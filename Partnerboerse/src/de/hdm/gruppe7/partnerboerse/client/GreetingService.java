@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The client-side stub for the RPC service.
  * Test Dunja
  * Test Annina
+ * Test Milena
  */
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
