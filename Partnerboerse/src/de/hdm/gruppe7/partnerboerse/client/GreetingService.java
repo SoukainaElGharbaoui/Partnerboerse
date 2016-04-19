@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * Test Milena
  * Test Carolin
  * Test Nina
+ * Test Soukaina
+ *
  */
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
