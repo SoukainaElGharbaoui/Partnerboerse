@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.List;
 import java.util.Vector;
 
+import de.hdm.thies.bankProjekt.server.db.DBConnection;
+import de.hdm.thies.bankProjekt.shared.bo.Account;
+
 
 
 
@@ -148,7 +151,7 @@ public class NutzerprofilMapper {
 	  /**
 	   * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	   * 
-	   * @param a das Objekt, das in die DB geschrieben werden soll
+	   * @param np das Objekt, das in die DB geschrieben werden soll
 	   * @return das als Parameter Ã¼bergebene Objekt
 	   */
 	  public Nutzerprofil update(Nutzerprofil np) {
@@ -175,7 +178,78 @@ public class NutzerprofilMapper {
 	    return np;
 	  }
 	  
+	  /**
+	   * Löschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
+	   * 
+	   * @param np das aus der DB zu löschende "Objekt"
+	   */
+	  public void delete(Nutzerprofil np) {
+	    Connection con = DBConnection.connection();
+
+	    try {
+	      Statement stmt = con.createStatement();
+
+	      stmt.executeUpdate("DELETE FROM T_NUTZERPROFIL " + "WHERE Profil_ID =" 
+	      + np.getProfilId());
+
+	    }
+	    catch (SQLException e2) {
+	      e2.printStackTrace();
+	    }
+	  }
 	  
-	
+	  /**
+	   * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank. 
+	   * Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft 
+	   * und ggf. berichtigt.
+	   * 
+	   * @param np das zu speichernde Objekt
+	   * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
+	   * <code>profilId</code>.
+	   */
+	  public Nutzerprofil insert(Nutzerprofil np) {
+	    Connection con = DBConnection.connection();
+
+	    try {
+	      Statement stmt = con.createStatement();
+
+	      /*
+	       * Zunächst schauen wir nach, welches der momentan höchste
+	       * Primärschlüsselwert ist.
+	       */
+	      ResultSet rs = stmt.executeQuery("SELECT MAX(Profil_ID) AS maxProfil_ID "
+	          + "FROM T_NUTZERPROFIL");
+
+	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      if (rs.next()) {
+	        /*
+	         * np erhält den bisher maximalen, nun um 1 inkrementierten
+	         * Primärschlüssel.
+	         */
+	        np.setProfilId(rs.getInt("maxProfil_ID") + 1);
+
+	        stmt = con.createStatement();
+
+	        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+	        stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (Profil_ID, "
+	        + "Vorname, Nachname, Geburtsdatum)" 
+	        + "VALUES(" + np.getProfilId() + "," + np.getVorname() 
+	        + np.getNachname() + np.getGeburtsdatum + ")");
+	        
+	        stmt.executeUpdate("INSERT INTO T_PROFIL (Profil_ID, "
+	        + "Geschlecht, Haarfarbe, Koerpergroesse, Raucher)" 
+	        + "VALUES(" + np.getGeschlecht() + "," + np.getHaarfarbe() 
+	        + np.getKoerpergroesse() + np.getGeschlecht + ")");
+	      }
+	    }
+	    catch (SQLException e2) {
+	      e2.printStackTrace();
+	    }
+
+	    /*
+	     * Rückgabe, des evtl. korrigierten Nutzerprofils.
+	     */
+	    return np;
+	  }
 
 }
