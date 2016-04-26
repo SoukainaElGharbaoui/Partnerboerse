@@ -1,12 +1,13 @@
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.thies.bankProjekt.shared.BankVerwaltungImpl;
+
 
 /**
  * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung 
@@ -43,19 +44,47 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, 
 			Date geburtsdatum, String geschlecht, String haarfarbe, 
-			String koerpergroesse, boolean raucher, String religion) 
+			int koerpergroesse, boolean raucher, String religion) 
 			throws IllegalArgumentException;
-	
-	public getNutzerprofilById() throws IllegalArgumentException; 
-	
-	  /**
-	   * Speichern eines Nutzerprofils-Objekts in der Datenbank.
+		
+	 /**
+	   * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
 	   * 
-	   * @param vorname, nachname, geburtsdatum, geschlecht, haarfarbe
-	   * @param koerpergroesse, raucher, religion 
-	   * @return fertiges Nutzerprofil-Objekt
+	   * @param profilId ist die ProfilId.
+	   * @return Das erste Nutzerprofil-Objekt, dass den Suchkriterien entspricht.
 	   * @throws IllegalArgumentException
 	   */
+		
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException; 
+		
 	
+	 /**
+	   * Speichern eines Nutzerprofil-Objekts in der Datenbank.
+	   * 
+	   * @param nutzerprofil zu sicherndes Objekt.
+	   * @throws IllegalArgumentException
+	   */
+	  public void save(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
+	  
+	  
+	  /**
+	   * L�schen des �bergebenen Nutzerprofils.
+	   * 
+	   * @param nutzerprofil das zu l�schende Nutzerprofil
+	   * @throws IllegalArgumentException
+	   */
+	  public void delete(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
 	
+	  
+	  /**
+	   * Suchen aller angesehenen Nutzerprofil-Objekte eines Nutzerprofils.
+	   * 
+	   * @param nutzerprofil ist das Nutzerprofil.
+	   * @return Liste von Nutzerprofil-Objekten, die den 
+	   * Suchkriterien entsprechen.
+	   * @throws IllegalArgumentException
+	   */
+	  
+	  public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil)
+	  throws IllegalArgumentException;
 	}

@@ -3,7 +3,6 @@ package de.hdm.gruppe7.partnerboerse.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -90,11 +89,11 @@ public class NutzerprofilMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Nutzerprofil np = new Nutzerprofil();
-				np.setProfilId(rs.getInt("Profil_ID"));
-				np.setVorname(rs.getString("Vorname"));
-				np.setNachname(rs.getString("Nachname"));
-				return np;
+				Nutzerprofil nutzerprofil = new Nutzerprofil();
+				nutzerprofil.setProfilId(rs.getInt("Profil_ID"));
+				nutzerprofil.setVorname(rs.getString("Vorname"));
+				nutzerprofil.setNachname(rs.getString("Nachname"));
+				return nutzerprofil;
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -129,19 +128,19 @@ public class NutzerprofilMapper {
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
-				Nutzerprofil np = new Nutzerprofil();
-				np.setProfilId(rs.getInt("Profil_ID"));
-				np.setVorname(rs.getString("Vorname"));
-				np.setNachname(rs.getString("Nachname"));
-				np.setGeburtsdatum(rs.getDate("Geburtsdatum"));
-				np.setGeschlecht(rs.getString("Geschlecht"));
-				np.setHaarfarbe(rs.getString("Haarfarbe"));
-				np.setKoerpergroesse(rs.getInt("Koerpergroesse"));
-				np.setRaucher(rs.getBoolean("Raucher"));
-				np.setReligion(rs.getString("Religion"));
+				Nutzerprofil nutzerprofil = new Nutzerprofil();
+				nutzerprofil.setProfilId(rs.getInt("Profil_ID"));
+				nutzerprofil.setVorname(rs.getString("Vorname"));
+				nutzerprofil.setNachname(rs.getString("Nachname"));
+				nutzerprofil.setGeburtsdatum(rs.getDate("Geburtsdatum"));
+				nutzerprofil.setGeschlecht(rs.getString("Geschlecht"));
+				nutzerprofil.setHaarfarbe(rs.getString("Haarfarbe"));
+				nutzerprofil.setKoerpergroesse(rs.getInt("Koerpergroesse"));
+				nutzerprofil.setRaucher(rs.getBoolean("Raucher"));
+				nutzerprofil.setReligion(rs.getString("Religion"));
 				
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(np);
+				result.add(nutzerprofil);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -154,11 +153,11 @@ public class NutzerprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
-	 * @param np
+	 * @param nutzerprofil
 	 *            das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter Ã¼bergebene Objekt
 	 */
-	public Nutzerprofil update(Nutzerprofil np) {
+	public Nutzerprofil update(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -168,32 +167,32 @@ public class NutzerprofilMapper {
 					+ "ON T_NUTZERPROFIL.Profil_ID = T_PROFIL.Profil_ID"				
 					+ "SET Vorname=\", Nachname=\", Geburtsdatum=\""					
 					+ "Koerpergroesse=\", Raucher=\", Geschlecht=\", Haarfarbe=\""
-					+ "WHERE Profil_ID=" + np.getProfilId());
+					+ "WHERE Profil_ID=" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Nutzerprofil np) zu wahren, geben wir np
-		// zurÃ¼ck
-		return np;
+		// Um Analogie zu insert(Nutzerprofil nutzerprofil) zu wahren, 
+		// geben wir nuterprofil zurÃ¼ck
+		return nutzerprofil;
 	}
 
 	/**
 	 * Lï¿½schen der Daten eines <code>Nutzerprofil</code>-Objekts aus der
 	 * Datenbank.
 	 * 
-	 * @param np
+	 * @param nutzerprofil
 	 *            das aus der DB zu lï¿½schende "Objekt"
 	 */
-	public void delete(Nutzerprofil np) {
+	public void delete(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("DELETE FROM T_NUTZERPROFIL "
-					+ "WHERE Profil_ID =" + np.getProfilId());
+					+ "WHERE Profil_ID =" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -205,12 +204,12 @@ public class NutzerprofilMapper {
 	 * Dabei wird auch der Primï¿½rschlï¿½ssel des ï¿½bergebenen Objekts
 	 * geprï¿½ft und ggf. berichtigt.
 	 * 
-	 * @param np
+	 * @param nutzerprofil
 	 *            das zu speichernde Objekt
 	 * @return das bereits ï¿½bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>profilId</code>.
 	 */
-	public Nutzerprofil insert(Nutzerprofil np) {
+	public Nutzerprofil insert(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -230,21 +229,21 @@ public class NutzerprofilMapper {
 				 * np erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
 				 * Primï¿½rschlï¿½ssel.
 				 */
-				np.setProfilId(rs.getInt("maxProfil_ID") + 1);
+				nutzerprofil.setProfilId(rs.getInt("maxProfil_ID") + 1);
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 				stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (Profil_ID, "
 						+ "Vorname, Nachname, Geburtsdatum)" + "VALUES("
-						+ np.getProfilId() + "," + np.getVorname() + "," 
-						+ np.getNachname() + ","  + np.getGeburtsdatum() + ")");
+						+ nutzerprofil.getProfilId() + "," + nutzerprofil.getVorname() + "," 
+						+ nutzerprofil.getNachname() + ","  + nutzerprofil.getGeburtsdatum() + ")");
 
 				stmt.executeUpdate("INSERT INTO T_PROFIL (Profil_ID, "
 						+ "Geschlecht, Haarfarbe, Koerpergroesse, Raucher)"
-						+ "VALUES(" + np.getGeschlecht() + ","
-						+ np.getHaarfarbe() + "," + np.getKoerpergroesse() 
-						+ "," + np.getGeschlecht() + ")");
+						+ "VALUES(" + nutzerprofil.getGeschlecht() + ","
+						+ nutzerprofil.getHaarfarbe() + "," + nutzerprofil.getKoerpergroesse() 
+						+ "," + nutzerprofil.getGeschlecht() + ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -253,7 +252,7 @@ public class NutzerprofilMapper {
 		/*
 		 * Rï¿½ckgabe, des evtl. korrigierten Nutzerprofils.
 		 */
-		return np;
+		return nutzerprofil;
 	}
 
 }
