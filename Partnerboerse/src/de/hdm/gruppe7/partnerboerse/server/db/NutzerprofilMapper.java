@@ -4,8 +4,9 @@ import java.sql.*;
 import java.util.List;
 import java.util.Vector;
 
-import de.hdm.thies.bankProjekt.server.db.DBConnection;
-import de.hdm.thies.bankProjekt.shared.bo.Account;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+
+
 
 
 
@@ -118,7 +119,7 @@ public class NutzerprofilMapper {
 	  public List<Nutzerprofil> findAllNutzerprofile() {
 	    Connection con = DBConnection.connection();
 
-	    // Ergebnisvektor vorbereiten
+	    // Ergebnisliste vorbereiten
 	    List<Nutzerprofil> result = new List<Nutzerprofil>();
 
 	    try {
@@ -134,10 +135,10 @@ public class NutzerprofilMapper {
 	        np.setVorname(rs.getString("Vorname"));
 	        np.setNachname(rs.getString("Nachname"));
 	        
-	        return np;
+	        
 
 	        // HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-	        result.addElement(np);
+	        result.add(np);
 	      }
 	    }
 	    catch (SQLException e2) {
@@ -179,9 +180,9 @@ public class NutzerprofilMapper {
 	  }
 	  
 	  /**
-	   * Löschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
+	   * Lï¿½schen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
 	   * 
-	   * @param np das aus der DB zu löschende "Objekt"
+	   * @param np das aus der DB zu lï¿½schende "Objekt"
 	   */
 	  public void delete(Nutzerprofil np) {
 	    Connection con = DBConnection.connection();
@@ -199,12 +200,12 @@ public class NutzerprofilMapper {
 	  }
 	  
 	  /**
-	   * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank. 
-	   * Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft 
+	   * Einfï¿½gen eines <code>Nutzerprofil</code>-Objekts in die Datenbank. 
+	   * Dabei wird auch der Primï¿½rschlï¿½ssel des ï¿½bergebenen Objekts geprï¿½ft 
 	   * und ggf. berichtigt.
 	   * 
 	   * @param np das zu speichernde Objekt
-	   * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
+	   * @return das bereits ï¿½bergebene Objekt, jedoch mit ggf. korrigierter
 	   * <code>profilId</code>.
 	   */
 	  public Nutzerprofil insert(Nutzerprofil np) {
@@ -214,32 +215,32 @@ public class NutzerprofilMapper {
 	      Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(Profil_ID) AS maxProfil_ID "
 	          + "FROM T_NUTZERPROFIL");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
 	        /*
-	         * np erhält den bisher maximalen, nun um 1 inkrementierten
-	         * Primärschlüssel.
+	         * np erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+	         * Primï¿½rschlï¿½ssel.
 	         */
 	        np.setProfilId(rs.getInt("maxProfil_ID") + 1);
 
 	        stmt = con.createStatement();
 
-	        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+	        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 	        stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (Profil_ID, "
 	        + "Vorname, Nachname, Geburtsdatum)" 
 	        + "VALUES(" + np.getProfilId() + "," + np.getVorname() 
-	        + np.getNachname() + np.getGeburtsdatum + ")");
+	        + np.getNachname() + np.getGeburtsdatum() + ")");
 	        
 	        stmt.executeUpdate("INSERT INTO T_PROFIL (Profil_ID, "
 	        + "Geschlecht, Haarfarbe, Koerpergroesse, Raucher)" 
 	        + "VALUES(" + np.getGeschlecht() + "," + np.getHaarfarbe() 
-	        + np.getKoerpergroesse() + np.getGeschlecht + ")");
+	        + np.getKoerpergroesse() + np.getGeschlecht() + ")");
 	      }
 	    }
 	    catch (SQLException e2) {
@@ -247,7 +248,7 @@ public class NutzerprofilMapper {
 	    }
 
 	    /*
-	     * Rückgabe, des evtl. korrigierten Nutzerprofils.
+	     * Rï¿½ckgabe, des evtl. korrigierten Nutzerprofils.
 	     */
 	    return np;
 	  }
