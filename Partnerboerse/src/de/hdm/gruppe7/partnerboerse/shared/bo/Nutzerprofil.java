@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Realisierung eines exemplarischen Nutzerprofils. 
- * @author Nina Baumgärtner
+ * @author Nina BaumgÃ¤rtner
  */
 
 public class Nutzerprofil extends Profil{
@@ -54,7 +54,6 @@ public class Nutzerprofil extends Profil{
 	public void setAngeseheneNp(List<Nutzerprofil> angeseheneNp) {
 		this.angeseheneNp = angeseheneNp;
 	}
-	
 	
 	// MUSS NOCH DEFINIERT WERDEN !!
 	
