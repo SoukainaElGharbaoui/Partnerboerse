@@ -62,6 +62,30 @@ public class NutzerprofilMapper {
 	}
 
 	/**
+	 * Erstellen einer Tabelle in der Datenbank, falls diese noch nicht
+	 * exisitiert.
+	 */
+
+	public void createNutzerprofilTable() throws IllegalArgumentException {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+		try {
+
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			stmt.executeQuery("CREATE TABLE IF NOT EXISTS T_NUTZERPROFIL"
+					+ "( profil_id int(3), vorname varchar(15), nachname varchar(15)"
+					+ "geburtsdatum date, PRIMARY KEY (profil_id)) ");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+
+	/**
 	 * Suchen eines Nutzerprofils mit vorgegebener Nutzerprofil ID. Da diese
 	 * eindeutig ist, wird genau ein Objekt zurï¿½ckgegeben.
 	 * 
@@ -80,8 +104,8 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT Profil_ID, Vorname, Nachname FROM T_NUTZERPROFIL "
-							+ "WHERE Profil_ID=" + profilId);
+					.executeQuery("SELECT profil_id, vorname, nachname FROM T_NUTZERPROFIL "
+							+ "WHERE profil_id=" + profilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -90,9 +114,9 @@ public class NutzerprofilMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("Profil_ID"));
-				nutzerprofil.setVorname(rs.getString("Vorname"));
-				nutzerprofil.setNachname(rs.getString("Nachname"));
+				nutzerprofil.setProfilId(rs.getInt("profil_id"));
+				nutzerprofil.setVorname(rs.getString("vorname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));
 				return nutzerprofil;
 			}
 		} catch (SQLException e2) {
@@ -122,23 +146,23 @@ public class NutzerprofilMapper {
 
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM T_PROFIL INNER JOIN"
-							+ "T_NUTZERPROFIL ON T_PROFIL.Profil_ID = "
-							+ "T_NUTZERPROFIL.Profil_ID ORDER BY Profil_ID");
+							+ "T_NUTZERPROFIL ON T_PROFIL.profil_id = "
+							+ "T_NUTZERPROFIL.profil_id ORDER BY profil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("Profil_ID"));
-				nutzerprofil.setVorname(rs.getString("Vorname"));
-				nutzerprofil.setNachname(rs.getString("Nachname"));
-				nutzerprofil.setGeburtsdatum(rs.getDate("Geburtsdatum"));
-				nutzerprofil.setGeschlecht(rs.getString("Geschlecht"));
-				nutzerprofil.setHaarfarbe(rs.getString("Haarfarbe"));
-				nutzerprofil.setKoerpergroesse(rs.getInt("Koerpergroesse"));
-				nutzerprofil.setRaucher(rs.getBoolean("Raucher"));
-				nutzerprofil.setReligion(rs.getString("Religion"));
-				
+				nutzerprofil.setProfilId(rs.getInt("profil_id"));
+				nutzerprofil.setVorname(rs.getString("vorname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));
+				nutzerprofil.setGeburtsdatum(rs.getDate("geburtsdatum"));
+				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				nutzerprofil.setKoerpergroesse(rs.getInt("koerpergroesse"));
+				nutzerprofil.setRaucher(rs.getBoolean("raucher"));
+				nutzerprofil.setReligion(rs.getString("religion"));
+
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
 				result.add(nutzerprofil);
 			}
@@ -157,23 +181,23 @@ public class NutzerprofilMapper {
 	 *            das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter Ã¼bergebene Objekt
 	 */
-	public Nutzerprofil update(Nutzerprofil nutzerprofil) {
+	public Nutzerprofil updateNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE T_NUTZERPROFIL INNER JOIN T_PROFIL"
-					+ "ON T_NUTZERPROFIL.Profil_ID = T_PROFIL.Profil_ID"				
-					+ "SET Vorname=\", Nachname=\", Geburtsdatum=\""					
-					+ "Koerpergroesse=\", Raucher=\", Geschlecht=\", Haarfarbe=\""
-					+ "WHERE Profil_ID=" + nutzerprofil.getProfilId());
+					+ "ON T_NUTZERPROFIL.profil_id = T_PROFIL.profil_id"
+					+ "SET vorname=\", nachname=\", geburtsdatum=\""
+					+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\""
+					+ "WHERE profil_id=" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Nutzerprofil nutzerprofil) zu wahren, 
+		// Um Analogie zu insert(Nutzerprofil nutzerprofil) zu wahren,
 		// geben wir nuterprofil zurÃ¼ck
 		return nutzerprofil;
 	}
@@ -185,14 +209,14 @@ public class NutzerprofilMapper {
 	 * @param nutzerprofil
 	 *            das aus der DB zu lï¿½schende "Objekt"
 	 */
-	public void delete(Nutzerprofil nutzerprofil) {
+	public void deleteNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("DELETE FROM T_NUTZERPROFIL "
-					+ "WHERE Profil_ID =" + nutzerprofil.getProfilId());
+					+ "WHERE profil_id =" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -209,7 +233,7 @@ public class NutzerprofilMapper {
 	 * @return das bereits ï¿½bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>profilId</code>.
 	 */
-	public Nutzerprofil insert(Nutzerprofil nutzerprofil) {
+	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -220,7 +244,7 @@ public class NutzerprofilMapper {
 			 * Primï¿½rschlï¿½sselwert ist.
 			 */
 			ResultSet rs = stmt
-					.executeQuery("SELECT MAX(Profil_ID) AS maxProfil_ID "
+					.executeQuery("SELECT MAX(profil_id) AS maxProfil_id "
 							+ "FROM T_NUTZERPROFIL");
 
 			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
@@ -229,21 +253,24 @@ public class NutzerprofilMapper {
 				 * np erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
 				 * Primï¿½rschlï¿½ssel.
 				 */
-				nutzerprofil.setProfilId(rs.getInt("maxProfil_ID") + 1);
+				nutzerprofil.setProfilId(rs.getInt("maxProfil_id") + 1);
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
-				stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (Profil_ID, "
-						+ "Vorname, Nachname, Geburtsdatum)" + "VALUES("
-						+ nutzerprofil.getProfilId() + "," + nutzerprofil.getVorname() + "," 
-						+ nutzerprofil.getNachname() + ","  + nutzerprofil.getGeburtsdatum() + ")");
+				stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (profil_id, "
+						+ "vorname, nachname, geburtsdatum)" + "VALUES("
+						+ nutzerprofil.getProfilId() + ","
+						+ nutzerprofil.getVorname() + ","
+						+ nutzerprofil.getNachname() + ","
+						+ nutzerprofil.getGeburtsdatum() + ")");
 
-				stmt.executeUpdate("INSERT INTO T_PROFIL (Profil_ID, "
-						+ "Geschlecht, Haarfarbe, Koerpergroesse, Raucher)"
+				stmt.executeUpdate("INSERT INTO T_PROFIL (profil_id, "
+						+ "geschlecht, haarfarbe, koerpergroesse, raucher)"
 						+ "VALUES(" + nutzerprofil.getGeschlecht() + ","
-						+ nutzerprofil.getHaarfarbe() + "," + nutzerprofil.getKoerpergroesse() 
-						+ "," + nutzerprofil.getGeschlecht() + ")");
+						+ nutzerprofil.getHaarfarbe() + ","
+						+ nutzerprofil.getKoerpergroesse() + ","
+						+ nutzerprofil.getGeschlecht() + ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

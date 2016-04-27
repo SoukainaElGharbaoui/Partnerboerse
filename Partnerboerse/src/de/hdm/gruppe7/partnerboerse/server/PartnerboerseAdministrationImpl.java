@@ -144,7 +144,7 @@ implements PartnerboerseAdministration {
 	    nutzerprofil.setProfilId(1);
 
 	    // Objekt in der DB speichern.
-	    return this.nutzerprofilMapper.insert(nutzerprofil);
+	    return this.nutzerprofilMapper.insertNutzerprofil(nutzerprofil);
 	}
 
 	/**
@@ -165,7 +165,7 @@ implements PartnerboerseAdministration {
 	public void save(Nutzerprofil nutzerprofil) 
 			throws IllegalArgumentException {
 		
-		nutzerprofilMapper.update(nutzerprofil);
+		nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
 	}
 	
 
@@ -176,7 +176,7 @@ implements PartnerboerseAdministration {
 	public void delete(Nutzerprofil nutzerprofil) 
 			throws IllegalArgumentException {
 		
-		nutzerprofilMapper.delete(nutzerprofil);
+		nutzerprofilMapper.deleteNutzerprofil(nutzerprofil);
 	}
 
 	@Override
