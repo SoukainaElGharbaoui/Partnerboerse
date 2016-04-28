@@ -30,8 +30,10 @@ public class DBConnection {
      * Die URL, mit deren Hilfe die Datenbank angesprochen wird.
      */
     
-    private static String googleUrl = "";
+
+    private static String googleUrl = "jdbc.google:mysql://prof-thies.de:thies-bankproject:thies-bankproject/bankproject?user=demo&password=demo";
     private static String localUrl = "jdbc:mysql://127.0.0.1:3306/partnerboerse";
+
     private static String user = "root";
     private static String password = "";
 
