@@ -2,11 +2,6 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import de.hdm.gruppe7.partnerboerse.shared.FieldVerifier;
 
-
-import de.hdm.thies.bankProjekt.client.CreateAccountDemo;
-import de.hdm.thies.bankProjekt.client.DeleteAccountDemo;
-import de.hdm.thies.bankProjekt.client.Showcase;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -75,18 +70,18 @@ public class Partnerboerse implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				 /*
-		         * Showcase instantiieren.
-		         */
-		        Showcase showcase = new FindCustomersByNameDemo();
-		        /*
-		         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
-		         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
-		         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
-		         * Elemente dieses DIV.
-		         */
-		        RootPanel.get("Details").clear();
-		        RootPanel.get("Details").add(showcase);
+//				 /*
+//		         * Showcase instantiieren.
+//		         */
+//		        Showcase showcase = new FindCustomersByNameDemo();
+//		        /*
+//		         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
+//		         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
+//		         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
+//		         * Elemente dieses DIV.
+//		         */
+//		        RootPanel.get("Details").clear();
+//		        RootPanel.get("Details").add(showcase);
 		    
 
 			}
@@ -111,9 +106,9 @@ public class Partnerboerse implements EntryPoint {
 	    createNutzerprofilButton.addClickHandler(new ClickHandler() {
 	      @Override
 		public void onClick(ClickEvent event) {
-	        Showcase showcase = new CreateAccountDemo();
-	        RootPanel.get("Details").clear();
-	        RootPanel.get("Details").add(showcase);
+//	        Showcase showcase = new CreateAccountDemo();
+//	        RootPanel.get("Details").clear();
+//	        RootPanel.get("Details").add(showcase);
 	      }
 	    });
 	    
@@ -126,9 +121,9 @@ public class Partnerboerse implements EntryPoint {
 	    deleteNutzerprofilButton.addClickHandler(new ClickHandler() {
 	      @Override
 		public void onClick(ClickEvent event) {
-	        Showcase showcase = new DeleteAccountDemo();
-	        RootPanel.get("Details").clear();
-	        RootPanel.get("Details").add(showcase);
+//	        Showcase showcase = new DeleteAccountDemo();
+//	        RootPanel.get("Details").clear();
+//	        RootPanel.get("Details").add(showcase);
 	      }
 	    });
 	    

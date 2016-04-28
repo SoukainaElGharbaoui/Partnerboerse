@@ -77,7 +77,8 @@ public class Seeder {
 				nutzerprofil.setProfilId(someProfilIds[i]);
 				nutzerprofil.setVorname(someVornamen[i]);
 				nutzerprofil.setNachname(someNachnamen[i]);
-				nutzerprofil.setGeburtsdatum(someGeburtsdaten[i]);
+
+				// nutzerprofil.setGeburtsdatum(someGeburtsdaten[i]);
 				NutzerprofilMapper.nutzerprofilMapper().insertNutzerprofil(nutzerprofil);
 			}
 		}
@@ -95,11 +96,13 @@ public class Seeder {
 				"Bauer", "Baumgaertner", "Gogol", "Maier", "Friedrichsen",
 				"Schwab", "Mueller", "Gier", "Kappel", "Schmidt"	
 			};
-		// Date Notation???
-		private Date[] someGeburtsdaten = {
-				//1962-08-14, 1955-03-27 
-				
-		};
+		
+//		// Date Notation???
+//		private Date[] someGeburtsdaten = {
+//				//1962-08-14, 1955-03-27 
+ 
+//		};
+
 			
 		/************* someTable end *******************/
 
