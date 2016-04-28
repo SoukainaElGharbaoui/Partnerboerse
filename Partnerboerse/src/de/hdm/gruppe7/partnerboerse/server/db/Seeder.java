@@ -98,6 +98,7 @@ public class Seeder {
 		// Date Notation???
 		private Date[] someGeburtsdaten = {
 				//1962-08-14, 1955-03-27 
+				
 		};
 			
 		/************* someTable end *******************/
