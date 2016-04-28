@@ -43,7 +43,7 @@ public class DBConnection {
      * <p>
      * 
      * <b>Fazit:</b> DBConnection sollte nicht mittels <code>new</code>
-     * instantiiert werden, sondern stets durch Aufruf dieser statischen
+     * instantiiert werden, sondern stets durch Aufruf dieser statischens
      * Methode.
      * <p>
      * 
