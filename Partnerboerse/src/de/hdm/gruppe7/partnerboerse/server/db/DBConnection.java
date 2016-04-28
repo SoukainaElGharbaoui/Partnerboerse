@@ -31,7 +31,8 @@ public class DBConnection {
      */
     
     private static String googleUrl = "";
-    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/partnerboerse";
+    private static String localUrl = "localhost/phpmyadmin/partnerboerse";
+   // private static String localUrl = "jdbc:mysql://127.0.0.1:3306/partnerboerse";
     private static String user = "root";
     private static String password = "";
 
