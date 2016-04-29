@@ -35,9 +35,12 @@ public class Partnerboerse implements EntryPoint {
 		 * realisiert. Daher bietet sich ein VerticalPanel als Container an.
 		 */
 		VerticalPanel navPanel = new VerticalPanel();
-
 		HorizontalPanel horPanel = new HorizontalPanel();
-
+		HorizontalPanel hor2Panel = new HorizontalPanel();
+		HorizontalPanel hor3Panel = new HorizontalPanel();
+		HorizontalPanel hor4Panel = new HorizontalPanel();
+		HorizontalPanel hor5Panel = new HorizontalPanel();
+		HorizontalPanel hor6Panel = new HorizontalPanel();
 		/*
 		 * Das VerticalPanel wird einem DIV-Element namens "Navigator" in der
 		 * zugehÃ¶rigen HTML-Datei zugewiesen und erhÃ¤lt so seinen
@@ -66,22 +69,28 @@ public class Partnerboerse implements EntryPoint {
 	     * Demonstrators nicht unnÃ¶tig zu erhÃ¶hen. 
 	     */
 		
+
+		
 		/**
 		 * Erzeugen eines EIngabefelds für den Vornamen
 		 */
 		final TextBox vornameTextBox = new TextBox ();
 		final Label vornameLabel = new Label("Vorname angeben");
-		navPanel.add(vornameLabel);	
-	    navPanel.add(vornameTextBox);
-		
+		navPanel.add(horPanel);
+		horPanel.add(vornameLabel);	
+	    horPanel.add(vornameTextBox);
+	    //+Methode hinzufügen um Vornamen anzulegen
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für den Nachnamen
 		 */
 		final TextBox nachnameTextBox = new TextBox ();
 		final Label nachnameLabel = new Label("Nachname angeben");
-		navPanel.add(nachnameLabel);	
-		navPanel.add(nachnameTextBox);
+		navPanel.add(hor2Panel);
+		hor2Panel.add(nachnameLabel);
+		hor2Panel.add(nachnameTextBox);
+	    //+Methode hinzufügen um Nachnamen anzulegen
+	    
 		
 		/**
 		 * Erzeugen einer Auswahl für das Geschlecht
@@ -89,15 +98,17 @@ public class Partnerboerse implements EntryPoint {
 		final Label geschlechtLabel = new Label("Geschlecht auswaehlen");
 		final RadioButton weiblichRadioButton = new RadioButton("weiblich","weiblich");
 		final RadioButton maennlichRadioButton = new RadioButton("maennlich","maennlich");
-		navPanel.add(geschlechtLabel);
-	    navPanel.add(weiblichRadioButton);
-	    navPanel.add(maennlichRadioButton);
+		navPanel.add(hor3Panel);
+		hor3Panel.add(geschlechtLabel);
+	    hor3Panel.add(weiblichRadioButton);
+	    hor3Panel.add(maennlichRadioButton);
 //	    FUNKTIONIERT NICHT
 //	    if (weiblichRadioButton.getValue() == true){
 //	    	maennlichRadioButton.setValue(false);
 //	    }
 //	    
-	
+	    //+Methode hinzufügen um Geschlecht anzulegen
+	    
 		/**
 		 * Erzeugen eines DatePickers für das Geburtsdatum
 		 */
@@ -105,6 +116,7 @@ public class Partnerboerse implements EntryPoint {
 		final DatePicker geburtsdatumDatePicker = new DatePicker();
 	    navPanel.add(geburtsdatumLabel);	
 	    navPanel.add(geburtsdatumDatePicker);
+	    //+Methode hinzufügen um Geburtsdatum anzulegen
 	    
 		
 		/**
@@ -113,9 +125,10 @@ public class Partnerboerse implements EntryPoint {
 		final Label raucherLabel = new Label("Rauchen Sie?");
 		final CheckBox raucherCheckBox = new CheckBox("Raucher");
 		final CheckBox nichtRaucherCheckBox = new CheckBox("Nichtraucher");
-		navPanel.add(raucherLabel);
-	    navPanel.add(raucherCheckBox);
-	    navPanel.add(nichtRaucherCheckBox);
+		navPanel.add(hor4Panel);
+		hor4Panel.add(raucherLabel);
+	    hor4Panel.add(raucherCheckBox);
+	    hor4Panel.add(nichtRaucherCheckBox);
 //	    FUNKTIONIERT NICHT
 //	    if (raucherCheckBox.getValue() == true){
 //	   	
@@ -125,14 +138,18 @@ public class Partnerboerse implements EntryPoint {
 //	    }  	else {raucherCheckBox.setValue(false);
 //	        nichtRaucherCheckBox.setValue(false);
 //	    }
+	    //+Methode hinzufügen um Raucher/Nichtraucher anzulegen
+	    
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für die Größe in cm
 		 */
 		final TextBox groesseTextBox = new TextBox ();
 		final Label groesseLabel = new Label("Groesse angeben");
-		navPanel.add(groesseLabel);	
-	    navPanel.add(groesseTextBox);
+		navPanel.add(hor5Panel);
+		hor5Panel.add(groesseLabel);	
+	    hor5Panel.add(groesseTextBox);	   
+	    //+Methode hinzufügen um Groesse anzulegen
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für die Haarfarbe
@@ -145,14 +162,16 @@ public class Partnerboerse implements EntryPoint {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		navPanel.add(haarfarbeLabel);	
-		navPanel.add(haarfarbeListBox);
-	   
+		navPanel.add(hor6Panel);
+		hor6Panel.add(haarfarbeLabel);	
+		hor6Panel.add(haarfarbeListBox);
+	    //+Methode hinzufügen um Haarfarbe anzulegen
+	    
 	    /**
 		 * Erzugen eines Button "Nutzerprofil anlegen"
 		 */
 		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 	    navPanel.add(createNutzerprofilButton);
-	    
+	    //ClickHAndler hinzufügen
 	}
 }
