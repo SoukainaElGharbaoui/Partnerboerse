@@ -124,7 +124,7 @@ implements PartnerboerseAdministration {
 	@Override
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			Date geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, boolean raucher, String religion)
+			String koerpergroesse, String raucher, String religion)
 			throws IllegalArgumentException {
 			
 		Nutzerprofil nutzerprofil = new Nutzerprofil();

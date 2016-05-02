@@ -136,7 +136,7 @@ public class NutzerprofilMapper {
 				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
 				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
 				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
-				nutzerprofil.setRaucher(rs.getBoolean("raucher"));
+				nutzerprofil.setRaucher(rs.getString("raucher"));
 				nutzerprofil.setReligion(rs.getString("religion"));
 
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste

@@ -53,23 +53,18 @@ public class Partnerboerse implements EntryPoint {
 		HorizontalPanel hor4Panel = new HorizontalPanel();
 		HorizontalPanel hor5Panel = new HorizontalPanel();
 		HorizontalPanel hor6Panel = new HorizontalPanel();
+		HorizontalPanel hor7Panel = new HorizontalPanel();
 		/*
 		 * Das VerticalPanel wird einem DIV-Element namens "Navigator" in der
 		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
 		 * Darstellungsort.
 		 */
 		RootPanel.get("Navigator").add(navPanel);
-	
 
-		
 		/*
 		 * Ab hier bauen wir sukzessive den Navigator mit seinen Buttons aus.
 		 */
 
-		
-
-	
-		
 		 /*
 	     * Ab hier folgen weitere Button-Definitionen, die nach exakt der gleichen
 	     * Methode erfolgen wie beim ersten Button.
@@ -108,28 +103,15 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen einer Auswahl f�r das Geschlecht
 		 */
 		final Label geschlechtLabel = new Label("Geschlecht auswaehlen");
-		final CheckBox weiblichCheckBox = new CheckBox("weiblich");
-		final CheckBox maennlichCheckBox = new CheckBox("maennlich");
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
 		navPanel.add(hor3Panel);
 		hor3Panel.add(geschlechtLabel);
-	    hor3Panel.add(weiblichCheckBox);
-	    hor3Panel.add(maennlichCheckBox);
+	    hor3Panel.add(geschlechtListBox);
 	    
-	    final Label fehlendesGeschlechtLabel = new Label("Bitte geben Sie Ihr Geschlecht an."); 
-	    
-	    if(weiblichCheckBox.isChecked()){
-	    	maennlichCheckBox.isEnabled(); 
-	    	geschlecht = "weiblich"; 
-	    } else if(maennlichCheckBox.isChecked()) { 
-	    	weiblichCheckBox.isEnabled(); 
-	    	geschlecht = "maennlich"; 
-	    } else {
-	    	hor3Panel.add(fehlendesGeschlechtLabel); 
-	    }
-	    
-
-
-	    
+	   
 		/**
 		 * Erzeugen eines DatePickers f�r das Geburtsdatum
 		 */
@@ -144,24 +126,14 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen einer CheckBox f�r Raucher
 		 */
 		final Label raucherLabel = new Label("Rauchen Sie?");
-		final CheckBox raucherCheckBox = new CheckBox("Raucher");
-		final CheckBox nichtRaucherCheckBox = new CheckBox("Nichtraucher");
+		final ListBox raucherListBox = new ListBox(); 
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichraucher");
 		navPanel.add(hor4Panel);
 		hor4Panel.add(raucherLabel);
-	    hor4Panel.add(raucherCheckBox);
-	    hor4Panel.add(nichtRaucherCheckBox);
+	    hor4Panel.add(raucherListBox); 
 	   
-	    final Label fehlenderRaucherstatusLabel = new Label("Bitte geben Sie an, ob Sie ein Raucher sind."); 
-	    
-	    if(raucherCheckBox.isChecked()){
-	    	nichtRaucherCheckBox.isEnabled(); 
-	    	raucher = true; 
-	    } else if(nichtRaucherCheckBox.isChecked()) { 
-	    	raucherCheckBox.isEnabled(); 
-	    	raucher = false;  
-	    } else {
-	    	hor3Panel.add(fehlenderRaucherstatusLabel); 
-	    }
 
 	    /**
 		 * Erzeugen eines EIngabefelds f�r die Gr��e in cm
@@ -171,8 +143,6 @@ public class Partnerboerse implements EntryPoint {
 		navPanel.add(hor5Panel);
 		hor5Panel.add(koerpergroesseLabel);	
 	    hor5Panel.add(koerpergroesseTextBox);	   
-	 
-	    
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds f�r die Haarfarbe
@@ -201,9 +171,9 @@ public class Partnerboerse implements EntryPoint {
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		navPanel.add(hor6Panel);
-		hor6Panel.add(religionLabel);	
-		hor6Panel.add(religionListBox);
+		navPanel.add(hor7Panel);
+		hor7Panel.add(religionLabel);	
+		hor7Panel.add(religionListBox);
 		
 		
 		final Label ergebnisLabel = new Label();
@@ -221,8 +191,8 @@ public class Partnerboerse implements EntryPoint {
 				
 				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(),
 						nachnameTextBox.getText(), geburtsdatumDatePicker.getValue(),
-						geschlecht, haarfarbeListBox.getSelectedItemText(), 
-						koerpergroesseTextBox.getText(), raucher, 
+						geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
+						koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
 						religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil> (){
 
 							@Override

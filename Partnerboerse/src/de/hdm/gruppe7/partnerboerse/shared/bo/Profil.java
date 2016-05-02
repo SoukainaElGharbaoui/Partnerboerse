@@ -11,7 +11,7 @@ public class Profil extends BusinessObject {
 	
 	private int profilId;
 	private String geschlecht; 
-	private boolean raucher;
+	private String raucher;
 	private String koerpergroesse;
 	private String haarfarbe;
 	private String religion;
@@ -29,10 +29,11 @@ public class Profil extends BusinessObject {
 	public void setGeschlecht(String geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	public boolean isRaucher() {
+	public String isRaucher() {
 		return raucher;
 	}
-	public void setRaucher(boolean raucher) {
+
+	public void setRaucher(String raucher) {
 		this.raucher = raucher;
 	}
 	public String getKoerpergroesse() {
