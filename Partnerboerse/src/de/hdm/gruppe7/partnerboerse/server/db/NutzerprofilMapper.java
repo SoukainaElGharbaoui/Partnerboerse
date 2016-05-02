@@ -62,30 +62,6 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Erstellen einer Tabelle in der Datenbank, falls diese noch nicht
-	 * exisitiert.
-	 */
-
-	public void createNutzerprofilTable() throws IllegalArgumentException {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-		try {
-
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			stmt.executeQuery("CREATE TABLE IF NOT EXISTS T_NUTZERPROFIL"
-					+ "( profil_id int(3), vorname varchar(15), nachname varchar(15)"
-					+ "geburtsdatum date, PRIMARY KEY (profil_id)) ");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-	}
-
-	/**
 	 * Suchen eines Nutzerprofils mit vorgegebener Nutzerprofil ID. Da diese
 	 * eindeutig ist, wird genau ein Objekt zurï¿½ckgegeben.
 	 * 
@@ -159,7 +135,7 @@ public class NutzerprofilMapper {
 				nutzerprofil.setGeburtsdatum(rs.getDate("geburtsdatum"));
 				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
 				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				nutzerprofil.setKoerpergroesse(rs.getInt("koerpergroesse"));
+				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
 				nutzerprofil.setRaucher(rs.getBoolean("raucher"));
 				nutzerprofil.setReligion(rs.getString("religion"));
 
@@ -260,17 +236,17 @@ public class NutzerprofilMapper {
 				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 				stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (profil_id, "
 						+ "vorname, nachname, geburtsdatum)" + "VALUES("
-						+ nutzerprofil.getProfilId() + ","
-						+ nutzerprofil.getVorname() + ","
-						+ nutzerprofil.getNachname() + ","
-						+ nutzerprofil.getGeburtsdatum() + ")");
+						+ nutzerprofil.getProfilId() + ",'"
+						+ nutzerprofil.getVorname() + "','"
+						+ nutzerprofil.getNachname() + "','"
+						+ nutzerprofil.getGeburtsdatum() + "')");
 
 				stmt.executeUpdate("INSERT INTO T_PROFIL (profil_id, "
 						+ "geschlecht, haarfarbe, koerpergroesse, raucher)"
-						+ "VALUES(" + nutzerprofil.getGeschlecht() + ","
-						+ nutzerprofil.getHaarfarbe() + ","
-						+ nutzerprofil.getKoerpergroesse() + ","
-						+ nutzerprofil.getGeschlecht() + ")");
+						+ "VALUES('" + nutzerprofil.getGeschlecht() + "','"
+						+ nutzerprofil.getHaarfarbe() + "','"
+						+ nutzerprofil.getKoerpergroesse() + "','"
+						+ nutzerprofil.getGeschlecht() + "')");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

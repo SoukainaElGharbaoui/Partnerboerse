@@ -12,7 +12,7 @@ public class Profil extends BusinessObject {
 	private int profilId;
 	private String geschlecht; 
 	private boolean raucher;
-	private int koerpergroesse;
+	private String koerpergroesse;
 	private String haarfarbe;
 	private String religion;
 	
@@ -35,11 +35,11 @@ public class Profil extends BusinessObject {
 	public void setRaucher(boolean raucher) {
 		this.raucher = raucher;
 	}
-	public int getKoerpergroesse() {
+	public String getKoerpergroesse() {
 		return koerpergroesse;
 	}
-	public void setKoerpergroesse(int koerpergroesse) {
-		this.koerpergroesse = koerpergroesse;
+	public void setKoerpergroesse(String koerpergroesse2) {
+		this.koerpergroesse = koerpergroesse2;
 	}
 	public String getHaarfarbe() {
 		return haarfarbe;
@@ -55,14 +55,14 @@ public class Profil extends BusinessObject {
 	}
 	
 	/**
-	   * Erzeugen einer einfachen textuellen Repräsentation der jeweiligen
+	   * Erzeugen einer einfachen textuellen Reprï¿½sentation der jeweiligen
 	   * Kontoinstanz.
 	   */
 	  @Override
 	public String toString() {
 	    return super.toString() + "Profil-ID: #" + this.profilId 
 	    		+ "Geschlecht: " + this.geschlecht + "Raucher: " + this.raucher 
-	    		+ "Körpergröße: " + this.koerpergroesse + "Haarfarbe: " 
+	    		+ "Kï¿½rpergrï¿½ï¿½e: " + this.koerpergroesse + "Haarfarbe: " 
 	    		+ this.haarfarbe + "Religion: " + this.religion;
 	  }
 
@@ -70,18 +70,18 @@ public class Profil extends BusinessObject {
 	   * <p>
 	   * Feststellen der <em>inhaltlichen</em> Gleichheit zweier Profil-Objekte.
 	   * Die Gleichheit wird in diesem Beispiel auf eine identische Profil-Id
-	   * beschränkt.
+	   * beschrï¿½nkt.
 	   * </p>
 	   * <p>
 	   * <b>ACHTUNG:</b> Die inhaltliche Gleichheit nicht mit dem Vergleich der
-	   * <em>Identität</em> eines Objekts mit einem anderen verwechseln!!! Dies
-	   * würde durch den Operator <code>==</code> bestimmt. Bei Unklarheit hierzu
-	   * können Sie nocheinmal in die Definition des Sprachkerns von Java schauen.
-	   * Die Methode <code>equals(...)</code> ist für jeden Referenzdatentyp
+	   * <em>Identitï¿½t</em> eines Objekts mit einem anderen verwechseln!!! Dies
+	   * wï¿½rde durch den Operator <code>==</code> bestimmt. Bei Unklarheit hierzu
+	   * kï¿½nnen Sie nocheinmal in die Definition des Sprachkerns von Java schauen.
+	   * Die Methode <code>equals(...)</code> ist fï¿½r jeden Referenzdatentyp
 	   * definiert, da sie bereits in der Klasse <code>Object</code> in einfachster
 	   * Form realisiert ist. Dort ist sie allerdings auf die simple Bestimmung der 
-	   * Gleicheit der Java-internen Objekt-ID der verglichenen Objekte beschränkt.
-	   * In unseren eigenen Klassen können wir diese Methode überschreiben und ihr
+	   * Gleicheit der Java-internen Objekt-ID der verglichenen Objekte beschrï¿½nkt.
+	   * In unseren eigenen Klassen kï¿½nnen wir diese Methode ï¿½berschreiben und ihr
 	   * mehr Intelligenz verleihen.
 	   * </p>
 	   */

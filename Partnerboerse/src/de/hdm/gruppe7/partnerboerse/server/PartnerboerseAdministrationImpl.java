@@ -124,7 +124,7 @@ implements PartnerboerseAdministration {
 	@Override
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			Date geburtsdatum, String geschlecht, String haarfarbe,
-			int koerpergroesse, boolean raucher, String religion)
+			String koerpergroesse, boolean raucher, String religion)
 			throws IllegalArgumentException {
 			
 		Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -138,7 +138,7 @@ implements PartnerboerseAdministration {
 	    nutzerprofil.setReligion(religion);	    
 	    
 	    /*
-	     * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann ein
+	     * Setzen einer vorläufigen Profilnr. Der insert-Aufruf liefert dann ein
 	     * Objekt, dessen Nummer mit der Datenbank konsistent ist.
 	     */
 	    nutzerprofil.setProfilId(1);

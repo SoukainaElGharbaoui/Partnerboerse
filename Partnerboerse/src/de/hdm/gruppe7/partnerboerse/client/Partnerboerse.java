@@ -33,6 +33,9 @@ public class Partnerboerse implements EntryPoint {
 	
 	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class) ;
 	
+	private String geschlecht; 
+	private boolean raucher; 
+	
 	@Override
 	public void onModuleLoad() {
 
@@ -81,7 +84,7 @@ public class Partnerboerse implements EntryPoint {
 
 		
 		/**
-		 * Erzeugen eines EIngabefelds für den Vornamen
+		 * Erzeugen eines EIngabefelds fï¿½r den Vornamen
 		 */
 		final TextBox vornameTextBox = new TextBox ();
 		final Label vornameLabel = new Label("Vorname angeben");
@@ -91,7 +94,7 @@ public class Partnerboerse implements EntryPoint {
 	 
 	    
 	    /**
-		 * Erzeugen eines EIngabefelds für den Nachnamen
+		 * Erzeugen eines EIngabefelds fï¿½r den Nachnamen
 		 */
 		final TextBox nachnameTextBox = new TextBox ();
 		final Label nachnameLabel = new Label("Nachname angeben");
@@ -102,7 +105,7 @@ public class Partnerboerse implements EntryPoint {
 	    
 		
 		/**
-		 * Erzeugen einer Auswahl für das Geschlecht
+		 * Erzeugen einer Auswahl fï¿½r das Geschlecht
 		 */
 		final Label geschlechtLabel = new Label("Geschlecht auswaehlen");
 		final CheckBox weiblichCheckBox = new CheckBox("weiblich");
@@ -111,15 +114,24 @@ public class Partnerboerse implements EntryPoint {
 		hor3Panel.add(geschlechtLabel);
 	    hor3Panel.add(weiblichCheckBox);
 	    hor3Panel.add(maennlichCheckBox);
-//	    FUNKTIONIERT NICHT
-//	    if (weiblichRadioButton.getValue() == true){
-//	    	maennlichRadioButton.setValue(false);
-//	    }
-//	    
-	
+	    
+	    final Label fehlendesGeschlechtLabel = new Label("Bitte geben Sie Ihr Geschlecht an."); 
+	    
+	    if(weiblichCheckBox.isChecked()){
+	    	maennlichCheckBox.isEnabled(); 
+	    	geschlecht = "weiblich"; 
+	    } else if(maennlichCheckBox.isChecked()) { 
+	    	weiblichCheckBox.isEnabled(); 
+	    	geschlecht = "maennlich"; 
+	    } else {
+	    	hor3Panel.add(fehlendesGeschlechtLabel); 
+	    }
+	    
+
+
 	    
 		/**
-		 * Erzeugen eines DatePickers für das Geburtsdatum
+		 * Erzeugen eines DatePickers fï¿½r das Geburtsdatum
 		 */
 		final Label geburtsdatumLabel = new Label("Geburtsdatum angeben");
 		final DatePicker geburtsdatumDatePicker = new DatePicker();
@@ -129,7 +141,7 @@ public class Partnerboerse implements EntryPoint {
 	    
 		
 		/**
-		 * Erzeugen einer CheckBox für Raucher
+		 * Erzeugen einer CheckBox fï¿½r Raucher
 		 */
 		final Label raucherLabel = new Label("Rauchen Sie?");
 		final CheckBox raucherCheckBox = new CheckBox("Raucher");
@@ -139,13 +151,20 @@ public class Partnerboerse implements EntryPoint {
 	    hor4Panel.add(raucherCheckBox);
 	    hor4Panel.add(nichtRaucherCheckBox);
 	   
-//	    if raucherCheckBox.isChecked() {
-//	    	nichtRaucherCheckBox.isEnabled();
-//	    }
+	    final Label fehlenderRaucherstatusLabel = new Label("Bitte geben Sie an, ob Sie ein Raucher sind."); 
 	    
-	    
+	    if(raucherCheckBox.isChecked()){
+	    	nichtRaucherCheckBox.isEnabled(); 
+	    	raucher = true; 
+	    } else if(nichtRaucherCheckBox.isChecked()) { 
+	    	raucherCheckBox.isEnabled(); 
+	    	raucher = false;  
+	    } else {
+	    	hor3Panel.add(fehlenderRaucherstatusLabel); 
+	    }
+
 	    /**
-		 * Erzeugen eines EIngabefelds für die Größe in cm
+		 * Erzeugen eines EIngabefelds fï¿½r die Grï¿½ï¿½e in cm
 		 */
 		final TextBox koerpergroesseTextBox = new TextBox ();
 		final Label koerpergroesseLabel = new Label("Koerperroesse in cm angeben");
@@ -156,7 +175,7 @@ public class Partnerboerse implements EntryPoint {
 	    
 	    
 	    /**
-		 * Erzeugen eines EIngabefelds für die Haarfarbe
+		 * Erzeugen eines EIngabefelds fï¿½r die Haarfarbe
 		 */
 		final ListBox haarfarbeListBox = new ListBox ();
 		final Label haarfarbeLabel = new Label("Haarfarbe angeben");
@@ -172,15 +191,15 @@ public class Partnerboerse implements EntryPoint {
 		hor6Panel.add(haarfarbeListBox);
 		
 		 /**
-		 * Erzeugen eines EIngabefelds für die Religion
+		 * Erzeugen eines EIngabefelds fï¿½r die Religion
 		 */
 		final ListBox religionListBox = new ListBox ();
 		final Label religionLabel = new Label("Religion angeben");
 		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
-		religionListBox.addItem("Jüdisch");
+		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
-		religionListBox.addItem("Bhuddistisch");
+		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		navPanel.add(hor6Panel);
 		hor6Panel.add(religionLabel);	
@@ -208,13 +227,13 @@ public class Partnerboerse implements EntryPoint {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								ergebnisLabel.setText("Es ist ein unerwarteter Fehler aufgetreten");
+								ergebnisLabel.setText("Es trat ein unerwarteter Fehler auf");
 								
 							}
 
 							@Override
 							public void onSuccess(Nutzerprofil result) {
-								ergebnisLabel.setText("Nutzerprofil erfolgreich angelegt");
+								ergebnisLabel.setText("Das Nutzerprofil wurde erfolgreich angelegt");
 								
 							}
 					
