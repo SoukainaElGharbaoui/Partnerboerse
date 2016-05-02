@@ -40,7 +40,7 @@ public class Partnerboerse implements EntryPoint {
 	public void onModuleLoad() {
 
 		// Achtung: bei NutzerprofilForm ist partnerboerseVerwaltung drin,
-		// brauchen wir evtl nicht
+		// brauchen wir evtl nicht wirklich
 
 		/*
 		 * Der Navigator ist als einspaltige Aneinanderreihung von Buttons
