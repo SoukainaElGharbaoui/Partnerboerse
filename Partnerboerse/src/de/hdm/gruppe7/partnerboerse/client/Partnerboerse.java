@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -32,9 +31,6 @@ public class Partnerboerse implements EntryPoint {
 	 */
 	
 	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class) ;
-	
-	private String geschlecht; 
-	private boolean raucher; 
 	
 	@Override
 	public void onModuleLoad() {
@@ -183,7 +179,7 @@ public class Partnerboerse implements EntryPoint {
 		 */
 		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 	    navPanel.add(createNutzerprofilButton);
-	    
+	    navPanel.add(ergebnisLabel);
 	    createNutzerprofilButton.addClickHandler(new ClickHandler () {
 
 			@Override
