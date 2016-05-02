@@ -80,7 +80,7 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT profil_id, vorname, nachname FROM T_NUTZERPROFIL "
+					.executeQuery("SELECT profil_id, vorname, nachname FROM t_nutzerprofil "
 							+ "WHERE profil_id=" + profilId);
 
 			/*
@@ -121,9 +121,9 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM T_PROFIL INNER JOIN"
-							+ "T_NUTZERPROFIL ON T_PROFIL.profil_id = "
-							+ "T_NUTZERPROFIL.profil_id ORDER BY profil_id");
+					.executeQuery("SELECT * FROM t_profil INNER JOIN"
+							+ "t_nutzerprofil ON t_profil.profil_id = "
+							+ "t_nutzerprofil.profil_id ORDER BY profil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -163,8 +163,8 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE T_NUTZERPROFIL INNER JOIN T_PROFIL"
-					+ "ON T_NUTZERPROFIL.profil_id = T_PROFIL.profil_id"
+			stmt.executeUpdate("UPDATE t_nutzerprofil INNER JOIN t_profil"
+					+ "ON t_nutzerprofil.profil_id = t_profil.profil_id"
 					+ "SET vorname=\", nachname=\", geburtsdatum=\""
 					+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\""
 					+ "WHERE profil_id=" + nutzerprofil.getProfilId());
@@ -191,7 +191,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM T_NUTZERPROFIL "
+			stmt.executeUpdate("DELETE FROM t_nutzerprofil "
 					+ "WHERE profil_id =" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
@@ -221,7 +221,7 @@ public class NutzerprofilMapper {
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT MAX(profil_id) AS maxProfil_id "
-							+ "FROM T_NUTZERPROFIL");
+							+ "FROM t_nutzerprofil");
 
 			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
@@ -234,14 +234,14 @@ public class NutzerprofilMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
-				stmt.executeUpdate("INSERT INTO T_NUTZERPROFIL (profil_id, "
+				stmt.executeUpdate("INSERT INTO t_nutzerprofil (profil_id, "
 						+ "vorname, nachname, geburtsdatum)" + "VALUES("
 						+ nutzerprofil.getProfilId() + ",'"
 						+ nutzerprofil.getVorname() + "','"
 						+ nutzerprofil.getNachname() + "','"
 						+ nutzerprofil.getGeburtsdatum() + "')");
 
-				stmt.executeUpdate("INSERT INTO T_PROFIL (profil_id, "
+				stmt.executeUpdate("INSERT INTO t_profil (profil_id, "
 						+ "geschlecht, haarfarbe, koerpergroesse, raucher)"
 						+ "VALUES('" + nutzerprofil.getGeschlecht() + "','"
 						+ nutzerprofil.getHaarfarbe() + "','"
