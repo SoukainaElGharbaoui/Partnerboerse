@@ -1,17 +1,23 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
+
+import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -24,6 +30,9 @@ public class Partnerboerse implements EntryPoint {
 	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
+	
+	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class) ;
+	
 	@Override
 	public void onModuleLoad() {
 
@@ -79,7 +88,7 @@ public class Partnerboerse implements EntryPoint {
 		navPanel.add(horPanel);
 		horPanel.add(vornameLabel);	
 	    horPanel.add(vornameTextBox);
-	    //+Methode hinzufügen um Vornamen anzulegen
+	 
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für den Nachnamen
@@ -89,25 +98,25 @@ public class Partnerboerse implements EntryPoint {
 		navPanel.add(hor2Panel);
 		hor2Panel.add(nachnameLabel);
 		hor2Panel.add(nachnameTextBox);
-	    //+Methode hinzufügen um Nachnamen anzulegen
+	    
 	    
 		
 		/**
 		 * Erzeugen einer Auswahl für das Geschlecht
 		 */
 		final Label geschlechtLabel = new Label("Geschlecht auswaehlen");
-		final RadioButton weiblichRadioButton = new RadioButton("weiblich","weiblich");
-		final RadioButton maennlichRadioButton = new RadioButton("maennlich","maennlich");
+		final CheckBox weiblichCheckBox = new CheckBox("weiblich");
+		final CheckBox maennlichCheckBox = new CheckBox("maennlich");
 		navPanel.add(hor3Panel);
 		hor3Panel.add(geschlechtLabel);
-	    hor3Panel.add(weiblichRadioButton);
-	    hor3Panel.add(maennlichRadioButton);
+	    hor3Panel.add(weiblichCheckBox);
+	    hor3Panel.add(maennlichCheckBox);
 //	    FUNKTIONIERT NICHT
 //	    if (weiblichRadioButton.getValue() == true){
 //	    	maennlichRadioButton.setValue(false);
 //	    }
 //	    
-	    //+Methode hinzufügen um Geschlecht anzulegen
+	
 	    
 		/**
 		 * Erzeugen eines DatePickers für das Geburtsdatum
@@ -116,7 +125,7 @@ public class Partnerboerse implements EntryPoint {
 		final DatePicker geburtsdatumDatePicker = new DatePicker();
 	    navPanel.add(geburtsdatumLabel);	
 	    navPanel.add(geburtsdatumDatePicker);
-	    //+Methode hinzufügen um Geburtsdatum anzulegen
+	 
 	    
 		
 		/**
@@ -129,33 +138,29 @@ public class Partnerboerse implements EntryPoint {
 		hor4Panel.add(raucherLabel);
 	    hor4Panel.add(raucherCheckBox);
 	    hor4Panel.add(nichtRaucherCheckBox);
-//	    FUNKTIONIERT NICHT
-//	    if (raucherCheckBox.getValue() == true){
-//	   	
-//	    	nichtRaucherCheckBox.setValue(false);
-//	    }	else if (nichtRaucherCheckBox.getValue() == true){
-//	    	raucherCheckBox.setValue(false);
-//	    }  	else {raucherCheckBox.setValue(false);
-//	        nichtRaucherCheckBox.setValue(false);
+	   
+//	    if raucherCheckBox.isChecked() {
+//	    	nichtRaucherCheckBox.isEnabled();
 //	    }
-	    //+Methode hinzufügen um Raucher/Nichtraucher anzulegen
 	    
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für die Größe in cm
 		 */
-		final TextBox groesseTextBox = new TextBox ();
-		final Label groesseLabel = new Label("Groesse angeben");
+		final TextBox koerpergroesseTextBox = new TextBox ();
+		final Label koerpergroesseLabel = new Label("Koerperroesse in cm angeben");
 		navPanel.add(hor5Panel);
-		hor5Panel.add(groesseLabel);	
-	    hor5Panel.add(groesseTextBox);	   
-	    //+Methode hinzufügen um Groesse anzulegen
+		hor5Panel.add(koerpergroesseLabel);	
+	    hor5Panel.add(koerpergroesseTextBox);	   
+	 
+	    
 	    
 	    /**
 		 * Erzeugen eines EIngabefelds für die Haarfarbe
 		 */
 		final ListBox haarfarbeListBox = new ListBox ();
 		final Label haarfarbeLabel = new Label("Haarfarbe angeben");
+		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -165,13 +170,60 @@ public class Partnerboerse implements EntryPoint {
 		navPanel.add(hor6Panel);
 		hor6Panel.add(haarfarbeLabel);	
 		hor6Panel.add(haarfarbeListBox);
-	    //+Methode hinzufügen um Haarfarbe anzulegen
+		
+		 /**
+		 * Erzeugen eines EIngabefelds für die Religion
+		 */
+		final ListBox religionListBox = new ListBox ();
+		final Label religionLabel = new Label("Religion angeben");
+		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Christlich");
+		religionListBox.addItem("Jüdisch");
+		religionListBox.addItem("Muslimisch");
+		religionListBox.addItem("Bhuddistisch");
+		religionListBox.addItem("Hinduistisch");
+		navPanel.add(hor6Panel);
+		hor6Panel.add(religionLabel);	
+		hor6Panel.add(religionListBox);
+		
+		
+		final Label ergebnisLabel = new Label();
 	    
 	    /**
 		 * Erzugen eines Button "Nutzerprofil anlegen"
 		 */
 		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 	    navPanel.add(createNutzerprofilButton);
-	    //ClickHAndler hinzufügen
+	    
+	    createNutzerprofilButton.addClickHandler(new ClickHandler () {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(),
+						nachnameTextBox.getText(), geburtsdatumDatePicker.getValue(),
+						geschlecht, haarfarbeListBox.getSelectedItemText(), 
+						koerpergroesseTextBox.getText(), raucher, 
+						religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil> (){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ergebnisLabel.setText("Es ist ein unerwarteter Fehler aufgetreten");
+								
+							}
+
+							@Override
+							public void onSuccess(Nutzerprofil result) {
+								ergebnisLabel.setText("Nutzerprofil erfolgreich angelegt");
+								
+							}
+					
+				});
+				
+			}
+	    	
+	    	
+	    });
+	   
 	}
 }
