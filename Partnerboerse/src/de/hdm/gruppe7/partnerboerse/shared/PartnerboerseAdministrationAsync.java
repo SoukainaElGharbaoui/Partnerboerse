@@ -11,10 +11,14 @@ public interface PartnerboerseAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createNutzerprofil(String vorname, String nachname, Date geburtsdatum,
-			String geschlecht, String Haarfarbe, String koerpergroesse,
-			String raucher, String religion,
-			AsyncCallback<Nutzerprofil> callback);
+//	void createNutzerprofil(String vorname, String nachname, Date geburtsdatum,
+//			String geschlecht, String haarfarbe, String koerpergroesse,
+//			String raucher, String religion,
+//			AsyncCallback<Nutzerprofil> callback);
+	
+	void createNutzerprofil(String vorname, String nachname, String geburtsdatum, String geschlecht, String haarfarbe, 
+			String koerpergroesse, String raucher, 
+			String religion, AsyncCallback<Nutzerprofil> callback);
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
@@ -25,4 +29,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
 			AsyncCallback<List<Nutzerprofil>> callback);
 
+	
+
+	
 }

@@ -112,9 +112,9 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen eines DatePickers f�r das Geburtsdatum
 		 */
 		final Label geburtsdatumLabel = new Label("Geburtsdatum angeben");
-		final DatePicker geburtsdatumDatePicker = new DatePicker();
+		final TextBox geburtsdatumTextBox = new TextBox();
 	    navPanel.add(geburtsdatumLabel);	
-	    navPanel.add(geburtsdatumDatePicker);
+	    navPanel.add(geburtsdatumTextBox);
 	 
 	    
 		
@@ -185,12 +185,18 @@ public class Partnerboerse implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(),
-						nachnameTextBox.getText(), geburtsdatumDatePicker.getValue(),
-						geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
-						koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
-						religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil> (){
+//				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(),
+//				nachnameTextBox.getText(), geburtsdatumDatePicker.getValue(),
+//				geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
+//				koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
+//				religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil> (){
 
+				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(), nachnameTextBox.getText(), geburtsdatumTextBox.getText(),geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
+						koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
+						religionListBox.getSelectedItemText(),
+							new AsyncCallback<Nutzerprofil> () {
+
+				
 							@Override
 							public void onFailure(Throwable caught) {
 								ergebnisLabel.setText("Es trat ein unerwarteter Fehler auf");

@@ -79,9 +79,8 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT profil_id, vorname, nachname FROM t_nutzerprofil "
-							+ "WHERE profil_id=" + profilId);
+			ResultSet rs = stmt.executeQuery(
+					"SELECT profil_id, vorname, nachname FROM t_nutzerprofil " + "WHERE profil_id=" + profilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -120,10 +119,8 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_profil INNER JOIN"
-							+ "t_nutzerprofil ON t_profil.profil_id = "
-							+ "t_nutzerprofil.profil_id ORDER BY profil_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil INNER JOIN"
+					+ "t_nutzerprofil ON t_profil.profil_id = " + "t_nutzerprofil.profil_id ORDER BY profil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -132,7 +129,7 @@ public class NutzerprofilMapper {
 				nutzerprofil.setProfilId(rs.getInt("profil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
 				nutzerprofil.setNachname(rs.getString("nachname"));
-				nutzerprofil.setGeburtsdatum(rs.getDate("geburtsdatum"));
+				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
 				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
 				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
 				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
@@ -163,11 +160,11 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE t_nutzerprofil INNER JOIN t_profil"
-					+ "ON t_nutzerprofil.profil_id = t_profil.profil_id"
-					+ "SET vorname=\", nachname=\", geburtsdatum=\""
-					+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\""
-					+ "WHERE profil_id=" + nutzerprofil.getProfilId());
+			stmt.executeUpdate(
+					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.profil_id = t_profil.profil_id"
+							+ "SET vorname=\", nachname=\", geburtsdatum=\""
+							+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\"" + "WHERE profil_id="
+							+ nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -191,8 +188,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_nutzerprofil "
-					+ "WHERE profil_id =" + nutzerprofil.getProfilId());
+			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE profil_id =" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -209,19 +205,14 @@ public class NutzerprofilMapper {
 	 * @return das bereits ï¿½bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>profilId</code>.
 	 */
+
 	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			/*
-			 * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
-			 * Primï¿½rschlï¿½sselwert ist.
-			 */
-			ResultSet rs = stmt
-					.executeQuery("SELECT MAX(profil_id) AS maxProfil_id "
-							+ "FROM t_nutzerprofil");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxProfil_id " + "FROM t_profil");
 
 			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
@@ -230,35 +221,93 @@ public class NutzerprofilMapper {
 				 * Primï¿½rschlï¿½ssel.
 				 */
 				nutzerprofil.setProfilId(rs.getInt("maxProfil_id") + 1);
-
-				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
-				
+		
+//				stmt = con.createStatement();
+//
+//				ResultSet rs2 = stmt.executeQuery("SELECT MAX(profil_id) AS maxProfil_id " + "FROM t_profil");
+//
+//				// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
+//				if (rs2.next()) {
+//					/*
+//					 * np erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+//					 * Primï¿½rschlï¿½ssel.
+//					 */
+//					nutzerprofil.setProfilId(rs2.getInt("maxProfil_id") + 1);
+//				}
+//				
 				stmt = con.createStatement();
-				
-				stmt.executeUpdate("INSERT INTO t_nutzerprofil (profil_id, "
-						+ "vorname, nachname, geburtsdatum)" + "VALUES("
-						+ nutzerprofil.getProfilId() + ",'"
-						+ nutzerprofil.getVorname() + "','"
-						+ nutzerprofil.getNachname() + "','"
-						+ nutzerprofil.getGeburtsdatum() + "')");
+				stmt.executeUpdate(
+						"INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
+								+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getGeschlecht() + "','"
+								+ nutzerprofil.getHaarfarbe() + "','" + nutzerprofil.getKoerpergroesse() + "','"
+								+ nutzerprofil.getRaucher() + "','" + nutzerprofil.getReligion() + "')");
 
 				stmt = con.createStatement();
-				
-				stmt.executeUpdate("INSERT INTO t_profil (profil_id, "
-						+ "geschlecht, haarfarbe, koerpergroesse, raucher)"
-						+ "VALUES('" + nutzerprofil.getGeschlecht() + "','"
-						+ nutzerprofil.getHaarfarbe() + "','"
-						+ nutzerprofil.getKoerpergroesse() + "','"
-						+ nutzerprofil.getGeschlecht() + "')");
+				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
+						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
+						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
 			}
-		} catch (SQLException e2) {
+		}
+		 catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
 		/*
 		 * Rï¿½ckgabe, des evtl. korrigierten Nutzerprofils.
 		 */
-		return nutzerprofil;
-	}
+		return nutzerprofil;	
+		}
+
+	// public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
+	// Connection con = DBConnection.connection();
+	//
+	// try {
+	// Statement stmt = con.createStatement();
+	//
+	// /*
+	// * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	// * Primï¿½rschlï¿½sselwert ist.
+	// */
+	// ResultSet rs = stmt
+	// .executeQuery("SELECT MAX(profil_id) AS maxProfil_id "
+	// + "FROM t_nutzerprofil");
+	//
+	// // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
+	// if (rs.next()) {
+	// /*
+	// * np erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+	// * Primï¿½rschlï¿½ssel.
+	// */
+	// nutzerprofil.setProfilId(rs.getInt("maxProfil_id") + 1);
+	//
+	// // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
+	//
+	// stmt = con.createStatement();
+	//
+	// stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, "
+	// + "vorname, nachname, geburtsdatum)" + "VALUES("
+	// + nutzerprofil.getProfilId() + ",'"
+	// + nutzerprofil.getVorname() + "','"
+	// + nutzerprofil.getNachname() + "',"
+	// + nutzerprofil.getGeburtsdatum() + ")");
+	//
+	// stmt = con.createStatement();
+	//
+	// stmt.executeUpdate("INSERT INTO t_profil (profil_id, "
+	// + "geschlecht, haarfarbe, koerpergroesse, raucher)"
+	// + "VALUES('" + nutzerprofil.getGeschlecht() + "','"
+	// + nutzerprofil.getHaarfarbe() + "',"
+	// + nutzerprofil.getKoerpergroesse() + ",'"
+	// + nutzerprofil.getGeschlecht() + "')");
+	// }
+	// } catch (SQLException e2) {
+	// e2.printStackTrace();
+	// }
+	//
+	// /*
+	// * Rï¿½ckgabe, des evtl. korrigierten Nutzerprofils.
+	// */
+	// return nutzerprofil;
+	// }
 
 }

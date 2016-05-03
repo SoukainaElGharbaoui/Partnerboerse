@@ -48,10 +48,12 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
-/war/Partnerboerse/
-/war/PartnerboerseReport/
+war/WEB-INF/lib
+war/Partnerboerse/
+war/PartnerboerseReport/
 /.factorypath
 .svn/
 /.settings
 /.gwt
 /test-classes/
+.DS_Store

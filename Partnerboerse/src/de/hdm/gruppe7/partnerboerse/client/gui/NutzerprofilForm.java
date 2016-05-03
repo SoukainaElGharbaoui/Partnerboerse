@@ -12,8 +12,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
  * Formular für die Darstellung des selektierten Nutzerprofils
  */
 public class NutzerprofilForm {
-	PartnerboerseAdministrationAsync partnerboerseVerwaltung = ClientsideSettings
-			.getPartnerboerseVerwaltung();
+	PartnerboerseAdministrationAsync partnerboerseAdministration = ClientsideSettings.getPartnerboerseAdministration();
 	
 	Nutzerprofil nutzerprofilToDisplay = null;
 	//CustomerAccountsTreeViewModel catvm = null;
