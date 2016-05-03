@@ -10,7 +10,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
  * Solche Erweiterungen von <code>AbstractCell<T></code> dienen zur Erzeugung von
  * HTML-Code für benutzerdefinierte Objekte. 
  * 
- * In diesem Fall wird die <code></code>
+ * In diesem Fall wird die <code>id</code>
  * eines Kontoobjekts mit einem vorangestellten "Kontonnr. " in einem <code>div-</code>Element
  * erzeugt.
  *
@@ -26,11 +26,7 @@ public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 	      if (value == null) {
 	        return;
 	      }
-	      
-//	      sb.appendHtmlConstant("<div>");
-//	      sb.appendEscaped(value.getProfilId());
-//	      sb.appendHtmlConstant(", ");
-	      
+	      	      
 	      sb.appendHtmlConstant("<div>");
 	      sb.appendEscaped(value.getVorname());
 	      sb.appendHtmlConstant(", ");
