@@ -1,10 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client.gui;
 
-public class NutzerprofilCell {
 
-<<<<<<< HEAD
-}
-=======
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
@@ -65,4 +61,4 @@ public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 	      
 	}
 }
->>>>>>> branch 'master' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
+
