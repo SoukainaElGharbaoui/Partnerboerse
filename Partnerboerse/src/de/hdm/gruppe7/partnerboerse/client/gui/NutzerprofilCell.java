@@ -62,5 +62,4 @@ public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 	      sb.appendHtmlConstant(", ");
 	      
 	}
-
 }
