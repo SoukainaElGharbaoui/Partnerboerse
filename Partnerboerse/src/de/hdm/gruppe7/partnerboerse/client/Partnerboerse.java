@@ -43,6 +43,7 @@ public class Partnerboerse implements EntryPoint {
 		 * realisiert. Daher bietet sich ein VerticalPanel als Container an.
 		 */
 		VerticalPanel navPanel = new VerticalPanel();
+		VerticalPanel naviPanel = new VerticalPanel();
 		HorizontalPanel horPanel = new HorizontalPanel();
 		HorizontalPanel hor2Panel = new HorizontalPanel();
 		HorizontalPanel hor3Panel = new HorizontalPanel();
@@ -55,7 +56,8 @@ public class Partnerboerse implements EntryPoint {
 		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
 		 * Darstellungsort.
 		 */
-		RootPanel.get("Navigator").add(navPanel);
+		RootPanel.get("Details").add(navPanel);
+		RootPanel.get("Navigator").add(naviPanel);
 
 		/*
 		 * Ab hier bauen wir sukzessive den Navigator mit seinen Buttons aus.
@@ -72,13 +74,56 @@ public class Partnerboerse implements EntryPoint {
 	     * Demonstrators nicht unnötig zu erhöhen. 
 	     */
 		
-
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button eigenesProfilButton = new Button("Eigenes Profil anzeigen");
+		naviPanel.add(eigenesProfilButton);
 		
 		/**
-		 * Erzeugen eines EIngabefelds f�r den Vornamen
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button profilBearbeitenButton = new Button("Eigenes Profil bearbeiten");
+		naviPanel.add(profilBearbeitenButton);
+		
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button eigenesProfilLoeschen = new Button("Eigenes Profil l&ouml;schen");
+		naviPanel.add(eigenesProfilLoeschen);
+		
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button merklisteButton = new Button("Merkliste anzeigen");
+		naviPanel.add(merklisteButton);
+		
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button sperrlisteButton = new Button("Sperrliste anzeigen");
+		naviPanel.add(sperrlisteButton);
+		
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button partnervorschlaegeOhneSpButton = new Button("Unangesehene Partnervorschlaege anzeigen");
+		naviPanel.add(partnervorschlaegeOhneSpButton);
+		
+		/**
+		 * Erzeugen eines Navigation-Buttons
+		 */
+		final Button partnervorschlaegeMitSpButton = new Button("Partnervorschlaege auf Basis Ihrer Suche anzeigen");
+		naviPanel.add(partnervorschlaegeMitSpButton);
+		
+		
+		
+		/**
+		 * Erzeugen eines Eingabefelds f�r den Vornamen
 		 */
 		final TextBox vornameTextBox = new TextBox ();
 		final Label vornameLabel = new Label("Vorname angeben");
+		
 		navPanel.add(horPanel);
 		horPanel.add(vornameLabel);	
 	    horPanel.add(vornameTextBox);
@@ -178,6 +223,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzugen eines Button "Nutzerprofil anlegen"
 		 */
 		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
+		createNutzerprofilButton.setStylePrimaryName("partnerboerse-menubutton");
 	    navPanel.add(createNutzerprofilButton);
 	    navPanel.add(ergebnisLabel);
 	    createNutzerprofilButton.addClickHandler(new ClickHandler () {

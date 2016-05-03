@@ -1,21 +1,61 @@
-/** Add css rules here for your application. */
+body {
+    text-align: center;  /* Zentrierung im Internet Explorer */
+  }
 
-
-/** Example rules used by the template application (remove for your app) */
 h1 {
   font-size: 2em;
   font-weight: bold;
   color: #777777;
-  margin: 40px 0px 70px;
+  margin: 40px 0px 20px;
   text-align: center;
 }
 
-.sendButton {
+div#Header {
+	margin: 5px; 	
+	background: #CCCCFF
+}
+
+div#Navigator {
+	max-height: 300px;
+	overflow:scroll;
+	padding: 1em 1em;
+	
+	background: #FFFF99;
+}
+
+div#Details {
+	padding: 4em 1em;
+	
+	background: #FFFF99;
+}
+
+div#Trailer {
+	clear: both;
+	padding: 10px 0;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	border-top: 1px dashed silver;
+	font-size: 80%;
+	text-align: center;
+	
+	background: #FFCCCC;
+}
+
+
+.partnerboerse-menubutton {
+	font-size: 100%;
+	font-weight: bold;
+	width: 15em;
+	margin-bottom: 1em;
+}
+
+
+
+/* /* .sendButton {
   display: block;
   font-size: 16pt;
 }
 
-/** Most GWT widgets already have a style name defined */
+* Most GWT widgets already have a style name defined
 .gwt-DialogBox {
   width: 400px;
 }
@@ -28,7 +68,8 @@ h1 {
   color: red;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
+* Set ids using widget.getElement().setId("idOfElement")
 #closeButton {
   margin: 15px 6px 6px;
 }
+ */ */
