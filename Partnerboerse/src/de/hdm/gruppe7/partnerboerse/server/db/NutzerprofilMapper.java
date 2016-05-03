@@ -231,9 +231,10 @@ public class NutzerprofilMapper {
 				 */
 				nutzerprofil.setProfilId(rs.getInt("maxProfil_id") + 1);
 
-				stmt = con.createStatement();
-
 				// Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
+				
+				stmt = con.createStatement();
+				
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (profil_id, "
 						+ "vorname, nachname, geburtsdatum)" + "VALUES("
 						+ nutzerprofil.getProfilId() + ",'"
@@ -241,6 +242,8 @@ public class NutzerprofilMapper {
 						+ nutzerprofil.getNachname() + "','"
 						+ nutzerprofil.getGeburtsdatum() + "')");
 
+				stmt = con.createStatement();
+				
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, "
 						+ "geschlecht, haarfarbe, koerpergroesse, raucher)"
 						+ "VALUES('" + nutzerprofil.getGeschlecht() + "','"

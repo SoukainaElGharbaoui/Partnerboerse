@@ -30,7 +30,7 @@ public class Partnerboerse implements EntryPoint {
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
 	
-	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class) ;
+	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 	
 	@Override
 	public void onModuleLoad() {
