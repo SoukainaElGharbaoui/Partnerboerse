@@ -21,7 +21,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Partnerboerse implements EntryPoint {
+public class Partnerboerse implements EntryPoint{
 
 	/**
 	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>

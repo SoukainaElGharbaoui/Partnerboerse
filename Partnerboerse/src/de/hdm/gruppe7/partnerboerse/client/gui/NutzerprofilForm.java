@@ -50,7 +50,7 @@ public class NutzerprofilForm {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
 		Grid nutzerprofilGrid = new Grid(2, 6);
-		this.add(nutzerprofilGrid);
+//		this.add(nutzerprofilGrid);
 		
 		Label nameLabel = new Label("Name");
 		nutzerprofilGrid.setWidget(0, 0, nameLabel);
@@ -82,7 +82,7 @@ public class NutzerprofilForm {
 		nutzerprofilGrid.setWidget(1, 0,  religionListBox);
 		
 		HorizontalPanel nutzerprofilButtonsPanel = new HorizontalPanel();
-		this.add(nutzerprofilButtonsPanel);
+//		this.add(nutzerprofilButtonsPanel);
 		
 
 		Button changeButton = new Button("Ändern");
@@ -189,8 +189,8 @@ public class NutzerprofilForm {
 		public void onClick(ClickEvent event) {
 			String vorname = vornameTextBox.getText();
 			String nachname = nachnameTextBox.getText();
-			partnerboerseVerwaltung.createNutzerprofil(vorname, nachname, // wird in partnerboerseAdministrationAsync festgelegt
-					new CreateNutzerprofilCallback());
+			//partnerboerseVerwaltung.createNutzerprofil(vorname, nachname, // wird in partnerboerseAdministrationAsync festgelegt
+//					new CreateNutzerprofilCallback());
 		}
 	}
 	
