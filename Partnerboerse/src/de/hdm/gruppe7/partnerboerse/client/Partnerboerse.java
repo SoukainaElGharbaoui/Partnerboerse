@@ -98,7 +98,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen eines Eingabefelds fuer den Vornamen.
 		 */
 		final TextBox vornameTextBox = new TextBox();
-		final Label vornameLabel = new Label("  Vorname");
+		final Label vornameLabel = new Label("Vorname");
 
 		navPanel1.add(horPanelVorname);
 		horPanelVorname.add(vornameTextBox);
@@ -108,7 +108,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen eines Eingabefelds fuer den Nachnamen.
 		 */
 		final TextBox nachnameTextBox = new TextBox();
-		final Label nachnameLabel = new Label("  Nachname");
+		final Label nachnameLabel = new Label("Nachname");
 		navPanel1.add(horPanelNachname);
 		horPanelNachname.add(nachnameTextBox);
 		horPanelNachname.add(nachnameLabel);
@@ -116,7 +116,7 @@ public class Partnerboerse implements EntryPoint {
 		/**
 		 * Erzeugen einer Auswahl fuer das Geschlecht.
 		 */
-		final Label geschlechtLabel = new Label("  Geschlecht");
+		final Label geschlechtLabel = new Label("Geschlecht");
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
@@ -128,7 +128,7 @@ public class Partnerboerse implements EntryPoint {
 		/**
 		 * Erzeugen einer TextBox fuer das Geburtsdatum.
 		 */
-		final Label geburtsdatumLabel = new Label("  Geburtsdatum");
+		final Label geburtsdatumLabel = new Label("Geburtsdatum (TT.MM.YYYY)");
 		final TextBox geburtsdatumTextBox = new TextBox();
 		navPanel1.add(horPanelGeburtsdatum);
 		horPanelGeburtsdatum.add(geburtsdatumTextBox);
@@ -141,7 +141,7 @@ public class Partnerboerse implements EntryPoint {
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
-		raucherListBox.addItem("Nichraucher");
+		raucherListBox.addItem("Nichtraucher");
 		navPanel1.add(horPanelRaucher);
 		horPanelRaucher.add(raucherListBox);
 		horPanelRaucher.add(raucherLabel);
@@ -150,7 +150,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Erzeugen eines Eingabefelds fuer die Koerpergroesse.
 		 */
 		final TextBox koerpergroesseTextBox = new TextBox();
-		final Label koerpergroesseLabel = new Label("Koerpergroesse (in cm)");
+		final Label koerpergroesseLabel = new Label("Koerpergroesse (cm)");
 		navPanel1.add(horPanelKoerpergroesse);
 		horPanelKoerpergroesse.add(koerpergroesseTextBox);
 		horPanelKoerpergroesse.add(koerpergroesseLabel);

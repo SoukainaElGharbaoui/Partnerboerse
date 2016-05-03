@@ -161,27 +161,29 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			// Größte profil_id ermitteln. 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxProfil_id " + "FROM t_profil");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
 			if (rs.next()) {	
 				
 				// nutzerprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
-				nutzerprofil.setProfilId(rs.getInt("maxProfil_id") + 1);
+				nutzerprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
 		
-				// Tabelle t_profil befüllen.
+				// Tabelle t_profil befüllen - funktioniert. 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
 								+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getGeschlecht() + "','"
 								+ nutzerprofil.getHaarfarbe() + "','" + nutzerprofil.getKoerpergroesse() + "','"
 								+ nutzerprofil.getRaucher() + "','" + nutzerprofil.getReligion() + "')");
-
-				// Tablle t_nutzerprofil befüllen.
+				
+				// Tablle t_nutzerprofil befüllen - funktioniert. 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
 						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
 						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
+
 			}
+			
 		}
 		 catch (SQLException e2) {
 			e2.printStackTrace();
