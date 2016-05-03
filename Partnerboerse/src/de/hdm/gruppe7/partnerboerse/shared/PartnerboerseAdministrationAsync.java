@@ -10,14 +10,9 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public interface PartnerboerseAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
-
-//	void createNutzerprofil(String vorname, String nachname, Date geburtsdatum,
-//			String geschlecht, String haarfarbe, String koerpergroesse,
-//			String raucher, String religion,
-//			AsyncCallback<Nutzerprofil> callback);
 	
-	void createNutzerprofil(String vorname, String nachname, String geburtsdatum, String geschlecht, String haarfarbe, 
-			String koerpergroesse, String raucher, 
+	void createNutzerprofil(String vorname, String nachname, String geburtsdatum, 
+			String geschlecht, String haarfarbe, String koerpergroesse, String raucher, 
 			String religion, AsyncCallback<Nutzerprofil> callback);
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);

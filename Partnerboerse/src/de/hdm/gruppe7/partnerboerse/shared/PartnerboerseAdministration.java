@@ -43,15 +43,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	   * @throws IllegalArgumentException
 	   */
 	
-//	public Nutzerprofil createNutzerprofil(String vorname, String nachname, 
-//			Date geburtsdatum, String geschlecht, String haarfarbe, 
-//			String koerpergroesse, String raucher, String religion) 
-//			throws IllegalArgumentException;
-		
-	
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geburtsdatum, String geschlecht, String haarfarbe, 
-			String koerpergroesse, String raucher, 
-			String religion);
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geburtsdatum, 
+			String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion);
 	 /**
 	   * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
 	   * 

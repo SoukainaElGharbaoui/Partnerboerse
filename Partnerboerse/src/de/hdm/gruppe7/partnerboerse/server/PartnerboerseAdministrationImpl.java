@@ -91,17 +91,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 	private NutzerprofilMapper nutzerprofilMapper = null;
 
-	// Konstruktor
+	/**
+	 * No-Argument-Konstruktor
+	 * @throws IllegalArgumentException
+	 */
 	public PartnerboerseAdministrationImpl() throws IllegalArgumentException {
 
 	}
 
 	/**
-	 * Initialsierungsmethode. Siehe dazu Anmerkungen zum
-	 * No-Argument-Konstruktor {@link #ReportGeneratorImpl()}. Diese Methode
-	 * muss für jede Instanz von <code>BankVerwaltungImpl</code> aufgerufen
-	 * werden.
-	 * 
+	 * Initialsierungsmethode, die für jede Instanz von <code>PartnerboerseAdministrationImpl</code> 
+	 * aufgerufen werden muss. 
 	 * @see #ReportGeneratorImpl()
 	 */
 	@Override
@@ -130,44 +130,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException {
 
 		Nutzerprofil nutzerprofil = new Nutzerprofil();
-		nutzerprofil.setProfilId(1);
 		nutzerprofil.setVorname(vorname);
 		nutzerprofil.setNachname(nachname);
 		nutzerprofil.setGeburtsdatum(geburtsdatum);
 		nutzerprofil.setGeschlecht(geschlecht);
-		 nutzerprofil.setHaarfarbe(haarfarbe);
-		 nutzerprofil.setKoerpergroesse(koerpergroesse);
-		 nutzerprofil.setRaucher(raucher);
-		 nutzerprofil.setReligion(religion);
+		nutzerprofil.setHaarfarbe(haarfarbe);
+		nutzerprofil.setKoerpergroesse(koerpergroesse);
+		nutzerprofil.setRaucher(raucher);
+		nutzerprofil.setReligion(religion);
+		
+		// Vorläufige ProfilId setzen. 
+		nutzerprofil.setProfilId(1);
 
 		return this.nutzerprofilMapper.insertNutzerprofil(nutzerprofil);
 
 	}
-
-	// public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-	// Date geburtsdatum, String geschlecht, String haarfarbe,
-	// String koerpergroesse, String raucher, String religion)
-	// throws IllegalArgumentException {
-	//
-	// Nutzerprofil nutzerprofil = new Nutzerprofil();
-	// nutzerprofil.setVorname(vorname);
-	// nutzerprofil.setNachname(nachname);
-	// nutzerprofil.setGeburtsdatum(geburtsdatum);
-	// nutzerprofil.setGeschlecht(geschlecht);
-	// nutzerprofil.setHaarfarbe(haarfarbe);
-	// nutzerprofil.setKoerpergroesse(koerpergroesse);
-	// nutzerprofil.setRaucher(raucher);
-	// nutzerprofil.setReligion(religion);
-	//
-	// /*
-	// * Setzen einer vorläufigen Profilnr. Der insert-Aufruf liefert dann ein
-	// * Objekt, dessen Nummer mit der Datenbank konsistent ist.
-	// */
-	// nutzerprofil.setProfilId(1);
-	//
-	// // Objekt in der DB speichern.
-	// return this.nutzerprofilMapper.insertNutzerprofil(nutzerprofil);
-	// }
 
 	/**
 	 * Auslesen eines Nutzerprofils anhand seiner ProfilId.

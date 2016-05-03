@@ -12,184 +12,154 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
-public class Partnerboerse implements EntryPoint{
+public class Partnerboerse implements EntryPoint {
 
 	/**
-	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
-	 * zusichert, benötigen wir eine Methode
-	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
-	 * <code>main()</code>-Methode normaler Java-Applikationen.
+	 * Diese Klasse sichert die Implementierung des Interface <code>EntryPoint</code>.
+	 * Daher benötigen wir die Methode <code>public void onModuleLoad()</code>. 
+	 * Diese ist das GWT-Pendant der<code>main()</code>-Methode normaler Java-Applikationen.
 	 */
-	
-	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
-	
+	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT
+			.create(PartnerboerseAdministration.class);
+
 	@Override
 	public void onModuleLoad() {
 
-		// Achtung: bei NutzerprofilForm ist partnerboerseVerwaltung drin,
-		// brauchen wir evtl nicht wirklich
-
-		/*
-		 * Der Navigator ist als einspaltige Aneinanderreihung von Buttons
-		 * realisiert. Daher bietet sich ein VerticalPanel als Container an.
+		/**
+		 * VerticalPanels und HorizontalPanels erzeugen.
 		 */
-		VerticalPanel navPanel = new VerticalPanel();
-		VerticalPanel naviPanel = new VerticalPanel();
-		HorizontalPanel horPanel = new HorizontalPanel();
-		HorizontalPanel hor2Panel = new HorizontalPanel();
-		HorizontalPanel hor3Panel = new HorizontalPanel();
-		HorizontalPanel hor4Panel = new HorizontalPanel();
-		HorizontalPanel hor5Panel = new HorizontalPanel();
-		HorizontalPanel hor6Panel = new HorizontalPanel();
-		HorizontalPanel hor7Panel = new HorizontalPanel();
-		/*
-		 * Das VerticalPanel wird einem DIV-Element namens "Navigator" in der
-		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
-		 * Darstellungsort.
-		 */
-		RootPanel.get("Details").add(navPanel);
-		RootPanel.get("Navigator").add(naviPanel);
-
-		/*
-		 * Ab hier bauen wir sukzessive den Navigator mit seinen Buttons aus.
-		 */
-
-		 /*
-	     * Ab hier folgen weitere Button-Definitionen, die nach exakt der gleichen
-	     * Methode erfolgen wie beim ersten Button.
-	     * 
-	     * Da das Muster dazu sich mehrfach wiederholt, könnte man hier schon von
-	     * einem unerwünschte Code Clone sprechen. Um dies stilistisch zu optimieren
-	     * wäre z.B. die Verwendung des Factory oder Builder Pattern denkbar. 
-	     * Hierauf wurde jedoch bewusst verzichtet, um den Komplexitätsgrad dieses
-	     * Demonstrators nicht unnötig zu erhöhen. 
-	     */
+		VerticalPanel navPanel1 = new VerticalPanel();
+		VerticalPanel navPanel2 = new VerticalPanel();
+		HorizontalPanel horPanelVorname = new HorizontalPanel();
+		HorizontalPanel horPanelNachname = new HorizontalPanel();
+		HorizontalPanel horPanelGeschlecht = new HorizontalPanel();
+		HorizontalPanel horPanelGeburtsdatum = new HorizontalPanel();
+		HorizontalPanel horPanelRaucher = new HorizontalPanel();
+		HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
+		HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
+		HorizontalPanel horPanelReligion = new HorizontalPanel();
+		
+		RootPanel.get("Details").add(navPanel1);
 		
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Das VerticalPanel wird einem DIV-Element names "Navigator" in der 
+		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen Darstellungsort.
+		 */
+		RootPanel.get("Navigator").add(navPanel2);
+
+		/**
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button eigenesProfilButton = new Button("Eigenes Profil anzeigen");
-		naviPanel.add(eigenesProfilButton);
-		
+		navPanel2.add(eigenesProfilButton);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button profilBearbeitenButton = new Button("Eigenes Profil bearbeiten");
-		naviPanel.add(profilBearbeitenButton);
-		
+		navPanel2.add(profilBearbeitenButton);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button eigenesProfilLoeschen = new Button("Eigenes Profil l&ouml;schen");
-		naviPanel.add(eigenesProfilLoeschen);
-		
+		navPanel2.add(eigenesProfilLoeschen);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button merklisteButton = new Button("Merkliste anzeigen");
-		naviPanel.add(merklisteButton);
-		
+		navPanel2.add(merklisteButton);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button sperrlisteButton = new Button("Sperrliste anzeigen");
-		naviPanel.add(sperrlisteButton);
-		
+		navPanel2.add(sperrlisteButton);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button partnervorschlaegeOhneSpButton = new Button("Unangesehene Partnervorschlaege anzeigen");
-		naviPanel.add(partnervorschlaegeOhneSpButton);
-		
+		navPanel2.add(partnervorschlaegeOhneSpButton);
+
 		/**
-		 * Erzeugen eines Navigation-Buttons
+		 * Erzeugen eines Navigation-Buttons.
 		 */
 		final Button partnervorschlaegeMitSpButton = new Button("Partnervorschlaege auf Basis Ihrer Suche anzeigen");
-		naviPanel.add(partnervorschlaegeMitSpButton);
-		
-		
+		navPanel2.add(partnervorschlaegeMitSpButton);
+
+		/**
+		 * Erzeugen eines Eingabefelds fuer den Vornamen.
+		 */
+		final TextBox vornameTextBox = new TextBox();
+		final Label vornameLabel = new Label("  Vorname");
+
+		navPanel1.add(horPanelVorname);
+		horPanelVorname.add(vornameTextBox);
+		horPanelVorname.add(vornameLabel);
 		
 		/**
-		 * Erzeugen eines Eingabefelds f�r den Vornamen
+		 * Erzeugen eines Eingabefelds fuer den Nachnamen.
 		 */
-		final TextBox vornameTextBox = new TextBox ();
-		final Label vornameLabel = new Label("Vorname angeben");
-		
-		navPanel.add(horPanel);
-		horPanel.add(vornameLabel);	
-	    horPanel.add(vornameTextBox);
-	 
-	    
-	    /**
-		 * Erzeugen eines EIngabefelds f�r den Nachnamen
-		 */
-		final TextBox nachnameTextBox = new TextBox ();
-		final Label nachnameLabel = new Label("Nachname angeben");
-		navPanel.add(hor2Panel);
-		hor2Panel.add(nachnameLabel);
-		hor2Panel.add(nachnameTextBox);
-	    
-	    
-		
+		final TextBox nachnameTextBox = new TextBox();
+		final Label nachnameLabel = new Label("  Nachname");
+		navPanel1.add(horPanelNachname);
+		horPanelNachname.add(nachnameTextBox);
+		horPanelNachname.add(nachnameLabel);
+
 		/**
-		 * Erzeugen einer Auswahl f�r das Geschlecht
+		 * Erzeugen einer Auswahl fuer das Geschlecht.
 		 */
-		final Label geschlechtLabel = new Label("Geschlecht auswaehlen");
+		final Label geschlechtLabel = new Label("  Geschlecht");
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
-		navPanel.add(hor3Panel);
-		hor3Panel.add(geschlechtLabel);
-	    hor3Panel.add(geschlechtListBox);
-	    
-	   
+		navPanel1.add(horPanelGeschlecht);
+		horPanelGeschlecht.add(geschlechtListBox);
+		horPanelGeschlecht.add(geschlechtLabel);
+
 		/**
-		 * Erzeugen eines DatePickers f�r das Geburtsdatum
+		 * Erzeugen einer TextBox fuer das Geburtsdatum.
 		 */
-		final Label geburtsdatumLabel = new Label("Geburtsdatum angeben");
+		final Label geburtsdatumLabel = new Label("  Geburtsdatum");
 		final TextBox geburtsdatumTextBox = new TextBox();
-	    navPanel.add(geburtsdatumLabel);	
-	    navPanel.add(geburtsdatumTextBox);
-	 
-	    
-		
+		navPanel1.add(horPanelGeburtsdatum);
+		horPanelGeburtsdatum.add(geburtsdatumTextBox);
+		horPanelGeburtsdatum.add(geburtsdatumLabel);
+
 		/**
-		 * Erzeugen einer CheckBox f�r Raucher
+		 * Erzeugen einer Auswahl fuer den Raucherstatus.
 		 */
-		final Label raucherLabel = new Label("Rauchen Sie?");
-		final ListBox raucherListBox = new ListBox(); 
+		final Label raucherLabel = new Label("Raucherstatus");
+		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichraucher");
-		navPanel.add(hor4Panel);
-		hor4Panel.add(raucherLabel);
-	    hor4Panel.add(raucherListBox); 
-	   
+		navPanel1.add(horPanelRaucher);
+		horPanelRaucher.add(raucherListBox);
+		horPanelRaucher.add(raucherLabel);
 
-	    /**
-		 * Erzeugen eines EIngabefelds f�r die Gr��e in cm
+		/**
+		 * Erzeugen eines Eingabefelds fuer die Koerpergroesse.
 		 */
-		final TextBox koerpergroesseTextBox = new TextBox ();
-		final Label koerpergroesseLabel = new Label("Koerperroesse in cm angeben");
-		navPanel.add(hor5Panel);
-		hor5Panel.add(koerpergroesseLabel);	
-	    hor5Panel.add(koerpergroesseTextBox);	   
-	    
-	    /**
-		 * Erzeugen eines EIngabefelds f�r die Haarfarbe
+		final TextBox koerpergroesseTextBox = new TextBox();
+		final Label koerpergroesseLabel = new Label("Koerpergroesse (in cm)");
+		navPanel1.add(horPanelKoerpergroesse);
+		horPanelKoerpergroesse.add(koerpergroesseTextBox);
+		horPanelKoerpergroesse.add(koerpergroesseLabel);
+
+		/**
+		 * Erzeugen einer Auswahl fuer die Haarfarbe.
 		 */
-		final ListBox haarfarbeListBox = new ListBox ();
-		final Label haarfarbeLabel = new Label("Haarfarbe angeben");
+		final ListBox haarfarbeListBox = new ListBox();
+		final Label haarfarbeLabel = new Label("Haarfarbe");
 		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -197,70 +167,76 @@ public class Partnerboerse implements EntryPoint{
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		navPanel.add(hor6Panel);
-		hor6Panel.add(haarfarbeLabel);	
-		hor6Panel.add(haarfarbeListBox);
+		navPanel1.add(horPanelHaarfarbe);
+		horPanelHaarfarbe.add(haarfarbeListBox);
+		horPanelHaarfarbe.add(haarfarbeLabel);
 		
-		 /**
-		 * Erzeugen eines EIngabefelds f�r die Religion
+		/**
+		 * Erzeugen einer Auswahl fuer die Religion. 
 		 */
-		final ListBox religionListBox = new ListBox ();
-		final Label religionLabel = new Label("Religion angeben");
+		final ListBox religionListBox = new ListBox();
+		final Label religionLabel = new Label("Religion");
 		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		navPanel.add(hor7Panel);
-		hor7Panel.add(religionLabel);	
-		hor7Panel.add(religionListBox);
+		navPanel1.add(horPanelReligion);
+		horPanelReligion.add(religionListBox);
+		horPanelReligion.add(religionLabel);
 		
-		
-		final Label ergebnisLabel = new Label();
-	    
-	    /**
-		 * Erzugen eines Button "Nutzerprofil anlegen"
+		/**
+		 * infoLabel für die Benutzerinformation erzeugen. 
+		 */
+		final Label infoLabel = new Label();
+
+		/**
+		 * createNutzerprofilButton erzeugen und zum navPanel hinzufügen.
 		 */
 		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 		createNutzerprofilButton.setStylePrimaryName("partnerboerse-menubutton");
-	    navPanel.add(createNutzerprofilButton);
-	    navPanel.add(ergebnisLabel);
-	    createNutzerprofilButton.addClickHandler(new ClickHandler () {
+		navPanel1.add(createNutzerprofilButton);
 
-			@Override
+		/**
+		 * infoLabel zum navPanel hinzufügen.
+		 */
+		navPanel1.add(infoLabel);
+
+		/**
+		 * ClickHandler für den createNutzerprofilButton erstellen.
+		 */
+		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-//				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(),
-//				nachnameTextBox.getText(), geburtsdatumDatePicker.getValue(),
-//				geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
-//				koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
-//				religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil> (){
-
-				partnerboerseAdministration.createNutzerprofil(vornameTextBox.getText(), nachnameTextBox.getText(), geburtsdatumTextBox.getText(),geschlechtListBox.getSelectedItemText(), haarfarbeListBox.getSelectedItemText(), 
-						koerpergroesseTextBox.getText(), raucherListBox.getSelectedItemText(), 
+				/**
+				 * Das Auslesen der "ListBox" funktioniert, die Werte werden in
+				 * die Datenbank geschrieben!
+				 */
+				partnerboerseAdministration.createNutzerprofil(
+						vornameTextBox.getText(), nachnameTextBox.getText(),
+						geburtsdatumTextBox.getText(),
+						geschlechtListBox.getSelectedItemText(),
+						haarfarbeListBox.getSelectedItemText(),
+						koerpergroesseTextBox.getText(),
+						raucherListBox.getSelectedItemText(),
 						religionListBox.getSelectedItemText(),
-							new AsyncCallback<Nutzerprofil> () {
+						new AsyncCallback<Nutzerprofil>() {
 
-				
 							@Override
 							public void onFailure(Throwable caught) {
-								ergebnisLabel.setText("Es trat ein unerwarteter Fehler auf");
-								
+								infoLabel.setText("Es trat ein Fehler auf");
 							}
 
 							@Override
 							public void onSuccess(Nutzerprofil result) {
-								ergebnisLabel.setText("Das Nutzerprofil wurde erfolgreich angelegt");
-								
+								infoLabel.setText("Das Nutzerprofil wurde erfolgreich angelegt");
 							}
-					
-				});
-				
+
+						});
+
 			}
-	    	
-	    	
-	    });
-	   
+
+		});
+
 	}
 }
