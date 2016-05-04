@@ -84,14 +84,14 @@ public class NutzerprofilForm {
 //		this.add(nutzerprofilButtonsPanel);
 		
 
-		Button changeButton = new Button("Ändern");
+		Button changeButton = new Button("ï¿½ndern");
 		changeButton.addClickHandler(new ChangeClickHandler());
 		nutzerprofilButtonsPanel.add(changeButton);
 
 		Button searchButton = new Button("Suchen");
 		nutzerprofilButtonsPanel.add(searchButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Lï¿½schen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		nutzerprofilButtonsPanel.add(deleteButton);
 
@@ -105,7 +105,7 @@ public class NutzerprofilForm {
 	}
 	
 	/**
-	 * Die Änderung eines Kunden bezieht sich auf seinen Vor- und/oder
+	 * Die ï¿½nderung eines Kunden bezieht sich auf seinen Vor- und/oder
 	 * Nachnamen. Es erfolgt der Aufruf der Service-Methode "save".
 	 * 
 	 */
@@ -116,9 +116,9 @@ public class NutzerprofilForm {
 			if (nutzerprofilToDisplay != null) {
 				nutzerprofilToDisplay.setVorname(vornameTextBox.getText());
 				nutzerprofilToDisplay.setNachname(nachnameTextBox.getText());
-				partnerboerseVerwaltung.save(nutzerprofilToDisplay, new SaveCallback());
+				partnerboerseAdministration.save(nutzerprofilToDisplay, new SaveCallback());
 			} else {
-				Window.alert("kein Nutzerprofil ausgewählt");
+				Window.alert("kein Nutzerprofil ausgewï¿½hlt");
 			}
 		}
 	}
@@ -126,18 +126,18 @@ public class NutzerprofilForm {
 	private class SaveCallback implements AsyncCallback<Void> {
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Die Änderung ist fehlgeschlagen!");
+			Window.alert("Die ï¿½nderung ist fehlgeschlagen!");
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-			// Die Änderung wird zum Kunden- und Kontenbaum propagiert.
+			// Die ï¿½nderung wird zum Kunden- und Kontenbaum propagiert.
 			//catvm.updateNutzerprofil(nutzerprofilToDisplay);
 		}
 	}
 	
 	/**
-	 * Das erfolgreiche Löschen eines Kunden führt zur Aktualisierung des
+	 * Das erfolgreiche Lï¿½schen eines Kunden fï¿½hrt zur Aktualisierung des
 	 * Kunden- und Kontenbaumes.
 	 * 
 	 */
@@ -146,9 +146,9 @@ public class NutzerprofilForm {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (nutzerprofilToDisplay == null) {
-				Window.alert("kein Kunde ausgewählt");
+				Window.alert("kein Kunde ausgewï¿½hlt");
 			} else {
-				partnerboerseVerwaltung.delete(nutzerprofilToDisplay,
+				partnerboerseAdministration.delete(nutzerprofilToDisplay,
 						new deleteNutzerprofilCallback(nutzerprofilToDisplay));
 			}
 		}
@@ -164,7 +164,7 @@ public class NutzerprofilForm {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Der Löschvorgang ist fehlgeschlagen!");
+			Window.alert("Der Lï¿½schvorgang ist fehlgeschlagen!");
 		}
 
 		@Override
@@ -203,7 +203,7 @@ public class NutzerprofilForm {
 		@Override
 		public void onSuccess(Nutzerprofil nutzerprofil) {
 			if (nutzerprofil != null) {
-				// Das erfolgreiche Hinzufügen eines Kunden wird an den Kunden- und
+				// Das erfolgreiche Hinzufï¿½gen eines Kunden wird an den Kunden- und
 				// Kontenbaum propagiert.
 				//catvm.addNutzerprofil(nutzerprofil);
 			}
@@ -216,9 +216,9 @@ public class NutzerprofilForm {
 //		}
 		
 		/*
-		 * Wenn der anzuzeigende Kunde gesetzt bzw. gelöscht wird, werden die
-		 * zugehörenden Textfelder mit den Informationen aus dem Kundenobjekt
-		 * gefüllt bzw. gelöscht.
+		 * Wenn der anzuzeigende Kunde gesetzt bzw. gelï¿½scht wird, werden die
+		 * zugehï¿½renden Textfelder mit den Informationen aus dem Kundenobjekt
+		 * gefï¿½llt bzw. gelï¿½scht.
 		 */
 		void setSelected(Nutzerprofil nutzerprofil) {
 			if (nutzerprofil != null) {

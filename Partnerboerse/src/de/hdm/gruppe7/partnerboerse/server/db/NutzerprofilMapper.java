@@ -156,10 +156,10 @@ public class NutzerprofilMapper {
 
 	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
-
+		
 		try {
 			Statement stmt = con.createStatement();
-
+			
 			// Größte profil_id ermitteln. 
 			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
@@ -168,7 +168,7 @@ public class NutzerprofilMapper {
 				
 				// nutzerprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
 				nutzerprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
-		
+				
 				// Tabelle t_profil befüllen - funktioniert. 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
