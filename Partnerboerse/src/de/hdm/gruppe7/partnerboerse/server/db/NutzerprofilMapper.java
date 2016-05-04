@@ -169,6 +169,12 @@ public class NutzerprofilMapper {
 				// nutzerprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
 				nutzerprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
 				
+				// Tablle t_nutzerprofil befüllen - funktioniert. 
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
+						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
+						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
+				
 				// Tabelle t_profil befüllen - funktioniert. 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
@@ -176,11 +182,7 @@ public class NutzerprofilMapper {
 								+ nutzerprofil.getHaarfarbe() + "','" + nutzerprofil.getKoerpergroesse() + "','"
 								+ nutzerprofil.getRaucher() + "','" + nutzerprofil.getReligion() + "')");
 				
-				// Tablle t_nutzerprofil befüllen - funktioniert. 
-				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
-						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
-						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
+				
 
 			}
 			
