@@ -21,7 +21,7 @@ public class ClientsideSettings extends CommonSettings{
 	   * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
 	   * namens <code>PartnerboerseAdministration</code>.
 	   */
-	  private static PartnerboerseAdministrationAsync partnerboerseVerwaltung = null;
+	  private static PartnerboerseAdministrationAsync partnerboerseAdministration = null;
 	  
 	  
 	  /**
@@ -114,60 +114,61 @@ public class ClientsideSettings extends CommonSettings{
 	   * 
 	   * @return eindeutige Instanz des Typs <code>PartnerboerseAdministrationAsync</code>
 	   */
-	  public static PartnerboerseAdministrationAsync getPartnerboerseVerwaltung() {
+	  public static PartnerboerseAdministrationAsync getPartnerboerseAdministration() {
 	    // Gab es bislang noch keine PartnerboerseAdministration-Instanz, dann...
-	    if (partnerboerseVerwaltung == null) {
+	    if (partnerboerseAdministration == null) {
 	      // Zunächst instantiieren wir PartnerboerseAdministration
-	      partnerboerseVerwaltung = GWT.create(PartnerboerseAdministration.class);
+	    	partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 	    }
 
 	    // So, nun brauchen wir die PartnerboerseAdministration nur noch zurückzugeben.
-	    return partnerboerseVerwaltung;
+	    return partnerboerseAdministration;
 	  }
 	  
 	  
-	  /**
-	   * <p>
-	   * Anlegen und Auslesen des applikationsweit eindeutigen ReportGenerators.
-	   * Diese Methode erstellt den ReportGenerator, sofern dieser noch nicht
-	   * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
-	   * zuvor angelegte Objekt zurückgegeben.
-	   * </p>
-	   * 
-	   * <p>
-	   * Der Aufruf dieser Methode erfolgt im Client z.B. durch
-	   * <code>ReportGeneratorAsync reportGenerator 
-	   * = ClientSideSettings.getReportGenerator()</code> .
-	   * </p>
-	   * 
-	   * @return eindeutige Instanz des Typs <code>ReportGeneratorAsync</code>
-	   */
-	  public static ReportGeneratorAsync getReportGenerator() {
-	    // Gab es bislang noch keine ReportGenerator-Instanz, dann...
-	    if (reportGenerator == null) {
-	      // Zunächst instantiieren wir ReportGenerator
-	      reportGenerator = GWT.create(ReportGenerator.class);
+//	  /**
+//	   * <p>
+//	   * Anlegen und Auslesen des applikationsweit eindeutigen ReportGenerators.
+//	   * Diese Methode erstellt den ReportGenerator, sofern dieser noch nicht
+//	   * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
+//	   * zuvor angelegte Objekt zurückgegeben.
+//	   * </p>
+//	   * 
+//	   * <p>
+//	   * Der Aufruf dieser Methode erfolgt im Client z.B. durch
+//	   * <code>ReportGeneratorAsync reportGenerator 
+//	   * = ClientSideSettings.getReportGenerator()</code> .
+//	   * </p>
+//	   * 
+//	   * @return eindeutige Instanz des Typs <code>ReportGeneratorAsync</code>
+//	   */
+//	  public static ReportGeneratorAsync getReportGenerator() {
+//	    // Gab es bislang noch keine ReportGenerator-Instanz, dann...
+//	    if (reportGenerator == null) {
+//	      // Zunächst instantiieren wir ReportGenerator
+//	      reportGenerator = GWT.create(ReportGenerator.class);
+//
+//	      final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
+//	        @Override
+//			public void onFailure(Throwable caught) {
+//	          ClientsideSettings.getLogger().severe(
+//	              "Der ReportGenerator konnte nicht initialisiert werden!");
+//	        }
+//
+//	        @Override
+//			public void onSuccess(Void result) {
+//	          ClientsideSettings.getLogger().info(
+//	              "Der ReportGenerator wurde initialisiert.");
+//	        }
+//	      };
+//
+//	      reportGenerator.init(initReportGeneratorCallback);
+//	    }
+//
+//	    // So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.
+//	    return reportGenerator;
+//	  }
 
-	      final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
-	        @Override
-			public void onFailure(Throwable caught) {
-	          ClientsideSettings.getLogger().severe(
-	              "Der ReportGenerator konnte nicht initialisiert werden!");
-	        }
-
-	        @Override
-			public void onSuccess(Void result) {
-	          ClientsideSettings.getLogger().info(
-	              "Der ReportGenerator wurde initialisiert.");
-	        }
-	      };
-
-	      reportGenerator.init(initReportGeneratorCallback);
-	    }
-
-	    // So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.
-	    return reportGenerator;
-	  }
 
 }
 

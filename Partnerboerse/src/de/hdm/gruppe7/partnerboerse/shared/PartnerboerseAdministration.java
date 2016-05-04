@@ -3,6 +3,7 @@ package de.hdm.gruppe7.partnerboerse.shared;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -42,11 +43,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	   * @throws IllegalArgumentException
 	   */
 	
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname, 
-			Date geburtsdatum, String geschlecht, String haarfarbe, 
-			String koerpergroesse, String raucher, String religion) 
-			throws IllegalArgumentException;
-		
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geburtsdatum, 
+			String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion);
 	 /**
 	   * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
 	   * 

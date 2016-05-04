@@ -29,7 +29,7 @@ public class Profil extends BusinessObject {
 	public void setGeschlecht(String geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	public String isRaucher() {
+	public String getRaucher() {
 		return raucher;
 	}
 
@@ -55,6 +55,12 @@ public class Profil extends BusinessObject {
 		this.religion = religion;
 	}
 	
+	//Konstruktor
+	 public Profil() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+	
 	/**
 	   * Erzeugen einer einfachen textuellen Repr�sentation der jeweiligen
 	   * Kontoinstanz.
@@ -67,7 +73,8 @@ public class Profil extends BusinessObject {
 	    		+ this.haarfarbe + "Religion: " + this.religion;
 	  }
 
-	  /**
+	 
+	/**
 	   * <p>
 	   * Feststellen der <em>inhaltlichen</em> Gleichheit zweier Profil-Objekte.
 	   * Die Gleichheit wird in diesem Beispiel auf eine identische Profil-Id

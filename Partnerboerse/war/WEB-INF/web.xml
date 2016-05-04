@@ -7,13 +7,13 @@
 
   <!-- Servlets -->
     <servlet>
-    <servlet-name>partnerboerseadministrationServlet</servlet-name>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
     <servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>partnerboerseadministrationServlet</servlet-name>
-    <url-pattern>/partnerboerse/partnerboerseadministration</url-pattern>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
+    <url-pattern>/partnerboerseadministration</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

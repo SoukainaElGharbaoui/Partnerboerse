@@ -53,7 +53,7 @@ public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 	      
 
 	      sb.appendHtmlConstant("<div>");
-	      sb.appendEscaped(value.isRaucher());
+	      sb.appendEscaped(value.getRaucher());
 	      sb.appendHtmlConstant(", ");
 	      
 

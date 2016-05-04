@@ -14,10 +14,11 @@ public class Nutzerprofil extends Profil{
 	
 	private String vorname;
 	private String nachname; 
-	private Date geburtsdatum;
+	private String geburtsdatum;
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	
 	public String getVorname() {
 		return vorname;
 	}
@@ -30,10 +31,10 @@ public class Nutzerprofil extends Profil{
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
-	public Date getGeburtsdatum() {
+	public String getGeburtsdatum() {
 		return geburtsdatum;
 	}
-	public void setGeburtsdatum(Date geburtsdatum) {
+	public void setGeburtsdatum(String geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
 	public List<Nutzerprofil> getPartnervorschlaegeNp() {
@@ -53,6 +54,12 @@ public class Nutzerprofil extends Profil{
 	}
 	public void setAngeseheneNp(List<Nutzerprofil> angeseheneNp) {
 		this.angeseheneNp = angeseheneNp;
+	}
+	
+	//Konstruktor
+	public Nutzerprofil() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	// MUSS NOCH DEFINIERT WERDEN !!
