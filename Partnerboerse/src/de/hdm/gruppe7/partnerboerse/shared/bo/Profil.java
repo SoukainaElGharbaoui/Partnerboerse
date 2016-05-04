@@ -20,7 +20,7 @@ public class Profil extends BusinessObject {
 	public int getProfilId() {
 		return profilId;
 	}
-	public void setProfilId(int profil_id) {
+	public void setProfilId(int profilId) {
 		this.profilId = profilId;
 	}
 	public String getGeschlecht() {
