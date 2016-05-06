@@ -2,15 +2,20 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Navigator extends VerticalPanel {
 
+	
 	public Navigator() {
-		final Label nutzerprofilAnlegenLabel = new Label("Nutzerprofil anlegen");
-		nutzerprofilAnlegenLabel.addClickHandler(new ClickHandler() {
+		/**
+		 * Button "Nutzerprofil anlegen" hinzufügen.
+		 * !!! Gehört hier nicht hin, dient zurzeit jedoch als Beispiel !!!
+		 */
+		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
+		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
 				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
@@ -19,7 +24,37 @@ public class Navigator extends VerticalPanel {
 			}
 		});
 		
-		this.add(nutzerprofilAnlegenLabel);	
+		this.add(nutzerprofilAnlegenButton);	
+		
+		/**
+		 * Button "Merkzettel anzeigen" hinzufügen
+		 */
+		final Button merkzettelAnzeigenButton = new Button("Merkzettel anzeigen"); 
+		merkzettelAnzeigenButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				ShowMerkzettel showMerkzettel = new ShowMerkzettel(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showMerkzettel); 				
+			}		
+		}); 
+		
+		this.add(merkzettelAnzeigenButton); 
+		
+		/**
+		 * Button "Sperrliste anzeigen" hinzufügen
+		 */
+		final Button sperrlisteAnzeigenButton = new Button("Sperrliste anzeigen"); 
+		sperrlisteAnzeigenButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				ShowSperrliste showSperrliste = new ShowSperrliste(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showSperrliste); 				
+			}		
+		}); 
+		
+		this.add(sperrlisteAnzeigenButton); 
 	}
 	
 //	/**
