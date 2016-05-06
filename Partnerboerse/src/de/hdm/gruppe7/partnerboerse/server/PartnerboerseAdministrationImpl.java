@@ -118,7 +118,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
 	
-	public Vector<Merkliste> getMerkliste(int profilId) throws IllegalArgumentException {
+	public Vector<Merkliste> getGemerkteProfileFor(int profilId) throws IllegalArgumentException {
 		
 		return this.merklisteMapper.findAllVermerkeFor(profilId); 
 	}
