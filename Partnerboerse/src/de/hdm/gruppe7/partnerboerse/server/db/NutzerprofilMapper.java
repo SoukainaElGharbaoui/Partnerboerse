@@ -7,53 +7,14 @@ import java.util.List;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-/**
- * Mapper-Klasse, die <code>Nutzerprofil</code>-Objekte auf eine relationale
- * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur VerfÃ¼gung
- * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
- * gelÃ¶scht werden kÃ¶nnen. Das Mapping ist bidirektional. D.h., Objekte
- * kÃ¶nnen in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
- * 
- * @see ***
- * @author Soukaina ElGharbaoui
- */
-
 public class NutzerprofilMapper {
-
-	/**
-	 * Die Klasse NutzerprofilMapper wird nur einmal instantiiert. Man spricht
-	 * hierbei von einem sogenannten <b>Singleton</b>.
-	 * <p>
-	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-	 * fÃ¼r sÃ¤mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
-	 * speichert die einzige Instanz dieser Klasse.
-	 * 
-	 * @see nutzerprofilMapper()
-	 */
 
 	private static NutzerprofilMapper nutzerprofilMapper = null;
 
-	/**
-	 * GeschÃ¼tzter Konstruktor - verhindert die MÃ¶glichkeit, mit
-	 * <code>new</code> neue Instanzen dieser Klasse zu erzeugen.
-	 */
+	// Konstruktor
 	protected NutzerprofilMapper() {
 	}
-
-	/**
-	 * Diese statische Methode kann aufgrufen werden durch
-	 * <code>NutzerprofilMapper.nutzerprofilMapper()</code>. Sie stellt die
-	 * Singleton-Eigenschaft sicher, indem Sie dafÃ¼r sorgt, dass nur eine
-	 * einzige Instanz von <code>NutzerprofilMapper</code> existiert.
-	 * <p>
-	 * 
-	 * <b>Fazit:</b> NutzerprofilMapper sollte nicht mittels <code>new</code>
-	 * instantiiert werden, sondern stets durch Aufruf dieser statischen
-	 * Methode.
-	 * 
-	 * @return DAS <code>NutzerprofilMapper</code>-Objekt.
-	 * @see nutzerprofilMapper
-	 */
+	
 	public static NutzerprofilMapper nutzerprofilMapper() {
 		if (nutzerprofilMapper == null) {
 			nutzerprofilMapper = new NutzerprofilMapper();
@@ -63,13 +24,7 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Suchen eines Nutzerprofils mit vorgegebener Nutzerprofil ID. Da diese
-	 * eindeutig ist, wird genau ein Objekt zurï¿½ckgegeben.
-	 * 
-	 * @param id
-	 *            PrimÃ¤rschlÃ¼sselattribut (->DB)
-	 * @return Nutzerprofil-Objekt, das dem Ã¼bergebenen SchlÃ¼ssel entspricht,
-	 *         null bei nicht vorhandenem DB-Tupel.
+	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId. 
 	 */
 	public Nutzerprofil findByNutzerprofilId(int profilId) {
 		// DB-Verbindung holen
@@ -105,11 +60,6 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Auslesen aller Nutzerprofile.
-	 * 
-	 * @return Eine Liste mit Nutzerprofil-Objekten, die sÃ¤mtliche
-	 *         Nutzerprofile reprÃ¤sentieren. Bei evtl. Exceptions wird eine
-	 *         partiell gefÃ¼llte oder ggf. auch eine leere Liste
-	 *         zurÃ¼ckgeliefert.
 	 */
 	public List<Nutzerprofil> findAllNutzerprofile() {
 		Connection con = DBConnection.connection();
@@ -150,11 +100,7 @@ public class NutzerprofilMapper {
 	
 	/**
 	 * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
-	 * Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf. berichtigt.
-	 * @param nutzerprofil das zu speichernde Objekt
-	 * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter <code>profilId</code>.
 	 */
-
 	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
 		
@@ -182,10 +128,6 @@ public class NutzerprofilMapper {
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
 						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
 						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
-				
-				
-				
-				
 
 			}
 			
@@ -201,11 +143,7 @@ public class NutzerprofilMapper {
 		}
 
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
-	 * 
-	 * @param nutzerprofil
-	 *            das Objekt, das in die DB geschrieben werden soll
-	 * @return das als Parameter Ã¼bergebene Objekt
+	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
 	 */
 	public Nutzerprofil updateNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
@@ -223,17 +161,11 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Nutzerprofil nutzerprofil) zu wahren,
-		// geben wir nuterprofil zurÃ¼ck
 		return nutzerprofil;
 	}
 
 	/**
-	 * Lï¿½schen der Daten eines <code>Nutzerprofil</code>-Objekts aus der
-	 * Datenbank.
-	 * 
-	 * @param nutzerprofil
-	 *            das aus der DB zu lï¿½schende "Objekt"
+	 * Loeschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
 	 */
 	public void deleteNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();

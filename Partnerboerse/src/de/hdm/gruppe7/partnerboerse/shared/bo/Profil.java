@@ -9,7 +9,7 @@ public class Profil extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int profilId;
+	private int profilId = 1; // zu Testzwecken
 	private String geschlecht; 
 	private String raucher;
 	private String koerpergroesse;
