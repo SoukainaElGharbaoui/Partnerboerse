@@ -159,11 +159,8 @@ public class AuswahloptionMapper {
 		return auswahloption;
 	}
 	
-		
-		
-		
-		
-		public void deleteInfo(Auswahloption auswahloption) {
+
+	public void deleteInfo(Auswahloption auswahloption) {
 			Connection con = DBConnection.connection();
 
 			try {

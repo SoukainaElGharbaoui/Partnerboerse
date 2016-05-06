@@ -181,12 +181,7 @@ public class NutzerprofilMapper {
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
 						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
-						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
-				
-				
-				
-				
-
+						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");	
 			}
 			
 		}
@@ -246,5 +241,6 @@ public class NutzerprofilMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-	}}
+	}
+}
 
