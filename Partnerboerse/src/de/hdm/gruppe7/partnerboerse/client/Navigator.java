@@ -6,10 +6,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class Navigator extends VerticalPanel {
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 
+
+
+public class Navigator extends VerticalPanel {
 	
 	public Navigator() {
+		
+		Benutzer b = new Benutzer(); 
+		b.setProfilId(1); 
 		/**
 		 * Button "Nutzerprofil anlegen" hinzufügen.
 		 * !!! Gehört hier nicht hin, dient zurzeit jedoch als Beispiel !!!
@@ -29,17 +35,17 @@ public class Navigator extends VerticalPanel {
 		/**
 		 * Button "Merkzettel anzeigen" hinzufügen
 		 */
-		final Button merkzettelAnzeigenButton = new Button("Merkzettel anzeigen"); 
-		merkzettelAnzeigenButton.addClickHandler(new ClickHandler() {
+		final Button merklisteAnzeigenButton = new Button("Merkliste anzeigen"); 
+		merklisteAnzeigenButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				ShowMerkzettel showMerkzettel = new ShowMerkzettel(); 
+				ShowMerkliste showMerkliste = new ShowMerkliste(); 
 				RootPanel.get("Details").clear(); 
-				RootPanel.get("Details").add(showMerkzettel); 				
+				RootPanel.get("Details").add(showMerkliste); 				
 			}		
 		}); 
 		
-		this.add(merkzettelAnzeigenButton); 
+		this.add(merklisteAnzeigenButton); 
 		
 		/**
 		 * Button "Sperrliste anzeigen" hinzufügen
