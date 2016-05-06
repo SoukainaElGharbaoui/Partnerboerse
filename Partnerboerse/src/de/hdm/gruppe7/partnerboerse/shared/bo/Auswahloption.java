@@ -5,9 +5,10 @@ public class Auswahloption extends BusinessObject{
 	private static final long serialVersionUID = 1L;
 
 	//Attribute
-	private int auswahlId;
+	private int auswahloptionId;
 	private String optionsbezeichnung;
-	
+	private Eigenschaft eigenschaft;
+
 	//Konstruktor
 	public Auswahloption() {
 		super();
@@ -15,11 +16,19 @@ public class Auswahloption extends BusinessObject{
 	}
 	
 	//Getter- & Settermethoden
-	public int getAuswahlId() {
-		return auswahlId;
+	
+	public Eigenschaft getEigenschaft() {
+		return eigenschaft;
 	}
-	public void setAuswahlId(int auswahlId) {
-		this.auswahlId = auswahlId;
+
+	public void setEigenschaft(Eigenschaft eigenschaft) {
+		this.eigenschaft = eigenschaft;
+	}
+	public int getAuswahloptionId() {
+		return auswahloptionId;
+	}
+	public void setAuswahloptionId(int auswahloptionId) {
+		this.auswahloptionId = auswahloptionId;
 	}
 	public String getOptionsbezeichnung() {
 		return optionsbezeichnung;

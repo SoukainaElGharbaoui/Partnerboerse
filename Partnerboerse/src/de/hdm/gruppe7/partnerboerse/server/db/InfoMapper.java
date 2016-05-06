@@ -1,6 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
