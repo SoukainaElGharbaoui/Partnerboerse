@@ -35,8 +35,8 @@ public class AuswahleigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT auswahleigenschaft_id, auswahltext FROM t_auswahleigenschaft "
-							+ "WHERE auswahleigenschaft_id="
+					.executeQuery("SELECT eigenschaft_id, auswahltext FROM t_auswahleigenschaft "
+							+ "WHERE eigenschaft_id="
 							+ auswahleigenschaftId);
 
 			if (rs.next()) {
@@ -122,7 +122,7 @@ public class AuswahleigenschaftMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE t_auswahleigenschaft"
-					+ "SET auswahltext=\"WHERE auswahleigenschaft_id="
+					+ "SET auswahltext=\"WHERE eigenschaft_id="
 					+ auswahleigenschaft.getEigenschaftId());
 
 		} catch (SQLException e2) {
