@@ -2,18 +2,22 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public interface PartnerboerseAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
-	
-	void createNutzerprofil(String vorname, String nachname, String geburtsdatum, 
-			String geschlecht, String haarfarbe, String koerpergroesse, String raucher, 
-			String religion, AsyncCallback<Nutzerprofil> callback);
+
+	void createNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion,
+			AsyncCallback<Nutzerprofil> callback);
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
@@ -24,7 +28,31 @@ public interface PartnerboerseAdministrationAsync {
 	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
 			AsyncCallback<List<Nutzerprofil>> callback);
 
-	
+	/**
+	 * ABSCHNITT MERKLISTE: BEGINN
+	 */
 
+	void getGemerkteProfileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
+
+	/**
+	 * ABSCHNITT MERKLISTE: ENDE
+	 */
+
+	/**
+	 * ABSCHNITT SUCHPROFIL: BEGINN
+	 */
+	void createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion,
+			AsyncCallback<Suchprofil> callback);
 	
-}
+	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
+
+	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
+
+	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+	
+	/**
+	 * ABSCHNITT SUCHPROFIL: ENDE
+	 */
+	}
+	
