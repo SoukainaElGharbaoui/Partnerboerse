@@ -7,9 +7,11 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -24,6 +26,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private NutzerprofilMapper nutzerprofilMapper = null;
 	
 	private MerklisteMapper merklisteMapper = null; 
+	
+	private InfoMapper infoMapper = null;
 
 	/**
 	 * No-Argument-Konstruktor
@@ -46,7 +50,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		 * der Datenbank kommunizieren kann.
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
-		this.merklisteMapper = MerklisteMapper.merklisteMapper(); 
+		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.infoMapper = InfoMapper.infoMapper();
 	}
 
 	/**
@@ -113,6 +118,48 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	//Anlegen einer Info
+	public Info createInfo(String infotext) throws IllegalArgumentException {
+
+		Info info = new Info();
+		info.setInfotext(infotext);
+		
+		// Vorläufige InfoId setzen. 
+		info.setInfoId(1);
+
+		return this.infoMapper.insertInfo(info);
+
+	}
+	
+	/**
+	 * Auslesen einer Info anhand ihrer InfoId.
+	 */
+	@Override
+	public Info getInfoById(int infoId) throws IllegalArgumentException {
+
+		return this.infoMapper.findByInfoId(infoId);
+	}
+
+	/**
+	 * Speichern eines Nutzerprofils.
+	 */
+	@Override
+	public void save(Info info) throws IllegalArgumentException {
+
+		infoMapper.updateInfo(info);
+	}
+
+	/**
+	 * Löschen eines Nutzerprofils.
+	 */
+	@Override
+	public void delete(Info info) throws IllegalArgumentException {
+
+		infoMapper.deleteInfo(info);
+	}
+
 	
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN

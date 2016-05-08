@@ -26,7 +26,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
 	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
 	private HorizontalPanel horPanelReligion = new HorizontalPanel();
-
+	
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -126,9 +126,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		horPanelReligion.add(religionLabel);
 
 		/**
-		 * infoLabel für die Benutzerinformation erzeugen.
+		 * informationLabel für die Benutzerinformation erzeugen.
 		 */
-		final Label infoLabel = new Label();
+		final Label informationLabel = new Label();
 
 		final Button createNutzerprofilButton = new Button(
 				"Nutzerprofil anlegen");
@@ -137,9 +137,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilButton);
 
 		/**
-		 * infoLabel zum navPanel hinzufügen.
+		 * informationLabel zum navPanel hinzufügen.
 		 */
-		verPanel.add(infoLabel);
+		verPanel.add(informationLabel);
 
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -157,13 +157,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										infoLabel
+										informationLabel
 												.setText("Es trat ein Fehler auf");
 									}
 
 									@Override
 									public void onSuccess(Nutzerprofil result) {
-										infoLabel
+										informationLabel
 												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
 									}
 

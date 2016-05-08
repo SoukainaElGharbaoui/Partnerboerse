@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -104,4 +105,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
+
+	public Info createInfo(String text);
+
+	Info getInfoById(int infoId) throws IllegalArgumentException;
+
+	void save(Info info) throws IllegalArgumentException;
+
+	void delete(Info info) throws IllegalArgumentException;
 }

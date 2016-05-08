@@ -1,4 +1,5 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 import java.sql.Connection;
@@ -11,12 +12,11 @@ import java.util.List;
 public class InfoMapper {
 
 	private static InfoMapper infoMapper = null;
-	
-	
+
 	protected InfoMapper() {
-		
+
 	}
-	
+
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
 	 * <code>InfoMapper.infoMapper()</code>. Sie stellt die
@@ -38,8 +38,7 @@ public class InfoMapper {
 
 		return infoMapper;
 	}
-	
-	
+
 	public Info findByInfoId(int infoId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -50,7 +49,8 @@ public class InfoMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT info_id, infotext FROM t_info " + "WHERE info_id=" + infoId);
+					"SELECT info_id, t_nutzerprofil.nutzerprofil_id, t_eigenschaft.eigenschaft_id, infotext FROM t_beschreibungsinfo, t_nutzerprofil, t_eigenschaft "
+							+ "WHERE info_id=" + infoId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -71,7 +71,6 @@ public class InfoMapper {
 		return null;
 	}
 
-
 	public List<Info> findAllInfos() {
 		Connection con = DBConnection.connection();
 
@@ -81,7 +80,7 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info ORDER BY info_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_beschreibungsinfo ORDER BY info_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -100,51 +99,46 @@ public class InfoMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
-	
-	
+
 	public Info insertInfo(Info info) {
 		Connection con = DBConnection.connection();
-		
+
 		try {
 			Statement stmt = con.createStatement();
-			
-			// Größte info_id ermitteln. 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(info_id) AS maxinfo_id " + "FROM t_info");
+
+			// Größte info_id ermitteln.
+			ResultSet rs = stmt.executeQuery("SELECT MAX(info_id) AS maxinfo_id " + "FROM t_beschreibungsinfo");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {	
-				
-				// info erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
+			if (rs.next()) {
+
+				// info erhaelt den bisher maximalen, nun um 1 inkrementierten
+				// Primärschlüssel.
 				info.setInfoId(rs.getInt("maxinfo_id") + 1);
-				
-				// Tabelle t_info befüllen 
+
+				// Tabelle t_info befüllen
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_info (info_id, infotext) "
-								+ "VALUES(" + info.getInfoId() + ",'" + info.getInfotext() + "')");
+				stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (info_id, infotext) " + "VALUES(" + info.getInfoId()
+						+ ",'" + info.getInfotext() + "')");
 			}
-			
-		}
-		 catch (SQLException e2) {
+
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
 		/*
-		 * Rückgabe der Info mit evtl. korrigierter InfoId. 
+		 * Rückgabe der Info mit evtl. korrigierter InfoId.
 		 */
-		return info;	
-		}
+		return info;
+	}
 
-	
-		public Info updateInfo(Info info) {
+	public Info updateInfo(Info info) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate(
-					"UPDATE t_info"
-							+ "SET infotext=\"WHERE info_id="
-							+ info.getInfoId());
+			stmt.executeUpdate("UPDATE t_beschreibungsinfo" + "SET infotext=\"WHERE info_id=" + info.getInfoId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -154,48 +148,49 @@ public class InfoMapper {
 		// geben wir info zurÃ¼ck
 		return info;
 	}
-	
-		
-		public void deleteInfo(Info info) {
-			Connection con = DBConnection.connection();
 
-			try {
-				Statement stmt = con.createStatement();
+	public void deleteInfo(Info info) {
+		Connection con = DBConnection.connection();
 
-				stmt.executeUpdate("DELETE FROM t_info " + "WHERE info_id =" + info.getInfoId());
+		try {
+			Statement stmt = con.createStatement();
 
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
+			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo " + "WHERE info_id =" + info.getInfoId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
-		
-//		public List<Auswahleigenschaft> findByAuswahl (Auswahleigenschaft auswahl){
-//			
-//			
-//			// DB-Verbindung holen
-//			Connection con = DBConnection.connection();
-//
-//			try {
-//				// Leeres SQL-Statement (JDBC) anlegen
-//				Statement stmt = con.createStatement();
-//
-//				// Statement ausfÃ¼llen und als Query an die DB schicken
-//				ResultSet rs = stmt.executeQuery(
-//						"SELECT eigenschaft_id, auswahltext FROM t_auswahleigenschaft " + "WHERE auswahl_id=" + auswahlId);
-//
-//				/*
-//				 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-//				 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-//				 */
-//				if (rs.next()) {
-//					// Ergebnis-Tupel in Objekt umwandeln
-//					Info info = new Info();
-//					info.setInfoId(rs.getInt("info_id"));
-//					info.setInfotext(rs.getString("infotext"));
-//					return info;
-//				}
-//			} catch (SQLException e2) {
-//				e2.printStackTrace();
-//				return null;
-//			}
+	}
+
+	// public List<Auswahleigenschaft> findByAuswahl (Auswahleigenschaft
+	// auswahl){
+	//
+	//
+	// // DB-Verbindung holen
+	// Connection con = DBConnection.connection();
+	//
+	// try {
+	// // Leeres SQL-Statement (JDBC) anlegen
+	// Statement stmt = con.createStatement();
+	//
+	// // Statement ausfÃ¼llen und als Query an die DB schicken
+	// ResultSet rs = stmt.executeQuery(
+	// "SELECT eigenschaft_id, auswahltext FROM t_auswahleigenschaft " + "WHERE
+	// auswahl_id=" + auswahlId);
+	//
+	// /*
+	// * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
+	// * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+	// */
+	// if (rs.next()) {
+	// // Ergebnis-Tupel in Objekt umwandeln
+	// Info info = new Info();
+	// info.setInfoId(rs.getInt("info_id"));
+	// info.setInfotext(rs.getString("infotext"));
+	// return info;
+	// }
+	// } catch (SQLException e2) {
+	// e2.printStackTrace();
+	// return null;
+	// }
 }

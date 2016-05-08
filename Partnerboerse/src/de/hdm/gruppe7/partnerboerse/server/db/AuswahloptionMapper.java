@@ -1,4 +1,5 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 
@@ -9,16 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AuswahloptionMapper {
-	
+
 	private static AuswahloptionMapper auswahloptionMapper = null;
-	
-	
+
 	protected AuswahloptionMapper() {
-		
+
 	}
-	
+
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
 	 * <code>InfoMapper.infoMapper()</code>. Sie stellt die
@@ -33,14 +32,14 @@ public class AuswahloptionMapper {
 	 * @return DAS <code>InfoMapper</code>-Objekt.
 	 * @see infoMapper
 	 */
-	
+
 	public static AuswahloptionMapper auswahloptionMapper() {
 		if (auswahloptionMapper == null) {
 			auswahloptionMapper = new AuswahloptionMapper();
 		}
 		return auswahloptionMapper;
 	}
-	
+
 	public Auswahloption findByAuswahloptionId(int auswahloptionId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -51,7 +50,8 @@ public class AuswahloptionMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung FROM t_auswahloption " + "WHERE auswahloption_id=" + auswahloptionId);
+					"SELECT auswahloption_id, t_eigenschaft.eigenschaft_id, optionsbezeichnung FROM t_auswahloption, t_eigenschaft "
+							+ "WHERE auswahloption_id=" + auswahloptionId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -104,51 +104,49 @@ public class AuswahloptionMapper {
 		return result;
 	}
 
-	
 	public Auswahloption insertAuswahloption(Auswahloption auswahloption) {
 		Connection con = DBConnection.connection();
-		
+
 		try {
 			Statement stmt = con.createStatement();
-			
-			// Größte info_id ermitteln. 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(auswahloption_id) AS maxauswahloption_id " + "FROM t_auswahloption");
+
+			// Größte info_id ermitteln.
+			ResultSet rs = stmt
+					.executeQuery("SELECT MAX(auswahloption_id) AS maxauswahloption_id " + "FROM t_auswahloption");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {	
-			Eigenschaft eigenschaft = new Eigenschaft();
-			
-			// info erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
+			if (rs.next()) {
+				Eigenschaft eigenschaft = new Eigenschaft();
+
+				// info erhaelt den bisher maximalen, nun um 1 inkrementierten
+				// Primärschlüssel.
 				auswahloption.setAuswahloptionId(rs.getInt("maxauswahloption_id") + 1);
-				
-				// Tabelle t_info befüllen 
+
+				// Tabelle t_info befüllen
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_auswahloption (auswahloption_id, eigenschaft_id, optionsbezeichnung) "
-								+ "VALUES(" + auswahloption.getAuswahloptionId() + ",'"+ eigenschaft.getEigenschaftId() +",'"+ auswahloption.getOptionsbezeichnung() + "')");
+						+ "VALUES(" + auswahloption.getAuswahloptionId() + ",'" + eigenschaft.getEigenschaftId() + ",'"
+						+ auswahloption.getOptionsbezeichnung() + "')");
 			}
-			
-		}
-		 catch (SQLException e2) {
+
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
 		/*
-		 * Rückgabe der Info mit evtl. korrigierter InfoId. 
+		 * Rückgabe der Info mit evtl. korrigierter InfoId.
 		 */
-		return auswahloption;	
-		}
+		return auswahloption;
+	}
 
-	
-		public Auswahloption updateAuswahloption(Auswahloption auswahloption) {
+	public Auswahloption updateAuswahloption(Auswahloption auswahloption) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate(
-					"UPDATE t_auswahloption"
-							+ "SET optionsbezeichnung=\"WHERE auswahloption_id="
-							+ auswahloption.getAuswahloptionId());
+			stmt.executeUpdate("UPDATE t_auswahloption" + "SET optionsbezeichnung=\"WHERE auswahloption_id="
+					+ auswahloption.getAuswahloptionId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -158,19 +156,19 @@ public class AuswahloptionMapper {
 		// geben wir info zurÃ¼ck
 		return auswahloption;
 	}
-	
 
 	public void deleteInfo(Auswahloption auswahloption) {
-			Connection con = DBConnection.connection();
+		Connection con = DBConnection.connection();
 
-			try {
-				Statement stmt = con.createStatement();
+		try {
+			Statement stmt = con.createStatement();
 
-				stmt.executeUpdate("DELETE FROM t_auswahloption " + "WHERE auswahloption_id =" + auswahloption.getAuswahloptionId());
+			stmt.executeUpdate(
+					"DELETE FROM t_auswahloption " + "WHERE auswahloption_id =" + auswahloption.getAuswahloptionId());
 
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
-	
+	}
+
 }

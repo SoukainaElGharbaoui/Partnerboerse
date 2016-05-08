@@ -61,7 +61,23 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(sperrlisteAnzeigenButton); 
-	}
+
+	
+	/**
+	 * Button "Infos anzeigen" hinzufügen
+	 */
+	final Button infoAnzeigenButton = new Button("Info anzeigen"); 
+	infoAnzeigenButton.addClickHandler(new ClickHandler() {
+
+		public void onClick(ClickEvent event) {
+			CreateInfo createInfo = new CreateInfo(); 
+			RootPanel.get("Details").clear(); 
+			RootPanel.get("Details").add(createInfo); 				
+		}		
+	}); 
+	
+	this.add(infoAnzeigenButton); 
+}
 	
 //	/**
 //	 * Erzeugen eines Navigation-Buttons.
