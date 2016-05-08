@@ -78,6 +78,20 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(suchprofilAnlegenButton); 
+		
+		/**
+		 * Button "Eigenes Profil anzeigen" hinzufügen
+		 */
+		final Button eigenesProfilAnzeigenButton = new Button("Profil anzeigen");
+		eigenesProfilAnzeigenButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				ShowEigenesProfil showEigenesProfil = new ShowEigenesProfil(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showEigenesProfil); 				
+			}		
+		}); 
+		this.add(eigenesProfilAnzeigenButton); 
 	}
 	
 //	/**
