@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public interface PartnerboerseAdministrationAsync {
 
@@ -37,4 +38,21 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
 
-}
+	/**
+	 * ABSCHNITT SUCHPROFIL: BEGINN
+	 */
+	void createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion,
+			AsyncCallback<Suchprofil> callback);
+	
+	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
+
+	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
+
+	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+	
+	/**
+	 * ABSCHNITT SUCHPROFIL: ENDE
+	 */
+	}
+	

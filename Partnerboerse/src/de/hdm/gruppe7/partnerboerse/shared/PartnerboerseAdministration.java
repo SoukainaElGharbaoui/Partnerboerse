@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Synchrone Schnittstelle fÃ¼r eine RPC-fÃ¤hige Klasse zur Verwaltung 
@@ -104,4 +105,56 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
+	
+	
+	
+	/**
+	 * ABSCHNITT SUCHPROFIL: BEGINN
+	 */
+	
+	/**
+	 * Ein neues Suchprofil anlegen.
+	 * 
+	 * @param alterMin, alterMax, geschlecht, haarfarbe, koerpergroesse, raucher, religion
+	 * @return fertiges Suchprofil-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Suchprofil createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion);
+	
+	/**
+	 * Speichern eines Suchprofil-Objekts in der Datenbank.
+	 * 
+	 * @param suchprofil
+	 *            zu sicherndes Objekt.
+	 * @throws IllegalArgumentException
+	 */
+	public void save(Suchprofil suchprofil) throws IllegalArgumentException;
+
+	/**
+	 * Löschen des übergebenen Suchprofils.
+	 * 
+	 * @param suchprofil
+	 *            das zu loeschende Suchprofil
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(Suchprofil suchprofil)
+			throws IllegalArgumentException;
+
+	/**
+	 * Ausgeben aller Suchprfile.
+	 * @return Liste aller Suchprofile
+	 * @throws IllegalArgumentException
+	 */
+	
+	public List<Suchprofil> getAllSuchprofile()
+			throws IllegalArgumentException;
+	
+	/**
+	 * ABSCHNITT SUCHPROFIL: ENDE
+	 */
+	
+	
 }
+

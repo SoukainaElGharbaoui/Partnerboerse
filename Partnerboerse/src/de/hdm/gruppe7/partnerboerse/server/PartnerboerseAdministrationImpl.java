@@ -9,13 +9,17 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
+import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implements PartnerboerseAdministration {
+
+	
 
 	/**
 	 * Referenz auf den DatenbankMapper, der Nutzerprofil-Objekte mit der
@@ -24,7 +28,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private NutzerprofilMapper nutzerprofilMapper = null;
 	
 	private MerklisteMapper merklisteMapper = null; 
-
+    
+	private SuchprofilMapper suchprofilMapper = null;
 	/**
 	 * No-Argument-Konstruktor
 	 * @throws IllegalArgumentException
@@ -122,9 +127,54 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		
 		return this.merklisteMapper.findAllVermerkeFor(profilId); 
 	}
-	
+
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
 
+	/**
+	 * ABSCHNITT SUCHPROFIL: BEGINN
+	 */
+	
+	public Suchprofil createSuchprofil(String alterMin, String alterMax,
+			String geschlecht, String haarfarbe, String koerpergroesse,
+			String raucher, String religion) throws IllegalArgumentException {
+	
+			Suchprofil suchprofil = new Suchprofil();
+			suchprofil.setAlterMin(alterMin);
+			suchprofil.setAlterMax (alterMax);
+			suchprofil.setGeschlecht(geschlecht);
+			suchprofil.setHaarfarbe(haarfarbe);
+			suchprofil.setKoerpergroesse(koerpergroesse);
+			suchprofil.setRaucher(raucher);
+			suchprofil.setReligion(religion);
+			
+			suchprofil.setProfilId(1);
+
+			return this.suchprofilMapper.insertSuchprofil(suchprofil);
+	}
+
+
+	public void save(Suchprofil suchprofil) throws IllegalArgumentException {
+		
+		suchprofilMapper.updateSuchprofil(suchprofil);
+	
+	}
+
+
+	public void delete(Suchprofil suchprofil) throws IllegalArgumentException {
+		
+		suchprofilMapper.deleteSuchprofil(suchprofil);
+		
+	}
+
+
+	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
+		
+		return this.suchprofilMapper.findAllSuchprofile();
+		
+	}
+	/**
+	 * ABSCHNITT SUCHPROFIL: BEGINN
+	 */
 }
