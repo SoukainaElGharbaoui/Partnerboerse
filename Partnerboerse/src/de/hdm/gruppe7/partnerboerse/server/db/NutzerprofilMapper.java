@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.server.db;
 
 import java.sql.*;
@@ -126,8 +127,7 @@ public class NutzerprofilMapper {
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
 						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
-						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");
-
+						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");	
 			}
 			
 		}
@@ -178,5 +178,5 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
-
 }
+
