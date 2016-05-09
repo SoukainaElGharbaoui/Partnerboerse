@@ -52,8 +52,8 @@ public class ShowMerkliste extends VerticalPanel {
 		 * Tabelle formatieren und CSS einbinden. 
 		 */
 		merklisteFlexTable.setCellPadding(6);
-		merklisteFlexTable.getRowFormatter().addStyleName(0, "merklisteHeader");
-		merklisteFlexTable.addStyleName("merklisteFlexTable");   
+		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		merklisteFlexTable.addStyleName("FlexTable");   
 		
 		// Testzwecke
 		final Label infoLabel = new Label(); 

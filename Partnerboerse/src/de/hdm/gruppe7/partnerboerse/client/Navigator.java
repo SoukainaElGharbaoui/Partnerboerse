@@ -123,9 +123,9 @@ public class Navigator extends VerticalPanel {
 		eigenesProfilAnzeigenButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				ShowEigenesProfil showEigenesProfil = new ShowEigenesProfil(); 
+				ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
 				RootPanel.get("Details").clear(); 
-				RootPanel.get("Details").add(showEigenesProfil); 				
+				RootPanel.get("Details").add(showEigenesNp); 				
 			}		
 		}); 
 		this.add(eigenesProfilAnzeigenButton); 

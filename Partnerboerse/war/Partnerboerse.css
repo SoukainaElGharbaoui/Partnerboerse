@@ -50,12 +50,12 @@ div#Trailer {
 
 /* MERKLISTE BEGINN */ 
 
-.merklisteHeader {
+.TableHeader {
   background-color: #808080;
   color: white;
 }
  
-.merklisteFlexTable {
+.FlexTable {
   border: 1px solid silver;
   padding: 2px;
   margin-bottom:6px;
