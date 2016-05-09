@@ -26,8 +26,7 @@ public class ClientsideSettings extends CommonSettings {
 	public static PartnerboerseAdministrationAsync getPartnerboerseAdministration() {
 
 		if (partnerboerseAdministration == null) {
-			partnerboerseAdministration = GWT
-					.create(PartnerboerseAdministration.class);
+			partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 		}
 		return partnerboerseAdministration;
 	}

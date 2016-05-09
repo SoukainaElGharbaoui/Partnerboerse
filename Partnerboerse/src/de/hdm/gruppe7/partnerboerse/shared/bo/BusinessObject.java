@@ -2,6 +2,8 @@ package de.hdm.gruppe7.partnerboerse.shared.bo;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 	/**
 	 * <p>
 	 * Die Klasse <code>BusinessObject</code> stellt die Basisklasse aller in diesem
@@ -17,7 +19,7 @@ import java.io.Serializable;
 	 * textuelle Notation in JSON (siehe http://www.json.org/) kodiert.
 	 * </p>
 	 */
-	public abstract class BusinessObject implements Serializable {
+	public abstract class BusinessObject implements IsSerializable, Serializable {
 
 	  private static final long serialVersionUID = 1L;
 
