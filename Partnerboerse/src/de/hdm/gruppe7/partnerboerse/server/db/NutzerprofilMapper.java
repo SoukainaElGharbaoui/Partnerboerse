@@ -36,7 +36,7 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT profil_id, vorname, nachname FROM t_nutzerprofil " + "WHERE profil_id=" + profilId);
+					"SELECT nutzerprofil_id, vorname, nachname FROM t_nutzerprofil " + "WHERE nutzerprofil_id=" + profilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -45,7 +45,7 @@ public class NutzerprofilMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("profil_id"));
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
 				nutzerprofil.setNachname(rs.getString("nachname"));
 				return nutzerprofil;
