@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -23,9 +25,8 @@ public class ShowFremdprofil extends VerticalPanel {
 		this.add(verPanel); 
 		
 		/**
-		 * Label f�r die �berschrift
+		 * Label f�r die �berschrift
 		 */
-		
 		final Label ueberschriftLabel = new Label("Fremdprofil"); 
 		
 		
@@ -51,22 +52,14 @@ public class ShowFremdprofil extends VerticalPanel {
 		 * Tabelle formatieren und CSS einbinden.
 		 */
 		showFremdprofilFlexTable.setCellPadding(6);
-		showFremdprofilFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
+		showFremdprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showFremdprofilFlexTable.addStyleName("FlexTable");
 		
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
-		
 		final Label infoLabel = new Label();
-
-		
-		/**
-		 * Merken/Nicht-Mehr-Merken-Button hinzufügen. 
-		 */
-		String buttonText = "";
-		final Button mButton = new Button(buttonText); 
+		final Label infoLabel2 = new Label(); 
 		
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getNutzerprofilById(Benutzer.getProfilId(),
@@ -83,75 +76,112 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
-						
-						final String nutzerprofilId = String
-								.valueOf(result.getProfilId());
-						showFremdprofilFlexTable.setText(0, 1,
-								nutzerprofilId);
+						final String nutzerprofilId = String.valueOf(result.getProfilId());
+						showFremdprofilFlexTable.setText(0, 1, nutzerprofilId);
 
-						
 						// Vorname aus Datenbank aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(1, 1,
-								result.getVorname());
+						showFremdprofilFlexTable.setText(1, 1, result.getVorname());
 
-						
 						// Nachname aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(2, 1,
-								result.getNachname());
+						showFremdprofilFlexTable.setText(2, 1, result.getNachname());
 
-						
 						// Geschlecht aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(3, 1,
-								result.getGeschlecht());
+						showFremdprofilFlexTable.setText(3, 1, result.getGeschlecht());
 
-						
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(4, 1,
-								result.getGeburtsdatum());
+						showFremdprofilFlexTable.setText(4, 1, result.getGeburtsdatum());
 
-						
 						// Religion aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(5, 1,
-								result.getReligion());
+						showFremdprofilFlexTable.setText(5, 1, result.getReligion());
 
-						
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(6, 1,
-								result.getKoerpergroesse());
+						showFremdprofilFlexTable.setText(6, 1, result.getKoerpergroesse());
 
-						
 						// Haarfarbe aus der Datenbank holen
-						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(7, 1,
-								result.getHaarfarbe());
+						// und in Tabelle eintragen				
+						showFremdprofilFlexTable.setText(7, 1, result.getHaarfarbe());
 
-						
 						// Raucher aus der Datenbank holen
 						// und in Tabelle eintragen
-						
-						showFremdprofilFlexTable.setText(8, 1,
-								result.getRaucher());
-
+						showFremdprofilFlexTable.setText(8, 1, result.getRaucher());
 					}
 				});
 		
+		/**
+		 * TEIL MILENA BEGINN: Programmierung "Vermerk setzen" / "Vermerk löschen" Button.
+		 */
+		// Vermerkstatus überprüfen. 
+		ClientsideSettings.getPartnerboerseAdministration().getVermerkStatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf."); 	
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				String buttonText = "";
+
+				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
+				if(result == 0){
+					buttonText = "Vermerk setzen"; 
+				} else {
+					buttonText = "Vermerk löschen"; 
+				}	
+				
+				// "Vermerk setzen" / "Vermerk löschen" Button hinzufügen. 
+				final Button mButton = new Button(buttonText); 
+				verPanel.add(mButton);
+				
+				// ClickHandler für "Vermerk löschen" Button hinzufügen. 
+				if(buttonText == "Vermerk löschen") {
+//					infoLabel.setText("Man kann den Vermerk löschen");
+//					verPanel.add(infoLabel);
+				
+//					mButton.addClickHandler(new ClickHandler() {
+//						public void onClick(ClickEvent event) {
+//							
+//							ClientsideSettings.getPartnerboerseAdministration().
+//							vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+//
+//								@Override
+//								public void onFailure(Throwable caught) {
+//									infoLabel2.setText("Es trat ein Fehler auf.");
+//									
+//								}
+//
+//								@Override
+//								public void onSuccess(Void result) {
+//									infoLabel2.setText("Vermerk erfolgreich gelöscht.");
+//									
+//								}
+//								
+//							});
+//							
+//						}
+//						
+//					});
+					
+				}
+				
+			}
+			
+		});
+		
+		/**
+		 * TEIL MILENA ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button 
+		 */
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showFremdprofilFlexTable);
-		verPanel.add(infoLabel);
-		verPanel.add(mButton);
+		//verPanel.add(infoLabel);
+		//verPanel.add(mButton);
 
 	}
 }

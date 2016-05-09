@@ -79,7 +79,7 @@ public class SuchprofilMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil INNER JOIN"
 					+ "t_suchprofil ON t_profil.profil_id = " + "t_nutzerprofil.profil_id ORDER BY profil_id");
 
-			// F�r jeden Eintrag im Suchergebnis wird nun ein
+			// F�r jeden Eintrag im Suchergebnis wird nun ein
 			// Suchprofil-Objekt erstellt.
 			while (rs.next()) {
 				Suchprofil suchprofil = new Suchprofil();
@@ -92,20 +92,20 @@ public class SuchprofilMapper {
 				suchprofil.setRaucher(rs.getString("raucher"));
 				suchprofil.setReligion(rs.getString("religion"));
 
-				// Hinzuf�gen des neuen Objekts zur Ergebnisliste
+				// Hinzuf�gen des neuen Objekts zur Ergebnisliste
 				result.add(suchprofil);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Ergebnisliste zur�ckgeben
+		// Ergebnisliste zur�ckgeben
 		return result;
 	}
 	
 	
 	/**
-	 * Einf�gen eines <code>Suchprofil</code>-Objekts in die Datenbank.
+	 * Einf�gen eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
 	public Suchprofil insertSuchprofil(Suchprofil suchprofil) {
 		Connection con = DBConnection.connection();
@@ -113,7 +113,7 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			// Gr��te profil_id ermitteln. 
+			// Gr��te profil_id ermitteln. 
 			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
@@ -122,14 +122,14 @@ public class SuchprofilMapper {
 				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
 				suchprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
 				
-				// Tabelle t_profil bef�llen - funktioniert nicht. 
+				// Tabelle t_profil bef�llen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
 								+ "VALUES(" + suchprofil.getProfilId() + ",'" + suchprofil.getGeschlecht() + "','"
 								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesse() + "','"
 								+ suchprofil.getRaucher() + "','" + suchprofil.getReligion() + "')");
 				
-				// Tablle t_suchprofil befüllen - funktioniert nicht. 
+				// Tablle t_suchprofil befüllen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
 						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
@@ -172,14 +172,19 @@ public class SuchprofilMapper {
 	/**
 	 * Loeschen der Daten eines <code>Suchprofil</code>-Objekts aus der Datenbank.
 	 */
-	public void deleteSuchprofil(Suchprofil Suchprofil) {
+	public void deleteSuchprofil(int profilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_suchprofil " + "WHERE profil_id =" + Suchprofil.getProfilId());
-
+			stmt.executeUpdate("DELETE * FROM t_suchprofil " 
+					+ "WHERE suchprofil_id =" + profilId);
+			
+			stmt.executeUpdate("DELETE * FROM t_profil " 
+					+ "WHERE profil_id =" + profilId);
+			
+			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -198,9 +203,15 @@ public class SuchprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM t_suchprofil " 
-					+ "WHERE suchprofil_id='" + profilId +"'");
-
+					"SELECT t_suchprofil.suchprofil_id, "
+					+ "t_suchprofil.nutzerprofil_id, "
+					+ "t_suchprofil.alter_von, t_suchprofil.alter_bis, "
+					+ "t_profil.geschlecht, t_profil.koerpergroesse, "
+					+ "t_profil.haarfarbe, t_profil.raucher, t_profil.religion"
+					+ "FROM t_suchprofil, t_profil"
+					+ "WHERE t_suchprofil.suchprofil_id = t_profil.profil_id"
+					+ "AND t_suchprofil.nutzerprofil_id=" + profilId);
+            	
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
 			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
@@ -208,9 +219,16 @@ public class SuchprofilMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Suchprofil suchprofil = new Suchprofil();
+				
 				suchprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				suchprofil.setAlterMin(rs.getString("Alter minimal"));
-				suchprofil.setAlterMax(rs.getString("Alter maximal"));	
+				suchprofil.setAlterMin(rs.getString("alter_von"));
+				suchprofil.setAlterMax(rs.getString("alter_bis"));	
+				suchprofil.setGeschlecht(rs.getString("geschlecht"));
+				suchprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
+				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				suchprofil.setRaucher(rs.getString("raucher"));
+				suchprofil.setReligion(rs.getString("religion"));
+				
 				return suchprofil;
 				
 			}
