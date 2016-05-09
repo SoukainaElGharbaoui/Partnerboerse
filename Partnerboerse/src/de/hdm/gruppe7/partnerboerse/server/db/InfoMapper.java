@@ -1,9 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
 
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 import java.sql.Connection;
@@ -43,42 +43,6 @@ public class InfoMapper {
 		return infoMapper;
 	}
 
-	// public Info findByInfoId(int nutzerprofilId, int eigenschaftId) {
-	// // DB-Verbindung holen
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// // Leeres SQL-Statement (JDBC) anlegen
-	// Statement stmt = con.createStatement();
-	//
-	// // Statement ausfÃ¼llen und als Query an die DB schicken
-	// ResultSet rs = stmt
-	// .executeQuery("SELECT nutzerprofil_id, eigenschaft_id, infotext FROM
-	// t_beschreibungsinfo "
-	// + "WHERE nutzerprofil_id=" + nutzerprofilId + ", eigenschaft_id=" +
-	// eigenschaftId);
-	//
-	//
-	// /*
-	// * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-	// * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-	// */
-	// if (rs.next()) {
-	// // Ergebnis-Tupel in Objekt umwandeln
-	// Info info = new Info();
-	// nutzerprofil.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
-	// eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
-	// info.setInfotext(rs.getString("infotext"));
-	// return info;
-	// }
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// return null;
-	// }
-	//
-	// return null;
-	// }
-
 	 public List<Eigenschaft> findAllEigenschaften() {
 	 Connection con = DBConnection.connection();
 	
@@ -107,8 +71,67 @@ public class InfoMapper {
 	 // Ergebnisliste zurÃ¼ckgeben
 	 return result;
 	 }
-	 
-	 
+
+	public Info findByInfoId(int infoId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT info_id, t_nutzerprofil.nutzerprofil_id, t_eigenschaft.eigenschaft_id, infotext FROM t_beschreibungsinfo, t_nutzerprofil, t_eigenschaft "
+							+ "WHERE info_id=" + infoId);
+
+			/*
+			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
+			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Info info = new Info();
+				info.setInfoId(rs.getInt("info_id"));
+				info.setInfotext(rs.getString("infotext"));
+				return info;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
+
+	public List<Info> findAllInfos() {
+		Connection con = DBConnection.connection();
+
+		// Ergebnisliste vorbereiten
+		List<Info> result = new ArrayList<Info>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_beschreibungsinfo ORDER BY info_id");
+
+			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+			// Nutzerprofil-Objekt erstellt.
+			while (rs.next()) {
+				Info info = new Info();
+				info.setInfoId(rs.getInt("info_id"));
+				info.setInfotext(rs.getString("infotext"));
+
+				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+				result.add(info);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisliste zurÃ¼ckgeben
+		return result;
+	}
 
 	public Info insertInfo(Info info) {
 		Connection con = DBConnection.connection();
@@ -172,6 +195,18 @@ public class InfoMapper {
 //		}
 //	}
 
+	public void deleteInfo(Info info) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo " + "WHERE info_id =" + info.getInfoId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
 	// public List<Auswahleigenschaft> findByAuswahl (Auswahleigenschaft
 	// auswahl){
 	//
