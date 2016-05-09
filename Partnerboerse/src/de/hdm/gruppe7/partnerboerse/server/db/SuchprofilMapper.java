@@ -184,4 +184,41 @@ public class SuchprofilMapper {
 			e2.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Suchen eines Suchprofils mit vorgegebener ProfilId. 
+	 */
+	public Suchprofil findBySuchprofilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM t_suchprofil " 
+					+ "WHERE suchprofil_id='" + profilId +"'");
+
+			/*
+			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
+			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Suchprofil suchprofil = new Suchprofil();
+				suchprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+				suchprofil.setAlterMin(rs.getString("Alter minimal"));
+				suchprofil.setAlterMax(rs.getString("Alter maximal"));	
+				return suchprofil;
+				
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
 }
