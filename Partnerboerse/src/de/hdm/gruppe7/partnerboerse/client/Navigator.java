@@ -14,6 +14,10 @@ public class Navigator extends VerticalPanel {
 	
 	public Navigator() {
 		
+		/*
+		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird seine eigene Profil-ID
+		 * gesetzt (hier noch temporär - normalerweisen im Login nach Ermittlung über Mailadresse
+		 */
 		Benutzer b = new Benutzer(); 
 		b.setProfilId(1); 
 		/**

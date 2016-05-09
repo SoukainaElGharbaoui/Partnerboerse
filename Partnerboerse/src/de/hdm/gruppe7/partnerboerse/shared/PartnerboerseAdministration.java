@@ -99,7 +99,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
 
-	public Vector<Merkliste> getGemerkteProfileFor(int profilId)
+	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
+			throws IllegalArgumentException;
+
+	public void vermerkLoeschen(int profilId, int mFremdprofilId)
 			throws IllegalArgumentException;
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE

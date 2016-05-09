@@ -31,7 +31,9 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
 
-	void getGemerkteProfileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
+	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
+
+	void vermerkLoeschen(int profilId, int mFremdprofilId, AsyncCallback<Void> callback);
 
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE

@@ -13,20 +13,21 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-
 @SuppressWarnings("serial")
-public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implements PartnerboerseAdministration {
+public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
+		implements PartnerboerseAdministration {
 
 	/**
 	 * Referenz auf den DatenbankMapper, der Nutzerprofil-Objekte mit der
 	 * Datenbank abgleicht.
 	 */
 	private NutzerprofilMapper nutzerprofilMapper = null;
-	
-	private MerklisteMapper merklisteMapper = null; 
+
+	private MerklisteMapper merklisteMapper = null;
 
 	/**
 	 * No-Argument-Konstruktor
+	 * 
 	 * @throws IllegalArgumentException
 	 */
 	public PartnerboerseAdministrationImpl() throws IllegalArgumentException {
@@ -34,8 +35,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Initialsierungsmethode, die für jede Instanz von <code>PartnerboerseAdministrationImpl</code> 
-	 * aufgerufen werden muss. 
+	 * Initialsierungsmethode, die für jede Instanz von
+	 * <code>PartnerboerseAdministrationImpl</code> aufgerufen werden muss.
+	 * 
 	 * @see #ReportGeneratorImpl()
 	 */
 	@Override
@@ -46,7 +48,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		 * der Datenbank kommunizieren kann.
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
-		this.merklisteMapper = MerklisteMapper.merklisteMapper(); 
+		this.merklisteMapper = MerklisteMapper.merklisteMapper();
 	}
 
 	/**
@@ -60,9 +62,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @see save(Nutzerprofil nutzerprofil)
 	 */
 	@Override
-	
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geburtsdatum, String geschlecht,
-			String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException {
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion)
+			throws IllegalArgumentException {
 
 		Nutzerprofil nutzerprofil = new Nutzerprofil();
 		nutzerprofil.setVorname(vorname);
@@ -73,8 +76,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		nutzerprofil.setKoerpergroesse(koerpergroesse);
 		nutzerprofil.setRaucher(raucher);
 		nutzerprofil.setReligion(religion);
-		
-		// Vorläufige ProfilId setzen. 
+
+		// Vorläufige ProfilId setzen.
 		nutzerprofil.setProfilId(1);
 
 		return this.nutzerprofilMapper.insertNutzerprofil(nutzerprofil);
@@ -85,7 +88,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Auslesen eines Nutzerprofils anhand seiner ProfilId.
 	 */
 	@Override
-	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
+	public Nutzerprofil getNutzerprofilById(int profilId)
+			throws IllegalArgumentException {
 
 		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
@@ -103,26 +107,36 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Löschen eines Nutzerprofils.
 	 */
 	@Override
-	public void delete(Nutzerprofil nutzerprofil) throws IllegalArgumentException {
+	public void delete(Nutzerprofil nutzerprofil)
+			throws IllegalArgumentException {
 
 		nutzerprofilMapper.deleteNutzerprofil(nutzerprofil);
 	}
 
 	@Override
-	public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil) throws IllegalArgumentException {
+	public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil)
+			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
-	
-	public Vector<Merkliste> getGemerkteProfileFor(int profilId) throws IllegalArgumentException {
-		
-		return this.merklisteMapper.findAllVermerkeFor(profilId); 
+
+	// Gemerkte Nutzerprofile eines Nutzerprofils ermitteln. 
+	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
+			throws IllegalArgumentException {
+
+		return this.merklisteMapper.findAllVermerkeFor(profilId);
 	}
 	
+	// Bestimmten Vermerk eines Nutzerprofils löschen. 
+	public void vermerkLoeschen(int profilId, int mFremdprofilId) throws IllegalArgumentException {
+		
+		this.merklisteMapper.deleteVermerk(profilId, mFremdprofilId); 
+	}
+
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
