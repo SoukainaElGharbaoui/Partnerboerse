@@ -45,15 +45,10 @@ public class Navigator extends VerticalPanel {
 		final Button showEigenesNpButton = new Button("Eigenes Nutzerprofil anzeigen"); 
 		showEigenesNpButton.addClickHandler(new ClickHandler() {
 
-			public void onClick(ClickEvent event) {
-				NutzerprofilForm nutzerprofilToDisplay = new NutzerprofilForm();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(nutzerprofilToDisplay);
-				
-////			ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
-//				RootPanel.get("Details").clear(); 
-////			RootPanel.get("Details").add(showEigenesNp); 				
-
+			public void onClick(ClickEvent event) {				
+				ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showEigenesNp); 				
 			}		
 		}); 
 		
