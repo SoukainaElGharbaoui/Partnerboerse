@@ -123,7 +123,6 @@ public class ShowMerkliste extends VerticalPanel {
 									 * 
 									 */
 									if (Integer.valueOf(fpIDflextable) == Integer.valueOf(fremdprofilId)){
-										// TODO : ZEILE aus DB löschen
 										
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().

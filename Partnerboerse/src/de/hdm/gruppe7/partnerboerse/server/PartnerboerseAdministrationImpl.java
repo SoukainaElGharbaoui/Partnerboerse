@@ -13,7 +13,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;988
 
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
