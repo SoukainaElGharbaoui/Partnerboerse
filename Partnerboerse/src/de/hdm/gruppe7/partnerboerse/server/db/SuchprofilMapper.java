@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -106,7 +107,7 @@ public class SuchprofilMapper {
 	/**
 	 * Einfügen eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
-	public Suchprofil insertSuchprofil(Suchprofil suchprofil, Nutzerprofil nutzerprofil) {
+	public Suchprofil insertSuchprofil(Suchprofil suchprofil) {
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -130,9 +131,9 @@ public class SuchprofilMapper {
 				
 				// Tablle t_suchprofil befÃ¼llen - funktioniert nicht. 
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id,nutzerprofil_id, alter_von, alter_bis) "
-						+ "VALUES(" + suchprofil.getProfilId() + ",'" + nutzerprofil.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
-						+ suchprofil.getAlterMax() + "','" + "')");	
+				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
+						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
+						+ suchprofil.getAlterMax() + "')");	
 			}
 			
 		}

@@ -1,15 +1,21 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 
 public class CreateInfo extends VerticalPanel {
 
@@ -18,6 +24,7 @@ public class CreateInfo extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel horPanelInfo = new HorizontalPanel();
+//	private HorizontalPanel horPanelEigenschaft = new HorizontalPanel();
 	
 	/**
 	 * Konstruktor hinzufügen.
@@ -34,13 +41,14 @@ public class CreateInfo extends VerticalPanel {
 		horPanelInfo.add(infoTextBox);
 		horPanelInfo.add(infoLabel);
 
+		
 		/**
 		 * informationLabel für die Benutzerinformation erzeugen.
 		 */
 		final Label informationLabel = new Label();
 
 		final Button createInfoButton = new Button(
-				"Persönliche Information angeben");
+				"Information speichern");
 		createInfoButton
 				.setStylePrimaryName("partnerboerse-menubutton");
 		verPanel.add(createInfoButton);
@@ -75,4 +83,5 @@ public class CreateInfo extends VerticalPanel {
 		});
 
 	}
+	
 }

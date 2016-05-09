@@ -13,6 +13,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
@@ -57,8 +58,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 * der Datenbank kommunizieren kann.
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
-		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+
 		this.infoMapper = InfoMapper.infoMapper();
+		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper(); 
 	}
 
 	/**
@@ -198,8 +201,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 	
-	public Info createInfo(Info info)  throws IllegalArgumentException {
+	public Info createInfo(String infotext) throws IllegalArgumentException {
+		
+		Info info = new Info();
+		info.setInfotext(infotext);
+		
+		info.setInfoId(1);
 		
 		return this.infoMapper.insertInfo(info);
+	}
+	
+	public List<Eigenschaft> getAllEigenschaften() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaften();
 	}
 }

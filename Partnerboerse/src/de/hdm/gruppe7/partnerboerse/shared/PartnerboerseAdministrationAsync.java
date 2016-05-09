@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
@@ -49,14 +50,19 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
+	
+	
+	
 	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 
-	void createInfo(Info info, AsyncCallback<Info> callback); 
+	void createInfo(String infotext, AsyncCallback<Info> callback); 
 	
+	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
+
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
