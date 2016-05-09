@@ -54,6 +54,9 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
+	
+	
+	
 	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
