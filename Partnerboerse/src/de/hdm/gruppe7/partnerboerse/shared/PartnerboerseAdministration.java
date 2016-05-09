@@ -172,6 +172,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
 	
+	
+/**
+ *Auslesen eines Suchprofils anhand der ID
+ * @param profilId
+ * @return
+ * @throws IllegalArgumentException
+ */
+	
+	
+	public Suchprofil getSuchprofilById(int profilId)
+			throws IllegalArgumentException;
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */

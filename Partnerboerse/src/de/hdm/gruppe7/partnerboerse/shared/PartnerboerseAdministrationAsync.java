@@ -63,6 +63,8 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 
+	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+
 		
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE

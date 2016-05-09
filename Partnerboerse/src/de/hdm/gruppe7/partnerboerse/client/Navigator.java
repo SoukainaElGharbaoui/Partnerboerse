@@ -115,7 +115,31 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(suchprofilAnlegenButton); 
+	
+	
+		
+		/**
+		 * Button "Suchprofil anzeigen" hinzufügen.
+		 */
+		final Button showSuchprofilButton = new Button
+				("Eigenes Suchprofil anzeigen");
+		showSuchprofilButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {				
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showSuchprofil); 				
+			}	
+			
+		});
+		
+		this.add(showSuchprofilButton);
+		
+	
+	
 	}
+	
+	
 	
 //	/**
 //	 * Erzeugen eines Navigation-Buttons.

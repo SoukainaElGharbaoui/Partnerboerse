@@ -218,6 +218,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findAllSuchprofile();
 		
 	}
+	
+	
+	/**
+	 * Auslesen eines Suchprofils anhand seiner ProfilId.
+	 */
+	@Override
+	public Suchprofil getSuchprofilById(int profilId)
+			throws IllegalArgumentException {
+
+		return this.suchprofilMapper.findBySuchprofilId(profilId);
+	}
+	
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
