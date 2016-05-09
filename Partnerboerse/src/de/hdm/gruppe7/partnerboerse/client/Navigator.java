@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 
@@ -14,6 +15,10 @@ public class Navigator extends VerticalPanel {
 	
 	public Navigator() {
 		
+		/*
+		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird seine eigene Profil-ID
+		 * gesetzt (hier noch temporär - normalerweisen im Login nach Ermittlung über Mailadresse
+		 */
 		Benutzer b = new Benutzer(); 
 		b.setProfilId(1); 
 		/**
@@ -61,6 +66,22 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(sperrlisteAnzeigenButton); 
+		
+
+		/**
+		 * Button "Suchprofil anlegen" hinzufügen
+		 */
+		final Button suchprofilAnlegenButton = new Button("Suchprofil anlegen"); 
+		suchprofilAnlegenButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(createSuchprofil); 				
+			}		
+		}); 
+		
+		this.add(suchprofilAnlegenButton); 
 	}
 	
 //	/**

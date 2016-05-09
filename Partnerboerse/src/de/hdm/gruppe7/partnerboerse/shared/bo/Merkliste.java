@@ -1,6 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
-public class Merkliste extends BusinessObject {
+import java.io.Serializable;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class Merkliste implements IsSerializable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
