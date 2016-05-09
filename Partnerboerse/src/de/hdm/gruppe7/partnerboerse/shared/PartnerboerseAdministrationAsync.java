@@ -43,6 +43,8 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
+	
+	void getVermerkStatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	void vermerkLoeschen(int profilId, int mFremdprofilId, AsyncCallback<Void> callback);
 
@@ -68,6 +70,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+
 
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
