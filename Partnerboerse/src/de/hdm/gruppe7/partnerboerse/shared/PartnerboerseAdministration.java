@@ -51,6 +51,24 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			String geburtsdatum, String geschlecht, String haarfarbe,
 			String koerpergroesse, String raucher, String religion);
+	
+	
+	/**
+	 * Das existierende Nutzerprofil updaten.
+	 * 
+	 * @param vorname
+	 *            , nachname, geburtsdatum, geschlecht, haarfarbe
+	 * @param koerpergroesse
+	 *            , raucher, religion
+	 * @return fertiges Nutzerprofil-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Nutzerprofil updateNutzerprofil(String vorname);
+//	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
+//			String geburtsdatum, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion);
+
 
 	/**
 	 * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
@@ -136,7 +154,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void save(Suchprofil suchprofil) throws IllegalArgumentException;
 
 	/**
-	 * Löschen des übergebenen Suchprofils.
+	 * Lï¿½schen des ï¿½bergebenen Suchprofils.
 	 * 
 	 * @param suchprofil
 	 *            das zu loeschende Suchprofil
