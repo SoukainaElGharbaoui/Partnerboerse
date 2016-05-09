@@ -17,7 +17,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;988
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
@@ -29,9 +29,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	private NutzerprofilMapper nutzerprofilMapper = null;
 	
-	private MerklisteMapper merklisteMapper = null; 
-    
 	private SuchprofilMapper suchprofilMapper = null;
+	
+	private MerklisteMapper merklisteMapper = null; 
 	
 	private InfoMapper infoMapper = null;
 
@@ -52,28 +52,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
-		/*
-		 * Ganz wesentlich ist, dass die PartnerboerseAdministration einen
-		 * vollständigen Satz von Mappern besitzt, mit deren Hilfe sie dann mit
-		 * der Datenbank kommunizieren kann.
-		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
-
-		this.infoMapper = InfoMapper.infoMapper();
+		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
-		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper(); 
+		this.infoMapper = InfoMapper.infoMapper();
+
 	}
 
-	/**
-	 * Anlegen eines neuen Nutzerprofils. Dies führt implizit zu einem Speichern
-	 * des neuen Nutzerprofils in der Datenbank.
-	 * 
-	 * Änderungen an Nutzerprofil-Objekten müssen stets durch Aufruf von
-	 * {@link #save(Nutzerprofil nutzerprofil)} in die Datenbank transferiert
-	 * werden.
-	 * 
-	 * @see save(Nutzerprofil nutzerprofil)
-	 */
 	@Override
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			String geburtsdatum, String geschlecht, String haarfarbe,
@@ -172,12 +157,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.merklisteMapper.findAllVermerkeFor(profilId);
 	}
 	
+	// Überprüfen, ob ein Vermerk besteht. 
+	public int getVermerkStatus(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
+		
+		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
+	}
+	
 	// Bestimmten Vermerk eines Nutzerprofils löschen. 
 	public void vermerkLoeschen(int profilId, int mFremdprofilId) throws IllegalArgumentException {
 		
 		this.merklisteMapper.deleteVermerk(profilId, mFremdprofilId); 
 	}
-
 
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE

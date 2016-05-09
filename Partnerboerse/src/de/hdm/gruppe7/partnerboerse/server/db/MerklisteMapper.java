@@ -4,13 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class MerklisteMapper {
 
@@ -71,6 +67,35 @@ public class MerklisteMapper {
 		return result;
 	}
 
+	/**
+	 * Vermerkstatus ermitteln. 
+	 */
+	public int pruefeVermerk(int profilId, int fremdprofilId) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Es liegt kein Vermerk vor.)
+		int vermerkstatus = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_vermerk "
+					+ "WHERE nutzerprofil_id=" + 1 + " AND fremdprofil_id=" + 8);
+			
+			if (rs.next()) {
+		        // Es liegt ein Vermerk vor.  
+				vermerkstatus = 1; 
+		      } else {
+		    	  // Es liegt kein Vermerk vor. 
+		    	  vermerkstatus = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return vermerkstatus; 
+	}
+	
 	/**
 	 * Vermerk einfügen. 
 	 */
