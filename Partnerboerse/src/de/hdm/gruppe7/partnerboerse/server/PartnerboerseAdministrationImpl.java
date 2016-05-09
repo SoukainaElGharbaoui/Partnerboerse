@@ -58,7 +58,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 * der Datenbank kommunizieren kann.
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
-
 		this.infoMapper = InfoMapper.infoMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper(); 

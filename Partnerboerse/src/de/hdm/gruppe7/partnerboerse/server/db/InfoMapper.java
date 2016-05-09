@@ -88,12 +88,13 @@ public class InfoMapper {
 	 try {
 	 Statement stmt = con.createStatement();
 	
-	 ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id FROM t_beschreibungsinfo WHERE typ="+"B");
+	 ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft WHERE typ='B'");
 	
 	 // FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 	 // Nutzerprofil-Objekt erstellt.
 	 while (rs.next()) {
 	 Eigenschaft eigenschaft = new Eigenschaft();
+	 eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
 	 eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
 	
 	 // HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
