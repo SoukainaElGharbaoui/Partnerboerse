@@ -82,7 +82,24 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(suchprofilAnlegenButton); 
-	}
+	
+	
+	
+	/**
+	 * Button "Info anlegen" hinzufügen
+	 */
+	final Button infoAnlegenButton = new Button("Info anlegen"); 
+	infoAnlegenButton.addClickHandler(new ClickHandler() {
+
+		public void onClick(ClickEvent event) {
+			CreateInfo createInfo = new CreateInfo(); 
+			RootPanel.get("Details").clear(); 
+			RootPanel.get("Details").add(createInfo); 				
+		}		
+	}); 
+	
+	this.add(infoAnlegenButton); 
+}
 	
 //	/**
 //	 * Erzeugen eines Navigation-Buttons.

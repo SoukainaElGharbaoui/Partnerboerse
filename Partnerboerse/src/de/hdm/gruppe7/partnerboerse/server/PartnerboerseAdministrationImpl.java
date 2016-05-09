@@ -8,10 +8,12 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -29,6 +31,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	private MerklisteMapper merklisteMapper = null; 
     
 	private SuchprofilMapper suchprofilMapper = null;
+	
+	private InfoMapper infoMapper = null;
 
 	/**
 	 * No-Argument-Konstruktor
@@ -54,6 +58,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.infoMapper = InfoMapper.infoMapper();
 	}
 
 	/**
@@ -192,4 +197,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
+	
+	public Info createInfo(Info info)  throws IllegalArgumentException {
+		
+		return this.infoMapper.insertInfo(info);
+	}
 }

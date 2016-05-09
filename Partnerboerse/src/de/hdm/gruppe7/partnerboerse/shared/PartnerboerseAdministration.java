@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -153,6 +154,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	public List<Suchprofil> getAllSuchprofile()
+			throws IllegalArgumentException;
+
+	public Info createInfo(Info info) 
 			throws IllegalArgumentException;
 	
 	/**
