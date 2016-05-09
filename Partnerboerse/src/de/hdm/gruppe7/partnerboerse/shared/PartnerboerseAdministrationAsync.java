@@ -18,6 +18,13 @@ public interface PartnerboerseAdministrationAsync {
 			String geburtsdatum, String geschlecht, String haarfarbe,
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
+	
+	void updateNutzerprofil(String vorname, AsyncCallback<Nutzerprofil> callback);
+	
+//	void updateNutzerprofil(String vorname, String nachname,
+//			String geburtsdatum, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion,
+//			AsyncCallback<Nutzerprofil> callback);
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
@@ -50,7 +57,8 @@ public interface PartnerboerseAdministrationAsync {
 	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
-	
+
+		
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */

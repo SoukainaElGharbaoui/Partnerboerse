@@ -28,7 +28,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private HorizontalPanel horPanelReligion = new HorizontalPanel();
 
 	/**
-	 * Konstruktor hinzufügen.
+	 * Konstruktor
 	 */
 	public CreateNutzerprofil() {
 		this.add(verPanel);
