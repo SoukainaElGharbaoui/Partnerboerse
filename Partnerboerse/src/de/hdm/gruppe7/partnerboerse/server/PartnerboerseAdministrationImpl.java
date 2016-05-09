@@ -53,6 +53,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper(); 
 	}
 
 	/**
