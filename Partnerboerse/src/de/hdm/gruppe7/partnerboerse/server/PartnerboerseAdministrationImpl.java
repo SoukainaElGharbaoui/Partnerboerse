@@ -96,6 +96,34 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.nutzerprofilMapper.insertNutzerprofil(nutzerprofil);
 
 	}
+	
+	/**
+	 * Aktualisieren eines Nutzerprofils.
+	 */
+	
+	public Nutzerprofil updateNutzerprofil(String vorname){
+		return null;
+	}
+//	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
+//			String geburtsdatum, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion) {
+//		
+//		Nutzerprofil nutzerprofil = new Nutzerprofil();
+//		nutzerprofil.setVorname(vorname);
+//		nutzerprofil.setNachname(nachname);
+//		nutzerprofil.setGeburtsdatum(geburtsdatum);
+//		nutzerprofil.setGeschlecht(geschlecht);
+//		nutzerprofil.setHaarfarbe(haarfarbe);
+//		nutzerprofil.setKoerpergroesse(koerpergroesse);
+//		nutzerprofil.setRaucher(raucher);
+//		nutzerprofil.setReligion(religion);
+//		
+//		// Vorläufige ProfilId setzen. 
+//				nutzerprofil.setProfilId(1);
+//
+//		return this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+
+//	}
 
 	/**
 	 * Auslesen eines Nutzerprofils anhand seiner ProfilId.
@@ -174,7 +202,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			
 			suchprofil.setProfilId(1);
 
-			return this.suchprofilMapper.insertSuchprofil(suchprofil);
+			return null;
+//			return this.suchprofilMapper.insertSuchprofil(suchprofil);
 	}
 
 
@@ -197,6 +226,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findAllSuchprofile();
 		
 	}
+	
+	
+	/**
+	 * Auslesen eines Suchprofils anhand seiner ProfilId.
+	 */
+	@Override
+	public Suchprofil getSuchprofilById(int profilId)
+			throws IllegalArgumentException {
+
+		return this.suchprofilMapper.findBySuchprofilId(profilId);
+	}
+	
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
@@ -215,3 +256,4 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAllEigenschaften();
 	}
 }
+
