@@ -33,7 +33,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void save(Nutzerprofil nutzerprofil, AsyncCallback<Void> callback);
 
-	void delete(Nutzerprofil nutzerprofil, AsyncCallback<Void> callback);
+	void deleteNutzerprofil(Nutzerprofil nutzerprofil, AsyncCallback<Void> callback);
 
 	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
 			AsyncCallback<List<Nutzerprofil>> callback);
@@ -57,12 +57,9 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
-	
-	
-	
 	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
-	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
+	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 

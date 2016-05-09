@@ -148,7 +148,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Löschen eines Nutzerprofils.
 	 */
 	@Override
-	public void delete(Nutzerprofil nutzerprofil)
+	public void deleteNutzerprofil(Nutzerprofil nutzerprofil)
 			throws IllegalArgumentException {
 
 		nutzerprofilMapper.deleteNutzerprofil(nutzerprofil);
@@ -202,8 +202,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			
 			suchprofil.setProfilId(1);
 
-			return null;
-//			return this.suchprofilMapper.insertSuchprofil(suchprofil);
+			return this.suchprofilMapper.insertSuchprofil(suchprofil);
 	}
 
 
@@ -214,9 +213,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 
-	public void delete(Suchprofil suchprofil) throws IllegalArgumentException {
+	public void deleteSuchprofil(int profilId) throws IllegalArgumentException {
 		
-		suchprofilMapper.deleteSuchprofil(suchprofil);
+		suchprofilMapper.deleteSuchprofil(profilId);
 		
 	}
 

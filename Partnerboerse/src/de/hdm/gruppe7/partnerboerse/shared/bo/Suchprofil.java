@@ -21,7 +21,6 @@ public class Suchprofil extends Profil {
 	
 	public void setAlterMax(String alterMax) {
 		this.alterMax = alterMax;
-	} 
-	
+	}
 
 }

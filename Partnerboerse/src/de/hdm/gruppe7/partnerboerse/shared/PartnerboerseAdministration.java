@@ -94,15 +94,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public void save(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
 
-	/**
-	 * L�schen des �bergebenen Nutzerprofils.
-	 * 
-	 * @param nutzerprofil
-	 *            das zu loeschende Nutzerprofil
-	 * @throws IllegalArgumentException
-	 */
-	public void delete(Nutzerprofil nutzerprofil)
-			throws IllegalArgumentException;
+	void deleteNutzerprofil(Nutzerprofil nutzerprofil);
 
 	/**
 	 * Suchen aller angesehenen Nutzerprofil-Objekte eines Nutzerprofils.
@@ -163,7 +155,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            das zu loeschende Suchprofil
 	 * @throws IllegalArgumentException
 	 */
-	public void delete(Suchprofil suchprofil)
+	public void deleteSuchprofil(int profilId)
 			throws IllegalArgumentException;
 
 	/**
