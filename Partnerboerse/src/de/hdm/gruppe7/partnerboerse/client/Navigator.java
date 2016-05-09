@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.gruppe7.partnerboerse.client.gui.NutzerprofilForm;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 
 
@@ -36,6 +37,38 @@ public class Navigator extends VerticalPanel {
 		});
 		
 		this.add(nutzerprofilAnlegenButton);	
+		
+		
+		/**
+		 * Button "Eigenes Nutzerprofil anzeigen" hinzufügen
+		 */
+		final Button showEigenesNpButton = new Button("Eigenes Nutzerprofil anzeigen"); 
+		showEigenesNpButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {				
+				ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
+				RootPanel.get("Details").clear(); 
+				RootPanel.get("Details").add(showEigenesNp); 				
+			}		
+		}); 
+		
+		this.add(showEigenesNpButton);
+		
+		/**
+		 * Button "Nutzerprofil bearbeiten" hinzufügen.
+		 */
+		final Button nutzerprofilEditierenButton = new Button
+				("Eigenes Nutzerprofil bearbeiten");
+		nutzerprofilEditierenButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(editNutzerprofil);
+			}
+		});
+		
+		this.add(nutzerprofilEditierenButton);	
 		
 		/**
 		 * Button "Merkzettel anzeigen" hinzufügen

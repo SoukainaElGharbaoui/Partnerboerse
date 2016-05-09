@@ -147,7 +147,7 @@ public class ShowMerkliste extends VerticalPanel {
 										
 										// Zeile in Flextabelle löschen
 										merklisteFlexTable.removeRow(z);
-										infoLabel.setText("Werte aus array: Fremfprofil = " + fremdprofilId + " Löschzeile aus Flextabe = " 
+										infoLabel.setText("Werte aus array: Fremdprofil = " + fremdprofilId + " Löschzeile aus Flextabe = " 
 										+ merklisteFlexTable.getText(z, 0));
 										break;
 									}
