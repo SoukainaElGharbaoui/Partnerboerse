@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -8,6 +9,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -51,6 +54,24 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			String geburtsdatum, String geschlecht, String haarfarbe,
 			String koerpergroesse, String raucher, String religion);
+	
+	
+	/**
+	 * Das existierende Nutzerprofil updaten.
+	 * 
+	 * @param vorname
+	 *            , nachname, geburtsdatum, geschlecht, haarfarbe
+	 * @param koerpergroesse
+	 *            , raucher, religion
+	 * @return fertiges Nutzerprofil-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Nutzerprofil updateNutzerprofil(String vorname);
+//	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
+//			String geburtsdatum, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion);
+
 
 	/**
 	 * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
@@ -136,7 +157,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void save(Suchprofil suchprofil) throws IllegalArgumentException;
 
 	/**
-	 * Löschen des übergebenen Suchprofils.
+	 * Lï¿½schen des ï¿½bergebenen Suchprofils.
 	 * 
 	 * @param suchprofil
 	 *            das zu loeschende Suchprofil
@@ -153,11 +174,26 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
+
+	public Info createInfo(String infotext) 
+			throws IllegalArgumentException;
 	
+	public List<Eigenschaft> getAllEigenschaften()
+			throws IllegalArgumentException;
+	
+/**
+ *Auslesen eines Suchprofils anhand der ID
+ * @param profilId
+ * @return
+ * @throws IllegalArgumentException
+ */
+	
+	
+	public Suchprofil getSuchprofilById(int profilId)
+			throws IllegalArgumentException;
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
 	
 	
 }
-

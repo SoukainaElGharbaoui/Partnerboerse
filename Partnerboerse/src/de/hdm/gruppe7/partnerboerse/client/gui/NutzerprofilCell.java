@@ -1,5 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client.gui;
 
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
@@ -18,7 +19,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 
-	@Override
 	public void render(com.google.gwt.cell.client.Cell.Context context,
 			Nutzerprofil value, SafeHtmlBuilder sb) {
 		
@@ -63,3 +63,4 @@ public class NutzerprofilCell extends AbstractCell<Nutzerprofil>{
 	      
 	}
 }
+

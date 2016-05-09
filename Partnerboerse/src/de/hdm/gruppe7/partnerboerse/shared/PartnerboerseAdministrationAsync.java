@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -6,6 +7,8 @@ import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -18,6 +21,13 @@ public interface PartnerboerseAdministrationAsync {
 			String geburtsdatum, String geschlecht, String haarfarbe,
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
+	
+	void updateNutzerprofil(String vorname, AsyncCallback<Nutzerprofil> callback);
+	
+//	void updateNutzerprofil(String vorname, String nachname,
+//			String geburtsdatum, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion,
+//			AsyncCallback<Nutzerprofil> callback);
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
@@ -47,12 +57,21 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
+	
+	
+	
 	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void delete(Suchprofil suchprofil, AsyncCallback<Void> callback);
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+
+	void createInfo(String infotext, AsyncCallback<Info> callback); 
 	
+	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
+
+	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */

@@ -36,7 +36,10 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT profil_id, vorname, nachname FROM t_nutzerprofil " + "WHERE profil_id=" + profilId);
+
+					"SELECT * FROM t_nutzerprofil " 
+					+ "WHERE nutzerprofil_id='" + profilId +"'");
+
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -45,16 +48,16 @@ public class NutzerprofilMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("profil_id"));
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));	
 				return nutzerprofil;
+				
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			return null;
 		}
-
 		return null;
 	}
 
@@ -71,13 +74,13 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil INNER JOIN"
-					+ "t_nutzerprofil ON t_profil.profil_id = " + "t_nutzerprofil.profil_id ORDER BY profil_id");
+					+ "t_nutzerprofil ON t_profil.profil_id = " + "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("profil_id"));
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
 				nutzerprofil.setNachname(rs.getString("nachname"));
 				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
@@ -151,9 +154,9 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate(
-					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.profil_id = t_profil.profil_id"
+					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id"
 							+ "SET vorname=\", nachname=\", geburtsdatum=\""
-							+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\"" + "WHERE profil_id="
+							+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\"" + "WHERE nutzerprofil_id="
 							+ nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
@@ -172,7 +175,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE profil_id =" + nutzerprofil.getProfilId());
+			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE nutzerprofil_id =" + nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
