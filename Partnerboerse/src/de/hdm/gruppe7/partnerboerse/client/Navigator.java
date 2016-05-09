@@ -115,21 +115,50 @@ public class Navigator extends VerticalPanel {
 		}); 
 		
 		this.add(suchprofilAnlegenButton); 
+
+		
+	
+	/**
+	 * Button "Info anlegen" hinzufügen
+	 */
+	final Button infoAnlegenButton = new Button("Info anlegen"); 
+	infoAnlegenButton.addClickHandler(new ClickHandler() {
+
+		public void onClick(ClickEvent event) {
+			CreateInfo createInfo = new CreateInfo(); 
+			RootPanel.get("Details").clear(); 
+			RootPanel.get("Details").add(createInfo); 				
+		}		
+	}); 
+	
+	this.add(infoAnlegenButton); 
+
+
 		
 		/**
-		 * Button "Eigenes Profil anzeigen" hinzufügen
+		 * Button "Suchprofil anzeigen" hinzufügen.
 		 */
-		final Button eigenesProfilAnzeigenButton = new Button("Profil anzeigen");
-		eigenesProfilAnzeigenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
+		final Button showSuchprofilButton = new Button
+				("Eigenes Suchprofil anzeigen");
+		showSuchprofilButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {				
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
 				RootPanel.get("Details").clear(); 
-				RootPanel.get("Details").add(showEigenesNp); 				
-			}		
-		}); 
-		this.add(eigenesProfilAnzeigenButton); 
+				RootPanel.get("Details").add(showSuchprofil); 				
+			}	
+			
+		});
+		
+		this.add(showSuchprofilButton);
+		
+	
+	
+
 	}
+
+	
+	
 	
 //	/**
 //	 * Erzeugen eines Navigation-Buttons.

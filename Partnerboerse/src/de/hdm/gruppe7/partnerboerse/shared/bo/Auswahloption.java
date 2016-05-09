@@ -7,7 +7,6 @@ public class Auswahloption extends BusinessObject{
 	//Attribute
 	private int auswahloptionId;
 	private String optionsbezeichnung;
-	private Eigenschaft eigenschaft;
 
 	//Konstruktor
 	public Auswahloption() {
@@ -16,14 +15,7 @@ public class Auswahloption extends BusinessObject{
 	}
 	
 	//Getter- & Settermethoden
-	
-	public Eigenschaft getEigenschaft() {
-		return eigenschaft;
-	}
 
-	public void setEigenschaft(Eigenschaft eigenschaft) {
-		this.eigenschaft = eigenschaft;
-	}
 	public int getAuswahloptionId() {
 		return auswahloptionId;
 	}

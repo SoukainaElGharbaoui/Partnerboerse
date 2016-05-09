@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.Date;
@@ -7,10 +8,13 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -28,6 +32,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	private MerklisteMapper merklisteMapper = null; 
     
 	private SuchprofilMapper suchprofilMapper = null;
+	
+	private InfoMapper infoMapper = null;
 
 	/**
 	 * No-Argument-Konstruktor
@@ -52,6 +58,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 * der Datenbank kommunizieren kann.
 		 */
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
+
+		this.infoMapper = InfoMapper.infoMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper(); 
 	}
@@ -218,8 +226,34 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findAllSuchprofile();
 		
 	}
+	
+	
+	/**
+	 * Auslesen eines Suchprofils anhand seiner ProfilId.
+	 */
+	@Override
+	public Suchprofil getSuchprofilById(int profilId)
+			throws IllegalArgumentException {
+
+		return this.suchprofilMapper.findBySuchprofilId(profilId);
+	}
+	
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
-
+	
+	public Info createInfo(String infotext) throws IllegalArgumentException {
+		
+		Info info = new Info();
+		info.setInfotext(infotext);
+		
+		info.setInfoId(1);
+		
+		return this.infoMapper.insertInfo(info);
+	}
+	
+	public List<Eigenschaft> getAllEigenschaften() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaften();
+	}
 }
+
