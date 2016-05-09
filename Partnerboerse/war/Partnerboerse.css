@@ -48,6 +48,21 @@ div#Trailer {
 	margin-bottom: 1em;
 }
 
+/* MERKLISTE BEGINN */ 
+
+.merklisteHeader {
+  background-color: #808080;
+  color: white;
+}
+ 
+.merklisteFlexTable {
+  border: 1px solid silver;
+  padding: 2px;
+  margin-bottom:6px;
+}
+
+/* MERKLISTE ENDE */
+
 
 
 /* /* .sendButton {
