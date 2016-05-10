@@ -112,14 +112,20 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
-
+	// Alle Vermerke eines Nutzerprofils auslesen.
 	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
+	// Vermerkstatus ermitteln. 
 	public int getVermerkStatus(int profilId, int fremdprofilId)
 			throws IllegalArgumentException; 
+	
+	// Vermerk einfügen.
+	public void vermerkEinfuegen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
 
-	public void vermerkLoeschen(int profilId, int mFremdprofilId)
+	// Vermerk löschen. 
+	public void vermerkLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE

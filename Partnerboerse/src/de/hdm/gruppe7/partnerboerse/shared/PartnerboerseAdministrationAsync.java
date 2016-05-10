@@ -42,11 +42,17 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
 
+	// Alle Vermerke eines Nutzerprofils auslesen. 
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
 	
+	// Vermerkstatus ermitteln. 
 	void getVermerkStatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	
+	// Vermerk einfügen. 
+	void vermerkEinfuegen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 
-	void vermerkLoeschen(int profilId, int mFremdprofilId, AsyncCallback<Void> callback);
+	// Vermerk löschen. 
+	void vermerkLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
@@ -67,6 +73,8 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+
+
 
 
 	/**
