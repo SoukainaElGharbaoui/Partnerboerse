@@ -20,36 +20,26 @@ public class EditSuchprofil extends VerticalPanel {
 	
 	private VerticalPanel verPanel = new VerticalPanel();
 
-	
-	
 	/**
 	 * Konstruktor
 	 */
 	public EditSuchprofil() {
 		this.add(verPanel);
-	
-	
-		
+
 	/**
-	 * Label Überschrift
+	 * Label ï¿½berschrift
 	 */
 	final Label ueberschriftLabel = new Label("Aktuelles Suchprofil bearbeiten");
 	
-	
-
 	/**
 	 * Label Button
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
-
-	
 	
 	/**
 	 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
 	 */
 	final FlexTable editSuchprofilFlexTable = new FlexTable();
-	
-	
 	
 	/**
 	 *  * Tabelle formatieren und CSS einbinden.
@@ -58,14 +48,12 @@ public class EditSuchprofil extends VerticalPanel {
 	editSuchprofilFlexTable.getColumnFormatter().addStyleName(0,
 			"TableHeader");
 	editSuchprofilFlexTable.addStyleName("FlexTable");
-
-
 	
 	/**
 	 * Erste Spalte der Tabelle festlegen.
 	 */
 
-	editSuchprofilFlexTable.setText(0, 0, "Nutzerprofil-Id");
+	editSuchprofilFlexTable.setText(0, 0, "Suchprofil-Id");
 	editSuchprofilFlexTable.setText(1, 0, "Geschlecht");
 	editSuchprofilFlexTable.setText(2, 0, "Koerpergroesse");
 	editSuchprofilFlexTable.setText(3, 0, "Haarfarbe");
@@ -92,8 +80,7 @@ public class EditSuchprofil extends VerticalPanel {
 				public void onSuccess(Suchprofil result) {
 				
 					// Suchprofil-Id aus der Datenbank holen
-					final String suchprofilId = String.valueOf(result
-							.getProfilId());
+					final String suchprofilId = String.valueOf(result.getProfilId());
 					editSuchprofilFlexTable.setText(0, 1, suchprofilId);
 
 					// Geschlecht aus der Datenbank holen
@@ -138,7 +125,7 @@ public class EditSuchprofil extends VerticalPanel {
 	final ListBox geschlechtListBox = new ListBox();
 	geschlechtListBox.addItem("Keine Auswahl");
 	geschlechtListBox.addItem("Weiblich");
-	geschlechtListBox.addItem("Männlich");
+	geschlechtListBox.addItem("MÃ¤nnlich");
 	editSuchprofilFlexTable.setWidget(1, 3, geschlechtListBox);
 	
 	final TextBox koerpergroesseTextBox = new TextBox();
@@ -175,29 +162,24 @@ public class EditSuchprofil extends VerticalPanel {
 	religionListBox.addItem("Hinduistisch");
 	editSuchprofilFlexTable.setWidget(7, 3, religionListBox);
 	
-	
-	
 	/**
-	 * Zum Panel hinzufügen
+	 * Zum Panel hinzufï¿½gen
 	 */
 	
 	verPanel.add(ueberschriftLabel);
 	verPanel.add(editSuchprofilFlexTable);
 	verPanel.add(infoLabel);
 	verPanel.add(editLabel);
-
-	
-	
 	
 	/**
-	 *  Änderungen Speichern-Button hinzufÃ¼gen und ausbauen.
+	 *  ï¿½nderungen Speichern-Button hinzufÃ¼gen und ausbauen.
 	 */
 			final Button speichernButton = new Button("&Auml;nderungen speichern");
 			verPanel.add(buttonPanel);
 			buttonPanel.add(speichernButton);
 
 	/**
-	 * ClickHandler für den Speichern-Button hinzufügen.
+	 * ClickHandler fï¿½r den Speichern-Button hinzufï¿½gen.
 	 */
 			final Label informationLabel = new Label();
 			verPanel.add(informationLabel);		
@@ -216,20 +198,18 @@ public class EditSuchprofil extends VerticalPanel {
 
 								@Override
 								public void onFailure(Throwable caught) {
-							
-									informationLabel
-											.setText("Es trat ein Fehler auf");
+									informationLabel.setText("Es trat ein Fehler auf");
 								}
 
 								@Override
 								public void onSuccess(Suchprofil result) {
-								ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showSuchprofil);
+									informationLabel.setText("Suchprofil erfolgreich aktualisiert.");
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSuchprofil);
 								}
 
 							});
-
 					
 				}
 			});

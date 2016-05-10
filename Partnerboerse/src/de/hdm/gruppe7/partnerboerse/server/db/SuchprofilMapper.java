@@ -150,22 +150,26 @@ public class SuchprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
-	public Suchprofil updateSuchprofil(Suchprofil suchprofil) {
+	public Suchprofil updateSuchprofil(Suchprofil suchprofil) { 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate(
-					"UPDATE t_suchprofil SET alter_von='" + suchprofil.getAlterMin() + "',alter_bis='" + suchprofil.getAlterMax() 
-					+ "'WHERE suchprofil_id =" + suchprofil.getProfilId());
+					"UPDATE t_suchprofil " + "SET alter_von=\"" + "suchprofil.getAlterMin()" 
+					+ "\", " + "alter_bis=\"" + "suchprofil.getAlterMax()" + "\" "
+					+ "WHERE suchprofil_id=" + suchprofil.getProfilId());
+			
 			stmt = con.createStatement();
+			
 			stmt.executeUpdate(
-					"UPDATE t_profil SET geschlecht='" + suchprofil.getGeschlecht() + "',koerpergroesse='" + suchprofil.getKoerpergroesse() 
-					+ "',haarfarbe='" + suchprofil.getHaarfarbe() + "',raucher='" + suchprofil.getRaucher() 
-					+ "',religion='" + suchprofil.getReligion()
-					+ "'WHERE suchprofil_id =" + suchprofil.getProfilId());
-	
+					"UPDATE t_profil " + "SET geschlecht=\"" + suchprofil.getGeschlecht() 
+					+ "\", " + "koerpergroesse=\"" + suchprofil.getKoerpergroesse() 
+					+ "\", " + "haarfarbe=\"" + suchprofil.getHaarfarbe()
+					+ "\", " + "raucher=\"" + suchprofil.getRaucher()
+					+ "\", " + "religion=\"" + suchprofil.getReligion() + "\" "
+					+ "WHERE profil_id=" + suchprofil.getProfilId());
 
 
 		} catch (SQLException e2) {
