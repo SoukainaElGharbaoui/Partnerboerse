@@ -157,11 +157,16 @@ public class SuchprofilMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate(
-					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_suchprofil.profil_id = t_profil.profil_id"
-							+ "SET alterMin=" + suchprofil.getAlterMin() + " alterMax=" + suchprofil.getAlterMax()
-							+ "koerpergroesse=" + suchprofil.getKoerpergroesse() + " raucher=" + suchprofil.getRaucher()
-							+ "geschlecht=" + suchprofil.getGeschlecht() + " haarfarbe=" + suchprofil.getHaarfarbe() + "WHERE profil_id="
-							+ suchprofil.getProfilId());
+					"UPDATE t_suchprofil SET alter_von='" + suchprofil.getAlterMin() + "',alter_bis='" + suchprofil.getAlterMax() 
+					+ "'WHERE suchprofil_id =" + suchprofil.getProfilId());
+			stmt = con.createStatement();
+			stmt.executeUpdate(
+					"UPDATE t_profil SET geschlecht='" + suchprofil.getGeschlecht() + "',koerpergroesse='" + suchprofil.getKoerpergroesse() 
+					+ "',haarfarbe='" + suchprofil.getHaarfarbe() + "',raucher='" + suchprofil.getRaucher() 
+					+ "',religion='" + suchprofil.getReligion()
+					+ "'WHERE suchprofil_id =" + suchprofil.getProfilId());
+	
+
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
