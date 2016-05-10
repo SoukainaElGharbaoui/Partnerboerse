@@ -201,9 +201,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 
-	public void save(Suchprofil suchprofil) throws IllegalArgumentException {
+	public Suchprofil save(String alterMin, String alterMax, String geschlecht, 
+			String haarfarbe,String koerpergroesse, String raucher, 
+			String religion) throws IllegalArgumentException {
 		
-		suchprofilMapper.updateSuchprofil(suchprofil);
+		Suchprofil suchprofil = new Suchprofil();
+		suchprofil.setAlterMin(alterMin);
+		suchprofil.setAlterMax (alterMax);
+		suchprofil.setGeschlecht(geschlecht);
+		suchprofil.setHaarfarbe(haarfarbe);
+		suchprofil.setKoerpergroesse(koerpergroesse);
+		suchprofil.setRaucher(raucher);
+		suchprofil.setReligion(religion);
+		
+		return this.suchprofilMapper.updateSuchprofil(suchprofil);
+		
 	
 	}
 

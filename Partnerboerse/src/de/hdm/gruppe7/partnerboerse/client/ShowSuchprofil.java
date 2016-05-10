@@ -122,7 +122,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
 
-		// ClickHandler für den Löschen-Button hinzufügen.
+		// ClickHandler für den Bearbeiten-Button hinzufügen.
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				EditSuchprofil editSuchprofil = new EditSuchprofil();
