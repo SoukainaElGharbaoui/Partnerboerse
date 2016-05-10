@@ -224,7 +224,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public Suchprofil getSuchprofilById(int profilId)
 			throws IllegalArgumentException {
-
+		
 		return this.suchprofilMapper.findBySuchprofilId(profilId);
 	}
 	

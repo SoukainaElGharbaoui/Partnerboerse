@@ -36,10 +36,9 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-
+					
 					"SELECT * FROM t_nutzerprofil " 
-					+ "WHERE nutzerprofil_id='" + profilId +"'");
-
+					+ "WHERE nutzerprofil_id=" + profilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
