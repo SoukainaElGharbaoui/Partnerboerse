@@ -17,7 +17,7 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class Partnerboerse implements EntryPoint {
+public  class Partnerboerse implements EntryPoint {
 
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface <code>EntryPoint</code>.
@@ -27,7 +27,6 @@ public class Partnerboerse implements EntryPoint {
 	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT
 			.create(PartnerboerseAdministration.class);
 
-	@Override
 	public void onModuleLoad() {
 	
 		/**

@@ -22,21 +22,26 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 	
-	void updateNutzerprofil(String vorname, AsyncCallback<Nutzerprofil> callback);
+	void updateNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion, AsyncCallback<Nutzerprofil> callback);
 	
-//	void updateNutzerprofil(String vorname, String nachname,
-//			String geburtsdatum, String geschlecht, String haarfarbe,
-//			String koerpergroesse, String raucher, String religion,
-//			AsyncCallback<Nutzerprofil> callback);
+
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	void save(Nutzerprofil nutzerprofil, AsyncCallback<Void> callback);
+	void save(String vorname, String nachname, String geschlecht, 
+			String haarfarbe,String koerpergroesse, String raucher, 
+			String religion, String geburtsdatum, AsyncCallback<Void> callback);
+	
+	
 
-	void deleteNutzerprofil(Nutzerprofil nutzerprofil, AsyncCallback<Void> callback);
+	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
 	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
 			AsyncCallback<List<Nutzerprofil>> callback);
+	
+	void getFremdprofilById (int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
 
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
@@ -85,6 +90,5 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
 
-
-	}
+}
 	

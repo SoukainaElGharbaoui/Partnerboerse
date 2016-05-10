@@ -59,6 +59,46 @@ public class NutzerprofilMapper {
 		}
 		return null;
 	}
+	
+	/**
+	 * Auslesen des Fremdprofils
+	 * @param profilId
+	 * @return
+	 */
+	
+	public Nutzerprofil findByFremdprofilId(int fremdprofilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+					
+					"SELECT * FROM t_nutzerprofil " 
+					+ "WHERE nutzerprofil_id=" + fremdprofilId);
+
+			/*
+			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
+			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Nutzerprofil nutzerprofil = new Nutzerprofil();
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+				nutzerprofil.setVorname(rs.getString("vorname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));	
+				return nutzerprofil;
+				
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 
 	/**
 	 * Auslesen aller Nutzerprofile.
@@ -146,16 +186,18 @@ public class NutzerprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
 	 */
-	public Nutzerprofil updateNutzerprofil(Nutzerprofil nutzerprofil) {
+	public Nutzerprofil updateNutzerprofil( Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
+		
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate(
 					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id"
-							+ "SET vorname=\", nachname=\", geburtsdatum=\""
-							+ "koerpergroesse=\", raucher=\", geschlecht=\", haarfarbe=\"" + "WHERE nutzerprofil_id="
+							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
+							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
+							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
 							+ nutzerprofil.getProfilId());
 
 		} catch (SQLException e2) {
@@ -168,13 +210,13 @@ public class NutzerprofilMapper {
 	/**
 	 * Loeschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
 	 */
-	public void deleteNutzerprofil(Nutzerprofil nutzerprofil) {
+	public void deleteNutzerprofil(int profilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE nutzerprofil_id =" + nutzerprofil.getProfilId());
+			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE nutzerprofil_id =" + profilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

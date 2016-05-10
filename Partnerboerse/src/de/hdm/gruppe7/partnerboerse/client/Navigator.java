@@ -54,21 +54,21 @@ public class Navigator extends VerticalPanel {
 		
 		this.add(showEigenesNpButton);
 		
-		/**
-		 * Button "Nutzerprofil bearbeiten" hinzufügen.
-		 */
-		final Button nutzerprofilEditierenButton = new Button
-				("Eigenes Nutzerprofil bearbeiten");
-		nutzerprofilEditierenButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(editNutzerprofil);
-			}
-		});
+//		/**
+//		 * Button "Nutzerprofil bearbeiten" hinzufügen.
+//		 */
+//		final Button nutzerprofilEditierenButton = new Button
+//				("Eigenes Nutzerprofil bearbeiten");
+//		nutzerprofilEditierenButton.addClickHandler(new ClickHandler() {
+//			
+//			public void onClick(ClickEvent event) {
+//				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(editNutzerprofil);
+//			}
+//		});
 		
-		this.add(nutzerprofilEditierenButton);	
+//		this.add(nutzerprofilEditierenButton);	
 		
 		/**
 		 * Button "Merkzettel anzeigen" hinzufügen

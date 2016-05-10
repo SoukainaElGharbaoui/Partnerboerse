@@ -67,10 +67,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 
-	public Nutzerprofil updateNutzerprofil(String vorname);
-//	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
-//			String geburtsdatum, String geschlecht, String haarfarbe,
-//			String koerpergroesse, String raucher, String religion);
+	
+	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion);
 
 
 	/**
@@ -84,7 +84,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public Nutzerprofil getNutzerprofilById(int profilId)
 			throws IllegalArgumentException;
-
+	
+	/**
+	 * Suchen eines Fremdprofil-Objekt, dessen FremdprofilId bekannt ist
+	 */
+	
+	public Nutzerprofil getFremdprofilById(int fremdprofilId)
+			throws IllegalArgumentException;
 	/**
 	 * Speichern eines Nutzerprofil-Objekts in der Datenbank.
 	 * 
@@ -92,9 +98,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public void save(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
+	public void save (String vorname, String nachname, String geschlecht, 
+			String haarfarbe,String koerpergroesse, String raucher, 
+			String religion, String geburtsdatum) throws IllegalArgumentException;
+	
+	/**
+	 * löschen eines Nutzerprofils in der Datenbank
+	 * @param profilId
+	 */
 
-	void deleteNutzerprofil(Nutzerprofil nutzerprofil);
+	void deleteNutzerprofil(int profilId);
 
 	/**
 	 * Suchen aller angesehenen Nutzerprofil-Objekte eines Nutzerprofils.
@@ -196,6 +209,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
-	
-	
+
 }
+
+		
+
+

@@ -15,6 +15,7 @@ public class Merkliste implements IsSerializable, Serializable {
 	private String mGeschlecht;
 	
 
+
 	public int getmFremdprofilId() {
 		return mFremdprofilId;
 	}
@@ -45,6 +46,8 @@ public class Merkliste implements IsSerializable, Serializable {
 	public void setmGeschlecht(String mGeschlecht) {
 		this.mGeschlecht = mGeschlecht;
 	} 
+	
+	
 
 	
 }
