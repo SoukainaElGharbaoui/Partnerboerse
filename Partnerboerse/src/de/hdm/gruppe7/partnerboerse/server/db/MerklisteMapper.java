@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 
 public class MerklisteMapper {
@@ -80,7 +81,7 @@ public class MerklisteMapper {
 			Statement stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_vermerk "
-					+ "WHERE nutzerprofil_id=" + 1 + " AND fremdprofil_id=" + 8);
+					+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
 			
 			if (rs.next()) {
 		        // Es liegt ein Vermerk vor.  
@@ -99,21 +100,31 @@ public class MerklisteMapper {
 	/**
 	 * Vermerk einfügen. 
 	 */
-	public void insertVermerk(int profilId, int fremdprofilId) {
+	public void insertVermerk(int profilId, int fremdprofilId) { 
+		Connection con = DBConnection.connection();
 		
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("INSERT INTO t_vermerk (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
+			+ Benutzer.getProfilId() + "," + fremdprofilId + ")");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}	
 	}
 	
 	/**
 	 * Vermerk löschen.
 	 */
-	public void deleteVermerk(int profilId, int mFremdprofilId) {
+	public void deleteVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("DELETE FROM t_vermerk WHERE nutzerprofil_id=" + profilId
-					+ " AND fremdprofil_id=" + mFremdprofilId);
+					+ " AND fremdprofil_id=" + fremdprofilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

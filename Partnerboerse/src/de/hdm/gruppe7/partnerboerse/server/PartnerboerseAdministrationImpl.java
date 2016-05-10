@@ -4,6 +4,7 @@ package de.hdm.gruppe7.partnerboerse.server;
 import java.util.List;
 import java.util.Vector;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
@@ -154,27 +155,25 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
-
-	// Gemerkte Nutzerprofile eines Nutzerprofils ermitteln. 
-	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
-			throws IllegalArgumentException {
-
+	// Alle Vermerke eines Nutzerprofils auslesen.
+	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
 		return this.merklisteMapper.findAllVermerkeFor(profilId);
 	}
 	
-	// Überprüfen, ob ein Vermerk besteht. 
-	public int getVermerkStatus(int profilId, int fremdprofilId)
-			throws IllegalArgumentException {
-		
+	// Vermerkstatus ermitteln. 
+	public int getVermerkStatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
 	}
 	
-	// Bestimmten Vermerk eines Nutzerprofils löschen. 
-	public void vermerkLoeschen(int profilId, int mFremdprofilId) throws IllegalArgumentException {
-		
-		this.merklisteMapper.deleteVermerk(profilId, mFremdprofilId); 
+	// Vermerk einfügen. 
+	public void vermerkEinfuegen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.merklisteMapper.insertVermerk(profilId, fremdprofilId); 
 	}
-
+	
+	// Vermerk löschen. 
+	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.merklisteMapper.deleteVermerk(profilId, fremdprofilId); 
+	}
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
