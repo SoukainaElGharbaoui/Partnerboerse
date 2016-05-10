@@ -149,7 +149,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public void save(Suchprofil suchprofil) throws IllegalArgumentException;
+	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
 	 * L�schen des �bergebenen Suchprofils.

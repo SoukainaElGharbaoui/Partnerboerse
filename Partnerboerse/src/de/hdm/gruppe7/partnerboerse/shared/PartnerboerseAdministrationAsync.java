@@ -59,21 +59,24 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
-	void save(Suchprofil suchprofil, AsyncCallback<Void> callback);
+	void save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion, AsyncCallback<Suchprofil> callback);
 
 	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
 
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
-
-	void createInfo(String infotext, AsyncCallback<Info> callback); 
-	
-	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
-	 */
+	 */	
+	
+	void createInfo(String infotext, AsyncCallback<Info> callback); 
+	
+	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
+
+
 	}
 	
