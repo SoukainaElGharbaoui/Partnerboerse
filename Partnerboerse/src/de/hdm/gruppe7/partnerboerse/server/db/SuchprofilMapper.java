@@ -177,12 +177,15 @@ public class SuchprofilMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-
+			
+			ResultSet suchprofilId = stmt.executeQuery("SELECT t_suchprofil.suchprofil_id FROM t_suchprofil "
+					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+			
 			stmt.executeUpdate("DELETE * FROM t_suchprofil " 
-					+ "WHERE suchprofil_id =" + profilId);
+					+ "WHERE t_suchprofil.nutzerprofil_id =" + profilId);
 			
 			stmt.executeUpdate("DELETE * FROM t_profil " 
-					+ "WHERE profil_id =" + profilId);
+					+ "WHERE profil_id =" + suchprofilId);
 			
 			
 		} catch (SQLException e2) {
