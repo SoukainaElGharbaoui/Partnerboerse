@@ -52,6 +52,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
+
+		/*
+		 * Ganz wesentlich ist, dass die PartnerboerseAdministration einen
+		 * vollständigen Satz von Mappern besitzt, mit deren Hilfe sie dann mit
+		 * der Datenbank kommunizieren kann.
+		 */
+
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
