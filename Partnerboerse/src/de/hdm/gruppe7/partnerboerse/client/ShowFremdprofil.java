@@ -21,17 +21,16 @@ public class ShowFremdprofil extends VerticalPanel {
 	/** 
 	 * Konstruktor hinzufügen. 
 	 */
-	public ShowFremdprofil(int fremdprofilId){
+	public ShowFremdprofil(int fremdprofilId) {
 		this.add(verPanel); 
 		
 		/**
-		 * Label f�r die �berschrift
+		 * Label für die Überschrift hinzufügen. 
 		 */
 		final Label ueberschriftLabel = new Label("Fremdprofil"); 
 		
-		
 		/**
-		 * Tabelle zur Anzeige des eigenen Profils erstellen.
+		 * Tabelle zur Anzeige des Fremdprofils erstellen.
 		 */
 		final FlexTable showFremdprofilFlexTable = new FlexTable();
 		
@@ -68,7 +67,6 @@ public class ShowFremdprofil extends VerticalPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
-
 					}
 
 					@Override
@@ -118,7 +116,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		 */
 		// Vermerkstatus überprüfen. 
 		ClientsideSettings.getPartnerboerseAdministration().getVermerkStatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf."); 	
@@ -126,6 +124,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Integer result) {
+				
 				String buttonText = "";
 
 				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
@@ -139,49 +138,46 @@ public class ShowFremdprofil extends VerticalPanel {
 				final Button mButton = new Button(buttonText); 
 				verPanel.add(mButton);
 				
-				// ClickHandler für "Vermerk löschen" Button hinzufügen. 
-				if(buttonText == "Vermerk löschen") {
-//					infoLabel.setText("Man kann den Vermerk löschen");
-//					verPanel.add(infoLabel);
-				
-//					mButton.addClickHandler(new ClickHandler() {
-//						public void onClick(ClickEvent event) {
-//							
-//							ClientsideSettings.getPartnerboerseAdministration().
-//							vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+				// ClickHandler hinzufügen. 
+				mButton.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						
+						infoLabel.setText("test");
+						verPanel.add(infoLabel);
+						
+//						ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 //
-//								@Override
-//								public void onFailure(Throwable caught) {
-//									infoLabel2.setText("Es trat ein Fehler auf.");
-//									
-//								}
-//
-//								@Override
-//								public void onSuccess(Void result) {
-//									infoLabel2.setText("Vermerk erfolgreich gelöscht.");
-//									
-//								}
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								infoLabel.setText("Fehler");
 //								
-//							});
+//							}
+//
+//							@Override
+//							public void onSuccess(Void result) {
+//								infoLabel.setText("Erfolg");
+//								
+//							}
 //							
-//						}
-//						
-//					});
+//						});
+						
+					}
 					
-				}
+				}); 
 				
 			}
-			
+				
 		});
 		
 		/**
 		 * TEIL MILENA ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button 
 		 */
-		
+	
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showFremdprofilFlexTable);
-		//verPanel.add(infoLabel);
-		//verPanel.add(mButton);
+//		verPanel.add(infoLabel);
 
 	}
 }
