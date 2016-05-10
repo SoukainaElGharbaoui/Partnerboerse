@@ -1,11 +1,9 @@
 
 package de.hdm.gruppe7.partnerboerse.server;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
@@ -243,8 +241,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		Info info = new Info();
 		info.setInfotext(infotext);
-		
-		info.setInfoId(1);
 		
 		return this.infoMapper.insertInfo(info);
 	}
