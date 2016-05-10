@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class EditSuchprofil extends VerticalPanel {
@@ -68,8 +69,8 @@ public class EditSuchprofil extends VerticalPanel {
 	editSuchprofilFlexTable.setText(1, 0, "Geschlecht");
 	editSuchprofilFlexTable.setText(2, 0, "Koerpergroesse");
 	editSuchprofilFlexTable.setText(3, 0, "Haarfarbe");
-	editSuchprofilFlexTable.setText(4, 0, "AlterMax");
-	editSuchprofilFlexTable.setText(5, 0, "AlterMin");
+	editSuchprofilFlexTable.setText(4, 0, "Alter von");
+	editSuchprofilFlexTable.setText(5, 0, "Alter bis");
 	editSuchprofilFlexTable.setText(6, 0, "Raucher");
 	editSuchprofilFlexTable.setText(7, 0, "Religion");
 	
@@ -79,6 +80,52 @@ public class EditSuchprofil extends VerticalPanel {
 	 */
 	
 	final Label infoLabel = new Label();
+	
+	ClientsideSettings.getPartnerboerseAdministration().getSuchprofilById(
+			Benutzer.getProfilId(), new AsyncCallback<Suchprofil>() {
+
+				public void onFailure(Throwable caught) {
+					infoLabel.setText("Es trat ein Fehler auf.");
+
+				}
+
+				public void onSuccess(Suchprofil result) {
+				
+					// Suchprofil-Id aus der Datenbank holen
+					final String suchprofilId = String.valueOf(result
+							.getProfilId());
+					editSuchprofilFlexTable.setText(0, 1, suchprofilId);
+
+					// Geschlecht aus der Datenbank holen
+					editSuchprofilFlexTable.setText(1, 1,
+							result.getGeschlecht());
+					
+					// Koerpergroesse aus der Datenbank holen
+					editSuchprofilFlexTable.setText(2, 1,
+							result.getKoerpergroesse());
+					
+					// Haarfarbe aus der Datenbank holen
+					editSuchprofilFlexTable.setText(3, 1,
+							result.getHaarfarbe());
+					
+					// AlterMax aus der Datenbank holen
+					editSuchprofilFlexTable.setText(4, 1,
+							result.getAlterMin());
+					
+					// AlterMin aus der Datenbank holen
+					editSuchprofilFlexTable.setText(5, 1,
+							result.getAlterMax());
+					
+					// Raucher aus der Datenbank holen
+					editSuchprofilFlexTable.setText(6, 1,
+							result.getRaucher());
+					
+					// Religion aus der Datenbank holen
+					editSuchprofilFlexTable.setText(7, 1,
+							result.getReligion());
+				}
+
+			});
 	
 	
 	
