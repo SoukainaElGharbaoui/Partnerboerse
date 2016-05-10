@@ -132,8 +132,6 @@ public class Navigator extends VerticalPanel {
 	}); 
 	
 	this.add(infoAnlegenButton); 
-
-
 		
 		/**
 		 * Button "Suchprofil anzeigen" hinzufügen.

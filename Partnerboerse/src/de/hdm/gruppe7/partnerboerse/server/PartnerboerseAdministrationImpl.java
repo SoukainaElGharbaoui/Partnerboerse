@@ -1,7 +1,6 @@
 
 package de.hdm.gruppe7.partnerboerse.server;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -52,6 +51,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
+
+		/*
+		 * Ganz wesentlich ist, dass die PartnerboerseAdministration einen
+		 * vollständigen Satz von Mappern besitzt, mit deren Hilfe sie dann mit
+		 * der Datenbank kommunizieren kann.
+		 */
+
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
@@ -149,27 +155,25 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
-
-	// Gemerkte Nutzerprofile eines Nutzerprofils ermitteln. 
-	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
-			throws IllegalArgumentException {
-
+	// Alle Vermerke eines Nutzerprofils auslesen.
+	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
 		return this.merklisteMapper.findAllVermerkeFor(profilId);
 	}
 	
-	// Überprüfen, ob ein Vermerk besteht. 
-	public int getVermerkStatus(int profilId, int fremdprofilId)
-			throws IllegalArgumentException {
-		
+	// Vermerkstatus ermitteln. 
+	public int getVermerkStatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
 	}
 	
-	// Bestimmten Vermerk eines Nutzerprofils löschen. 
-	public void vermerkLoeschen(int profilId, int mFremdprofilId) throws IllegalArgumentException {
-		
-		this.merklisteMapper.deleteVermerk(profilId, mFremdprofilId); 
+	// Vermerk einfügen. 
+	public void vermerkEinfuegen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.merklisteMapper.insertVermerk(profilId, fremdprofilId); 
 	}
-
+	
+	// Vermerk löschen. 
+	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.merklisteMapper.deleteVermerk(profilId, fremdprofilId); 
+	}
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
@@ -236,8 +240,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		Info info = new Info();
 		info.setInfotext(infotext);
-		
-		info.setInfoId(1);
 		
 		return this.infoMapper.insertInfo(info);
 	}
