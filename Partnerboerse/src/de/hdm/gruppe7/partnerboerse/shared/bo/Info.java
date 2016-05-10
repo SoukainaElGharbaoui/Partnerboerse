@@ -7,7 +7,9 @@ public class Info extends BusinessObject {
 	//Attribute
 	private int infoId;
 	private String infotext;
-	
+	private Eigenschaft eigenschaft;
+	public String getEigenschaftId;
+
 	//Konstruktor
 	public Info() {
 		super();
@@ -15,6 +17,15 @@ public class Info extends BusinessObject {
 	}
 	
 	//Getter- & Settermethoden
+	public Eigenschaft getEigenschaft() {
+		return eigenschaft;
+	}
+	public void setEigenschaft(Eigenschaft eigenschaft) {
+		this.eigenschaft = eigenschaft;
+	}
+	public int getEigenschaftId(){
+		return eigenschaft.eigenschaftId;
+	}
 	public int getInfoId() {
 		return infoId;
 	}

@@ -209,15 +209,13 @@ public class SuchprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					"SELECT t_suchprofil.suchprofil_id, "
-					+ "t_suchprofil.nutzerprofil_id, "
-					+ "t_suchprofil.alter_von, t_suchprofil.alter_bis, "
-					+ "t_profil.geschlecht, t_profil.koerpergroesse, "
-					+ "t_profil.haarfarbe, t_profil.raucher, t_profil.religion"
-					+ "FROM t_suchprofil, t_profil"
-					+ "WHERE t_suchprofil.suchprofil_id = t_profil.profil_id"
-					+ "AND t_suchprofil.nutzerprofil_id=" + profilId);
-            	
+			
+			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
+			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
+			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
+			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
+			
+					
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
 			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
@@ -226,17 +224,17 @@ public class SuchprofilMapper {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Suchprofil suchprofil = new Suchprofil();
 				
-				suchprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				suchprofil.setAlterMin(rs.getString("alter_von"));
-				suchprofil.setAlterMax(rs.getString("alter_bis"));	
+				suchprofil.setProfilId(rs.getInt("suchprofil_id"));
 				suchprofil.setGeschlecht(rs.getString("geschlecht"));
 				suchprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
 				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				suchprofil.setAlterMin(rs.getString("alter_von"));
+				suchprofil.setAlterMax(rs.getString("alter_bis"));	
 				suchprofil.setRaucher(rs.getString("raucher"));
 				suchprofil.setReligion(rs.getString("religion"));
 				
 				return suchprofil;
-				
+					
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

@@ -1,7 +1,6 @@
 
 package de.hdm.gruppe7.partnerboerse.server;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -241,7 +240,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public Suchprofil getSuchprofilById(int profilId)
 			throws IllegalArgumentException {
-
+		
 		return this.suchprofilMapper.findBySuchprofilId(profilId);
 	}
 	
@@ -253,8 +252,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		Info info = new Info();
 		info.setInfotext(infotext);
-		
-		info.setInfoId(1);
 		
 		return this.infoMapper.insertInfo(info);
 	}
