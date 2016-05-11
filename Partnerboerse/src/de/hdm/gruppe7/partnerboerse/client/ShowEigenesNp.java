@@ -160,7 +160,7 @@ public class ShowEigenesNp extends VerticalPanel {
 							
 									bearbeitenButton.addClickHandler(new ClickHandler() {
 										public void onClick(ClickEvent event) {
-											EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
+											EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Integer.valueOf(nutzerprofilId));
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(editNutzerprofil);
 							

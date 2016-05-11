@@ -68,9 +68,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 
 	
-	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
+	public void saveNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
@@ -97,15 +96,18 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @param nutzerprofil
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
-	 */
-	public void save (String vorname, String nachname, String geschlecht, 
-			String haarfarbe,String koerpergroesse, String raucher, 
-			String religion, String geburtsdatum) throws IllegalArgumentException;
+     */
+	
+	
+	public Suchprofil save(String alterMin, String alterMax,
+			String geschlecht, String haarfarbe, String koerpergroesse, 
+			String raucher, String religion);
 	
 	/**
-	 * löschen eines Nutzerprofils in der Datenbank
+	 * lï¿½schen eines Nutzerprofils in der Datenbank
 	 * @param profilId
 	 */
+
 
 	void deleteNutzerprofil(int profilId);
 
@@ -168,8 +170,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
+//	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
 	 * Lï¿½schen des ï¿½bergebenen Suchprofils.
@@ -190,7 +192,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
 
-	public Info createInfo(String infotext) 
+	public Info createInfo(int profilId, int eigenschaftId, String infotext) 
 			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllEigenschaften()

@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class NutzerprofilMapper {
@@ -37,8 +38,11 @@ public class NutzerprofilMapper {
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 					
-					"SELECT * FROM t_nutzerprofil " 
-					+ "WHERE nutzerprofil_id=" + profilId);
+					"SELECT * FROM t_nutzerprofil, t_profil " 
+					+ "WHERE profil_id= " + profilId + " AND nutzerprofil_id=" + profilId);
+			
+			
+
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -47,9 +51,15 @@ public class NutzerprofilMapper {
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id")); 
 				nutzerprofil.setVorname(rs.getString("vorname"));
 				nutzerprofil.setNachname(rs.getString("nachname"));	
+				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));	
+				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+				nutzerprofil.setKoerpergroesse(rs.getString("Koerpergroesse"));
+				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				nutzerprofil.setRaucher(rs.getString("raucher"));
+				nutzerprofil.setReligion(rs.getString("religion"));
 				return nutzerprofil;
 				
 			}
@@ -186,25 +196,37 @@ public class NutzerprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
 	 */
-	public Nutzerprofil updateNutzerprofil( Nutzerprofil nutzerprofil) {
-		Connection con = DBConnection.connection();
+	public void updateNutzerprofil(String vorname, String nachname, String geburtsdatum,  String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion) {
 		
+		Connection con = DBConnection.connection();
+	
 
 		try {
 			Statement stmt = con.createStatement();
-
+//
 			stmt.executeUpdate(
-					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id"
-							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
-							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
-							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
-							+ nutzerprofil.getProfilId());
+					"UPDATE t_nutzerprofil " 
+							+ "SET vorname=\"" + vorname + "\", " + " nachname=\"" + nachname + "\", " + " geburtsdatum=\""
+							+  geburtsdatum +  "\" " + "WHERE nutzerprofil_id="
+							+ Benutzer.getProfilId());
+			
+			stmt = con.createStatement();
+			
+			stmt.executeUpdate(
+					"UPDATE t_profil " 
+							+ "SET geschlecht=\"" + geschlecht + "\", " + " haarfarbe=\"" + haarfarbe + "\", " + " koerpergroesse=\""
+							+  koerpergroesse + "\", " + "raucher=\"" + raucher + "\", " + " religion=\"" + religion + "\" " + "WHERE profil_id="
+							+ Benutzer.getProfilId());
+			
+			
+			
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		return nutzerprofil;
+	
 	}
 
 	/**
