@@ -56,8 +56,8 @@ public class EditNutzerprofil extends VerticalPanel {
 		final Label vornameLabel = new Label ("Vorname");
 		final Label nachnameLabel = new Label ("Nachname");
 		final Label geburtsdatumLabel = new Label ("Geburtsdatum");
-//		final Label koerpergroesseLabel = new Label ("Geburtsdatum");
-		
+		final Label koerpergroesseLabel = new Label ("Koerpergroesse");
+		final Label haarfarbeLabel = new Label ("Haarfarbe");
 		
 //		final TextBox vornameTextBox1 = new TextBox();
 //		final Label vornameLabel = new Label("Vorname");
@@ -76,9 +76,17 @@ public class EditNutzerprofil extends VerticalPanel {
 		horPanelGeburtsdatum.add(geburtsdatumTextBox);
 		horPanelGeburtsdatum.add(geburtsdatumLabel);
 		
-//		verPanel.add(horPanelKoerpergroesse);
-//		horPanelGeburtsdatum.add(koerpergroesseTextBox);
-//		horPanelGeburtsdatum.add(koerpergroesseLabel);
+		verPanel.add(horPanelKoerpergroesse);
+		horPanelGeburtsdatum.add(koerpergroesseTextBox);
+		horPanelGeburtsdatum.add(koerpergroesseLabel);
+		
+		verPanel.add(horPanelHaarfarbe);
+		horPanelHaarfarbe.add(haarfarbeListBox);
+		horPanelHaarfarbe.add(haarfarbeLabel);
+		
+//		verPanel.add(horPanel);
+//		horPanelHaarfarbe.add(haarfarbeListBox);
+//		horPanelHaarfarbe.add(haarfarbeLabel);
 		
 //		horPanelVorname.add(vornameTextBox1);
 //		horPanelVorname.add(vornameLabel);
@@ -120,7 +128,14 @@ public class EditNutzerprofil extends VerticalPanel {
 								koerpergroesseTextBox.setText(result
 										.getKoerpergroesse());
 								
-								haarfarbeListBox.setItemText(index, text);
+								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
+								
+								religionListBox.setItemText(0, result.getReligion());
+								
+								geschlechtListBox.setItemText(0,  result.getGeschlecht());
+								
+								raucherListBox.setItemText (0, result.getRaucher());
+		
 								
 
 							}
