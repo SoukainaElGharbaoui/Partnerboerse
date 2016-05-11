@@ -68,9 +68,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 
 	
-	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
+	public void saveNutzerprofil(String vorname, String nachname,
+			String geburtsdatum) throws IllegalArgumentException;
 
 
 	/**
@@ -98,9 +97,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public void save (String vorname, String nachname, String geschlecht, 
-			String haarfarbe,String koerpergroesse, String raucher, 
-			String religion, String geburtsdatum) throws IllegalArgumentException;
+//	public void save (String vorname, String nachname, String geschlecht, 
+//			String haarfarbe,String koerpergroesse, String raucher, 
+//			String religion, String geburtsdatum) throws IllegalArgumentException;
 	
 	/**
 	 * löschen eines Nutzerprofils in der Datenbank

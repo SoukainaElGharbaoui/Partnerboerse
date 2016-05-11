@@ -55,18 +55,30 @@ public class EditNutzerprofil extends VerticalPanel {
 		final Label ueberschriftLabel = new Label("Hier koennen sie ihr Nutzerprofil bearbeiten!");
 		final Label vornameLabel = new Label ("Vorname");
 		final Label nachnameLabel = new Label ("Nachname");
+		final Label geburtsdatumLabel = new Label ("Geburtsdatum");
+//		final Label koerpergroesseLabel = new Label ("Geburtsdatum");
 		
 		
 //		final TextBox vornameTextBox1 = new TextBox();
 //		final Label vornameLabel = new Label("Vorname");
+		
 		verPanel.add(ueberschriftLabel);
+		
 		verPanel.add(horPanelVorname);
 		horPanelVorname.add(vornameTextBox);
 		horPanelVorname.add(vornameLabel);
+		
 		verPanel.add(horPanelNachname);
 		horPanelNachname.add(nachnameTextBox);
 		horPanelNachname.add(nachnameLabel);
 		
+		verPanel.add(horPanelGeburtsdatum);
+		horPanelGeburtsdatum.add(geburtsdatumTextBox);
+		horPanelGeburtsdatum.add(geburtsdatumLabel);
+		
+//		verPanel.add(horPanelKoerpergroesse);
+//		horPanelGeburtsdatum.add(koerpergroesseTextBox);
+//		horPanelGeburtsdatum.add(koerpergroesseLabel);
 		
 //		horPanelVorname.add(vornameTextBox1);
 //		horPanelVorname.add(vornameLabel);
@@ -83,35 +95,36 @@ public class EditNutzerprofil extends VerticalPanel {
 		
 		
 		
-		
-				ClientsideSettings.getPartnerboerseAdministration()
-						.getNutzerprofilById(nutzerprofilId, new AsyncCallback<Nutzerprofil>() {
+		ClientsideSettings.getPartnerboerseAdministration()
+				.getNutzerprofilById(nutzerprofilId,
+						new AsyncCallback<Nutzerprofil>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel2.setText("Es trat ein Fehler auf.");
-															}
+							}
 
 							@Override
 							public void onSuccess(Nutzerprofil result) {
-								
-							
-//								final String nutzerprofilId2 = String.valueOf(result.getProfilId());
-								
+
+								// final String nutzerprofilId2 =
+								// String.valueOf(result.getProfilId());
+
 								vornameTextBox.setText(result.getVorname());
-								
+
 								nachnameTextBox.setText(result.getNachname());
-							
-							
-								
+
+								geburtsdatumTextBox.setText(result
+										.getGeburtsdatum());
+
+								koerpergroesseTextBox.setText(result
+										.getKoerpergroesse());
+
 							}
+
+						});
 					
-				
-			
-				});
-						
-		
-		
+	
 		
 		/**
 		 * updateNutzerprofilButton, um das Nutzerprofil zu aktualisieren.
@@ -121,44 +134,43 @@ public class EditNutzerprofil extends VerticalPanel {
 		updateNutzerprofilButton
 				.setStylePrimaryName("partnerboerse-menubutton");
 		verPanel.add(updateNutzerprofilButton);
-		
-		
+
 		/**
 		 * ClickHandler für den Button updateNutzerprofilButton
 		 */
-	updateNutzerprofilButton.addClickHandler(new ClickHandler() {
-		public void onClick(ClickEvent event) {
-			
-			ClientsideSettings.getPartnerboerseAdministration()
-			.updateNutzerprofil(vornameTextBox.getText(), nachnameTextBox.getText(),
-					geburtsdatumTextBox.getText(),
-					geschlechtListBox.getSelectedItemText(),
-					haarfarbeListBox.getSelectedItemText(),
-					koerpergroesseTextBox.getText(),
-					raucherListBox.getSelectedItemText(),
-					religionListBox.getSelectedItemText(),
-					new AsyncCallback<Nutzerprofil>() {
+		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				// geschlechtListBox.getSelectedItemText(),
+								// haarfarbeListBox.getSelectedItemText(),
+								// koerpergroesseTextBox.getText(),
+								// raucherListBox.getSelectedItemText(),
+								// religionListBox.getSelectedItemText(),
 
+				ClientsideSettings.getPartnerboerseAdministration()
+						.saveNutzerprofil(vornameTextBox.getText(),
+								nachnameTextBox.getText(),
+								geburtsdatumTextBox.getText(),
+								
+								new AsyncCallback<Void>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									infoLabel
-											.setText("Es trat ein Fehler auf");
-								}
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabel
+												.setText("Es trat ein Fehler auf");
+									}
 
-								@Override
-								public void onSuccess(Nutzerprofil result) {
-									infoLabel
-											.setText("Das Nutzerprofil wurde erfolgreich angelegt");
-								}
-					
-					});
-	
-		}
-});
+									@Override
+									public void onSuccess(Void result) {
+										infoLabel
+												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
+									}
 
-	
-	
+								});
+				
 
-}
+			}
+		});
+
+	}
 }
