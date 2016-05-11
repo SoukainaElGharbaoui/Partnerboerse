@@ -29,20 +29,23 @@ public class EditSuchprofil extends VerticalPanel {
 	public EditSuchprofil() {
 		this.add(verPanel);
 
+	
 	/**
 	 * Label �berschrift
 	 */
 	final Label ueberschriftLabel = new Label("Aktuelles Suchprofil bearbeiten");
 	
 	/**
-	 * Label Button
+	 * Panel Button
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
+	
 	
 	/**
 	 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
 	 */
 	final FlexTable editSuchprofilFlexTable = new FlexTable();
+	
 	
 	/**
 	 *  * Tabelle formatieren und CSS einbinden.
@@ -51,6 +54,7 @@ public class EditSuchprofil extends VerticalPanel {
 	editSuchprofilFlexTable.getColumnFormatter().addStyleName(0,
 			"TableHeader");
 	editSuchprofilFlexTable.addStyleName("FlexTable");
+	
 	
 	/**
 	 * Erste Spalte der Tabelle festlegen.
@@ -66,58 +70,7 @@ public class EditSuchprofil extends VerticalPanel {
 	editSuchprofilFlexTable.setText(7, 0, "Religion");
 	
 	
-//	/**
-//	 * Zweite Spalte der Tabelle festlegen (Datenbankabfrage der Werte)
-//	 */
-//	
-//	final Label infoLabel = new Label();
-//	
-//	ClientsideSettings.getPartnerboerseAdministration().getSuchprofilById(
-//			Benutzer.getProfilId(), new AsyncCallback<Suchprofil>() {
-//
-//				public void onFailure(Throwable caught) {
-//					infoLabel.setText("Es trat ein Fehler auf.");
-//
-//				}
-//
-//				public void onSuccess(Suchprofil result) {
-//				
-//					// Suchprofil-Id aus der Datenbank holen
-//					final String suchprofilId = String.valueOf(result.getProfilId());
-//					editSuchprofilFlexTable.setText(0, 1, suchprofilId);
-//
-//					// Geschlecht aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(1, 1,
-//							result.getGeschlecht());
-//					
-//					// Koerpergroesse aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(2, 1,
-//							result.getKoerpergroesse());
-//					
-//					// Haarfarbe aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(3, 1,
-//							result.getHaarfarbe());
-//					
-//					// AlterMax aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(4, 1,
-//							result.getAlterMin());
-//					
-//					// AlterMin aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(5, 1,
-//							result.getAlterMax());
-//					
-//					// Raucher aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(6, 1,
-//							result.getRaucher());
-//					
-//					// Religion aus der Datenbank holen
-//					editSuchprofilFlexTable.setText(7, 1,
-//							result.getReligion());
-//				}
-//
-//			});
-//	
-//	
+	
 	
 	/**
 	 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
@@ -176,7 +129,6 @@ public class EditSuchprofil extends VerticalPanel {
 	
 	final Label infoLabel2 = new Label();
 	
-
 	ClientsideSettings.getPartnerboerseAdministration()
 	.getSuchprofilById(profilId, new AsyncCallback<Suchprofil>() {
 
@@ -187,9 +139,6 @@ public class EditSuchprofil extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Suchprofil result) {
-			
-		
-//			final String nutzerprofilId2 = String.valueOf(result.getProfilId());
 			
 			koerpergroesseTextBox.setText(result.getKoerpergroesse());
 			

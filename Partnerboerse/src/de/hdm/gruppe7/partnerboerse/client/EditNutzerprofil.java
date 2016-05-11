@@ -4,88 +4,135 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
+
+
 
 public class EditNutzerprofil extends VerticalPanel {
 	
 	int nutzerprofilId; 
-
-	/**
-	 * VerticalPanels und HorizontalPanels hinzufügen.
-	 */
-	private VerticalPanel verPanel = new VerticalPanel();
-	private HorizontalPanel horPanelVorname = new HorizontalPanel();
-	private HorizontalPanel horPanelNachname = new HorizontalPanel();
-	private HorizontalPanel horPanelGeschlecht = new HorizontalPanel();
-	private HorizontalPanel horPanelGeburtsdatum = new HorizontalPanel();
-	private HorizontalPanel horPanelRaucher = new HorizontalPanel();
-	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
-	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
-	private HorizontalPanel horPanelReligion = new HorizontalPanel();
 	
+	VerticalPanel verPanel = new VerticalPanel();
+
 	/**
 	 * Konstruktor
 	 */
-	
-		
-	public EditNutzerprofil(int nutzerprofilId) {
-		this.nutzerprofilId = nutzerprofilId;
+	public EditNutzerprofil() {
+		//this.nutzerprofilId = nutzerprofilId;
 		this.add(verPanel);
 
 		/**
-		 * Erzeugen eines Eingabefelds fuer den Vornamen.
+		 * Label �berschrift
 		 */
-		final TextBox vornameTextBox = new TextBox();
-		final  TextBox nachnameTextBox = new TextBox();
-		final TextBox  geburtsdatumTextBox = new TextBox();
-		final ListBox geschlechtListBox = new ListBox();
-		final ListBox haarfarbeListBox = new ListBox();
-		final TextBox koerpergroesseTextBox = new TextBox();
-		final ListBox raucherListBox = new ListBox();
-		final ListBox religionListBox = new ListBox();
+		final Label ueberschriftLabel = new Label("Aktuelles Nutzerprofil bearbeiten");
 		
-		
-		final Label ueberschriftLabel = new Label("Hier koennen sie ihr Nutzerprofil bearbeiten!");
-		final Label vornameLabel = new Label ("Vorname");
-		final Label nachnameLabel = new Label ("Nachname");
-		
-		
-//		final TextBox vornameTextBox1 = new TextBox();
-//		final Label vornameLabel = new Label("Vorname");
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(horPanelVorname);
-		horPanelVorname.add(vornameTextBox);
-		horPanelVorname.add(vornameLabel);
-		verPanel.add(horPanelNachname);
-		horPanelNachname.add(nachnameTextBox);
-		horPanelNachname.add(nachnameLabel);
-		
-		
-//		horPanelVorname.add(vornameTextBox1);
-//		horPanelVorname.add(vornameLabel);
+		/**
+		 * Panel Button
+		 */
+		HorizontalPanel buttonPanel = new HorizontalPanel();	
 		
 		
 		/**
-		 * infoLabel für die Benutzerinformation erzeugen.
+		 * Tabelle erzeugen, in der das Nutzerprofil dargestellt wird und bearbeitet werden kann.
 		 */
-		final Label infoLabel = new Label();
-		verPanel.add(infoLabel);
+		final FlexTable editNutzerprofilFlexTable = new FlexTable();
+		
+		
+		/**
+		 *  * Tabelle formatieren und CSS einbinden.
+		 */
+		editNutzerprofilFlexTable.setCellPadding(6);
+		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
+		editNutzerprofilFlexTable.addStyleName("FlexTable");
+		
+		
+		/**
+		 * Erste Spalte der Tabelle festlegen.
+		 */
+
+		editNutzerprofilFlexTable.setText(0, 0, "Nutzerprofil-Id");
+		editNutzerprofilFlexTable.setText(1, 0, "Vorname");
+		editNutzerprofilFlexTable.setText(2, 0, "Nachname");
+		editNutzerprofilFlexTable.setText(3, 0, "Geschlecht");
+		editNutzerprofilFlexTable.setText(4, 0, "Geburtsdatum");
+		editNutzerprofilFlexTable.setText(5, 0, "Raucher");
+		editNutzerprofilFlexTable.setText(6, 0, "Koerpergroesse");
+		editNutzerprofilFlexTable.setText(7, 0, "Haarfarbe");
+		editNutzerprofilFlexTable.setText(8, 0, "Religion");
+
+		
+		
+		/**
+		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
+		 */
+		
+		final Label editLabel = new Label();
+		
+		final TextBox vornameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
+		
+		final TextBox nachnameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
+		
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		editNutzerprofilFlexTable.setWidget(3, 2, geschlechtListBox);
+		
+		final TextBox geburtsdatumTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumTextBox);
+	
+		final ListBox raucherListBox = new ListBox();
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichtraucher");
+		editNutzerprofilFlexTable.setWidget(5, 2, raucherListBox);
+		
+		final TextBox koerpergroesseTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(6, 2, koerpergroesseTextBox);
+		
+		final ListBox haarfarbeListBox = new ListBox();
+		haarfarbeListBox.addItem("Keine Auswahl");
+		haarfarbeListBox.addItem("Blond");
+		haarfarbeListBox.addItem("Braun");
+		haarfarbeListBox.addItem("Rot");
+		haarfarbeListBox.addItem("Schwarz");
+		haarfarbeListBox.addItem("Grau");
+		haarfarbeListBox.addItem("Glatze");
+		editNutzerprofilFlexTable.setWidget(7, 2, haarfarbeListBox);
+		
+		final ListBox religionListBox = new ListBox();
+		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Christlich");
+		religionListBox.addItem("Juedisch");
+		religionListBox.addItem("Muslimisch");
+		religionListBox.addItem("Buddhistisch");
+		religionListBox.addItem("Hinduistisch");
+		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
+		
+		
+		/**
+		 * Text in Eingabefelder einf�gen
+		 *
+		 */
 		
 		final Label infoLabel2 = new Label();
-		verPanel.add(infoLabel2);
-		
-		
-		
 		
 				ClientsideSettings.getPartnerboerseAdministration()
-						.getNutzerprofilById(nutzerprofilId, new AsyncCallback<Nutzerprofil>() {
+				.getNutzerprofilById(nutzerprofilId, new AsyncCallback<Nutzerprofil>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -95,65 +142,75 @@ public class EditNutzerprofil extends VerticalPanel {
 							@Override
 							public void onSuccess(Nutzerprofil result) {
 								
-							
-//								final String nutzerprofilId2 = String.valueOf(result.getProfilId());
-								
 								vornameTextBox.setText(result.getVorname());
 								
 								nachnameTextBox.setText(result.getNachname());
-							
-							
 								
+								koerpergroesseTextBox.setText(result.getKoerpergroesse());
+								
+								geburtsdatumTextBox.setText(result.getGeburtsdatum());
+									
+								raucherListBox.setItemText(0, result.getRaucher());
+								
+								geschlechtListBox.setItemText(0, result.getGeschlecht());
+								
+								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
+								
+								religionListBox.setItemText(0, result.getReligion());
+							
 							}
-					
-				
-			
 				});
+		
+				
+				/**
+				 * Zum Panel hinzuf�gen
+				 */
+				
+				verPanel.add(ueberschriftLabel);
+				verPanel.add(editNutzerprofilFlexTable);
+//				verPanel.add(infoLabel);
+				verPanel.add(infoLabel2);
+				verPanel.add(editLabel);
+				
+				/**
+				 *  �nderungen Speichern-Button hinzufügen und ausbauen.
+				 */
+						final Button speichernButton = new Button("&Auml;nderungen speichern");
+						verPanel.add(buttonPanel);
+						buttonPanel.add(speichernButton);
 						
-		
-		
-		
-		/**
-		 * updateNutzerprofilButton, um das Nutzerprofil zu aktualisieren.
-		 */
-		final Button updateNutzerprofilButton = new Button(
-				"Nutzerprofil updaten");
-		updateNutzerprofilButton
-				.setStylePrimaryName("partnerboerse-menubutton");
-		verPanel.add(updateNutzerprofilButton);
-		
-		
-		/**
-		 * ClickHandler für den Button updateNutzerprofilButton
-		 */
-	updateNutzerprofilButton.addClickHandler(new ClickHandler() {
-		public void onClick(ClickEvent event) {
-			
-			ClientsideSettings.getPartnerboerseAdministration()
-			.updateNutzerprofil(vornameTextBox.getText(), nachnameTextBox.getText(),
-					geburtsdatumTextBox.getText(),
-					geschlechtListBox.getSelectedItemText(),
-					haarfarbeListBox.getSelectedItemText(),
-					koerpergroesseTextBox.getText(),
-					raucherListBox.getSelectedItemText(),
-					religionListBox.getSelectedItemText(),
-					new AsyncCallback<Nutzerprofil>() {
+						final Label informationLabel = new Label();
+						verPanel.add(informationLabel);		
+						
+						
+						speichernButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+								
+								ClientsideSettings.getPartnerboerseAdministration()
+								.updateNutzerprofil(vornameTextBox.getText(), nachnameTextBox.getText(),
+										geburtsdatumTextBox.getText(),
+										geschlechtListBox.getSelectedItemText(),
+										haarfarbeListBox.getSelectedItemText(),
+										koerpergroesseTextBox.getText(),
+										raucherListBox.getSelectedItemText(),
+										religionListBox.getSelectedItemText(),
+										new AsyncCallback<Nutzerprofil>() {
 
 
-								@Override
-								public void onFailure(Throwable caught) {
-									infoLabel
-											.setText("Es trat ein Fehler auf");
-								}
+													@Override
+													public void onFailure(Throwable caught) {
+														informationLabel
+																.setText("Es trat ein Fehler auf");
+													}
 
-								@Override
-								public void onSuccess(Nutzerprofil result) {
-									infoLabel
-											.setText("Das Nutzerprofil wurde erfolgreich angelegt");
-								}
-					
-					});
-	
+													@Override
+													public void onSuccess(Nutzerprofil result) {
+														informationLabel
+																.setText("Das Nutzerprofil wurde erfolgreich gespeichert");
+													}
+										
+										});
+
 		}
 });
 
