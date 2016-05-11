@@ -3,6 +3,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -36,54 +37,66 @@ public class EditNutzerprofil extends VerticalPanel {
 	public EditNutzerprofil(int nutzerprofilId) {
 		this.nutzerprofilId = nutzerprofilId;
 		this.add(verPanel);
+		
 		/**
-		 * Erzeugen eines Eingabefelds fuer den Vornamen.
+		 * Label �berschrift
 		 */
-		final TextBox vornameTextBox = new TextBox();
-		final  TextBox nachnameTextBox = new TextBox();
-		final TextBox  geburtsdatumTextBox = new TextBox();
-		final ListBox geschlechtListBox = new ListBox();
-		final ListBox haarfarbeListBox = new ListBox();
-		final TextBox koerpergroesseTextBox = new TextBox();
-		final ListBox raucherListBox = new ListBox();
-		final ListBox religionListBox = new ListBox();
-		
-		
 		final Label ueberschriftLabel = new Label("Hier koennen sie ihr Nutzerprofil bearbeiten!");
-		final Label vornameLabel = new Label ("Vorname");
-		final Label nachnameLabel = new Label ("Nachname");
-		final Label geburtsdatumLabel = new Label ("Geburtsdatum");
-		final Label koerpergroesseLabel = new Label ("Koerpergroesse");
-		final Label haarfarbeLabel = new Label ("Haarfarbe");
-		final Label geschlechtLabel = new Label ("Geschlecht");
-		final Label religionLabel = new Label ("Religion");
-		final Label raucherLabel = new Label ("Raucher");
-		
-//		final TextBox vornameTextBox1 = new TextBox();
-//		final Label vornameLabel = new Label("Vorname");
-		
 		verPanel.add(ueberschriftLabel);
+		/**
+		 * Panel Button
+		 */
+		HorizontalPanel buttonPanel = new HorizontalPanel();
 		
-		verPanel.add(horPanelVorname);
-		horPanelVorname.add(vornameTextBox);
-		horPanelVorname.add(vornameLabel);
 		
-		verPanel.add(horPanelNachname);
-		horPanelNachname.add(nachnameTextBox);
-		horPanelNachname.add(nachnameLabel);
+		/**
+		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
+		 */
+		final FlexTable editNutzerprofilFlexTable = new FlexTable();
 		
-		verPanel.add(horPanelGeburtsdatum);
-		horPanelGeburtsdatum.add(geburtsdatumTextBox);
-		horPanelGeburtsdatum.add(geburtsdatumLabel);
+		/**
+		 *  * Tabelle formatieren und CSS einbinden.
+		 */
+		editNutzerprofilFlexTable.setCellPadding(6);
+		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
+		editNutzerprofilFlexTable.addStyleName("FlexTable");
 		
-		verPanel.add(horPanelKoerpergroesse);
-		horPanelKoerpergroesse.add(koerpergroesseTextBox);
-		horPanelKoerpergroesse.add(koerpergroesseLabel);
+		/**
+		 * Erste Spalte der Tabelle festlegen.
+		 */
+
+		editNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
+		editNutzerprofilFlexTable.setText(1, 0, "Vorname");
+		editNutzerprofilFlexTable.setText(2, 0, "Nachname");
+		editNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
+		editNutzerprofilFlexTable.setText(4, 0, "Koerpergroesse");
+		editNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
+		editNutzerprofilFlexTable.setText(6, 0, "Geschlecht");
+		editNutzerprofilFlexTable.setText(7, 0, "Raucher");
+		editNutzerprofilFlexTable.setText(8, 0, "Religion");
 		
-		verPanel.add(horPanelHaarfarbe);
-		horPanelHaarfarbe.add(haarfarbeListBox);
-		horPanelHaarfarbe.add(haarfarbeLabel);
+		/**
+		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
+		 */
 		
+		final Label editLabel = new Label();
+		
+		
+		final TextBox vornameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
+		
+		final TextBox nachnameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
+		
+	
+		final TextBox geburtsdatumTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
+		
+		final TextBox koerpergroesseTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		
+		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -91,38 +104,31 @@ public class EditNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
+		editNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 		
-		verPanel.add(horPanelGeschlecht);
-		horPanelGeschlecht.add(geschlechtListBox);
-		horPanelGeschlecht.add(geschlechtLabel);
-		
+		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
+		editNutzerprofilFlexTable.setWidget(6, 2, geschlechtListBox);
 		
-		verPanel.add(horPanelReligion);
-		horPanelReligion.add(religionListBox);
-		horPanelReligion.add(religionLabel);
+		final ListBox raucherListBox = new ListBox();
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichtraucher");
+		editNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
 		
+		final ListBox religionListBox = new ListBox();
 		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		
-		verPanel.add(horPanelRaucher);
-		horPanelRaucher.add(raucherListBox);
-		horPanelRaucher.add(raucherLabel);
-		
-		raucherListBox.addItem("Keine Angabe");
-		raucherListBox.addItem("Raucher");
-		raucherListBox.addItem("Nichtraucher");
-		
-//		horPanelVorname.add(vornameTextBox1);
-//		horPanelVorname.add(vornameLabel);
+		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
 		
 		
+		verPanel.add(editNutzerprofilFlexTable);
 		/**
 		 * infoLabel für die Benutzerinformation erzeugen.
 		 */
@@ -170,9 +176,9 @@ public class EditNutzerprofil extends VerticalPanel {
 		 * updateNutzerprofilButton, um das Nutzerprofil zu aktualisieren.
 		 */
 		final Button updateNutzerprofilButton = new Button(
-				"Nutzerprofil updaten");
-		updateNutzerprofilButton
-				.setStylePrimaryName("partnerboerse-menubutton");
+				"&Auml;nderungen speichern");
+//		updateNutzerprofilButton
+//				.setStylePrimaryName("partnerboerse-menubutton");
 		verPanel.add(updateNutzerprofilButton);
 		/**
 		 * ClickHandler für den Button updateNutzerprofilButton
