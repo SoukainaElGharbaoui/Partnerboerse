@@ -58,6 +58,9 @@ public class EditNutzerprofil extends VerticalPanel {
 		final Label geburtsdatumLabel = new Label ("Geburtsdatum");
 		final Label koerpergroesseLabel = new Label ("Koerpergroesse");
 		final Label haarfarbeLabel = new Label ("Haarfarbe");
+		final Label geschlechtLabel = new Label ("Geschlecht");
+		final Label religionLabel = new Label ("Religion");
+		final Label raucherLabel = new Label ("Raucher");
 		
 //		final TextBox vornameTextBox1 = new TextBox();
 //		final Label vornameLabel = new Label("Vorname");
@@ -77,16 +80,47 @@ public class EditNutzerprofil extends VerticalPanel {
 		horPanelGeburtsdatum.add(geburtsdatumLabel);
 		
 		verPanel.add(horPanelKoerpergroesse);
-		horPanelGeburtsdatum.add(koerpergroesseTextBox);
-		horPanelGeburtsdatum.add(koerpergroesseLabel);
+		horPanelKoerpergroesse.add(koerpergroesseTextBox);
+		horPanelKoerpergroesse.add(koerpergroesseLabel);
 		
 		verPanel.add(horPanelHaarfarbe);
 		horPanelHaarfarbe.add(haarfarbeListBox);
 		horPanelHaarfarbe.add(haarfarbeLabel);
 		
-//		verPanel.add(horPanel);
-//		horPanelHaarfarbe.add(haarfarbeListBox);
-//		horPanelHaarfarbe.add(haarfarbeLabel);
+		haarfarbeListBox.addItem("Keine Auswahl");
+		haarfarbeListBox.addItem("Blond");
+		haarfarbeListBox.addItem("Braun");
+		haarfarbeListBox.addItem("Rot");
+		haarfarbeListBox.addItem("Schwarz");
+		haarfarbeListBox.addItem("Grau");
+		haarfarbeListBox.addItem("Glatze");
+		
+		verPanel.add(horPanelGeschlecht);
+		horPanelGeschlecht.add(geschlechtListBox);
+		horPanelGeschlecht.add(geschlechtLabel);
+		
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		
+		verPanel.add(horPanelReligion);
+		horPanelReligion.add(religionListBox);
+		horPanelReligion.add(religionLabel);
+		
+		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Christlich");
+		religionListBox.addItem("Juedisch");
+		religionListBox.addItem("Muslimisch");
+		religionListBox.addItem("Buddhistisch");
+		religionListBox.addItem("Hinduistisch");
+		
+		verPanel.add(horPanelRaucher);
+		horPanelRaucher.add(raucherListBox);
+		horPanelRaucher.add(raucherLabel);
+		
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichtraucher");
 		
 //		horPanelVorname.add(vornameTextBox1);
 //		horPanelVorname.add(vornameLabel);

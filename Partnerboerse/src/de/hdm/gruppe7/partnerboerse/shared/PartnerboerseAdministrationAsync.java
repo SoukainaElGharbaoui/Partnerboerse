@@ -23,7 +23,7 @@ public interface PartnerboerseAdministrationAsync {
 			AsyncCallback<Nutzerprofil> callback);
 	
 	void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, AsyncCallback<Void> callback);
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion, AsyncCallback<Void> callback);
 	
 
 

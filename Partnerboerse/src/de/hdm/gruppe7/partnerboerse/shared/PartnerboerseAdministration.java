@@ -69,7 +69,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum) throws IllegalArgumentException;
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
