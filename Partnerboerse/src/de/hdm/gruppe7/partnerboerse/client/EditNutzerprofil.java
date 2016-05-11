@@ -1,4 +1,5 @@
 package de.hdm.gruppe7.partnerboerse.client;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -11,29 +12,21 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+
 public class EditNutzerprofil extends VerticalPanel {
-	
-	int nutzerprofilId; 
+
+	int nutzerprofilId;
 	/**
 	 * VerticalPanels und HorizontalPanels hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	private HorizontalPanel horPanelVorname = new HorizontalPanel();
-	private HorizontalPanel horPanelNachname = new HorizontalPanel();
-	private HorizontalPanel horPanelGeschlecht = new HorizontalPanel();
-	private HorizontalPanel horPanelGeburtsdatum = new HorizontalPanel();
-	private HorizontalPanel horPanelRaucher = new HorizontalPanel();
-	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
-	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
-	private HorizontalPanel horPanelReligion = new HorizontalPanel();
 	
+
 	/**
 	 * Konstruktor
 	 */
-	
-		
+
 	public EditNutzerprofil(int nutzerprofilId) {
 		this.nutzerprofilId = nutzerprofilId;
 		this.add(verPanel);
@@ -41,12 +34,11 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
+
 		final Label ueberschriftLabel = new Label("Hier koennen sie ihr Nutzerprofil bearbeiten!");
+
 		verPanel.add(ueberschriftLabel);
-		/**
-		 * Panel Button
-		 */
-		HorizontalPanel buttonPanel = new HorizontalPanel();
+
 		
 		
 		/**
@@ -79,9 +71,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
 		 */
-		
-		final Label editLabel = new Label();
-		
+
 		
 		final TextBox vornameTextBox = new TextBox();
 		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
@@ -126,20 +116,20 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
-		
-		
-		verPanel.add(editNutzerprofilFlexTable);
+	
 		/**
 		 * infoLabel für die Benutzerinformation erzeugen.
 		 */
 		final Label infoLabel = new Label();
 		verPanel.add(infoLabel);
-		
+
 		final Label infoLabel2 = new Label();
 		verPanel.add(infoLabel2);
 		
-		
-		
+		/**
+		 * Die Textboxen werden zu anfangs mit den bestehenden Eigenschaften gef�llt.
+		 */
+
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getNutzerprofilById(nutzerprofilId,
 						new AsyncCallback<Nutzerprofil>() {
@@ -147,31 +137,32 @@ public class EditNutzerprofil extends VerticalPanel {
 							public void onFailure(Throwable caught) {
 								infoLabel2.setText("Es trat ein Fehler auf.");
 							}
+
 							@Override
 							public void onSuccess(Nutzerprofil result) {
-								// final String nutzerprofilId2 =
-								// String.valueOf(result.getProfilId());
+
 								vornameTextBox.setText(result.getVorname());
 								nachnameTextBox.setText(result.getNachname());
 								geburtsdatumTextBox.setText(result
 										.getGeburtsdatum());
 								koerpergroesseTextBox.setText(result
 										.getKoerpergroesse());
-								
-								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
-								
+
+								haarfarbeListBox.setItemText(0,
+										result.getHaarfarbe());
+
 								religionListBox.setItemText(0, result.getReligion());
-								
-								geschlechtListBox.setItemText(0,  result.getGeschlecht());
-								
-								raucherListBox.setItemText (0, result.getRaucher());
-		
-								
+
+								geschlechtListBox.setItemText(0,
+										result.getGeschlecht());
+
+								raucherListBox.setItemText(0,
+										result.getRaucher());
+
 							}
 						});
-					
-	
 		
+		verPanel.add(editNutzerprofilFlexTable);
 		/**
 		 * updateNutzerprofilButton, um das Nutzerprofil zu aktualisieren.
 		 */
@@ -185,31 +176,33 @@ public class EditNutzerprofil extends VerticalPanel {
 		 */
 		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-			
+
 				ClientsideSettings.getPartnerboerseAdministration()
 						.saveNutzerprofil(vornameTextBox.getText(),
 								nachnameTextBox.getText(),
 								geburtsdatumTextBox.getText(),
-								 geschlechtListBox.getSelectedItemText(),
-								 haarfarbeListBox.getSelectedItemText(),
-								 koerpergroesseTextBox.getText(),
-								 raucherListBox.getSelectedItemText(),
-								 religionListBox.getSelectedItemText(),
+								geschlechtListBox.getSelectedItemText(),
+								haarfarbeListBox.getSelectedItemText(),
+								koerpergroesseTextBox.getText(),
+								raucherListBox.getSelectedItemText(),
+								religionListBox.getSelectedItemText(),
 								new AsyncCallback<Void>() {
 									@Override
 									public void onFailure(Throwable caught) {
 										infoLabel
 												.setText("Es trat ein Fehler auf");
 									}
+
 									@Override
 									public void onSuccess(Void result) {
 										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 										RootPanel.get("Details").clear();
-										RootPanel.get("Details").add(showEigenesNp);
+										RootPanel.get("Details").add(
+												showEigenesNp);
+
 									}
 								});
-				
+
 			}
 		});
 	}

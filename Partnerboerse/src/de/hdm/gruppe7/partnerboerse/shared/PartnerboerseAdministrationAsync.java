@@ -1,7 +1,6 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 

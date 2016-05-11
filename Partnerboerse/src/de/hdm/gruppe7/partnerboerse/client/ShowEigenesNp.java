@@ -37,7 +37,6 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 		final Label ueberschriftLabel = new Label("Eigenes Nutzerprofil");
 
-
 		/**
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
 		 */
@@ -138,13 +137,20 @@ public class ShowEigenesNp extends VerticalPanel {
 
 								showEigenesNpFlexTable.setText(8, 1,
 										result.getRaucher());
+
+								
+
+
+
 							}
 
-				});
 
-								verPanel.add(ueberschriftLabel);
-								verPanel.add(showEigenesNpFlexTable);
-								verPanel.add(infoLabel);
+				});
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(showEigenesNpFlexTable);
+		verPanel.add(infoLabel);
+
+
 
 								// Löschen-Button hinzufügen und ausbauen.
 								final Button loeschenButton = new Button("Löschen");
