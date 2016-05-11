@@ -153,7 +153,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		
 
-		nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+		this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
 	}
 
 	/**
@@ -163,7 +163,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public void deleteNutzerprofil(int profilId)
 			throws IllegalArgumentException {
 
-		nutzerprofilMapper.deleteNutzerprofil(profilId);
+
+		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
+
+		
 	}
 
 	@Override
@@ -243,8 +246,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	public void deleteSuchprofil(int profilId) throws IllegalArgumentException {
 		
-		suchprofilMapper.deleteSuchprofil(profilId);
-		
+		this.suchprofilMapper.deleteSuchprofil(profilId);
 	}
 
 

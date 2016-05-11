@@ -112,15 +112,15 @@ public class ShowSuchprofil extends VerticalPanel {
 		verPanel.add(showSuchprofilFlexTable);
 		verPanel.add(infoLabel);
 
-		// Bearbeiten-Button hinzufügen und ausbauen.
-		final Button bearbeitenButton = new Button("Bearbeiten");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(bearbeitenButton);
-
 		// Löschen-Button hinzufügen und ausbauen.
 		final Button loeschenButton = new Button("Löschen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
+		
+		// Bearbeiten-Button hinzufügen und ausbauen.
+		final Button bearbeitenButton = new Button("Bearbeiten");
+		verPanel.add(buttonPanel);
+		buttonPanel.add(bearbeitenButton);
 
 		// ClickHandler für den Bearbeiten-Button hinzufügen.
 		bearbeitenButton.addClickHandler(new ClickHandler() {
