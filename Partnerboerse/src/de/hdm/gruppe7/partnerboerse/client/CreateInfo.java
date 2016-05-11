@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
@@ -104,13 +105,14 @@ public class CreateInfo extends VerticalPanel {
 					final Button speichernInfoButton = new Button("Information speichern");
 					speichernInfoButton.setStylePrimaryName("partnerboerse-menubutton");
 					showEigenschaftFlexTable.setWidget(row, 3, speichernInfoButton);
-					// verPanel.add(speichernInfoButton);
 
 					speichernInfoButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
+						
+							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
-							ClientsideSettings.getPartnerboerseAdministration().createInfo(textArea.getText(),
-									new AsyncCallback<Info>() {
+							ClientsideSettings.getPartnerboerseAdministration().createInfo(Benutzer.getProfilId(),
+									eigenschaftIdInt, textArea.getText(), new AsyncCallback<Info>() {
 
 										@Override
 										public void onFailure(Throwable caught) {

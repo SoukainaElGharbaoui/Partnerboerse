@@ -273,9 +273,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 	
-	public Info createInfo(String infotext) throws IllegalArgumentException {
+	public Info createInfo(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
 		
 		Info info = new Info();
+		info.setNutzerprofilId(profilId);
+		info.setEigenschaftId(eigenschaftId);
 		info.setInfotext(infotext);
 		
 		return this.infoMapper.insertInfo(info);
