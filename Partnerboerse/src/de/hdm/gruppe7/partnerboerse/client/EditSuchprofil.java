@@ -123,7 +123,7 @@ public class EditSuchprofil extends VerticalPanel {
 	
 	
 	/**
-	 * Text in Eingabefelder einf�gen
+	 * Text in Eingabefelder einf�gen
 	 *
 	 */
 	
@@ -153,8 +153,6 @@ public class EditSuchprofil extends VerticalPanel {
 			haarfarbeListBox.setItemText(0, result.getHaarfarbe());
 			
 			religionListBox.setItemText(0, result.getReligion());
-		
-	
 			
 		}
 	});
@@ -171,7 +169,7 @@ public class EditSuchprofil extends VerticalPanel {
 	verPanel.add(editLabel);
 	
 	/**
-	 *  �nderungen Speichern-Button hinzufügen und ausbauen.
+	 * Änderungen Speichern-Button hinzufügen und ausbauen.
 	 */
 			final Button speichernButton = new Button("&Auml;nderungen speichern");
 			verPanel.add(buttonPanel);
@@ -181,19 +179,19 @@ public class EditSuchprofil extends VerticalPanel {
 	 * ClickHandler f�r den Speichern-Button hinzuf�gen.
 	 */
 			final Label informationLabel = new Label();
-			verPanel.add(informationLabel);		
+			verPanel.add(informationLabel);	
 			
 			speichernButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
+					
 					ClientsideSettings.getPartnerboerseAdministration()
-					.save(alterMinTextBox.getText(),
+					.saveSuchprofil(alterMinTextBox.getText(), 
 							alterMaxTextBox.getText(),
 							geschlechtListBox.getSelectedItemText(),
-							haarfarbeListBox.getSelectedItemText(),
 							koerpergroesseTextBox.getText(),
+							haarfarbeListBox.getSelectedItemText(),
 							raucherListBox.getSelectedItemText(),
-							religionListBox.getSelectedItemText(),
-							new AsyncCallback<Suchprofil>() {
+							religionListBox.getSelectedItemText(),new AsyncCallback<Void>() {
 
 								@Override
 								public void onFailure(Throwable caught) {
@@ -201,7 +199,7 @@ public class EditSuchprofil extends VerticalPanel {
 								}
 
 								@Override
-								public void onSuccess(Suchprofil result) {
+								public void onSuccess(Void result) {
 									informationLabel.setText("Suchprofil erfolgreich aktualisiert.");
 									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
 									RootPanel.get("Details").clear();

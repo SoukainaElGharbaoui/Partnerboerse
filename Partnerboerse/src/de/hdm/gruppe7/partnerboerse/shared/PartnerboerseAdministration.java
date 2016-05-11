@@ -99,9 +99,11 @@ public interface PartnerboerseAdministration extends RemoteService {
      */
 	
 	
-	public Suchprofil save(String alterMin, String alterMax,
-			String geschlecht, String haarfarbe, String koerpergroesse, 
-			String raucher, String religion);
+	public void saveSuchprofil(String alterMin, String alterMax, String geschlecht, 
+			String koerpergroesse, String haarfarbe, String raucher, String religion) 
+			throws IllegalArgumentException;
+	
+
 	
 	/**
 	 * l�schen eines Nutzerprofils in der Datenbank

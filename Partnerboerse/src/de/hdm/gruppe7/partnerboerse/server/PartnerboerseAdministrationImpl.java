@@ -94,22 +94,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException {
-		
-		
-//			
-//		Nutzerprofil nutzerprofil = new Nutzerprofil();
-//		nutzerprofil.setVorname(vorname);
-//		nutzerprofil.setNachname(nachname);
-//		nutzerprofil.setGeburtsdatum(geburtsdatum);
-//		nutzerprofil.setGeschlecht(geschlecht);
-//		nutzerprofil.setHaarfarbe(haarfarbe);
-//		nutzerprofil.setKoerpergroesse(koerpergroesse);
-//		nutzerprofil.setRaucher(raucher);
-//		nutzerprofil.setReligion(religion);
-//		
-//		// Vorläufige ProfilId setzen. 
-//				nutzerprofil.setProfilId(1);
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, 
+			String raucher, String religion) throws IllegalArgumentException {
 
 		 this.nutzerprofilMapper.updateNutzerprofil(vorname, nachname,
 				 geburtsdatum, geschlecht, haarfarbe, koerpergroesse, raucher, religion);
@@ -227,21 +213,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 
-	public Suchprofil save(String alterMin, String alterMax, String geschlecht, 
-			String haarfarbe,String koerpergroesse, String raucher, 
-			String religion) throws IllegalArgumentException {
+	public void saveSuchprofil(String alterMin, String alterMax, String geschlecht, 
+			String koerpergroesse, String haarfarbe, String raucher, String religion) 
+			throws IllegalArgumentException {
 		
-		Suchprofil suchprofil = new Suchprofil();
-		suchprofil.setAlterMin(alterMin);
-		suchprofil.setAlterMax (alterMax);
-		suchprofil.setGeschlecht(geschlecht);
-		suchprofil.setHaarfarbe(haarfarbe);
-		suchprofil.setKoerpergroesse(koerpergroesse);
-		suchprofil.setRaucher(raucher);
-		suchprofil.setReligion(religion);
-		
-		return this.suchprofilMapper.updateSuchprofil(suchprofil);
-		
+		this.suchprofilMapper.updateSuchprofil(alterMin, alterMax, geschlecht,
+				koerpergroesse, haarfarbe, raucher, religion);
 	
 	}
 

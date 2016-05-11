@@ -132,8 +132,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		final Label infoLabel2 = new Label();
 		verPanel.add(infoLabel2);
 		
-		
-		
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getNutzerprofilById(nutzerprofilId,
 						new AsyncCallback<Nutzerprofil>() {
@@ -185,16 +183,15 @@ public class EditNutzerprofil extends VerticalPanel {
 						.saveNutzerprofil(vornameTextBox.getText(),
 								nachnameTextBox.getText(),
 								geburtsdatumTextBox.getText(),
-								 geschlechtListBox.getSelectedItemText(),
-								 haarfarbeListBox.getSelectedItemText(),
-								 koerpergroesseTextBox.getText(),
-								 raucherListBox.getSelectedItemText(),
-								 religionListBox.getSelectedItemText(),
+								geschlechtListBox.getSelectedItemText(),
+								haarfarbeListBox.getSelectedItemText(),
+								koerpergroesseTextBox.getText(),
+								raucherListBox.getSelectedItemText(),
+								religionListBox.getSelectedItemText(),
 								new AsyncCallback<Void>() {
 									@Override
 									public void onFailure(Throwable caught) {
-										infoLabel
-												.setText("Es trat ein Fehler auf");
+										infoLabel.setText("Es trat ein Fehler auf");
 									}
 									@Override
 									public void onSuccess(Void result) {

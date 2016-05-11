@@ -150,33 +150,47 @@ public class SuchprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
-	public Suchprofil updateSuchprofil(Suchprofil suchprofil) { 
+	public void updateSuchprofil(String alterMin, String alterMax,String geschlecht, 
+			String koerpergroesse, String haarfarbe, String raucher, String religion) { 
 		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable, d.h. die SuchprofilId
+		int suchprofilIdInt = 0; 
 
 		try {
-			Statement stmt = con.createStatement();
+			Statement stmt = con.createStatement(); 
+			
+			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
+					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
+			
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			if(rs.next()) {
+				suchprofilIdInt = rs.getInt("sp_id"); 
 
+			stmt = con.createStatement();
 			stmt.executeUpdate(
-					"UPDATE t_suchprofil " + "SET alter_von=\"" + "suchprofil.getAlterMin()" 
-					+ "\", " + "alter_bis=\"" + "suchprofil.getAlterMax()" + "\" "
-					+ "WHERE suchprofil_id=" + suchprofil.getProfilId());
+					"UPDATE t_suchprofil " 
+							+ "SET alter_von=\"" + alterMin + "\", " 
+							+ "alter_bis=\"" + alterMax + "\" "
+							+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId()); 
 			
 			stmt = con.createStatement();
-			
 			stmt.executeUpdate(
-					"UPDATE t_profil " + "SET geschlecht=\"" + suchprofil.getGeschlecht() 
-					+ "\", " + "koerpergroesse=\"" + suchprofil.getKoerpergroesse() 
-					+ "\", " + "haarfarbe=\"" + suchprofil.getHaarfarbe()
-					+ "\", " + "raucher=\"" + suchprofil.getRaucher()
-					+ "\", " + "religion=\"" + suchprofil.getReligion() + "\" "
-					+ "WHERE profil_id=" + suchprofil.getProfilId());
+					"UPDATE t_profil " 
+							+ "SET geschlecht=\"" + geschlecht + "\", " 
+							+ "koerpergroesse=\"" + koerpergroesse + "\", " 
+							+ "haarfarbe=\"" + haarfarbe + "\", " 
+							+ "raucher=\"" + raucher + "\", "
+							+ "religion=\"" + religion + "\" "
+							+ "WHERE profil_id=" + suchprofilIdInt);
 
-
+			}
+			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		return suchprofil;
 	}
 
 	/**
@@ -209,16 +223,7 @@ public class SuchprofilMapper {
 			// Löschen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
-						
-//			stmt.executeUpdate("DELETE FROM t_profil "
-//					+ "WHERE t_profil.profil_id " 
-//					+ "IN (SELECT t_suchprofil.suchprofil_id "
-//					+ "FROM t_suchprofil "
-//					+ "WHERE t_suchprofil.nutzerprofilId=" + profilId);
-//			
-//			stmt = con.createStatement();
-			
-			
+								
 			}
 			
 		} catch (SQLException e2) {
