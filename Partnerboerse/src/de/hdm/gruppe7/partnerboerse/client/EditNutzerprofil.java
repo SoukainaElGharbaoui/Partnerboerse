@@ -156,39 +156,39 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * ClickHandler für den Button updateNutzerprofilButton
 		 */
-		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+//		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
 				
 			
 
-				ClientsideSettings.getPartnerboerseAdministration()
-						.saveNutzerprofil(vornameTextBox.getText(),
-								nachnameTextBox.getText(),
-								geburtsdatumTextBox.getText(),
-								 geschlechtListBox.getSelectedItemText(),
-								 haarfarbeListBox.getSelectedItemText(),
-								 koerpergroesseTextBox.getText(),
-								 raucherListBox.getSelectedItemText(),
-								 religionListBox.getSelectedItemText(),
-								new AsyncCallback<Void>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										infoLabel
-												.setText("Es trat ein Fehler auf");
-									}
-
-									@Override
-									public void onSuccess(Void result) {
-										infoLabel
-												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
-									}
-
-								});
-				
-
-			}
-		});
+//				ClientsideSettings.getPartnerboerseAdministration()
+//						.saveNutzerprofil(vornameTextBox.getText(),
+//								nachnameTextBox.getText(),
+//								geburtsdatumTextBox.getText(),
+//								 geschlechtListBox.getSelectedItemText(),
+//								 haarfarbeListBox.getSelectedItemText(),
+//								 koerpergroesseTextBox.getText(),
+//								 raucherListBox.getSelectedItemText(),
+//								 religionListBox.getSelectedItemText(),
+//								new AsyncCallback<Void>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										infoLabel
+//												.setText("Es trat ein Fehler auf");
+//									}
+//
+//									@Override
+//									public void onSuccess(Void result) {
+//										infoLabel
+//												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
+//									}
+//
+//								});
+//				
+//
+//			}
+//		});
 
 	}
 }

@@ -12,6 +12,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -273,18 +274,36 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 	
-	public Info createInfo(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
 		
 		Info info = new Info();
 		info.setNutzerprofilId(profilId);
 		info.setEigenschaftId(eigenschaftId);
 		info.setInfotext(infotext);
 		
-		return this.infoMapper.insertInfo(info);
+		return this.infoMapper.insertBeschreibungsinfo(info);
 	}
 	
-	public List<Eigenschaft> getAllEigenschaften() throws IllegalArgumentException {
-		return this.infoMapper.findAllEigenschaften();
+	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) throws IllegalArgumentException {
+		
+		Info info = new Info();
+		info.setNutzerprofilId(profilId);
+		info.setEigenschaftId(eigenschaftId);
+		info.setAuswahloptionId(auswahloptionId);
+		
+		return this.infoMapper.insertAuswahlinfo(info);
+	}
+	
+	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaftenB();
+	}
+	
+	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaftenA();
+	}
+	
+	public List<Auswahloption> getAllAuswahloptionen() throws IllegalArgumentException {
+		return this.infoMapper.findAllAuswahloptionen();
 	}
 }
 

@@ -9,10 +9,24 @@ public class Info extends BusinessObject {
 	private String infotext;
 	private int eigenschaftId;
 	private int nutzerprofilId;
+	private int auswahloptionId;
+
+	//Konstruktor
+	public Info() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
-//	Eigenschaft eigenschaft = new Eigenschaft();
-//	Nutzerprofil nutzerprofil= new Nutzerprofil();
-	
+	//Getter- & Settermethoden
+
+	public int getAuswahloptionId() {
+		return auswahloptionId;
+	}
+
+	public void setAuswahloptionId(int auswahloptionId) {
+		this.auswahloptionId = auswahloptionId;
+	}
+
 	public int getNutzerprofilId() {
 		return nutzerprofilId;
 	}
@@ -28,15 +42,6 @@ public class Info extends BusinessObject {
 	public void setEigenschaftId(int eigenschaftId) {
 		this.eigenschaftId = eigenschaftId;
 	}
-
-	//Konstruktor
-	public Info() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	//Getter- & Settermethoden
-
 	public int getInfoId() {
 		return infoId;
 	}
