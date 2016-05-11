@@ -151,7 +151,7 @@ public class NutzerprofilForm extends VerticalPanel {
 			if (nutzerprofilToDisplay != null) {
 				nutzerprofilToDisplay.setVorname(vornameTextBox.getText());
 //				nutzerprofilToDisplay.setNachname(nachnameTextBox.getText());
-				partnerboerseAdministration.save(nutzerprofilToDisplay, new SaveCallback());
+//				partnerboerseAdministration.save(nutzerprofilToDisplay, new SaveCallback());
 			} else {
 				Window.alert("kein Nutzerprofil ausgew�hlt");
 			}

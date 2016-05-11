@@ -22,17 +22,16 @@ public interface PartnerboerseAdministrationAsync {
 			String koerpergroesse, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 	
-	void updateNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion, AsyncCallback<Nutzerprofil> callback);
+	void saveNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, AsyncCallback<Void> callback);
 	
 
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	void save(String vorname, String nachname, String geschlecht, 
-			String haarfarbe,String koerpergroesse, String raucher, 
-			String religion, String geburtsdatum, AsyncCallback<Void> callback);
+//	void save(String vorname, String nachname, String geschlecht, 
+//			String haarfarbe,String koerpergroesse, String raucher, 
+//			String religion, String geburtsdatum, AsyncCallback<Void> callback);
 	
 	
 

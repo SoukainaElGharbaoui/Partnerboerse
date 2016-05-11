@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class NutzerprofilMapper {
@@ -50,6 +51,7 @@ public class NutzerprofilMapper {
 				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
 				nutzerprofil.setNachname(rs.getString("nachname"));	
+				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));	
 				return nutzerprofil;
 				
 			}
@@ -186,25 +188,37 @@ public class NutzerprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
 	 */
-	public Nutzerprofil updateNutzerprofil( Nutzerprofil nutzerprofil) {
-		Connection con = DBConnection.connection();
+	public void updateNutzerprofil(String vorname, String nachname, String geburtsdatum) {
 		
+		Connection con = DBConnection.connection();
+	
 
 		try {
 			Statement stmt = con.createStatement();
-
+//
 			stmt.executeUpdate(
-					"UPDATE t_nutzerprofil INNER JOIN t_profil" + "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id"
+					"UPDATE t_nutzerprofil " 
+							+ "SET vorname=\"" + vorname + "\", " + " nachname=\"" + nachname + "\", " + " geburtsdatum=\""
+							+  geburtsdatum +  "\" " + "WHERE nutzerprofil_id="
+							+ Benutzer.getProfilId());
+			
+			stmt = con.createStatement();
+			
+			stmt.executeUpdate(
+					"UPDATE t_profil " 
 							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
 							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
 							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
 							+ nutzerprofil.getProfilId());
+			
+			
+			
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		return nutzerprofil;
+	
 	}
 
 	/**

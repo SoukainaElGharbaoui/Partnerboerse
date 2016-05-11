@@ -93,24 +93,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	
 	
-	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion) {
+	public void saveNutzerprofil(String vorname, String nachname,
+			String geburtsdatum) throws IllegalArgumentException {
 		
-		Nutzerprofil nutzerprofil = new Nutzerprofil();
-		nutzerprofil.setVorname(vorname);
-		nutzerprofil.setNachname(nachname);
-		nutzerprofil.setGeburtsdatum(geburtsdatum);
-		nutzerprofil.setGeschlecht(geschlecht);
-		nutzerprofil.setHaarfarbe(haarfarbe);
-		nutzerprofil.setKoerpergroesse(koerpergroesse);
-		nutzerprofil.setRaucher(raucher);
-		nutzerprofil.setReligion(religion);
 		
-		// Vorläufige ProfilId setzen. 
-				nutzerprofil.setProfilId(1);
+//			
+//		Nutzerprofil nutzerprofil = new Nutzerprofil();
+//		nutzerprofil.setVorname(vorname);
+//		nutzerprofil.setNachname(nachname);
+//		nutzerprofil.setGeburtsdatum(geburtsdatum);
+//		nutzerprofil.setGeschlecht(geschlecht);
+//		nutzerprofil.setHaarfarbe(haarfarbe);
+//		nutzerprofil.setKoerpergroesse(koerpergroesse);
+//		nutzerprofil.setRaucher(raucher);
+//		nutzerprofil.setReligion(religion);
+//		
+//		// Vorläufige ProfilId setzen. 
+//				nutzerprofil.setProfilId(1);
 
-		return this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+		 this.nutzerprofilMapper.updateNutzerprofil(vorname, nachname,
+				 geburtsdatum);
 
 	}
 
@@ -137,24 +139,24 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Speichern eines Nutzerprofils.
 	 */
-	@Override
-	public void save(String vorname, String nachname, String geschlecht, 
-			String haarfarbe,String koerpergroesse, String raucher, 
-			String religion, String geburtsdatum) throws IllegalArgumentException {
-
-		Nutzerprofil nutzerprofil = new Nutzerprofil();
-		nutzerprofil.setVorname(vorname);
-		nutzerprofil.setNachname (nachname);
-		nutzerprofil.setGeschlecht(geschlecht);
-		nutzerprofil.setHaarfarbe(haarfarbe);
-		nutzerprofil.setKoerpergroesse(koerpergroesse);
-		nutzerprofil.setRaucher(raucher);
-		nutzerprofil.setReligion(religion);
-		
-		
-
-		this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
-	}
+//	@Override
+//	public void save(String vorname, String nachname, String geschlecht, 
+//			String haarfarbe,String koerpergroesse, String raucher, 
+//			String religion, String geburtsdatum) throws IllegalArgumentException {
+//
+//		Nutzerprofil nutzerprofil = new Nutzerprofil();
+//		nutzerprofil.setVorname(vorname);
+//		nutzerprofil.setNachname (nachname);
+//		nutzerprofil.setGeschlecht(geschlecht);
+//		nutzerprofil.setHaarfarbe(haarfarbe);
+//		nutzerprofil.setKoerpergroesse(koerpergroesse);
+//		nutzerprofil.setRaucher(raucher);
+//		nutzerprofil.setReligion(religion);
+//		
+//		
+//
+//		this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+//	}
 
 	/**
 	 * Löschen eines Nutzerprofils.
