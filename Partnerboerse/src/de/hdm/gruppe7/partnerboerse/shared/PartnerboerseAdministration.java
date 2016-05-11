@@ -92,7 +92,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
+	
 	public void save(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
+	
+	public Suchprofil save(String alterMin, String alterMax,
+			String geschlecht, String haarfarbe, String koerpergroesse, 
+			String raucher, String religion);
 
 	void deleteNutzerprofil(Nutzerprofil nutzerprofil);
 
@@ -155,8 +160,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
+//	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
+//			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
 	 * L�schen des �bergebenen Suchprofils.
@@ -177,7 +182,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
 
-	public Info createInfo(String infotext) 
+	public Info createInfo(int profilId, int eigenschaftId, String infotext) 
 			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllEigenschaften()

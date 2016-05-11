@@ -139,8 +139,11 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 			
 			stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (nutzerprofil_id, eigenschaft_id, infotext) "
-					+ "VALUES(" + Benutzer.getProfilId() + "," + info.getEigenschaftId + ",'" + info.getInfotext() + "')");
+					+ "VALUES(" + info.getNutzerprofilId() + "," + info.getEigenschaftId() + ",'" + info.getInfotext() + "')");
 
+//			stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (nutzerprofil_id) "
+//					+ "VALUES( info.getNutzerprofilId())");
+		
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}

@@ -81,7 +81,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */	
 	
-	void createInfo(String infotext, AsyncCallback<Info> callback); 
+	void createInfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
 	
 	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
 
