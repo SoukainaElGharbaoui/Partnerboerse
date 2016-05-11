@@ -1,5 +1,4 @@
 package de.hdm.gruppe7.partnerboerse.client;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -7,15 +6,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-
 public class EditNutzerprofil extends VerticalPanel {
 	
 	int nutzerprofilId; 
-
 	/**
 	 * VerticalPanels und HorizontalPanels hinzufügen.
 	 */
@@ -37,7 +35,6 @@ public class EditNutzerprofil extends VerticalPanel {
 	public EditNutzerprofil(int nutzerprofilId) {
 		this.nutzerprofilId = nutzerprofilId;
 		this.add(verPanel);
-
 		/**
 		 * Erzeugen eines Eingabefelds fuer den Vornamen.
 		 */
@@ -137,25 +134,18 @@ public class EditNutzerprofil extends VerticalPanel {
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getNutzerprofilById(nutzerprofilId,
 						new AsyncCallback<Nutzerprofil>() {
-
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel2.setText("Es trat ein Fehler auf.");
 							}
-
 							@Override
 							public void onSuccess(Nutzerprofil result) {
-
 								// final String nutzerprofilId2 =
 								// String.valueOf(result.getProfilId());
-
 								vornameTextBox.setText(result.getVorname());
-
 								nachnameTextBox.setText(result.getNachname());
-
 								geburtsdatumTextBox.setText(result
 										.getGeburtsdatum());
-
 								koerpergroesseTextBox.setText(result
 										.getKoerpergroesse());
 								
@@ -168,9 +158,7 @@ public class EditNutzerprofil extends VerticalPanel {
 								raucherListBox.setItemText (0, result.getRaucher());
 		
 								
-
 							}
-
 						});
 					
 	
@@ -183,7 +171,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		updateNutzerprofilButton
 				.setStylePrimaryName("partnerboerse-menubutton");
 		verPanel.add(updateNutzerprofilButton);
-
 		/**
 		 * ClickHandler für den Button updateNutzerprofilButton
 		 */
@@ -191,7 +178,6 @@ public class EditNutzerprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 			
-
 				ClientsideSettings.getPartnerboerseAdministration()
 						.saveNutzerprofil(vornameTextBox.getText(),
 								nachnameTextBox.getText(),
@@ -202,24 +188,20 @@ public class EditNutzerprofil extends VerticalPanel {
 								 raucherListBox.getSelectedItemText(),
 								 religionListBox.getSelectedItemText(),
 								new AsyncCallback<Void>() {
-
 									@Override
 									public void onFailure(Throwable caught) {
 										infoLabel
 												.setText("Es trat ein Fehler auf");
 									}
-
 									@Override
 									public void onSuccess(Void result) {
-										infoLabel
-												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
+										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(showEigenesNp);
 									}
-
 								});
 				
-
 			}
 		});
-
 	}
 }
