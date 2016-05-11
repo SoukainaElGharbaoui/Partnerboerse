@@ -10,9 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
@@ -60,6 +58,10 @@ public class ShowSuchprofil extends VerticalPanel {
 				"TableHeader");
 		showSuchprofilFlexTable.addStyleName("FlexTable");
 
+		/**
+		 * InfoLabel erstellen um Text auszugeben
+		 */
+		
 		final Label infoLabel = new Label();
 
 		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilById(
@@ -71,7 +73,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					}
 
 					public void onSuccess(Suchprofil result) {
-					
+
 						// Suchprofil-Id aus der Datenbank holen
 						final String suchprofilId = String.valueOf(result
 								.getProfilId());
@@ -80,27 +82,27 @@ public class ShowSuchprofil extends VerticalPanel {
 						// Geschlecht aus der Datenbank holen
 						showSuchprofilFlexTable.setText(1, 1,
 								result.getGeschlecht());
-						
+
 						// Koerpergroesse aus der Datenbank holen
 						showSuchprofilFlexTable.setText(2, 1,
 								result.getKoerpergroesse());
-						
+
 						// Haarfarbe aus der Datenbank holen
 						showSuchprofilFlexTable.setText(3, 1,
 								result.getHaarfarbe());
-						
+
 						// AlterMax aus der Datenbank holen
 						showSuchprofilFlexTable.setText(4, 1,
 								result.getAlterMin());
-						
+
 						// AlterMin aus der Datenbank holen
 						showSuchprofilFlexTable.setText(5, 1,
 								result.getAlterMax());
-						
+
 						// Raucher aus der Datenbank holen
 						showSuchprofilFlexTable.setText(6, 1,
 								result.getRaucher());
-						
+
 						// Religion aus der Datenbank holen
 						showSuchprofilFlexTable.setText(7, 1,
 								result.getReligion());
@@ -116,7 +118,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		final Button loeschenButton = new Button("Löschen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
-		
+
 		// Bearbeiten-Button hinzufügen und ausbauen.
 		final Button bearbeitenButton = new Button("Bearbeiten");
 		verPanel.add(buttonPanel);

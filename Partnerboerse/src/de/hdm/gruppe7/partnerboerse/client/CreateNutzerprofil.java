@@ -26,15 +26,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
 	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
 	private HorizontalPanel horPanelReligion = new HorizontalPanel();
-	private HorizontalPanel horPanelVersuch = new HorizontalPanel();
 	
 	/**
 	 * Konstruktor
 	 */
 	public CreateNutzerprofil() {
 		this.add(verPanel);
-		
-		
+
 		/**
 		 * Erzeugen eines Eingabefelds fuer den Vornamen.
 		 */

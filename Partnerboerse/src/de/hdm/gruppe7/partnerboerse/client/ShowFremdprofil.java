@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowFremdprofil extends VerticalPanel {
@@ -59,7 +58,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		 * InfoLabel erstellen um Text auszugeben
 		 */
 		final Label infoLabel = new Label();
-		final Label infoLabel2 = new Label(); 
+		
 		
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getFremdprofilById( fremdprofilId,

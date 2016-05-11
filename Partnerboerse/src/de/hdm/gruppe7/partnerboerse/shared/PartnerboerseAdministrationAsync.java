@@ -1,12 +1,12 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -85,9 +85,14 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */	
 	
-	void createInfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
+	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
 	
-	void getAllEigenschaften(AsyncCallback<List<Eigenschaft>> callback);
+	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
+	
+	void getAllEigenschaftenB(AsyncCallback<List<Eigenschaft>> callback);
 
+	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);
+
+	void getAllAuswahloptionen(AsyncCallback<List<Auswahloption>> callback);
 }
 	

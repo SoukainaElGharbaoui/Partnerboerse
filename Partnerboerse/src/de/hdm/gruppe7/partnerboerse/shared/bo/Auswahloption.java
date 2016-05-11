@@ -7,6 +7,8 @@ public class Auswahloption extends BusinessObject{
 	//Attribute
 	private int auswahloptionId;
 	private String optionsbezeichnung;
+	private int eigenschaftId;
+	private int nutzerprofilId;
 
 	//Konstruktor
 	public Auswahloption() {
@@ -16,6 +18,21 @@ public class Auswahloption extends BusinessObject{
 	
 	//Getter- & Settermethoden
 
+	public int getNutzerprofilId() {
+		return nutzerprofilId;
+	}
+
+	public void setNutzerprofilId(int nutzerprofilId) {
+		this.nutzerprofilId = nutzerprofilId;
+	}
+	public int getEigenschaftId() {
+		return eigenschaftId;
+	}
+
+	public void setEigenschaftId(int eigenschaftId) {
+		this.eigenschaftId = eigenschaftId;
+	}
+	
 	public int getAuswahloptionId() {
 		return auswahloptionId;
 	}

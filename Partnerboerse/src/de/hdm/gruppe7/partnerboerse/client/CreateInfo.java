@@ -7,10 +7,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
@@ -18,9 +21,17 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 public class CreateInfo extends VerticalPanel {
 
 	/**
+	 * GUI für Beschreibungsinfo
+	 */
+
+	/**
 	 * VerticalPanels und HorizontalPanels hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+
+	private HorizontalPanel horPanel = new HorizontalPanel();
+	
+//	final ListBox neueListBox = new ListBox();
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -51,23 +62,6 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.addStyleName("FlexTable");
 
 		/**
-		 * Erzeugen einer TextArea fuer die Info.
-		 */
-		// final TextArea textArea = new TextArea();
-
-		/**
-		 * Button definieren
-		 */
-		// final Button speichernInfoButton = new Button("Information
-		// speichern");
-		// speichernInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-		// verPanel.add(speichernInfoButton);
-
-		// final Button loeschenInfoButton = new Button("Information löschen");
-		// loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-		// verPanel.add(loeschenInfoButton);
-
-		/**
 		 * informationLabel für die Benutzerinformation erzeugen.
 		 */
 		final Label informationLabel = new Label();
@@ -77,7 +71,7 @@ public class CreateInfo extends VerticalPanel {
 		 */
 		verPanel.add(informationLabel);
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaften(new AsyncCallback<List<Eigenschaft>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenB(new AsyncCallback<List<Eigenschaft>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -111,7 +105,7 @@ public class CreateInfo extends VerticalPanel {
 						
 							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
-							ClientsideSettings.getPartnerboerseAdministration().createInfo(Benutzer.getProfilId(),
+							ClientsideSettings.getPartnerboerseAdministration().createBeschreibungsinfo(Benutzer.getProfilId(),
 									eigenschaftIdInt, textArea.getText(), new AsyncCallback<Info>() {
 
 										@Override
@@ -131,10 +125,6 @@ public class CreateInfo extends VerticalPanel {
 					final Button loeschenInfoButton = new Button("Information löschen");
 					loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
 					showEigenschaftFlexTable.setWidget(row, 4, loeschenInfoButton);
-					// verPanel.add(loeschenInfoButton);
-
-					// verPanel.add(horPanelInfo);
-					// horPanelInfo.add(textArea);
 				}
 
 			}
@@ -142,6 +132,137 @@ public class CreateInfo extends VerticalPanel {
 
 		verPanel.add(showEigenschaftFlexTable);
 		verPanel.add(informationLabel);
-	}
+	
+	
+	
+	/**
+	 * GUI für Auswahlinfo
+	 */
+	
+	/**
+	 * Tabelle zur Anzeige der Eigenschaften hinzufügen.
+	 */
+	final FlexTable showEigenschaftFlexTableAuswahl = new FlexTable();
 
+	/**
+	 * Erste Zeile der Tabelle festlegen.
+	 */
+	showEigenschaftFlexTableAuswahl.setText(0, 0, "Eigenschaft-Id");
+	showEigenschaftFlexTableAuswahl.setText(0, 1, "Erlaeuterung");
+	showEigenschaftFlexTableAuswahl.setText(0, 2, "Auswahloptionen");
+
+	showEigenschaftFlexTableAuswahl.setText(0, 3, "Speichern");
+	showEigenschaftFlexTableAuswahl.setText(0, 4, "Löschen");
+
+	/**
+	 * Tabelle formatieren und CSS einbinden.
+	 */
+	showEigenschaftFlexTableAuswahl.setCellPadding(6);
+	showEigenschaftFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
+	showEigenschaftFlexTableAuswahl.addStyleName("FlexTable");
+
+	/**
+	 * informationLabel für die Benutzerinformation erzeugen.
+	 */
+	final Label informationLabelAuswahl = new Label();
+
+	/**
+	 * informationLabel zum navPanel hinzufügen.
+	 */
+	verPanel.add(informationLabelAuswahl);
+
+	ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenA(new AsyncCallback<List<Eigenschaft>>() {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			informationLabelAuswahl.setText("Es trat ein Fehler auf");
+		}
+
+		@Override
+		public void onSuccess(List<Eigenschaft> result) {
+			// Anzahl der Zeilen ermitteln.
+			int row = showEigenschaftFlexTableAuswahl.getRowCount();
+
+			// Tabelle mit Inhalten aus der Datenbank befüllen.
+			for (Eigenschaft e : result) {
+				row++;
+
+				final String eigenschaftId = String.valueOf(e.getEigenschaftId());
+
+				showEigenschaftFlexTableAuswahl.setText(row, 0, eigenschaftId);
+
+				showEigenschaftFlexTableAuswahl.setText(row, 1, e.getErlaeuterung());
+				
+				final ListBox neueListBox = new ListBox();
+
+				showEigenschaftFlexTableAuswahl.setWidget(row, 2, neueListBox);
+						
+						ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen(new AsyncCallback<List<Auswahloption>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabelAuswahl.setText("Es trat ein Fehler auf");
+								
+							}
+
+							@Override
+							public void onSuccess(List<Auswahloption> result) {
+							
+							int row2 = showEigenschaftFlexTableAuswahl.getRowCount();
+							
+							
+							for(Auswahloption a : result){
+								row2++;
+								
+								neueListBox.addItem(a.getOptionsbezeichnung());
+								
+								
+							}
+							
+							
+							}
+				
+						});
+						
+						
+					
+				final Button speichernInfoButton = new Button("Information speichern");
+				speichernInfoButton.setStylePrimaryName("partnerboerse-menubutton");
+				showEigenschaftFlexTableAuswahl.setWidget(row, 3, speichernInfoButton);
+
+				speichernInfoButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+					
+						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
+
+//						ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),
+//								eigenschaftIdInt, neueListBox.getSelectedItemText(), new AsyncCallback<Info>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										informationLabelAuswahl.setText("Es trat ein Fehler auf");
+//									}
+//
+//									@Override
+//									public void onSuccess(Info result) {
+//										informationLabelAuswahl.setText("Die Info wurde erfolgreich angelegt");
+//									}
+//
+//								});
+					}
+				});
+
+				
+				
+				final Button loeschenInfoButton = new Button("Information löschen");
+				loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
+				showEigenschaftFlexTableAuswahl.setWidget(row, 4, loeschenInfoButton);
+			}
+		}
+
+	});
+
+	verPanel.add(showEigenschaftFlexTableAuswahl);
+	verPanel.add(informationLabelAuswahl);
+	}
 }

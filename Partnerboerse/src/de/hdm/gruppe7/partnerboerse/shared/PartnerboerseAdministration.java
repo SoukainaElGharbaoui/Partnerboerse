@@ -1,14 +1,13 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -194,11 +193,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
 
-	public Info createInfo(int profilId, int eigenschaftId, String infotext) 
+	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
 			throws IllegalArgumentException;
 	
-	public List<Eigenschaft> getAllEigenschaften()
+	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
+	
+	public List<Eigenschaft> getAllEigenschaftenB()
+			throws IllegalArgumentException;
+	
+	public List<Eigenschaft> getAllEigenschaftenA()
+			throws IllegalArgumentException;
+	
+	public List<Auswahloption> getAllAuswahloptionen()
+			throws IllegalArgumentException;
+
 	
 /**
  *Auslesen eines Suchprofils anhand der ID
