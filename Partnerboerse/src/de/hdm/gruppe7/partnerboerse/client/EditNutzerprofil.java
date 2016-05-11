@@ -6,8 +6,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class EditNutzerprofil extends VerticalPanel {
@@ -196,8 +198,9 @@ public class EditNutzerprofil extends VerticalPanel {
 									}
 									@Override
 									public void onSuccess(Void result) {
-										infoLabel
-												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
+										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(showEigenesNp);
 									}
 								});
 				
