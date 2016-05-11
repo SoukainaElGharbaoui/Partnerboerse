@@ -95,7 +95,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum) throws IllegalArgumentException {
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException {
 		
 		
 //			
@@ -113,7 +113,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 //				nutzerprofil.setProfilId(1);
 
 		 this.nutzerprofilMapper.updateNutzerprofil(vorname, nachname,
-				 geburtsdatum);
+				 geburtsdatum, geschlecht, haarfarbe, koerpergroesse, raucher, religion);
 
 	}
 

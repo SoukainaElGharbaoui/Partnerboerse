@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.server.db;
 
 import java.sql.*;
@@ -15,7 +14,7 @@ public class NutzerprofilMapper {
 	// Konstruktor
 	protected NutzerprofilMapper() {
 	}
-	
+
 	public static NutzerprofilMapper nutzerprofilMapper() {
 		if (nutzerprofilMapper == null) {
 			nutzerprofilMapper = new NutzerprofilMapper();
@@ -25,7 +24,7 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId. 
+	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId.
 	 */
 	public Nutzerprofil findByNutzerprofilId(int profilId) {
 		// DB-Verbindung holen
@@ -37,9 +36,9 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					
-					"SELECT * FROM t_nutzerprofil " 
-					+ "WHERE nutzerprofil_id=" + profilId);
+
+			"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE profil_id= "
+					+ profilId + " AND nutzerprofil_id=" + profilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -50,10 +49,15 @@ public class NutzerprofilMapper {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
 				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));	
-				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));	
+				nutzerprofil.setNachname(rs.getString("nachname"));
+				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
+				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+				nutzerprofil.setKoerpergroesse(rs.getString("Koerpergroesse"));
+				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				nutzerprofil.setRaucher(rs.getString("raucher"));
+				nutzerprofil.setReligion(rs.getString("religion"));
 				return nutzerprofil;
-				
+
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -64,10 +68,11 @@ public class NutzerprofilMapper {
 	
 	/**
 	 * Auslesen des Fremdprofils
+	 * 
 	 * @param profilId
 	 * @return
 	 */
-	
+
 	public Nutzerprofil findByFremdprofilId(int fremdprofilId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -78,9 +83,9 @@ public class NutzerprofilMapper {
 
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
-					
-					"SELECT * FROM t_nutzerprofil " 
-					+ "WHERE nutzerprofil_id=" + fremdprofilId);
+
+			"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE nutzerprofil_id="
+					+ fremdprofilId + " AND profil_id=" + fremdprofilId);
 
 			/*
 			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -91,9 +96,9 @@ public class NutzerprofilMapper {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
 				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));	
+				nutzerprofil.setNachname(rs.getString("nachname"));
 				return nutzerprofil;
-				
+
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -114,8 +119,10 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil INNER JOIN"
-					+ "t_nutzerprofil ON t_profil.profil_id = " + "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM t_profil INNER JOIN"
+							+ "t_nutzerprofil ON t_profil.profil_id = "
+							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -147,94 +154,135 @@ public class NutzerprofilMapper {
 	 */
 	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
 		Connection con = DBConnection.connection();
-		
+
 		try {
 			Statement stmt = con.createStatement();
-			
-			// Größte profil_id ermitteln. 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
+
+			// Größte profil_id ermitteln.
+			ResultSet rs = stmt
+					.executeQuery("SELECT MAX(profil_id) AS maxprofil_id "
+							+ "FROM t_profil");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {	
-				
-				// nutzerprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
+			if (rs.next()) {
+
+				// nutzerprofil erhaelt den bisher maximalen, nun um 1
+				// inkrementierten Primärschlüssel.
 				nutzerprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
-				
-				// Tabelle t_profil befüllen - funktioniert. 
+
+				// Tabelle t_profil befüllen - funktioniert.
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
-								+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getGeschlecht() + "','"
-								+ nutzerprofil.getHaarfarbe() + "','" + nutzerprofil.getKoerpergroesse() + "','"
-								+ nutzerprofil.getRaucher() + "','" + nutzerprofil.getReligion() + "')");
-				
-				// Tablle t_nutzerprofil befüllen - funktioniert. 
+						+ "VALUES("
+						+ nutzerprofil.getProfilId()
+						+ ",'"
+						+ nutzerprofil.getGeschlecht()
+						+ "','"
+						+ nutzerprofil.getHaarfarbe()
+						+ "','"
+						+ nutzerprofil.getKoerpergroesse()
+						+ "','"
+						+ nutzerprofil.getRaucher()
+						+ "','"
+						+ nutzerprofil.getReligion() + "')");
+
+				// Tablle t_nutzerprofil befüllen - funktioniert.
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
-						+ "VALUES(" + nutzerprofil.getProfilId() + ",'" + nutzerprofil.getVorname() + "','"
-						+ nutzerprofil.getNachname() + "','" + nutzerprofil.getGeburtsdatum() + "')");	
+						+ "VALUES("
+						+ nutzerprofil.getProfilId()
+						+ ",'"
+						+ nutzerprofil.getVorname()
+						+ "','"
+						+ nutzerprofil.getNachname()
+						+ "','"
+						+ nutzerprofil.getGeburtsdatum() + "')");
 			}
-			
-		}
-		 catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		/*
-		 * Rückgabe des Nutzerprofils mit evtl. korrigierter ProfilId. 
-		 */
-		return nutzerprofil;	
-		}
-
-	/**
-	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
-	 */
-	public void updateNutzerprofil(String vorname, String nachname, String geburtsdatum) {
-		
-		Connection con = DBConnection.connection();
-	
-
-		try {
-			Statement stmt = con.createStatement();
-//
-			stmt.executeUpdate(
-					"UPDATE t_nutzerprofil " 
-							+ "SET vorname=\"" + vorname + "\", " + " nachname=\"" + nachname + "\", " + " geburtsdatum=\""
-							+  geburtsdatum +  "\" " + "WHERE nutzerprofil_id="
-							+ Benutzer.getProfilId());
-			
-//			stmt = con.createStatement();
-			
-//			stmt.executeUpdate(
-//					"UPDATE t_profil " 
-//							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
-//							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
-//							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
-//							+ nutzerprofil.getProfilId());
-//			
-			
-			
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-	
+		/*
+		 * Rückgabe des Nutzerprofils mit evtl. korrigierter ProfilId.
+		 */
+		return nutzerprofil;
 	}
 
 	/**
-	 * Loeschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der Datenbank.
+	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die
+	 * Datenbank.
 	 */
-	public void deleteNutzerprofil(int profilId) {
+	public void updateNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion) {
+
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
+			
+			stmt.executeUpdate("UPDATE t_nutzerprofil " + "SET vorname=\""
+					+ vorname + "\", " + " nachname=\"" + nachname + "\", "
+					+ " geburtsdatum=\"" + geburtsdatum + "\" "
+					+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId());
 
-			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE nutzerprofil_id =" + profilId);
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_profil " + "SET geschlecht=\""
+					+ geschlecht + "\", " + " haarfarbe=\"" + haarfarbe
+					+ "\", " + " koerpergroesse=\"" + koerpergroesse + "\", "
+					+ "raucher=\"" + raucher + "\", " + " religion=\""
+					+ religion + "\" " + "WHERE profil_id="
+					+ Benutzer.getProfilId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Loeschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der
+	 * Datenbank.
+	 */
+	public void deleteNutzerprofil(int profilId) {
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvariable, d.h. die NutzerprofilId
+		int nutzerprofilIdInt = 0;
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			// Holen der zu löschenden NutzerprofilId aus der Tabelle
+			// t_nutzerprofil
+			ResultSet rs = stmt
+					.executeQuery("SELECT nutzerprofil_id AS np_id "
+							+ "FROM t_nutzerprofil WHERE t_nutzerprofil.nutzerprofil_id="
+							+ profilId);
+
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			if (rs.next()) {
+				nutzerprofilIdInt = rs.getInt("np_id");
+
+				// Löschen der Daten in der Tabelle t_nutzerprofil mit der
+				// entsprechenden ProfilId
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_nutzerprofil "
+						+ "WHERE t_nutzerprofil.nutzerprofil_id=" + profilId);
+
+				// Löschen der Daten in der Tabelle t_profil mit der
+				// entsprechenden NutzerprofilId
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id="
+						+ nutzerprofilIdInt);
+
+			}
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 	}
 }
-

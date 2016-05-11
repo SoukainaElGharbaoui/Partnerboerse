@@ -4,109 +4,135 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class EditNutzerprofil extends VerticalPanel {
-	
-	int nutzerprofilId; 
 
+	int nutzerprofilId;
 	/**
 	 * VerticalPanels und HorizontalPanels hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	private HorizontalPanel horPanelVorname = new HorizontalPanel();
-	private HorizontalPanel horPanelNachname = new HorizontalPanel();
-	private HorizontalPanel horPanelGeschlecht = new HorizontalPanel();
-	private HorizontalPanel horPanelGeburtsdatum = new HorizontalPanel();
-	private HorizontalPanel horPanelRaucher = new HorizontalPanel();
-	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
-	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
-	private HorizontalPanel horPanelReligion = new HorizontalPanel();
 	
+
 	/**
 	 * Konstruktor
 	 */
-	
-		
+
 	public EditNutzerprofil(int nutzerprofilId) {
 		this.nutzerprofilId = nutzerprofilId;
 		this.add(verPanel);
-
+		
 		/**
-		 * Erzeugen eines Eingabefelds fuer den Vornamen.
+		 * Label �berschrift
 		 */
-		final TextBox vornameTextBox = new TextBox();
-		final  TextBox nachnameTextBox = new TextBox();
-		final TextBox  geburtsdatumTextBox = new TextBox();
-		final ListBox geschlechtListBox = new ListBox();
-		final ListBox haarfarbeListBox = new ListBox();
-		final TextBox koerpergroesseTextBox = new TextBox();
-		final ListBox raucherListBox = new ListBox();
-		final ListBox religionListBox = new ListBox();
-		
-		
+
 		final Label ueberschriftLabel = new Label("Hier koennen sie ihr Nutzerprofil bearbeiten!");
-		final Label vornameLabel = new Label ("Vorname");
-		final Label nachnameLabel = new Label ("Nachname");
-		final Label geburtsdatumLabel = new Label ("Geburtsdatum");
-		final Label koerpergroesseLabel = new Label ("Koerpergroesse");
-		final Label haarfarbeLabel = new Label ("Haarfarbe");
-		
-//		final TextBox vornameTextBox1 = new TextBox();
-//		final Label vornameLabel = new Label("Vorname");
-		
+
 		verPanel.add(ueberschriftLabel);
-		
-		verPanel.add(horPanelVorname);
-		horPanelVorname.add(vornameTextBox);
-		horPanelVorname.add(vornameLabel);
-		
-		verPanel.add(horPanelNachname);
-		horPanelNachname.add(nachnameTextBox);
-		horPanelNachname.add(nachnameLabel);
-		
-		verPanel.add(horPanelGeburtsdatum);
-		horPanelGeburtsdatum.add(geburtsdatumTextBox);
-		horPanelGeburtsdatum.add(geburtsdatumLabel);
-		
-		verPanel.add(horPanelKoerpergroesse);
-		horPanelGeburtsdatum.add(koerpergroesseTextBox);
-		horPanelGeburtsdatum.add(koerpergroesseLabel);
-		
-		verPanel.add(horPanelHaarfarbe);
-		horPanelHaarfarbe.add(haarfarbeListBox);
-		horPanelHaarfarbe.add(haarfarbeLabel);
-		
-//		verPanel.add(horPanel);
-//		horPanelHaarfarbe.add(haarfarbeListBox);
-//		horPanelHaarfarbe.add(haarfarbeLabel);
-		
-//		horPanelVorname.add(vornameTextBox1);
-//		horPanelVorname.add(vornameLabel);
+
 		
 		
+		/**
+		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
+		 */
+		final FlexTable editNutzerprofilFlexTable = new FlexTable();
+		
+		/**
+		 *  * Tabelle formatieren und CSS einbinden.
+		 */
+		editNutzerprofilFlexTable.setCellPadding(6);
+		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
+		editNutzerprofilFlexTable.addStyleName("FlexTable");
+		
+		/**
+		 * Erste Spalte der Tabelle festlegen.
+		 */
+
+		editNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
+		editNutzerprofilFlexTable.setText(1, 0, "Vorname");
+		editNutzerprofilFlexTable.setText(2, 0, "Nachname");
+		editNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
+		editNutzerprofilFlexTable.setText(4, 0, "Koerpergroesse");
+		editNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
+		editNutzerprofilFlexTable.setText(6, 0, "Geschlecht");
+		editNutzerprofilFlexTable.setText(7, 0, "Raucher");
+		editNutzerprofilFlexTable.setText(8, 0, "Religion");
+		
+		/**
+		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
+		 */
+
+		
+		final TextBox vornameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
+		
+		final TextBox nachnameTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
+		
+	
+		final TextBox geburtsdatumTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
+		
+		final TextBox koerpergroesseTextBox = new TextBox();
+		editNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		
+		final ListBox haarfarbeListBox = new ListBox();
+		haarfarbeListBox.addItem("Keine Auswahl");
+		haarfarbeListBox.addItem("Blond");
+		haarfarbeListBox.addItem("Braun");
+		haarfarbeListBox.addItem("Rot");
+		haarfarbeListBox.addItem("Schwarz");
+		haarfarbeListBox.addItem("Grau");
+		haarfarbeListBox.addItem("Glatze");
+		editNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
+		
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		editNutzerprofilFlexTable.setWidget(6, 2, geschlechtListBox);
+		
+		final ListBox raucherListBox = new ListBox();
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichtraucher");
+		editNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
+		
+		final ListBox religionListBox = new ListBox();
+		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Christlich");
+		religionListBox.addItem("Juedisch");
+		religionListBox.addItem("Muslimisch");
+		religionListBox.addItem("Buddhistisch");
+		religionListBox.addItem("Hinduistisch");
+		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
+	
 		/**
 		 * infoLabel für die Benutzerinformation erzeugen.
 		 */
 		final Label infoLabel = new Label();
 		verPanel.add(infoLabel);
-		
+
 		final Label infoLabel2 = new Label();
 		verPanel.add(infoLabel2);
 		
-		
-		
+		/**
+		 * Die Textboxen werden zu anfangs mit den bestehenden Eigenschaften gef�llt.
+		 */
+
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getNutzerprofilById(nutzerprofilId,
 						new AsyncCallback<Nutzerprofil>() {
-
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel2.setText("Es trat ein Fehler auf.");
@@ -115,80 +141,70 @@ public class EditNutzerprofil extends VerticalPanel {
 							@Override
 							public void onSuccess(Nutzerprofil result) {
 
-								// final String nutzerprofilId2 =
-								// String.valueOf(result.getProfilId());
-
 								vornameTextBox.setText(result.getVorname());
-
 								nachnameTextBox.setText(result.getNachname());
-
 								geburtsdatumTextBox.setText(result
 										.getGeburtsdatum());
-
 								koerpergroesseTextBox.setText(result
 										.getKoerpergroesse());
-								
-								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
-								
+
+								haarfarbeListBox.setItemText(0,
+										result.getHaarfarbe());
+
 								religionListBox.setItemText(0, result.getReligion());
-								
-								geschlechtListBox.setItemText(0,  result.getGeschlecht());
-								
-								raucherListBox.setItemText (0, result.getRaucher());
-		
-								
+
+								geschlechtListBox.setItemText(0,
+										result.getGeschlecht());
+
+								raucherListBox.setItemText(0,
+										result.getRaucher());
 
 							}
-
 						});
-					
-	
 		
+		verPanel.add(editNutzerprofilFlexTable);
 		/**
 		 * updateNutzerprofilButton, um das Nutzerprofil zu aktualisieren.
 		 */
 		final Button updateNutzerprofilButton = new Button(
-				"Nutzerprofil updaten");
-		updateNutzerprofilButton
-				.setStylePrimaryName("partnerboerse-menubutton");
+				"&Auml;nderungen speichern");
+//		updateNutzerprofilButton
+//				.setStylePrimaryName("partnerboerse-menubutton");
 		verPanel.add(updateNutzerprofilButton);
-
 		/**
 		 * ClickHandler für den Button updateNutzerprofilButton
 		 */
-//		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-				
-			
 
-//				ClientsideSettings.getPartnerboerseAdministration()
-//						.saveNutzerprofil(vornameTextBox.getText(),
-//								nachnameTextBox.getText(),
-//								geburtsdatumTextBox.getText(),
-//								 geschlechtListBox.getSelectedItemText(),
-//								 haarfarbeListBox.getSelectedItemText(),
-//								 koerpergroesseTextBox.getText(),
-//								 raucherListBox.getSelectedItemText(),
-//								 religionListBox.getSelectedItemText(),
-//								new AsyncCallback<Void>() {
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										infoLabel
-//												.setText("Es trat ein Fehler auf");
-//									}
-//
-//									@Override
-//									public void onSuccess(Void result) {
-//										infoLabel
-//												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
-//									}
-//
-//								});
-//				
-//
-//			}
-//		});
+		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
 
+				ClientsideSettings.getPartnerboerseAdministration()
+						.saveNutzerprofil(vornameTextBox.getText(),
+								nachnameTextBox.getText(),
+								geburtsdatumTextBox.getText(),
+								geschlechtListBox.getSelectedItemText(),
+								haarfarbeListBox.getSelectedItemText(),
+								koerpergroesseTextBox.getText(),
+								raucherListBox.getSelectedItemText(),
+								religionListBox.getSelectedItemText(),
+								new AsyncCallback<Void>() {
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabel
+												.setText("Es trat ein Fehler auf");
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(
+												showEigenesNp);
+
+									}
+								});
+
+			}
+		});
 	}
 }

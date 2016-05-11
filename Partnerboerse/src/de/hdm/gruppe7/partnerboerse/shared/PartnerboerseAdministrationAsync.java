@@ -1,7 +1,6 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,7 +23,7 @@ public interface PartnerboerseAdministrationAsync {
 			AsyncCallback<Nutzerprofil> callback);
 	
 	void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, AsyncCallback<Void> callback);
+			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion, AsyncCallback<Void> callback);
 	
 
 
