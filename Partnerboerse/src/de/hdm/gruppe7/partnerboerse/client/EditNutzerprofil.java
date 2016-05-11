@@ -119,6 +119,9 @@ public class EditNutzerprofil extends VerticalPanel {
 
 								koerpergroesseTextBox.setText(result
 										.getKoerpergroesse());
+								
+								haarfarbeListBox.setItemText(index, text);
+								
 
 							}
 
@@ -141,17 +144,17 @@ public class EditNutzerprofil extends VerticalPanel {
 		updateNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				// geschlechtListBox.getSelectedItemText(),
-								// haarfarbeListBox.getSelectedItemText(),
-								// koerpergroesseTextBox.getText(),
-								// raucherListBox.getSelectedItemText(),
-								// religionListBox.getSelectedItemText(),
+			
 
 				ClientsideSettings.getPartnerboerseAdministration()
 						.saveNutzerprofil(vornameTextBox.getText(),
 								nachnameTextBox.getText(),
 								geburtsdatumTextBox.getText(),
-								
+								 geschlechtListBox.getSelectedItemText(),
+								 haarfarbeListBox.getSelectedItemText(),
+								 koerpergroesseTextBox.getText(),
+								 raucherListBox.getSelectedItemText(),
+								 religionListBox.getSelectedItemText(),
 								new AsyncCallback<Void>() {
 
 									@Override

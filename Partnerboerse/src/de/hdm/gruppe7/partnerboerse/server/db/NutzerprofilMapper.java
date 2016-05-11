@@ -202,14 +202,14 @@ public class NutzerprofilMapper {
 							+  geburtsdatum +  "\" " + "WHERE nutzerprofil_id="
 							+ Benutzer.getProfilId());
 			
-//			stmt = con.createStatement();
-//			
-//			stmt.executeUpdate(
-//					"UPDATE t_profil " 
-//							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
-//							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
-//							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
-//							+ nutzerprofil.getProfilId());
+			stmt = con.createStatement();
+			
+			stmt.executeUpdate(
+					"UPDATE t_profil " 
+							+ "SET vorname=\"" + nutzerprofil.getVorname() + "\", " + " nachname=\"" + nutzerprofil.getNachname() + "\", " + " geburtsdatum=\""
+							+  nutzerprofil.getGeburtsdatum() + "\", " + "koerpergroesse=\"" + nutzerprofil.getKoerpergroesse() + "\", " + " raucher=\"" + nutzerprofil.getRaucher() + "\", " + " geschlecht=\"" + nutzerprofil.getGeschlecht() + "\", " + " haarfarbe=\""
+							+ nutzerprofil.getHaarfarbe() + "\", " + "WHERE nutzerprofil_id="
+							+ nutzerprofil.getProfilId());
 			
 			
 			
