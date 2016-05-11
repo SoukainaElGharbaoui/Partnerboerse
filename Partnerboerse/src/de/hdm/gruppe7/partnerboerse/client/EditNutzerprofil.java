@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class EditNutzerprofil extends VerticalPanel {
@@ -62,8 +61,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		final Label religionLabel = new Label ("Religion");
 		final Label raucherLabel = new Label ("Raucher");
 		
-//		final TextBox vornameTextBox1 = new TextBox();
-//		final Label vornameLabel = new Label("Vorname");
+
 		
 		verPanel.add(ueberschriftLabel);
 		
@@ -122,8 +120,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		
-//		horPanelVorname.add(vornameTextBox1);
-//		horPanelVorname.add(vornameLabel);
+
 		
 		
 		/**

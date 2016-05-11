@@ -27,13 +27,18 @@ public class Navigator extends VerticalPanel {
 		 * !!! Gehört hier nicht hin, dient zurzeit jedoch als Beispiel !!!
 		 */
 		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
+		
 		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
 				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createNutzerprofil);
+				nutzerprofilAnlegenButton.setVisible(false);
 			}
+			
+			
+			
 		});
 		
 		this.add(nutzerprofilAnlegenButton);	
