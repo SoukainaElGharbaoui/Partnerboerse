@@ -92,29 +92,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Aktualisieren eines Nutzerprofils.
 	 */
 	
-	public Nutzerprofil updateNutzerprofil(String vorname){
-		return null;
-	}
-//	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
-//			String geburtsdatum, String geschlecht, String haarfarbe,
-//			String koerpergroesse, String raucher, String religion) {
-//		
-//		Nutzerprofil nutzerprofil = new Nutzerprofil();
-//		nutzerprofil.setVorname(vorname);
-//		nutzerprofil.setNachname(nachname);
-//		nutzerprofil.setGeburtsdatum(geburtsdatum);
-//		nutzerprofil.setGeschlecht(geschlecht);
-//		nutzerprofil.setHaarfarbe(haarfarbe);
-//		nutzerprofil.setKoerpergroesse(koerpergroesse);
-//		nutzerprofil.setRaucher(raucher);
-//		nutzerprofil.setReligion(religion);
-//		
-//		// Vorläufige ProfilId setzen. 
-//				nutzerprofil.setProfilId(1);
-//
-//		return this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+	
+	public Nutzerprofil updateNutzerprofil(String vorname, String nachname,
+			String geburtsdatum, String geschlecht, String haarfarbe,
+			String koerpergroesse, String raucher, String religion) {
+		
+		Nutzerprofil nutzerprofil = new Nutzerprofil();
+		nutzerprofil.setVorname(vorname);
+		nutzerprofil.setNachname(nachname);
+		nutzerprofil.setGeburtsdatum(geburtsdatum);
+		nutzerprofil.setGeschlecht(geschlecht);
+		nutzerprofil.setHaarfarbe(haarfarbe);
+		nutzerprofil.setKoerpergroesse(koerpergroesse);
+		nutzerprofil.setRaucher(raucher);
+		nutzerprofil.setReligion(religion);
+		
+		// Vorläufige ProfilId setzen. 
+				nutzerprofil.setProfilId(1);
 
-//	}
+		return this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
+
+	}
 
 	/**
 	 * Auslesen eines Nutzerprofils anhand seiner ProfilId.
@@ -125,12 +123,35 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
+	
+	/**
+	 * Auslesen eines Fremdprofils anhand seiner fremdprofilId
+	 */
+	 
+	public Nutzerprofil getFremdprofilById(int fremdprofilId)
+			throws IllegalArgumentException {
 
+		return this.nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+	}
+	
 	/**
 	 * Speichern eines Nutzerprofils.
 	 */
 	@Override
-	public void save(Nutzerprofil nutzerprofil) throws IllegalArgumentException {
+	public void save(String vorname, String nachname, String geschlecht, 
+			String haarfarbe,String koerpergroesse, String raucher, 
+			String religion, String geburtsdatum) throws IllegalArgumentException {
+
+		Nutzerprofil nutzerprofil = new Nutzerprofil();
+		nutzerprofil.setVorname(vorname);
+		nutzerprofil.setNachname (nachname);
+		nutzerprofil.setGeschlecht(geschlecht);
+		nutzerprofil.setHaarfarbe(haarfarbe);
+		nutzerprofil.setKoerpergroesse(koerpergroesse);
+		nutzerprofil.setRaucher(raucher);
+		nutzerprofil.setReligion(religion);
+		
+		
 
 		this.nutzerprofilMapper.updateNutzerprofil(nutzerprofil);
 	}
@@ -139,10 +160,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Löschen eines Nutzerprofils.
 	 */
 	@Override
-	public void deleteNutzerprofil(Nutzerprofil nutzerprofil)
+	public void deleteNutzerprofil(int profilId)
 			throws IllegalArgumentException {
 
-		this.nutzerprofilMapper.deleteNutzerprofil(nutzerprofil);
+
+		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
+
+		
 	}
 
 	@Override

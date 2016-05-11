@@ -49,6 +49,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(6, 0, "Koerpergroesse");
 		showEigenesNpFlexTable.setText(7, 0, "Haarfarbe");
 		showEigenesNpFlexTable.setText(8, 0, "Raucher?");
+		showEigenesNpFlexTable.setText(9, 0,"Buttons");
+		
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -141,43 +143,73 @@ public class ShowEigenesNp extends VerticalPanel {
 								showEigenesNpFlexTable.setText(8, 1,
 										result.getRaucher());
 
+								
+									// Bearbeiten-Button hinzufügen und ausbauen.
+								
+									final Button bearbeitenButton = new Button("Bearbeiten");
+//									verPanel.add(buttonPanel);
+									showEigenesNpFlexTable.setWidget(9,2,bearbeitenButton);
+									
+									// Löschen-Button hinzufügen und ausbauen.
+							
+									final Button loeschenButton = new Button("Löschen");
+//									verPanel.add(buttonPanel);
+									showEigenesNpFlexTable.setWidget(9,1,loeschenButton);				
+											
+		                           // ClickHandler für den Bearbeiten-Button hinzufügen.
+							
+									bearbeitenButton.addClickHandler(new ClickHandler() {
+										public void onClick(ClickEvent event) {
+											EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Integer.valueOf(nutzerprofilId));
+											RootPanel.get("Details").clear();
+											RootPanel.get("Details").add(editNutzerprofil);
+							
+										}
+									});				
+											
+									
+											// ClickHandler für den Löschen-Button hinzufügen.
+									
+									loeschenButton.addClickHandler(new ClickHandler() {
+										public void onClick(ClickEvent event) {
+											
+											ClientsideSettings.getPartnerboerseAdministration()
+											.deleteNutzerprofil(Benutzer.getProfilId(),
+													new AsyncCallback<Void>() {
+							
+														@Override
+														public void onFailure(Throwable caught) {
+															infoLabel
+																	.setText("Es trat ein Fehler auf");
+														}
+							
+														@Override
+														public void onSuccess(Void result) {
+															infoLabel
+																	.setText("Ihr Profil wurde erfolgreich gelöscht");
+														}
+
+												});
+												
+						
+									}
+								});
+															
 							}
 						});
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showEigenesNpFlexTable);
 		verPanel.add(infoLabel);
-
-		// Bearbeiten-Button hinzufügen und ausbauen.
-
-		final Button bearbeitenButton = new Button("Bearbeiten");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(bearbeitenButton);
-
-		// Löschen-Button hinzufügen und ausbauen.
-
-		final Button loeschenButton = new Button("Löschen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(loeschenButton);
-
-		// ClickHandler für den Löschen-Button hinzufügen.
-
-		bearbeitenButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(editNutzerprofil);
-
-			}
-		});
-
-		// ClickHandler für den Löschen-Button hinzufügen.
 		
-		loeschenButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+					
 
-			}
-		});
+
+	
+
+			
+
+	
 	}
 
 }

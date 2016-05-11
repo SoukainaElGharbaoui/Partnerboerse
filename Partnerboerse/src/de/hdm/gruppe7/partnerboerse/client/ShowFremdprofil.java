@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowFremdprofil extends VerticalPanel {
@@ -61,7 +62,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		final Label infoLabel2 = new Label(); 
 		
 		ClientsideSettings.getPartnerboerseAdministration()
-		.getNutzerprofilById(Benutzer.getProfilId(),
+		.getFremdprofilById( fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -69,13 +70,17 @@ public class ShowFremdprofil extends VerticalPanel {
 						infoLabel.setText("Es trat ein Fehler auf.");
 					}
 
-					@Override
+					
+					
 					public void onSuccess(Nutzerprofil result) {
+						
+						
+						
 
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
-						final String nutzerprofilId = String.valueOf(result.getProfilId());
-						showFremdprofilFlexTable.setText(0, 1, nutzerprofilId);
+						final String nutzerprofilid = String.valueOf(result.getProfilId());
+						showFremdprofilFlexTable.setText(0, 1, nutzerprofilid);
 
 						// Vorname aus Datenbank aus der Datenbank holen
 						// und in Tabelle eintragen
@@ -109,6 +114,9 @@ public class ShowFremdprofil extends VerticalPanel {
 						// und in Tabelle eintragen
 						showFremdprofilFlexTable.setText(8, 1, result.getRaucher());
 					}
+
+
+				
 				});
 		
 		/**
@@ -177,7 +185,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showFremdprofilFlexTable);
-//		verPanel.add(infoLabel);
+		verPanel.add(infoLabel);
 
 	}
 }
