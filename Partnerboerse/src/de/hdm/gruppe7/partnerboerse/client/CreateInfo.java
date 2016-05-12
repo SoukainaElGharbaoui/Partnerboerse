@@ -236,20 +236,20 @@ public class CreateInfo extends VerticalPanel {
 					
 						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
-//						ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),
-//								eigenschaftIdInt, neueListBox.getSelectedItemText(), new AsyncCallback<Info>() {
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										informationLabelAuswahl.setText("Es trat ein Fehler auf");
-//									}
-//
-//									@Override
-//									public void onSuccess(Info result) {
-//										informationLabelAuswahl.setText("Die Info wurde erfolgreich angelegt");
-//									}
-//
-//								});
+						ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),
+								eigenschaftIdInt, neueListBox.getSelectedIndex(), new AsyncCallback<Info>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										informationLabelAuswahl.setText("Es trat ein Fehler auf");
+									}
+
+									@Override
+									public void onSuccess(Info result) {
+										informationLabelAuswahl.setText("Die Info wurde erfolgreich angelegt");
+									}
+
+								});
 					}
 				});
 

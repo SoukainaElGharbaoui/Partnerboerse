@@ -62,7 +62,7 @@ public class InfoMapper {
 
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
 				result.add(eigenschaft);
-			}
+			}	
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
