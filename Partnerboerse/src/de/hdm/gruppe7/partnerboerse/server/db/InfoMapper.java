@@ -72,7 +72,7 @@ public class InfoMapper {
 	}
 	
 	// FindAllAuswahloptionen erstellen
-	public List<Auswahloption> findAllAuswahloptionen() {
+	public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisliste vorbereiten
@@ -81,7 +81,8 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung FROM t_auswahloption");
+			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
+					+ "FROM t_auswahloption WHERE eigenschaft_id=" + eigenschaftId);
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.

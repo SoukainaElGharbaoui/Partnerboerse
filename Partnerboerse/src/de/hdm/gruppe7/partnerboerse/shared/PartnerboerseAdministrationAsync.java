@@ -93,6 +93,6 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);
 
-	void getAllAuswahloptionen(AsyncCallback<List<Auswahloption>> callback);
+	void getAllAuswahloptionen(int eigenschaftId, AsyncCallback<List<Auswahloption>> callback);
 }
 	

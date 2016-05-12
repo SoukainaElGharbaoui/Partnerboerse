@@ -205,7 +205,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Eigenschaft> getAllEigenschaftenA()
 			throws IllegalArgumentException;
 	
-	public List<Auswahloption> getAllAuswahloptionen()
+	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
 			throws IllegalArgumentException;
 
 	

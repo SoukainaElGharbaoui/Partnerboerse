@@ -197,7 +197,8 @@ public class CreateInfo extends VerticalPanel {
 
 				showEigenschaftFlexTableAuswahl.setWidget(row, 2, neueListBox);
 						
-						ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen(new AsyncCallback<List<Auswahloption>>() {
+						ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen
+							(Integer.valueOf(eigenschaftId), new AsyncCallback<List<Auswahloption>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
