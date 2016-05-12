@@ -194,7 +194,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		});
 		
 		/**
-		 * ABSCHNITT MERKLISTE ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button 
+		 * ABSCHNITT MERKLISTE ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button. 
 		 */
 	
 		verPanel.add(ueberschriftLabel);

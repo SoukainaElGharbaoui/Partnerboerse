@@ -10,6 +10,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
+import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
@@ -17,6 +18,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 @SuppressWarnings("serial")
@@ -32,6 +34,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	private SuchprofilMapper suchprofilMapper = null;
 	
 	private MerklisteMapper merklisteMapper = null; 
+	
+	private SperrlisteMapper sperrlisteMapper = null; 
 	
 	private InfoMapper infoMapper = null;
 
@@ -62,6 +66,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper(); 
 		this.infoMapper = InfoMapper.infoMapper();
 
 	}
@@ -190,6 +195,24 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
+	
+	/**
+	 * ABSCHNITT SPERRLISTE: BEGINN
+	 */
+	// Alle Sperrungen eines Nutzerprofils auslesen. 
+	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
+		return this.sperrlisteMapper.findAllSperrungenFor(profilId);
+	}
+		
+	// Sperrung löschen. 
+	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.sperrlisteMapper.deleteSperrung(profilId, fremdprofilId); 
+	}
+	
+	/**
+	 * ABSCHNITT SPERRLISTE: ENDE
+	 */
+	
 
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN

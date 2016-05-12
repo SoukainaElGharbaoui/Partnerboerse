@@ -11,6 +11,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public interface PartnerboerseAdministrationAsync {
@@ -45,7 +46,6 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
-
 	// Alle Vermerke eines Nutzerprofils auslesen. 
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
 	
@@ -57,9 +57,20 @@ public interface PartnerboerseAdministrationAsync {
 
 	// Vermerk löschen. 
 	void vermerkLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
-
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
+	 */
+	
+	/**
+	 * ABSCHNITT SPERRLISTE: BEGINN
+	 */
+	// Alle Sperrungen eines Nutzerprofils auslesen. 
+	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Vector<Sperrliste>> callback);
+	
+	// Sperrung löschen. 
+	void sperrungLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	/**
+	 * ABSCHNITT SPERRLISTE: ENDE
 	 */
 
 	/**
@@ -94,5 +105,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getAllAuswahloptionen(int eigenschaftId, AsyncCallback<List<Auswahloption>> callback);
+
+
 }
 	

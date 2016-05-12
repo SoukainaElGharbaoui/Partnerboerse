@@ -12,6 +12,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
@@ -145,6 +146,20 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
+	 */
+	
+	/**
+	 * ABSCHNITT SPERRLISTE: BEGINN
+	 */
+	// Alle Sperrungen eines Nutzerprofils auslesen.
+	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
+			throws IllegalArgumentException;
+	
+	// Sperrung löschen. 
+	public void sperrungLoeschen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
+	/**
+	 * ABSCHNITT SPERRLISTE: ENDE
 	 */
 	
 	

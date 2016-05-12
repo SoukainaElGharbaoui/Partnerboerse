@@ -1,10 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
-import java.io.Serializable;
-
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class Merkliste implements IsSerializable, Serializable {
+public class Merkliste extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -14,8 +10,6 @@ public class Merkliste implements IsSerializable, Serializable {
 	private String mGeburtsdatum;
 	private String mGeschlecht;
 	
-
-
 	public int getmFremdprofilId() {
 		return mFremdprofilId;
 	}
@@ -46,8 +40,5 @@ public class Merkliste implements IsSerializable, Serializable {
 	public void setmGeschlecht(String mGeschlecht) {
 		this.mGeschlecht = mGeschlecht;
 	} 
-	
-	
-
 	
 }
