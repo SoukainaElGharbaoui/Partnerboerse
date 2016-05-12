@@ -21,7 +21,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	/** 
 	 * Konstruktor hinzufügen. 
 	 */
-	public ShowFremdprofil(int fremdprofilId) {
+	public ShowFremdprofil(final int fremdprofilId) {
 		this.add(verPanel); 
 		
 		/**
@@ -72,9 +72,6 @@ public class ShowFremdprofil extends VerticalPanel {
 					
 					
 					public void onSuccess(Nutzerprofil result) {
-						
-						
-						
 
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
@@ -132,6 +129,10 @@ public class ShowFremdprofil extends VerticalPanel {
 			@Override
 			public void onSuccess(Integer result) {
 				
+//				final int fremdprofilIdDB = 3;
+//				infoLabel.setText("test"+ "Benutzer = " + Benutzer.getProfilId() +  "FPID = " + fremdprofilId +  "Result = " + result);
+//				verPanel.add(infoLabel);
+				
 				String buttonText = "";
 
 				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
@@ -151,24 +152,32 @@ public class ShowFremdprofil extends VerticalPanel {
 					@Override
 					public void onClick(ClickEvent event) {
 						
-						infoLabel.setText("test");
+						
+						if(mButton.getText() == "Vermerk löschen") {
+//						infoLabel.setText("test");
+						infoLabel.setText("test"+ "Benutzer = " + Benutzer.getProfilId() +  "FPID = " + fremdprofilId);
 						verPanel.add(infoLabel);
 						
-//						ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
-//
-//							@Override
-//							public void onFailure(Throwable caught) {
-//								infoLabel.setText("Fehler");
-//								
-//							}
-//
-//							@Override
-//							public void onSuccess(Void result) {
-//								infoLabel.setText("Erfolg");
-//								
-//							}
-//							
-//						});
+						ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Fehler");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								infoLabel.setText("Button erfolgreich geändert");
+								if(mButton.getText() == "Vermerk löschen"){
+									mButton.setText("Vermerk setzen");
+								} else {
+									mButton.setText("Vermerk löschen"); 
+								}
+								
+							}
+							
+						});
+						} // Ende Vermerk löschen
 						
 					}
 					
