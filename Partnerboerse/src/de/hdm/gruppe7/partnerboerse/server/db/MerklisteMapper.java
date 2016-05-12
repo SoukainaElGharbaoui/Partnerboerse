@@ -107,7 +107,7 @@ public class MerklisteMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("INSERT INTO t_vermerk (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
-			+ Benutzer.getProfilId() + "," + fremdprofilId + ")");
+			+ profilId + "," + fremdprofilId + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
