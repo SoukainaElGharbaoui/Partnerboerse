@@ -179,7 +179,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	// Vermerk einfügen. 
-	public void vermerkEinfuegen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		this.merklisteMapper.insertVermerk(profilId, fremdprofilId); 
 	}
 	

@@ -137,7 +137,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException; 
 	
 	// Vermerk einfügen.
-	public void vermerkEinfuegen(int profilId, int fremdprofilId)
+	public void vermerkSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
 
 	// Vermerk löschen. 

@@ -53,7 +53,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getVermerkStatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 	
 	// Vermerk einfügen. 
-	void vermerkEinfuegen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	void vermerkSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 
 	// Vermerk löschen. 
 	void vermerkLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
