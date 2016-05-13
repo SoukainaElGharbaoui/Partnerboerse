@@ -203,6 +203,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
 		return this.sperrlisteMapper.findAllSperrungenFor(profilId);
 	}
+	
+	// Sperrstatus ermitteln. 
+	public int getSperrStatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		return this.sperrlisteMapper.pruefeSperrung(profilId, fremdprofilId); 
+	}
+	
+	// Sperrung einfügen. 
+	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		this.sperrlisteMapper.insertSperrung(profilId, fremdprofilId); 
+	}
 		
 	// Sperrung löschen. 
 	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {

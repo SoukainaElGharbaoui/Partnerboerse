@@ -67,6 +67,12 @@ public interface PartnerboerseAdministrationAsync {
 	// Alle Sperrungen eines Nutzerprofils auslesen. 
 	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Vector<Sperrliste>> callback);
 	
+	// Sperrstatus ermitteln. 
+	void getSperrStatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	
+	// Sperrung einfügen. 
+	void sperrungSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	
 	// Sperrung löschen. 
 	void sperrungLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 	/**

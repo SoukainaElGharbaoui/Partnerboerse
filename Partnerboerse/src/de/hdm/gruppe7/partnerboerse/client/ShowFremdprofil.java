@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -17,6 +18,11 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * VerticalPanel hinzufügen.  
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	/**
+	 * HorizontalPanel hinzufügen.
+	 */
+	private HorizontalPanel horPanel = new HorizontalPanel(); 
 	
 	/** 
 	 * Konstruktor hinzufügen. 
@@ -137,7 +143,7 @@ public class ShowFremdprofil extends VerticalPanel {
 				
 				// Button zum VerticalPanel hinzufügen. 
 				final Button mButton = new Button(buttonText); 
-				verPanel.add(mButton);
+				horPanel.add(mButton);
 				
 				// ClickHandler hinzufügen. 
 				mButton.addClickHandler(new ClickHandler() {
@@ -192,11 +198,95 @@ public class ShowFremdprofil extends VerticalPanel {
 			}
 				
 		});
-		
 		/**
 		 * ABSCHNITT MERKLISTE ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button. 
 		 */
-	
+		
+		/**
+		 * ABSCHNITT SPERRLISTE BEGINN: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
+		 */
+		// Sperrstatus überprüfen. 
+		ClientsideSettings.getPartnerboerseAdministration().getSperrStatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf."); 	
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				
+				String buttonText = "";
+
+				// Button-Aufschrift entsprechend ermitteltem Sperrstatus hinzufügen. 
+				if(result == 0){
+					buttonText = "Sperrung setzen"; 
+				} else {
+					buttonText = "Sperrung löschen"; 
+				}	
+				
+				// Button zum VerticalPanel hinzufügen. 
+				final Button mButton = new Button(buttonText); 
+				horPanel.add(mButton);
+				verPanel.add(horPanel);
+				
+				// ClickHandler hinzufügen. 
+				mButton.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						
+						// Wenn die Button-Aufschrift "Sperrung löschen" lautet... 
+						if(mButton.getText() == "Sperrung löschen") {
+						
+							// Sperrung aus der Datenbank löschen. 
+							ClientsideSettings.getPartnerboerseAdministration().sperrungLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								mButton.setText("Sperrung setzen"); 
+							}
+							
+						  });
+							
+						} 
+						
+						// Wenn die Button-Aufschrift "Sperrung setzen" lautet... 
+						if(mButton.getText() == "Sperrung setzen") {
+							
+							// Sperrung in die Datenbank einfügen. 
+							ClientsideSettings.getPartnerboerseAdministration().sperrungSetzen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf.");
+								}
+
+								@Override
+								public void onSuccess(Void result) {
+									mButton.setText("Sperrung löschen"); 
+								}
+								
+							});
+							
+						}
+						
+					}
+					
+				}); 
+				
+			}
+				
+		});
+		/**
+		 * ABSCHNITT SPERRLISTE ENDE: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
+		 */
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showFremdprofilFlexTable);
 		verPanel.add(infoLabel);

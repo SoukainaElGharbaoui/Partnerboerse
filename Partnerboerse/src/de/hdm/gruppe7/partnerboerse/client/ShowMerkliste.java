@@ -43,7 +43,7 @@ public class ShowMerkliste extends VerticalPanel {
 		final FlexTable merklisteFlexTable = new FlexTable(); 
 
 		/**
-		 * Erste Zeile der Tabelle festlegen. 
+		 * Header-Zeile der Tabelle festlegen. 
 		 */
 		merklisteFlexTable.setText(0, 0, "F-ID");
 		merklisteFlexTable.setText(0, 1, "Vorname");
@@ -72,6 +72,7 @@ public class ShowMerkliste extends VerticalPanel {
 			}
 
 			@Override
+			// Vektor der gemerkten Profile abarbeiten. 
 			public void onSuccess(Vector<Merkliste> result) {
 
 				// Anzahl der Zeilen ermitteln. 
@@ -104,16 +105,14 @@ public class ShowMerkliste extends VerticalPanel {
 						public void onClick(ClickEvent event) {
 							
 							/**
-							 * Flextable nach FremdprofilID durchsuchen --> Index = Zeile die gelöscht werden soll
-							 * Achtung: Die Flextable darf erst ab 2 benutzt werden (Zeile 1 = Headerzeilen)
+							 * Tabelle nach Fremdprofil-ID durchsuchen; Index = Die Zeile, die gelöscht werden soll. 
+							 * Achtung: Die Tabelle darf erst ab Zeile 2 verwendet werden (Zeile 1 = Header-Zeile).
 							 */
 							for(int i=2; i<=merklisteFlexTable.getRowCount(); i++) {
 					
-									String fremdprofilIdFlexTable = "";
-									fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
+									String fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
 									
-									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)){
-										
+									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().
 										vermerkLoeschen(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Void>(){

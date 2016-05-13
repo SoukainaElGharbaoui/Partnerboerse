@@ -65,6 +65,52 @@ public class SperrlisteMapper {
 	}
 	
 	/**
+	 * Sperrstatus ermitteln. 
+	 */
+	public int pruefeSperrung(int profilId, int fremdprofilId) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
+		int sperrstatus = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
+					+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
+			
+			if (rs.next()) {
+		        // Es liegt eine Sperrung vor.  
+				sperrstatus = 1; 
+		      } else {
+		    	  // Es liegt keine Sperrung vor. 
+		    	  sperrstatus = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return sperrstatus; 
+	}
+	
+	/**
+	 * Sperrung einfügen. 
+	 */
+	public void insertSperrung(int profilId, int fremdprofilId) { 
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("INSERT INTO t_sperrung (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
+			+ profilId + "," + fremdprofilId + ")");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}	
+	}
+	
+	/**
 	 * Sperrung löschen.
 	 */
 	public void deleteSperrung(int profilId, int fremdprofilId) {

@@ -43,7 +43,7 @@ public class ShowSperrliste extends VerticalPanel {
 		final FlexTable sperrlisteFlexTable = new FlexTable(); 
 
 		/**
-		 * Erste Zeile der Tabelle festlegen. 
+		 * Header-Zeile der Tabelle festlegen. 
 		 */
 		sperrlisteFlexTable.setText(0, 0, "F-ID");
 		sperrlisteFlexTable.setText(0, 1, "Vorname");
@@ -72,6 +72,7 @@ public class ShowSperrliste extends VerticalPanel {
 			}
 
 			@Override
+			// Vektor der gesperrten Profile abarbeiten. 
 			public void onSuccess(Vector<Sperrliste> result) {
 				
 				// Anzahl der Zeilen ermitteln. 
@@ -104,16 +105,14 @@ public class ShowSperrliste extends VerticalPanel {
 						public void onClick(ClickEvent event) {
 							
 							/**
-							 * Flextable nach FremdprofilID durchsuchen --> Index = Zeile die gelöscht werden soll
-							 * Achtung: Die Flextable darf erst ab 2 benutzt werden (Zeile 1 = Headerzeilen)
+							 * Tabelle nach Fremdprofil-ID durchsuchen; Index = Die Zeile, die gelöscht werden soll. 
+							 * Achtung: Die Tabelle darf erst ab Zeile 2 verwendet werden (Zeile 1 = Header-Zeile).
 							 */
 							for(int i=2; i<=sperrlisteFlexTable.getRowCount(); i++) {
 					
-									String fremdprofilIdFlexTable = "";
-									fremdprofilIdFlexTable = sperrlisteFlexTable.getText(i, 0);
+									String fremdprofilIdFlexTable = sperrlisteFlexTable.getText(i, 0);
 									
-									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)){
-										
+									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().
 										sperrungLoeschen(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Void>(){
