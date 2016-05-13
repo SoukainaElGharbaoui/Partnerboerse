@@ -22,6 +22,9 @@ public class EditInfo extends VerticalPanel {
 	HorizontalPanel buttonPanel = new HorizontalPanel();
 	
 	
-	
+
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+public class EditInfo extends VerticalPanel {
 
 }

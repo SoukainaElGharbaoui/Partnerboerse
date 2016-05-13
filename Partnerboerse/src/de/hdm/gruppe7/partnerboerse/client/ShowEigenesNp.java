@@ -48,12 +48,15 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(0, 0, "Nutzerprofil-Id");
 		showEigenesNpFlexTable.setText(1, 0, "Vorname");
 		showEigenesNpFlexTable.setText(2, 0, "Nachname");
-		showEigenesNpFlexTable.setText(3, 0, "Geschlecht");
-		showEigenesNpFlexTable.setText(4, 0, "Geburtsdatum");
-		showEigenesNpFlexTable.setText(5, 0, "Religion");
-		showEigenesNpFlexTable.setText(6, 0, "Koerpergroesse");
-		showEigenesNpFlexTable.setText(7, 0, "Haarfarbe");
-		showEigenesNpFlexTable.setText(8, 0, "Raucher?");
+		showEigenesNpFlexTable.setText(3, 0, "Geburtsdatum");
+		showEigenesNpFlexTable.setText(4, 0, "Koerpergroesse");
+		showEigenesNpFlexTable.setText(5, 0, "Haarfarbe");
+		showEigenesNpFlexTable.setText(6, 0, "Geschlecht");
+		showEigenesNpFlexTable.setText(7, 0, "Raucher?");
+		showEigenesNpFlexTable.setText(8, 0, "Religion");
+		
+		
+		
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -102,43 +105,42 @@ public class ShowEigenesNp extends VerticalPanel {
 								showEigenesNpFlexTable.setText(2, 1,
 										result.getNachname());
 
-								// Geschlecht aus der Datenbank holen
-								// und in Tabelle eintragen
-
-								showEigenesNpFlexTable.setText(3, 1,
-										result.getGeschlecht());
-
 								// Geburtsdatum aus der Datenbank holen
 								// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(4, 1,
+								showEigenesNpFlexTable.setText(3, 1,
 										result.getGeburtsdatum());
-
-								// Religion aus der Datenbank holen
-								// und in Tabelle eintragen
-
-								showEigenesNpFlexTable.setText(5, 1,
-										result.getReligion());
-
+								
 								// Koerpergroesse aus der Datenbank holen
 								// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(6, 1,
+								showEigenesNpFlexTable.setText(4, 1,
 										result.getKoerpergroesse());
-
+								
 								// Haarfarbe aus der Datenbank holen
 								// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(7, 1,
+								showEigenesNpFlexTable.setText(5, 1,
 										result.getHaarfarbe());
+
+								// Geschlecht aus der Datenbank holen
+								// und in Tabelle eintragen
+
+								showEigenesNpFlexTable.setText(6, 1,
+										result.getGeschlecht());
 
 								// Raucher aus der Datenbank holen
 								// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(8, 1,
+								showEigenesNpFlexTable.setText(7, 1,
 										result.getRaucher());
 
-								
+								// Religion aus der Datenbank holen
+								// und in Tabelle eintragen
+
+								showEigenesNpFlexTable.setText(8, 1,
+										result.getReligion());
+
 
 
 

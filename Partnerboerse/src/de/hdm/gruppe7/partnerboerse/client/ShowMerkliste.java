@@ -28,9 +28,14 @@ public class ShowMerkliste extends VerticalPanel {
 		this.add(verPanel); 
 		
 		/**
-		 * Überschrift hinzufügen. 
+		 * Überschrift-Label hinzufügen. 
 		 */
-		final Label ueberschriftLabel = new Label("Diese Kontakte haben Sie sich gemerkt:"); 
+		final Label ueberschriftLabel = new Label("Diese Nutzerprofile befinden sich auf Ihrer Merkliste:"); 
+		
+		/**
+		 * Information-Label hinzufügen. 
+		 */
+		final Label infoLabel = new Label(); 
 		
 		/**
 		 * Tabelle zur Anzeige der gemerkten Kontakte hinzufügen. 
@@ -55,15 +60,8 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		merklisteFlexTable.addStyleName("FlexTable");   
 		
-		// Testzwecke
-		final Label infoLabel = new Label(); 
-		final Label infoLabel1 = new Label();
-		final Label infoLabel2 = new Label();
-		final Label infoLabel3 = new Label();
-		final Label infoLabel4 = new Label();
-		
 			/**
-			 * Gemerkte Nutzerprofile eines bestimmten Nutzerprofils anzeigen. 
+			 * Gemerkte Nutzerprofile anzeigen. 
 			 */
 			ClientsideSettings.getPartnerboerseAdministration().
 			getGemerkteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Merkliste>>() {
@@ -80,11 +78,10 @@ public class ShowMerkliste extends VerticalPanel {
 				int row = merklisteFlexTable.getRowCount();
 				
 				// Tabelle mit Inhalten aus der Datenbank befüllen. 
-				for(Merkliste m : result){
+				for(Merkliste m : result) {
 					row++;
 					
 					final String fremdprofilId = String.valueOf(m.getmFremdprofilId());
-					
 					merklisteFlexTable.setText(row, 0, fremdprofilId); 
 					merklisteFlexTable.setText(row, 1, m.getmVorname()); 
 					merklisteFlexTable.setText(row, 2, m.getmNachname());
@@ -99,6 +96,7 @@ public class ShowMerkliste extends VerticalPanel {
 					final Button anzeigenButton = new Button("Anzeigen");
 					merklisteFlexTable.setWidget(row, 6, anzeigenButton); 
 					
+					// Testzwecke: Index der FlexTable-Rows anzeigen. 
 					merklisteFlexTable.setText(row, 7, String.valueOf(row)); 
 					
 					// ClickHandler für den Löschen-Button hinzufügen. 
@@ -107,22 +105,14 @@ public class ShowMerkliste extends VerticalPanel {
 							
 							/**
 							 * Flextable nach FremdprofilID durchsuchen --> Index = Zeile die gelöscht werden soll
-							 * 
 							 * Achtung: Die Flextable darf erst ab 2 benutzt werden (Zeile 1 = Headerzeilen)
 							 */
-							for(int z=2; z<=merklisteFlexTable.getRowCount(); z++){
-//									System.out.println("Werte aus for:"+ anzRecords + " " +z);
-									infoLabel1.setText("Werte aus for: Anzahl = "+ merklisteFlexTable.getRowCount() + " Index =  " +z + " FPID =  " + fremdprofilId);
+							for(int i=2; i<=merklisteFlexTable.getRowCount(); i++) {
 					
-									String fpIDflextable = "";
-									fpIDflextable = merklisteFlexTable.getText(z, 0);
+									String fremdprofilIdFlexTable = "";
+									fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
 									
-									infoLabel3.setText("Werte für fpIDflextable = "  + fpIDflextable + " fremdprofilId = " + fremdprofilId );
-									
-									/*
-									 * 
-									 */
-									if (Integer.valueOf(fpIDflextable) == Integer.valueOf(fremdprofilId)){
+									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)){
 										
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().
@@ -130,24 +120,18 @@ public class ShowMerkliste extends VerticalPanel {
 			
 											@Override
 											public void onFailure(Throwable caught) {
-												infoLabel.setText("ShowMerkzettel: Fehler bei Löschen DS");
-												infoLabel1.setText("ShowMerkzettel: Benutzer = " + Benutzer.getProfilId());
-												infoLabel2.setText(caught.toString());
-												
+												infoLabel.setText("Es trat ein Fehler auf.");
 											}
 			
 											@Override
 											public void onSuccess(Void result) {
-												infoLabel4.setText("DS erfolgreich gelöscht: Benutzer= " + Benutzer.getProfilId() + " FPID= " + Integer.valueOf(fremdprofilId));
-												
+												infoLabel.setText("Das Nutzerprofil wurde erfolgreich von Ihrer Merkliste entfernt.");
 											}
 											
 										});
 										
-										// Zeile in Flextabelle löschen
-										merklisteFlexTable.removeRow(z);
-										infoLabel.setText("Werte aus array: Fremdprofil = " + fremdprofilId + " Löschzeile aus Flextabe = " 
-										+ merklisteFlexTable.getText(z, 0));
+										// Zeile in Tabelle löschen. 
+										merklisteFlexTable.removeRow(i);
 										break;
 									}
 								}			         
@@ -176,10 +160,6 @@ public class ShowMerkliste extends VerticalPanel {
 		verPanel.add(ueberschriftLabel); 
 		verPanel.add(merklisteFlexTable); 
 		verPanel.add(infoLabel);
-		verPanel.add(infoLabel1);
-		verPanel.add(infoLabel2);
-		verPanel.add(infoLabel3);
-		verPanel.add(infoLabel4);
 		
 	}	
 
