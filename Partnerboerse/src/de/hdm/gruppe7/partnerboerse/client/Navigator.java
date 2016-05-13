@@ -139,6 +139,28 @@ public class Navigator extends VerticalPanel {
 		});
 
 		this.add(showSuchprofilButton);
+		
+		
+		/**
+		 * Button "Partnervorschlaege anzeigen" hinzufügen.
+		 */
+		final Button showPartnervorschlaegeButton = new Button(
+				"Partnervorschlaege anzeigen");
+		
+		showPartnervorschlaegeButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaege);
+			}
+
+		});
+
+		this.add(showPartnervorschlaegeButton);
+		
+		
+		
 
 	}
 
