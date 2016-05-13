@@ -282,5 +282,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException {
 		return this.infoMapper.findAllAuswahloptionen(eigenschaftId);
 	}
+	
+	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosB(profilId);
+	}
 }
 

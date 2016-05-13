@@ -131,6 +131,43 @@ public class InfoMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
+	
+	
+	
+	public List<Info> findAllInfosB(int profilId) {
+		Connection con = DBConnection.connection();
+
+		List<Info> result = new ArrayList<Info>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT "
+					+ "t_beschreibungsinfo.nutzerprofil_id, "
+					+ "t_beschreibungsinfo.infotext, "
+					+ "t_eigenschaft.erlaeuterung "
+					+ "FROM t_beschreibungsinfo INNER JOIN t_eigenschaft "
+					+ "ON t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+					+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId);
+			
+			
+			while (rs.next()) {
+				Info info = new Info();
+				info.setNutzerprofilId(profilId);
+				info.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+				info.setInfotext(rs.getString("infotext"));
+				
+				result.add(info);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	
 
 	// public Info findByInfoId(int infoId) {
 	// // DB-Verbindung holen

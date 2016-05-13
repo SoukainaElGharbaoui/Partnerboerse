@@ -7,7 +7,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
@@ -29,10 +28,6 @@ public class CreateInfo extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
-	private HorizontalPanel horPanel = new HorizontalPanel();
-	
-//	final ListBox neueListBox = new ListBox();
-
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -52,7 +47,7 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.setText(0, 2, "Infotext");
 
 		showEigenschaftFlexTable.setText(0, 3, "Speichern");
-		showEigenschaftFlexTable.setText(0, 4, "Löschen");
+//		showEigenschaftFlexTable.setText(0, 4, "Löschen");
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -122,9 +117,9 @@ public class CreateInfo extends VerticalPanel {
 						}
 					});
 
-					final Button loeschenInfoButton = new Button("Information löschen");
-					loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-					showEigenschaftFlexTable.setWidget(row, 4, loeschenInfoButton);
+//					final Button loeschenInfoButton = new Button("Information löschen");
+//					loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
+//					showEigenschaftFlexTable.setWidget(row, 4, loeschenInfoButton);
 				}
 
 			}
@@ -152,7 +147,7 @@ public class CreateInfo extends VerticalPanel {
 	showEigenschaftFlexTableAuswahl.setText(0, 2, "Auswahloptionen");
 
 	showEigenschaftFlexTableAuswahl.setText(0, 3, "Speichern");
-	showEigenschaftFlexTableAuswahl.setText(0, 4, "Löschen");
+//	showEigenschaftFlexTableAuswahl.setText(0, 4, "Löschen");
 
 	/**
 	 * Tabelle formatieren und CSS einbinden.
@@ -209,11 +204,11 @@ public class CreateInfo extends VerticalPanel {
 							@Override
 							public void onSuccess(List<Auswahloption> result) {
 							
-							int row2 = showEigenschaftFlexTableAuswahl.getRowCount();
+//							int row2 = showEigenschaftFlexTableAuswahl.getRowCount();
 							
 							
 							for(Auswahloption a : result){
-								row2++;
+//								row2++;
 								
 								neueListBox.addItem(a.getOptionsbezeichnung());
 								
@@ -255,9 +250,9 @@ public class CreateInfo extends VerticalPanel {
 
 				
 				
-				final Button loeschenInfoButton = new Button("Information löschen");
-				loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-				showEigenschaftFlexTableAuswahl.setWidget(row, 4, loeschenInfoButton);
+//				final Button loeschenInfoButton = new Button("Information löschen");
+//				loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
+//				showEigenschaftFlexTableAuswahl.setWidget(row, 4, loeschenInfoButton);
 			}
 		}
 
