@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -18,87 +18,69 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * VerticalPanels und HorizontalPanels hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	private HorizontalPanel horPanelVorname = new HorizontalPanel();
-	private HorizontalPanel horPanelNachname = new HorizontalPanel();
-	private HorizontalPanel horPanelGeschlecht = new HorizontalPanel();
-	private HorizontalPanel horPanelGeburtsdatum = new HorizontalPanel();
-	private HorizontalPanel horPanelRaucher = new HorizontalPanel();
-	private HorizontalPanel horPanelKoerpergroesse = new HorizontalPanel();
-	private HorizontalPanel horPanelHaarfarbe = new HorizontalPanel();
-	private HorizontalPanel horPanelReligion = new HorizontalPanel();
-	
+
 	/**
 	 * Konstruktor
 	 */
 	public CreateNutzerprofil() {
 		this.add(verPanel);
 
+		
 		/**
-		 * Erzeugen eines Eingabefelds fuer den Vornamen.
+		 * Label �berschrift
 		 */
+
+		final Label ueberschriftLabel = new Label("Nutzerprofil anlegen");
+
+		verPanel.add(ueberschriftLabel);
+
+		/**
+		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
+		 */
+		final FlexTable createNutzerprofilFlexTable = new FlexTable();
+		
+		/**
+		 *  * Tabelle formatieren und CSS einbinden.
+		 */
+		createNutzerprofilFlexTable.setCellPadding(6);
+		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
+		createNutzerprofilFlexTable.addStyleName("FlexTable");
+		
+		/**
+		 * Erste Spalte der Tabelle festlegen.
+		 */
+
+		createNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
+		createNutzerprofilFlexTable.setText(1, 0, "Vorname");
+		createNutzerprofilFlexTable.setText(2, 0, "Nachname");
+		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
+		createNutzerprofilFlexTable.setText(4, 0, "Koerpergroesse");
+		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
+		createNutzerprofilFlexTable.setText(6, 0, "Geschlecht");
+		createNutzerprofilFlexTable.setText(7, 0, "Raucher");
+		createNutzerprofilFlexTable.setText(8, 0, "Religion");
+		
+		
+		/**
+		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
+		 */
+
+		
 		final TextBox vornameTextBox = new TextBox();
-		final Label vornameLabel = new Label("Vorname");
-
-		verPanel.add(horPanelVorname);
-		horPanelVorname.add(vornameTextBox);
-		horPanelVorname.add(vornameLabel);
-
-		/**
-		 * Erzeugen eines Eingabefelds fuer den Nachnamen.
-		 */
+		createNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
+		
 		final TextBox nachnameTextBox = new TextBox();
-		final Label nachnameLabel = new Label("Nachname");
-		verPanel.add(horPanelNachname);
-		horPanelNachname.add(nachnameTextBox);
-		horPanelNachname.add(nachnameLabel);
-
-		/**
-		 * Erzeugen einer Auswahl fuer das Geschlecht.
-		 */
-		final Label geschlechtLabel = new Label("Geschlecht");
-		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("Keine Auswahl");
-		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("Männlich");
-		verPanel.add(horPanelGeschlecht);
-		horPanelGeschlecht.add(geschlechtListBox);
-		horPanelGeschlecht.add(geschlechtLabel);
-
-		/**
-		 * Erzeugen einer TextBox fuer das Geburtsdatum.
-		 */
-		final Label geburtsdatumLabel = new Label("Geburtsdatum (TT.MM.YYYY)");
+		createNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
+		
+	
 		final TextBox geburtsdatumTextBox = new TextBox();
-		verPanel.add(horPanelGeburtsdatum);
-		horPanelGeburtsdatum.add(geburtsdatumTextBox);
-		horPanelGeburtsdatum.add(geburtsdatumLabel);
-
-		/**
-		 * Erzeugen einer Auswahl fuer den Raucherstatus.
-		 */
-		final Label raucherLabel = new Label("Raucherstatus");
-		final ListBox raucherListBox = new ListBox();
-		raucherListBox.addItem("Keine Angabe");
-		raucherListBox.addItem("Raucher");
-		raucherListBox.addItem("Nichtraucher");
-		verPanel.add(horPanelRaucher);
-		horPanelRaucher.add(raucherListBox);
-		horPanelRaucher.add(raucherLabel);
-
-		/**
-		 * Erzeugen eines Eingabefelds fuer die Koerpergroesse.
-		 */
+		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
+		
 		final TextBox koerpergroesseTextBox = new TextBox();
-		final Label koerpergroesseLabel = new Label("Koerpergroesse (cm)");
-		verPanel.add(horPanelKoerpergroesse);
-		horPanelKoerpergroesse.add(koerpergroesseTextBox);
-		horPanelKoerpergroesse.add(koerpergroesseLabel);
-
-		/**
-		 * Erzeugen einer Auswahl fuer die Haarfarbe.
-		 */
+		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		
 		final ListBox haarfarbeListBox = new ListBox();
-		final Label haarfarbeLabel = new Label("Haarfarbe");
 		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -106,24 +88,32 @@ public class CreateNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		verPanel.add(horPanelHaarfarbe);
-		horPanelHaarfarbe.add(haarfarbeListBox);
-		horPanelHaarfarbe.add(haarfarbeLabel);
-
-		/**
-		 * Erzeugen einer Auswahl fuer die Religion.
-		 */
+		createNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
+		
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		createNutzerprofilFlexTable.setWidget(6, 2, geschlechtListBox);
+		
+		final ListBox raucherListBox = new ListBox();
+		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Raucher");
+		raucherListBox.addItem("Nichtraucher");
+		createNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
+		
 		final ListBox religionListBox = new ListBox();
-		final Label religionLabel = new Label("Religion");
 		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		verPanel.add(horPanelReligion);
-		horPanelReligion.add(religionListBox);
-		horPanelReligion.add(religionLabel);
+		createNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
+	
+		
+		verPanel.add(createNutzerprofilFlexTable);
+		
 
 		/**
 		 * informationLabel für die Benutzerinformation erzeugen.
