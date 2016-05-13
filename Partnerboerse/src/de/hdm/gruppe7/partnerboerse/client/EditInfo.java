@@ -12,8 +12,7 @@ public class EditInfo extends VerticalPanel {
 	
 	private VerticalPanel verPanel = new VerticalPanel();
 	
-	public EditInfo(int infoId){
-		this.infoId = infoId;
+	public EditInfo(){
 		this.add(verPanel);
 	}
 	
@@ -21,10 +20,4 @@ public class EditInfo extends VerticalPanel {
 	
 	HorizontalPanel buttonPanel = new HorizontalPanel();
 	
-	
-
-import com.google.gwt.user.client.ui.VerticalPanel;
-
-public class EditInfo extends VerticalPanel {
-
-}
+}	
