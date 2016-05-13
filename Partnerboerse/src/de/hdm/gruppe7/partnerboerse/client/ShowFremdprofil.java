@@ -135,8 +135,10 @@ public class ShowFremdprofil extends VerticalPanel {
 				String buttonText = "";
 
 				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
+				// Wenn kein Vermerk vorliegt...
 				if(result == 0){
 					buttonText = "Vermerk setzen"; 
+				// Wenn ein Vermerk vorliegt...
 				} else {
 					buttonText = "Vermerk löschen"; 
 				}	
@@ -205,8 +207,8 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * ABSCHNITT SPERRLISTE BEGINN: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
 		 */
-		// Sperrstatus überprüfen. 
-		ClientsideSettings.getPartnerboerseAdministration().getSperrStatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+		// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.  
+		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 			
 			@Override
 			public void onFailure(Throwable caught) {

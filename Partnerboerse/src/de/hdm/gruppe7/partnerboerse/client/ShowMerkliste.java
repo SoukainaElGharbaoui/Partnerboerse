@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -113,6 +114,7 @@ public class ShowMerkliste extends VerticalPanel {
 									String fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
 									
 									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
+										
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().
 										vermerkLoeschen(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Void>(){
@@ -142,9 +144,62 @@ public class ShowMerkliste extends VerticalPanel {
 					// ClickHandler für den Anzeigen-Button hinzufügen. 
 					anzeigenButton.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
-							ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
-							RootPanel.get("Details").clear(); 
-							RootPanel.get("Details").add(showFremdprofil); 
+							
+							// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
+							ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Integer>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf.");
+									
+								}
+
+								@Override
+								public void onSuccess(Integer result) {
+									// Wenn keine Sperrung vorliegt...
+									if(result == 0) {
+										ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+										RootPanel.get("Details").clear(); 
+										RootPanel.get("Details").add(showFremdprofil);
+									// Wenn eine Sperrung vorliegt...
+									} else {
+										// DialobBox hinzufügen. 
+										final DialogBox sperrungDialogBox = new DialogBox();
+								
+										sperrungDialogBox.setText("Information");
+										sperrungDialogBox.setAnimationEnabled(true);
+										// Schließen-Button hinzufügen. 
+										final Button schliessenButton = new Button("Schließen"); 
+										// VerticalPanel hinzufügen. 
+										final VerticalPanel sperrungVerPanel = new VerticalPanel(); 
+										// Label hinzufügen. 
+										final Label sperrungLabel = new Label("Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
+										// Widgets zum VerticalPanel hinzufügen. 
+										sperrungVerPanel.add(sperrungLabel);
+										sperrungVerPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+										sperrungVerPanel.add(schliessenButton);
+										sperrungDialogBox.setWidget(sperrungVerPanel);
+										sperrungDialogBox.center();
+										
+										// ClickHandler für den Schließen-Button hinzufügen. 
+										schliessenButton.addClickHandler(new ClickHandler(){
+
+											@Override
+											public void onClick(ClickEvent event) {
+												sperrungDialogBox.hide();
+												
+											}
+											
+										}); 
+										  
+									}
+									
+									
+								}
+								
+							});
+							
+ 
 							
 						}
 						
@@ -159,6 +214,7 @@ public class ShowMerkliste extends VerticalPanel {
 		verPanel.add(ueberschriftLabel); 
 		verPanel.add(merklisteFlexTable); 
 		verPanel.add(infoLabel);
+		
 		
 	}	
 

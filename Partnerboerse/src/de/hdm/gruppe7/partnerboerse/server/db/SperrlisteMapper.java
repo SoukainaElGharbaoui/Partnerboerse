@@ -65,13 +65,13 @@ public class SperrlisteMapper {
 	}
 	
 	/**
-	 * Sperrstatus ermitteln. 
+	 * Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
 	 */
-	public int pruefeSperrung(int profilId, int fremdprofilId) {
+	public int pruefeSperrungFremdprofil(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
 		
 		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
-		int sperrstatus = 0; 
+		int sperrstatusFremdprofil = 0; 
 		
 		try {
 			Statement stmt = con.createStatement();
@@ -81,16 +81,45 @@ public class SperrlisteMapper {
 			
 			if (rs.next()) {
 		        // Es liegt eine Sperrung vor.  
-				sperrstatus = 1; 
+				sperrstatusFremdprofil = 1; 
 		      } else {
 		    	  // Es liegt keine Sperrung vor. 
-		    	  sperrstatus = 0; 
+		    	  sperrstatusFremdprofil = 0; 
 		      }
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		return sperrstatus; 
+		return sperrstatusFremdprofil; 
+	}
+	
+	/**
+	 * Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
+	 */
+	public int pruefeSperrungEigenesProfil(int profilId, int fremdprofilId) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
+		int sperrstatusEigenesProfil = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
+					+ "WHERE nutzerprofil_id=" + fremdprofilId + " AND fremdprofil_id=" + profilId); 
+			
+			if (rs.next()) {
+		        // Es liegt eine Sperrung vor.  
+				sperrstatusEigenesProfil = 1; 
+		      } else {
+		    	  // Es liegt keine Sperrung vor. 
+		    	  sperrstatusEigenesProfil = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return sperrstatusEigenesProfil;  
 	}
 	
 	/**
