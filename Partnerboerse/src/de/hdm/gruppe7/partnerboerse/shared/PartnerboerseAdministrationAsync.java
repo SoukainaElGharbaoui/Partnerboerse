@@ -29,6 +29,8 @@ public interface PartnerboerseAdministrationAsync {
 
 
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
+	
+	void getAllNutzerprofile(Nutzerprofil nutzerprofil, AsyncCallback<List<Nutzerprofil>> callback );
 
 //	void save(String vorname, String nachname, String geschlecht, 
 //			String haarfarbe,String koerpergroesse, String raucher, 

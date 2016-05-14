@@ -120,8 +120,8 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_profil INNER JOIN"
-							+ "t_nutzerprofil ON t_profil.profil_id = "
+					.executeQuery("SELECT * FROM t_profil,"
+							+ "t_nutzerprofil WHERE t_profil.profil_id = "
 							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein

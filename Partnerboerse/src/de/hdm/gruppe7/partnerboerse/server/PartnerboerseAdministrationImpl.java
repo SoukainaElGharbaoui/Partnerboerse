@@ -129,6 +129,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
+	 * Auslesen aller Nutzerprofile
+	 * @return
+	 */
+	
+	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) {
+		return this.nutzerprofilMapper.findAllNutzerprofile();
+	}
+	
+	/**
 	 * Speichern eines Nutzerprofils.
 	 */
 //	@Override

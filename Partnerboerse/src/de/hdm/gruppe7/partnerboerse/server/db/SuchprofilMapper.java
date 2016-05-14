@@ -40,7 +40,11 @@ public class SuchprofilMapper {
 //
 //			// Statement ausfÃ¼llen und als Query an die DB schicken
 //			ResultSet rs = stmt.executeQuery(
-//					"SELECT profil_id, alterMin, alterMax FROM t_suchprofil " + "WHERE profil_id=" + profilId);
+////					"SELECT * profil_id, alterMin, alterMax FROM t_suchprofil " + "WHERE profil_id=" + profilId);
+//			
+//
+//			"SELECT * FROM t_suchprofil, t_profil " + "WHERE profil_id= "
+//					+ profilId + " AND suchprofil_id=" + profilId);
 //
 //			/*
 //			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
@@ -50,8 +54,8 @@ public class SuchprofilMapper {
 //				// Ergebnis-Tupel in Objekt umwandeln
 //				Suchprofil suchprofil = new Suchprofil();
 //				suchprofil.setProfilId(rs.getInt("profil_id"));
-//				suchprofil.setAlterMin(rs.getInt("Alter minimal"));
-//				suchprofil.setAlterMax(rs.getInt("Alter maximal"));
+////				suchprofil.setAlterMin(rs.getInt("Alter minimal"));
+////				suchprofil.setAlterMax(rs.getInt("Alter maximal"));
 //				return suchprofil;
 //			}
 //		} catch (SQLException e2) {
@@ -243,10 +247,8 @@ public class SuchprofilMapper {
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 			
-			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
-			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
-			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
-			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
+			"SELECT * "
+			+ "FROM t_suchprofil, t_profil  Where suchprofil_id =" + profilId + "  AND profil_id =" + profilId);
 			
 					
 			/*
