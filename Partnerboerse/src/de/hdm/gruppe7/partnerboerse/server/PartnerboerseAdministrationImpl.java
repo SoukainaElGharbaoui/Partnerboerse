@@ -284,12 +284,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.insertBeschreibungsinfo(info);
 	}
 	
-	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) throws IllegalArgumentException {
+	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionIdInt) throws IllegalArgumentException {
 		
 		Info info = new Info();
 		info.setNutzerprofilId(profilId);
 		info.setEigenschaftId(eigenschaftId);
-		info.setAuswahloptionId(auswahloptionId);
+		info.setAuswahloptionId(auswahloptionIdInt);
 		
 		return this.infoMapper.insertAuswahlinfo(info);
 	}
@@ -308,6 +308,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosB(profilId);
+	}
+	
+	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosA(profilId);
 	}
 }
 

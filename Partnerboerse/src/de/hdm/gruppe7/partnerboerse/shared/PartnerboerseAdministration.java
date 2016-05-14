@@ -226,6 +226,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Info> getAllInfosB(int profilId)
 			throws IllegalArgumentException;
 
+	public List<Info> getAllInfosA(int profilId)
+			throws IllegalArgumentException;
 	
 /**
  *Auslesen eines Suchprofils anhand der ID

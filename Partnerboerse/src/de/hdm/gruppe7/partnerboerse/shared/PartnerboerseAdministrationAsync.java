@@ -113,6 +113,9 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
 	
+	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
+
+	
 	/**
 	 * ABSCHNITT Info: ENDE
 	 */	

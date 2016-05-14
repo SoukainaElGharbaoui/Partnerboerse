@@ -225,10 +225,11 @@ public class CreateInfo extends VerticalPanel {
 				final Button speichernInfoButton = new Button("Information speichern");
 				speichernInfoButton.setStylePrimaryName("partnerboerse-menubutton");
 				showEigenschaftFlexTableAuswahl.setWidget(row, 3, speichernInfoButton);
+				
 
 				speichernInfoButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-					
+				
 						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
 						ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),

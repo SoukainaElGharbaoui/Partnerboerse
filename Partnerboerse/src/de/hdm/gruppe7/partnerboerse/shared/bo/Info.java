@@ -11,7 +11,9 @@ public class Info extends BusinessObject {
 	private String eigenschaftErlaeuterung;
 	private int nutzerprofilId;
 	private int auswahloptionId;
+	private String optionsbezeichnung;
 
+	
 	//Konstruktor
 	public Info() {
 		super();
@@ -62,6 +64,14 @@ public class Info extends BusinessObject {
 
 	public void setEigenschaftErlaeuterung(String eigenschaftErlaeuterung) {
 		this.eigenschaftErlaeuterung = eigenschaftErlaeuterung;
+	}
+
+	public String getOptionsbezeichnung() {
+		return optionsbezeichnung;
+	}
+
+	public void setOptionsbezeichnung(String optionsbezeichnung) {
+		this.optionsbezeichnung = optionsbezeichnung;
 	}
 	
 }
