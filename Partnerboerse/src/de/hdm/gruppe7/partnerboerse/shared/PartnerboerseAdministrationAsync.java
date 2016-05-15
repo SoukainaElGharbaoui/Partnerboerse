@@ -105,6 +105,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */	
 	
+	
+	/**
+	 * ABSCHNITT Info: BEGINN
+	 */	
+	
 	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
 	
 	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
@@ -114,7 +119,15 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getAllAuswahloptionen(int eigenschaftId, AsyncCallback<List<Auswahloption>> callback);
+	
+	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
+	
+	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
 
+	
+	/**
+	 * ABSCHNITT Info: ENDE
+	 */	
 
 }
 	
