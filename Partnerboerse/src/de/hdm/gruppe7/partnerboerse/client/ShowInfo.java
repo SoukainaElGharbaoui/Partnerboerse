@@ -35,10 +35,12 @@ public class ShowInfo extends VerticalPanel {
 		 */
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 
+		
+		
 		// Tabelle für Beschreibungsinfo
 
 		/**
-		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
+		 * Tabelle erzeugen, in der die Beschreibungsinfos dargestellt werden.
 		 */
 		final FlexTable showInfoFlexTable = new FlexTable();
 
@@ -89,48 +91,101 @@ public class ShowInfo extends VerticalPanel {
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
-		verPanel.add(infoLabel);
-		
-		// Löschen-Button hinzufügen und ausbauen.
-				final Button loeschenButton = new Button("Löschen");
-				verPanel.add(buttonPanel);
-				buttonPanel.add(loeschenButton);
+				
+				
+				// Tabelle für Auswahlinfo
 
-				// Bearbeiten-Button hinzufügen und ausbauen.
-				final Button bearbeitenButton = new Button("Bearbeiten");
-				verPanel.add(buttonPanel);
-				buttonPanel.add(bearbeitenButton);
+				/**
+				 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
+				 */
+				final FlexTable showInfoFlexTableAuswahl = new FlexTable();
 
-				// ClickHandler für den Bearbeiten-Button hinzufügen.
-				bearbeitenButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						EditInfo editInfo = new EditInfo();
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(editInfo);
-					}
-				});
+				/**
+				 * Erste Zeile der Tabelle festlegen.
+				 */
+				showInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
+				showInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
+				showInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
 
-//				// ClickHandler für den Löschen-Button hinzufügen.
-//				loeschenButton.addClickHandler(new ClickHandler() {
-//					public void onClick(ClickEvent event) {
-//
-//						ClientsideSettings.getPartnerboerseAdministration()
-//								.deleteSuchprofil(Benutzer.getProfilId(),
-//										new AsyncCallback<Void>() {
-//
-//											@Override
-//											public void onFailure(Throwable caught) {
-//												infoLabel
-//														.setText("Es trat ein Fehler auf");
-//											}
-//
-//											@Override
-//											public void onSuccess(Void result) {
-//												infoLabel
-//														.setText("Das Suchprofil wurde erfolgreich gelöscht");
-//											}
-//
-//										});
+				/**
+				 * Tabelle formatieren und CSS einbinden.
+				 */
+				showInfoFlexTableAuswahl.setCellPadding(6);
+				showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
+				showInfoFlexTableAuswahl.addStyleName("FlexTable");
+				
+				
+				ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
+						Benutzer.getProfilId(), new AsyncCallback<List<Info>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
+
+							@Override
+							public void onSuccess(List <Info> result) {
+								// Anzahl der Zeilen ermitteln.
+								int row = showInfoFlexTableAuswahl.getRowCount();
+
+								// Tabelle mit Inhalten aus der Datenbank befüllen.
+								for (Info i : result) {
+									row++;
+									
+									final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+									
+									showInfoFlexTableAuswahl.setText(row, 0, nutzerprofilId);
+									showInfoFlexTableAuswahl.setText(row, 1, i.getEigenschaftErlaeuterung());
+									showInfoFlexTableAuswahl.setText(row, 2, i.getOptionsbezeichnung());
+								}
+							}
+						});
+				
+
+				verPanel.add(showInfoFlexTableAuswahl);
+				verPanel.add(infoLabel);
+				
+				// Löschen-Button hinzufügen und ausbauen.
+						final Button loeschenButton = new Button("Löschen");
+						verPanel.add(buttonPanel);
+						buttonPanel.add(loeschenButton);
+
+						// Bearbeiten-Button hinzufügen und ausbauen.
+						final Button bearbeitenButton = new Button("Bearbeiten");
+						verPanel.add(buttonPanel);
+						buttonPanel.add(bearbeitenButton);
+
+						// ClickHandler für den Bearbeiten-Button hinzufügen.
+						bearbeitenButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+								EditInfo editInfo = new EditInfo();
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(editInfo);
+							}
+						});
+
+//						// ClickHandler für den Löschen-Button hinzufügen.
+//						loeschenButton.addClickHandler(new ClickHandler() {
+//							public void onClick(ClickEvent event) {
+		//
+//								ClientsideSettings.getPartnerboerseAdministration()
+//										.deleteSuchprofil(Benutzer.getProfilId(),
+//												new AsyncCallback<Void>() {
+		//
+//													@Override
+//													public void onFailure(Throwable caught) {
+//														infoLabel
+//																.setText("Es trat ein Fehler auf");
+//													}
+		//
+//													@Override
+//													public void onSuccess(Void result) {
+//														infoLabel
+//																.setText("Das Suchprofil wurde erfolgreich gelöscht");
+//													}
+		//
+//												});
+
 
 	}
 }

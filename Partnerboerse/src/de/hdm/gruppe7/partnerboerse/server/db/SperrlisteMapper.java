@@ -65,6 +65,81 @@ public class SperrlisteMapper {
 	}
 	
 	/**
+	 * Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	 */
+	public int pruefeSperrungFremdprofil(int profilId, int fremdprofilId) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
+		int sperrstatusFremdprofil = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
+					+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
+			
+			if (rs.next()) {
+		        // Es liegt eine Sperrung vor.  
+				sperrstatusFremdprofil = 1; 
+		      } else {
+		    	  // Es liegt keine Sperrung vor. 
+		    	  sperrstatusFremdprofil = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return sperrstatusFremdprofil; 
+	}
+	
+	/**
+	 * Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
+	 */
+	public int pruefeSperrungEigenesProfil(int profilId, int fremdprofilId) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
+		int sperrstatusEigenesProfil = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
+					+ "WHERE nutzerprofil_id=" + fremdprofilId + " AND fremdprofil_id=" + profilId); 
+			
+			if (rs.next()) {
+		        // Es liegt eine Sperrung vor.  
+				sperrstatusEigenesProfil = 1; 
+		      } else {
+		    	  // Es liegt keine Sperrung vor. 
+		    	  sperrstatusEigenesProfil = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return sperrstatusEigenesProfil;  
+	}
+	
+	/**
+	 * Sperrung einfügen. 
+	 */
+	public void insertSperrung(int profilId, int fremdprofilId) { 
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("INSERT INTO t_sperrung (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
+			+ profilId + "," + fremdprofilId + ")");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}	
+	}
+	
+	/**
 	 * Sperrung löschen.
 	 */
 	public void deleteSperrung(int profilId, int fremdprofilId) {
