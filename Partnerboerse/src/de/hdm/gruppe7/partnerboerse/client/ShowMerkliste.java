@@ -31,7 +31,8 @@ public class ShowMerkliste extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen. 
 		 */
-		final Label ueberschriftLabel = new Label("Diese Nutzerprofile befinden sich auf Ihrer Merkliste:"); 
+		final Label ueberschriftLabel = new Label("Diese Nutzerprofile befinden sich auf Ihrer Merkliste:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		
 		/**
 		 * Information-Label hinzufügen. 

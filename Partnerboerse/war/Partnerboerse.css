@@ -12,7 +12,7 @@ h1 {
 
 div#Header {
 	margin: 5px; 	
-	background: #CCCCFF
+	background: #fea7ad
 }
 
 div#Navigator {
@@ -20,13 +20,15 @@ div#Navigator {
 	overflow:scroll;
 	padding: 1em 1em;
 	
-	background: #FFFF99;
+	background: #ffffff;
 }
 
 div#Details {
 	padding: 4em 1em;
+	width: 300px; 
+	height: 365px;
 	
-	background: #FFFF99;
+	background: #ffffff;
 }
 
 div#Trailer {
@@ -36,16 +38,24 @@ div#Trailer {
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
+	/* position: relative; */ 
 	
-	background: #FFCCCC;
+	background: #d7d7d7;
 }
-
 
 .partnerboerse-menubutton {
 	font-size: 100%;
 	font-weight: bold;
 	width: 15em;
 	margin-bottom: 1em;
+}
+
+.partnerboerse-label {
+	font-size: 120%;
+	font-weight: bold;
+	font-style: italic;
+	color: gray;
+	padding-bottom: 0.5em;
 }
 
 /* MERKLISTE BEGINN */ 
