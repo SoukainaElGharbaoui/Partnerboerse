@@ -133,7 +133,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * @return
 	 */
 	
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) {
+	public Vector<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
 	

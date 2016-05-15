@@ -1,6 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.List;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -17,6 +17,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	
+	
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -59,7 +62,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
 		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
 		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
-		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+//		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		/**
 		 * PartnervorschlaegeSP anzeigen in den folgenden Zeilen 
@@ -72,7 +75,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getAllNutzerprofile(nutzerprofil,
-						new AsyncCallback<List<Nutzerprofil>>() {
+						new AsyncCallback<Vector<Nutzerprofil>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -80,9 +83,15 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 							}
 
-							@Override
-							public void onSuccess(List<Nutzerprofil> result) {
-
+							public void onSuccess(Vector<Nutzerprofil> result) {
+								
+							
+						
+								
+		
+				
+																												
+														
 								ClientsideSettings
 										.getPartnerboerseAdministration()
 										.getSuchprofilById(
@@ -98,32 +107,59 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 													@Override
 													public void onSuccess(
-															Suchprofil result2) {
+															Suchprofil result2 ) {
 														
-														int ergebnis = 0;
-														int a1 = 1;
+														String haarfarbe = result2.getHaarfarbe();
+														 String geschlecht = result2.getGeschlecht();
+														String koerpergroesse = result2.getKoerpergroesse();
+														String religion = result2.getReligion();
 														
-														for (int i = 1; i == result.size(); i++) {
+														
+														
+														
+															int ergebnis = 0;
+														    int a1 = 1;
+														  
+														
+															// Anzahl der Zeilen ermitteln. 
+								
+														int row = partnervorschlaegeSpFlexTable.getRowCount();
+														
+															
+														for(Nutzerprofil m : result){
+															row++;
+															
+																									
 																
-															if (result2.getGeschlecht() == result.get(i).getGeschlecht())
+															if (geschlecht == m.getGeschlecht())
 																	
 																	ergebnis = ergebnis + a1;	
+															
+															
 
-															if (result2.getHaarfarbe() ==  result.get(i).getHaarfarbe())
-																	
-																ergebnis = ergebnis + a1;
-
-															if (result2.getKoerpergroesse() ==  result.get(i).getKoerpergroesse())
-																	
-																ergebnis = ergebnis + a1;
-
-															if (result2.getRaucher() ==  result.get(i).getRaucher())
-																	
-																ergebnis = ergebnis + a1;
-
-															if (result2.getReligion() ==  result.get(i).getReligion())
-																	
-																ergebnis = ergebnis + a1;
+//															if (result2.getHaarfarbe() ==  m.getHaarfarbe())
+//																	
+//																ergebnis = ergebnis + a1;
+//															
+//															
+//
+//															if (result2.getKoerpergroesse() ==  m.getKoerpergroesse())
+//																	
+//																ergebnis = ergebnis + a1;
+//															
+//															
+//
+//															if (result2.getRaucher() ==  m.getRaucher())
+//																	
+//																ergebnis = ergebnis + a1;
+//															
+//													
+//
+//															if (result2.getReligion() ==  m.getReligion())
+//																	
+//																ergebnis = ergebnis + a1;
+//															
+//															
 
 															// if
 															// (suchprofil.getAlterMax()
@@ -137,25 +173,36 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															// nutzerprofil.getGeburtsdatum())
 															// return a;
 
-															int prozent = (100 / 5)* ergebnis;
-														partnervorschlaegeSpFlexTable.setText(1,1, prozent + "%");
-														}
-														
-														
-														
+															int prozent = (100 / 1)* ergebnis;
 													
+														
+															final String nutzerprofilId = String.valueOf(m.getProfilId());
+															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
+															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
+															partnervorschlaegeSpFlexTable.setText(row, 2, m.getVorname());
+															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
+															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
+															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
+														
+														
+														
+														
+														
+														
+														
+															
+
+														}
 
 													}
 
 												});
 
-							}
-
-						});
-		
-		
-		
-
+									}
+							
+							
+							
+				});
 
 	}
 
