@@ -20,6 +20,7 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	private int uebereinstimmung;
 	
 	public String getVorname() {
 		return vorname;
@@ -88,6 +89,14 @@ public class Nutzerprofil extends Profil{
 	
 	private void entsperreProfil (Nutzerprofil np) {
 		
+	}
+	
+	public void setUebereinstimmung(int uebereinstimmung){
+		this.uebereinstimmung = uebereinstimmung;
+	}
+	
+	public int getUebereinstimmung() {
+		return uebereinstimmung;
 	}
 	
 }

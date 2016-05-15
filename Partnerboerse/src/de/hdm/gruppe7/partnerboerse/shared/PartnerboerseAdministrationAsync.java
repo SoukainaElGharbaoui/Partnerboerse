@@ -119,6 +119,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * ABSCHNITT Info: ENDE
 	 */	
-
+  
+	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
 }
 	
