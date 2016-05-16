@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -12,6 +14,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
 
+
+
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 public class EditInfo extends VerticalPanel {
@@ -54,23 +59,23 @@ public class EditInfo extends VerticalPanel {
 	
 	final Label infoLabel2 = new Label();
 
-	ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
-			Benutzer.getProfilId(), new AsyncCallback <List<Info>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					infoLabel2.setText("Es trat ein Fehler auf.");
-				}
-
-				@Override
-				public void onSuccess(List<Info> result) {
-
-					musikListBox.setItemText(0, result.getMusik());
-
-					ernaehrungListBox.setItemText(0, result.getErnaehrung());
-
-				}
-			});
+//	ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
+//			Benutzer.getProfilId(), new AsyncCallback <List<Info>>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					infoLabel2.setText("Es trat ein Fehler auf.");
+//				}
+//
+//				@Override
+//				public void onSuccess(List<Info> result) {
+//
+//					musikListBox.setItemText(0, result.getMusik());
+//
+//					ernaehrungListBox.setItemText(0, result.getErnaehrung());
+//
+//				}
+//			});
 
 	/**
 	 * Zum Panel hinzufï¿½gen
@@ -95,29 +100,29 @@ public class EditInfo extends VerticalPanel {
 	final Label informationLabel = new Label();
 	verPanel.add(informationLabel);
 
-	speichernButton.addClickHandler(new ClickHandler() {
-		public void onClick(ClickEvent event) {
-			ClientsideSettings.getPartnerboerseAdministration().saveInfo(
-					ernaehrungListBox.getSelectedItemText(),
-					musikListBox.getSelectedItemText(),
-					new AsyncCallback<Void>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							informationLabel
-									.setText("Es trat ein Fehler auf");
-						}
-
-						@Override
-						public void onSuccess(Void result) {
-							informationLabel
-									.setText("Info erfolgreich aktualisiert.");
-							ShowInfo showInfo = new ShowInfo();
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(showInfo);
-						}
-
-					});
+//	speichernButton.addClickHandler(new ClickHandler() {
+//		public void onClick(ClickEvent event) {
+//			ClientsideSettings.getPartnerboerseAdministration().saveInfo(
+//					ernaehrungListBox.getSelectedItemText(),
+//					musikListBox.getSelectedItemText(),
+//					new AsyncCallback<Void>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							informationLabel
+//									.setText("Es trat ein Fehler auf");
+//						}
+//
+//						@Override
+//						public void onSuccess(Void result) {
+//							informationLabel
+//									.setText("Info erfolgreich aktualisiert.");
+//							ShowInfo showInfo = new ShowInfo();
+//							RootPanel.get("Details").clear();
+//							RootPanel.get("Details").add(showInfo);
+//						}
+//
+//					});
 //		loeschenButton.addClickHandler(new ClickHandler() {
 //				public void onClick(ClickEvent event) {
 //
@@ -140,7 +145,7 @@ public class EditInfo extends VerticalPanel {
 			
 
 		}
-	});
+	
 }
-}
+
 		
