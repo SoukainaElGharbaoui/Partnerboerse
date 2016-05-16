@@ -97,7 +97,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	
-	public Vector<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
+	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
 	throws IllegalArgumentException;
 	
 	/**

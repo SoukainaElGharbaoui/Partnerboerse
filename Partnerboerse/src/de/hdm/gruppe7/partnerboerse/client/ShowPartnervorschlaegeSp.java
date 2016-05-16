@@ -1,15 +1,23 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Vector;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
@@ -18,7 +26,12 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	
-	
+	public String geschlecht;
+	public String haarfarbe;
+	public String religion;
+	public String raucher;
+	public String koerpergroesse;
+	public String eigenschaftId;
 	
 
 	/**
@@ -62,20 +75,77 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
 		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
 		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
-//		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		/**
 		 * PartnervorschlaegeSP anzeigen in den folgenden Zeilen 
 		 */
 	
+																					
+														
+		ClientsideSettings	.getPartnerboerseAdministration()
+			.getSuchprofilById(Benutzer.getProfilId(),new AsyncCallback<Suchprofil>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+															
+														
+
+						}
+
+						@Override
+						public void onSuccess(Suchprofil result2 ){
+										
+								 haarfarbe = result2.getHaarfarbe();
+								 geschlecht = result2.getGeschlecht();
+								koerpergroesse = result2.getKoerpergroesse();
+								religion = result2.getReligion();
+								 raucher = result2.getRaucher();
+																				
+														
+														
+														
+														
+
+					}
+
+				});
 		
-	
 		
+//		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenA(new AsyncCallback<List<Eigenschaft>>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void onSuccess(List<Eigenschaft> result) {
+//				
+//				
+//				
+//				eigenschaftId = String.valueOf(result.get(0).getEigenschaftId());
+//						
+//				
+//			}
+//
+//			
+//			
+//			
+//		});
+						
+								
+		
+				
+									
+		// Aufruf des Suchprofils, welches zum Vergleich gentzt wird						
+								
 		Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getAllNutzerprofile(nutzerprofil,
-						new AsyncCallback<Vector<Nutzerprofil>>() {
+						new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -83,85 +153,70 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 							}
 
-							public void onSuccess(Vector<Nutzerprofil> result) {
+							public void onSuccess(List<Nutzerprofil> result) {
 								
-							
-						
+														//Variable festlegen die zur Speicherung der
+														//Übereinstimmungen genutzt wird
 								
-		
-				
-																												
-														
-								ClientsideSettings
-										.getPartnerboerseAdministration()
-										.getSuchprofilById(
-												Benutzer.getProfilId(),
-												new AsyncCallback<Suchprofil>() {
-
-													@Override
-													public void onFailure(
-															Throwable caught) {
-														
-
-													}
-
-													@Override
-													public void onSuccess(
-															Suchprofil result2 ) {
-														
-														String haarfarbe = result2.getHaarfarbe();
-														 String geschlecht = result2.getGeschlecht();
-														String koerpergroesse = result2.getKoerpergroesse();
-														String religion = result2.getReligion();
-														
-														
-														
-														
-															int ergebnis = 0;
-														    int a1 = 1;
+															int uebreinstimmung = 0;
+														    
 														  
 														
-															// Anzahl der Zeilen ermitteln. 
+														// Anzahl der Zeilen in der FlexTable ermitteln. 
 								
 														int row = partnervorschlaegeSpFlexTable.getRowCount();
 														
-															
+														// Durchlaufen der Elemente aus result, bei jedem Duchlauf 
+														//werden die Eigenschaften verglichen
+														
 														for(Nutzerprofil m : result){
 															row++;
-															
-																									
-																
+																											
 															if (geschlecht == m.getGeschlecht())
 																	
-																	ergebnis = ergebnis + a1;	
+																uebreinstimmung = uebreinstimmung + 1;	
+															
+															
+															if (haarfarbe ==  m.getHaarfarbe())
+																	
+																uebreinstimmung = uebreinstimmung + 1;
+
+															
+															if (koerpergroesse ==  m.getKoerpergroesse())
+																uebreinstimmung = uebreinstimmung + 1;
+															
+
+															if (raucher ==  m.getRaucher())
+																	
+																uebreinstimmung= uebreinstimmung + 1;
 															
 															
 
-//															if (result2.getHaarfarbe() ==  m.getHaarfarbe())
-//																	
-//																ergebnis = ergebnis + a1;
-//															
-//															
-//
-//															if (result2.getKoerpergroesse() ==  m.getKoerpergroesse())
-//																	
-//																ergebnis = ergebnis + a1;
-//															
-//															
-//
-//															if (result2.getRaucher() ==  m.getRaucher())
-//																	
-//																ergebnis = ergebnis + a1;
-//															
-//													
-//
-//															if (result2.getReligion() ==  m.getReligion())
-//																	
-//																ergebnis = ergebnis + a1;
-//															
-//															
+															if (religion ==  m.getReligion())
+																	
+																uebreinstimmung = uebreinstimmung + 1;
+															
+															//Berechnung des Alters 
+															
+//															GregorianCalendar geburtstag = new GregorianCalendar();
+//													        geburtstag.setTime(m.getGeburtsdatum());
+//													        GregorianCalendar heute = new GregorianCalendar();
+//													        int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+//													        if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH))
+//													        {
+//													            alter = alter - 1;
+//													        }
+//													        else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH))
+//													        {
+//													            if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE))
+//													            {
+//													                alter = alter - 1;
+//													            }
+//													        }
+															
 
-															// if
+															
+																// if
 															// (suchprofil.getAlterMax()
 															// <=
 															// nutzerprofil.getGeburtsdatum())
@@ -172,10 +227,18 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															// >=
 															// nutzerprofil.getGeburtsdatum())
 															// return a;
-
-															int prozent = (100 / 1)* ergebnis;
 													
-														
+															
+															
+
+														// die Anzahl der Uebereinstimmungen wird in prozent umgerechnet 
+															//und in der Variable prozent gespeichert
+
+															int prozent = (100 / 5)* uebreinstimmung;
+													
+														// die FlexTable wird mit den Werten der Nutzerprofile und der 
+														//Uebereinstimmungen in prozent gefüllt
+															
 															final String nutzerprofilId = String.valueOf(m.getProfilId());
 															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
 															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
@@ -183,7 +246,25 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
 															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
 															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
+															
 														
+														// die Variable muss für den nächsten Durchlauf auf null gesetzt werden	
+															uebreinstimmung = 0;
+															
+															// Anzeigen-Button hinzufÃ¼gen und ausbauen. 
+															final Button anzeigenButton = new Button("Anzeigen");
+															partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+															
+															// ClickHandler fÃ¼r den Anzeigen-Button hinzufÃ¼gen. 
+															anzeigenButton.addClickHandler(new ClickHandler(){
+																public void onClick(ClickEvent event) {
+																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
+																	RootPanel.get("Details").clear(); 
+																	RootPanel.get("Details").add(showFremdprofil); 
+																	
+																}
+																
+															}); 
 														
 														
 														
@@ -191,18 +272,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														
 														
 															
+								}
 
-														}
+							}
 
-													}
-
-												});
-
-									}
-							
-							
-							
-				});
+						});
 
 	}
 
