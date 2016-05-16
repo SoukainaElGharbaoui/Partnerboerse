@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
 
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
@@ -24,10 +24,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	public String geschlecht;
-	public String koerpergroesse;
+	public int koerpergroesse;
 	public String haarfarbe;
 	public String raucher;
 	public String religion;
+	public String alter;
+	public String geburtsdatum;
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -93,10 +95,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					
 					public void onSuccess(Nutzerprofil benutzer) {
 						geschlecht = benutzer.getGeschlecht();
-						koerpergroesse = benutzer.getKoerpergroesse();
+						koerpergroesse = Integer.valueOf(benutzer.getKoerpergroesse());
 						haarfarbe = benutzer.getHaarfarbe();
 						raucher = benutzer.getRaucher();
 						religion = benutzer.getReligion();
+						geburtsdatum = benutzer.getGeburtsdatum();
+						
 						
 					}
 				
@@ -120,7 +124,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						for (Nutzerprofil np : result) {
 							row++;
 							
-							int uebereinstimmung = 0;
+							double uebereinstimmung = 0;
 							final String ProfilId = String.valueOf(np.getProfilId());
 							partnervorschlaegeNpFlexTable.setText(row, 0, ProfilId);
 							
@@ -130,7 +134,10 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							if (np.getHaarfarbe() ==  haarfarbe)
 								uebereinstimmung = uebereinstimmung + 1;
 							
-							if (np.getKoerpergroesse() ==  koerpergroesse)
+							if (Integer.valueOf(np.getKoerpergroesse()) < koerpergroesse + 10 )
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							else if (Integer.valueOf(np.getKoerpergroesse()) > koerpergroesse - 10 )
 								uebereinstimmung = uebereinstimmung + 1;
 							
 							if (np.getRaucher() ==  raucher)
@@ -139,7 +146,10 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							if (np.getReligion() ==  religion)
 								uebereinstimmung = uebereinstimmung + 1;
 							
-							int ergebnis = (100 / 5)* uebereinstimmung;
+							if (np.getGeburtsdatum() == geburtsdatum)
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							double ergebnis = (100 / 6)* uebereinstimmung;
 							
 							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis));
 							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
