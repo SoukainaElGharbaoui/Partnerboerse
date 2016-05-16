@@ -12,7 +12,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 public class EditInfo extends VerticalPanel {
 	
@@ -23,7 +23,6 @@ public class EditInfo extends VerticalPanel {
 	
 	public EditInfo(){
 		this.add(verPanel);
-	}
 	
 	final Label ueberschriftLabel = new Label ("Info bearbeiten");
 	
@@ -55,8 +54,8 @@ public class EditInfo extends VerticalPanel {
 	
 	final Label infoLabel2 = new Label();
 
-	ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(
-			profilId, new AsyncCallback<Info>() {
+	ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
+			Benutzer.getProfilId(), new AsyncCallback <List<Info>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -64,7 +63,7 @@ public class EditInfo extends VerticalPanel {
 				}
 
 				@Override
-				public void onSuccess(Info result) {
+				public void onSuccess(List<Info> result) {
 
 					musikListBox.setItemText(0, result.getMusik());
 
@@ -119,9 +118,29 @@ public class EditInfo extends VerticalPanel {
 						}
 
 					});
+//		loeschenButton.addClickHandler(new ClickHandler() {
+//				public void onClick(ClickEvent event) {
+//
+//					ClientsideSettings.getPartnerboerseAdministration()
+//							.deleteInfo(Benutzer.getProfilId(),
+//									new AsyncCallback<Void>() {
+//
+//										@Override
+//										public void onFailure(Throwable caught) {
+//											infoLabel
+//													.setText("Es trat ein Fehler auf");
+//										}
+//
+//										@Override
+//										public void onSuccess(Void result) {
+//											infoLabel
+//													.setText("Die Info wurde erfolgreich gelöscht");
+//										}
+			
+			
 
 		}
 	});
 }
-
+}
 		
