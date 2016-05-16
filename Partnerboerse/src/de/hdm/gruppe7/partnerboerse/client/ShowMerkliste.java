@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -160,8 +161,10 @@ public class ShowMerkliste extends VerticalPanel {
 									// Wenn keine Sperrung vorliegt...
 									if(result == 0) {
 										ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
-										RootPanel.get("Details").clear(); 
+										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showFremdprofil);
+										
+										
 									// Wenn eine Sperrung vorliegt...
 									} else {
 										// DialobBox hinzufügen. 
