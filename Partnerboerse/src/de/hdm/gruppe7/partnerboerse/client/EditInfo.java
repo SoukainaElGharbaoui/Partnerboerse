@@ -91,6 +91,8 @@ public class EditInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
 
+		
+		// Tabelle für Auswahlinfos
 		final FlexTable editInfoFlexTableAuswahl = new FlexTable();
 
 		editInfoFlexTableAuswahl.setCellPadding(6);
@@ -169,13 +171,15 @@ public class EditInfo extends VerticalPanel {
 		 */
 		final Label informationLabel = new Label();
 		verPanel.add(informationLabel);
+		
+		
 
-		// speichernButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// ClientsideSettings.getPartnerboerseAdministration().saveInfo(
-		// ernaehrungListBox.getSelectedItemText(),
-		// musikListBox.getSelectedItemText(),
-		// new AsyncCallback<Void>() {
+		 //speichernButton.addClickHandler(new ClickHandler() {
+		 //public void onClick(ClickEvent event) {
+		 //ClientsideSettings.getPartnerboerseAdministration().saveInfo(
+		 //ernaehrungListBox.getSelectedItemText(),
+		 //musikListBox.getSelectedItemText(),
+		 //new AsyncCallback<Void>() {
 		//
 		// @Override
 		// public void onFailure(Throwable caught) {
