@@ -124,11 +124,19 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
 
+	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
+	
+	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	void deleteOneInfoA(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
 	
 	/**
 	 * ABSCHNITT Info: ENDE
 	 */	
   
 	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
+
+
 }
 	
