@@ -28,7 +28,8 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
-		final Label ueberschriftLabel = new Label("Aktuelle Infos");
+		final Label ueberschriftLabel = new Label("Ihre Infos:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		/**
 		 * Label Button

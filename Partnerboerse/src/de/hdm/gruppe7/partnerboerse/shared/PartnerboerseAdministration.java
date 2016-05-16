@@ -155,6 +155,18 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException; 
+	
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
+	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException; 
+	
+	// Sperrung einfügen.
+	public void sperrungSetzen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
+	
 	// Sperrung löschen. 
 	public void sperrungLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
