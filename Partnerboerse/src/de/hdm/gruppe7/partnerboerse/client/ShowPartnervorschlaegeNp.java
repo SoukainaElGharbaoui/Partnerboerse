@@ -13,7 +13,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
@@ -21,7 +23,11 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-
+	public String geschlecht;
+	public String koerpergroesse;
+	public String haarfarbe;
+	public String raucher;
+	public String religion;
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -69,8 +75,37 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
-		final Label infoLabel = new Label();
 		
+		final Label infoLabel = new Label();
+
+	
+		ClientsideSettings
+		.getPartnerboerseAdministration()
+		.getNutzerprofilById(
+				Benutzer.getProfilId(),
+				new AsyncCallback<Nutzerprofil>() {
+				
+					public void onFailure(
+							Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					
+					public void onSuccess(Nutzerprofil benutzer) {
+						geschlecht = benutzer.getGeschlecht();
+						koerpergroesse = benutzer.getKoerpergroesse();
+						haarfarbe = benutzer.getHaarfarbe();
+						raucher = benutzer.getRaucher();
+						religion = benutzer.getReligion();
+						
+					}
+				
+
+
+					
+					
+					
+				});
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getAllProfile(new AsyncCallback<List<Nutzerprofil>>() {
 
@@ -81,11 +116,32 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 					public void onSuccess(List<Nutzerprofil> result) {
 						int row = partnervorschlaegeNpFlexTable.getRowCount();
+						
 						for (Nutzerprofil np : result) {
 							row++;
+							
+							int uebereinstimmung = 0;
 							final String ProfilId = String.valueOf(np.getProfilId());
 							partnervorschlaegeNpFlexTable.setText(row, 0, ProfilId);
-							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getUebereinstimmung()));
+							
+							if (np.getGeschlecht() == geschlecht)
+								uebereinstimmung = uebereinstimmung + 1;	
+						
+							if (np.getHaarfarbe() ==  haarfarbe)
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							if (np.getKoerpergroesse() ==  koerpergroesse)
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							if (np.getRaucher() ==  raucher)
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							if (np.getReligion() ==  religion)
+								uebereinstimmung = uebereinstimmung + 1;
+							
+							int ergebnis = (100 / 5)* uebereinstimmung;
+							
+							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis));
 							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
 							partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
 							partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeburtsdatum());
@@ -109,15 +165,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						}
 					}
 
-					private String ItegerOf(int uebereinstimmung) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					
-
-
-				
 				});
 		
 	}
