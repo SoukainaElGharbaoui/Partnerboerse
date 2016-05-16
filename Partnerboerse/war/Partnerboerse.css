@@ -16,9 +16,11 @@ div#Header {
 }
 
 div#Navigator {
-	max-height: 300px;
-	overflow:scroll;
-	padding: 1em 1em;
+	/*  max-height: 300px; */
+	overflow:scroll; 
+	padding: 2em 2em;
+	width: 250px; 
+	height: 400px;
 	
 	background: #ffffff;
 }
