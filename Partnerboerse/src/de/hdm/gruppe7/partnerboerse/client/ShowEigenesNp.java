@@ -16,21 +16,27 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
+	 * HorizontalPanel
+	 */
+	private HorizontalPanel horPanel = new HorizontalPanel();
+	
+	/**
 	 * VerticalPanel hinzufügen.
 	 */
-	private VerticalPanel verPanel = new VerticalPanel();
+	private VerticalPanel verPanel1 = new VerticalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();
 	
 	/**
 	 * Label Button
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
-
+	
 
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 	public ShowEigenesNp() {
-		this.add(verPanel);
+		this.add(horPanel);
 
 		/**
 		 * Label für Überschrift erstellen
@@ -57,8 +63,6 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
 		
 		
-		
-
 		/**
 		 * Tabelle formatieren und CSS einbinden.
 		 */
@@ -149,20 +153,20 @@ public class ShowEigenesNp extends VerticalPanel {
 
 
 				});
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(showEigenesNpFlexTable);
-		verPanel.add(infoLabel);
+		verPanel1.add(ueberschriftLabel);
+		verPanel1.add(showEigenesNpFlexTable);
+		verPanel1.add(infoLabel);
 
 
 
 								// Löschen-Button hinzufügen und ausbauen.
 								final Button loeschenButton = new Button("Löschen");
-								verPanel.add(buttonPanel);
+								verPanel1.add(buttonPanel);
 								buttonPanel.add(loeschenButton);
 
 								// Bearbeiten-Button hinzufügen und ausbauen.
 								final Button bearbeitenButton = new Button("Bearbeiten");
-								verPanel.add(buttonPanel);
+								verPanel1.add(buttonPanel);
 								buttonPanel.add(bearbeitenButton);
 
 								// ClickHandler für den Bearbeiten-Button
@@ -211,6 +215,11 @@ public class ShowEigenesNp extends VerticalPanel {
 											}
 										});
 
+		ShowInfo showInfo = new ShowInfo();
+		verPanel2.add(showInfo);
+		horPanel.add(verPanel1);
+		horPanel.add(verPanel2);
+								
 							}
 				
 
