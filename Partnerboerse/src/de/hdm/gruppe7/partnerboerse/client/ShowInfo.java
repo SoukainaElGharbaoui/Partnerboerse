@@ -140,14 +140,14 @@ public class ShowInfo extends VerticalPanel {
 									showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
 								}
 							}
-						});
+						});	
 				
 
 				verPanel.add(showInfoFlexTableAuswahl);
 				verPanel.add(infoLabel);
 				
 				// Löschen-Button hinzufügen und ausbauen.
-						final Button loeschenButton = new Button("Löschen");
+						final Button loeschenButton = new Button("Alle löschen");
 						verPanel.add(buttonPanel);
 						buttonPanel.add(loeschenButton);
 
