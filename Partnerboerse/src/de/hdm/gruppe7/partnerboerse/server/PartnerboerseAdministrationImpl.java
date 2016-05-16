@@ -328,5 +328,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosA(profilId);
 	}
+	
+	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findAllNutzerprofile();
+	}
 }
 

@@ -120,9 +120,10 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_profil INNER JOIN"
-							+ "t_nutzerprofil ON t_profil.profil_id = "
-							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
+					.executeQuery(
+							"SELECT * FROM t_nutzerprofil INNER JOIN t_profil WHERE "
+							+ "t_nutzerprofil.nutzerprofil_id = t_profil.profil_id AND t_profil.profil_id > 1");
+
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.

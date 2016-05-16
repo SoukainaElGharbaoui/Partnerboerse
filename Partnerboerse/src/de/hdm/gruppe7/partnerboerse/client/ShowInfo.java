@@ -28,7 +28,8 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
-		final Label ueberschriftLabel = new Label("Aktuelle Infos");
+		final Label ueberschriftLabel = new Label("Ihre Infos:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		/**
 		 * Label Button
@@ -72,7 +73,7 @@ public class ShowInfo extends VerticalPanel {
 					}
 
 					@Override
-					public void onSuccess(List <Info> result) {
+					public void onSuccess(List<Info> result) {
 						// Anzahl der Zeilen ermitteln.
 						int row = showInfoFlexTable.getRowCount();
 
@@ -124,29 +125,29 @@ public class ShowInfo extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(List <Info> result) {
+							public void onSuccess(List<Info> result) {
 								// Anzahl der Zeilen ermitteln.
 								int row = showInfoFlexTableAuswahl.getRowCount();
 
 								// Tabelle mit Inhalten aus der Datenbank befüllen.
-								for (Info i : result) {
+								for (Info iA : result) {
 									row++;
 									
-									final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+									final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
 									
 									showInfoFlexTableAuswahl.setText(row, 0, nutzerprofilId);
-									showInfoFlexTableAuswahl.setText(row, 1, i.getEigenschaftErlaeuterung());
-									showInfoFlexTableAuswahl.setText(row, 2, i.getOptionsbezeichnung());
+									showInfoFlexTableAuswahl.setText(row, 1, iA.getEigenschaftErlaeuterung());
+									showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
 								}
 							}
-						});
+						});	
 				
 
 				verPanel.add(showInfoFlexTableAuswahl);
 				verPanel.add(infoLabel);
 				
 				// Löschen-Button hinzufügen und ausbauen.
-						final Button loeschenButton = new Button("Löschen");
+						final Button loeschenButton = new Button("Alle löschen");
 						verPanel.add(buttonPanel);
 						buttonPanel.add(loeschenButton);
 

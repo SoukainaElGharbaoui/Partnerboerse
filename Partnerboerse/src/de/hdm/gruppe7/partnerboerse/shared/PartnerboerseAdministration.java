@@ -254,6 +254,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
+	
+	public List<Nutzerprofil> getAllProfile()
+			throws IllegalArgumentException;
 
 }
 

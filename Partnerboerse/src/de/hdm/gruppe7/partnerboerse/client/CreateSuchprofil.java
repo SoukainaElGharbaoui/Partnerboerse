@@ -20,7 +20,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Konstruktor hinzufügen.
+	 * Konstruktor hinzufï¿½gen.
 	 */
 	public CreateSuchprofil() {
 		this.add(verPanel);
@@ -28,7 +28,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		/**
 		 * Label fÃ¼r Ãœberschrift erstellen
 		 */
-		final Label ueberschriftLabel = new Label("Suchprofil anlegen");
+		final Label ueberschriftLabel = new Label("Suchprofil anlegen:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		/**
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
@@ -124,7 +125,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	verPanel.add(createSuchprofilButton);
 
 	/**
-	 * infoLabel zum navPanel hinzufügen.
+	 * infoLabel zum navPanel hinzufï¿½gen.
 	 */
 	verPanel.add(infoLabel);
 

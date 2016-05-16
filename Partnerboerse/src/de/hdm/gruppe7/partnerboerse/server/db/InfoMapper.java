@@ -42,6 +42,7 @@ public class InfoMapper {
 		return infoMapper;
 	}
 
+	
 	public List<Eigenschaft> findAllEigenschaftenB() {
 		Connection con = DBConnection.connection();
 
@@ -51,7 +52,8 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft WHERE typ='B'");
+			ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft "
+					+ "WHERE typ='B' ORDER BY eigenschaft_id ");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -70,6 +72,7 @@ public class InfoMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
+	
 	
 	// FindAllAuswahloptionen erstellen
 	public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
@@ -113,7 +116,8 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft WHERE typ='A'");
+			ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft "
+					+ "WHERE typ='A' ORDER BY eigenschaft_id ");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -147,9 +151,10 @@ public class InfoMapper {
 					+ "t_beschreibungsinfo.nutzerprofil_id, "
 					+ "t_beschreibungsinfo.infotext, "
 					+ "t_eigenschaft.erlaeuterung "
-					+ "FROM t_beschreibungsinfo INNER JOIN t_eigenschaft "
-					+ "ON t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-					+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId);
+					+ "FROM t_beschreibungsinfo, t_eigenschaft "
+					+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
+					+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+					+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
 			
 			
 			while (rs.next()) {
@@ -173,37 +178,29 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
-		int auswahloptionId;
-
+		
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT "
-					+ "t_auswahlinfo.nutzerprofil_id, "
-					+ "t_auswahlinfo.auswahloption_id, "
-					+ "t_eigenschaft.erlaeuterung "
-					+ "FROM t_auswahlinfo INNER JOIN t_eigenschaft "
-					+ "ON t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-					+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId);
-			
-//			auswahloptionId = rs.getInt("auswahloption_id");
-			
-//			stmt = con.createStatement();
-//			rs = stmt.executeQuery("SELECT "
-//					+ "t_auswahloption.optionsbezeichnung "
-//					+ "FROM t_auswahloption INNER JOIN t_auswahlinfo "
-//					+ "ON t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id "
-//					+ "AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
-//					+ "WHERE t_auswahlinfo.auswahloption_id=" + auswahloptionId
-//					+ "AND t_auswahlinfo.nutzerprofil_id=" + profilId);		
+					+ "t_eigenschaft.erlaeuterung, "
+					+ "t_auswahloption.optionsbezeichnung, "
+					+ "t_auswahlinfo.nutzerprofil_id "
+					+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
+					+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
+					+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+					+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+					+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+					+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
 			
 			while (rs.next()) {
 				Info info = new Info();
-				info.setNutzerprofilId(profilId);
+				info.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
 				info.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-//				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
 				
-				result.add(info);
+			result.add(info);
+
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

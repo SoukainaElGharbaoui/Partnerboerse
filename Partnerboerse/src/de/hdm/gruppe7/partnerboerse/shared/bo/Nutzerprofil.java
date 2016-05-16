@@ -3,7 +3,10 @@ package de.hdm.gruppe7.partnerboerse.shared.bo;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
+
+import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 
 /**
  * Realisierung eines exemplarischen Nutzerprofils. 
@@ -20,6 +23,7 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+
 	
 	public String getVorname() {
 		return vorname;
@@ -63,16 +67,7 @@ public class Nutzerprofil extends Profil{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	// MUSS NOCH DEFINIERT WERDEN !!
-	
-	private int berechneAehnlichkeitsmassNp (Nutzerprofil np) {
-		return 0; 
-	}
-	
-	private int berechneAehnlichkeitsmassSp (Suchprofil sp) {
-		return 0; 
-	}
+
 	
 	private void merkeProfil (Nutzerprofil np) {
 		
@@ -89,5 +84,7 @@ public class Nutzerprofil extends Profil{
 	private void entsperreProfil (Nutzerprofil np) {
 		
 	}
+	
+
 	
 }

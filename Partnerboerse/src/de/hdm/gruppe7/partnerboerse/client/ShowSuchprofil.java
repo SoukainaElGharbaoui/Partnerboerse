@@ -26,7 +26,8 @@ public class ShowSuchprofil extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
-		final Label ueberschriftLabel = new Label("Aktuelles Suchprofil");
+		final Label ueberschriftLabel = new Label("Ihr Suchprofil:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		/**
 		 * Label Button
