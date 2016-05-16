@@ -73,7 +73,7 @@ public class ShowInfo extends VerticalPanel {
 					}
 
 					@Override
-					public void onSuccess(List <Info> result) {
+					public void onSuccess(List<Info> result) {
 						// Anzahl der Zeilen ermitteln.
 						int row = showInfoFlexTable.getRowCount();
 
@@ -125,19 +125,19 @@ public class ShowInfo extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(List <Info> result) {
+							public void onSuccess(List<Info> result) {
 								// Anzahl der Zeilen ermitteln.
 								int row = showInfoFlexTableAuswahl.getRowCount();
 
 								// Tabelle mit Inhalten aus der Datenbank befüllen.
-								for (Info i : result) {
+								for (Info iA : result) {
 									row++;
 									
-									final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+									final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
 									
 									showInfoFlexTableAuswahl.setText(row, 0, nutzerprofilId);
-									showInfoFlexTableAuswahl.setText(row, 1, i.getEigenschaftErlaeuterung());
-									showInfoFlexTableAuswahl.setText(row, 2, i.getOptionsbezeichnung());
+									showInfoFlexTableAuswahl.setText(row, 1, iA.getEigenschaftErlaeuterung());
+									showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
 								}
 							}
 						});

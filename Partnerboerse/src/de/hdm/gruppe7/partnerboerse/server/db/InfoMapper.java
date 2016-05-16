@@ -173,35 +173,29 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
-		int auswahloptionId;
-
+		
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT "
-					+ "t_auswahlinfo.nutzerprofil_id, "
-					+ "t_auswahlinfo.auswahloption_id, "
 					+ "t_eigenschaft.erlaeuterung "
-					+ "FROM t_auswahlinfo INNER JOIN t_eigenschaft "
-					+ "ON t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+					+ "FROM t_eigenschaft INNER JOIN t_auswahlinfo "
+					+ "ON t_eigenschaft.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
 					+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId);
 			
-//			auswahloptionId = rs.getInt("auswahloption_id");
+			stmt = con.createStatement();
+			ResultSet rs2 = stmt.executeQuery("SELECT "
+						+ "t_auswahloption.optionsbezeichnung "
+						+ "FROM t_auswahloption INNER JOIN t_auswahlinfo "
+						+ "ON t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+						+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+						+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId);
 			
-//			stmt = con.createStatement();
-//			rs = stmt.executeQuery("SELECT "
-//					+ "t_auswahloption.optionsbezeichnung "
-//					+ "FROM t_auswahloption INNER JOIN t_auswahlinfo "
-//					+ "ON t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id "
-//					+ "AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
-//					+ "WHERE t_auswahlinfo.auswahloption_id=" + auswahloptionId
-//					+ "AND t_auswahlinfo.nutzerprofil_id=" + profilId);		
-			
-			while (rs.next()) {
+			while (rs.next() && rs2.next()) {
 				Info info = new Info();
 				info.setNutzerprofilId(profilId);
 				info.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-//				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+				info.setOptionsbezeichnung(rs2.getString("optionsbezeichnung"));
 				
 				result.add(info);
 			}
