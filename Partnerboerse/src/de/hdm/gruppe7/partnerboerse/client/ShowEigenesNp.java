@@ -67,8 +67,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		 * Tabelle formatieren und CSS einbinden.
 		 */
 		showEigenesNpFlexTable.setCellPadding(6);
-		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
+		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showEigenesNpFlexTable.addStyleName("FlexTable");
 
 		/**

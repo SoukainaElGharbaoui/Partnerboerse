@@ -18,14 +18,13 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * VerticalPanel hinzufügen.  
 	 */
 	private VerticalPanel verPanel1 = new VerticalPanel();
-	private VerticalPanel verPanel2 = new VerticalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();  
 	
 	/**
 	 * HorizontalPanel hinzufügen.
 	 */
-	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 	private HorizontalPanel horPanel = new HorizontalPanel(); 
-	
+	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 	
 	/** 
 	 * Konstruktor hinzufügen. 
@@ -34,9 +33,15 @@ public class ShowFremdprofil extends VerticalPanel {
 		this.add(horPanel); 
 		
 		/**
-		 * Label für die Überschrift hinzufügen. 
+		 * Überschrift-Label hinzufügen. 
 		 */
-		final Label ueberschriftLabel = new Label("Fremdprofil"); 
+		final Label ueberschriftLabel = new Label("Fremdprofil");
+		ueberschriftLabel.addStyleName("partnerboerse-label");
+		
+		/**
+		 * Information-Label hinzufügen.
+		 */
+		final Label infoLabel = new Label();
 		
 		/**
 		 * Tabelle zur Anzeige des Fremdprofils erstellen.
@@ -51,10 +56,10 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.setText(2, 0, "Nachname");
 		showFremdprofilFlexTable.setText(3, 0, "Geschlecht");
 		showFremdprofilFlexTable.setText(4, 0, "Geburtsdatum");
-		showFremdprofilFlexTable.setText(5, 0, "Religion");
-		showFremdprofilFlexTable.setText(6, 0, "Koerpergroesse");
-		showFremdprofilFlexTable.setText(7, 0, "Haarfarbe");
-		showFremdprofilFlexTable.setText(8, 0, "Raucher?");
+		showFremdprofilFlexTable.setText(5, 0, "Koerpergroesse");
+		showFremdprofilFlexTable.setText(6, 0, "Haarfarbe");
+		showFremdprofilFlexTable.setText(7, 0, "Raucherstatus");
+		showFremdprofilFlexTable.setText(8, 0, "Religion");
 		
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -64,10 +69,8 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.addStyleName("FlexTable");
 		
 		/**
-		 * InfoLabel erstellen um Text auszugeben
+		 * Entsprechendes Fremdprofil abrufen. 
 		 */
-		final Label infoLabel = new Label();
-		
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getFremdprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
@@ -100,21 +103,21 @@ public class ShowFremdprofil extends VerticalPanel {
 						// und in Tabelle eintragen
 						showFremdprofilFlexTable.setText(4, 1, result.getGeburtsdatum());
 
-						// Religion aus der Datenbank holen
-						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(5, 1, result.getReligion());
-
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(6, 1, result.getKoerpergroesse());
+						showFremdprofilFlexTable.setText(5, 1, result.getKoerpergroesse());
 
 						// Haarfarbe aus der Datenbank holen
 						// und in Tabelle eintragen				
-						showFremdprofilFlexTable.setText(7, 1, result.getHaarfarbe());
+						showFremdprofilFlexTable.setText(6, 1, result.getHaarfarbe());
 
-						// Raucher aus der Datenbank holen
+						// Raucherstatus aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(8, 1, result.getRaucher());
+						showFremdprofilFlexTable.setText(7, 1, result.getRaucher());
+						
+						// Religion aus der Datenbank holen
+						// und in Tabelle eintragen
+						showFremdprofilFlexTable.setText(8, 1, result.getReligion());
 				
 					}
 				});

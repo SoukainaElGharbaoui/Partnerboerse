@@ -12,23 +12,30 @@ h1 {
 
 div#Header {
 	margin: 5px; 	
-	background: #fea7ad
+	background: #ff9191
 }
 
 div#Navigator {
 	/*  max-height: 300px; */
-	overflow:scroll; 
-	padding: 2em 2em;
-	width: 250px; 
-	height: 400px;
+	/* overflow:scroll; */
+	border: 3px solid silver;
+	padding: 3em 4em;
+	width: 200px; 
+	height: 370px;
 	
 	background: #ffffff;
 }
 
+div#Space{
+	width: 100px; 
+	height: 370px;
+}
+
 div#Details {
-	padding: 4em 1em;
-	width: 300px; 
-	height: 365px;
+	
+	/*padding: 3em 4em;*/
+	width: 900px; 
+	height: 370px;
 	
 	background: #ffffff;
 }
@@ -52,10 +59,18 @@ div#Trailer {
 	margin-bottom: 1em;
 }
 
+.navigatorbutton {
+	font-size: 100%;
+	/*font-weight: bold; */
+	width: 15em;
+	heigt: 20em; 
+	margin-bottom: 1.5em;
+}
+
 .partnerboerse-label {
 	font-size: 120%;
 	font-weight: bold;
-	font-style: italic;
+	/* font-style: italic; */
 	color: gray;
 	padding-bottom: 0.5em;
 }
@@ -70,7 +85,8 @@ div#Trailer {
 .FlexTable {
   border: 1px solid silver;
   padding: 2px;
-  margin-bottom:6px;
+  margin-right: 150px; 
+  margin-bottom: 10px;
 }
 
 /* MERKLISTE ENDE */
