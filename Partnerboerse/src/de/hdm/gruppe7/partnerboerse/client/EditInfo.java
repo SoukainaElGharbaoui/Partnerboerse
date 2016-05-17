@@ -191,15 +191,15 @@ public class EditInfo extends VerticalPanel {
 							public void onClick(ClickEvent event) {
 							
 //							final int eigenschaftIdInt = Integer.valueOf(iA.getEigenschaftId());
-							final String eigenschaftId = String.valueOf(iA.getEigenschaftId());
-								
-							for(int i=2; i<=editInfoFlexTable.getRowCount(); i++) {
-							String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 0);
-							if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
+//							final String eigenschaftId = String.valueOf(iA.getEigenschaftId());
+//								
+//							for(int i=2; i<=editInfoFlexTable.getRowCount(); i++) {
+//							String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 0);
+//							if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
 								
 								
 								ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoA(Benutzer.getProfilId(),
-										Integer.valueOf(eigenschaftId), new AsyncCallback<Void>() {
+										Eigenschaft.getEigenschaftId(), new AsyncCallback<Void>() {
 
 											@Override
 											public void onFailure(Throwable caught) {
@@ -213,9 +213,9 @@ public class EditInfo extends VerticalPanel {
 
 										});
 								// Zeile in Tabelle löschen. 
-								editInfoFlexTable.removeRow(i);
-								break;
-							}}
+//								editInfoFlexTable.removeRow(i);
+//								break;
+//							}}
 							}
 						});
 					
