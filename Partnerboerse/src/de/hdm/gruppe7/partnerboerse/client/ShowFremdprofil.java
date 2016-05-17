@@ -17,18 +17,21 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * VerticalPanel hinzufügen.  
 	 */
-	private VerticalPanel verPanel = new VerticalPanel();
+	private VerticalPanel verPanel1 = new VerticalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();
 	
 	/**
 	 * HorizontalPanel hinzufügen.
 	 */
+	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 	private HorizontalPanel horPanel = new HorizontalPanel(); 
+	
 	
 	/** 
 	 * Konstruktor hinzufügen. 
 	 */
 	public ShowFremdprofil(final int fremdprofilId) {
-		this.add(verPanel); 
+		this.add(horPanel); 
 		
 		/**
 		 * Label für die Überschrift hinzufügen. 
@@ -66,7 +69,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		final Label infoLabel = new Label();
 		
 		ClientsideSettings.getPartnerboerseAdministration()
-		.getFremdprofilById( fremdprofilId,
+		.getFremdprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -78,9 +81,9 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
-						final String nutzerprofilid = String.valueOf(result.getProfilId());
-						showFremdprofilFlexTable.setText(0, 1, nutzerprofilid);
-
+						final String nutzerprofilId = String.valueOf(result.getProfilId());
+						showFremdprofilFlexTable.setText(0, 1, nutzerprofilId);
+						
 						// Vorname aus Datenbank aus der Datenbank holen
 						// und in Tabelle eintragen
 						showFremdprofilFlexTable.setText(1, 1, result.getVorname());
@@ -112,11 +115,10 @@ public class ShowFremdprofil extends VerticalPanel {
 						// Raucher aus der Datenbank holen
 						// und in Tabelle eintragen
 						showFremdprofilFlexTable.setText(8, 1, result.getRaucher());
-					}
-
-
 				
+					}
 				});
+				
 		
 		/**
 		 * ABSCHNITT MERKLISTE BEGINN: Programmierung "Vermerk setzen" / "Vermerk löschen" Button.
@@ -145,7 +147,7 @@ public class ShowFremdprofil extends VerticalPanel {
 				
 				// Button zum VerticalPanel hinzufügen. 
 				final Button mButton = new Button(buttonText); 
-				horPanel.add(mButton);
+				buttonPanel.add(mButton);
 				
 				// ClickHandler hinzufügen. 
 				mButton.addClickHandler(new ClickHandler() {
@@ -229,8 +231,7 @@ public class ShowFremdprofil extends VerticalPanel {
 				
 				// Button zum VerticalPanel hinzufügen. 
 				final Button mButton = new Button(buttonText); 
-				horPanel.add(mButton);
-				verPanel.add(horPanel);
+				buttonPanel.add(mButton);
 				
 				// ClickHandler hinzufügen. 
 				mButton.addClickHandler(new ClickHandler() {
@@ -289,9 +290,15 @@ public class ShowFremdprofil extends VerticalPanel {
 		 * ABSCHNITT SPERRLISTE ENDE: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
 		 */
 		
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(showFremdprofilFlexTable);
-		verPanel.add(infoLabel);
+		verPanel1.add(ueberschriftLabel);
+		verPanel1.add(showFremdprofilFlexTable);
+		verPanel1.add(infoLabel);
+		verPanel1.add(buttonPanel);
+		horPanel.add(verPanel1);
+		
+		ShowFremdinfo fremdinfo = new ShowFremdinfo(fremdprofilId);
+		verPanel2.add(fremdinfo);
+		horPanel.add(verPanel2);
 
 	}
 }

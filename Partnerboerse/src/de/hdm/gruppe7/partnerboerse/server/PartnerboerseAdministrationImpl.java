@@ -309,6 +309,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.insertAuswahlinfo(info);
 	}
 	
+	public void saveInfo(Info info)
+	throws IllegalArgumentException {
+		
+		this.infoMapper.updateInfo(info);
+	
+	}
+	
 	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
 		return this.infoMapper.findAllEigenschaftenB();
 	}
