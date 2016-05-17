@@ -114,6 +114,9 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
 	
+	void saveInfo(Info info, AsyncCallback<Void> callback);
+	
+	
 	void getAllEigenschaftenB(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);

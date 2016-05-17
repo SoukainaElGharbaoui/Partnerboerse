@@ -310,23 +310,23 @@ public class InfoMapper {
 		return info;
 	}
 
-	// public Info updateInfo(Info info) {
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// Statement stmt = con.createStatement();
-	//
-	// stmt.executeUpdate("UPDATE t_info" + "SET infotext=\"WHERE info_id=" +
-	// info.getInfoId());
-	//
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// }
-	//
-	// // Um Analogie zu insert(Info info) zu wahren,
+	 public Info updateInfo(Info info) {
+	 Connection con = DBConnection.connection();
+	
+	 try {
+	 Statement stmt = con.createStatement();
+	
+	 stmt.executeUpdate("UPDATE t_info" + "SET infotext=\"WHERE info_id=" +
+	 info.getInfoId());
+	
+	 } catch (SQLException e2) {
+	 e2.printStackTrace();
+	 }
+	
+	// Um Analogie zu insert(Info info) zu wahren,
 	// // geben wir info zurÃ¼ck
-	// return info;
-	// }
+	 return info;
+	 }
 	//
 	// public void deleteInfo(Info info) {
 	// Connection con = DBConnection.connection();

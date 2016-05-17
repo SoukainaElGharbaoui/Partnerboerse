@@ -44,6 +44,7 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
 		editInfoFlexTable.setText(0, 1, "Eigenschaft");
 		editInfoFlexTable.setText(0, 2, "Infotext");
+		editInfoFlexTable.setText(0, 3, "Auswahloption");
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -93,16 +94,7 @@ public class EditInfo extends VerticalPanel {
 
 		
 		// Tabelle für Auswahlinfos
-		final FlexTable editInfoFlexTableAuswahl = new FlexTable();
-
-		editInfoFlexTableAuswahl.setCellPadding(6);
-		editInfoFlexTableAuswahl.getColumnFormatter().addStyleName(0,
-				"TableHeader");
-		editInfoFlexTableAuswahl.addStyleName("FlexTable");
-
-		editInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
-		editInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
-		editInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
+		
 
 		final Label editLabel = new Label();
 
@@ -110,12 +102,12 @@ public class EditInfo extends VerticalPanel {
 		ernaehrungListBox.addItem("vegetarisch");
 		ernaehrungListBox.addItem("vegan");
 		ernaehrungListBox.addItem("keine Angabe");
-		editInfoFlexTableAuswahl.setWidget(1, 2, ernaehrungListBox);
+		editInfoFlexTable.setWidget(1, 3, ernaehrungListBox);
 
 		final ListBox musikListBox = new ListBox();
 		musikListBox.addItem("Pop");
 		musikListBox.addItem("RnB");
-		editInfoFlexTableAuswahl.setWidget(2, 2, musikListBox);
+		editInfoFlexTable.setWidget(2, 3, musikListBox);
 
 		final Label infoLabel2 = new Label();
 
@@ -130,7 +122,7 @@ public class EditInfo extends VerticalPanel {
 					@Override
 					public void onSuccess(List<Info> result) {
 
-						int row = editInfoFlexTableAuswahl.getRowCount();
+						int row = editInfoFlexTable.getRowCount();
 
 						// Tabelle mit Inhalten aus der Datenbank befüllen.
 						for (Info iA : result) {
@@ -138,11 +130,11 @@ public class EditInfo extends VerticalPanel {
 							final String nutzerprofilId = String.valueOf(iA
 									.getNutzerprofilId());
 
-							editInfoFlexTableAuswahl.setText(row, 0,
+							editInfoFlexTable.setText(row, 0,
 									nutzerprofilId);
-							editInfoFlexTableAuswahl.setText(row, 1,
+							editInfoFlexTable.setText(row, 1,
 									iA.getEigenschaftErlaeuterung());
-							editInfoFlexTableAuswahl.setText(row, 2,
+							editInfoFlexTable.setText(row, 2,
 									iA.getOptionsbezeichnung());
 
 						}
@@ -154,7 +146,7 @@ public class EditInfo extends VerticalPanel {
 		 */
 
 		verPanel.add(ueberschriftLabel);
-		verPanel.add(editInfoFlexTableAuswahl);
+		verPanel.add(editInfoFlexTable);
 		// verPanel.add(infoLabel);
 		verPanel.add(infoLabel2);
 		verPanel.add(editLabel);

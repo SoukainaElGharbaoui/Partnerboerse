@@ -226,6 +226,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
+	public void saveInfo(Info info)
+	throws IllegalArgumentException;
+	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
 	
