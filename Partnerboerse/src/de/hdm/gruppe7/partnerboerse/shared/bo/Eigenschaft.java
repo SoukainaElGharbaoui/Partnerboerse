@@ -6,7 +6,7 @@ public class Eigenschaft extends BusinessObject {
 	private static final long serialVersionUID = 1L;
 	
 	public String bezeichnung;
-	public int eigenschaftId;
+	public static int eigenschaftId;
 	public String erlaeuterung;
 	public String eigenschaft;
 	
@@ -22,7 +22,7 @@ public class Eigenschaft extends BusinessObject {
 		this.eigenschaftId = eigenschaftId;
 	}
 	
-	public int getEigenschaftId(){
+	public static int getEigenschaftId(){
 		return eigenschaftId;
 	}
 	

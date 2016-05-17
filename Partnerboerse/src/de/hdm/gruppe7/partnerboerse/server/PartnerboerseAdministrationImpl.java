@@ -352,7 +352,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException {
 	
-	this.infoMapper.deleteOneInfoA(profilId,eigenschaftId);
-}
+		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
+	}
 }
 

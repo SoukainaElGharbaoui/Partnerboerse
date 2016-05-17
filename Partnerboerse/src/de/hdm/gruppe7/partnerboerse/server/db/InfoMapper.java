@@ -337,7 +337,7 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo " + "WHERE nutzerprofil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id=" + profilId);
 
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id=" + profilId);
@@ -357,8 +357,8 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo " + "WHERE nutzerprofil_id=" + profilId
-					+ "AND eigenschaft_id="+ eigenschaftId );
+			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id=" + profilId
+					+ " AND eigenschaft_id=" + eigenschaftId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -376,7 +376,7 @@ public class InfoMapper {
 			
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id=" + profilId
-					+ "AND eigenschaft_id="+ eigenschaftId );
+					+ " AND eigenschaft_id=" + eigenschaftId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
