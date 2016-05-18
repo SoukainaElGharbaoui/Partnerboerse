@@ -10,9 +10,9 @@ public class Auswahleigenschaft extends Eigenschaft {
 	//private List <Auswahloption> auswahloption;
 	
 	
-	private List <Auswahloption> auswahloption;
+	private List<Auswahloption> auswahloption;
 	
-	public List <Auswahloption> zugehoerigeAuswahloptionen;
+	public List<Auswahloption> zugehoerigeAuswahloptionen;
 	
 	public void setAuswahltext(String auswahltext){
 		this.auswahltext = auswahltext;
@@ -26,7 +26,7 @@ public class Auswahleigenschaft extends Eigenschaft {
 		this.auswahloption = auswahloption;
 	}
 	
-	public List <Auswahloption> getZugehoerigeAuswahloptionen(){
+	public List<Auswahloption> getZugehoerigeAuswahloptionen(){
 		return auswahloption;
 		
 	}

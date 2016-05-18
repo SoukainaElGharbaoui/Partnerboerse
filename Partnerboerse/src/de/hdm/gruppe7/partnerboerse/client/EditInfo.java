@@ -108,33 +108,6 @@ public class EditInfo extends VerticalPanel {
 						// Anzahl der Zeilen ermitteln.
 						int row = editInfoFlexTable.getRowCount();
 
-						ClientsideSettings.getPartnerboerseAdministration()
-								.getAllEigenschaftenB(new AsyncCallback<List<Eigenschaft>>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										infoLabelB.setText("Es trat ein Fehler auf");
-									}
-
-									@Override
-									public void onSuccess(List<Eigenschaft> result) {
-										// Anzahl der Zeilen ermitteln.
-										int row = editInfoFlexTable.getRowCount();
-
-										// Tabelle mit Inhalten aus der
-										// Datenbank befüllen.
-										for (Eigenschaft e : result) {
-											row++;
-
-											final String eigenschaftId = String.valueOf(e.getEigenschaftId());
-
-											// Hier wird richtig befüllt aber an der falschen Stelle
-											editInfoFlexTable.setText(row, 1, eigenschaftId);
-
-										}
-									}
-								});
-
 						// Tabelle mit Inhalten aus der Datenbank befüllen.
 						for (Info iB : result) {
 							row++;
@@ -143,22 +116,22 @@ public class EditInfo extends VerticalPanel {
 							final String nutzerprofilId = String.valueOf(iB.getNutzerprofilId());
 
 							editInfoFlexTable.setText(row, 0, nutzerprofilId);
-							
-							// 0 wird befüllt -> Verweis auf methode getEigenschaften fehlt!
-//							editInfoFlexTable.setText(row, 1, eigenschaftId);
-							
+							editInfoFlexTable.setText(row, 1, eigenschaftId);
 							editInfoFlexTable.setText(row, 2, iB.getEigenschaftErlaeuterung());
 							editInfoFlexTable.setText(row, 3, iB.getInfotext());
 
+							
+							
 							final Button loeschenButton = new Button("Löschen");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
 
 							loeschenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
-
-									for (int i = 2; i <= editInfoFlexTable.getRowCount(); i++) {
-										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
-										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
+									
+																	
+									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
+//										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
+//										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
 
 											ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoB(
 													Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
@@ -173,14 +146,15 @@ public class EditInfo extends VerticalPanel {
 														public void onSuccess(Void result) {
 															infoLabelB.setText(
 																	"Die Beschreibungsinfo wurde erfolgreich gelöscht");
+															
 														}
 
 													});
 
-											// Zeile in Tabelle löschen.
+//											// Zeile in Tabelle löschen.
 											editInfoFlexTable.removeRow(i);
 											break;
-										}
+//										}
 									}
 								}
 							});
@@ -208,32 +182,6 @@ public class EditInfo extends VerticalPanel {
 
 						int row = editInfoFlexTable.getRowCount();
 
-						ClientsideSettings.getPartnerboerseAdministration()
-								.getAllEigenschaftenA(new AsyncCallback<List<Eigenschaft>>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										infoLabelA.setText("Es trat ein Fehler auf");
-									}
-
-									@Override
-									public void onSuccess(List<Eigenschaft> result) {
-										// Anzahl der Zeilen ermitteln.
-										int row = editInfoFlexTable.getRowCount();
-
-										// Tabelle mit Inhalten aus der
-										// Datenbank befüllen.
-										for (Eigenschaft e : result) {
-											row++;
-
-											final String eigenschaftId = String.valueOf(e.getEigenschaftId());
-
-											editInfoFlexTable.setText(row, 1, eigenschaftId);
-
-										}
-
-									}
-								});
 
 						// Tabelle mit Inhalten aus der Datenbank befüllen.
 						for (Info iA : result) {
@@ -243,23 +191,21 @@ public class EditInfo extends VerticalPanel {
 							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
 
 							editInfoFlexTable.setText(row, 0, nutzerprofilId);
-
+							editInfoFlexTable.setText(row, 1, eigenschaftId);
 							editInfoFlexTable.setText(row, 2, iA.getEigenschaftErlaeuterung());
 							editInfoFlexTable.setText(row, 3, iA.getOptionsbezeichnung());
 
+							
+
 							final Button loeschenButton = new Button("Löschen");
-							loeschenButton.setStylePrimaryName("partnerboerse-menubutton");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
 
 							loeschenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 
-									// final int eigenschaftIdInt =
-									// Integer.valueOf(iA.getEigenschaftId());
-
-									for (int i = 2; i <= editInfoFlexTable.getRowCount(); i++) {
-										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
-										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
+									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
+//										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
+//										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
 
 											ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoA(
 													Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
@@ -282,7 +228,7 @@ public class EditInfo extends VerticalPanel {
 											editInfoFlexTable.removeRow(i);
 											break;
 										}
-									}
+//									}
 								}
 							});
 
