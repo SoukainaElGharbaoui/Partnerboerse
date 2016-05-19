@@ -30,7 +30,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * Label �berschrift
 		 */
 
-		final Label ueberschriftLabel = new Label("Nutzerprofil anlegen");
+		final Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		verPanel.add(ueberschriftLabel);
 
@@ -50,16 +51,14 @@ public class CreateNutzerprofil extends VerticalPanel {
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
-
-		createNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
-		createNutzerprofilFlexTable.setText(1, 0, "Vorname");
-		createNutzerprofilFlexTable.setText(2, 0, "Nachname");
-		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
-		createNutzerprofilFlexTable.setText(4, 0, "Koerpergroesse");
-		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
-		createNutzerprofilFlexTable.setText(6, 0, "Geschlecht");
-		createNutzerprofilFlexTable.setText(7, 0, "Raucher");
-		createNutzerprofilFlexTable.setText(8, 0, "Religion");
+		createNutzerprofilFlexTable.setText(0, 0, "Vorname");
+		createNutzerprofilFlexTable.setText(1, 0, "Nachname");
+		createNutzerprofilFlexTable.setText(2, 0, "Geburtsdatum");
+		createNutzerprofilFlexTable.setText(3, 0, "Koerpergroesse");
+		createNutzerprofilFlexTable.setText(4, 0, "Haarfarbe");
+		createNutzerprofilFlexTable.setText(5, 0, "Geschlecht");
+		createNutzerprofilFlexTable.setText(6, 0, "Raucher");
+		createNutzerprofilFlexTable.setText(7, 0, "Religion");
 		
 		
 		/**
@@ -68,17 +67,17 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		
 		final TextBox vornameTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
+		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
 		
 		final TextBox nachnameTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
+		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
 		
 	
 		final TextBox geburtsdatumTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
+		createNutzerprofilFlexTable.setWidget(2, 2, geburtsdatumTextBox);
 		
 		final TextBox koerpergroesseTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		createNutzerprofilFlexTable.setWidget(3, 2, koerpergroesseTextBox);
 		
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -88,19 +87,19 @@ public class CreateNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		createNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
+		createNutzerprofilFlexTable.setWidget(4, 2, haarfarbeListBox);
 		
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
-		createNutzerprofilFlexTable.setWidget(6, 2, geschlechtListBox);
+		createNutzerprofilFlexTable.setWidget(5, 2, geschlechtListBox);
 		
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
-		createNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
+		createNutzerprofilFlexTable.setWidget(6, 2, raucherListBox);
 		
 		final ListBox religionListBox = new ListBox();
 		religionListBox.addItem("Keine Auswahl");
@@ -109,7 +108,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		createNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
+		createNutzerprofilFlexTable.setWidget(7, 2, religionListBox);
 	
 		
 		verPanel.add(createNutzerprofilFlexTable);

@@ -165,6 +165,18 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException; 
+	
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
+	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException; 
+	
+	// Sperrung einfügen.
+	public void sperrungSetzen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
+	
 	// Sperrung löschen. 
 	public void sperrungLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
@@ -224,6 +236,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
+	public void saveInfo(Info info)
+	throws IllegalArgumentException;
+	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
 	
@@ -236,7 +251,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Info> getAllInfosB(int profilId)
 			throws IllegalArgumentException;
 
+	public List<Info> getAllInfosA(int profilId)
+			throws IllegalArgumentException;
 	
+	public void deleteAllInfos(int profilId)
+		throws IllegalArgumentException;
+
+	public void deleteOneInfoB(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public void deleteOneInfoA(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
 /**
  *Auslesen eines Suchprofils anhand der ID
  * @param profilId
@@ -250,6 +275,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
+	
+	public List<Nutzerprofil> getAllProfile()
+			throws IllegalArgumentException;
+
 
 }
 

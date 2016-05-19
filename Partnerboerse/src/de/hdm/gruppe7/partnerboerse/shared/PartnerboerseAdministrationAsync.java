@@ -69,6 +69,15 @@ public interface PartnerboerseAdministrationAsync {
 	// Alle Sperrungen eines Nutzerprofils auslesen. 
 	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Vector<Sperrliste>> callback);
 	
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	void getSperrstatusFremdprofil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
+	void getSperrstatusEigenesProfil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	
+	// Sperrung einfügen. 
+	void sperrungSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	
 	// Sperrung löschen. 
 	void sperrungLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 	/**
@@ -107,6 +116,9 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
 	
+	void saveInfo(Info info, AsyncCallback<Void> callback);
+	
+	
 	void getAllEigenschaftenB(AsyncCallback<List<Eigenschaft>> callback);
 
 	void getAllEigenschaftenA(AsyncCallback<List<Eigenschaft>> callback);
@@ -115,9 +127,21 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
 	
+	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
+
+	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
+	
+	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	void deleteOneInfoA(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	
 	/**
 	 * ABSCHNITT Info: ENDE
 	 */	
+  
+	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
+
 
 }
 	

@@ -47,7 +47,6 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.setText(0, 2, "Infotext");
 
 		showEigenschaftFlexTable.setText(0, 3, "Speichern");
-//		showEigenschaftFlexTable.setText(0, 4, "Löschen");
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -116,10 +115,6 @@ public class CreateInfo extends VerticalPanel {
 									});
 						}
 					});
-
-//					final Button loeschenInfoButton = new Button("Information löschen");
-//					loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-//					showEigenschaftFlexTable.setWidget(row, 4, loeschenInfoButton);
 				}
 
 			}
@@ -145,9 +140,7 @@ public class CreateInfo extends VerticalPanel {
 	showEigenschaftFlexTableAuswahl.setText(0, 0, "Eigenschaft-Id");
 	showEigenschaftFlexTableAuswahl.setText(0, 1, "Erlaeuterung");
 	showEigenschaftFlexTableAuswahl.setText(0, 2, "Auswahloptionen");
-
 	showEigenschaftFlexTableAuswahl.setText(0, 3, "Speichern");
-//	showEigenschaftFlexTableAuswahl.setText(0, 4, "Löschen");
 
 	/**
 	 * Tabelle formatieren und CSS einbinden.
@@ -204,31 +197,24 @@ public class CreateInfo extends VerticalPanel {
 							@Override
 							public void onSuccess(List<Auswahloption> result) {
 							
-//							int row2 = showEigenschaftFlexTableAuswahl.getRowCount();
-							
-							
 							for(Auswahloption a : result){
-//								row2++;
 								
 								neueListBox.addItem(a.getOptionsbezeichnung());
-								
-								
 							}
-							
 							
 							}
 				
 						});
 						
-						
 					
 				final Button speichernInfoButton = new Button("Information speichern");
 				speichernInfoButton.setStylePrimaryName("partnerboerse-menubutton");
 				showEigenschaftFlexTableAuswahl.setWidget(row, 3, speichernInfoButton);
+				
 
 				speichernInfoButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-					
+				
 						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
 						ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),
@@ -247,12 +233,6 @@ public class CreateInfo extends VerticalPanel {
 								});
 					}
 				});
-
-				
-				
-//				final Button loeschenInfoButton = new Button("Information löschen");
-//				loeschenInfoButton.setStylePrimaryName("partnerboerse-menubutton");
-//				showEigenschaftFlexTableAuswahl.setWidget(row, 4, loeschenInfoButton);
 			}
 		}
 

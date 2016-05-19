@@ -20,7 +20,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Konstruktor hinzuf�gen.
+	 * Konstruktor hinzuf�gen.
 	 */
 	public CreateSuchprofil() {
 		this.add(verPanel);
@@ -28,7 +28,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		/**
 		 * Label für Überschrift erstellen
 		 */
-		final Label ueberschriftLabel = new Label("Suchprofil anlegen");
+		final Label ueberschriftLabel = new Label("Suchprofil anlegen:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
 		/**
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
@@ -48,14 +49,13 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Erste Spalte der Tabelle festlegen.
 		 */
 		
-		createSuchprofilFlexTable.setText(0, 0, "Suchprofil-Id");
-		createSuchprofilFlexTable.setText(1, 0, "Geschlecht");
-		createSuchprofilFlexTable.setText(2, 0, "Koerpergroesse");
-		createSuchprofilFlexTable.setText(3, 0, "Haarfarbe");
-		createSuchprofilFlexTable.setText(4, 0, "Alter von");
-		createSuchprofilFlexTable.setText(5, 0, "Alter bis");
-		createSuchprofilFlexTable.setText(6, 0, "Raucher");
-		createSuchprofilFlexTable.setText(7, 0, "Religion");
+		createSuchprofilFlexTable.setText(0, 0, "Geschlecht");
+		createSuchprofilFlexTable.setText(1, 0, "Koerpergroesse");
+		createSuchprofilFlexTable.setText(2, 0, "Haarfarbe");
+		createSuchprofilFlexTable.setText(3, 0, "Alter von");
+		createSuchprofilFlexTable.setText(4, 0, "Alter bis");
+		createSuchprofilFlexTable.setText(5, 0, "Raucher");
+		createSuchprofilFlexTable.setText(6, 0, "Religion");
 
 		
 		/**
@@ -68,10 +68,10 @@ public class CreateSuchprofil extends VerticalPanel {
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("MÃ¤nnlich");
-		createSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
+		createSuchprofilFlexTable.setWidget(0, 2, geschlechtListBox);
 
 		final TextBox koerpergroesseTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(2, 2, koerpergroesseTextBox);
+		createSuchprofilFlexTable.setWidget(1, 2, koerpergroesseTextBox);
 
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -81,19 +81,19 @@ public class CreateSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		createSuchprofilFlexTable.setWidget(3, 2, haarfarbeListBox);
+		createSuchprofilFlexTable.setWidget(2, 2, haarfarbeListBox);
 
 		final TextBox alterMinTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(4, 2, alterMinTextBox);
+		createSuchprofilFlexTable.setWidget(3, 2, alterMinTextBox);
 
 		final TextBox alterMaxTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(5, 2, alterMaxTextBox);
+		createSuchprofilFlexTable.setWidget(4, 2, alterMaxTextBox);
 
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
-		createSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
+		createSuchprofilFlexTable.setWidget(5, 2, raucherListBox);
 
 		final ListBox religionListBox = new ListBox();
 		religionListBox.addItem("Keine Auswahl");
@@ -102,7 +102,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
+		createSuchprofilFlexTable.setWidget(6, 2, religionListBox);
 		
 		/**
 		 * Zum Panel hinzufï¿½gen
@@ -124,7 +124,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	verPanel.add(createSuchprofilButton);
 
 	/**
-	 * infoLabel zum navPanel hinzuf�gen.
+	 * infoLabel zum navPanel hinzuf�gen.
 	 */
 	verPanel.add(infoLabel);
 
