@@ -215,39 +215,36 @@ public class InfoMapper {
 		return result;
 	}
 
-	// public Info findByInfoId(int infoId) {
-	// // DB-Verbindung holen
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// // Leeres SQL-Statement (JDBC) anlegen
-	// Statement stmt = con.createStatement();
-	//
-	// // Statement ausfÃ¼llen und als Query an die DB schicken
-	// ResultSet rs = stmt.executeQuery(
-	// "SELECT info_id, t_nutzerprofil.nutzerprofil_id,
-	// t_eigenschaft.eigenschaft_id, infotext FROM t_beschreibungsinfo,
-	// t_nutzerprofil, t_eigenschaft "
-	// + "WHERE info_id=" + infoId);
-	//
-	// /*
-	// * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-	// * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-	// */
-	// if (rs.next()) {
-	// // Ergebnis-Tupel in Objekt umwandeln
-	// Info info = new Info();
-	// info.setInfoId(rs.getInt("info_id"));
-	// info.setInfotext(rs.getString("infotext"));
-	// return info;
-	// }
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// return null;
-	// }
-	//
-	// return null;
-	// }
+	public Info findByInfoAId(String optionsbezeichnung, int eigenschaftId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
+							+ "FROM t_auswahloption "
+							+ "WHERE optionsbezeichnung='" + optionsbezeichnung + "' "
+							+ "AND eigenschaft_id=" + eigenschaftId);
+
+			if (rs.next()) {
+
+				Info info = new Info();
+				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				return info;
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
 
 	// public List<Info> findAllInfos() {
 	// Connection con = DBConnection.connection();
@@ -321,22 +318,51 @@ public class InfoMapper {
 		return info;
 	}
 
-	public Info updateInfo(Info info) {
+	public void updateInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) {
+		Connection con = DBConnection.connection();
+		
+		 int auswahloptionId = 0; 
+
+			try {
+				Statement stmt = con.createStatement(); 
+				
+				// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+				ResultSet rs = stmt.executeQuery("SELECT auswahloption_id AS ao_id "
+						+ "FROM t_auswahlinfo WHERE nutzerprofil_id=" + profilId
+						+ " AND eigenschaft_id=" + eigenschaftId);
+				
+				// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+				if(rs.next()) {
+					auswahloptionId = rs.getInt("ao_id"); 
+					
+		  stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_auswahlinfo "
+					+ "SET auswahloption_id=" + neueAuswahloptionId
+							+ " WHERE auswahloption_id=" + auswahloptionId);
+//                            + " AND nutzerprofil_id=" + profilId
+//							+ " AND eigenschaft_id=" + eigenschaftId);
+							
+				}} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+
+	public void updateInfoB(int profilId, int eigenschaftId, String infotext) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE t_info"
-					+ "SET infotext=\"WHERE info_id=" + info.getInfoId());
+			stmt.executeUpdate("UPDATE t_beschreibungsinfo "
+					+ "SET infotext=\"" + infotext + "\" "
+					+ "WHERE nutzerprofil_id=" + profilId
+					+ " AND eigenschaft_id=" + eigenschaftId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Info info) zu wahren,
-		// // geben wir info zurÃ¼ck
-		return info;
 	}
 
 	//
