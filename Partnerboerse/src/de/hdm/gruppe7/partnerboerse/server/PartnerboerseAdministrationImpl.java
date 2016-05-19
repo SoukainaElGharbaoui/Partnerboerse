@@ -354,5 +354,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
 	}
+	
+	// Besuch hinzufuegen. 
+		public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+			this.nutzerprofilMapper.insertBesuch(profilId, fremdprofilId); 
+		}
+		
+		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
+			return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
+		}
+			
 }
 

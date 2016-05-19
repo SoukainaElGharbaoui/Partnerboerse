@@ -140,6 +140,9 @@ public interface PartnerboerseAdministrationAsync {
   
 	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
 
-
+	// Besuch hinzufuegen. 
+	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	
+	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 }
 	
