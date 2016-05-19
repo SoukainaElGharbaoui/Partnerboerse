@@ -159,6 +159,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														//Übereinstimmungen genutzt wird
 								
 															int uebreinstimmung = 0;
+															
 														    
 														  
 														
@@ -235,6 +236,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															//und in der Variable prozent gespeichert
 
 															int prozent = (100 / 5)* uebreinstimmung;
+															
+															 
+															 
+															
 													
 														// die FlexTable wird mit den Werten der Nutzerprofile und der 
 														//Uebereinstimmungen in prozent gefüllt
@@ -261,6 +266,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
 																	RootPanel.get("Details").clear(); 
 																	RootPanel.get("Details").add(showFremdprofil); 
+																	
+																	
+																	
 																	
 																}
 																
