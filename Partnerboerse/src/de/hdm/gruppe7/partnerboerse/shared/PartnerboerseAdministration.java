@@ -226,6 +226,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
+	public void saveInfo(Info info)
+	throws IllegalArgumentException;
+	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
 	
@@ -241,6 +244,14 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Info> getAllInfosA(int profilId)
 			throws IllegalArgumentException;
 	
+	public void deleteAllInfos(int profilId)
+		throws IllegalArgumentException;
+
+	public void deleteOneInfoB(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public void deleteOneInfoA(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
 /**
  *Auslesen eines Suchprofils anhand der ID
  * @param profilId
@@ -257,6 +268,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public List<Nutzerprofil> getAllProfile()
 			throws IllegalArgumentException;
+
 
 }
 

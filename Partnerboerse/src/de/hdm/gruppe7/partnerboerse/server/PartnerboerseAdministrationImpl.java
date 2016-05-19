@@ -309,6 +309,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.insertAuswahlinfo(info);
 	}
 	
+	public void saveInfo(Info info)
+	throws IllegalArgumentException {
+		
+		this.infoMapper.updateInfo(info);
+	
+	}
+	
 	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
 		return this.infoMapper.findAllEigenschaftenB();
 	}
@@ -331,6 +338,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
+	}
+	
+	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
+		
+		this.infoMapper.deleteAllInfos(profilId);
+	}
+	
+	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException {
+		
+		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
+	}
+
+	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException {
+	
+		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
 	}
 }
 
