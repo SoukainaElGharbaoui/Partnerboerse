@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -17,7 +16,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 
 public class EditInfo extends VerticalPanel {
 
@@ -26,7 +24,7 @@ public class EditInfo extends VerticalPanel {
 	 */
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	int neueAuswahloptionId;
 	int eigenschaftIdA;
 
@@ -59,8 +57,6 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
-		editInfoFlexTable.setText(0, 5, "Speichern");
-
 
 		/**
 		 * InfoLabel erstellen um Text auszugeben
@@ -69,7 +65,7 @@ public class EditInfo extends VerticalPanel {
 		final Label infoLabelA = new Label();
 		final Label infoLabelA2 = new Label();
 		final Label ueberschriftLabel = new Label("Eigene Info bearbeiten");
-
+		final Button updateInfosButton = new Button("&Auml;nderungen speichern");
 
 		/**
 		 * GUI für Beschreibungsinfo
@@ -113,8 +109,6 @@ public class EditInfo extends VerticalPanel {
 									
 																	
 									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
-//										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
-//										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
 
 											ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoB(
 													Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
@@ -129,26 +123,19 @@ public class EditInfo extends VerticalPanel {
 														public void onSuccess(Void result) {
 															infoLabelB.setText(
 																	"Die Beschreibungsinfo wurde erfolgreich gelöscht");
-															
 														}
 
 													});
 
-//											// Zeile in Tabelle löschen.
 											editInfoFlexTable.removeRow(i);
 											break;
-//										}
 									}
 								}
 							});
 							
-							
-							final Button speichernButton = new Button("Speichern");
-							editInfoFlexTable.setWidget(row, 5, speichernButton);
-							
-							
-							speichernButton.addClickHandler(new ClickHandler(){
-								public void onClick(ClickEvent event){
+							updateInfosButton.addClickHandler(new ClickHandler() {
+								public void onClick(ClickEvent event) {
+									
 									String neuerInfotext = textArea.getText();
 									
 									ClientsideSettings.getPartnerboerseAdministration().saveInfoB(Benutzer.getProfilId(),
@@ -160,7 +147,6 @@ public class EditInfo extends VerticalPanel {
 														Throwable caught) {
 													
 												infoLabelB.setText("Beim Speichern des neuen Infotextes trat ein Fehler auf");
-													
 												}
 
 												@Override
@@ -168,13 +154,8 @@ public class EditInfo extends VerticalPanel {
 														Void result) {
 													infoLabelB.setText("Das Aktualisieren des Infotextes war erfolgreich");
 												}
-										
-										
-										
-										
 									});
 								}
-								
 							});
 
 
@@ -222,14 +203,12 @@ public class EditInfo extends VerticalPanel {
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabelA.setText("Es trat ein Fehler auf");
-								
 							}
 
 							@Override
 							public void onSuccess(List<Auswahloption> result) {
 							
 							for(Auswahloption a : result){
-								
 								neueListBox.addItem(a.getOptionsbezeichnung());
 							}
 							
@@ -240,8 +219,6 @@ public class EditInfo extends VerticalPanel {
 							neueListBox.insertItem(iA.getOptionsbezeichnung(), 0);
 							editInfoFlexTable.setWidget(row, 3, neueListBox);
 							
-
-
 							final Button loeschenButton = new Button("Löschen");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
 
@@ -249,8 +226,6 @@ public class EditInfo extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 
 									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
-//										String eigenschaftIdFlexTable = editInfoFlexTable.getText(i, 1);
-//										if (Integer.valueOf(eigenschaftIdFlexTable) == Integer.valueOf(eigenschaftId)) {
 
 											ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoA(
 													Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
@@ -269,20 +244,15 @@ public class EditInfo extends VerticalPanel {
 
 													});
 
-											// Zeile in Tabelle löschen.
 											editInfoFlexTable.removeRow(i);
 											break;
-//										}
 									}
 								}
 							});
 							
 							
-				final Button speichernInfoButton = new Button("Speichern");
-				editInfoFlexTable.setWidget(row, 5, speichernInfoButton);
-				
-				 speichernInfoButton.addClickHandler(new ClickHandler() {
-					 public void onClick(ClickEvent event) {
+				updateInfosButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
 						 
 						 String optionsbezeichnung = neueListBox.getSelectedItemText();
 						 
@@ -295,7 +265,6 @@ public class EditInfo extends VerticalPanel {
 								public void onFailure(Throwable caught) {
 									infoLabelA.setText("Es trat ein Fehler beim Herausholen "
 											+ "der AuswahloptionId auf");
-									
 								}
 
 								@Override
@@ -305,12 +274,7 @@ public class EditInfo extends VerticalPanel {
 										+ " hat funktioniert");
 								neueAuswahloptionId = result.getAuswahloptionId();
 								eigenschaftIdA = result.getEigenschaftId();
-						 
-								 
-					 
-							}
-						 		
-						 	});
+
 						 
 						 ClientsideSettings.getPartnerboerseAdministration().saveInfoA(
 								 Benutzer.getProfilId(), neueAuswahloptionId, eigenschaftIdA, 
@@ -325,14 +289,22 @@ public class EditInfo extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										infoLabelA2.setText("Das Aktualisieren der Auswahlinfo "
-												+ "hat funktioniert.");													
+												+ "hat funktioniert.");			
+										
+										
+										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(
+												showEigenesNp);
 									}
 									 
 								 });
-						 	
+						 
+								}
+						 	});
 					 }
 				 });
-					 
+				
 						}
 					}
 		});
@@ -342,6 +314,8 @@ public class EditInfo extends VerticalPanel {
 		verPanel.add(infoLabelA);
 		verPanel.add(infoLabelB);
 		verPanel.add(infoLabelA2);
-		
+		verPanel.add(updateInfosButton);
+
+
 	}
 }
