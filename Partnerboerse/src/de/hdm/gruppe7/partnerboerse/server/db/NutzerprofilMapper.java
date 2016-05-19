@@ -3,9 +3,11 @@ package de.hdm.gruppe7.partnerboerse.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class NutzerprofilMapper {
 
@@ -110,19 +112,22 @@ public class NutzerprofilMapper {
 	/**
 	 * Auslesen aller Nutzerprofile.
 	 */
-	public List<Nutzerprofil> findAllNutzerprofile() {
+	public Vector<Nutzerprofil> findAllNutzerprofile() {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisliste vorbereiten
-		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery(							
-							"SELECT * FROM t_nutzerprofil INNER JOIN t_profil WHERE "
-							+ "t_profil.profil_id = t_nutzerprofil.nutzerprofil_id");
+
+					.executeQuery("SELECT * FROM t_profil,"
+							+ "t_nutzerprofil WHERE t_profil.profil_id = "
+							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
+			
+
 
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
@@ -148,6 +153,7 @@ public class NutzerprofilMapper {
 
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
+
 	}
 	
 	/**
@@ -200,6 +206,7 @@ public class NutzerprofilMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
+
 	
 	/**
 	 * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank.

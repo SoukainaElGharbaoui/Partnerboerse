@@ -129,6 +129,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
+	 * Auslesen aller Nutzerprofile
+	 * @return
+	 */
+	
+	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) {
+		return this.nutzerprofilMapper.findAllNutzerprofile();
+	}
+	
+	/**
 	 * Speichern eines Nutzerprofils.
 	 */
 //	@Override
@@ -309,11 +318,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.insertAuswahlinfo(info);
 	}
 	
-	public void saveInfo(Info info)
+	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
 	throws IllegalArgumentException {
 		
-		this.infoMapper.updateInfo(info);
+		this.infoMapper.updateInfoA(profilId, neueAuswahloptionId, eigenschaftId);
 	
+	}
+	
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException {
+				
+		this.infoMapper.updateInfoB(profilId, eigenschaftId, infotext);
 	}
 	
 	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
@@ -334,6 +349,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosA(profilId);
+	}
+	
+	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
 	}
 	
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {

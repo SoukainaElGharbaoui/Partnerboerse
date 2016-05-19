@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -25,6 +26,9 @@ public class EditInfo extends VerticalPanel {
 	 */
 
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	int neueAuswahloptionId;
+	int eigenschaftIdA;
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -47,25 +51,6 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		editInfoFlexTable.addStyleName("FlexTable");
 
-		// final ListBox ernaehrungListBox = new ListBox();
-		// ernaehrungListBox.addItem("vegetarisch");
-		// ernaehrungListBox.addItem("vegan");
-		// ernaehrungListBox.addItem("keine Angabe");
-		// editInfoFlexTable.setWidget(1, 2, ernaehrungListBox);
-		//
-		// final ListBox musikListBox = new ListBox();
-		// musikListBox.addItem("Pop");
-		// musikListBox.addItem("RnB");
-		// editInfoFlexTable.setWidget(2, 2, musikListBox);
-
-		/**
-		 * Erste Spalte der Tabelle festlegen.
-		 */
-
-		// editInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
-		// editInfoFlexTable.setText(1, 0, "Eigenschaft");
-		// editInfoFlexTable.setText(2, 0, "Infotext");
-
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
@@ -74,22 +59,17 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Infotext");
 		editInfoFlexTable.setText(0, 4, "Löschen");
+		editInfoFlexTable.setText(0, 5, "Bearbeiten");
+		editInfoFlexTable.setText(0, 6, "Speichern");
 
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
 		final Label infoLabelB = new Label();
 		final Label infoLabelA = new Label();
-		final Label editLabel = new Label();
+		final Label infoLabelA2 = new Label();
 		final Label ueberschriftLabel = new Label("Eigene Info bearbeiten");
 
-		/**
-		 * informationLabel zum navPanel hinzufügen.
-		 */
-		verPanel.add(infoLabelB);
-		verPanel.add(infoLabelA);
-		verPanel.add(editLabel);
-		verPanel.add(ueberschriftLabel);
 
 		/**
 		 * GUI für Beschreibungsinfo
@@ -158,13 +138,51 @@ public class EditInfo extends VerticalPanel {
 									}
 								}
 							});
+							
+							
+							final TextArea textArea = new TextArea();
+							editInfoFlexTable.setWidget(row, 5, textArea);
+							
+							final Button speichernButton = new Button("Speichern");
+							editInfoFlexTable.setWidget(row, 6, speichernButton);
+							
+							
+							speichernButton.addClickHandler(new ClickHandler(){
+								public void onClick(ClickEvent event){
+									String neuerInfotext = textArea.getText();
+									
+									ClientsideSettings.getPartnerboerseAdministration().saveInfoB(Benutzer.getProfilId(),
+											Integer.valueOf(eigenschaftId), neuerInfotext, 
+											new AsyncCallback<Void>(){
+
+												@Override
+												public void onFailure(
+														Throwable caught) {
+													
+												infoLabelB.setText("Beim Speichern des neuen Infotextes trat ein Fehler auf");
+													
+												}
+
+												@Override
+												public void onSuccess(
+														Void result) {
+													infoLabelB.setText("Das Aktualisieren des Infotextes war erfolgreich");
+												}
+										
+										
+										
+										
+									});
+								}
+								
+							});
+
+
 
 						}
 					}
 				});
 
-		verPanel.add(editInfoFlexTable);
-		verPanel.add(infoLabelB);
 
 		/**
 		 * GUI für Auswahlinfo
@@ -227,221 +245,103 @@ public class EditInfo extends VerticalPanel {
 											// Zeile in Tabelle löschen.
 											editInfoFlexTable.removeRow(i);
 											break;
-										}
-//									}
+//										}
+									}
 								}
 							});
+							
+							
+							final ListBox neueListBox = new ListBox();
+							editInfoFlexTable.setWidget(row, 5, neueListBox);
+							
+							ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen
+							(Integer.valueOf(eigenschaftId), new AsyncCallback<List<Auswahloption>>() {
 
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabelA.setText("Es trat ein Fehler auf");
+								
+							}
+
+							@Override
+							public void onSuccess(List<Auswahloption> result) {
+							
+							for(Auswahloption a : result){
+								
+								neueListBox.addItem(a.getOptionsbezeichnung());
+							}
+							
+							}
+				
+						});
+							
+//							int listBoxIndex = iA.getAuswahloptionId()-1;
+//					neueListBox.setSelectedIndex(listBoxIndex);	
+					
+				final Button speichernInfoButton = new Button("Speichern");
+				editInfoFlexTable.setWidget(row, 6, speichernInfoButton);
+				
+				 speichernInfoButton.addClickHandler(new ClickHandler() {
+					 public void onClick(ClickEvent event) {
+						 
+						 String optionsbezeichnung = neueListBox.getSelectedItemText();
+						 
+						 ClientsideSettings.getPartnerboerseAdministration()
+						 	.getInfoAById(optionsbezeichnung, Integer.valueOf(eigenschaftId), 
+						 			new AsyncCallback<Info>() {
+						 		
+						 		
+						 		@Override
+								public void onFailure(Throwable caught) {
+									infoLabelA.setText("Es trat ein Fehler beim Herausholen "
+											+ "der AuswahloptionId auf");
+									
+								}
+
+								@Override
+								public void onSuccess(Info result) {
+								
+								infoLabelA.setText("Das Herausholen der Auswahloptions-Id"
+										+ " hat funktioniert");
+								neueAuswahloptionId = result.getAuswahloptionId();
+								eigenschaftIdA = result.getEigenschaftId();
+						 
+								 
+					 
+							}
+						 		
+						 	});
+						 
+						 ClientsideSettings.getPartnerboerseAdministration().saveInfoA(
+								 Benutzer.getProfilId(), neueAuswahloptionId, eigenschaftIdA, 
+								 new AsyncCallback<Void>(){
+	
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabelA2.setText("Es trat ein Fehler beim Speichern "
+												+ "der neuen Auswahloption auf");												
+									}
+	
+									@Override
+									public void onSuccess(Void result) {
+										infoLabelA2.setText("Das Aktualisieren der Auswahlinfo "
+												+ "hat funktioniert.");													
+									}
+									 
+								 });
+						 	
+					 }
+				 });
+					 
 						}
-
 					}
-				});
-
+		});
+		
+		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
 		verPanel.add(infoLabelA);
-
-		/**
-		 * Finalen Löschen & Speichern Button hinzufügen
-		 */
-		HorizontalPanel buttonPanel = new HorizontalPanel();
-
-		/**
-		 * ï¿½nderungen Speichern-Button hinzufÃ¼gen und ausbauen.
-		 */
-		final Button speichernButton = new Button("&Auml;nderungen speichern");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(speichernButton);
-
-		/**
-		 * ï¿½nderungen Löschen-Button hinzufÃ¼gen und ausbauen.
-		 */
-		final Button loeschenButton = new Button("&Auml;nderungen loeschen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(loeschenButton);
-
-		/**
-		 * ClickHandler fï¿½r den Speichern-Button hinzufï¿½gen.
-		 */
-		final Label informationLabel = new Label();
-		verPanel.add(informationLabel);
-
-		// speichernButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// ClientsideSettings.getPartnerboerseAdministration().saveInfo(
-		// ernaehrungListBox.getSelectedItemText(),
-		// musikListBox.getSelectedItemText(),
-		// new AsyncCallback<Void>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// informationLabel
-		// .setText("Es trat ein Fehler auf");
-		// }
-		//
-		// @Override
-		// public void onSuccess(Void result) {
-		// informationLabel
-		// .setText("Info erfolgreich aktualisiert.");
-		// ShowInfo showInfo = new ShowInfo();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showInfo);
-		// }
-		//
-		// });
-		// }});
-
-		////////////////////////////////////////////////////////////////////
-
-		// ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
-		// Benutzer.getProfilId(), new AsyncCallback <List<Info>>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// infoLabel2.setText("Es trat ein Fehler auf.");
-		// }
-		//
-		// @Override
-		// public void onSuccess(List<Info> result) {
-		//
-		// musikListBox.setItemText(0, result.getMusik());
-		//
-		// ernaehrungListBox.setItemText(0, result.getErnaehrung());
-		//
-		// }
-		// });
-
-		/**
-		 * Zum Panel hinzufï¿½gen
-		 */
-
-		// verPanel.add(ueberschriftLabel);
-		// verPanel.add(editInfoFlexTable);
-		// verPanel.add(infoLabel);
-		// verPanel.add(infoLabelA);
-		// verPanel.add(editLabel);
-
-		// loeschenButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		//
-		// ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoB(Benutzer.getProfilId(),
-		// eigenschaftId, new AsyncCallback<Void>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// informationLabel.setText("Es trat ein Fehler auf");
-		// }
-		//
-		// @Override
-		// public void onSuccess(Void result) {
-		// informationLabel.setText("Die Beschreibungsinfo wurde erfolgreich
-		// gelöscht");
-		// }
-		//
-		// });
-		//
-		// ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoA(Benutzer.getProfilId(),
-		// eigenschaftId, new AsyncCallback<Void>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// informationLabel.setText("Es trat ein Fehler auf");
-		// }
-		//
-		// @Override
-		// public void onSuccess(Void result) {
-		// informationLabel.setText("Die Auswahlinfo wurde erfolgreich
-		// gelöscht");
-		// }
-		//
-		// });
-		// }
-		// });
-
-		// verPanel.add(ueberschriftLabel);
-		// verPanel.add(editInfoFlexTable);
-
-		// Tabelle für Auswahlinfos
-
-		// final Label editLabel = new Label();
-
-		//// final ListBox ernaehrungListBox = new ListBox();
-		// ernaehrungListBox.addItem("vegetarisch");
-		// ernaehrungListBox.addItem("vegan");
-		// ernaehrungListBox.addItem("keine Angabe");
-		// editInfoFlexTable.setWidget(1, 3, ernaehrungListBox);
-		//
-		//// final ListBox musikListBox = new ListBox();
-		// musikListBox.addItem("Pop");
-		// musikListBox.addItem("RnB");
-		// editInfoFlexTable.setWidget(2, 3, musikListBox);
-
-		// final Label infoLabel2 = new Label();
-
-		/**
-		 * Zum Panel hinzufï¿½gen
-		 */
-
-		// verPanel.add(ueberschriftLabel);
-		// verPanel.add(editInfoFlexTable);
-		// // verPanel.add(infoLabel);
-		// verPanel.add(infoLabelA);
-		// verPanel.add(editLabel);
-
-		/**
-		 * ï¿½nderungen Speichern-Button hinzufÃ¼gen und ausbauen.
-		 */
-		// final Button speichernButton2 = new Button("&Auml;nderungen
-		// speichern");
-		// verPanel.add(buttonPanel);
-		// buttonPanel.add(speichernButton2);
-		//
-		// /**
-		// * ClickHandler fï¿½r den Speichern-Button hinzufï¿½gen.
-		// */
-		//// final Label informationLabel = new Label();
-		// verPanel.add(informationLabel);
-
-		// speichernButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// ClientsideSettings.getPartnerboerseAdministration().saveInfo(
-		// ernaehrungListBox.getSelectedItemText(),
-		// musikListBox.getSelectedItemText(),
-		// new AsyncCallback<Void>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// informationLabel
-		// .setText("Es trat ein Fehler auf");
-		// }
-		//
-		// @Override
-		// public void onSuccess(Void result) {
-		// informationLabel
-		// .setText("Info erfolgreich aktualisiert.");
-		// ShowInfo showInfo = new ShowInfo();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showInfo);
-		// }
-		//
-		// });
-		// loeschenButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		//
-		// ClientsideSettings.getPartnerboerseAdministration()
-		// .deleteInfo(Benutzer.getProfilId(),
-		// new AsyncCallback<Void>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// infoLabel
-		// .setText("Es trat ein Fehler auf");
-		// }
-		//
-		// @Override
-		// public void onSuccess(Void result) {
-		// infoLabel
-		// .setText("Die Info wurde erfolgreich gelöscht");
-		// }
-
+		verPanel.add(infoLabelB);
+		verPanel.add(infoLabelA2);
+		
 	}
 }

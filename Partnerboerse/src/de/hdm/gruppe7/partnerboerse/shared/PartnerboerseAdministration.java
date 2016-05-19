@@ -90,6 +90,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public Nutzerprofil getFremdprofilById(int fremdprofilId)
 			throws IllegalArgumentException;
+	
+	/**
+	 * Alle Nutzerprofile ausgeben
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	
+	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
+	throws IllegalArgumentException;
+	
 	/**
 	 * Speichern eines Nutzerprofil-Objekts in der Datenbank.
 	 * 
@@ -226,8 +236,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
-	public void saveInfo(Info info)
-	throws IllegalArgumentException;
+	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
@@ -242,6 +255,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	public List<Info> getAllInfosA(int profilId)
+			throws IllegalArgumentException;
+	
+	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
 			throws IllegalArgumentException;
 	
 	public void deleteAllInfos(int profilId)
