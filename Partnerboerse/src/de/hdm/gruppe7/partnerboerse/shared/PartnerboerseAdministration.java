@@ -90,6 +90,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public Nutzerprofil getFremdprofilById(int fremdprofilId)
 			throws IllegalArgumentException;
+	
+	/**
+	 * Alle Nutzerprofile ausgeben
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	
+	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
+	throws IllegalArgumentException;
+	
 	/**
 	 * Speichern eines Nutzerprofil-Objekts in der Datenbank.
 	 * 
