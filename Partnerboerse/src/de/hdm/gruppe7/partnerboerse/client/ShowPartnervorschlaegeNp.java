@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -23,13 +24,15 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	public String geschlecht;
-	public int koerpergroesse;
-	public String haarfarbe;
-	public String raucher;
-	public String religion;
-	public String alter;
-	public String geburtsdatum;
+	private String geschlecht;
+	private int koerpergroesse;
+	private String haarfarbe;
+	private String raucher;
+	private String religion;
+	private String alter;
+	private String geburtsdatum;
+	private int besuchstatus;
+
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -111,7 +114,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					
 				});
 		ClientsideSettings.getPartnerboerseAdministration()
-		.getAllProfile(new AsyncCallback<List<Nutzerprofil>>() {
+		.getUnangeseheneNutzerprofile(Benutzer.getProfilId(), new AsyncCallback<List<Nutzerprofil>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -119,59 +122,78 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					}
 
 					public void onSuccess(List<Nutzerprofil> result) {
+						
 						int row = partnervorschlaegeNpFlexTable.getRowCount();
 						
 						for (Nutzerprofil np : result) {
 							row++;
 							
-							double uebereinstimmung = 0;
-							final String ProfilId = String.valueOf(np.getProfilId());
-							partnervorschlaegeNpFlexTable.setText(row, 0, ProfilId);
-							
-							if (np.getGeschlecht() == geschlecht)
-								uebereinstimmung = uebereinstimmung + 1;	
+							final int fremdprofilId = np.getProfilId();
 						
-							if (np.getHaarfarbe() ==  haarfarbe)
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							if (Integer.valueOf(np.getKoerpergroesse()) < koerpergroesse + 10 )
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							else if (Integer.valueOf(np.getKoerpergroesse()) > koerpergroesse - 10 )
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							if (np.getRaucher() ==  raucher)
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							if (np.getReligion() ==  religion)
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							if (np.getGeburtsdatum() == geburtsdatum)
-								uebereinstimmung = uebereinstimmung + 1;
-							
-							double ergebnis = (100 / 6)* uebereinstimmung;
-							
-							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis));
-							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
-							partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
-							partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeburtsdatum());
-							partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht()); 
-							
-							// Anzeigen-Button hinzufügen und ausbauen. 
-							final Button anzeigenButton = new Button("Anzeigen");
-							partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton); 
-			
-						
-						// ClickHandler für den Anzeigen-Button hinzufügen. 
-						anzeigenButton.addClickHandler(new ClickHandler(){
-							public void onClick(ClickEvent event) {
-								ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(ProfilId)); 
-								RootPanel.get("Details").clear(); 
-								RootPanel.get("Details").add(showFremdprofil); 
+									
+									double uebereinstimmung = 0;
+									
+									partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
+									
+									if (np.getGeschlecht() != geschlecht)
+										uebereinstimmung = uebereinstimmung + 1;	
 								
-							}
-							
-						}); 
+									if (np.getHaarfarbe() ==  haarfarbe)
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									if (Integer.valueOf(np.getKoerpergroesse()) < koerpergroesse + 10 )
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									else if (Integer.valueOf(np.getKoerpergroesse()) > koerpergroesse - 10 )
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									if (np.getRaucher() ==  raucher)
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									if (np.getReligion() ==  religion)
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									if (np.getGeburtsdatum() == geburtsdatum)
+										uebereinstimmung = uebereinstimmung + 1;
+									
+									double ergebnis = (100 / 6)* uebereinstimmung;
+									
+									partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis));
+									partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
+									partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
+									partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeburtsdatum());
+									partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht()); 
+									
+									// Anzeigen-Button hinzufügen und ausbauen. 
+									final Button anzeigenButton = new Button("Anzeigen");
+									partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
+									
+									 
+									// ClickHandler für den Anzeigen-Button hinzufügen. 
+									anzeigenButton.addClickHandler(new ClickHandler(){
+										public void onClick(ClickEvent event) {
+											
+											// Besuch in die Datenbank einfügen. 
+											ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+
+												@Override
+												public void onFailure(Throwable caught) {
+													infoLabel.setText("Es trat ein Fehler auf.");
+												}
+
+												@Override
+												public void onSuccess(Void result) {
+													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId); 
+													RootPanel.get("Details").clear(); 
+													RootPanel.get("Details").add(showFremdprofil); 
+												}
+												
+											});
+									}
+									
+								}); 
+								
+				
 						}
 					}
 

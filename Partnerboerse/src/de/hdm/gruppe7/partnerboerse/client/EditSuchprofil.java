@@ -27,7 +27,7 @@ public class EditSuchprofil extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * Label ï¿½berschrift
+		 * Label �berschrift
 		 */
 		final Label ueberschriftLabel = new Label(
 				"Aktuelles Suchprofil bearbeiten");
@@ -74,7 +74,7 @@ public class EditSuchprofil extends VerticalPanel {
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("MÃ¤nnlich");
+		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
 
 		final TextBox koerpergroesseTextBox = new TextBox();
@@ -112,7 +112,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 
 		/**
-		 * Text in Eingabefelder einfügen
+		 * Text in Eingabefelder einf�gen
 		 *
 		 */
 
@@ -148,7 +148,7 @@ public class EditSuchprofil extends VerticalPanel {
 				});
 
 		/**
-		 * Zum Panel hinzufï¿½gen
+		 * Zum Panel hinzuf�gen
 		 */
 
 		verPanel.add(ueberschriftLabel);
@@ -158,14 +158,14 @@ public class EditSuchprofil extends VerticalPanel {
 		verPanel.add(editLabel);
 
 		/**
-		 * ï¿½nderungen Speichern-Button hinzufÃ¼gen und ausbauen.
+		 * �nderungen Speichern-Button hinzufügen und ausbauen.
 		 */
 		final Button speichernButton = new Button("&Auml;nderungen speichern");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(speichernButton);
 
 		/**
-		 * ClickHandler fï¿½r den Speichern-Button hinzufï¿½gen.
+		 * ClickHandler f�r den Speichern-Button hinzuf�gen.
 		 */
 		final Label informationLabel = new Label();
 		verPanel.add(informationLabel);

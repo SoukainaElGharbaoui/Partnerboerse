@@ -285,7 +285,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Nutzerprofil> getAllProfile()
 			throws IllegalArgumentException;
 
+	// Besuch hinzufuegen.
+	public void besuchSetzen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
+	
+		
+		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+				throws IllegalArgumentException;
 
+		
 }
 
 		

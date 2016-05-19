@@ -38,24 +38,20 @@ public class SuchprofilMapper {
 //			// Leeres SQL-Statement (JDBC) anlegen
 //			Statement stmt = con.createStatement();
 //
-//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			// Statement ausfüllen und als Query an die DB schicken
 //			ResultSet rs = stmt.executeQuery(
-////					"SELECT * profil_id, alterMin, alterMax FROM t_suchprofil " + "WHERE profil_id=" + profilId);
-//			
-//
-//			"SELECT * FROM t_suchprofil, t_profil " + "WHERE profil_id= "
-//					+ profilId + " AND suchprofil_id=" + profilId);
+//					"SELECT profil_id, alterMin, alterMax FROM t_suchprofil " + "WHERE profil_id=" + profilId);
 //
 //			/*
-//			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-//			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+//			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
+//			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 //			 */
 //			if (rs.next()) {
 //				// Ergebnis-Tupel in Objekt umwandeln
 //				Suchprofil suchprofil = new Suchprofil();
 //				suchprofil.setProfilId(rs.getInt("profil_id"));
-////				suchprofil.setAlterMin(rs.getInt("Alter minimal"));
-////				suchprofil.setAlterMax(rs.getInt("Alter maximal"));
+//				suchprofil.setAlterMin(rs.getInt("Alter minimal"));
+//				suchprofil.setAlterMax(rs.getInt("Alter maximal"));
 //				return suchprofil;
 //			}
 //		} catch (SQLException e2) {
@@ -81,7 +77,7 @@ public class SuchprofilMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil INNER JOIN"
 					+ "t_suchprofil ON t_profil.profil_id = " + "t_nutzerprofil.profil_id ORDER BY profil_id");
 
-			// F�r jeden Eintrag im Suchergebnis wird nun ein
+			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Suchprofil-Objekt erstellt.
 			while (rs.next()) {
 				Suchprofil suchprofil = new Suchprofil();
@@ -94,20 +90,20 @@ public class SuchprofilMapper {
 				suchprofil.setRaucher(rs.getString("raucher"));
 				suchprofil.setReligion(rs.getString("religion"));
 
-				// Hinzuf�gen des neuen Objekts zur Ergebnisliste
+				// Hinzufuegen des neuen Objekts zur Ergebnisliste
 				result.add(suchprofil);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Ergebnisliste zur�ckgeben
+		// Ergebnisliste zurueckgeben
 		return result;
 	}
 	
 	
 	/**
-	 * Einf�gen eines <code>Suchprofil</code>-Objekts in die Datenbank.
+	 * Einfuegen eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
 	public Suchprofil insertSuchprofil(Suchprofil suchprofil) {
 		Connection con = DBConnection.connection();
@@ -115,23 +111,23 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			// Gr��te profil_id ermitteln. 
+			// Grueuete profil_id ermitteln. 
 			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
 			if (rs.next()) {	
 				
-				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
+				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Prim�rschl�ssel. 
 				suchprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
 				
-				// Tabelle t_profil bef�llen - funktioniert! 
+				// Tabelle t_profil befuellen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
 								+ "VALUES(" + suchprofil.getProfilId() + ",'" + suchprofil.getGeschlecht() + "','"
 								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesse() + "','"
 								+ suchprofil.getRaucher() + "','" + suchprofil.getReligion() + "')");
 				
-				// Tablle t_suchprofil befüllen - funktioniert! 
+				// Tablle t_suchprofil bef�llen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
 						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
@@ -144,7 +140,7 @@ public class SuchprofilMapper {
 		}
 
 		/*
-		 * Rückgabe des Suchprofils mit evtl. korrigierter ProfilId. 
+		 * R�ckgabe des Suchprofils mit evtl. korrigierter ProfilId. 
 		 */
 		return suchprofil;	
 		}
@@ -162,11 +158,11 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement(); 
 			
-			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+			// Holen der zu l�schenden SuchprofilId aus der Tabelle t_suchprofil
 			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
 					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
 			
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			// Wenn wir etwas zur�ckerhalten, kann dies nur einzeilig sein.
 			if(rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id"); 
 
@@ -208,21 +204,21 @@ public class SuchprofilMapper {
 							
 			Statement stmt = con.createStatement();
 			
-			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+			// Holen der zu l�schenden SuchprofilId aus der Tabelle t_suchprofil
 			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
 					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
 			
 			
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			// Wenn wir etwas zur�ckerhalten, kann dies nur einzeilig sein.
 			if(rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id");
 			
-			// Löschen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
+			// L�schen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_suchprofil "
 					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
 			
-			// Löschen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
+			// L�schen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
 								
@@ -244,16 +240,18 @@ public class SuchprofilMapper {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			// Statement ausfÃ¼llen und als Query an die DB schicken
+			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 			
-			"SELECT * "
-			+ "FROM t_suchprofil, t_profil  Where suchprofil_id =" + profilId + "  AND profil_id =" + profilId);
+			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
+			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
+			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
+			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
 			
 					
 			/*
-			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
+			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
