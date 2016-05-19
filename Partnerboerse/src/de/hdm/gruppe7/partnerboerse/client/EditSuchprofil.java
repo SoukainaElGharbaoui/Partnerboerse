@@ -174,6 +174,7 @@ public class EditSuchprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				ClientsideSettings.getPartnerboerseAdministration().saveSuchprofil(
 						alterMinTextBox.getText(), alterMaxTextBox.getText(),
+						 
 						geschlechtListBox.getSelectedItemText(),
 						koerpergroesseTextBox.getText(),
 						haarfarbeListBox.getSelectedItemText(),

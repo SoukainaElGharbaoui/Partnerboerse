@@ -57,10 +57,10 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
 		editInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
-		editInfoFlexTable.setText(0, 3, "Infotext");
+		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
-		editInfoFlexTable.setText(0, 5, "Bearbeiten");
-		editInfoFlexTable.setText(0, 6, "Speichern");
+		editInfoFlexTable.setText(0, 5, "Speichern");
+
 
 		/**
 		 * InfoLabel erstellen um Text auszugeben
@@ -98,8 +98,11 @@ public class EditInfo extends VerticalPanel {
 							editInfoFlexTable.setText(row, 0, nutzerprofilId);
 							editInfoFlexTable.setText(row, 1, eigenschaftId);
 							editInfoFlexTable.setText(row, 2, iB.getEigenschaftErlaeuterung());
-							editInfoFlexTable.setText(row, 3, iB.getInfotext());
 
+							final TextArea textArea = new TextArea();
+							textArea.setText(iB.getInfotext());
+							
+							editInfoFlexTable.setWidget(row, 3, textArea);
 							
 							
 							final Button loeschenButton = new Button("Löschen");
@@ -140,11 +143,8 @@ public class EditInfo extends VerticalPanel {
 							});
 							
 							
-							final TextArea textArea = new TextArea();
-							editInfoFlexTable.setWidget(row, 5, textArea);
-							
 							final Button speichernButton = new Button("Speichern");
-							editInfoFlexTable.setWidget(row, 6, speichernButton);
+							editInfoFlexTable.setWidget(row, 5, speichernButton);
 							
 							
 							speichernButton.addClickHandler(new ClickHandler(){
@@ -211,9 +211,36 @@ public class EditInfo extends VerticalPanel {
 							editInfoFlexTable.setText(row, 0, nutzerprofilId);
 							editInfoFlexTable.setText(row, 1, eigenschaftId);
 							editInfoFlexTable.setText(row, 2, iA.getEigenschaftErlaeuterung());
-							editInfoFlexTable.setText(row, 3, iA.getOptionsbezeichnung());
 
 							
+							final ListBox neueListBox = new ListBox();
+							
+							
+							ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen
+							(Integer.valueOf(eigenschaftId), new AsyncCallback<List<Auswahloption>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabelA.setText("Es trat ein Fehler auf");
+								
+							}
+
+							@Override
+							public void onSuccess(List<Auswahloption> result) {
+							
+							for(Auswahloption a : result){
+								
+								neueListBox.addItem(a.getOptionsbezeichnung());
+							}
+							
+							}
+							
+						});
+							
+							neueListBox.insertItem(iA.getOptionsbezeichnung(), 0);
+							editInfoFlexTable.setWidget(row, 3, neueListBox);
+							
+
 
 							final Button loeschenButton = new Button("Löschen");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
@@ -251,35 +278,8 @@ public class EditInfo extends VerticalPanel {
 							});
 							
 							
-							final ListBox neueListBox = new ListBox();
-							editInfoFlexTable.setWidget(row, 5, neueListBox);
-							
-							ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen
-							(Integer.valueOf(eigenschaftId), new AsyncCallback<List<Auswahloption>>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabelA.setText("Es trat ein Fehler auf");
-								
-							}
-
-							@Override
-							public void onSuccess(List<Auswahloption> result) {
-							
-							for(Auswahloption a : result){
-								
-								neueListBox.addItem(a.getOptionsbezeichnung());
-							}
-							
-							}
-				
-						});
-							
-//							int listBoxIndex = iA.getAuswahloptionId()-1;
-//					neueListBox.setSelectedIndex(listBoxIndex);	
-					
 				final Button speichernInfoButton = new Button("Speichern");
-				editInfoFlexTable.setWidget(row, 6, speichernInfoButton);
+				editInfoFlexTable.setWidget(row, 5, speichernInfoButton);
 				
 				 speichernInfoButton.addClickHandler(new ClickHandler() {
 					 public void onClick(ClickEvent event) {
