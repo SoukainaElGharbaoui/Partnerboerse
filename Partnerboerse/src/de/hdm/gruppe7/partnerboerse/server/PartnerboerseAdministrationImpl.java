@@ -188,7 +188,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	// Vermerkstatus ermitteln. 
-	public int getVermerkStatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
 	}
 	

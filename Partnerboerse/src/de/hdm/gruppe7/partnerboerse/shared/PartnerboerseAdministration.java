@@ -144,7 +144,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 	
 	// Vermerkstatus ermitteln. 
-	public int getVermerkStatus(int profilId, int fremdprofilId)
+	public int getVermerkstatus(int profilId, int fremdprofilId)
 			throws IllegalArgumentException; 
 	
 	// Vermerk einfügen.
