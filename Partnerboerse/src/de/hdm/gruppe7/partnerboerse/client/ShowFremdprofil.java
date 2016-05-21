@@ -56,7 +56,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.setText(2, 0, "Nachname");
 		showFremdprofilFlexTable.setText(3, 0, "Geschlecht");
 		showFremdprofilFlexTable.setText(4, 0, "Geburtsdatum");
-		showFremdprofilFlexTable.setText(5, 0, "Koerpergroesse");
+		showFremdprofilFlexTable.setText(5, 0, "Körpergröße");
 		showFremdprofilFlexTable.setText(6, 0, "Haarfarbe");
 		showFremdprofilFlexTable.setText(7, 0, "Raucherstatus");
 		showFremdprofilFlexTable.setText(8, 0, "Religion");
@@ -122,7 +122,6 @@ public class ShowFremdprofil extends VerticalPanel {
 					}
 				});
 				
-		
 		/**
 		 * ABSCHNITT MERKLISTE BEGINN: Programmierung "Vermerk setzen" / "Vermerk löschen" Button.
 		 */

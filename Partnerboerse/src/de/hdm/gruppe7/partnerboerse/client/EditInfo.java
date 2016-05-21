@@ -64,7 +64,8 @@ public class EditInfo extends VerticalPanel {
 		final Label infoLabelB = new Label();
 		final Label infoLabelA = new Label();
 		final Label infoLabelA2 = new Label();
-		final Label ueberschriftLabel = new Label("Eigene Info bearbeiten");
+		final Label ueberschriftLabel = new Label("Info bearbeiten:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		final Button updateInfosButton = new Button("&Auml;nderungen speichern");
 
 		/**
