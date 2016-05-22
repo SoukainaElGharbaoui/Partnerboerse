@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
@@ -121,10 +122,34 @@ public class ShowFremdprofil extends VerticalPanel {
 				
 					}
 				});
+		
+		
 				
 		/**
 		 * ABSCHNITT MERKLISTE BEGINN: Programmierung "Vermerk setzen" / "Vermerk löschen" Button.
 		 */
+		
+		
+		final Button mButton = new Button();
+		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf.");
+				
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result == 1){
+					mButton.setVisible(false);  
+				}
+			
+			}
+			
+		});
+		
+	 
 		// Vermerkstatus überprüfen. 
 		ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 			
@@ -141,15 +166,15 @@ public class ShowFremdprofil extends VerticalPanel {
 				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
 				// Wenn kein Vermerk vorliegt...
 				if(result == 0) {
-					buttonText = "Vermerk setzen"; 
+					mButton.setText("Vermerk setzen");
 				// Wenn ein Vermerk vorliegt...
 				} else {
-					buttonText = "Vermerk löschen"; 
+					mButton.setText("Vermerk löschen");
 				}	
 				
-				// Button zum ButtonPanel hinzufügen. 
-				final Button mButton = new Button(buttonText); 
+//				final Button mButton = new Button(buttonText); 
 				buttonPanel.add(mButton);
+				
 				
 				// ClickHandler hinzufügen. 
 				mButton.addClickHandler(new ClickHandler() {
@@ -255,6 +280,9 @@ public class ShowFremdprofil extends VerticalPanel {
 							@Override
 							public void onSuccess(Void result) {
 								sButton.setText("Sperrung setzen"); 
+								ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showFremdprofil);
 							}
 							
 						  });
@@ -275,9 +303,47 @@ public class ShowFremdprofil extends VerticalPanel {
 								@Override
 								public void onSuccess(Void result) {
 									sButton.setText("Sperrung löschen"); 
+									ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showFremdprofil);
 								}
 								
 							});
+							
+							ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf.");	
+								}
+
+								@Override
+								public void onSuccess(Integer result) {
+									if(result == 1){
+									ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>(){
+
+										@Override
+										public void onFailure(Throwable caught) {
+											infoLabel.setText("Es trat ein Fehler auf.");	
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											infoLabel.setText("Gesperrt, von Merkliste entfernt.");
+											ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+											RootPanel.get("Details").clear();
+											RootPanel.get("Details").add(showFremdprofil);
+											
+										}
+										
+									});
+									} 
+									
+								}
+								
+							});
+							
+							
 							
 						}
 						
