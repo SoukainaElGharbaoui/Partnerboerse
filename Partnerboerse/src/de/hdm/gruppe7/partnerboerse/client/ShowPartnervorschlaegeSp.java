@@ -3,23 +3,19 @@ package de.hdm.gruppe7.partnerboerse.client;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Vector;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
@@ -55,11 +51,15 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Tabelle zur Anzeige der gemerkten Kontakte hinzuf√ºgen.
 		 */
-//		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
+		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
 		 
-		final CellTable<Nutzerprofil> partner = new CellTable<Nutzerprofil>();
+//		final CellTable<Nutzerprofil> partner = new CellTable<Nutzerprofil>();
 		
-		verPanel.add(partner);
+		verPanel.add(  partnervorschlaegeSpFlexTable);
+		
+//		 ListDataProvider<Nutzerprofil> dataProvider = new ListDataProvider<Nutzerprofil>();
+//		 dataProvider.addDataDisplay(partner);
+		
 		
 		
 		
@@ -68,22 +68,22 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/** 
 		 * Tabelle formatieren und CSS einbinden. 
 		 */
-//		partnervorschlaegeSpFlexTable.setCellPadding(6);
-//		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-//		partnervorschlaegeSpFlexTable.addStyleName("FlexTable");   
+		partnervorschlaegeSpFlexTable.setCellPadding(6);
+		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		partnervorschlaegeSpFlexTable.addStyleName("FlexTable");   
 		
 		
 		/**
 		 * Erste Zeile der Tabelle festlegen. 
 		 */
 		
-//		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
-//		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
-//		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
-//		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
-//		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
-//		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
-//		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
+		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
+		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
+		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
+		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
+		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
+		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		/**
 		 * PartnervorschlaegeSP anzeigen in den folgenden Zeilen 
@@ -166,19 +166,20 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														//Variable festlegen die zur Speicherung der
 														//‹bereinstimmungen genutzt wird
 								
-															int uebreinstimmung = 0;
+														int uebreinstimmung = 0;
 															
 														    
 														  
 														
 														// Anzahl der Zeilen in der FlexTable ermitteln. 
 								
-														int row = partner.getRowCount();
+														int row =  partnervorschlaegeSpFlexTable.getRowCount();
 														
 														// Durchlaufen der Elemente aus result, bei jedem Duchlauf 
 														//werden die Eigenschaften verglichen
 														
 														for(Nutzerprofil m : result){
+															
 															row++;
 																											
 															if (geschlecht == m.getGeschlecht())
@@ -204,6 +205,22 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															if (religion ==  m.getReligion())
 																	
 																uebreinstimmung = uebreinstimmung + 1;
+															
+															
+															
+															
+															
+															// die Anzahl der Uebereinstimmungen wird in prozent umgerechnet 
+															//und in der Variable prozent gespeichert
+															
+															int prozent = (100 / 5)* uebreinstimmung;
+															
+														
+															
+															// die Variable muss f¸r den n‰chsten Durchlauf auf null gesetzt werden	
+															uebreinstimmung = 0;
+															
+														
 															
 															//Berechnung des Alters 
 															
@@ -240,72 +257,75 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															
 															
 
-														// die Anzahl der Uebereinstimmungen wird in prozent umgerechnet 
-															//und in der Variable prozent gespeichert
+														
+															
 
-															int prozent = (100 / 5)* uebreinstimmung;
+															
+															
+															
+															
 															
 															 
-															 
-															
-													
+														
 														// die FlexTable wird mit den Werten der Nutzerprofile und der 
 														//Uebereinstimmungen in prozent gef¸llt
 															
-//															final String nutzerprofilId = String.valueOf(m.getProfilId());
-//															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
-//															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
-//															partnervorschlaegeSpFlexTable.setText(row, 2, m.getVorname());
-//															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
-//															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
-//															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
+															final String nutzerprofilId = String.valueOf(m.getProfilId());
+															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
+															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
+															partnervorschlaegeSpFlexTable.setText(row, 2, m.getVorname());
+															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
+															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
+															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
 															
-															TextColumn fremdIdSpalte = new TextColumn<Nutzerprofil>() {
-																public String getValue (Nutzerprofil result){
-																	return String.valueOf(result.getProfilId());
-																}
-																
-															};
-															
-															partner.addColumn(fremdIdSpalte, "F-Id");
-															
-
-															TextColumn<Nutzerprofil> nameSpalte = new TextColumn<Nutzerprofil>() {
-																public String getValue (Nutzerprofil result){
-																	return result.getVorname();
-																}
-																
-															};
-															
-															partner.addColumn(nameSpalte, "Name");
-															
-														// die Variable muss f¸r den n‰chsten Durchlauf auf null gesetzt werden	
-															uebreinstimmung = 0;
-															
-//															// Anzeigen-Button hinzuf√ºgen und ausbauen. 
-//															final Button anzeigenButton = new Button("Anzeigen");
-//															partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
-															
-//															// ClickHandler f√ºr den Anzeigen-Button hinzuf√ºgen. 
-//															anzeigenButton.addClickHandler(new ClickHandler(){
-//																public void onClick(ClickEvent event) {
-//																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
-//																	RootPanel.get("Details").clear(); 
-//																	RootPanel.get("Details").add(showFremdprofil); 
-//																	
-//																	
-//																	
-//																	
+//															TextColumn<Nutzerprofil> fremdIdSpalte = new TextColumn<Nutzerprofil>() {
+//																public String getValue (Nutzerprofil result){
+//																	return String.valueOf(result.getProfilId());
 //																}
 //																
-//															}); 
-														
-														
-														
-														
-														
+//															};
+////															
+//															partner.addColumn(fremdIdSpalte, "F-Id");
+////															
+////													
+////															
+//															partner.addColumn(aehnlichkeitSpalte, "Aehnlichkeit");
+//															
+//															
+////								
+////															
+////
+//															TextColumn<Nutzerprofil> nameSpalte = new TextColumn<Nutzerprofil>() {
+//																public String getValue (Nutzerprofil result){
+//																	return result.getVorname();
+//																}
+//																
+//															};
+//															
+//															partner.addColumn(nameSpalte, "Name");
+//															
+//															partner.setRowData(0, result);
+															
 														
 															
+															// Anzeigen-Button hinzuf√ºgen und ausbauen. 
+															final Button anzeigenButton = new Button("Anzeigen");
+															partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+//															
+															// ClickHandler f√ºr den Anzeigen-Button hinzuf√ºgen. 
+															anzeigenButton.addClickHandler(new ClickHandler(){
+																public void onClick(ClickEvent event) {
+																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
+																	RootPanel.get("Details").clear(); 
+																	RootPanel.get("Details").add(showFremdprofil); 
+																	
+																	
+																	
+																	
+												}
+
+											});
+
 								}
 
 							}

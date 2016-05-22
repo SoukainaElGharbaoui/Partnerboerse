@@ -30,12 +30,11 @@ public class EditSuchprofil extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-<<<<<<< HEAD
-		 * Label �berschrift
-=======
+
+
 		 *  Überschrift-Label hinzufügen. 
->>>>>>> refs/heads/master
-		 */
+
+		**/ 
 		final Label ueberschriftLabel = new Label("Suchprofil bearbeiten:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
@@ -122,12 +121,12 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 
 		/**
-<<<<<<< HEAD
-		 * Text in Eingabefelder einf�gen
+
+		 
 		 *
-=======
+
 		 * Daten des Suchprofils in die Tabelle einfügen. 
->>>>>>> refs/heads/master
+
 		 */
 		// InfoLabel hinzufügen. 
 		final Label infoLabel = new Label();
@@ -191,12 +190,11 @@ public class EditSuchprofil extends VerticalPanel {
 					}
 				});
 
-		/**
-<<<<<<< HEAD
-		 * Zum Panel hinzuf�gen
-=======
+/*
+		 
+
 		 * Widgets zum VerticalPanel hinzufügen. 
->>>>>>> refs/heads/master
+
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);
@@ -204,22 +202,22 @@ public class EditSuchprofil extends VerticalPanel {
 		verPanel.add(editLabel);
 
 		/**
-<<<<<<< HEAD
+
 		 * �nderungen Speichern-Button hinzufügen und ausbauen.
-=======
+
 		 * Änderungen-Speichern-Button hinzufügen und ausbauen.
->>>>>>> refs/heads/master
+
 		 */
 		final Button speichernButton = new Button("&Auml;nderungen speichern");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(speichernButton);
 
 		/**
-<<<<<<< HEAD
-		 * ClickHandler f�r den Speichern-Button hinzuf�gen.
-=======
+
+		 
+
 		 * ClickHandler für den Änderungen-Speichern-Button hinzufügen.
->>>>>>> refs/heads/master
+
 		 */
 		final Label informationLabel = new Label();
 		verPanel.add(informationLabel);
