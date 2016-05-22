@@ -127,7 +127,59 @@ public class NutzerprofilMapper {
 							+ "t_nutzerprofil WHERE t_profil.profil_id = "
 							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
 			
-					
+
+
+
+			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+			// Nutzerprofil-Objekt erstellt.
+			while (rs.next()) {
+				Nutzerprofil nutzerprofil = new Nutzerprofil();
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+				nutzerprofil.setVorname(rs.getString("vorname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));
+				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
+				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
+				nutzerprofil.setRaucher(rs.getString("raucher"));
+				nutzerprofil.setReligion(rs.getString("religion"));
+
+				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+				result.add(nutzerprofil);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisliste zurÃ¼ckgeben
+		return result;
+
+	}
+	
+	/**
+	 * Auslesen aller unangesehenen Nutzerprofile.
+	 */
+	public List<Nutzerprofil> findUnangeseheneNutzerprofile(int profilId) {
+		Connection con = DBConnection.connection();
+
+		// Ergebnisliste vorbereiten
+		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery(							
+							"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, "
+							+ "t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe, t_profil.raucher, t_profil.religion "
+							+ "FROM t_nutzerprofil LEFT JOIN t_besuch ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
+							+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
+							+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
+							+ "WHERE t_nutzerprofil.nutzerprofil_id !=" + profilId
+							+ " AND (t_besuch.nutzerprofil_id !=" + profilId
+							+ " OR t_besuch.fremdprofil_id IS NULL) "
+							+ "AND (t_sperrung.fremdprofil_id !=" + profilId
+							+ " OR t_sperrung.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil.nutzerprofil_id");
 
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
@@ -154,10 +206,7 @@ public class NutzerprofilMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
-	
-	
-	
-	
+
 	
 	/**
 	 * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
@@ -295,4 +344,51 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
+		
+		/**
+		 * Besuch hinzufuegen. 
+		 */
+		public void insertBesuch(int profilId, int fremdprofilId) { 
+			Connection con = DBConnection.connection();
+			
+			try {
+				Statement stmt = con.createStatement();
+
+				stmt.executeUpdate("INSERT INTO t_besuch (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
+				+ profilId + "," + fremdprofilId + ")");
+
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}	
+		}
+	
+		
+		/**
+		 * Besuchstatus ermitteln. 
+		 */
+		public int pruefeBesuch(int profilId, int fremdprofilId) {
+			Connection con = DBConnection.connection();
+			
+			// Ergebnisvariable (Ausgang: Es liegt kein Besuch vor.)
+			int besuchstatus = 0; 
+			
+			try {
+				Statement stmt = con.createStatement();
+				
+				ResultSet rs = stmt.executeQuery("SELECT * FROM t_besuch "
+						+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
+				
+				if (rs.next()) {
+			        // Es liegt ein Besuch vor.  
+					besuchstatus = 1; 
+			      } else {
+			    	  // Es liegt kein Besuch vor. 
+			    	  besuchstatus = 0; 
+			      }
+				
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			return besuchstatus; 
+		}
 }

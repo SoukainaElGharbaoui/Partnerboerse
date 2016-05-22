@@ -188,7 +188,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	// Vermerkstatus ermitteln. 
-	public int getVermerkStatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
 	}
 	
@@ -318,11 +318,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.insertAuswahlinfo(info);
 	}
 	
-	public void saveInfo(Info info)
+	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
 	throws IllegalArgumentException {
 		
-		this.infoMapper.updateInfo(info);
+		this.infoMapper.updateInfoA(profilId, neueAuswahloptionId, eigenschaftId);
 	
+	}
+	
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException {
+				
+		this.infoMapper.updateInfoB(profilId, eigenschaftId, infotext);
 	}
 	
 	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
@@ -345,6 +351,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAllInfosA(profilId);
 	}
 	
+	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
+	}
+	
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
@@ -363,5 +373,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
 	}
+	
+	// Besuch hinzufuegen. 
+		public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+			this.nutzerprofilMapper.insertBesuch(profilId, fremdprofilId); 
+		}
+		
+		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
+			return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
+		}
+			
 }
 

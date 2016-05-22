@@ -52,7 +52,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
 	
 	// Vermerkstatus ermitteln. 
-	void getVermerkStatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	void getVermerkstatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 	
 	// Vermerk einfügen. 
 	void vermerkSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
@@ -116,8 +116,10 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
 	
-	void saveInfo(Info info, AsyncCallback<Void> callback);
+	void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId, AsyncCallback<Void> callback);
 	
+	void saveInfoB(int profilId, int eigenschaftId, String infotext,
+			AsyncCallback<Void> callback);
 	
 	void getAllEigenschaftenB(AsyncCallback<List<Eigenschaft>> callback);
 
@@ -128,6 +130,8 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
 	
 	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
+	
+	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
 
 	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
 	
@@ -142,6 +146,11 @@ public interface PartnerboerseAdministrationAsync {
   
 	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
 
+
+	// Besuch hinzufuegen. 
+	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	
+	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
 }
 	

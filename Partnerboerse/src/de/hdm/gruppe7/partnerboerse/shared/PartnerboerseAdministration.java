@@ -144,7 +144,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 	
 	// Vermerkstatus ermitteln. 
-	public int getVermerkStatus(int profilId, int fremdprofilId)
+	public int getVermerkstatus(int profilId, int fremdprofilId)
 			throws IllegalArgumentException; 
 	
 	// Vermerk einfügen.
@@ -236,8 +236,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
-	public void saveInfo(Info info)
-	throws IllegalArgumentException;
+	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
@@ -252,6 +255,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	public List<Info> getAllInfosA(int profilId)
+			throws IllegalArgumentException;
+	
+	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
 			throws IllegalArgumentException;
 	
 	public void deleteAllInfos(int profilId)
@@ -279,7 +285,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Nutzerprofil> getAllProfile()
 			throws IllegalArgumentException;
 
+	// Besuch hinzufuegen.
+	public void besuchSetzen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException;
+	
+		
+		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+				throws IllegalArgumentException;
 
+		
 }
 
 		

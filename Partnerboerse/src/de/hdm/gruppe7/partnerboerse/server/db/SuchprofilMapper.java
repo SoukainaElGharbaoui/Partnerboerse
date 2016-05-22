@@ -111,7 +111,11 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
+<<<<<<< HEAD
 			// Graete profil_id ermitteln. 
+=======
+			// Grueuete profil_id ermitteln. 
+>>>>>>> refs/heads/master
 			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
