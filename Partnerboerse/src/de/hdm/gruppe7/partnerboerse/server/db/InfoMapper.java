@@ -379,7 +379,8 @@ public class InfoMapper {
                             + " AND nutzerprofil_id=" + profilId
 							+ " AND eigenschaft_id=" + eigenschaftId);
 							
-				}} catch (SQLException e2) {
+				}
+				} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 	}

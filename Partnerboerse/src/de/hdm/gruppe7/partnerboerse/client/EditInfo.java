@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -220,6 +221,8 @@ public class EditInfo extends VerticalPanel {
 									iA.getEigenschaftErlaeuterung());
 
 							final ListBox neueListBox = new ListBox();
+							
+							
 
 							ClientsideSettings.getPartnerboerseAdministration()
 									.getOptionById(
@@ -272,69 +275,22 @@ public class EditInfo extends VerticalPanel {
 													infoLabelOptionen
 															.setText("Das Festlegen der bisherigen Auswahloption hat "
 																	+ "funktioniert ");
-
+													
 													for (Auswahloption a : result) {
-
-														if (bisherigeAuswahloption != a
-																.getOptionsbezeichnung()) {
-															neueListBox.addItem(a
-																	.getOptionsbezeichnung());
-														} else {
-															break;
+														neueListBox.addItem(a
+																.getOptionsbezeichnung());
+														}
+													
+													for(int i = 1; i < neueListBox.getItemCount(); i++) {
+														if (neueListBox.getValue(i) == bisherigeAuswahloption) {
+															neueListBox.removeItem(i);
 														}
 													}
 												}
 											});
 
-							// ClientsideSettings
-							// .getPartnerboerseAdministration()
-							// .getOptionById(Integer.valueOf(eigenschaftId),
-							// new AsyncCallback<Info>() {
-							//
-							// @Override
-							// public void onFailure(
-							// Throwable caught) {
-							// infoLabelA
-							// .setText("Es trat ein Fehler beim Herausholen "
-							// + "der bisherigen Auswahloption auf");
-							// }
-							//
-							// @Override
-							// public void onSuccess(Info result) {
-							//
-							// infoLabelA
-							// .setText("Das Herausholen der bisherigen Auswahl "
-							// + "hat funktioniert");
-							//
-							// String bisherigeAuswahloption =
-							// result.getOptionsbezeichnung();
-							//
-							// neueListBox.insertItem(result.getOptionsbezeichnung(),
-							// 0);
-							//
-							//
-							// // for (int i = 0; i<
-							// neueListBox.getSelectedIndex();){
-							// //
-							// neueListBox.insertItem(result.getOptionsbezeichnung(),
-							// // 0);
-							// // }
-							// }
-							// });
 
 							editInfoFlexTable.setWidget(row, 3, neueListBox);
-
-							// int indexEigeneAuswahl =
-							// (iA.getAuswahloptionId()) - 1;
-							//
-							// if(indexEigeneAuswahl !=
-							// neueListBox.getSelectedIndex()) {
-
-							// for (int i = 0; i<
-							// neueListBox.getSelectedIndex();){
-							// neueListBox.insertItem(iA.getOptionsbezeichnung(),
-							// 0);
-							// }
 
 							final Button loeschenButton = new Button("Löschen");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
@@ -409,8 +365,9 @@ public class EditInfo extends VerticalPanel {
 																	eigenschaftIdA = result
 																			.getEigenschaftId();
 																	
-																	
 
+																	
+																
 																	ClientsideSettings
 																			.getPartnerboerseAdministration()
 																			.saveInfoA(
@@ -434,17 +391,17 @@ public class EditInfo extends VerticalPanel {
 																									.setText("Das Aktualisieren der Auswahlinfo "
 																											+ "hat funktioniert.");
 
-																							// ShowEigenesNp
-																							// showEigenesNp
-																							// =
-																							// new
-																							// ShowEigenesNp();
-																							// RootPanel
-																							// .get("Details")
-																							// .clear();
-																							// RootPanel
-																							// .get("Details")
-																							// .add(showEigenesNp);
+//																							 ShowEigenesNp
+//																							 showEigenesNp
+//																							 =
+//																							 new
+//																							 ShowEigenesNp();
+//																							 RootPanel
+//																							 .get("Details")
+//																							 .clear();
+//																							 RootPanel
+//																							 .get("Details")
+//																							 .add(showEigenesNp);
 																						}
 
 																					});
