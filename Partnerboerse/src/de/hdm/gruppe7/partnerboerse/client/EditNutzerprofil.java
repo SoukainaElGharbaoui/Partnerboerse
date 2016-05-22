@@ -60,10 +60,10 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
 		editNutzerprofilFlexTable.setText(1, 0, "Vorname");
 		editNutzerprofilFlexTable.setText(2, 0, "Nachname");
-		editNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
-		editNutzerprofilFlexTable.setText(4, 0, "Koerpergroesse");
-		editNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
-		editNutzerprofilFlexTable.setText(6, 0, "Geschlecht");
+		editNutzerprofilFlexTable.setText(3, 0, "Geschlecht");
+		editNutzerprofilFlexTable.setText(4, 0, "Geburtsdatum");
+		editNutzerprofilFlexTable.setText(5, 0, "Koerpergroesse");
+		editNutzerprofilFlexTable.setText(6, 0, "Haarfarbe");
 		editNutzerprofilFlexTable.setText(7, 0, "Raucher");
 		editNutzerprofilFlexTable.setText(8, 0, "Religion");
 		
@@ -78,12 +78,17 @@ public class EditNutzerprofil extends VerticalPanel {
 		final TextBox nachnameTextBox = new TextBox();
 		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
 		
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		editNutzerprofilFlexTable.setWidget(3, 2, geschlechtListBox);
 	
 		final TextBox geburtsdatumTextBox = new TextBox();
-		editNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
+		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumTextBox);
 		
 		final TextBox koerpergroesseTextBox = new TextBox();
-		editNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
 		
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -93,13 +98,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		editNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
-		
-		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("Keine Auswahl");
-		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("Männlich");
-		editNutzerprofilFlexTable.setWidget(6, 2, geschlechtListBox);
+		editNutzerprofilFlexTable.setWidget(6, 2, haarfarbeListBox);
 		
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
@@ -141,23 +140,44 @@ public class EditNutzerprofil extends VerticalPanel {
 							public void onSuccess(Nutzerprofil result) {
 
 								vornameTextBox.setText(result.getVorname());
+								
 								nachnameTextBox.setText(result.getNachname());
-								geburtsdatumTextBox.setText(result
-										.getGeburtsdatum());
-								koerpergroesseTextBox.setText(result
-										.getKoerpergroesse());
+								
+								geschlechtListBox.setItemText(0, result.getGeschlecht());
+								
+								for(int i = 0; i < geschlechtListBox.getItemCount(); i++) {
+									if (result.getGeschlecht() == geschlechtListBox.getValue(i)) { 
+										geschlechtListBox.removeItem(i);
+									}
+								}
+								
+								geburtsdatumTextBox.setText(result.getGeburtsdatum());
+								
+								koerpergroesseTextBox.setText(result.getKoerpergroesse());
 
-								haarfarbeListBox.setItemText(0,
-										result.getHaarfarbe());
+								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
+								
+								for(int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
+									if (result.getHaarfarbe() == haarfarbeListBox.getValue(i)) { 
+										haarfarbeListBox.removeItem(i);
+									}
+								}
 
 								religionListBox.setItemText(0, result.getReligion());
+								
+								for(int i = 0; i < religionListBox.getItemCount(); i++) {
+									if (result.getReligion() == religionListBox.getValue(i)) { 
+										religionListBox.removeItem(i);
+									}
+								}
 
-								geschlechtListBox.setItemText(0,
-										result.getGeschlecht());
+								raucherListBox.setItemText(0, result.getRaucher());
 
-								raucherListBox.setItemText(0,
-										result.getRaucher());
-
+								for(int i = 0; i < raucherListBox.getItemCount(); i++) {
+									if (result.getRaucher() == raucherListBox.getValue(i)) { 
+										raucherListBox.removeItem(i);
+									}
+								}
 							}
 						});
 		

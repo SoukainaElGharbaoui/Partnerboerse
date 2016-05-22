@@ -155,8 +155,7 @@ public class InfoMapper {
 							+ "t_beschreibungsinfo.eigenschaft_id, "
 							+ "t_eigenschaft.erlaeuterung "
 							+ "FROM t_beschreibungsinfo, t_eigenschaft "
-							+ "WHERE t_beschreibungsinfo.nutzerprofil_id="
-							+ profilId
+							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
 							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
 							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
 
@@ -215,6 +214,43 @@ public class InfoMapper {
 		return result;
 	}
 
+
+	public Info findOptionById(int eigenschaftId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT t_auswahlinfo.auswahloption_id, "
+							+ "t_auswahlinfo.eigenschaft_id, "
+							+ "t_auswahloption.optionsbezeichnung "
+							+ "FROM t_auswahlinfo, t_auswahloption "
+							+ "WHERE t_auswahlinfo.eigenschaft_id=" + eigenschaftId
+							+ " AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
+							+ "AND t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id ");
+			
+
+			if (rs.next()) {
+
+				Info info = new Info();
+				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+				return info;
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
+	
+	
+	
 	public Info findByInfoAId(String optionsbezeichnung, int eigenschaftId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -339,11 +375,12 @@ public class InfoMapper {
 
 			stmt.executeUpdate("UPDATE t_auswahlinfo "
 					+ "SET auswahloption_id=" + neueAuswahloptionId
-							+ " WHERE auswahloption_id=" + auswahloptionId);
-//                            + " AND nutzerprofil_id=" + profilId
-//							+ " AND eigenschaft_id=" + eigenschaftId);
+							+ " WHERE auswahloption_id=" + auswahloptionId
+                            + " AND nutzerprofil_id=" + profilId
+							+ " AND eigenschaft_id=" + eigenschaftId);
 							
-				}} catch (SQLException e2) {
+				}
+				} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 	}

@@ -80,10 +80,13 @@ public class ShowInfo extends VerticalPanel {
 							row++;
 
 							final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+//							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
+
 
 							showInfoFlexTable.setText(row, 0, nutzerprofilId);
 							showInfoFlexTable.setText(row, 1, i.getEigenschaftErlaeuterung());
 							showInfoFlexTable.setText(row, 2, i.getInfotext());
+							showInfoFlexTable.setText(row, 3, i.getOptionsbezeichnung());
 						}
 					}
 				});
@@ -96,21 +99,21 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
 		 */
-		final FlexTable showInfoFlexTableAuswahl = new FlexTable();
+//		final FlexTable showInfoFlexTableAuswahl = new FlexTable();
 
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
-		showInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
-		showInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
-		showInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
-
-		/**
-		 * Tabelle formatieren und CSS einbinden.
-		 */
-		showInfoFlexTableAuswahl.setCellPadding(6);
-		showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
-		showInfoFlexTableAuswahl.addStyleName("FlexTable");
+//		showInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
+//		showInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
+//		showInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
+//
+//		/**
+//		 * Tabelle formatieren und CSS einbinden.
+//		 */
+//		showInfoFlexTableAuswahl.setCellPadding(6);
+//		showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
+//		showInfoFlexTableAuswahl.addStyleName("FlexTable");
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(Benutzer.getProfilId(),
 				new AsyncCallback<List<Info>>() {
@@ -123,7 +126,7 @@ public class ShowInfo extends VerticalPanel {
 					@Override
 					public void onSuccess(List<Info> result) {
 						// Anzahl der Zeilen ermitteln.
-						int row = showInfoFlexTableAuswahl.getRowCount();
+						int row = showInfoFlexTable.getRowCount();
 
 						// Tabelle mit Inhalten aus der Datenbank befüllen.
 						for (Info iA : result) {
@@ -131,14 +134,15 @@ public class ShowInfo extends VerticalPanel {
 
 							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
 
-							showInfoFlexTableAuswahl.setText(row, 0, nutzerprofilId);
-							showInfoFlexTableAuswahl.setText(row, 1, iA.getEigenschaftErlaeuterung());
-							showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
+							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+							showInfoFlexTable.setText(row, 1, iA.getEigenschaftErlaeuterung());
+							showInfoFlexTable.setText(row, 2, iA.getOptionsbezeichnung());
+							showInfoFlexTable.setText(row, 3, iA.getInfotext());
 						}
 					}
 				});
 
-		verPanel.add(showInfoFlexTableAuswahl);
+		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
 
 		// Löschen-Button hinzufügen und ausbauen.
