@@ -351,6 +351,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAllInfosA(profilId);
 	}
 	
+	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findOptionById(eigenschaftId);
+	}
+	
 	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
 		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
 	}

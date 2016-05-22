@@ -131,6 +131,8 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
 	
+	void getOptionById(int eigenschaftId, AsyncCallback<Info> callback);
+
 	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
 
 	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);

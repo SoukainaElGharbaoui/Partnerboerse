@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -27,6 +26,7 @@ public class EditInfo extends VerticalPanel {
 
 	int neueAuswahloptionId;
 	int eigenschaftIdA;
+	String bisherigeAuswahloption;
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -61,11 +61,18 @@ public class EditInfo extends VerticalPanel {
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
-		final Label infoLabelB = new Label();
-		final Label infoLabelA = new Label();
-		final Label infoLabelA2 = new Label();
+		final Label infoLabelProfilId = new Label();
+		final Label infoLabelLoeschenB = new Label();
+		final Label infoLabelSaveIB = new Label();
+
+		final Label infoLabelLoeschenA = new Label();
+		final Label infoLabelInfosA = new Label();
+		final Label infoLabelOptionen = new Label();
+		final Label infoLabelInfoA = new Label();
+		final Label infoLabelSaveIA = new Label();
+
 		final Label ueberschriftLabel = new Label("Info bearbeiten:");
-		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		ueberschriftLabel.addStyleName("partnerboerse-label");
 		final Button updateInfosButton = new Button("&Auml;nderungen speichern");
 
 		/**
@@ -76,11 +83,14 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabelB.setText("Es trat ein Fehler auf.");
+						infoLabelProfilId.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override
 					public void onSuccess(List<Info> result) {
+
+						infoLabelProfilId
+								.setText("Die Profil-Id wurde erfolgreich ermittelt.");
 
 						// Anzahl der Zeilen ermitteln.
 						int row = editInfoFlexTable.getRowCount();
@@ -123,14 +133,14 @@ public class EditInfo extends VerticalPanel {
 															@Override
 															public void onFailure(
 																	Throwable caught) {
-																infoLabelB
+																infoLabelLoeschenB
 																		.setText("Es trat ein Fehler auf");
 															}
 
 															@Override
 															public void onSuccess(
 																	Void result) {
-																infoLabelB
+																infoLabelLoeschenB
 																		.setText("Die Beschreibungsinfo wurde erfolgreich gelöscht");
 															}
 
@@ -161,14 +171,14 @@ public class EditInfo extends VerticalPanel {
 																public void onFailure(
 																		Throwable caught) {
 
-																	infoLabelB
+																	infoLabelSaveIB
 																			.setText("Beim Speichern des neuen Infotextes trat ein Fehler auf");
 																}
 
 																@Override
 																public void onSuccess(
 																		Void result) {
-																	infoLabelB
+																	infoLabelSaveIB
 																			.setText("Das Aktualisieren des Infotextes war erfolgreich");
 																}
 															});
@@ -187,7 +197,7 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabelA.setText("Es trat ein Fehler auf.");
+						infoLabelInfosA.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override
@@ -211,6 +221,37 @@ public class EditInfo extends VerticalPanel {
 
 							final ListBox neueListBox = new ListBox();
 
+							ClientsideSettings.getPartnerboerseAdministration()
+									.getOptionById(
+											Integer.valueOf(eigenschaftId),
+											new AsyncCallback<Info>() {
+
+												@Override
+												public void onFailure(
+														Throwable caught) {
+													infoLabelInfosA
+															.setText("Es trat ein Fehler beim Herausholen "
+																	+ "der bisherigen Auswahloption auf");
+												}
+
+												@Override
+												public void onSuccess(
+														Info result) {
+
+													infoLabelInfosA
+															.setText("Das Herausholen der bisherigen Auswahl "
+																	+ "hat funktioniert");
+
+													bisherigeAuswahloption = result
+															.getOptionsbezeichnung();
+
+													neueListBox
+															.insertItem(
+																	bisherigeAuswahloption,
+																	0);
+												}
+											});
+
 							ClientsideSettings
 									.getPartnerboerseAdministration()
 									.getAllAuswahloptionen(
@@ -220,7 +261,7 @@ public class EditInfo extends VerticalPanel {
 												@Override
 												public void onFailure(
 														Throwable caught) {
-													infoLabelA
+													infoLabelOptionen
 															.setText("Es trat ein Fehler auf");
 												}
 
@@ -228,22 +269,72 @@ public class EditInfo extends VerticalPanel {
 												public void onSuccess(
 														List<Auswahloption> result) {
 
+													infoLabelOptionen
+															.setText("Das Festlegen der bisherigen Auswahloption hat "
+																	+ "funktioniert ");
+
 													for (Auswahloption a : result) {
-														neueListBox.addItem(a
-																.getOptionsbezeichnung());
+
+														if (bisherigeAuswahloption != a
+																.getOptionsbezeichnung()) {
+															neueListBox.addItem(a
+																	.getOptionsbezeichnung());
+														} else {
+															break;
+														}
 													}
-
 												}
-
 											});
 
-							
-							for (int i = 0; i< neueListBox.getSelectedIndex();){
-								neueListBox.insertItem(iA.getOptionsbezeichnung(),
-										0);
-							}
+							// ClientsideSettings
+							// .getPartnerboerseAdministration()
+							// .getOptionById(Integer.valueOf(eigenschaftId),
+							// new AsyncCallback<Info>() {
+							//
+							// @Override
+							// public void onFailure(
+							// Throwable caught) {
+							// infoLabelA
+							// .setText("Es trat ein Fehler beim Herausholen "
+							// + "der bisherigen Auswahloption auf");
+							// }
+							//
+							// @Override
+							// public void onSuccess(Info result) {
+							//
+							// infoLabelA
+							// .setText("Das Herausholen der bisherigen Auswahl "
+							// + "hat funktioniert");
+							//
+							// String bisherigeAuswahloption =
+							// result.getOptionsbezeichnung();
+							//
+							// neueListBox.insertItem(result.getOptionsbezeichnung(),
+							// 0);
+							//
+							//
+							// // for (int i = 0; i<
+							// neueListBox.getSelectedIndex();){
+							// //
+							// neueListBox.insertItem(result.getOptionsbezeichnung(),
+							// // 0);
+							// // }
+							// }
+							// });
 
 							editInfoFlexTable.setWidget(row, 3, neueListBox);
+
+							// int indexEigeneAuswahl =
+							// (iA.getAuswahloptionId()) - 1;
+							//
+							// if(indexEigeneAuswahl !=
+							// neueListBox.getSelectedIndex()) {
+
+							// for (int i = 0; i<
+							// neueListBox.getSelectedIndex();){
+							// neueListBox.insertItem(iA.getOptionsbezeichnung(),
+							// 0);
+							// }
 
 							final Button loeschenButton = new Button("Löschen");
 							editInfoFlexTable.setWidget(row, 4, loeschenButton);
@@ -264,14 +355,14 @@ public class EditInfo extends VerticalPanel {
 															@Override
 															public void onFailure(
 																	Throwable caught) {
-																infoLabelA
+																infoLabelLoeschenA
 																		.setText("Es trat ein Fehler auf");
 															}
 
 															@Override
 															public void onSuccess(
 																	Void result) {
-																infoLabelA
+																infoLabelLoeschenA
 																		.setText("Die Auswahlinfo wurde erfolgreich gelöscht");
 															}
 
@@ -289,6 +380,7 @@ public class EditInfo extends VerticalPanel {
 
 											String optionsbezeichnung = neueListBox
 													.getSelectedItemText();
+											
 
 											ClientsideSettings
 													.getPartnerboerseAdministration()
@@ -300,22 +392,24 @@ public class EditInfo extends VerticalPanel {
 																@Override
 																public void onFailure(
 																		Throwable caught) {
-																	infoLabelA
+																	infoLabelInfoA
 																			.setText("Es trat ein Fehler beim Herausholen "
-																					+ "der AuswahloptionId auf");
+																					+ "der AuswahloptionId auf.");
 																}
 
 																@Override
 																public void onSuccess(
 																		Info result) {
 
-																	infoLabelA
+																	infoLabelInfoA
 																			.setText("Das Herausholen der Auswahloptions-Id"
-																					+ " hat funktioniert");
+																					+ " hat funktioniert.");
 																	neueAuswahloptionId = result
 																			.getAuswahloptionId();
 																	eigenschaftIdA = result
 																			.getEigenschaftId();
+																	
+																	
 
 																	ClientsideSettings
 																			.getPartnerboerseAdministration()
@@ -328,25 +422,29 @@ public class EditInfo extends VerticalPanel {
 																						@Override
 																						public void onFailure(
 																								Throwable caught) {
-																							infoLabelA2
+																							infoLabelSaveIA
 																									.setText("Es trat ein Fehler beim Speichern "
-																											+ "der neuen Auswahloption auf");
+																											+ "der neuen Auswahloption auf.");
 																						}
 
 																						@Override
 																						public void onSuccess(
 																								Void result) {
-																							infoLabelA2
+																							infoLabelSaveIA
 																									.setText("Das Aktualisieren der Auswahlinfo "
 																											+ "hat funktioniert.");
 
-																							ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-																							RootPanel
-																									.get("Details")
-																									.clear();
-																							RootPanel
-																									.get("Details")
-																									.add(showEigenesNp);
+																							// ShowEigenesNp
+																							// showEigenesNp
+																							// =
+																							// new
+																							// ShowEigenesNp();
+																							// RootPanel
+																							// .get("Details")
+																							// .clear();
+																							// RootPanel
+																							// .get("Details")
+																							// .add(showEigenesNp);
 																						}
 
 																					});
@@ -362,9 +460,17 @@ public class EditInfo extends VerticalPanel {
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
-		verPanel.add(infoLabelA);
-		verPanel.add(infoLabelB);
-		verPanel.add(infoLabelA2);
+
+		verPanel.add(infoLabelProfilId);
+		verPanel.add(infoLabelLoeschenB);
+		verPanel.add(infoLabelSaveIB);
+
+		verPanel.add(infoLabelLoeschenA);
+		verPanel.add(infoLabelInfosA);
+		verPanel.add(infoLabelOptionen);
+		verPanel.add(infoLabelInfoA);
+		verPanel.add(infoLabelSaveIA);
+
 		verPanel.add(updateInfosButton);
 
 	}
