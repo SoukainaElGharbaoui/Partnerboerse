@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -53,29 +55,35 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Tabelle zur Anzeige der gemerkten Kontakte hinzufügen.
 		 */
-		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
-		verPanel.add(partnervorschlaegeSpFlexTable); 
+//		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
+		 
+		final CellTable<Nutzerprofil> partner = new CellTable<Nutzerprofil>();
 		
+		verPanel.add(partner);
+		
+		
+		
+	
 		
 		/** 
 		 * Tabelle formatieren und CSS einbinden. 
 		 */
-		partnervorschlaegeSpFlexTable.setCellPadding(6);
-		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		partnervorschlaegeSpFlexTable.addStyleName("FlexTable");   
+//		partnervorschlaegeSpFlexTable.setCellPadding(6);
+//		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+//		partnervorschlaegeSpFlexTable.addStyleName("FlexTable");   
 		
 		
 		/**
 		 * Erste Zeile der Tabelle festlegen. 
 		 */
 		
-		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
-		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
-		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
-		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
-		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
-		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
-		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+//		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
+//		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
+//		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
+//		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
+//		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
+//		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
+//		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		/**
 		 * PartnervorschlaegeSP anzeigen in den folgenden Zeilen 
@@ -165,7 +173,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														
 														// Anzahl der Zeilen in der FlexTable ermitteln. 
 								
-														int row = partnervorschlaegeSpFlexTable.getRowCount();
+														int row = partner.getRowCount();
 														
 														// Durchlaufen der Elemente aus result, bei jedem Duchlauf 
 														//werden die Eigenschaften verglichen
@@ -244,35 +252,53 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														// die FlexTable wird mit den Werten der Nutzerprofile und der 
 														//Uebereinstimmungen in prozent gef�llt
 															
-															final String nutzerprofilId = String.valueOf(m.getProfilId());
-															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
-															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
-															partnervorschlaegeSpFlexTable.setText(row, 2, m.getVorname());
-															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
-															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
-															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
+//															final String nutzerprofilId = String.valueOf(m.getProfilId());
+//															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
+//															partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(prozent) + "%" ); 
+//															partnervorschlaegeSpFlexTable.setText(row, 2, m.getVorname());
+//															partnervorschlaegeSpFlexTable.setText(row, 3, m.getNachname());
+//															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
+//															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
 															
-														
+															TextColumn fremdIdSpalte = new TextColumn<Nutzerprofil>() {
+																public String getValue (Nutzerprofil result){
+																	return String.valueOf(result.getProfilId());
+																}
+																
+															};
+															
+															partner.addColumn(fremdIdSpalte, "F-Id");
+															
+
+															TextColumn<Nutzerprofil> nameSpalte = new TextColumn<Nutzerprofil>() {
+																public String getValue (Nutzerprofil result){
+																	return result.getVorname();
+																}
+																
+															};
+															
+															partner.addColumn(nameSpalte, "Name");
+															
 														// die Variable muss f�r den n�chsten Durchlauf auf null gesetzt werden	
 															uebreinstimmung = 0;
 															
-															// Anzeigen-Button hinzufügen und ausbauen. 
-															final Button anzeigenButton = new Button("Anzeigen");
-															partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+//															// Anzeigen-Button hinzufügen und ausbauen. 
+//															final Button anzeigenButton = new Button("Anzeigen");
+//															partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
 															
-															// ClickHandler für den Anzeigen-Button hinzufügen. 
-															anzeigenButton.addClickHandler(new ClickHandler(){
-																public void onClick(ClickEvent event) {
-																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
-																	RootPanel.get("Details").clear(); 
-																	RootPanel.get("Details").add(showFremdprofil); 
-																	
-																	
-																	
-																	
-																}
-																
-															}); 
+//															// ClickHandler für den Anzeigen-Button hinzufügen. 
+//															anzeigenButton.addClickHandler(new ClickHandler(){
+//																public void onClick(ClickEvent event) {
+//																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
+//																	RootPanel.get("Details").clear(); 
+//																	RootPanel.get("Details").add(showFremdprofil); 
+//																	
+//																	
+//																	
+//																	
+//																}
+//																
+//															}); 
 														
 														
 														
