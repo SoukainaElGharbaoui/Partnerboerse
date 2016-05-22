@@ -277,9 +277,38 @@ public class ShowFremdprofil extends VerticalPanel {
 								public void onSuccess(Void result) {
 									mButton.setText("Sperrung löschen"); 
 								}
-								
-							});
+									});
 							
+						ClientsideSettings.getPartnerboerseAdministration().getVermerkStatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");	
+							}
+
+							@Override
+							public void onSuccess(Integer result) {
+								if(result == 1){
+								ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>(){
+
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabel.setText("Es trat ein Fehler auf.");	
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										infoLabel.setText("Gesperrt, von Merkliste entfernt.");
+									}
+									
+								});
+								} 
+								
+							}
+							
+						});
+								
+						
 						}
 						
 					}

@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -15,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 
@@ -29,9 +29,13 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	private String haarfarbe;
 	private String raucher;
 	private String religion;
-	private String alter;
 	private String geburtsdatum;
-	private int besuchstatus;
+	private int a2;
+	private int a3;
+	private int a4;
+	private int a6;
+	private int zwischenergebnis ;
+	
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -45,6 +49,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		 */
 		final Label ueberschriftLabel = new Label(
 				"Diese Nutzerprofile koennten zu ihnen passen");
+		ueberschriftLabel.addStyleDependentName("partnerboerse-label"); 
 		this.add(ueberschriftLabel);
 		verPanel.add(ueberschriftLabel); 
 		
@@ -82,6 +87,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		 */
 		
 		final Label infoLabel = new Label();
+		final Label infoLabel2 = new Label();
 
 	
 		ClientsideSettings
@@ -92,7 +98,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 				
 					public void onFailure(
 							Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
+						infoLabel.setText("Es trat ein hier Fehler auf.");
 					}
 
 					
@@ -106,19 +112,50 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						
 						
 					}
-				
 
-
-					
-					
 					
 				});
+		
+		ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(Benutzer.getProfilId(), new AsyncCallback<List<Info>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein riesen Fehler auf.");
+			}
+
+			@Override
+			public void onSuccess(List<Info> result) {
+				for (Info in : result) {
+					
+					if (in.getEigenschaftId() == 2) {
+						a2 = in.getAuswahloptionId();
+						}
+					
+					if (in.getEigenschaftId() == 3) {
+						a3 = in.getAuswahloptionId();
+						}
+					
+					if (in.getEigenschaftId() == 4) {
+						a4 = in.getAuswahloptionId();
+						}
+					
+					if (in.getEigenschaftId() == 6) {
+						a6 = in.getAuswahloptionId();
+						}
+				}
+				
+			}
+			
+		});
+		 verPanel.add(infoLabel);
+		 verPanel.add(infoLabel2);
+		 
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getUnangeseheneNutzerprofile(Benutzer.getProfilId(), new AsyncCallback<List<Nutzerprofil>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
+						infoLabel.setText("Es trat ein kleiner Fehler auf.");
 					}
 
 					public void onSuccess(List<Nutzerprofil> result) {
@@ -128,42 +165,109 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						for (Nutzerprofil np : result) {
 							row++;
 							
+							int uebereinstimmung = 0;
+							
 							final int fremdprofilId = np.getProfilId();
 						
-									
-									double uebereinstimmung = 0;
+							
 									
 									partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
 									
-									if (np.getGeschlecht() != geschlecht)
+									ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(fremdprofilId, new AsyncCallback<List<Info>>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											infoLabel.setText("Es trat ein kleiner Fehler auf.");
+											
+										}
+
+										@Override
+										public void onSuccess(List<Info> result) {
+											int uebereinstimmung = 0;
+											
+											for (Info info : result) {
+												
+												
+//											if (info.getEigenschaftId() == 1) {
+//												if (a1 == info.getAuswahloptionId()) {
+//													uebereinstimmung = uebereinstimmung + 1;
+//												}
+//												}
+											
+											if (info.getEigenschaftId() == 2 && a2 == info.getAuswahloptionId()) {
+//												if (a2 == info.getAuswahloptionId()) {
+													uebereinstimmung = uebereinstimmung + 1;
+//												}
+												}
+											
+											if (info.getEigenschaftId() == 3 && a3 == info.getAuswahloptionId()) {
+//												if (a3 == info.getAuswahloptionId()) {
+													uebereinstimmung = uebereinstimmung + 1;
+													
+//												}
+												}
+											
+											if (info.getEigenschaftId() == 4) {
+												if (a4 == info.getAuswahloptionId()) {
+													uebereinstimmung = uebereinstimmung + 1;
+												}
+												}
+											
+//											if (info.getEigenschaftId() == 5) {
+//												if (a5 == info.getAuswahloptionId()) {
+//													uebereinstimmung = uebereinstimmung + 1;
+//												}
+//												}
+											
+											if (info.getEigenschaftId() == 6 ) {
+												if (a6 == info.getAuswahloptionId()) {
+													uebereinstimmung = uebereinstimmung + 1;
+												}
+												}
+											
+										}
+											 zwischenergebnis = uebereinstimmung; 
+											
+										}
+									});
+									
+									if (np.getGeschlecht() != geschlecht){
 										uebereinstimmung = uebereinstimmung + 1;	
-								
-									if (np.getHaarfarbe() ==  haarfarbe)
+									}
+									
+									if (np.getHaarfarbe() ==  haarfarbe){
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									if (Integer.valueOf(np.getKoerpergroesse()) < koerpergroesse + 10 )
+									if (Integer.valueOf(np.getKoerpergroesse()) < koerpergroesse + 10 ){
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									else if (Integer.valueOf(np.getKoerpergroesse()) > koerpergroesse - 10 )
+									else if (Integer.valueOf(np.getKoerpergroesse()) > koerpergroesse - 10 ){
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									if (np.getRaucher() ==  raucher)
+									if (np.getRaucher() ==  raucher) {
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									if (np.getReligion() ==  religion)
+									if (np.getReligion() ==  religion){ 
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									if (np.getGeburtsdatum() == geburtsdatum)
+									if (np.getGeburtsdatum() == geburtsdatum){
 										uebereinstimmung = uebereinstimmung + 1;
+									}
 									
-									double ergebnis = (100 / 6)* uebereinstimmung;
+									double ergebnis = (100 / 6) * uebereinstimmung;
 									
-									partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis));
+									partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(ergebnis) + "%");
 									partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
 									partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
 									partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeburtsdatum());
 									partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht()); 
 									
+									 infoLabel.setText(String.valueOf(zwischenergebnis));
 									// Anzeigen-Button hinzufügen und ausbauen. 
 									final Button anzeigenButton = new Button("Anzeigen");
 									partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
