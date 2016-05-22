@@ -19,12 +19,13 @@ public interface PartnerboerseAdministrationAsync {
 	void init(AsyncCallback<Void> callback);
 
 	void createNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion,
+			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 	
 	void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion, AsyncCallback<Void> callback);
+			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			String raucher, String religion, AsyncCallback<Void> callback);
 	
 
 
@@ -87,12 +88,13 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
-	void createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion,
+	void createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
-	void saveSuchprofil(String alterMin, String alterMax, String geschlecht, String koerpergroesse,
-			String haarfarbe, String raucher, String religion, AsyncCallback<Void> callback);
+	void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, 
+			AsyncCallback<Void> callback);
 
 	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
 

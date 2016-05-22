@@ -52,8 +52,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
+			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
+			throws IllegalArgumentException;
 	
 	
 	/**
@@ -69,7 +70,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
+			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
@@ -109,8 +111,8 @@ public interface PartnerboerseAdministration extends RemoteService {
      */
 	
 	
-	public void saveSuchprofil(String alterMin, String alterMax, String geschlecht, 
-			String koerpergroesse, String haarfarbe, String raucher, String religion) 
+	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException;
 	
 
@@ -198,8 +200,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 
-	public Suchprofil createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
+	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
 	
 	/**
 	 * Speichern eines Suchprofil-Objekts in der Datenbank.

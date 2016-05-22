@@ -13,10 +13,16 @@ public class Profil extends BusinessObject {
 	private String geschlecht; 
 	private String raucher;
 	private String koerpergroesse;
+	private int koerpergroesseInt;
 	private String haarfarbe;
 	private String religion;
 	
-	
+	public int getKoerpergroesseInt() {
+		return koerpergroesseInt;
+	}
+	public void setKoerpergroesseInt(int koerpergroesseInt) {
+		this.koerpergroesseInt = koerpergroesseInt;
+	}
 	public int getProfilId() {
 		return profilId;
 	}
@@ -32,15 +38,14 @@ public class Profil extends BusinessObject {
 	public String getRaucher() {
 		return raucher;
 	}
-
 	public void setRaucher(String raucher) {
 		this.raucher = raucher;
 	}
 	public String getKoerpergroesse() {
 		return koerpergroesse;
 	}
-	public void setKoerpergroesse(String koerpergroesse2) {
-		this.koerpergroesse = koerpergroesse2;
+	public void setKoerpergroesse(String koerpergroesse) {
+		this.koerpergroesse = koerpergroesse;
 	}
 	public String getHaarfarbe() {
 		return haarfarbe;

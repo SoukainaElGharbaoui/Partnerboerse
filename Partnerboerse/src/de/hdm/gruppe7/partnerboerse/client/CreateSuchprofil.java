@@ -50,10 +50,10 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		
 		createSuchprofilFlexTable.setText(0, 0, "Geschlecht");
-		createSuchprofilFlexTable.setText(1, 0, "Koerpergroesse");
-		createSuchprofilFlexTable.setText(2, 0, "Haarfarbe");
-		createSuchprofilFlexTable.setText(3, 0, "Alter von");
-		createSuchprofilFlexTable.setText(4, 0, "Alter bis");
+		createSuchprofilFlexTable.setText(1, 0, "Alter von");
+		createSuchprofilFlexTable.setText(2, 0, "Alter bis");
+		createSuchprofilFlexTable.setText(3, 0, "Körpergröße");
+		createSuchprofilFlexTable.setText(4, 0, "Haarfarbe");
 		createSuchprofilFlexTable.setText(5, 0, "Raucher");
 		createSuchprofilFlexTable.setText(6, 0, "Religion");
 
@@ -67,11 +67,17 @@ public class CreateSuchprofil extends VerticalPanel {
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("MÃ¤nnlich");
+		geschlechtListBox.addItem("Männlich");
 		createSuchprofilFlexTable.setWidget(0, 2, geschlechtListBox);
+		
+		final TextBox alterMinTextBox = new TextBox();
+		createSuchprofilFlexTable.setWidget(1, 2, alterMinTextBox);
+
+		final TextBox alterMaxTextBox = new TextBox();
+		createSuchprofilFlexTable.setWidget(2, 2, alterMaxTextBox);
 
 		final TextBox koerpergroesseTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(1, 2, koerpergroesseTextBox);
+		createSuchprofilFlexTable.setWidget(3, 2, koerpergroesseTextBox);
 
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -81,13 +87,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		createSuchprofilFlexTable.setWidget(2, 2, haarfarbeListBox);
-
-		final TextBox alterMinTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(3, 2, alterMinTextBox);
-
-		final TextBox alterMaxTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(4, 2, alterMaxTextBox);
+		createSuchprofilFlexTable.setWidget(4, 2, haarfarbeListBox);
 
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
@@ -119,8 +119,6 @@ public class CreateSuchprofil extends VerticalPanel {
 
 	final Button createSuchprofilButton = new Button(
 			"Suchprofil anlegen");
-	createSuchprofilButton
-			.setStylePrimaryName("partnerboerse-menubutton");
 	verPanel.add(createSuchprofilButton);
 
 	/**
@@ -132,11 +130,11 @@ public class CreateSuchprofil extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 
 			ClientsideSettings.getPartnerboerseAdministration()
-					.createSuchprofil(alterMinTextBox.getText(),
-							alterMaxTextBox.getText(),
-							geschlechtListBox.getSelectedItemText(),
+					.createSuchprofil(geschlechtListBox.getSelectedItemText(),
+							Integer.parseInt(alterMinTextBox.getText()),
+							Integer.parseInt(alterMaxTextBox.getText()),
+							Integer.parseInt(koerpergroesseTextBox.getText()),
 							haarfarbeListBox.getSelectedItemText(),
-							koerpergroesseTextBox.getText(),
 							raucherListBox.getSelectedItemText(),
 							religionListBox.getSelectedItemText(),
 							new AsyncCallback<Suchprofil>() {

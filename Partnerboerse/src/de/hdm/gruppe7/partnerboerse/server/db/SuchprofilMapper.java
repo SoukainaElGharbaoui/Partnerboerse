@@ -117,21 +117,21 @@ public class SuchprofilMapper {
 			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
 			if (rs.next()) {	
 				
-				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
+				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primï¿½rschlï¿½ssel. 
 				suchprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
 				
 				// Tabelle t_profil befuellen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
 								+ "VALUES(" + suchprofil.getProfilId() + ",'" + suchprofil.getGeschlecht() + "','"
-								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesse() + "','"
+								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesseInt() + "','"
 								+ suchprofil.getRaucher() + "','" + suchprofil.getReligion() + "')");
 				
-				// Tablle t_suchprofil befüllen - funktioniert! 
+				// Tablle t_suchprofil befï¿½llen - funktioniert! 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
-						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
-						+ suchprofil.getAlterMax() + "')");	
+						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMinInt() + "','"
+						+ suchprofil.getAlterMaxInt()+ "')");	
 			}
 			
 		}
@@ -140,7 +140,7 @@ public class SuchprofilMapper {
 		}
 
 		/*
-		 * Rückgabe des Suchprofils mit evtl. korrigierter ProfilId. 
+		 * Rï¿½ckgabe des Suchprofils mit evtl. korrigierter ProfilId. 
 		 */
 		return suchprofil;	
 		}
@@ -148,8 +148,8 @@ public class SuchprofilMapper {
 	/**
 	 * Wiederholtes Schreiben eines <code>Suchprofil</code>-Objekts in die Datenbank.
 	 */
-	public void updateSuchprofil(String alterMin, String alterMax,String geschlecht, 
-			String koerpergroesse, String haarfarbe, String raucher, String religion) { 
+	public void updateSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) { 
 		Connection con = DBConnection.connection();
 		
 		// Ergebnisvariable, d.h. die SuchprofilId
@@ -158,26 +158,26 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement(); 
 			
-			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+			// Holen der zu lï¿½schenden SuchprofilId aus der Tabelle t_suchprofil
 			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
 					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
 			
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein.
 			if(rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id"); 
 
 			stmt = con.createStatement();
 			stmt.executeUpdate(
 					"UPDATE t_suchprofil " 
-							+ "SET alter_von=\"" + alterMin + "\", " 
-							+ "alter_bis=\"" + alterMax + "\" "
+							+ "SET alter_von=\"" + alterMinInt + "\", " 
+							+ "alter_bis=\"" + alterMaxInt + "\" "
 							+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId()); 
 			
 			stmt = con.createStatement();
 			stmt.executeUpdate(
 					"UPDATE t_profil " 
 							+ "SET geschlecht=\"" + geschlecht + "\", " 
-							+ "koerpergroesse=\"" + koerpergroesse + "\", " 
+							+ "koerpergroesse=\"" + koerpergroesseInt + "\", " 
 							+ "haarfarbe=\"" + haarfarbe + "\", " 
 							+ "raucher=\"" + raucher + "\", "
 							+ "religion=\"" + religion + "\" "
@@ -204,21 +204,21 @@ public class SuchprofilMapper {
 							
 			Statement stmt = con.createStatement();
 			
-			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+			// Holen der zu lï¿½schenden SuchprofilId aus der Tabelle t_suchprofil
 			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
 					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
 			
 			
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein.
 			if(rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id");
 			
-			// Löschen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
+			// Lï¿½schen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_suchprofil "
 					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
 			
-			// Löschen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
+			// Lï¿½schen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
 								

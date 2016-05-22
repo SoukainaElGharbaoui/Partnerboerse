@@ -73,17 +73,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	@Override
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion)
+			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
 		Nutzerprofil nutzerprofil = new Nutzerprofil();
 		nutzerprofil.setVorname(vorname);
 		nutzerprofil.setNachname(nachname);
-		nutzerprofil.setGeburtsdatum(geburtsdatum);
 		nutzerprofil.setGeschlecht(geschlecht);
+		nutzerprofil.setGeburtsdatum(geburtsdatum);
+		nutzerprofil.setKoerpergroesseInt(koerpergroesseInt);
 		nutzerprofil.setHaarfarbe(haarfarbe);
-		nutzerprofil.setKoerpergroesse(koerpergroesse);
 		nutzerprofil.setRaucher(raucher);
 		nutzerprofil.setReligion(religion);
 
@@ -100,11 +100,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, 
+			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
 			String raucher, String religion) throws IllegalArgumentException {
 
 		 this.nutzerprofilMapper.updateNutzerprofil(vorname, nachname,
-				 geburtsdatum, geschlecht, haarfarbe, koerpergroesse, raucher, religion);
+				 geschlecht, geburtsdatum, koerpergroesseInt, haarfarbe, raucher, religion);
 
 	}
 
@@ -242,16 +242,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 	
-	public Suchprofil createSuchprofil(String alterMin, String alterMax,
-			String geschlecht, String haarfarbe, String koerpergroesse,
-			String raucher, String religion) throws IllegalArgumentException {
+	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
+			throws IllegalArgumentException {
 	
 			Suchprofil suchprofil = new Suchprofil();
-			suchprofil.setAlterMin(alterMin);
-			suchprofil.setAlterMax (alterMax);
 			suchprofil.setGeschlecht(geschlecht);
+			suchprofil.setAlterMinInt(alterMinInt);
+			suchprofil.setAlterMaxInt(alterMaxInt);
+			suchprofil.setKoerpergroesseInt(koerpergroesseInt);
 			suchprofil.setHaarfarbe(haarfarbe);
-			suchprofil.setKoerpergroesse(koerpergroesse);
 			suchprofil.setRaucher(raucher);
 			suchprofil.setReligion(religion);
 			
@@ -261,12 +261,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 
-	public void saveSuchprofil(String alterMin, String alterMax, String geschlecht, 
-			String koerpergroesse, String haarfarbe, String raucher, String religion) 
+	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException {
 		
-		this.suchprofilMapper.updateSuchprofil(alterMin, alterMax, geschlecht,
-				koerpergroesse, haarfarbe, raucher, religion);
+		this.suchprofilMapper.updateSuchprofil(geschlecht, alterMinInt, alterMaxInt, 
+				koerpergroesseInt, haarfarbe, raucher, religion);
 	
 	}
 

@@ -239,7 +239,7 @@ public class NutzerprofilMapper {
 						+ "','"
 						+ nutzerprofil.getHaarfarbe()
 						+ "','"
-						+ nutzerprofil.getKoerpergroesse()
+						+ nutzerprofil.getKoerpergroesseInt()
 						+ "','"
 						+ nutzerprofil.getRaucher()
 						+ "','"
@@ -273,8 +273,8 @@ public class NutzerprofilMapper {
 	 * Datenbank.
 	 */
 	public void updateNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion) {
+			String geschlecht, String geburtsdatum, int koerpergroesseInt, 
+			String haarfarbe, String raucher, String religion) {
 
 		Connection con = DBConnection.connection();
 
@@ -290,7 +290,7 @@ public class NutzerprofilMapper {
 
 			stmt.executeUpdate("UPDATE t_profil " + "SET geschlecht=\""
 					+ geschlecht + "\", " + " haarfarbe=\"" + haarfarbe
-					+ "\", " + " koerpergroesse=\"" + koerpergroesse + "\", "
+					+ "\", " + " koerpergroesse=\"" + koerpergroesseInt + "\", "
 					+ "raucher=\"" + raucher + "\", " + " religion=\""
 					+ religion + "\" " + "WHERE profil_id="
 					+ Benutzer.getProfilId());

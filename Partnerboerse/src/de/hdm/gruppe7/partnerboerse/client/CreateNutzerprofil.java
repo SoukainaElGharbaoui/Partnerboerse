@@ -14,38 +14,33 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateNutzerprofil extends VerticalPanel {
 
-	/**
-	 * VerticalPanels und HorizontalPanels hinzufügen.
-	 */
-	private VerticalPanel verPanel = new VerticalPanel();
-
-	/**
-	 * Konstruktor
-	 */
-	public CreateNutzerprofil() {
-		this.add(verPanel);
-
-		
 		/**
-		 * Label �berschrift
+		 * VerticalPanel hinzufügen.
 		 */
+		private VerticalPanel verPanel = new VerticalPanel();
 
+		/**
+		 * Konstruktor hinzufügen. 
+		 */
+		public CreateNutzerprofil() {
+			this.add(verPanel);
+
+		/**
+		 * Überschrift-Label hinzufügen. 
+		 */
 		final Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 
-		verPanel.add(ueberschriftLabel);
-
 		/**
-		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird und bearbeitet werden kann.
+		 * Tabelle erzeugen, in der das Nutzerprofil angelegt werden kann. 
 		 */
 		final FlexTable createNutzerprofilFlexTable = new FlexTable();
 		
 		/**
-		 *  * Tabelle formatieren und CSS einbinden.
+		 * Tabelle formatieren und CSS einbinden.
 		 */
 		createNutzerprofilFlexTable.setCellPadding(6);
-		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
+		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
 		
 		/**
@@ -53,31 +48,33 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 */
 		createNutzerprofilFlexTable.setText(0, 0, "Vorname");
 		createNutzerprofilFlexTable.setText(1, 0, "Nachname");
-		createNutzerprofilFlexTable.setText(2, 0, "Geburtsdatum");
-		createNutzerprofilFlexTable.setText(3, 0, "Koerpergroesse");
-		createNutzerprofilFlexTable.setText(4, 0, "Haarfarbe");
-		createNutzerprofilFlexTable.setText(5, 0, "Geschlecht");
-		createNutzerprofilFlexTable.setText(6, 0, "Raucher");
+		createNutzerprofilFlexTable.setText(2, 0, "Geschlecht");
+		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
+		createNutzerprofilFlexTable.setText(4, 0, "Körpergröße");
+		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
+		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
 		
-		
 		/**
-		 * Drittte Spalte der Tabelle festlegen (Textboxen zum bearbeiten der Werte)
+		 * Dritte Spalte der Tabelle festlegen (TextBoxen und ListBoxen zur Bearbeitung der Werte). 
 		 */
-
-		
 		final TextBox vornameTextBox = new TextBox();
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
 		
 		final TextBox nachnameTextBox = new TextBox();
 		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
 		
-	
+		final ListBox geschlechtListBox = new ListBox();
+		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("Weiblich");
+		geschlechtListBox.addItem("Männlich");
+		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
+		
 		final TextBox geburtsdatumTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(2, 2, geburtsdatumTextBox);
+		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumTextBox);
 		
 		final TextBox koerpergroesseTextBox = new TextBox();
-		createNutzerprofilFlexTable.setWidget(3, 2, koerpergroesseTextBox);
+		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
 		
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -87,13 +84,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		createNutzerprofilFlexTable.setWidget(4, 2, haarfarbeListBox);
-		
-		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("Keine Auswahl");
-		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("Männlich");
-		createNutzerprofilFlexTable.setWidget(5, 2, geschlechtListBox);
+		createNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 		
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
@@ -109,37 +100,30 @@ public class CreateNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		createNutzerprofilFlexTable.setWidget(7, 2, religionListBox);
-	
-		
-		verPanel.add(createNutzerprofilFlexTable);
-		
 
 		/**
-		 * informationLabel für die Benutzerinformation erzeugen.
+		 * Information-Label zur Benutzerinformation hinzufügen.
 		 */
 		final Label informationLabel = new Label();
 
-		final Button createNutzerprofilButton = new Button(
-				"Nutzerprofil anlegen");
-		createNutzerprofilButton
-				.setStylePrimaryName("partnerboerse-menubutton");
-		verPanel.add(createNutzerprofilButton);
+		/**
+		 * Nutzerprofil-Anlegen-Button hinzufügen. 
+		 */
+		final Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 
 		/**
-		 * informationLabel zum navPanel hinzufügen.
+		 * ClickHandler für den Nutzerprofil-Anlegen-Button hinzufügen. 
 		 */
-		verPanel.add(informationLabel);
-
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
 				ClientsideSettings.getPartnerboerseAdministration()
 						.createNutzerprofil(vornameTextBox.getText(),
 								nachnameTextBox.getText(),
-								geburtsdatumTextBox.getText(),
 								geschlechtListBox.getSelectedItemText(),
+								geburtsdatumTextBox.getText(),
+								Integer.parseInt(koerpergroesseTextBox.getText()),
 								haarfarbeListBox.getSelectedItemText(),
-								koerpergroesseTextBox.getText(),
 								raucherListBox.getSelectedItemText(),
 								religionListBox.getSelectedItemText(),
 								new AsyncCallback<Nutzerprofil>() {
@@ -153,13 +137,21 @@ public class CreateNutzerprofil extends VerticalPanel {
 									@Override
 									public void onSuccess(Nutzerprofil result) {
 										informationLabel
-												.setText("Das Nutzerprofil wurde erfolgreich angelegt");
+												.setText("Das Nutzerprofil wurde erfolgreich angelegt.");
 									}
 
 								});
 
 			}
 		});
+		
+		/**
+		 * Widgets zum VerticalPanel hinzufügen. 
+		 */
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(createNutzerprofilFlexTable);
+		verPanel.add(createNutzerprofilButton);
+		verPanel.add(informationLabel); 
 
 	}
 }
