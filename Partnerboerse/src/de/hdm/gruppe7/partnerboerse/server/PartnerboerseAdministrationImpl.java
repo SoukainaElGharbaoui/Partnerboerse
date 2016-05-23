@@ -386,6 +386,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
 			return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 		}
-			
+
+		public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException {
+			return this.infoMapper.findAInfoByProfilId(profilId); 
+		}
+
+
 }
 

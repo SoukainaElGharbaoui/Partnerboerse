@@ -271,6 +271,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public void deleteOneInfoA(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
+	
+	public List<Info> getAInfoByProfilId(int profilId)
+			throws IllegalArgumentException;
 /**
  *Auslesen eines Suchprofils anhand der ID
  * @param profilId
@@ -296,6 +299,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
 				throws IllegalArgumentException;
 
+		
 		
 }
 

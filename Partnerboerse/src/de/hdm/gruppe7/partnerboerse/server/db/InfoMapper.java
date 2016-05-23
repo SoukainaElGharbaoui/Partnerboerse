@@ -474,6 +474,65 @@ public class InfoMapper {
 			e2.printStackTrace();
 		}
 	}
+	public List<Info> findAInfoByProfilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+		
+		List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
+							+ "FROM t_auswahlinfo "
+							+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
+
+			
+				while (rs.next()) {
+				
+				Info info = new Info();
+				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				result.add(info);
+				}
+			
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		
+			return result;
+		}
+	
+	public List<Info> findAllAInfos() {
+		Connection con = DBConnection.connection();
+
+		List<Info> result = new ArrayList<Info>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT t_auswahlinfo.nutzerprofil_id, t_auswahlinfo.auswahloption_id, t_auswahlinfo.eigenschaft_id "
+							+ "FROM t_auswahlinfo"
+							);
+
+			while (rs.next()) {
+				Info info = new Info();
+				info.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+
+				result.add(info);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		return result;
+	}
 
 	// public List<Auswahleigenschaft> findByAuswahl (Auswahleigenschaft
 	// auswahl){
