@@ -125,7 +125,7 @@ public class ShowEigenesNp extends VerticalPanel {
 								// und in Tabelle eintragen
 
 								showEigenesNpFlexTable.setText(5, 1,
-										result.getKoerpergroesse());
+										(Integer.toString(result.getKoerpergroesseInt())));
 								
 								// Haarfarbe aus der Datenbank holen
 								// und in Tabelle eintragen

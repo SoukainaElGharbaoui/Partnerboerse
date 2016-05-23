@@ -259,10 +259,10 @@ public class SuchprofilMapper {
 				
 				suchprofil.setProfilId(rs.getInt("suchprofil_id"));
 				suchprofil.setGeschlecht(rs.getString("geschlecht"));
-				suchprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
+				suchprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				suchprofil.setAlterMin(rs.getString("alter_von"));
-				suchprofil.setAlterMax(rs.getString("alter_bis"));	
+				suchprofil.setAlterMinInt(rs.getInt("alter_von"));
+				suchprofil.setAlterMaxInt(rs.getInt("alter_bis"));	
 				suchprofil.setRaucher(rs.getString("raucher"));
 				suchprofil.setReligion(rs.getString("religion"));
 				

@@ -54,7 +54,7 @@ public class NutzerprofilMapper {
 				nutzerprofil.setNachname(rs.getString("nachname"));
 				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
 				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
-				nutzerprofil.setKoerpergroesse(rs.getString("Koerpergroesse"));
+				nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
 				nutzerprofil.setRaucher(rs.getString("raucher"));
 				nutzerprofil.setReligion(rs.getString("religion"));

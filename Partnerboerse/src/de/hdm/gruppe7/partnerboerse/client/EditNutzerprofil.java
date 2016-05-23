@@ -1,5 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -149,7 +150,6 @@ public class EditNutzerprofil extends VerticalPanel {
 								
 								geburtsdatumTextBox.setText(result.getGeburtsdatum());
 								
-								// Noch klären! Es wird 0 reingeschrieben. 
 								koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 								
 								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
