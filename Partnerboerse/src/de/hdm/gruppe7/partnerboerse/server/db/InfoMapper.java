@@ -139,84 +139,84 @@ public class InfoMapper {
 
 	
 	
-//	public List<Info> findAllInfosB(int profilId) {
-//		Connection con = DBConnection.connection();
-//
-//		List<Info> result = new ArrayList<Info>();
-//
-//		try {
-//			Statement stmt = con.createStatement();
-//
-//			ResultSet rs = stmt
-//					.executeQuery("SELECT "
-//							+ "t_beschreibungsinfo.nutzerprofil_id, "
-//							+ "t_beschreibungsinfo.infotext, "
-//							+ "t_beschreibungsinfo.eigenschaft_id "
-////							+ "t_eigenschaft.erlaeuterung "
-//							+ "FROM t_beschreibungsinfo, t_eigenschaft "
-//							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
-//							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-//							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
-//
-//			while (rs.next()) {
-//				Beschreibungsinfo infoB = new Beschreibungsinfo();
-//				infoB.setNutzerprofilId(profilId);
-//				infoB.setEigenschaftId(rs.getInt("eigenschaft_id"));
-////				infoB.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-//				infoB.setInfotext(rs.getString("infotext"));
-//
-//				result.add(infoB);
-//			}
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//
-//		return result;
-//	}
-//
-//	
-//	
-//	public List<Info> findAllInfosA(int profilId) {
-//		Connection con = DBConnection.connection();
-//
-//		List<Info> result = new ArrayList<Info>();
-//
-//		try {
-//			Statement stmt = con.createStatement();
-//
-//			ResultSet rs = stmt
-//					.executeQuery("SELECT "
-////							+ "t_eigenschaft.erlaeuterung, "
-////							+ "t_auswahloption.optionsbezeichnung, "
-//							+ "t_auswahlinfo.nutzerprofil_id, "
-//							+ "t_auswahlinfo.eigenschaft_id, "
-//							+ "t_auswahlinfo.auswahloption_id "
-//							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
-//							+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
-//							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-//							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
-//							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
-//							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
-//
-//			while (rs.next()) {
-//								
-//				Auswahlinfo infoA = new Auswahlinfo();
-//				infoA.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
-//				infoA.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				infoA.setAuswahloptionId(rs.getInt("auswahloption_id"));
-//				
-////				infoA.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-////				infoA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-//
-//				result.add(infoA);
-//
-//			}
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//
-//		return result;
-//	}
+	public List<Beschreibungsinfo> findAllInfosB(int profilId) {
+		Connection con = DBConnection.connection();
+
+		List<Beschreibungsinfo> result = new ArrayList<Beschreibungsinfo>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT "
+							+ "t_beschreibungsinfo.nutzerprofil_id, "
+							+ "t_beschreibungsinfo.infotext, "
+							+ "t_beschreibungsinfo.eigenschaft_id "
+//							+ "t_eigenschaft.erlaeuterung "
+							+ "FROM t_beschreibungsinfo, t_eigenschaft "
+							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
+							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
+
+			while (rs.next()) {
+				Beschreibungsinfo infoB = new Beschreibungsinfo();
+				infoB.setNutzerprofilId(profilId);
+				infoB.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				infoB.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+				infoB.setInfotext(rs.getString("infotext"));
+
+				result.add(infoB);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		return result;
+	}
+
+	
+	
+	public List<Auswahlinfo> findAllInfosA(int profilId) {
+		Connection con = DBConnection.connection();
+
+		List<Auswahlinfo> result = new ArrayList<Auswahlinfo>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT "
+//							+ "t_eigenschaft.erlaeuterung, "
+//							+ "t_auswahloption.optionsbezeichnung, "
+							+ "t_auswahlinfo.nutzerprofil_id, "
+							+ "t_auswahlinfo.eigenschaft_id, "
+							+ "t_auswahlinfo.auswahloption_id "
+							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
+							+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
+							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
+
+			while (rs.next()) {
+								
+				Auswahlinfo infoA = new Auswahlinfo();
+				infoA.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+				infoA.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				infoA.setAuswahloptionId(rs.getInt("auswahloption_id"));
+				
+//				infoA.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+//				infoA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+
+				result.add(infoA);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		return result;
+	}
 //
 //
 //	public Info findOptionById(int eigenschaftId) {
@@ -378,29 +378,29 @@ public class InfoMapper {
 //
 //	}
 //
-//	
-//
-//	/**
-//	 * Gesamte Info löschen.
-//	 */
-//	public void deleteAllInfos(int profilId) {
-//		Connection con = DBConnection.connection();
-//
-//		try {
-//			Statement stmt = con.createStatement();
-//
-//			stmt = con.createStatement();
-//			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
-//					+ profilId);
-//
-//			stmt = con.createStatement();
-//			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
-//					+ profilId);
-//
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//	}
+	
+
+	/**
+	 * Gesamte Info löschen.
+	 */
+	public void deleteAllInfos(int profilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
+					+ profilId);
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
+					+ profilId);
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
 //
 //	/**
 //	 * Bestimmten Teil der Beschreibungsinfo löschen.

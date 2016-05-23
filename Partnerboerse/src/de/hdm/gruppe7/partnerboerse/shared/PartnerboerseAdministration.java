@@ -255,21 +255,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
 			throws IllegalArgumentException;
 	
-//	public List<Info> getAllInfosB(int profilId)
-//			throws IllegalArgumentException;
-//
-//	public List<Info> getAllInfosA(int profilId)
-//			throws IllegalArgumentException;
-//	
+	public List<Beschreibungsinfo> getAllInfosB(int profilId)
+			throws IllegalArgumentException;
+
+	public List<Auswahlinfo> getAllInfosA(int profilId)
+			throws IllegalArgumentException;
+	
 //	public Info getOptionById(int eigenschaftId)
 //			throws IllegalArgumentException;
 //	
 //	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
 //			throws IllegalArgumentException;
 //	
-//	public void deleteAllInfos(int profilId)
-//		throws IllegalArgumentException;
-//
+	public void deleteAllInfos(int profilId)
+		throws IllegalArgumentException;
+
 //	public void deleteOneInfoB(int profilId, int eigenschaftId)
 //			throws IllegalArgumentException;
 //	

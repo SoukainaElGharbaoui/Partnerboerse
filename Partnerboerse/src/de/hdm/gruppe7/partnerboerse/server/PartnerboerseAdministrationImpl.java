@@ -320,14 +320,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAllAuswahloptionen(eigenschaftId);
 	}
 	
-//	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException {
-//		return this.infoMapper.findAllInfosB(profilId);
-//	}
-//	
-//	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
-//		return this.infoMapper.findAllInfosA(profilId);
-//	}
-//	
+	public List<Beschreibungsinfo> getAllInfosB(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosB(profilId);
+	}
+	
+	public List<Auswahlinfo> getAllInfosA(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosA(profilId);
+	}
+	
 //	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException {
 //		return this.infoMapper.findOptionById(eigenschaftId);
 //	}
@@ -339,11 +339,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
-//	
-//	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
-//		
-//		this.infoMapper.deleteAllInfos(profilId);
-//	}
+	
+	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
+		
+		this.infoMapper.deleteAllInfos(profilId);
+	}
 //	
 //	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException {
 //		

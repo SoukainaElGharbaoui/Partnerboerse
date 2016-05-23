@@ -12,7 +12,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 public class ShowInfo extends VerticalPanel {
@@ -47,7 +49,7 @@ public class ShowInfo extends VerticalPanel {
 		 * Erste Zeile der Tabelle festlegen.
 		 */
 		showInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
-		showInfoFlexTable.setText(0, 1, "Eigenschaft");
+		showInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		showInfoFlexTable.setText(0, 2, "Infotext");
 
 		/**
@@ -57,44 +59,45 @@ public class ShowInfo extends VerticalPanel {
 		showInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showInfoFlexTable.addStyleName("FlexTable");
 
-//		/**
-//		 * InfoLabel erstellen um Text auszugeben
-//		 */
-//		final Label informationLabel = new Label();
-//
-//		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
-//				new AsyncCallback<List<Info>>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						informationLabel.setText("Es trat ein Fehler auf.");
-//					}
-//
-//					@Override
-//					public void onSuccess(List<Info> result) {
-//						// Anzahl der Zeilen ermitteln.
-//						int row = showInfoFlexTable.getRowCount();
-//
-//						// Tabelle mit Inhalten aus der Datenbank befüllen.
-//						for (Info i : result) {
-//							row++;
-//
-//							final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
-////							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
-//
-//
-//							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+		/**
+		 * InfoLabel erstellen um Text auszugeben
+		 */
+		final Label informationLabel = new Label();
+
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
+				new AsyncCallback<List<Beschreibungsinfo>>() {
+		
+					@Override
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					@Override
+					public void onSuccess(List<Beschreibungsinfo> result) {
+						// Anzahl der Zeilen ermitteln.
+						int row = showInfoFlexTable.getRowCount();
+
+						// Tabelle mit Inhalten aus der Datenbank befüllen.
+						for (Beschreibungsinfo i : result) {
+							row++;
+
+							final String nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+							final String eigenschaftId = String.valueOf(i.getEigenschaftId());
+//							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
+
+
+							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+							showInfoFlexTable.setText(row, 1, eigenschaftId);
+							
 //							showInfoFlexTable.setText(row, 1, i.getEigenschaftErlaeuterung());
-//							showInfoFlexTable.setText(row, 2, i.getInfotext());
-//							showInfoFlexTable.setText(row, 3, i.getOptionsbezeichnung());
-//						}
-//					}
-//				});
+							showInfoFlexTable.setText(row, 2, i.getInfotext());
+						}
+					}
+				});
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 
-		// Tabelle für Auswahlinfo
 
 		/**
 		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
@@ -115,35 +118,41 @@ public class ShowInfo extends VerticalPanel {
 //		showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
 //		showInfoFlexTableAuswahl.addStyleName("FlexTable");
 //
-//		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(Benutzer.getProfilId(),
-//				new AsyncCallback<List<Info>>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						informationLabel.setText("Es trat ein Fehler auf.");
-//					}
-//
-//					@Override
-//					public void onSuccess(List<Info> result) {
-//						// Anzahl der Zeilen ermitteln.
-//						int row = showInfoFlexTable.getRowCount();
-//
-//						// Tabelle mit Inhalten aus der Datenbank befüllen.
-//						for (Info iA : result) {
-//							row++;
-//
-//							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
-//
-//							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(Benutzer.getProfilId(),
+				new AsyncCallback<List<Auswahlinfo>>() {
+			
+					@Override
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					@Override
+					public void onSuccess(List<Auswahlinfo> result) {
+						// Anzahl der Zeilen ermitteln.
+						int row = showInfoFlexTable.getRowCount();
+
+						// Tabelle mit Inhalten aus der Datenbank befüllen.
+						for (Auswahlinfo iA : result) {
+							row++;
+
+							final String nutzerprofilId = String.valueOf(iA.getNutzerprofilId());
+							final String eigenschaftId = String.valueOf(iA.getEigenschaftId());
+							final String auswahloptionId = String.valueOf(iA.getAuswahloptionId());
+							
+
+							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+							showInfoFlexTable.setText(row, 1, eigenschaftId);
+							showInfoFlexTable.setText(row, 2, auswahloptionId);
+							
 //							showInfoFlexTable.setText(row, 1, iA.getEigenschaftErlaeuterung());
 //							showInfoFlexTable.setText(row, 2, iA.getOptionsbezeichnung());
 //							showInfoFlexTable.setText(row, 3, iA.getInfotext());
-//						}
-//					}
-//				});
+						}
+					}
+				});
 
 		verPanel.add(showInfoFlexTable);
-//		verPanel.add(informationLabel);
+		verPanel.add(informationLabel);
 
 		// Löschen-Button hinzufügen und ausbauen.
 		final Button loeschenButton = new Button("Alle Infos löschen");
@@ -164,26 +173,26 @@ public class ShowInfo extends VerticalPanel {
 			}
 		});
 
-//		// ClickHandler für den Löschen-Button hinzufügen.
-//		loeschenButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//
-//				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfos(Benutzer.getProfilId(),
-//						new AsyncCallback<Void>() {
-//
-//							@Override
-//							public void onFailure(Throwable caught) {
-//								informationLabel.setText("Es trat ein Fehler auf");
-//							}
-//
-//							@Override
-//							public void onSuccess(Void result) {
-//								informationLabel.setText("Die gesamte Info wurde erfolgreich gelöscht");
-//							}
-//
-//						});
-//
-//			}
-//		});
+		// ClickHandler für den Löschen-Button hinzufügen.
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfos(Benutzer.getProfilId(),
+						new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Es trat ein Fehler auf");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								informationLabel.setText("Die gesamte Info wurde erfolgreich gelöscht");
+							}
+
+						});
+
+			}
+		});
 	}
 }

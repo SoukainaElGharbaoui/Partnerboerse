@@ -131,15 +131,15 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAllAuswahloptionen(int eigenschaftId, AsyncCallback<List<Auswahloption>> callback);
 	
-//	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
-//	
-//	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
-//	
+	void getAllInfosB(int profilId, AsyncCallback<List<Beschreibungsinfo>> callback);
+	
+	void getAllInfosA(int profilId, AsyncCallback<List<Auswahlinfo>> callback);
+	
 //	void getOptionById(int eigenschaftId, AsyncCallback<Info> callback);
 //
 //	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
 //
-//	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
+	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
 //	
 //	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
 //
