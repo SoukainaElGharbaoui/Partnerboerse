@@ -61,10 +61,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 //		 dataProvider.addDataDisplay(partner);
 		
 		
-		
-		
-	
-		
 		/** 
 		 * Tabelle formatieren und CSS einbinden. 
 		 */
@@ -84,6 +80,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 4, "Alter");
 		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+		
 		
 		/**
 		 * PartnervorschlaegeSP anzeigen in den folgenden Zeilen 
