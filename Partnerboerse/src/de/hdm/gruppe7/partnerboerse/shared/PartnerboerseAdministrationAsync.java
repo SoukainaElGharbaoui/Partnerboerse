@@ -6,7 +6,9 @@ import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -114,14 +116,14 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT Info: BEGINN
 	 */	
 	
-	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
+	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Beschreibungsinfo> callback); 
 	
-	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Info> callback);
+	void createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId, AsyncCallback<Auswahlinfo> callback);
 	
-	void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId, AsyncCallback<Void> callback);
-	
-	void saveInfoB(int profilId, int eigenschaftId, String infotext,
-			AsyncCallback<Void> callback);
+//	void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId, AsyncCallback<Void> callback);
+//	
+//	void saveInfoB(int profilId, int eigenschaftId, String infotext,
+//			AsyncCallback<Void> callback);
 	
 	void getAllEigenschaftenB(AsyncCallback<List<Eigenschaft>> callback);
 
@@ -129,21 +131,21 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAllAuswahloptionen(int eigenschaftId, AsyncCallback<List<Auswahloption>> callback);
 	
-	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
-	
-	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
-	
-	void getOptionById(int eigenschaftId, AsyncCallback<Info> callback);
-
-	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
-
-	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
-	
-	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
-
-	void deleteOneInfoA(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
-
-	void getAInfoByProfilId(int profilId, AsyncCallback<List<Info>> callback);
+//	void getAllInfosB(int profilId, AsyncCallback<List<Info>> callback);
+//	
+//	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
+//	
+//	void getOptionById(int eigenschaftId, AsyncCallback<Info> callback);
+//
+//	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
+//
+//	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
+//	
+//	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+//
+//	void deleteOneInfoA(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+//
+//	void getAInfoByProfilId(int profilId, AsyncCallback<List<Info>> callback);
 
 	
 	/**

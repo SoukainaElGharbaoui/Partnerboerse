@@ -141,10 +141,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 									}
 
 								});
-
+				
 			}
 		});
-		
+				
 		/**
 		 * Widgets zum VerticalPanel hinzufügen. 
 		 */

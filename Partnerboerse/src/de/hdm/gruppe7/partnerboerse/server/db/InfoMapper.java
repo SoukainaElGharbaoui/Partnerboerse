@@ -1,7 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
@@ -21,20 +23,6 @@ public class InfoMapper {
 
 	}
 
-	/**
-	 * Diese statische Methode kann aufgrufen werden durch
-	 * <code>InfoMapper.infoMapper()</code>. Sie stellt die
-	 * Singleton-Eigenschaft sicher, indem Sie dafÃ¼r sorgt, dass nur eine
-	 * einzige Instanz von <code>InfoMapper</code> existiert.
-	 * <p>
-	 * 
-	 * <b>Fazit:</b> InfoMapper sollte nicht mittels <code>new</code>
-	 * instantiiert werden, sondern stets durch Aufruf dieser statischen
-	 * Methode.
-	 * 
-	 * @return DAS <code>InfoMapper</code>-Objekt.
-	 * @see infoMapper
-	 */
 	public static InfoMapper infoMapper() {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();
@@ -53,13 +41,14 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft "
+					.executeQuery("SELECT * FROM t_eigenschaft "
 							+ "WHERE typ='B' ORDER BY eigenschaft_id ");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Eigenschaft eigenschaft = new Eigenschaft();
+				eigenschaft.setTyp(rs.getString("typ"));
 				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
 
@@ -74,40 +63,8 @@ public class InfoMapper {
 		return result;
 	}
 
-	// FindAllAuswahloptionen erstellen
-	public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		// Ergebnisliste vorbereiten
-		List<Auswahloption> result = new ArrayList<Auswahloption>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
-							+ "FROM t_auswahloption WHERE eigenschaft_id="
-							+ eigenschaftId);
-
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
-			while (rs.next()) {
-				Auswahloption auswahloption = new Auswahloption();
-				auswahloption.setAuswahloptionId(rs.getInt("auswahloption_id"));
-				auswahloption.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				auswahloption.setOptionsbezeichnung(rs
-						.getString("optionsbezeichnung"));
-
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(auswahloption);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
+	
+	
 
 	public List<Eigenschaft> findAllEigenschaftenA() {
 		Connection con = DBConnection.connection();
@@ -119,13 +76,14 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft "
+					.executeQuery("SELECT * FROM t_eigenschaft "
 							+ "WHERE typ='A' ORDER BY eigenschaft_id ");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Eigenschaft eigenschaft = new Eigenschaft();
+				eigenschaft.setTyp(rs.getString("typ"));
 				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
 
@@ -139,180 +97,198 @@ public class InfoMapper {
 		// Ergebnisliste zurÃ¼ckgeben
 		return result;
 	}
-
-	public List<Info> findAllInfosB(int profilId) {
-		Connection con = DBConnection.connection();
-
-		List<Info> result = new ArrayList<Info>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT "
-							+ "t_beschreibungsinfo.nutzerprofil_id, "
-							+ "t_beschreibungsinfo.infotext, "
-							+ "t_beschreibungsinfo.eigenschaft_id, "
-							+ "t_eigenschaft.erlaeuterung "
-							+ "FROM t_beschreibungsinfo, t_eigenschaft "
-							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
-							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
-
-			while (rs.next()) {
-				Info info = new Info();
-				info.setNutzerprofilId(profilId);
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				info.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-				info.setInfotext(rs.getString("infotext"));
-
-				result.add(info);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		return result;
-	}
-
-	public List<Info> findAllInfosA(int profilId) {
-		Connection con = DBConnection.connection();
-
-		List<Info> result = new ArrayList<Info>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT "
-							+ "t_eigenschaft.erlaeuterung, "
-							+ "t_auswahloption.optionsbezeichnung, "
-							+ "t_auswahlinfo.nutzerprofil_id, "
-							+ "t_auswahlinfo.eigenschaft_id "
-							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
-							+ "WHERE t_auswahlinfo.nutzerprofil_id="
-							+ profilId
-							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
-							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
-							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
-
-			while (rs.next()) {
-				Info info = new Info();
-				info.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				info.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-
-				result.add(info);
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		return result;
-	}
-
-
-	public Info findOptionById(int eigenschaftId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT t_auswahlinfo.auswahloption_id, "
-							+ "t_auswahlinfo.eigenschaft_id, "
-							+ "t_auswahloption.optionsbezeichnung "
-							+ "FROM t_auswahlinfo, t_auswahloption "
-							+ "WHERE t_auswahlinfo.eigenschaft_id=" + eigenschaftId
-							+ " AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
-							+ "AND t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id ");
-			
-
-			if (rs.next()) {
-
-				Info info = new Info();
-				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-				return info;
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-
-		return null;
-	}
 	
 	
 	
-	public Info findByInfoAId(String optionsbezeichnung, int eigenschaftId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
+	
+	// FindAllAuswahloptionen erstellen
+		public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
+			Connection con = DBConnection.connection();
 
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
+			// Ergebnisliste vorbereiten
+			List<Auswahloption> result = new ArrayList<Auswahloption>();
 
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
-							+ "FROM t_auswahloption "
-							+ "WHERE optionsbezeichnung='" + optionsbezeichnung + "' "
-							+ "AND eigenschaft_id=" + eigenschaftId);
+			try {
+				Statement stmt = con.createStatement();
 
-			if (rs.next()) {
+				ResultSet rs = stmt
+						.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
+								+ "FROM t_auswahloption WHERE eigenschaft_id="
+								+ eigenschaftId);
 
-				Info info = new Info();
-				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				return info;
+				// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+				// Nutzerprofil-Objekt erstellt.
+				while (rs.next()) {
+					Auswahloption auswahloption = new Auswahloption();
+					auswahloption.setAuswahloptionId(rs.getInt("auswahloption_id"));
+					auswahloption.setEigenschaftId(rs.getInt("eigenschaft_id"));
+					auswahloption.setOptionsbezeichnung(rs
+							.getString("optionsbezeichnung"));
 
+					// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+					result.add(auswahloption);
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
+
+			// Ergebnisliste zurÃ¼ckgeben
+			return result;
 		}
+		
 
-		return null;
-	}
-
-	// public List<Info> findAllInfos() {
-	// Connection con = DBConnection.connection();
-	//
-	// // Ergebnisliste vorbereiten
-	// List<Info> result = new ArrayList<Info>();
-	//
-	// try {
-	// Statement stmt = con.createStatement();
-	//
-	// ResultSet rs = stmt.executeQuery("SELECT * FROM t_beschreibungsinfo ORDER
-	// BY info_id");
-	//
-	// // FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-	// // Nutzerprofil-Objekt erstellt.
-	// while (rs.next()) {
-	// Info info = new Info();
-	// info.setInfoId(rs.getInt("info_id"));
-	// info.setInfotext(rs.getString("infotext"));
-	//
-	// // HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-	// result.add(info);
-	// }
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// }
-	//
-	// // Ergebnisliste zurÃ¼ckgeben
-	// return result;
-	// }
-
-	public Info insertBeschreibungsinfo(Info info) {
+	
+	
+//	public List<Info> findAllInfosB(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT "
+//							+ "t_beschreibungsinfo.nutzerprofil_id, "
+//							+ "t_beschreibungsinfo.infotext, "
+//							+ "t_beschreibungsinfo.eigenschaft_id "
+////							+ "t_eigenschaft.erlaeuterung "
+//							+ "FROM t_beschreibungsinfo, t_eigenschaft "
+//							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
+//							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+//							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
+//
+//			while (rs.next()) {
+//				Beschreibungsinfo infoB = new Beschreibungsinfo();
+//				infoB.setNutzerprofilId(profilId);
+//				infoB.setEigenschaftId(rs.getInt("eigenschaft_id"));
+////				infoB.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+//				infoB.setInfotext(rs.getString("infotext"));
+//
+//				result.add(infoB);
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
+//
+//	
+//	
+//	public List<Info> findAllInfosA(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT "
+////							+ "t_eigenschaft.erlaeuterung, "
+////							+ "t_auswahloption.optionsbezeichnung, "
+//							+ "t_auswahlinfo.nutzerprofil_id, "
+//							+ "t_auswahlinfo.eigenschaft_id, "
+//							+ "t_auswahlinfo.auswahloption_id "
+//							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
+//							+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
+//							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+//							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+//							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+//							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
+//
+//			while (rs.next()) {
+//								
+//				Auswahlinfo infoA = new Auswahlinfo();
+//				infoA.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+//				infoA.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				infoA.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//				
+////				infoA.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+////				infoA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+//
+//				result.add(infoA);
+//
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
+//
+//
+//	public Info findOptionById(int eigenschaftId) {
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT t_auswahlinfo.auswahloption_id, "
+//							+ "t_auswahlinfo.eigenschaft_id, "
+//							+ "t_auswahloption.optionsbezeichnung "
+//							+ "FROM t_auswahlinfo, t_auswahloption "
+//							+ "WHERE t_auswahlinfo.eigenschaft_id=" + eigenschaftId
+//							+ " AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
+//							+ "AND t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id ");
+//			
+//
+//			if (rs.next()) {
+//
+//				Info info = new Info();
+//				info.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+//				return info;
+//
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//			return null;
+//		}
+//
+//		return null;
+//	}
+//	
+//	
+//	
+//	public Info findByInfoAId(String optionsbezeichnung, int eigenschaftId) {
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
+//							+ "FROM t_auswahloption "
+//							+ "WHERE optionsbezeichnung='" + optionsbezeichnung + "' "
+//							+ "AND eigenschaft_id=" + eigenschaftId);
+//
+//			if (rs.next()) {
+//
+//				Info info = new Info();
+//				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				return info;
+//
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//			return null;
+//		}
+//
+//		return null;
+//	}
+//
+//
+//	
+	public Beschreibungsinfo insertBeschreibungsinfo(Beschreibungsinfo infoB) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -320,249 +296,205 @@ public class InfoMapper {
 
 			stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (nutzerprofil_id, eigenschaft_id, infotext) "
 					+ "VALUES("
-					+ info.getNutzerprofilId()
+					+ infoB.getNutzerprofilId()
 					+ ","
-					+ info.getEigenschaftId()
+					+ infoB.getEigenschaftId()
 					+ ",'"
-					+ info.getInfotext()
+					+ infoB.getInfotext()
 					+ "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		return info;
+		return infoB;
 	}
 
-	public Info insertAuswahlinfo(Info info) {
+	public Auswahlinfo insertAuswahlinfo(Auswahlinfo infoA) {
 		Connection con = DBConnection.connection();
 
-		int auswahloptionId = info.getAuswahloptionId() + 1;
+		int auswahloptionId = infoA.getAuswahloptionId() + 1;
 
 		try {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("INSERT INTO t_auswahlinfo (nutzerprofil_id, eigenschaft_id, auswahloption_id) "
 					+ "VALUES("
-					+ info.getNutzerprofilId()
+					+ infoA.getNutzerprofilId()
 					+ ","
-					+ info.getEigenschaftId() + ",'" + auswahloptionId + "')");
+					+ infoA.getEigenschaftId() + ",'" + auswahloptionId + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		return info;
+		return infoA;
 	}
-
-	public void updateInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) {
-		Connection con = DBConnection.connection();
-		
-		 int auswahloptionId = 0; 
-
-			try {
-				Statement stmt = con.createStatement(); 
-				
-				// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
-				ResultSet rs = stmt.executeQuery("SELECT auswahloption_id AS ao_id "
-						+ "FROM t_auswahlinfo WHERE nutzerprofil_id=" + profilId
-						+ " AND eigenschaft_id=" + eigenschaftId);
-				
-				// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
-				if(rs.next()) {
-					auswahloptionId = rs.getInt("ao_id"); 
-					
-		  stmt = con.createStatement();
-
-			stmt.executeUpdate("UPDATE t_auswahlinfo "
-					+ "SET auswahloption_id=" + neueAuswahloptionId
-							+ " WHERE auswahloption_id=" + auswahloptionId
-                            + " AND nutzerprofil_id=" + profilId
-							+ " AND eigenschaft_id=" + eigenschaftId);
-							
-				}
-				} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-
-	public void updateInfoB(int profilId, int eigenschaftId, String infotext) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("UPDATE t_beschreibungsinfo "
-					+ "SET infotext=\"" + infotext + "\" "
-					+ "WHERE nutzerprofil_id=" + profilId
-					+ " AND eigenschaft_id=" + eigenschaftId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-	}
-
-	//
-	// public void deleteInfo(Info info) {
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// Statement stmt = con.createStatement();
-	//
-	// stmt.executeUpdate("DELETE FROM t_info " + "WHERE info_id =" +
-	// info.getInfoId());
-	//
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// }
-	// }
-
-	/**
-	 * Gesamte Info löschen.
-	 */
-	public void deleteAllInfos(int profilId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
-					+ profilId);
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
-					+ profilId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-
-	/**
-	 * Bestimmten Teil der Beschreibungsinfo löschen.
-	 */
-	public void deleteOneInfoB(int profilId, int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
-					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-
-	/**
-	 * Bestimmten Teil der Auswahlinfo löschen.
-	 */
-	public void deleteOneInfoA(int profilId, int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
-					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-	public List<Info> findAInfoByProfilId(int profilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-		
-		List<Info> result = new ArrayList<Info>();
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt
-					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
-							+ "FROM t_auswahlinfo "
-							+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
-
-			
-				while (rs.next()) {
-				
-				Info info = new Info();
-				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				result.add(info);
-				}
-			
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-		
-			return result;
-		}
+//
+//	public void updateInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) {
+//		Connection con = DBConnection.connection();
+//		
+//		 int auswahloptionId = 0; 
+//
+//			try {
+//				Statement stmt = con.createStatement(); 
+//				
+//				// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
+//				ResultSet rs = stmt.executeQuery("SELECT auswahloption_id AS ao_id "
+//						+ "FROM t_auswahlinfo WHERE nutzerprofil_id=" + profilId
+//						+ " AND eigenschaft_id=" + eigenschaftId);
+//				
+//				// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
+//				if(rs.next()) {
+//					auswahloptionId = rs.getInt("ao_id"); 
+//					
+//		  stmt = con.createStatement();
+//
+//			stmt.executeUpdate("UPDATE t_auswahlinfo "
+//					+ "SET auswahloption_id=" + neueAuswahloptionId
+//							+ " WHERE auswahloption_id=" + auswahloptionId
+//                            + " AND nutzerprofil_id=" + profilId
+//							+ " AND eigenschaft_id=" + eigenschaftId);
+//							
+//				}
+//				} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//
+//	public void updateInfoB(int profilId, int eigenschaftId, String infotext) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt.executeUpdate("UPDATE t_beschreibungsinfo "
+//					+ "SET infotext=\"" + infotext + "\" "
+//					+ "WHERE nutzerprofil_id=" + profilId
+//					+ " AND eigenschaft_id=" + eigenschaftId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//	}
+//
+//	
+//
+//	/**
+//	 * Gesamte Info löschen.
+//	 */
+//	public void deleteAllInfos(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
+//					+ profilId);
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
+//					+ profilId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//
+//	/**
+//	 * Bestimmten Teil der Beschreibungsinfo löschen.
+//	 */
+//	public void deleteOneInfoB(int profilId, int eigenschaftId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
+//					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//
+//	/**
+//	 * Bestimmten Teil der Auswahlinfo löschen.
+//	 */
+//	public void deleteOneInfoA(int profilId, int eigenschaftId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
+//					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//	public List<Info> findAInfoByProfilId(int profilId) {
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//		
+//		List<Info> result = new ArrayList<Info>();
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT auswahloption_id, eigenschaft_id "
+//							+ "FROM t_auswahlinfo "
+//							+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
+//
+//			
+//				while (rs.next()) {
+//				
+//				Info info = new Info();
+//				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				result.add(info);
+//				}
+//			
+//			} catch (SQLException e2) {
+//				e2.printStackTrace();
+//			}
+//		
+//			return result;
+//		}
+//	
+//	public List<Info> findAllAInfos() {
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT t_auswahlinfo.nutzerprofil_id, t_auswahlinfo.auswahloption_id, t_auswahlinfo.eigenschaft_id "
+//							+ "FROM t_auswahlinfo"
+//							);
+//
+//			while (rs.next()) {
+//				Info info = new Info();
+//				info.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//
+//				result.add(info);
+//
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
 	
-	public List<Info> findAllAInfos() {
-		Connection con = DBConnection.connection();
-
-		List<Info> result = new ArrayList<Info>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT t_auswahlinfo.nutzerprofil_id, t_auswahlinfo.auswahloption_id, t_auswahlinfo.eigenschaft_id "
-							+ "FROM t_auswahlinfo"
-							);
-
-			while (rs.next()) {
-				Info info = new Info();
-				info.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
-
-				result.add(info);
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		return result;
-	}
-
-	// public List<Auswahleigenschaft> findByAuswahl (Auswahleigenschaft
-	// auswahl){
-	//
-	//
-	// // DB-Verbindung holen
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// // Leeres SQL-Statement (JDBC) anlegen
-	// Statement stmt = con.createStatement();
-	//
-	// // Statement ausfÃ¼llen und als Query an die DB schicken
-	// ResultSet rs = stmt.executeQuery(
-	// "SELECT eigenschaft_id, auswahltext FROM t_auswahleigenschaft " + "WHERE
-	// auswahl_id=" + auswahlId);
-	//
-	// /*
-	// * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-	// * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-	// */
-	// if (rs.next()) {
-	// // Ergebnis-Tupel in Objekt umwandeln
-	// Info info = new Info();
-	// info.setInfoId(rs.getInt("info_id"));
-	// info.setInfotext(rs.getString("infotext"));
-	// return info;
-	// }
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// return null;
-	// }
 }

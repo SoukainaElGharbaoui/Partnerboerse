@@ -60,11 +60,20 @@ public class Profil extends BusinessObject {
 		this.religion = religion;
 	}
 	
+//	//Konstruktor
+//	 public Profil(String geschlecht, int koerpergroesseInt, 
+//			 String haarfarbe, String raucher, String religion) {
+//		 
+//		 this.geschlecht = geschlecht;
+//		 this.koerpergroesseInt = koerpergroesseInt;
+//		 this.haarfarbe = haarfarbe;
+//		 this.raucher = raucher;
+//		 this.religion = religion;
+//		}
+	
 	//Konstruktor
-	 public Profil() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	public Profil() {
+	}
 	
 	/**
 	   * Erzeugen einer einfachen textuellen Repr�sentation der jeweiligen

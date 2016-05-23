@@ -62,12 +62,23 @@ public class Nutzerprofil extends Profil{
 		this.angeseheneNp = angeseheneNp;
 	}
 	
-	//Konstruktor
-	public Nutzerprofil() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+//	//Konstruktor
+//	public Nutzerprofil(String geschlecht, int koerpergroesseInt, 
+//			 String haarfarbe, String raucher, String religion, 
+//			 String vorname, String nachname, String geburtsdatum) {
+//		
+//		super(geschlecht, koerpergroesseInt, haarfarbe, raucher, religion);
+//		
+//		this.vorname = vorname; 
+//		this.nachname = nachname;
+//		this.geburtsdatum = geburtsdatum;
+//	}
 
+	
+	// Konstrukor
+	public Nutzerprofil(){
+		super();
+	}
 	
 	private void merkeProfil (Nutzerprofil np) {
 		

@@ -76,7 +76,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
 		
 		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editNutzerprofilFlexTable.setWidget(3, 2, geschlechtListBox);
@@ -88,7 +87,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
 		
 		final ListBox haarfarbeListBox = new ListBox();
-		haarfarbeListBox.addItem("");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -98,13 +96,11 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(6, 2, haarfarbeListBox);
 		
 		final ListBox raucherListBox = new ListBox();
-		raucherListBox.addItem("");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
 		
 		final ListBox religionListBox = new ListBox();
-		religionListBox.addItem("");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -140,11 +136,9 @@ public class EditNutzerprofil extends VerticalPanel {
 								
 								nachnameTextBox.setText(result.getNachname());
 								
-								geschlechtListBox.setItemText(0, result.getGeschlecht());
-								
 								for(int i = 0; i < geschlechtListBox.getItemCount(); i++) {
-									if (result.getGeschlecht() == geschlechtListBox.getValue(i)) { 
-										geschlechtListBox.removeItem(i);
+									if (result.getGeschlecht().equals(geschlechtListBox.getValue(i))) { 
+										geschlechtListBox.setSelectedIndex(i);
 									}
 								}
 								
@@ -152,27 +146,21 @@ public class EditNutzerprofil extends VerticalPanel {
 								
 								koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 								
-								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
-								
 								for(int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
-									if (result.getHaarfarbe() == haarfarbeListBox.getValue(i)) { 
-										haarfarbeListBox.removeItem(i);
+									if (result.getHaarfarbe().equals(haarfarbeListBox.getValue(i))) { 
+										haarfarbeListBox.setSelectedIndex(i);
 									}
 								}
 
-								religionListBox.setItemText(0, result.getReligion());
-								
 								for(int i = 0; i < religionListBox.getItemCount(); i++) {
-									if (result.getReligion() == religionListBox.getValue(i)) { 
-										religionListBox.removeItem(i);
+									if (result.getReligion().equals(religionListBox.getValue(i))) { 
+										religionListBox.setSelectedIndex(i);
 									}
 								}
-
-								raucherListBox.setItemText(0, result.getRaucher());
 
 								for(int i = 0; i < raucherListBox.getItemCount(); i++) {
-									if (result.getRaucher() == raucherListBox.getValue(i)) { 
-										raucherListBox.removeItem(i);
+									if (result.getRaucher().equals(raucherListBox.getValue(i))) { 
+										raucherListBox.setSelectedIndex(i);
 									}
 								}
 							}

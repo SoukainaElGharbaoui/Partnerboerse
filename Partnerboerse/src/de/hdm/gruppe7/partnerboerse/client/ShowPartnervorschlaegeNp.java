@@ -116,37 +116,37 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					
 				});
 		
-		ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(Benutzer.getProfilId(), new AsyncCallback<List<Info>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein riesen Fehler auf.");
-			}
-
-			@Override
-			public void onSuccess(List<Info> result) {
-				for (Info in : result) {
-					
-					if (in.getEigenschaftId() == 2) {
-						a2 = in.getAuswahloptionId();
-						}
-					
-					if (in.getEigenschaftId() == 3) {
-						a3 = in.getAuswahloptionId();
-						}
-					
-					if (in.getEigenschaftId() == 4) {
-						a4 = in.getAuswahloptionId();
-						}
-					
-					if (in.getEigenschaftId() == 6) {
-						a6 = in.getAuswahloptionId();
-						}
-				}
-				
-			}
-			
-		});
+//		ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(Benutzer.getProfilId(), new AsyncCallback<List<Info>>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				infoLabel.setText("Es trat ein riesen Fehler auf.");
+//			}
+//
+//			@Override
+//			public void onSuccess(List<Info> result) {
+//				for (Info in : result) {
+//					
+//					if (in.getEigenschaftId() == 2) {
+//						a2 = in.getAuswahloptionId();
+//						}
+//					
+//					if (in.getEigenschaftId() == 3) {
+//						a3 = in.getAuswahloptionId();
+//						}
+//					
+//					if (in.getEigenschaftId() == 4) {
+//						a4 = in.getAuswahloptionId();
+//						}
+//					
+//					if (in.getEigenschaftId() == 6) {
+//						a6 = in.getAuswahloptionId();
+//						}
+//				}
+//				
+//			}
+//			
+//		});
 		 verPanel.add(infoLabel);
 		 verPanel.add(infoLabel2);
 		 
@@ -173,63 +173,63 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 									
 									partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
 									
-									ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(fremdprofilId, new AsyncCallback<List<Info>>() {
-
-										@Override
-										public void onFailure(Throwable caught) {
-											infoLabel.setText("Es trat ein kleiner Fehler auf.");
-											
-										}
-
-										@Override
-										public void onSuccess(List<Info> result) {
-											int uebereinstimmung = 0;
-											
-											for (Info info : result) {
-												
-												
-//											if (info.getEigenschaftId() == 1) {
-//												if (a1 == info.getAuswahloptionId()) {
+//									ClientsideSettings.getPartnerboerseAdministration().getAInfoByProfilId(fremdprofilId, new AsyncCallback<List<Info>>() {
+//
+//										@Override
+//										public void onFailure(Throwable caught) {
+//											infoLabel.setText("Es trat ein kleiner Fehler auf.");
+//											
+//										}
+//
+//										@Override
+//										public void onSuccess(List<Info> result) {
+//											int uebereinstimmung = 0;
+//											
+//											for (Info info : result) {
+//												
+//												
+////											if (info.getEigenschaftId() == 1) {
+////												if (a1 == info.getAuswahloptionId()) {
+////													uebereinstimmung = uebereinstimmung + 1;
+////												}
+////												}
+//											
+//											if (info.getEigenschaftId() == 2 && a2 == info.getAuswahloptionId()) {
+////												if (a2 == info.getAuswahloptionId()) {
+//													uebereinstimmung = uebereinstimmung + 1;
+////												}
+//												}
+//											
+//											if (info.getEigenschaftId() == 3 && a3 == info.getAuswahloptionId()) {
+////												if (a3 == info.getAuswahloptionId()) {
+//													uebereinstimmung = uebereinstimmung + 1;
+//													
+////												}
+//												}
+//											
+//											if (info.getEigenschaftId() == 4) {
+//												if (a4 == info.getAuswahloptionId()) {
 //													uebereinstimmung = uebereinstimmung + 1;
 //												}
 //												}
-											
-											if (info.getEigenschaftId() == 2 && a2 == info.getAuswahloptionId()) {
-//												if (a2 == info.getAuswahloptionId()) {
-													uebereinstimmung = uebereinstimmung + 1;
-//												}
-												}
-											
-											if (info.getEigenschaftId() == 3 && a3 == info.getAuswahloptionId()) {
-//												if (a3 == info.getAuswahloptionId()) {
-													uebereinstimmung = uebereinstimmung + 1;
-													
-//												}
-												}
-											
-											if (info.getEigenschaftId() == 4) {
-												if (a4 == info.getAuswahloptionId()) {
-													uebereinstimmung = uebereinstimmung + 1;
-												}
-												}
-											
-//											if (info.getEigenschaftId() == 5) {
-//												if (a5 == info.getAuswahloptionId()) {
+//											
+////											if (info.getEigenschaftId() == 5) {
+////												if (a5 == info.getAuswahloptionId()) {
+////													uebereinstimmung = uebereinstimmung + 1;
+////												}
+////												}
+//											
+//											if (info.getEigenschaftId() == 6 ) {
+//												if (a6 == info.getAuswahloptionId()) {
 //													uebereinstimmung = uebereinstimmung + 1;
 //												}
 //												}
-											
-											if (info.getEigenschaftId() == 6 ) {
-												if (a6 == info.getAuswahloptionId()) {
-													uebereinstimmung = uebereinstimmung + 1;
-												}
-												}
-											
-										}
-											 zwischenergebnis = uebereinstimmung; 
-											
-										}
-									});
+//											
+//										}
+//											 zwischenergebnis = uebereinstimmung; 
+//											
+//										}
+//									});
 									
 									if (np.getGeschlecht() != geschlecht){
 										uebereinstimmung = uebereinstimmung + 1;	

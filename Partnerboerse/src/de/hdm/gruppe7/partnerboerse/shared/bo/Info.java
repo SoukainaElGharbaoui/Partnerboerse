@@ -5,13 +5,14 @@ public class Info extends BusinessObject {
 	private static final long serialVersionUID = 1L;
 
 	//Attribute
-	private int infoId;
-	private String infotext;
-	private int eigenschaftId;
-	private String eigenschaftErlaeuterung;
+//	private String infotext; 
+	
 	private int nutzerprofilId;
-	private int auswahloptionId;
-	private String optionsbezeichnung;
+	private int eigenschaftId;
+	
+//	private String eigenschaftErlaeuterung;
+//	private int auswahloptionId;
+//	private String optionsbezeichnung;
 
 	
 	//Konstruktor
@@ -22,13 +23,13 @@ public class Info extends BusinessObject {
 	
 	//Getter- & Settermethoden
 
-	public int getAuswahloptionId() {
-		return auswahloptionId;
-	}
-
-	public void setAuswahloptionId(int auswahloptionId) {
-		this.auswahloptionId = auswahloptionId;
-	}
+//	public int getAuswahloptionId() {
+//		return auswahloptionId;
+//	}
+//
+//	public void setAuswahloptionId(int auswahloptionId) {
+//		this.auswahloptionId = auswahloptionId;
+//	}
 
 	public int getNutzerprofilId() {
 		return nutzerprofilId;
@@ -45,33 +46,33 @@ public class Info extends BusinessObject {
 	public void setEigenschaftId(int eigenschaftId) {
 		this.eigenschaftId = eigenschaftId;
 	}
-	public int getInfoId() {
-		return infoId;
-	}
-	public void setInfoId(int infoId) {
-		this.infoId = infoId;
-	}
-	public String getInfotext() {
-		return infotext;
-	}
-	public void setInfotext(String infotext) {
-		this.infotext = infotext;
-	}
-
-	public String getEigenschaftErlaeuterung() {
-		return eigenschaftErlaeuterung;
-	}
-
-	public void setEigenschaftErlaeuterung(String eigenschaftErlaeuterung) {
-		this.eigenschaftErlaeuterung = eigenschaftErlaeuterung;
-	}
-
-	public String getOptionsbezeichnung() {
-		return optionsbezeichnung;
-	}
-
-	public void setOptionsbezeichnung(String optionsbezeichnung) {
-		this.optionsbezeichnung = optionsbezeichnung;
-	}
+//	public int getInfoId() {
+//		return infoId;
+//	}
+//	public void setInfoId(int infoId) {
+//		this.infoId = infoId;
+//	}
+//	public String getInfotext() {
+//		return infotext;
+//	}
+//	public void setInfotext(String infotext) {
+//		this.infotext = infotext;
+//	}
+//
+//	public String getEigenschaftErlaeuterung() {
+//		return eigenschaftErlaeuterung;
+//	}
+//
+//	public void setEigenschaftErlaeuterung(String eigenschaftErlaeuterung) {
+//		this.eigenschaftErlaeuterung = eigenschaftErlaeuterung;
+//	}
+//
+//	public String getOptionsbezeichnung() {
+//		return optionsbezeichnung;
+//	}
+//
+//	public void setOptionsbezeichnung(String optionsbezeichnung) {
+//		this.optionsbezeichnung = optionsbezeichnung;
+//	}
 	
 }

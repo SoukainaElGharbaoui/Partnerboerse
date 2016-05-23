@@ -12,8 +12,10 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
@@ -95,6 +97,8 @@ public class CreateInfo extends VerticalPanel {
 					
 					showEigenschaftFlexTable.setWidget(row, 2, textArea);
 					
+					
+					
 					// ClickHandler für den Info-Anlegen-Button hinzufügen. 
 					createInfosButton.addClickHandler(new ClickHandler() {
 
@@ -102,8 +106,10 @@ public class CreateInfo extends VerticalPanel {
 							
 							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId); 
 							
+							
+							
 							ClientsideSettings.getPartnerboerseAdministration().createBeschreibungsinfo(Benutzer.getProfilId(),
-							eigenschaftIdInt, textArea.getText(), new AsyncCallback<Info>() {
+							eigenschaftIdInt, textArea.getText(), new AsyncCallback<Beschreibungsinfo>() {
 
 								@Override
 								public void onFailure(Throwable caught) {
@@ -111,7 +117,7 @@ public class CreateInfo extends VerticalPanel {
 								}
 
 								@Override
-								public void onSuccess(Info result) {
+								public void onSuccess(Beschreibungsinfo result) {
 									informationLabelB.setText("Die Beschreibungsinfo wurde erfolgreich angelegt");
 								}
 
@@ -179,8 +185,8 @@ public class CreateInfo extends VerticalPanel {
 							public void onClick(ClickEvent event) {
 								final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 								
-									ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(),
-									eigenschaftIdInt, neueListBox.getSelectedIndex(), new AsyncCallback<Info>() {
+									ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(), 
+											eigenschaftIdInt, neueListBox.getSelectedIndex(), new AsyncCallback<Auswahlinfo>() {
 								
 									@Override
 									public void onFailure(Throwable caught) {
@@ -188,7 +194,7 @@ public class CreateInfo extends VerticalPanel {
 									}
 								
 									@Override
-									public void onSuccess(Info result) {
+									public void onSuccess(Auswahlinfo result) {
 									informationLabelA.setText("Die Auswahlinfo wurde erfolgreich angelegt");
 									}
 								

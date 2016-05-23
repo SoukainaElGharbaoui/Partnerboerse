@@ -5,18 +5,10 @@ public class Eigenschaft extends BusinessObject {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public String bezeichnung;
 	public int eigenschaftId;
 	public String erlaeuterung;
-	public String eigenschaft;
-	
-	public void setBezeichnung(String bezeichnung){
-		this.bezeichnung = bezeichnung;
-	}
-	
-	public String getBezeichnung(){
-		return bezeichnung;
-	}
+	public String typ;
+
 	
 	public void setEigenschaftId(int eigenschaftId){
 		this.eigenschaftId = eigenschaftId;
@@ -34,12 +26,12 @@ public class Eigenschaft extends BusinessObject {
 		return erlaeuterung;
 	}
 	
-	public void setEigenschaft(String eigenschaft){
-		this.eigenschaft = eigenschaft;
+	public String getTyp() {
+		return typ;
 	}
-	
-	public String getEigenschaft(){
-		return eigenschaft;
+
+	public void setTyp(String typ) {
+		this.typ = typ;
 	}
 	
 	//Konstruktor
@@ -47,23 +39,23 @@ public class Eigenschaft extends BusinessObject {
 		super();
 	}
 	
-	public String toString() {
-	    return super.toString() + "Eigenschaft-ID: #" + this.eigenschaftId 
-	    		+ "Bezeichnung: " + this.bezeichnung + "Erlaeuterung: " + this.erlaeuterung 
-	    		+ "Eigenschaft: " + this.eigenschaft; 
-	  }
-	
-	public boolean equals(Object o) {
-	    if (o != null && o instanceof Eigenschaft) {
-	      Eigenschaft eig = (Eigenschaft) o;
-	      try {
-	        return super.equals(eig);
-	      }
-	      catch (IllegalArgumentException e) {
-	        return false;
-	      }
-	    }
-	    return false;
-	  }
+//	public String toString() {
+//	    return super.toString() + "Eigenschaft-ID: #" + this.eigenschaftId 
+//	    		+ "Erlaeuterung: " + this.erlaeuterung 
+//	    		+ "Typ: " + this.typ; 
+//	  }
+//	
+//	public boolean equals(Object o) {
+//	    if (o != null && o instanceof Eigenschaft) {
+//	      Eigenschaft eig = (Eigenschaft) o;
+//	      try {
+//	        return super.equals(eig);
+//	      }
+//	      catch (IllegalArgumentException e) {
+//	        return false;
+//	      }
+//	    }
+//	    return false;
+//	  }
 
 }
