@@ -351,6 +351,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAllInfosA(profilId);
 	}
 	
+	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findOptionById(eigenschaftId);
+	}
+	
 	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
 		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
 	}
@@ -382,6 +386,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
 			return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 		}
-			
+
+		public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException {
+			return this.infoMapper.findAInfoByProfilId(profilId); 
+		}
+
+
 }
 

@@ -131,6 +131,8 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getAllInfosA(int profilId, AsyncCallback<List<Info>> callback);
 	
+	void getOptionById(int eigenschaftId, AsyncCallback<Info> callback);
+
 	void getInfoAById(String optionsbezeichnung, int eigenschaftId, AsyncCallback<Info> callback);
 
 	void deleteAllInfos(int profilId, AsyncCallback<Void> callback);
@@ -138,6 +140,8 @@ public interface PartnerboerseAdministrationAsync {
 	void deleteOneInfoB(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
 
 	void deleteOneInfoA(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	void getAInfoByProfilId(int profilId, AsyncCallback<List<Info>> callback);
 
 	
 	/**
@@ -147,10 +151,11 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
 
 
-	// Besuch hinzufuegen. 
-	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	void besuchSetzen(int profilId, int fremdprofilId,
+			AsyncCallback<Void> callback);
 	
 	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+
 
 }
 	
