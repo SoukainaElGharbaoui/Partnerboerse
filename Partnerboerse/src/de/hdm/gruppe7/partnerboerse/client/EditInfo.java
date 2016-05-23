@@ -247,11 +247,6 @@ public class EditInfo extends VerticalPanel {
 
 													bisherigeAuswahloption = result
 															.getOptionsbezeichnung();
-
-													neueListBox
-															.insertItem(
-																	bisherigeAuswahloption,
-																	0);
 												}
 											});
 
@@ -281,9 +276,10 @@ public class EditInfo extends VerticalPanel {
 																.getOptionsbezeichnung());
 														}
 													
-													for(int i = 1; i < neueListBox.getItemCount(); i++) {
-														if (neueListBox.getValue(i) == bisherigeAuswahloption) {
-															neueListBox.removeItem(i);
+													for (int i = 0; i < neueListBox.getItemCount(); i++) {
+														
+														if (neueListBox.getValue(i).equals(bisherigeAuswahloption)) {
+															neueListBox.setItemSelected(i, true);
 														}
 													}
 												}
@@ -391,17 +387,17 @@ public class EditInfo extends VerticalPanel {
 																									.setText("Das Aktualisieren der Auswahlinfo "
 																											+ "hat funktioniert.");
 
-//																							 ShowEigenesNp
-//																							 showEigenesNp
-//																							 =
-//																							 new
-//																							 ShowEigenesNp();
-//																							 RootPanel
-//																							 .get("Details")
-//																							 .clear();
-//																							 RootPanel
-//																							 .get("Details")
-//																							 .add(showEigenesNp);
+																							 ShowEigenesNp
+																							 showEigenesNp
+																							 =
+																							 new
+																							 ShowEigenesNp();
+																							 RootPanel
+																							 .get("Details")
+																							 .clear();
+																							 RootPanel
+																							 .get("Details")
+																							 .add(showEigenesNp);
 																						}
 
 																					});
