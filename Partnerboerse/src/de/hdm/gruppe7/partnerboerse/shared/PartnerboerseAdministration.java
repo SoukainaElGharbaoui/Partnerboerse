@@ -10,9 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
@@ -142,7 +140,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ABSCHNITT MERKLISTE: BEGINN
 	 */
 	// Alle Vermerke eines Nutzerprofils auslesen.
-	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
+	public Vector<Nutzerprofil> getGemerkteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
 	// Vermerkstatus ermitteln. 
@@ -164,7 +162,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ABSCHNITT SPERRLISTE: BEGINN
 	 */
 	// Alle Sperrungen eines Nutzerprofils auslesen.
-	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
+	public Vector<Nutzerprofil> getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
 	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 

@@ -8,13 +8,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowMerkliste extends VerticalPanel {
 	
@@ -63,34 +62,29 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		merklisteFlexTable.addStyleName("FlexTable");   
 		
-			/**
-			 * Gemerkte Nutzerprofile anzeigen. 
-			 */
-			ClientsideSettings.getPartnerboerseAdministration().
-			getGemerkteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Merkliste>>() {
-			
+		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Nutzerprofil>>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
+				infoLabel.setText("Es trat ein Fehler auf.");	
 			}
 
 			@Override
-			// Vektor der gemerkten Profile abarbeiten. 
-			public void onSuccess(Vector<Merkliste> result) {
-
+			public void onSuccess(Vector<Nutzerprofil> result) {
 				// Anzahl der Zeilen ermitteln. 
 				int row = merklisteFlexTable.getRowCount();
 				
 				// Tabelle mit Inhalten aus der Datenbank befüllen. 
-				for(Merkliste m : result) {
+				for(Nutzerprofil n : result) {
 					row++;
 					
-					final String fremdprofilId = String.valueOf(m.getmFremdprofilId());
+					final String fremdprofilId = String.valueOf(n.getProfilId());
+					
 					merklisteFlexTable.setText(row, 0, fremdprofilId); 
-					merklisteFlexTable.setText(row, 1, m.getmVorname()); 
-					merklisteFlexTable.setText(row, 2, m.getmNachname());
-					merklisteFlexTable.setText(row, 3, m.getmGeburtsdatum());
-					merklisteFlexTable.setText(row, 4, m.getmGeschlecht()); 
+					merklisteFlexTable.setText(row, 1, n.getVorname()); 
+					merklisteFlexTable.setText(row, 2, n.getNachname());
+					merklisteFlexTable.setText(row, 3, n.getGeburtsdatum());
+					merklisteFlexTable.setText(row, 4, n.getGeschlecht());  
 					
 					// Löschen-Button hinzufügen und ausbauen. 
 					final Button loeschenButton = new Button("Löschen");
@@ -101,7 +95,7 @@ public class ShowMerkliste extends VerticalPanel {
 					merklisteFlexTable.setWidget(row, 6, anzeigenButton); 
 					
 					// Testzwecke: Index der FlexTable-Rows anzeigen. 
-					merklisteFlexTable.setText(row, 7, String.valueOf(row)); 
+					merklisteFlexTable.setText(row, 7, String.valueOf(row));
 					
 					// ClickHandler für den Löschen-Button hinzufügen. 
 					loeschenButton.addClickHandler(new ClickHandler() {
@@ -207,13 +201,18 @@ public class ShowMerkliste extends VerticalPanel {
 							
 						}
 						
-					}); 
+					});
 					
-				}
-			}
+					
+					
+					
+					
+				}		
 				
+			}
+			
 		});
-		
+				
 		// Widgets zum VerticalPanel hinzufügen. 
 		verPanel.add(ueberschriftLabel); 
 		verPanel.add(merklisteFlexTable); 
