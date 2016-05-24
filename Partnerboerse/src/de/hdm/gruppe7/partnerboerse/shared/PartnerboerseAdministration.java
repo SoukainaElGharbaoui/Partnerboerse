@@ -240,11 +240,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Auswahlinfo createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
 			throws IllegalArgumentException;
 	
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
+	
 //	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
 //			throws IllegalArgumentException;
 //	
-//	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-//			throws IllegalArgumentException;
+
 	
 	public List<Eigenschaft> getAllEigenschaftenB()
 			throws IllegalArgumentException;
@@ -258,24 +260,26 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Beschreibungsinfo> getAllInfosB(int profilId)
 			throws IllegalArgumentException;
 
-	public List<Auswahlinfo> getAllInfosA(int profilId)
-			throws IllegalArgumentException;
-	
-//	public Info getOptionById(int eigenschaftId)
+//	public List<Auswahlinfo> getAllInfosA(int profilId)
 //			throws IllegalArgumentException;
 //	
+//	public Auswahloption getOptionById(int eigenschaftId, int nutzerprofilId)
+//			throws IllegalArgumentException;
+	
+	public String[] getAllInfosGesamt(int profilId) throws IllegalArgumentException;
+	
 //	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
 //			throws IllegalArgumentException;
 //	
 	public void deleteAllInfos(int profilId)
 		throws IllegalArgumentException;
 
-//	public void deleteOneInfoB(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//	public void deleteOneInfoA(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
+	public void deleteOneInfoB(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public void deleteOneInfoA(int profilId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
 //	public List<Info> getAInfoByProfilId(int profilId)
 //			throws IllegalArgumentException;
 /**

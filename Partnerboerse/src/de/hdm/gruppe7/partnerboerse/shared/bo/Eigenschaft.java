@@ -36,7 +36,6 @@ public class Eigenschaft extends BusinessObject {
 	
 	//Konstruktor
 	public Eigenschaft(){
-		super();
 	}
 	
 //	public String toString() {
