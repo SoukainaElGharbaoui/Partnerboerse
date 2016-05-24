@@ -118,8 +118,7 @@ public class ShowEigenesNp extends VerticalPanel {
 								// Geburtsdatum aus der Datenbank holen
 								// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(4, 1,
-										result.getGeburtsdatum());
+								showEigenesNpFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
 								
 								// Koerpergroesse aus der Datenbank holen
 								// und in Tabelle eintragen

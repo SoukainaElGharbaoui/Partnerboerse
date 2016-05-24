@@ -102,7 +102,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(4, 1, result.getGeburtsdatum());
+						showFremdprofilFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen

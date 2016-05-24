@@ -86,7 +86,7 @@ public class ShowSperrliste extends VerticalPanel {
 					sperrlisteFlexTable.setText(row, 0, fremdprofilId); 
 					sperrlisteFlexTable.setText(row, 1, n.getVorname()); 
 					sperrlisteFlexTable.setText(row, 2, n.getNachname());
-					sperrlisteFlexTable.setText(row, 3, n.getGeburtsdatum());
+					sperrlisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
 					sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());  
 					
 					// Löschen-Button hinzufügen und ausbauen. 

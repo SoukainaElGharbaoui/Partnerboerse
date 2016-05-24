@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.server;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -54,7 +55,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Nutzerprofil anlegen. 
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
@@ -63,7 +64,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
-		n.setGeburtsdatum(geburtsdatum);
+		n.setGeburtsdatumDate(geburtsdatumDate);
 		n.setKoerpergroesseInt(koerpergroesseInt);
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
@@ -79,14 +80,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Nutzerprofil aktualisieren. 
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, 
-			String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
 			String raucher, String religion) throws IllegalArgumentException {
 		
 		Nutzerprofil n = new Nutzerprofil(); 
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
-		n.setGeburtsdatum(geburtsdatum);
+		n.setGeburtsdatumDate(geburtsdatumDate);
 		n.setKoerpergroesseInt(koerpergroesseInt);
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
@@ -123,29 +124,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Alle Nutzerprofile auslesen.
 	 */
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) throws IllegalArgumentException {
+	public List<Nutzerprofil> getAllNutzerprofile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
-	}
-	
-	/**
-	 * **********************************
-	 * Unnötig, da gleicher Mapper-Aufruf!
-	 * **********************************
-	 */
-	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findAllNutzerprofile();
-	}
-
-	/**
-	 * **********************************
-	 * Brauchen wir das???
-	 * **********************************
-	 */
-	@Override
-	public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	/*

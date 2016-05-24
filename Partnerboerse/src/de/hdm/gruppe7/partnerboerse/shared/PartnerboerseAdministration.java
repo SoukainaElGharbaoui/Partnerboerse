@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -29,7 +30,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil anlegen.
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException;
 	
@@ -37,7 +38,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
 			String raucher, String religion) throws IllegalArgumentException;
 	
 	/**
@@ -60,22 +61,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Alle Nutzerprofile auslesen.
 	 */
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) throws IllegalArgumentException;
-	
-	/**
-	 * ***********************************
-	 * Unnötig, da gleicher Mapper-Aufruf!
-	 * ***********************************
-	 */
-	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException;
-	
-	/**
-	 * **********************************
-	 * Brauchen wir das???
-	 * **********************************
-	 */
-	public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil)
-			throws IllegalArgumentException;
+	public List<Nutzerprofil> getAllNutzerprofile() throws IllegalArgumentException;
 	
 	/*
 	 * ***************************************************************************

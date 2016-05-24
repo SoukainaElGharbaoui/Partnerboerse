@@ -57,7 +57,7 @@ public class NutzerprofilMapper {
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
 						+ "VALUES(" + n.getProfilId() + ",'" + n.getVorname() + "','" + n.getNachname() + "','"
-						+ n.getGeburtsdatum() + "')");
+						+ n.getGeburtsdatumDate() + "')");
 			}
 
 		} catch (SQLException e2) {
@@ -82,7 +82,7 @@ public class NutzerprofilMapper {
 			
 			stmt.executeUpdate("UPDATE t_nutzerprofil " + "SET vorname=\""
 					+ n.getVorname() + "\", " + " nachname=\"" + n.getNachname() + "\", "
-					+ " geburtsdatum=\"" + n.getGeburtsdatum() + "\" "
+					+ " geburtsdatum=\"" + n.getGeburtsdatumDate() + "\" "
 					+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId());
 
 			stmt = con.createStatement();
@@ -165,7 +165,7 @@ public class NutzerprofilMapper {
 				n.setProfilId(rs.getInt("nutzerprofil_id"));
 				n.setVorname(rs.getString("vorname"));
 				n.setNachname(rs.getString("nachname"));
-				n.setGeburtsdatum(rs.getString("geburtsdatum"));
+				n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 				n.setGeschlecht(rs.getString("geschlecht"));
 				n.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 				n.setHaarfarbe(rs.getString("haarfarbe"));
@@ -242,7 +242,7 @@ public class NutzerprofilMapper {
 				n.setProfilId(rs.getInt("nutzerprofil_id"));
 				n.setVorname(rs.getString("vorname"));
 				n.setNachname(rs.getString("nachname"));
-				n.setGeburtsdatum(rs.getString("geburtsdatum"));
+				n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 				n.setGeschlecht(rs.getString("geschlecht"));
 				n.setHaarfarbe(rs.getString("haarfarbe"));
 				n.setKoerpergroesse(rs.getString("koerpergroesse"));
@@ -296,7 +296,7 @@ public class NutzerprofilMapper {
 					n.setProfilId(rs.getInt("nutzerprofil_id")); 
 					n.setVorname(rs.getString("vorname"));
 					n.setNachname(rs.getString("nachname"));
-					n.setGeburtsdatum(rs.getString("geburtsdatum"));
+					n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 					n.setGeschlecht(rs.getString("geschlecht"));
 					
 					// Hinzufügen des neuen Objekts zum Ergebnisvektor
@@ -410,7 +410,7 @@ public class NutzerprofilMapper {
 					n.setProfilId(rs.getInt("nutzerprofil_id")); 
 					n.setVorname(rs.getString("vorname"));
 					n.setNachname(rs.getString("nachname"));
-					n.setGeburtsdatum(rs.getString("geburtsdatum"));
+					n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 					n.setGeschlecht(rs.getString("geschlecht"));
 
 					// Hinzufügen des neuen Objekts zum Ergebnisvektor.
@@ -563,7 +563,7 @@ public class NutzerprofilMapper {
 					nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
 					nutzerprofil.setVorname(rs.getString("vorname"));
 					nutzerprofil.setNachname(rs.getString("nachname"));
-					nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
+					nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 					nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
 					nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
 					nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));

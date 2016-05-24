@@ -141,10 +141,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									
 		// Aufruf des Suchprofils, welches zum Vergleich gentzt wird						
 								
-		Nutzerprofil nutzerprofil = new Nutzerprofil();
+		//Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 		ClientsideSettings.getPartnerboerseAdministration()
-				.getAllNutzerprofile(nutzerprofil,
+				.getAllNutzerprofile(
 						new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
@@ -156,7 +156,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 							public void onSuccess(List<Nutzerprofil> result) {
 								
 														//Variable festlegen die zur Speicherung der
-														//Übereinstimmungen genutzt wird
+														//ï¿½bereinstimmungen genutzt wird
 								
 															int uebreinstimmung = 0;
 															
@@ -242,7 +242,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															
 													
 														// die FlexTable wird mit den Werten der Nutzerprofile und der 
-														//Uebereinstimmungen in prozent gefüllt
+														//Uebereinstimmungen in prozent gefï¿½llt
 															
 															final String nutzerprofilId = String.valueOf(m.getProfilId());
 															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
@@ -253,7 +253,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
 															
 														
-														// die Variable muss für den nächsten Durchlauf auf null gesetzt werden	
+														// die Variable muss fï¿½r den nï¿½chsten Durchlauf auf null gesetzt werden	
 															uebreinstimmung = 0;
 															
 															// Anzeigen-Button hinzufÃ¼gen und ausbauen. 

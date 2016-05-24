@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -26,7 +27,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * Nutzerprofil anlegen.
 	 */
 	void createNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 	
@@ -34,7 +35,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * Nutzerprofil aktualisieren.
 	 */
 	void saveNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
 			String raucher, String religion, AsyncCallback<Void> callback);
 	
 	/**
@@ -57,22 +58,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Alle Nutzerprofile auslesen.
 	 */
-	void getAllNutzerprofile(Nutzerprofil nutzerprofil, AsyncCallback<List<Nutzerprofil>> callback );
-
-	/**
-	 * ***********************************
-	 * Unnötig, da gleicher Mapper-Aufruf!
-	 * ***********************************
-	 */
-	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
-	
-	/**
-	 * **********************************
-	 * Brauchen wir das???
-	 * **********************************
-	 */
-	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
-			AsyncCallback<List<Nutzerprofil>> callback);
+	void getAllNutzerprofile(AsyncCallback<List<Nutzerprofil>> callback );
 	
 	/*
 	 * ***************************************************************************

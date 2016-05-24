@@ -83,7 +83,7 @@ public class ShowMerkliste extends VerticalPanel {
 					merklisteFlexTable.setText(row, 0, fremdprofilId); 
 					merklisteFlexTable.setText(row, 1, n.getVorname()); 
 					merklisteFlexTable.setText(row, 2, n.getNachname());
-					merklisteFlexTable.setText(row, 3, n.getGeburtsdatum());
+					merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
 					merklisteFlexTable.setText(row, 4, n.getGeschlecht());  
 					
 					// Löschen-Button hinzufügen und ausbauen. 
