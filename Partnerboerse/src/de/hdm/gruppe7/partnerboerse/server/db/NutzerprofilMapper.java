@@ -119,6 +119,13 @@ public class NutzerprofilMapper {
 					.executeQuery("SELECT nutzerprofil_id AS np_id "
 							+ "FROM t_nutzerprofil WHERE t_nutzerprofil.nutzerprofil_id="
 							+ profilId);
+//							+ "SELECT t_suchprofil.nutzerprofil_id, "
+//							+ "t_suchprofil.suchprofil_id,"
+//							+ "t_nutzerprofil, t_profil "
+//							+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId 
+//							+ " AND t_nutzerprofil.nutzerprofil_id="
+//							+ profilId);
+							
 
 			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
 			if (rs.next()) {
@@ -135,8 +142,43 @@ public class NutzerprofilMapper {
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id="
 						+ nutzerprofilIdInt);
+				
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_beschreibungsinfo "
+						+ "WHERE t_beschreibungsinfo.nutzerprofil_id="
+						+ profilId);
 
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_auswahlinfo "
+						+ "WHERE t_auswahlinfo.nutzerprofil_id="
+						+ profilId);
+				
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_besucht "
+						+ "WHERE t_besucht.nutzerprofil_id=" + profilId);
+				
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_vermerk "
+						+ "WHERE t_vermerk.nutzerprofil_id=" + profilId);
+				
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_sperrung "
+						+ "WHERE t_sperrung.nutzerprofil_id=" + profilId);
+				
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + profilId);
+				
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_suchprofil "
+						+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+				
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_suchprofil WHERE t_suchprofil.suchprofil_id="
+						+ profilId);
+				
 			}
+			
+			
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
