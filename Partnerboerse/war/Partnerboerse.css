@@ -21,7 +21,7 @@ div#Navigator {
 	border: 3px solid silver;
 	padding: 3em 4em;
 	width: 200px; 
-	height: 370px;
+	height: 500px;
 	
 	background: #ffffff;
 }
@@ -57,6 +57,10 @@ div#Trailer {
 	font-weight: bold;
 	width: 15em;
 	margin-bottom: 1em;
+}
+
+.partnerboerse-loeschenbutton {
+	background-color: #ff8080;
 }
 
 .navigatorbutton {

@@ -2,7 +2,6 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -42,7 +41,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	
 	private Label informationLabel = new Label();
 
-	private Button editNutzerprofilButton = new Button("Änderungen speichern");
+	private Button editNutzerprofilButton = new Button("Speichern");
 	
 	public EditNutzerprofil(int nutzerprofilId) {
 		this.add(verPanel);
@@ -70,7 +69,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
 		
 		// Geschlecht
-		
+		geschlechtListBox.addItem("");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editNutzerprofilFlexTable.setWidget(3, 2, geschlechtListBox);
@@ -97,6 +96,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
 		
 		// Haarfarbe
+		haarfarbeListBox.addItem("");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -106,11 +106,13 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(6, 2, haarfarbeListBox);
 		
 		// Raucher
+		raucherListBox.addItem("");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editNutzerprofilFlexTable.setWidget(7, 2, raucherListBox);
 		
 		// Religion
+		religionListBox.addItem("");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -137,8 +139,8 @@ public class EditNutzerprofil extends VerticalPanel {
 								geschlechtListBox.setItemText(0, result.getGeschlecht());
 								
 								for(int i = 0; i < geschlechtListBox.getItemCount(); i++) {
-									if (result.getGeschlecht().equals(geschlechtListBox.getValue(i))) { 
-										geschlechtListBox.setSelectedIndex(i);
+									if (result.getGeschlecht() == geschlechtListBox.getValue(i)) { 
+										geschlechtListBox.removeItem(i);
 									}
 								}
 								
@@ -149,24 +151,24 @@ public class EditNutzerprofil extends VerticalPanel {
 								haarfarbeListBox.setItemText(0, result.getHaarfarbe());
 								
 								for(int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
-									if (result.getHaarfarbe().equals(haarfarbeListBox.getValue(i))) { 
-										haarfarbeListBox.setSelectedIndex(i);
+									if (result.getHaarfarbe() == haarfarbeListBox.getValue(i)) { 
+										haarfarbeListBox.removeItem(i);
 									}
 								}
 
 								religionListBox.setItemText(0, result.getReligion());
 								
 								for(int i = 0; i < religionListBox.getItemCount(); i++) {
-									if (result.getReligion().equals(religionListBox.getValue(i))) { 
-										religionListBox.setSelectedIndex(i);
+									if (result.getReligion() == religionListBox.getValue(i)) { 
+										religionListBox.removeItem(i);
 									}
 								}
 
 								raucherListBox.setItemText(0, result.getRaucher());
 
 								for(int i = 0; i < raucherListBox.getItemCount(); i++) {
-									if (result.getRaucher().equals(raucherListBox.getValue(i))) { 
-										raucherListBox.setSelectedIndex(i);
+									if (result.getRaucher() == raucherListBox.getValue(i)) { 
+										raucherListBox.removeItem(i);
 									}
 								}
 							}
@@ -178,37 +180,37 @@ public class EditNutzerprofil extends VerticalPanel {
 		verPanel.add(editNutzerprofilButton);
 		verPanel.add(informationLabel); 
 		
-		// ClickHandler für den editNutzerprofilButton hinzufügen.
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
+
+			@Override
 			public void onClick(ClickEvent event) {
+				
+				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil
+				(vornameTextBox.getText(), nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), 
+						getGeburtsdatum(), Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(), 
+						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(), new AsyncCallback<Void> () {
 
-				ClientsideSettings.getPartnerboerseAdministration()
-						.saveNutzerprofil(vornameTextBox.getText(),
-								nachnameTextBox.getText(),
-								geschlechtListBox.getSelectedItemText(),
-								getGeburtsdatum(),
-								Integer.parseInt(koerpergroesseTextBox.getText()),
-								haarfarbeListBox.getSelectedItemText(),
-								raucherListBox.getSelectedItemText(),
-								religionListBox.getSelectedItemText(),
-								new AsyncCallback<Void>() {
-									@Override
-									public void onFailure(Throwable caught) {
-										informationLabel.setText("Es trat ein Fehler auf");
-									}
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Es trat ein Fehler auf");
+								
+							}
 
-									@Override
-									public void onSuccess(Void result) {
-										ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-										RootPanel.get("Details").clear();
-										RootPanel.get("Details").add(
-												showEigenesNp);
-
-									}
-								});
-
+							@Override
+							public void onSuccess(Void result) {
+								ShowEigenesNp showEigenesNp = new ShowEigenesNp(); 
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showEigenesNp); 
+								
+							}
+					
+				});
+				
 			}
-		});
+			
+		}); 
+		
+
 	}
 	
 	Date getGeburtsdatum(){

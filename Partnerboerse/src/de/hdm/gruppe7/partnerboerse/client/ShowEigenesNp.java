@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -187,8 +188,32 @@ public class ShowEigenesNp extends VerticalPanel {
 								loeschenButton
 										.addClickHandler(new ClickHandler() {
 											public void onClick(ClickEvent event) {
+												
+												final DialogBox loeschenDialogBox = new DialogBox();
+												
+												loeschenDialogBox.setText("Information");
+												loeschenDialogBox.setAnimationEnabled(true);
+												// Schließen-Button hinzufügen. 
+												final Button jaButton = new Button("Ja");
+												final Button neinButton = new Button("Nein");
+												// VerticalPanel hinzufügen. 
+												final VerticalPanel loeschenVerPanel = new VerticalPanel(); 
+												// Label hinzufügen. 
+												final Label loeschenLabel = new Label("Möchten Sie Ihr Nutzerprofil wirklich löschen?");
+												// Widgets zum VerticalPanel hinzufügen. 
+												loeschenVerPanel.add(loeschenLabel);
+												loeschenVerPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+												loeschenVerPanel.add(jaButton);
+												loeschenVerPanel.add(neinButton);
+												loeschenDialogBox.setWidget(loeschenVerPanel);
+												loeschenDialogBox.center();
+												
+												// ClickHandler für den Ja-Button hinzufügen. 
+												jaButton.addClickHandler(new ClickHandler(){
 
-												ClientsideSettings
+													@Override
+													public void onClick(ClickEvent event) {
+														ClientsideSettings
 														.getPartnerboerseAdministration()
 														.deleteNutzerprofil(
 																Benutzer.getProfilId(),
@@ -198,17 +223,31 @@ public class ShowEigenesNp extends VerticalPanel {
 																	public void onFailure(
 																			Throwable caught) {
 																		infoLabel
-																				.setText("Es trat ein Fehler auf");
+																				.setText("Es trat ein Fehler auf.");
 																	}
 
 																	@Override
 																	public void onSuccess(
 																			Void result) {
 																		infoLabel
-																				.setText("Ihr Profil wurde erfolgreich gelöscht");
+																		.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
 																	}
 
 																});
+													}
+													
+												});
+												
+												// ClickHandler für den Nein-Button hinzufügen. 
+												neinButton.addClickHandler(new ClickHandler(){
+
+													@Override
+													public void onClick(ClickEvent event) {
+														loeschenDialogBox.hide();
+														
+													}
+													
+												});
 
 											}
 										});
