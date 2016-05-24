@@ -137,7 +137,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 									@Override
 									public void onSuccess(Nutzerprofil result) {
 										informationLabel
-												.setText("Das Nutzerprofil wurde erfolgreich angelegt.");
+												.setText("Ihr Nutzerprofil wurde erfolgreich angelegt.");
 									}
 
 								});

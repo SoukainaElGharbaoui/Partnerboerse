@@ -13,7 +13,6 @@ public class NutzerprofilMapper {
 
 	private static NutzerprofilMapper nutzerprofilMapper = null;
 
-	// Konstruktor
 	protected NutzerprofilMapper() {
 	}
 
@@ -21,241 +20,44 @@ public class NutzerprofilMapper {
 		if (nutzerprofilMapper == null) {
 			nutzerprofilMapper = new NutzerprofilMapper();
 		}
-
 		return nutzerprofilMapper;
 	}
-
-	/**
-	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId.
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Nutzerprofil
+	 * ***************************************************************************
 	 */
-	public Nutzerprofil findByNutzerprofilId(int profilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-
-			"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE profil_id= "
-					+ profilId + " AND nutzerprofil_id=" + profilId);
-
-			/*
-			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));
-				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
-				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
-				nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
-				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				nutzerprofil.setRaucher(rs.getString("raucher"));
-				nutzerprofil.setReligion(rs.getString("religion"));
-				return nutzerprofil;
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
-	}
 	
 	/**
-	 * Auslesen des Fremdprofils
-	 * 
-	 * @param profilId
-	 * @return
+	 * Nutzerprofil-Objekt in die Datenbank einfügen.
 	 */
-
-	public Nutzerprofil findByFremdprofilId(int fremdprofilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-
-			"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE nutzerprofil_id="
-					+ fremdprofilId + " AND profil_id=" + fremdprofilId);
-
-			/*
-			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));
-				return nutzerprofil;
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
-	}
-
-	/**
-	 * Auslesen aller Nutzerprofile.
-	 */
-	public Vector<Nutzerprofil> findAllNutzerprofile() {
-		Connection con = DBConnection.connection();
-
-		// Ergebnisliste vorbereiten
-		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-
-					.executeQuery("SELECT * FROM t_profil,"
-							+ "t_nutzerprofil WHERE t_profil.profil_id = "
-							+ "t_nutzerprofil.nutzerprofil_id ORDER BY nutzerprofil_id");
-			
-
-
-
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
-			while (rs.next()) {
-				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));
-				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
-				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
-				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
-				nutzerprofil.setRaucher(rs.getString("raucher"));
-				nutzerprofil.setReligion(rs.getString("religion"));
-
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(nutzerprofil);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-
-	}
-	
-	/**
-	 * Auslesen aller unangesehenen Nutzerprofile.
-	 */
-	public List<Nutzerprofil> findUnangeseheneNutzerprofile(int profilId) {
-		Connection con = DBConnection.connection();
-
-		// Ergebnisliste vorbereiten
-		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery(							
-							"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, "
-							+ "t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe, t_profil.raucher, t_profil.religion "
-							+ "FROM t_nutzerprofil LEFT JOIN t_besuch ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
-							+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
-							+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
-							+ "WHERE t_nutzerprofil.nutzerprofil_id !=" + profilId
-							+ " AND (t_besuch.nutzerprofil_id !=" + profilId
-							+ " OR t_besuch.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung.fremdprofil_id !=" + profilId
-							+ " OR t_sperrung.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil.nutzerprofil_id");
-
-
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
-			while (rs.next()) {
-				Nutzerprofil nutzerprofil = new Nutzerprofil();
-				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
-				nutzerprofil.setVorname(rs.getString("vorname"));
-				nutzerprofil.setNachname(rs.getString("nachname"));
-				nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
-				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
-				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
-				nutzerprofil.setRaucher(rs.getString("raucher"));
-				nutzerprofil.setReligion(rs.getString("religion"));
-
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(nutzerprofil);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
-
-	
-	/**
-	 * Einfügen eines <code>Nutzerprofil</code>-Objekts in die Datenbank.
-	 */
-	public Nutzerprofil insertNutzerprofil(Nutzerprofil nutzerprofil) {
+	public Nutzerprofil insertNutzerprofil(Nutzerprofil n) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			// Größte profil_id ermitteln.
-			ResultSet rs = stmt
-					.executeQuery("SELECT MAX(profil_id) AS maxprofil_id "
-							+ "FROM t_profil");
+			// Größte profil_id aus Tabelle t_profil ermitteln.
+			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id FROM t_profil");
 
-			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
+			// Wenn wir etwas zurückerhalten...
 			if (rs.next()) {
 
-				// nutzerprofil erhaelt den bisher maximalen, nun um 1
-				// inkrementierten Primärschlüssel.
-				nutzerprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
+				// Nutzerprofil-Objekt mit bisher maximalem, nun um 1 inkrementierten Primärschlüssel versehen. 
+				n.setProfilId(rs.getInt("maxprofil_id") + 1);
 
-				// Tabelle t_profil befüllen - funktioniert.
+				// Tabelle t_profil befüllen.
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
-						+ "VALUES("
-						+ nutzerprofil.getProfilId()
-						+ ",'"
-						+ nutzerprofil.getGeschlecht()
-						+ "','"
-						+ nutzerprofil.getHaarfarbe()
-						+ "','"
-						+ nutzerprofil.getKoerpergroesseInt()
-						+ "','"
-						+ nutzerprofil.getRaucher()
-						+ "','"
-						+ nutzerprofil.getReligion() + "')");
+						+ "VALUES(" + n.getProfilId() + ",'" + n.getGeschlecht() + "','" + n.getHaarfarbe() + "','"
+						+ n.getKoerpergroesseInt() + "','" + n.getRaucher() + "','" + n.getReligion() + "')");
 
-				// Tablle t_nutzerprofil befüllen - funktioniert.
+				// Tablle t_nutzerprofil befüllen.
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
-						+ "VALUES("
-						+ nutzerprofil.getProfilId()
-						+ ",'"
-						+ nutzerprofil.getVorname()
-						+ "','"
-						+ nutzerprofil.getNachname()
-						+ "','"
-						+ nutzerprofil.getGeburtsdatum() + "')");
+						+ "VALUES(" + n.getProfilId() + ",'" + n.getVorname() + "','" + n.getNachname() + "','"
+						+ n.getGeburtsdatum() + "')");
 			}
 
 		} catch (SQLException e2) {
@@ -263,18 +65,15 @@ public class NutzerprofilMapper {
 		}
 
 		/*
-		 * Rückgabe des Nutzerprofils mit evtl. korrigierter ProfilId.
+		 * Nutzerprofil-Objekt zurückgeben. 
 		 */
-		return nutzerprofil;
+		return n;
 	}
 
 	/**
-	 * Wiederholtes Schreiben eines <code>Nutzerprofil</code>-Objekts in die
-	 * Datenbank.
+	 * Nutzerprofil-Objekt wiederholt in die Datenbank schreiben.
 	 */
-	public void updateNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt, 
-			String haarfarbe, String raucher, String religion) {
+	public void updateNutzerprofil(Nutzerprofil n) {
 
 		Connection con = DBConnection.connection();
 
@@ -282,17 +81,17 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 			
 			stmt.executeUpdate("UPDATE t_nutzerprofil " + "SET vorname=\""
-					+ vorname + "\", " + " nachname=\"" + nachname + "\", "
-					+ " geburtsdatum=\"" + geburtsdatum + "\" "
+					+ n.getVorname() + "\", " + " nachname=\"" + n.getNachname() + "\", "
+					+ " geburtsdatum=\"" + n.getGeburtsdatum() + "\" "
 					+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId());
 
 			stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE t_profil " + "SET geschlecht=\""
-					+ geschlecht + "\", " + " haarfarbe=\"" + haarfarbe
-					+ "\", " + " koerpergroesse=\"" + koerpergroesseInt + "\", "
-					+ "raucher=\"" + raucher + "\", " + " religion=\""
-					+ religion + "\" " + "WHERE profil_id="
+					+ n.getGeschlecht() + "\", " + " haarfarbe=\"" + n.getHaarfarbe()
+					+ "\", " + " koerpergroesse=\"" + n.getKoerpergroesseInt() + "\", "
+					+ "raucher=\"" + n.getRaucher() + "\", " + " religion=\""
+					+ n.getReligion() + "\" " + "WHERE profil_id="
 					+ Benutzer.getProfilId());
 
 		} catch (SQLException e2) {
@@ -302,8 +101,7 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Loeschen der Daten eines <code>Nutzerprofil</code>-Objekts aus der
-	 * Datenbank.
+	 * Nutzerprofil-Objekt aus der Datenbank löschen.
 	 */
 	public void deleteNutzerprofil(int profilId) {
 		Connection con = DBConnection.connection();
@@ -344,62 +142,141 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
-		
-		/**
-		 * Besuch hinzufuegen. 
-		 */
-		public void insertBesuch(int profilId, int fremdprofilId) { 
-			Connection con = DBConnection.connection();
-			
-			try {
-				Statement stmt = con.createStatement();
-
-				stmt.executeUpdate("INSERT INTO t_besuch (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
-				+ profilId + "," + fremdprofilId + ")");
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}	
-		}
 	
-		
-		/**
-		 * Besuchstatus ermitteln. 
-		 */
-		public int pruefeBesuch(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-			
-			// Ergebnisvariable (Ausgang: Es liegt kein Besuch vor.)
-			int besuchstatus = 0; 
-			
-			try {
-				Statement stmt = con.createStatement();
-				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM t_besuch "
-						+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
-				
-				if (rs.next()) {
-			        // Es liegt ein Besuch vor.  
-					besuchstatus = 1; 
-			      } else {
-			    	  // Es liegt kein Besuch vor. 
-			    	  besuchstatus = 0; 
-			      }
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
+	/**
+	 * Nutzerprofil mit vorgegebener Profil-ID suchen. 
+	 */
+	public Nutzerprofil findByNutzerprofilId(int profilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil, t_profil " 
+			+ "WHERE profil_id= " + profilId + " AND nutzerprofil_id=" + profilId);
+
+			/*
+			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden.
+			 * Prüfen, ob ein Ergebnis-Tupel vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Nutzerprofil-Objekt umwandeln.
+				Nutzerprofil n = new Nutzerprofil();
+				n.setProfilId(rs.getInt("nutzerprofil_id"));
+				n.setVorname(rs.getString("vorname"));
+				n.setNachname(rs.getString("nachname"));
+				n.setGeburtsdatum(rs.getString("geburtsdatum"));
+				n.setGeschlecht(rs.getString("geschlecht"));
+				n.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				n.setHaarfarbe(rs.getString("haarfarbe"));
+				n.setRaucher(rs.getString("raucher"));
+				n.setReligion(rs.getString("religion"));
+				return n;
+
 			}
-			return besuchstatus; 
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
 		}
+		return null;
+	}
+
+	/**
+	 * ***********************************
+	 * Unnötig, da gleicher Mapper-Aufruf!
+	 * ***********************************
+	 */
+	public Nutzerprofil findByFremdprofilId(int fremdprofilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+
+			"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE nutzerprofil_id="
+					+ fremdprofilId + " AND profil_id=" + fremdprofilId);
+
+			/*
+			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
+			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Nutzerprofil nutzerprofil = new Nutzerprofil();
+				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+				nutzerprofil.setVorname(rs.getString("vorname"));
+				nutzerprofil.setNachname(rs.getString("nachname"));
+				return nutzerprofil;
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * Alle Nutzerprofile auslesen.
+	 */
+	public Vector<Nutzerprofil> findAllNutzerprofile() {
+		Connection con = DBConnection.connection();
+
+		// Ergebnisvektor vorbereiten.
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil, t_nutzerprofil "
+							+ "WHERE t_profil.profil_id = t_nutzerprofil.nutzerprofil_id "
+							+ "ORDER BY nutzerprofil_id");
+
+			// Für jedes Ergebnis-Tupel ein Nutzerprofil-Objekt erstellen.
+			while (rs.next()) {
+				Nutzerprofil n = new Nutzerprofil();
+				n.setProfilId(rs.getInt("nutzerprofil_id"));
+				n.setVorname(rs.getString("vorname"));
+				n.setNachname(rs.getString("nachname"));
+				n.setGeburtsdatum(rs.getString("geburtsdatum"));
+				n.setGeschlecht(rs.getString("geschlecht"));
+				n.setHaarfarbe(rs.getString("haarfarbe"));
+				n.setKoerpergroesse(rs.getString("koerpergroesse"));
+				n.setRaucher(rs.getString("raucher"));
+				n.setReligion(rs.getString("religion"));
+
+				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+				result.add(n);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		// Ergebnisliste zurÃ¼ckgeben
+		return result;
+
+	}
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Nutzerprofil
+	 * ***************************************************************************
+	 */
 		
-		/**
-		 * ABSCHNITT MERKLISTE: BEGINN 
-		 */
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Merkliste
+	 * ***************************************************************************
+	 */
 		
-		/**
-		 * Alle Vermerke eines Nutzerprofils auslesen.
-		 */
-		public Vector<Nutzerprofil> findGemerkteNutzerprofileFor(int profilId) {
+	 /**
+	  * Alle Vermerke eines Nutzerprofils auslesen.
+	  */
+	 public Vector<Nutzerprofil> findGemerkteNutzerprofileFor(int profilId) {
 			Connection con = DBConnection.connection();
 			
 			Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
@@ -433,7 +310,6 @@ public class NutzerprofilMapper {
 			return result;
 		}
 		
-
 		/**
 		 * Vermerkstatus ermitteln. 
 		 */
@@ -498,12 +374,16 @@ public class NutzerprofilMapper {
 
 		}
 		
-		/**
-		 * ABSCHNITT MERKLISTE: ENDE 
+		/*
+		 * ***************************************************************************
+		 * ABSCHNITT, Ende: Merkliste
+		 * ***************************************************************************
 		 */
 		
-		/**
-		 * ABSCHNITT SPERRLISTE: BEGINN
+		/*
+		 * ***************************************************************************
+		 * ABSCHNITT, Beginn: Sperrliste
+		 * ***************************************************************************
 		 */
 		
 		/**
@@ -638,9 +518,123 @@ public class NutzerprofilMapper {
 
 		}
 		
-		/**
-		 * ABSCHNITT SPERRLISTE: ENDE
+		/*
+		 * ***************************************************************************
+		 * ABSCHNITT, Ende: Sperrliste
+		 * ***************************************************************************
 		 */
+		
+		/*
+		 * ***************************************************************************
+		 * ABSCHNITT, Beginn: Partnervorschläge
+		 * ***************************************************************************
+		 */
+
+		/**
+		 * Alle unangesehenen Nutzerprofile auslesen.
+		 */
+		public List<Nutzerprofil> findUnangeseheneNutzerprofile(int profilId) {
+			Connection con = DBConnection.connection();
+
+			// Ergebnisliste vorbereiten
+			List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+
+			try {
+				Statement stmt = con.createStatement();
+
+				ResultSet rs = stmt
+						.executeQuery(							
+								"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, "
+								+ "t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe, t_profil.raucher, t_profil.religion "
+								+ "FROM t_nutzerprofil LEFT JOIN t_besuch ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
+								+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
+								+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
+								+ "WHERE t_nutzerprofil.nutzerprofil_id !=" + profilId
+								+ " AND (t_besuch.nutzerprofil_id !=" + profilId
+								+ " OR t_besuch.fremdprofil_id IS NULL) "
+								+ "AND (t_sperrung.fremdprofil_id !=" + profilId
+								+ " OR t_sperrung.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil.nutzerprofil_id");
+
+
+				// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+				// Nutzerprofil-Objekt erstellt.
+				while (rs.next()) {
+					Nutzerprofil nutzerprofil = new Nutzerprofil();
+					nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+					nutzerprofil.setVorname(rs.getString("vorname"));
+					nutzerprofil.setNachname(rs.getString("nachname"));
+					nutzerprofil.setGeburtsdatum(rs.getString("geburtsdatum"));
+					nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+					nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+					nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
+					nutzerprofil.setRaucher(rs.getString("raucher"));
+					nutzerprofil.setReligion(rs.getString("religion"));
+
+					// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+					result.add(nutzerprofil);
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+
+			// Ergebnisliste zurÃ¼ckgeben
+			return result;
+		}
+
+			/**
+			 * Besuch setzen. 
+			 */
+			public void insertBesuch(int profilId, int fremdprofilId) { 
+				Connection con = DBConnection.connection();
+				
+				try {
+					Statement stmt = con.createStatement();
+
+					stmt.executeUpdate("INSERT INTO t_besuch (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
+					+ profilId + "," + fremdprofilId + ")");
+
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}	
+			}
+		
+			
+			/**
+			 * *******************
+			 * Brauchen wir das???
+			 * *******************
+			 */
+			public int pruefeBesuch(int profilId, int fremdprofilId) {
+				Connection con = DBConnection.connection();
+				
+				// Ergebnisvariable (Ausgang: Es liegt kein Besuch vor.)
+				int besuchstatus = 0; 
+				
+				try {
+					Statement stmt = con.createStatement();
+					
+					ResultSet rs = stmt.executeQuery("SELECT * FROM t_besuch "
+							+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
+					
+					if (rs.next()) {
+				        // Es liegt ein Besuch vor.  
+						besuchstatus = 1; 
+				      } else {
+				    	  // Es liegt kein Besuch vor. 
+				    	  besuchstatus = 0; 
+				      }
+					
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				return besuchstatus; 
+			}
+			
+			/*
+			 * ***************************************************************************
+			 * ABSCHNITT, Ende: Partnervorschläge
+			 * ***************************************************************************
+			 */
 		
 		
 }

@@ -13,9 +13,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class SuchprofilMapper {
 	private static SuchprofilMapper suchprofilMapper = null;
 	
-	/**
-	 * Konstruktor 
-	 */
 	protected SuchprofilMapper() {
 	}
 	
@@ -26,7 +23,183 @@ public class SuchprofilMapper {
 
 		return suchprofilMapper;
 	}
+	
+	/**
+	 * Suchprofil-Objekt in die Datenbank einfügen.
+	 */
+	public Suchprofil insertSuchprofil(Suchprofil s) {
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			// Größte profil_id aus der Tabelle t_profil ermitteln.
+			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
 
+			// Wenn wir etwas zurueckerhalten...
+			if (rs.next()) {	
+				
+				// Suchprofil-Objekt mit bisher maximalem, nun um 1 inkrementierten Primärschlüssel versehen. 
+				s.setProfilId(rs.getInt("maxprofil_id") + 1);
+				
+				// Tabelle t_profil befüllen:
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
+								+ "VALUES(" + s.getProfilId() + ",'" + s.getGeschlecht() + "','"
+								+ s.getHaarfarbe() + "','" + s.getKoerpergroesseInt() + "','"
+								+ s.getRaucher() + "','" + s.getReligion() + "')");
+				
+				// Tablle t_suchprofil befüllen: 
+				stmt = con.createStatement();
+				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
+						+ "VALUES(" + s.getProfilId() + "," + Benutzer.getProfilId() + ",'" + s.getAlterMinInt() + "','"
+						+ s.getAlterMaxInt()+ "')");	
+			}
+			
+		}
+		 catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		/*
+		 * Suchprofil-Objekt zurückgeben.
+		 */
+		return s;	
+		}
+	
+	/**
+	 * Suchprofil-Objekt wiederholt in die Datenbank schreiben. 
+	 */
+	public void updateSuchprofil(Suchprofil s) { 
+		Connection con = DBConnection.connection();
+		
+		int suchprofilIdInt = 0; 
+
+		try {
+			Statement stmt = con.createStatement(); 
+			
+			// Zu löschende suchprofil_id aus der Tabelle t_suchprofil holen.
+			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
+					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
+			
+			// Wenn wir etwas zurückerhalten...
+			if(rs.next()) {
+				suchprofilIdInt = rs.getInt("sp_id"); 
+
+			stmt = con.createStatement();
+			stmt.executeUpdate(
+					"UPDATE t_suchprofil " 
+							+ "SET alter_von=\"" + s.getAlterMinInt() + "\", " 
+							+ "alter_bis=\"" + s.getAlterMaxInt() + "\" "
+							+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId()); 
+			
+			stmt = con.createStatement();
+			stmt.executeUpdate(
+					"UPDATE t_profil " 
+							+ "SET geschlecht=\"" + s.getGeschlecht() + "\", " 
+							+ "koerpergroesse=\"" + s.getKoerpergroesseInt() + "\", " 
+							+ "haarfarbe=\"" + s.getHaarfarbe() + "\", " 
+							+ "raucher=\"" + s.getRaucher() + "\", "
+							+ "religion=\"" + s.getReligion() + "\" "
+							+ "WHERE profil_id=" + suchprofilIdInt);
+
+			}
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Suchprofil-Objekt aus der Datenbank löschen.
+	 */
+	public void deleteSuchprofil(int profilId) {
+		Connection con = DBConnection.connection();
+		
+		int suchprofilIdInt = 0;
+
+		try {
+							
+			Statement stmt = con.createStatement();
+			
+			// Zu löschende suchprofil_id aus der Tabelle t_suchprofil holen.
+			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
+					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+			
+			
+			// Wenn wir etwas zurückerhalten...
+			if(rs.next()) {
+				suchprofilIdInt = rs.getInt("sp_id");
+			
+			// Daten aus der Tabelle t_suchprofil mit der entsprechenden profil_id löschen.
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_suchprofil "
+					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+			
+			// Daten aus der Tabelle t_profil mit der entsprechenden suchprofil_id löschen.
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
+								
+			}
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Suchprofil mit vorgegebener Profil-ID suchen.
+	 */
+	public Suchprofil findBySuchprofilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery(
+			
+			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
+			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
+			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
+			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
+			
+					
+			/*
+			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
+			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Suchprofil s = new Suchprofil();
+				
+				s.setProfilId(rs.getInt("suchprofil_id"));
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));	
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
+				
+				return s;
+					
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * ************************
+	 * Brauchen wir das???
+	 * ************************
+	 */
 //	/**
 //	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId. 
 //	 */
@@ -63,7 +236,7 @@ public class SuchprofilMapper {
 //	}
 
 	/**
-	 * Ausgeben aller Suchprofile.
+	 * Alle Suchprofile auslesen.
 	 */
 	public List<Suchprofil> findAllSuchprofile() {
 		Connection con = DBConnection.connection();
@@ -80,18 +253,18 @@ public class SuchprofilMapper {
 			// Fuer jeden Eintrag im Suchergebnis wird nun ein
 			// Suchprofil-Objekt erstellt.
 			while (rs.next()) {
-				Suchprofil suchprofil = new Suchprofil();
-				suchprofil.setProfilId(rs.getInt("profil_id"));
-				suchprofil.setAlterMin(rs.getString("Alter minimal"));
-				suchprofil.setAlterMax(rs.getString("Alter maximal"));
-				suchprofil.setGeschlecht(rs.getString("geschlecht"));
-				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				suchprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
-				suchprofil.setRaucher(rs.getString("raucher"));
-				suchprofil.setReligion(rs.getString("religion"));
+				Suchprofil s = new Suchprofil();
+				s.setProfilId(rs.getInt("profil_id"));
+				s.setAlterMin(rs.getString("Alter minimal"));
+				s.setAlterMax(rs.getString("Alter maximal"));
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setKoerpergroesse(rs.getString("koerpergroesse"));
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
 
 				// Hinzufuegen des neuen Objekts zur Ergebnisliste
-				result.add(suchprofil);
+				result.add(s);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -99,181 +272,6 @@ public class SuchprofilMapper {
 
 		// Ergebnisliste zurueckgeben
 		return result;
-	}
-	
-	
-	/**
-	 * Einfuegen eines <code>Suchprofil</code>-Objekts in die Datenbank.
-	 */
-	public Suchprofil insertSuchprofil(Suchprofil suchprofil) {
-		Connection con = DBConnection.connection();
-		
-		try {
-			Statement stmt = con.createStatement();
-			
-			// Grueuete profil_id ermitteln. 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
-
-			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {	
-				
-				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Prim�rschl�ssel. 
-				suchprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
-				
-				// Tabelle t_profil befuellen - funktioniert! 
-				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
-								+ "VALUES(" + suchprofil.getProfilId() + ",'" + suchprofil.getGeschlecht() + "','"
-								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesseInt() + "','"
-								+ suchprofil.getRaucher() + "','" + suchprofil.getReligion() + "')");
-				
-				// Tablle t_suchprofil bef�llen - funktioniert! 
-				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
-						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMinInt() + "','"
-						+ suchprofil.getAlterMaxInt()+ "')");	
-			}
-			
-		}
-		 catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		/*
-		 * R�ckgabe des Suchprofils mit evtl. korrigierter ProfilId. 
-		 */
-		return suchprofil;	
-		}
-
-	/**
-	 * Wiederholtes Schreiben eines <code>Suchprofil</code>-Objekts in die Datenbank.
-	 */
-	public void updateSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion) { 
-		Connection con = DBConnection.connection();
-		
-		// Ergebnisvariable, d.h. die SuchprofilId
-		int suchprofilIdInt = 0; 
-
-		try {
-			Statement stmt = con.createStatement(); 
-			
-			// Holen der zu l�schenden SuchprofilId aus der Tabelle t_suchprofil
-			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
-					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
-			
-			// Wenn wir etwas zur�ckerhalten, kann dies nur einzeilig sein.
-			if(rs.next()) {
-				suchprofilIdInt = rs.getInt("sp_id"); 
-
-			stmt = con.createStatement();
-			stmt.executeUpdate(
-					"UPDATE t_suchprofil " 
-							+ "SET alter_von=\"" + alterMinInt + "\", " 
-							+ "alter_bis=\"" + alterMaxInt + "\" "
-							+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId()); 
-			
-			stmt = con.createStatement();
-			stmt.executeUpdate(
-					"UPDATE t_profil " 
-							+ "SET geschlecht=\"" + geschlecht + "\", " 
-							+ "koerpergroesse=\"" + koerpergroesseInt + "\", " 
-							+ "haarfarbe=\"" + haarfarbe + "\", " 
-							+ "raucher=\"" + raucher + "\", "
-							+ "religion=\"" + religion + "\" "
-							+ "WHERE profil_id=" + suchprofilIdInt);
-
-			}
-			
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Loeschen der Daten eines <code>Suchprofil</code>-Objekts aus der Datenbank.
-	 */
-	public void deleteSuchprofil(int profilId) {
-		Connection con = DBConnection.connection();
-		
-		// Ergebnisvariable, d.h. die SuchprofilId
-		int suchprofilIdInt = 0;
-
-		try {
-							
-			Statement stmt = con.createStatement();
-			
-			// Holen der zu l�schenden SuchprofilId aus der Tabelle t_suchprofil
-			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
-					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
-			
-			
-			// Wenn wir etwas zur�ckerhalten, kann dies nur einzeilig sein.
-			if(rs.next()) {
-				suchprofilIdInt = rs.getInt("sp_id");
-			
-			// L�schen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_suchprofil "
-					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
-			
-			// L�schen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
-								
-			}
-			
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Suchen eines Suchprofils mit vorgegebener ProfilId. 
-	 */
-	public Suchprofil findBySuchprofilId(int profilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-			
-			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
-			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
-			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
-			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
-			
-					
-			/*
-			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
-			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Suchprofil suchprofil = new Suchprofil();
-				
-				suchprofil.setProfilId(rs.getInt("suchprofil_id"));
-				suchprofil.setGeschlecht(rs.getString("geschlecht"));
-				suchprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
-				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				suchprofil.setAlterMinInt(rs.getInt("alter_von"));
-				suchprofil.setAlterMaxInt(rs.getInt("alter_bis"));	
-				suchprofil.setRaucher(rs.getString("raucher"));
-				suchprofil.setReligion(rs.getString("religion"));
-				
-				return suchprofil;
-					
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
 	}
 
 }
