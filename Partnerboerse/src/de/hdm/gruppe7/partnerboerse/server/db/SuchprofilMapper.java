@@ -148,6 +148,8 @@ public class SuchprofilMapper {
 		 */
 		return suchprofil;	
 		}
+	
+	
 
 	/**
 	 * Wiederholtes Schreiben eines <code>Suchprofil</code>-Objekts in die Datenbank.

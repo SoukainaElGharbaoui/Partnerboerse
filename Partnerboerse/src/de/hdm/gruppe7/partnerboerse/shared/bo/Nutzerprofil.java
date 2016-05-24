@@ -23,6 +23,7 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	private int aehnlichkeit;
 
 	
 	public String getVorname() {
@@ -30,6 +31,15 @@ public class Nutzerprofil extends Profil{
 	}
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
+	}
+	
+	public Integer getAehnlichkeit() {
+		return aehnlichkeit;
+	}
+	
+	public void setAehnlichkeit(int aehnlichkeit) {
+		
+		this.aehnlichkeit = aehnlichkeit;
 	}
 	public String getNachname() {
 		return nachname;

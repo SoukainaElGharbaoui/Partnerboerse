@@ -97,7 +97,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
+	public List<Nutzerprofil> getAllNutzerprofile ()
 	throws IllegalArgumentException;
 	
 	/**
@@ -299,7 +299,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
 				throws IllegalArgumentException;
 
-		
+	public int aehnlichkeitBerechnen (int suchprofilId, int nutzerprofilId) throws IllegalArgumentException;	
 		
 }
 

@@ -111,6 +111,7 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Auslesen aller Nutzerprofile.
+	 * @param nutzerprofil 
 	 */
 	public Vector<Nutzerprofil> findAllNutzerprofile() {
 		Connection con = DBConnection.connection();

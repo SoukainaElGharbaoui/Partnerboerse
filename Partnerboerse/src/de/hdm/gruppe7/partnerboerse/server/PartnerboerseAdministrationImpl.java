@@ -7,6 +7,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -14,6 +15,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -38,6 +40,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	private SperrlisteMapper sperrlisteMapper = null; 
 	
 	private InfoMapper infoMapper = null;
+	
+	public String geschlecht;
+	public String haarfarbe;
+	public String religion;
+	public String raucher;
+	public String koerpergroesse;
+	public String eigenschaftId;
 
 	/**
 	 * No-Argument-Konstruktor
@@ -133,7 +142,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * @return
 	 */
 	
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil) {
+	public List<Nutzerprofil> getAllNutzerprofile () {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
 	
@@ -390,6 +399,66 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException {
 			return this.infoMapper.findAInfoByProfilId(profilId); 
 		}
+
+
+
+
+/**
+ * Aehnlichkeitsberechnung zwischen einem Nutzerprofil und einem Suchprofil
+ */
+
+public int aehnlichkeitBerechnen (int suchprofilId, int nutzerprofilId) throws IllegalArgumentException {
+	
+	
+	Suchprofil suchprofil = this.suchprofilMapper.findBySuchprofilId(suchprofilId);
+	Nutzerprofil nutzerprofil = this.nutzerprofilMapper.findByNutzerprofilId(nutzerprofilId);
+	
+	int uebreinstimmung = 0;
+	
+	
+	//werden die Eigenschaften werden verglichen
+
+		if(suchprofil.getGeschlecht().equals(nutzerprofil.getGeschlecht())) {
+			
+			uebreinstimmung = uebreinstimmung + 1;				
+			
+		}
+		
+		if (suchprofil.getHaarfarbe()== nutzerprofil.getHaarfarbe()){
+			
+			uebreinstimmung = uebreinstimmung + 1;	
+		}
+		
+		if (suchprofil.getKoerpergroesse() == nutzerprofil.getKoerpergroesse()){
+			
+			uebreinstimmung = uebreinstimmung + 1;
+		}
+		
+		if (suchprofil.getRaucher()== nutzerprofil.getRaucher()){
+			
+			uebreinstimmung = uebreinstimmung + 1;
+			
+		}
+		
+		if (suchprofil.getReligion()== suchprofil.getReligion()){
+			
+			uebreinstimmung = uebreinstimmung + 1;
+			
+		}
+		
+		// die Anzahl der Uebereinstimmungen wird in prozent umgerechnet 
+		//und in der Variable prozent gespeichert
+		
+		int prozent = (100 / 5)* uebreinstimmung;
+		
+		
+		return prozent;
+		
+	
+	
+	
+}
+
 
 
 }
