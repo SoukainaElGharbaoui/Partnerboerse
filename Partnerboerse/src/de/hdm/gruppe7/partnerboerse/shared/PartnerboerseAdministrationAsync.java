@@ -10,7 +10,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public interface PartnerboerseAdministrationAsync {
@@ -119,7 +121,7 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	
 	// Alle Vermerke eines Nutzerprofils auslesen. 
-	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Nutzerprofil>> callback);
+	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Merkliste> callback);
 	
 	// Vermerkstatus ermitteln. 
 	void getVermerkstatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
@@ -143,7 +145,7 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	
 	// Alle Sperrungen eines Nutzerprofils auslesen. 
-	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Vector<Nutzerprofil>> callback);
+	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Sperrliste> callback);
 	
 	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
 	void getSperrstatusFremdprofil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);

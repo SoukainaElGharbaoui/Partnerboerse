@@ -7,7 +7,6 @@ import java.util.Vector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class NutzerprofilMapper {
 
@@ -106,79 +105,57 @@ public class NutzerprofilMapper {
 	public void deleteNutzerprofil(int profilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisvariable, d.h. die NutzerprofilId
-		int nutzerprofilIdInt = 0;
-
 		try {
 
 			Statement stmt = con.createStatement();
 
-			// Holen der zu löschenden NutzerprofilId aus der Tabelle
-			// t_nutzerprofil
-			ResultSet rs = stmt
-					.executeQuery("SELECT nutzerprofil_id AS np_id "
-							+ "FROM t_nutzerprofil WHERE t_nutzerprofil.nutzerprofil_id="
-							+ profilId);
-//							+ "SELECT t_suchprofil.nutzerprofil_id, "
-//							+ "t_suchprofil.suchprofil_id,"
-//							+ "t_nutzerprofil, t_profil "
-//							+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId 
-//							+ " AND t_nutzerprofil.nutzerprofil_id="
-//							+ profilId);
-							
-
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {
-				nutzerprofilIdInt = rs.getInt("np_id");
-
-				// Löschen der Daten in der Tabelle t_nutzerprofil mit der
-				// entsprechenden ProfilId
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM t_nutzerprofil "
-						+ "WHERE t_nutzerprofil.nutzerprofil_id=" + profilId);
-
-				// Löschen der Daten in der Tabelle t_profil mit der
-				// entsprechenden NutzerprofilId
-				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id="
-						+ nutzerprofilIdInt);
-				
-				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_beschreibungsinfo "
-						+ "WHERE t_beschreibungsinfo.nutzerprofil_id="
-						+ profilId);
+						+ "WHERE nutzerprofil_id=" + profilId);
 
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_auswahlinfo "
-						+ "WHERE t_auswahlinfo.nutzerprofil_id="
-						+ profilId);
+				stmt.executeUpdate("DELETE FROM t_profil WHERE profil_id=" + profilId);
 				
-				stmt =con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_besucht "
-						+ "WHERE t_besucht.nutzerprofil_id=" + profilId);
+				int suchprofilIdInt = 0; 
 				
-				stmt =con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_vermerk "
-						+ "WHERE t_vermerk.nutzerprofil_id=" + profilId);
+				ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
+						+ "FROM t_suchprofil WHERE nutzerprofil_id=" + profilId);
 				
-				stmt =con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_sperrung "
-						+ "WHERE t_sperrung.nutzerprofil_id=" + profilId);
-				
-				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + profilId);
+				if(rs.next()) {
+					suchprofilIdInt = rs.getInt("sp_id");
 				
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM t_suchprofil "
-						+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+						+ "WHERE nutzerprofil_id=" + profilId);
 				
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_suchprofil WHERE t_suchprofil.suchprofil_id="
-						+ profilId);
+				stmt.executeUpdate("DELETE FROM t_profil WHERE profil_id=" + suchprofilIdInt);					
+				}
 				
-			}
-			
-			
+				stmt = con.createStatement();
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_vermerk "
+						+ "WHERE nutzerprofil_id=" + profilId 
+						+ " OR fremdprofil_id=" + profilId);
+				
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_sperrung "
+						+ "WHERE nutzerprofil_id=" + profilId 
+						+ " OR fremdprofil_id=" + profilId);
+				
+				stmt =con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_besuch "
+						+ "WHERE nutzerprofil_id=" + profilId 
+						+ " OR fremdprofil_id=" + profilId);
+				
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_beschreibungsinfo "
+						+ "WHERE nutzerprofil_id=" + profilId);
+
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM t_auswahlinfo "
+						+ "WHERE nutzerprofil_id=" + profilId);
+
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -311,264 +288,6 @@ public class NutzerprofilMapper {
 	 * ABSCHNITT, Ende: Nutzerprofil
 	 * ***************************************************************************
 	 */
-		
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Merkliste
-	 * ***************************************************************************
-	 */
-		
-	 /**
-	  * Alle Vermerke eines Nutzerprofils auslesen.
-	  */
-	 public Vector<Nutzerprofil> findGemerkteNutzerprofileFor(int profilId) {
-			Connection con = DBConnection.connection();
-			
-			Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
-			
-			try {
-				Statement stmt = con.createStatement();
-
-				ResultSet rs = stmt.executeQuery("SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
-						+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht "
-						+ "FROM t_nutzerprofil, t_profil, t_vermerk "
-						+ "WHERE t_vermerk.nutzerprofil_id=" + profilId 
-						+ " AND t_nutzerprofil.nutzerprofil_id = t_vermerk.fremdprofil_id "
-						+ "AND t_profil.profil_id = t_vermerk.fremdprofil_id"); 
-
-				while (rs.next()) {
-					Nutzerprofil n = new Nutzerprofil();
-					n.setProfilId(rs.getInt("nutzerprofil_id")); 
-					n.setVorname(rs.getString("vorname"));
-					n.setNachname(rs.getString("nachname"));
-					n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
-					n.setGeschlecht(rs.getString("geschlecht"));
-					
-					// Hinzufügen des neuen Objekts zum Ergebnisvektor
-					result.addElement(n);
-				}
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
-			return result;
-		}
-		
-		/**
-		 * Vermerkstatus ermitteln. 
-		 */
-		public int pruefeVermerk(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-			
-			// Ergebnisvariable (Ausgang: Es liegt kein Vermerk vor.)
-			int vermerkstatus = 0; 
-			
-			try {
-				Statement stmt = con.createStatement();
-				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM t_vermerk "
-						+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
-				
-				if (rs.next()) {
-			        // Es liegt ein Vermerk vor.  
-					vermerkstatus = 1; 
-			      } else {
-			    	  // Es liegt kein Vermerk vor. 
-			    	  vermerkstatus = 0; 
-			      }
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-			return vermerkstatus; 
-		}
-		
-		/**
-		 * Vermerk einfügen. 
-		 */
-		public void insertVermerk(int profilId, int fremdprofilId) { 
-			Connection con = DBConnection.connection();
-			
-			try {
-				Statement stmt = con.createStatement();
-
-				stmt.executeUpdate("INSERT INTO t_vermerk (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
-				+ profilId + "," + fremdprofilId + ")");
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}	
-		}
-		
-		/**
-		 * Vermerk löschen.
-		 */
-		public void deleteVermerk(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-
-			try {
-				Statement stmt = con.createStatement();
-
-				stmt.executeUpdate("DELETE FROM t_vermerk WHERE nutzerprofil_id=" + profilId
-						+ " AND fremdprofil_id=" + fremdprofilId);
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
-		}
-		
-		/*
-		 * ***************************************************************************
-		 * ABSCHNITT, Ende: Merkliste
-		 * ***************************************************************************
-		 */
-		
-		/*
-		 * ***************************************************************************
-		 * ABSCHNITT, Beginn: Sperrliste
-		 * ***************************************************************************
-		 */
-		
-		/**
-		 * Alle Sperrungen eines Nutzerprofils auslesen.
-		 */
-		public Vector<Nutzerprofil> findGesperrteNutzerprofileFor(int profilId) {
-			Connection con = DBConnection.connection();
-
-			// Ergebnisliste
-			Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
-
-			try {
-				Statement stmt = con.createStatement();
-
-				ResultSet rs = stmt.executeQuery("SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
-						+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht "
-						+ "FROM t_nutzerprofil, t_profil, t_sperrung "
-						+ "WHERE t_sperrung.nutzerprofil_id=" + profilId 
-						+ " AND t_nutzerprofil.nutzerprofil_id = t_sperrung.fremdprofil_id "
-						+ "AND t_profil.profil_id = t_sperrung.fremdprofil_id"); 
-
-				while (rs.next()) {
-					Nutzerprofil n = new Nutzerprofil();
-					n.setProfilId(rs.getInt("nutzerprofil_id")); 
-					n.setVorname(rs.getString("vorname"));
-					n.setNachname(rs.getString("nachname"));
-					n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
-					n.setGeschlecht(rs.getString("geschlecht"));
-
-					// Hinzufügen des neuen Objekts zum Ergebnisvektor.
-					result.addElement(n);
-
-				}
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
-			return result;
-		}
-		
-		/**
-		 * Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
-		 */
-		public int pruefeSperrungFremdprofil(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-			
-			// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
-			int sperrstatusFremdprofil = 0; 
-			
-			try {
-				Statement stmt = con.createStatement();
-				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
-						+ "WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id=" + fremdprofilId);
-				
-				if (rs.next()) {
-			        // Es liegt eine Sperrung vor.  
-					sperrstatusFremdprofil = 1; 
-			      } else {
-			    	  // Es liegt keine Sperrung vor. 
-			    	  sperrstatusFremdprofil = 0; 
-			      }
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-			return sperrstatusFremdprofil; 
-		}
-		
-
-		/**
-		 * Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
-		 */
-		public int pruefeSperrungEigenesProfil(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-			
-			// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
-			int sperrstatusEigenesProfil = 0; 
-			
-			try {
-				Statement stmt = con.createStatement();
-				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung "
-						+ "WHERE nutzerprofil_id=" + fremdprofilId + " AND fremdprofil_id=" + profilId); 
-				
-				if (rs.next()) {
-			        // Es liegt eine Sperrung vor.  
-					sperrstatusEigenesProfil = 1; 
-			      } else {
-			    	  // Es liegt keine Sperrung vor. 
-			    	  sperrstatusEigenesProfil = 0; 
-			      }
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-			return sperrstatusEigenesProfil;  
-		}
-		
-		/**
-		 * Sperrung einfügen. 
-		 */
-		public void insertSperrung(int profilId, int fremdprofilId) { 
-			Connection con = DBConnection.connection();
-			
-			try {
-				Statement stmt = con.createStatement();
-
-				stmt.executeUpdate("INSERT INTO t_sperrung (nutzerprofil_id, fremdprofil_id) " + "VALUES (" 
-				+ profilId + "," + fremdprofilId + ")");
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}	
-		}
-		
-		/**
-		 * Sperrung löschen.
-		 */
-		public void deleteSperrung(int profilId, int fremdprofilId) {
-			Connection con = DBConnection.connection();
-
-			try {
-				Statement stmt = con.createStatement();
-
-				stmt.executeUpdate("DELETE FROM t_sperrung WHERE nutzerprofil_id=" + profilId
-						+ " AND fremdprofil_id=" + fremdprofilId);
-
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
-		}
-		
-		/*
-		 * ***************************************************************************
-		 * ABSCHNITT, Ende: Sperrliste
-		 * ***************************************************************************
-		 */
 		
 		/*
 		 * ***************************************************************************

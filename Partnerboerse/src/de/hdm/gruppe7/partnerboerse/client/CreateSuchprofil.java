@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -116,6 +117,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	 * infoLabel für die Benutzerinformation erzeugen.
 	 */
 	final Label infoLabel = new Label();
+	final Label warnungLabel = new Label(); 
 
 	final Button createSuchprofilButton = new Button(
 			"Suchprofil anlegen");
@@ -128,6 +130,11 @@ public class CreateSuchprofil extends VerticalPanel {
 
 	createSuchprofilButton.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
+			
+			if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+				warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+				verPanel.add(warnungLabel);
+			} else {
 
 			ClientsideSettings.getPartnerboerseAdministration()
 					.createSuchprofil(geschlechtListBox.getSelectedItemText(),
@@ -147,13 +154,16 @@ public class CreateSuchprofil extends VerticalPanel {
 
 								@Override
 								public void onSuccess(Suchprofil result) {
-									infoLabel
-											.setText("Das Suchprofil wurde erfolgreich angelegt");
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSuchprofil);
 								}
 
 							});
 
 		}
+		
+	}
 	});
 
 }
