@@ -156,6 +156,17 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
+	void berechneAehnlichkeitNpFor(int profilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
 
+
+	void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
+	
+	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
+	
+	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	
 }
 	
+
+

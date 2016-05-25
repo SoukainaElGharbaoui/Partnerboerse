@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class EditNutzerprofil extends VerticalPanel {
@@ -221,6 +222,20 @@ public class EditNutzerprofil extends VerticalPanel {
 
 									}
 								});
+				//DELETE Methode
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(Benutzer.getProfilId(), new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+				
+				
+					}
+					
+				});
 
 			}
 		});
