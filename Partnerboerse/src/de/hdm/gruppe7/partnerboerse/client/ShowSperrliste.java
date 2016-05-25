@@ -13,7 +13,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 public class ShowSperrliste extends VerticalPanel {
 	
@@ -65,20 +67,20 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Gesperrte Nutzerprofile anzeigen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Nutzerprofil>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Sperrliste>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");	
+				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
-			public void onSuccess(Vector<Nutzerprofil> result) {
-				// Anzahl der Zeilen ermitteln. 
+			public void onSuccess(Sperrliste result) {
+				Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile(); 
 				int row = sperrlisteFlexTable.getRowCount();
 				
-				// Tabelle mit Inhalten aus der Datenbank befüllen. 
-				for(Nutzerprofil n : result) {
+				for(Nutzerprofil n : gemerkteNutzerprofile) {
 					row++;
 					
 					final String fremdprofilId = String.valueOf(n.getProfilId());
@@ -143,14 +145,14 @@ public class ShowSperrliste extends VerticalPanel {
 					// ClickHandler für den Anzeigen-Button hinzufügen. 
 					anzeigenButton.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
-						ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
-						RootPanel.get("Details").clear(); 
-						RootPanel.get("Details").add(showFremdprofil); 
 							
+								ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showFremdprofil);
 						}
 						
-					}); 	
-					
+					});
+			
 				}
 				
 			}

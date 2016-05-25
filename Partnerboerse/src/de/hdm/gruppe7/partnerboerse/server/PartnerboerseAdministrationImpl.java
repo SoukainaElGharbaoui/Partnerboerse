@@ -9,13 +9,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
+import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
+import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 @SuppressWarnings("serial")
@@ -27,6 +31,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 **/
 	private NutzerprofilMapper nutzerprofilMapper = null;
 	private SuchprofilMapper suchprofilMapper = null;
+	private MerklisteMapper merklisteMapper = null; 
+	private SperrlisteMapper sperrlisteMapper = null; 
 	private InfoMapper infoMapper = null;
 
 	/**
@@ -42,6 +48,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public void init() throws IllegalArgumentException {
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
+		this.merklisteMapper = MerklisteMapper.merklisteMapper(); 
+		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper(); 
 		this.infoMapper = InfoMapper.infoMapper();
 	}
 	
@@ -216,23 +224,32 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	
 	// Alle Vermerke eines Nutzerprofils auslesen.
-	public Vector<Nutzerprofil> getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGemerkteNutzerprofileFor(profilId);
+	public Merkliste getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
+		
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>(); 
+		
+		result = this.merklisteMapper.findGemerkteNutzerprofileFor(profilId); 
+		
+		Merkliste gemerkteNutzerprofile = new Merkliste(); 
+		
+		gemerkteNutzerprofile.setGemerkteNutzerprofile(result); 
+		
+		return gemerkteNutzerprofile; 
 	}
 	
 	// Vermerkstatus ermitteln. 
 	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.pruefeVermerk(profilId, fremdprofilId); 
+		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
 	}
 	
 	// Vermerk einfügen. 
 	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.insertVermerk(profilId, fremdprofilId); 
+		this.merklisteMapper.insertVermerk(profilId, fremdprofilId); 
 	}
 	
 	// Vermerk löschen. 
 	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteVermerk(profilId, fremdprofilId); 
+		this.merklisteMapper.deleteVermerk(profilId, fremdprofilId); 
 	}
 	
 	/*
@@ -247,28 +264,37 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ***************************************************************************
 	 */
 	// Alle Sperrungen eines Nutzerprofils auslesen. 
-	public Vector<Nutzerprofil> getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGesperrteNutzerprofileFor(profilId);
+	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
+		
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>(); 
+		
+		result = this.sperrlisteMapper.findGesperrteNutzerprofileFor(profilId); 
+		
+		Sperrliste gesperrteNutzerprofile = new Sperrliste(); 
+		
+		gesperrteNutzerprofile.setGesperrteNutzerprofile(result); 
+		
+		return gesperrteNutzerprofile;
 	}
 	
 	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
 	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId); 
+		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId); 
 	}
 	
 	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.pruefeSperrungEigenesProfil(profilId, fremdprofilId); 
+		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profilId, fremdprofilId); 
 	}
 	
 	// Sperrung einfügen. 
 	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.insertSperrung(profilId, fremdprofilId); 
+		this.sperrlisteMapper.insertSperrung(profilId, fremdprofilId); 
 	}
 		
 	// Sperrung löschen. 
 	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteSperrung(profilId, fremdprofilId); 
+		this.sperrlisteMapper.deleteSperrung(profilId, fremdprofilId); 
 	}
 	
 	/*

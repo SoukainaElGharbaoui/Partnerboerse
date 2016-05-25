@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowMerkliste extends VerticalPanel {
@@ -62,20 +63,20 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		merklisteFlexTable.addStyleName("FlexTable");   
 		
-		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Nutzerprofil>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Merkliste>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");	
+				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
-			public void onSuccess(Vector<Nutzerprofil> result) {
-				// Anzahl der Zeilen ermitteln. 
+			public void onSuccess(Merkliste result) {
+				Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile(); 
 				int row = merklisteFlexTable.getRowCount();
 				
-				// Tabelle mit Inhalten aus der Datenbank befüllen. 
-				for(Nutzerprofil n : result) {
+				for(Nutzerprofil n : gemerkteNutzerprofile) {
 					row++;
 					
 					final String fremdprofilId = String.valueOf(n.getProfilId());
@@ -202,12 +203,8 @@ public class ShowMerkliste extends VerticalPanel {
 						}
 						
 					});
-					
-					
-					
-					
-					
-				}		
+			
+				}
 				
 			}
 			
