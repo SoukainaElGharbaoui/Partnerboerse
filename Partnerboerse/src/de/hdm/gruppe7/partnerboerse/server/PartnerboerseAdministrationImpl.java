@@ -391,6 +391,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			return this.infoMapper.findAInfoByProfilId(profilId); 
 		}
 
+		@Override
+		public boolean isUserRegistered(String userEmail) {
+			return false;
+		}
+
 
 }
 

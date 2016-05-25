@@ -301,6 +301,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
 				throws IllegalArgumentException;
 
+		boolean isUserRegistered(String userEmail);
+
 		
 		
 }

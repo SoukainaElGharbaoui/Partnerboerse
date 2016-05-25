@@ -18,10 +18,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * VerticalPanel hinzufügen.
 		 */
 		private VerticalPanel verPanel = new VerticalPanel();
+		private LoginInfo loginInfo;
 
 		/**
 		 * Konstruktor hinzufügen. 
 		 */
+	
 		public CreateNutzerprofil() {
 			this.add(verPanel);
 
@@ -154,4 +156,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(informationLabel); 
 
 	}
+
+		public CreateNutzerprofil(LoginInfo loginInfo) {
+			this.loginInfo = loginInfo;
+		}
 }

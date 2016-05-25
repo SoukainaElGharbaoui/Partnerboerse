@@ -12,6 +12,12 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 
 
 public class Navigator extends VerticalPanel {
+	
+	private LoginInfo loginInfo;
+
+	public Navigator(LoginInfo loginInfo){
+		this.loginInfo = loginInfo;
+	}
 
 	public Navigator() {
 

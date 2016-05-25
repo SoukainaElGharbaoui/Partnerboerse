@@ -2,6 +2,7 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -14,11 +15,33 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.client.gui.NutzerprofilForm;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
+import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class Partnerboerse implements EntryPoint {
+	
+	
+	private PartnerboerseAdministrationAsync partnerboerseAdministration2 = ClientsideSettings.getPartnerboerseAdministration();
+	private ReportGeneratorAsync reportGeneratorAsync =  ClientsideSettings.getReportGenerator();
+	private VerticalPanel verPanel;
+	private VerticalPanel content;
+	private Label lbl;
+	private Navigator showEigenesNpButton;
+	private Navigator merklisteAnzeigenButton;
+	private Navigator sperrlisteAnzeigenButton;
+	private Navigator showSuchprofilButton;
+	
+	private CreateNutzerprofil createNutzerprofil;
+	private Boolean test;
+	private LoginInfo loginInfo;
+	private VerticalPanel loginPanel;
+	private Label loginLabel;
+	private Anchor signInLink;
+	private Anchor signOutLink;
+
 
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface
@@ -26,14 +49,9 @@ public class Partnerboerse implements EntryPoint {
 	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
-	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT
-			.create(PartnerboerseAdministration.class);
-
-	private LoginInfo loginInfo = null;
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Please sign in to your Google Account to access the Partnerboerse application.");
-	private Anchor signInLink = new Anchor("Sign In");
-	private Anchor signOutLink = new Anchor("Sign Out");
+//	private final PartnerboerseAdministrationAsync partnerboerseAdministration = GWT
+//			.create(PartnerboerseAdministration.class);
+	
 
 	public void onModuleLoad() {
 
@@ -43,9 +61,17 @@ public class Partnerboerse implements EntryPoint {
 		 * Darstellungsort.
 		 */
 		RootPanel.get("Navigator").add(new Navigator());
+		
+		loginInfo = new LoginInfo();
+		loginPanel = new VerticalPanel();
+		loginLabel = new Label("Please sign in to your Google Account to access the Partnerboerse application.");
+		signInLink = new Anchor("Sign In");
+		signOutLink = new Anchor("Sign Out");
 
 		// Check login status using login service.
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		
+		
 		loginService.login(GWT.getHostPageBaseURL(),
 				new AsyncCallback<LoginInfo>() {
 					public void onFailure(Throwable error) {
@@ -64,28 +90,52 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	private void loadPartnerboerse() {
+		String userEmail = loginInfo.getEmailAddress();
+		isUserRegistered(userEmail);
+		
+		verPanel = new VerticalPanel(); 
+		
+		showEigenesNpButton = new Navigator(loginInfo);
+		merklisteAnzeigenButton = new Navigator(loginInfo);
+		sperrlisteAnzeigenButton = new Navigator(loginInfo);
+		showSuchprofilButton = new Navigator(loginInfo);
+		
+		
+		
 		signOutLink.setHref(loginInfo.getLogoutUrl());
 		RootPanel.get("Navigator").add(signOutLink);
+		
+		content = new VerticalPanel();
+		lbl = new Label("Willkommen auf unserer Partnerboerse");
+		lbl.setStyleName("label");
+		content.add(lbl);
+		
+		RootPanel.get("Content").add(content);
 
 	}
 	
-	private void isUserRegistered(String userMail){
+	private void isUserRegistered(String userEmail){
 		
 		AsyncCallback<Boolean> isUserRegisteredCallback = new AsyncCallback<Boolean>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+				ClientsideSettings.getLogger().severe("Fehler bei Benutzerüberprüfung");
 				
 			}
 
 			@Override
 			public void onSuccess(Boolean result) {
-				// TODO Auto-generated method stub
+				if(result == false) {
+					RootPanel.get("Details").clear();
+					createNutzerprofil = new CreateNutzerprofil(loginInfo);
+					
+					
+				}
 				
 			}
 			
-		};
+		}; partnerboerseAdministration2.isUserRegistered(userEmail, isUserRegisteredCallback);
 	}
 
 	private void loadLogin() {

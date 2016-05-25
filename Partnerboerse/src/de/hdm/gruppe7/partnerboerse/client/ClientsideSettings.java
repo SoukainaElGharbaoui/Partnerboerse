@@ -32,6 +32,12 @@ public class ClientsideSettings extends CommonSettings {
 		return partnerboerseAdministration;
 	}
 
+
+	public static de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync getReportGenerator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// /**
 	// * <p>
 	// * Anlegen und Auslesen des applikationsweit eindeutigen ReportGenerators.

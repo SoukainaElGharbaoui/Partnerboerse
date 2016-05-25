@@ -158,6 +158,9 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
+	void isUserRegistered(String userEmail,
+			AsyncCallback<Boolean> isUserRegisteredCallback);
+
 
 }
 	
