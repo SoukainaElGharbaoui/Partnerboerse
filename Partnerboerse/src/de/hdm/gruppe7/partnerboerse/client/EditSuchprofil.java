@@ -72,7 +72,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 		// Geschlecht-ListBox hinzufügen. 
 		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("");
+//		geschlechtListBox.addItem("");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
@@ -91,7 +91,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 		// Haarfarbe-ListBox hinzufügen. 
 		final ListBox haarfarbeListBox = new ListBox();
-		haarfarbeListBox.addItem("");
+//		haarfarbeListBox.addItem("");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -102,14 +102,14 @@ public class EditSuchprofil extends VerticalPanel {
 
 		// Raucher-ListBox hinzufügen. 
 		final ListBox raucherListBox = new ListBox();
-		raucherListBox.addItem("");
+//		raucherListBox.addItem("");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		// Religion-ListBox hinzufügen. 
 		final ListBox religionListBox = new ListBox();
-		religionListBox.addItem("");
+//		religionListBox.addItem("");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -135,12 +135,13 @@ public class EditSuchprofil extends VerticalPanel {
 					@Override
 					public void onSuccess(Suchprofil result) {
 						
-						// Geschlecht auslesen und einfügen. 
-						geschlechtListBox.setItemText(0, result.getGeschlecht());
+						final String suchprofilId = String.valueOf(result.getProfilId());
+						editSuchprofilFlexTable.setText(0, 1, suchprofilId);
 						
+						// Geschlecht auslesen und einfügen. 		
 						for(int i = 0; i < geschlechtListBox.getItemCount(); i++) {
-							if (result.getGeschlecht() == geschlechtListBox.getValue(i)) { 
-								geschlechtListBox.removeItem(i);
+							if (result.getGeschlecht().equals(geschlechtListBox.getValue(i))) { 
+								geschlechtListBox.setSelectedIndex(i);
 							}
 						}
 						
@@ -154,29 +155,23 @@ public class EditSuchprofil extends VerticalPanel {
 						koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 						
 						// Haarfarbe auslesen und einfügen. 
-						haarfarbeListBox.setItemText(0, result.getHaarfarbe());
-						
 						for(int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
-							if (result.getHaarfarbe() == haarfarbeListBox.getValue(i)) { 
-								haarfarbeListBox.removeItem(i);
+							if (result.getHaarfarbe().equals(haarfarbeListBox.getValue(i))) { 
+								haarfarbeListBox.setSelectedIndex(i);
 							}
 						}
 						
 						// Raucherstatus auslesen und einfügen. 
-						raucherListBox.setItemText(0, result.getRaucher());
-						
 						for(int i = 0; i < raucherListBox.getItemCount(); i++) {
-							if (result.getRaucher() == raucherListBox.getValue(i)) { 
-								raucherListBox.removeItem(i);
+							if (result.getRaucher().equals(raucherListBox.getValue(i))) { 
+								raucherListBox.setSelectedIndex(i);
 							}
 						}
 
 						// Religion auslesen und einfügen. 
-						religionListBox.setItemText(0, result.getReligion());
-						
 						for(int i = 0; i < religionListBox.getItemCount(); i++) {
-							if (result.getReligion() == religionListBox.getValue(i)) { 
-								religionListBox.removeItem(i);
+							if (result.getReligion().equals(religionListBox.getValue(i))) { 
+								religionListBox.setSelectedIndex(i);
 							}
 						}
 					}
