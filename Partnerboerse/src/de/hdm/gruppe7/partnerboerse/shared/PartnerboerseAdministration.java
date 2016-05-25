@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -10,137 +11,116 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
-/**
- * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung 
- * der Partnerboerse. 
- */
-
-/**
- * <code>@RemoteServiceRelativePath("partnerboerseadministration")</code> ist
- * bei der Adressierung des aus der zugehörigen Impl-Klasse entstehenden
- * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
- * Servlets an.
- */
 
 @RemoteServiceRelativePath("partnerboerseadministration")
 public interface PartnerboerseAdministration extends RemoteService {
 
-	/**
-	 * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von
-	 * GWT RPC zusätzlich zum No Argument Constructor der implementierenden
-	 * Klasse {@link PartnerboerseAdministrationImpl} notwendig. Diese Methode
-	 * wird direkt nach der Instantiierung aufgerufen.
-	 * 
-	 * @throws IllegalArgumentException
-	 */
 	public void init() throws IllegalArgumentException;
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Nutzerprofil
+	 * ***************************************************************************
+	 */
+	
+
+	
 
 	/**
-	 * Ein neues Nutzerprofil anlegen.
-	 * 
-	 * @param vorname
-	 *            , nachname, geburtsdatum, geschlecht, haarfarbe
-	 * @param koerpergroesse
-	 *            , raucher, religion
-	 * @return fertiges Nutzerprofil-Objekt
-	 * @throws IllegalArgumentException
+	 * Nutzerprofil anlegen.
 	 */
-
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
-	
-	
-	/**
-	 * Das existierende Nutzerprofil updaten.
-	 * 
-	 * @param vorname
-	 *            , nachname, geburtsdatum, geschlecht, haarfarbe
-	 * @param koerpergroesse
-	 *            , raucher, religion
-	 * @return fertiges Nutzerprofil-Objekt
-	 * @throws IllegalArgumentException
-	 */
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
+			throws IllegalArgumentException;
 
 	
+	/**
+	 * Nutzerprofil aktualisieren.
+	 */
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geburtsdatum, String geschlecht, String haarfarbe, String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
-
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
+			String raucher, String religion) throws IllegalArgumentException;
+	
+	/**
+	 * Nutzerprofil löschen.
+	 */
+	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
 	/**
-	 * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
-	 * 
-	 * @param profilId
-	 *            ist die ProfilId.
-	 * @return Das erste Nutzerprofil-Objekt, dass den Suchkriterien entspricht.
-	 * @throws IllegalArgumentException
+	 * Nutzerprofil anhand dessen Profil-ID auslesen. 
 	 */
-
-	public Nutzerprofil getNutzerprofilById(int profilId)
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException;
+	
+	/**
+	 * ***********************************
+	 * Unnötig, da gleicher Mapper-Aufruf!
+	 * ***********************************
+	 */
+	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException;
+	
+	/**
+	 * Alle Nutzerprofile auslesen.
+	 */
+	public List<Nutzerprofil> getAllNutzerprofile() throws IllegalArgumentException;
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Nutzerprofil
+	 * ***************************************************************************
+	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Suchprofil
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Suchprofil anlegen.
+	 */
+	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
+	
+	/**
+	 * Suchprofil aktualisieren.
+	 */
+	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException;
 	
 	/**
-	 * Suchen eines Fremdprofil-Objekt, dessen FremdprofilId bekannt ist
+	 * Suchprofil löschen.
 	 */
-	
-	public Nutzerprofil getFremdprofilById(int fremdprofilId)
-			throws IllegalArgumentException;
+	public void deleteSuchprofil(int profilId) throws IllegalArgumentException;
 	
 	/**
-	 * Alle Nutzerprofile ausgeben
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Suchprofil anhand der Profil-ID auslesen.
 	 */
-	
-	public List<Nutzerprofil> getAllNutzerprofile ()
-	throws IllegalArgumentException;
+	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 	
 	/**
-	 * Speichern eines Nutzerprofil-Objekts in der Datenbank.
-	 * 
-	 * @param nutzerprofil
-	 *            zu sicherndes Objekt.
-	 * @throws IllegalArgumentException
-     */
+	 * Alle Suchprofile auslesen.
+	 */
+	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
 	
-	
-	public void saveSuchprofil(String alterMin, String alterMax, String geschlecht, 
-			String koerpergroesse, String haarfarbe, String raucher, String religion) 
-			throws IllegalArgumentException;
-	
-
-	
-	/**
-	 * l�schen eines Nutzerprofils in der Datenbank
-	 * @param profilId
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Suchprofil
+	 * ***************************************************************************
 	 */
 
-
-	void deleteNutzerprofil(int profilId);
-
-	/**
-	 * Suchen aller angesehenen Nutzerprofil-Objekte eines Nutzerprofils.
-	 * 
-	 * @param nutzerprofil
-	 *            ist das Nutzerprofil.
-	 * @return Liste von Nutzerprofil-Objekten, die den Suchkriterien
-	 *         entsprechen.
-	 * @throws IllegalArgumentException
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Merkliste
+	 * ***************************************************************************
 	 */
-
-	public List<Nutzerprofil> getAngeseheneNpFor(Nutzerprofil nutzerprofil)
-			throws IllegalArgumentException;
-
-	/**
-	 * ABSCHNITT MERKLISTE: BEGINN
-	 */
+	
 	// Alle Vermerke eines Nutzerprofils auslesen.
-	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
+	public Vector<Nutzerprofil> getGemerkteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
 	// Vermerkstatus ermitteln. 
@@ -154,15 +134,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Vermerk löschen. 
 	public void vermerkLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
-	/**
-	 * ABSCHNITT MERKLISTE: ENDE
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Merkliste
+	 * ***************************************************************************
 	 */
 	
-	/**
-	 * ABSCHNITT SPERRLISTE: BEGINN
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Sperrliste
+	 * ***************************************************************************
 	 */
+	
 	// Alle Sperrungen eines Nutzerprofils auslesen.
-	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
+	public Vector<Nutzerprofil> getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
 	
 	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
@@ -180,55 +166,47 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Sperrung löschen. 
 	public void sperrungLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
-	/**
-	 * ABSCHNITT SPERRLISTE: ENDE
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Sperrliste
+	 * ***************************************************************************
 	 */
 	
-	
-	
-	/**
-	 * ABSCHNITT SUCHPROFIL: BEGINN
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Partnervorschläge
+	 * ***************************************************************************
 	 */
 	
-	/**
-	 * Ein neues Suchprofil anlegen.
-	 * 
-	 * @param alterMin, alterMax, geschlecht, haarfarbe, koerpergroesse, raucher, religion
-	 * @return fertiges Suchprofil-Objekt
-	 * @throws IllegalArgumentException
-	 */
+	// Alle unangesehenen Nutzerprofile auslesen.
+	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException;
+	
+	// Besuch setzen. 
+	public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	public Suchprofil createSuchprofil(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-			String koerpergroesse, String raucher, String religion);
+	//Aehnlichkeit berechnen
+	public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId)
+	throws IllegalArgumentException;
 	
-	/**
-	 * Speichern eines Suchprofil-Objekts in der Datenbank.
-	 * 
-	 * @param suchprofil
-	 *            zu sicherndes Objekt.
-	 * @throws IllegalArgumentException
-	 */
-//	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-//			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
-
-	/**
-	 * L�schen des �bergebenen Suchprofils.
-	 * 
-	 * @param suchprofil
-	 *            das zu loeschende Suchprofil
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteSuchprofil(int profilId)
-			throws IllegalArgumentException;
-
-	/**
-	 * Ausgeben aller Suchprfile.
-	 * @return Liste aller Suchprofile
-	 * @throws IllegalArgumentException
+	//Aehnlichkeit in DB speichern
+	public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;
+	
+	//Aehnlichkeit aus DB loeschen
+	public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException;
+	
+	//Ausgabe der Partnervorschlaege
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Partnervorschläge
+	 * ***************************************************************************
 	 */
 	
-	public List<Suchprofil> getAllSuchprofile()
-			throws IllegalArgumentException;
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Info
+	 * ***************************************************************************
+	 */
 
 	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
 			throws IllegalArgumentException;
@@ -274,32 +252,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public List<Info> getAInfoByProfilId(int profilId)
 			throws IllegalArgumentException;
-/**
- *Auslesen eines Suchprofils anhand der ID
- * @param profilId
- * @return
- * @throws IllegalArgumentException
- */
 	
-	
-	public Suchprofil getSuchprofilById(int profilId)
-			throws IllegalArgumentException;
-	/**
-	 * ABSCHNITT SUCHPROFIL: ENDE
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Info
+	 * ***************************************************************************
 	 */
-	
-	public List<Nutzerprofil> getAllProfile()
-			throws IllegalArgumentException;
-
-	// Besuch hinzufuegen.
-	public void besuchSetzen(int profilId, int fremdprofilId)
-			throws IllegalArgumentException;
-	
 		
-		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
-				throws IllegalArgumentException;
 
-	public int aehnlichkeitBerechnen (int suchprofilId, int nutzerprofilId) throws IllegalArgumentException;	
+
+		
+
 		
 }
 

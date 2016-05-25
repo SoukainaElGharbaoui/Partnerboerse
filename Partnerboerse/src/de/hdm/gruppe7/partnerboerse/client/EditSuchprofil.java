@@ -60,10 +60,10 @@ public class EditSuchprofil extends VerticalPanel {
 		 */
 		editSuchprofilFlexTable.setText(0, 0, "Suchprofil-Id");
 		editSuchprofilFlexTable.setText(1, 0, "Geschlecht");
-		editSuchprofilFlexTable.setText(2, 0, "Körpergröße");
-		editSuchprofilFlexTable.setText(3, 0, "Haarfarbe");
-		editSuchprofilFlexTable.setText(4, 0, "Alter von");
-		editSuchprofilFlexTable.setText(5, 0, "Alter bis");
+		editSuchprofilFlexTable.setText(2, 0, "Alter von");
+		editSuchprofilFlexTable.setText(3, 0, "Alter bis");
+		editSuchprofilFlexTable.setText(4, 0, "Körpergröße");
+		editSuchprofilFlexTable.setText(5, 0, "Haarfarbe");
 		editSuchprofilFlexTable.setText(6, 0, "Raucher");
 		editSuchprofilFlexTable.setText(7, 0, "Religion");
 
@@ -75,44 +75,44 @@ public class EditSuchprofil extends VerticalPanel {
 
 		// Geschlecht-ListBox hinzufügen. 
 		final ListBox geschlechtListBox = new ListBox();
-		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
+		
+		// AlterMin-TextBox hinzufügen. 
+		final TextBox alterMinTextBox = new TextBox();
+		editSuchprofilFlexTable.setWidget(2, 2, alterMinTextBox);
+
+		// AlterMax-TextBox hinzufügen. 
+		final TextBox alterMaxTextBox = new TextBox();
+		editSuchprofilFlexTable.setWidget(3, 2, alterMaxTextBox);
 
 		// Körpergröße-TextBox hinzufügen. 
 		final TextBox koerpergroesseTextBox = new TextBox();
-		editSuchprofilFlexTable.setWidget(2, 2, koerpergroesseTextBox);
+		editSuchprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
 
 		// Haarfarbe-ListBox hinzufügen. 
 		final ListBox haarfarbeListBox = new ListBox();
-		haarfarbeListBox.addItem("Keine Auswahl");
+		haarfarbeListBox.addItem("");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		editSuchprofilFlexTable.setWidget(3, 2, haarfarbeListBox);
-
-		// AlterMin-TextBox hinzufügen. 
-		final TextBox alterMinTextBox = new TextBox();
-		editSuchprofilFlexTable.setWidget(4, 2, alterMinTextBox);
-
-		// AlterMax-TextBox hinzufügen. 
-		final TextBox alterMaxTextBox = new TextBox();
-		editSuchprofilFlexTable.setWidget(5, 2, alterMaxTextBox);
+		editSuchprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 
 		// Raucher-ListBox hinzufügen. 
 		final ListBox raucherListBox = new ListBox();
-		raucherListBox.addItem("Keine Auswahl");
+		raucherListBox.addItem("");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		// Religion-ListBox hinzufügen. 
 		final ListBox religionListBox = new ListBox();
-		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -152,8 +152,14 @@ public class EditSuchprofil extends VerticalPanel {
 							}
 						}
 						
+						// AlterMin auslesen und einfügen. 
+						alterMinTextBox.setText(Integer.toString(result.getAlterMinInt()));
+
+						// AlterMax auslesen und einfügen. 
+						alterMaxTextBox.setText(Integer.toString(result.getAlterMaxInt()));
+						
 						// Körpergröße auslesen und einfügen. 
-						koerpergroesseTextBox.setText(result.getKoerpergroesse());
+						koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 						
 						// Haarfarbe auslesen und einfügen. 
 						haarfarbeListBox.setItemText(0, result.getHaarfarbe());
@@ -163,12 +169,6 @@ public class EditSuchprofil extends VerticalPanel {
 								haarfarbeListBox.removeItem(i);
 							}
 						}
-
-						// AlterMin auslesen und einfügen. 
-						alterMinTextBox.setText(result.getAlterMin());
-
-						// AlterMax auslesen und einfügen. 
-						alterMaxTextBox.setText(result.getAlterMax());
 						
 						// Raucherstatus auslesen und einfügen. 
 						raucherListBox.setItemText(0, result.getRaucher());
@@ -225,10 +225,10 @@ public class EditSuchprofil extends VerticalPanel {
 		speichernButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ClientsideSettings.getPartnerboerseAdministration().saveSuchprofil(
-						alterMinTextBox.getText(), alterMaxTextBox.getText(),
-						 
 						geschlechtListBox.getSelectedItemText(),
-						koerpergroesseTextBox.getText(),
+						Integer.parseInt(alterMinTextBox.getText()), 
+						Integer.parseInt(alterMaxTextBox.getText()),
+						Integer.parseInt(koerpergroesseTextBox.getText()),
 						haarfarbeListBox.getSelectedItemText(),
 						raucherListBox.getSelectedItemText(),
 						religionListBox.getSelectedItemText(),

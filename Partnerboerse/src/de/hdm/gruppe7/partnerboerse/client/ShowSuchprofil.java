@@ -85,20 +85,20 @@ public class ShowSuchprofil extends VerticalPanel {
 								result.getGeschlecht());
 
 						// Koerpergroesse aus der Datenbank holen
-						showSuchprofilFlexTable.setText(2, 1,
-								result.getKoerpergroesse());
+						showSuchprofilFlexTable.setText(2, 1, Integer.toString(
+								result.getKoerpergroesseInt()));
 
 						// Haarfarbe aus der Datenbank holen
 						showSuchprofilFlexTable.setText(3, 1,
 								result.getHaarfarbe());
 
 						// AlterMax aus der Datenbank holen
-						showSuchprofilFlexTable.setText(4, 1,
-								result.getAlterMin());
+						showSuchprofilFlexTable.setText(4, 1, Integer.toString(
+								result.getAlterMinInt()));
 
 						// AlterMin aus der Datenbank holen
-						showSuchprofilFlexTable.setText(5, 1,
-								result.getAlterMax());
+						showSuchprofilFlexTable.setText(5, 1, Integer.toString(
+								result.getAlterMaxInt()));
 
 						// Raucher aus der Datenbank holen
 						showSuchprofilFlexTable.setText(6, 1,

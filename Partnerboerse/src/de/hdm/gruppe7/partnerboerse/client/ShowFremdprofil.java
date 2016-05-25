@@ -16,31 +16,31 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowFremdprofil extends VerticalPanel {
 	
 	/**
-	 * VerticalPanel hinzufügen.  
+	 * VerticalPanel hinzufï¿½gen.  
 	 */
 	private VerticalPanel verPanel1 = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();  
 	
 	/**
-	 * HorizontalPanel hinzufügen.
+	 * HorizontalPanel hinzufï¿½gen.
 	 */
 	private HorizontalPanel horPanel = new HorizontalPanel(); 
 	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 	
 	/** 
-	 * Konstruktor hinzufügen. 
+	 * Konstruktor hinzufï¿½gen. 
 	 */
 	public ShowFremdprofil(final int fremdprofilId) {
 		this.add(horPanel); 
 		
 		/**
-		 * Überschrift-Label hinzufügen. 
+		 * ï¿½berschrift-Label hinzufï¿½gen. 
 		 */
 		final Label ueberschriftLabel = new Label("Fremdprofil");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
 		/**
-		 * Information-Label hinzufügen.
+		 * Information-Label hinzufï¿½gen.
 		 */
 		final Label infoLabel = new Label();
 		
@@ -57,7 +57,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.setText(2, 0, "Nachname");
 		showFremdprofilFlexTable.setText(3, 0, "Geschlecht");
 		showFremdprofilFlexTable.setText(4, 0, "Geburtsdatum");
-		showFremdprofilFlexTable.setText(5, 0, "Körpergröße");
+		showFremdprofilFlexTable.setText(5, 0, "KÃ¶rpergrÃ¶ÃŸe");
 		showFremdprofilFlexTable.setText(6, 0, "Haarfarbe");
 		showFremdprofilFlexTable.setText(7, 0, "Raucherstatus");
 		showFremdprofilFlexTable.setText(8, 0, "Religion");
@@ -102,11 +102,11 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(4, 1, result.getGeburtsdatum());
+						showFremdprofilFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(5, 1, result.getKoerpergroesse());
+						showFremdprofilFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
 
 						// Haarfarbe aus der Datenbank holen
 						// und in Tabelle eintragen				
@@ -126,31 +126,30 @@ public class ShowFremdprofil extends VerticalPanel {
 		
 				
 		/**
-		 * ABSCHNITT MERKLISTE BEGINN: Programmierung "Vermerk setzen" / "Vermerk löschen" Button.
+		 * ABSCHNITT MERKLISTE UND SPERRLISTE BEGINN: 
+		 * Programmierung "Vermerk setzen" / "Vermerk lÃ¶schen", "Sperrung setzen" / "Sperrung lÃ¶schen" Button.
 		 */
 		
-		
+		// Vermerk-Button erzeugen. 
 		final Button mButton = new Button();
+		
+		// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde. 
 		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 
-			@Override
 			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
-				
+				infoLabel.setText("Es trat ein Fehler auf.");	
 			}
 
-			@Override
 			public void onSuccess(Integer result) {
+				// Wenn eine Sperrung vorliegt, wird der Vermerk-Button ausgeblendet. 
 				if(result == 1){
 					mButton.setVisible(false);  
-				}
-			
-			}
-			
+				}			
+			}			
 		});
 		
 	 
-		// Vermerkstatus überprüfen. 
+		// PrÃ¼fen, ob Fremdprofil von Benutzer gemerkt wurde. 
 		ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 			
 			@Override
@@ -161,40 +160,33 @@ public class ShowFremdprofil extends VerticalPanel {
 			@Override
 			public void onSuccess(Integer result) {
 				
-				String buttonText = "";
-
-				// Button-Aufschrift entsprechend ermitteltem Vermerkstatus hinzufügen. 
-				// Wenn kein Vermerk vorliegt...
+				// Wenn kein Vermerk vorliegt, lautet die Vermerk-Button-Aufschrift "Vermerk setzen". 
 				if(result == 0) {
 					mButton.setText("Vermerk setzen");
-				// Wenn ein Vermerk vorliegt...
+				// Wenn ein Vermerk vorliegt, lautet die Vermerk-Button-Aufschrift "Vermerk lÃ¶schen". 
 				} else {
-					mButton.setText("Vermerk löschen");
+					mButton.setText("Vermerk lÃ¶schen");
 				}	
 				
-//				final Button mButton = new Button(buttonText); 
+				// Vermerk-Button zum VerticalPanel hinzufÃ¼gen. 
 				buttonPanel.add(mButton);
 				
-				
-				// ClickHandler hinzufügen. 
+				// ClickHandler fÃ¼r den Vermerk-Button hinzufÃ¼gen. 
 				mButton.addClickHandler(new ClickHandler() {
-
-					@Override
 					public void onClick(ClickEvent event) {
 						
-						// Wenn die Button-Aufschrift "Vermerk löschen" lautet... 
-						if(mButton.getText() == "Vermerk löschen") {
+						// Wenn die Vermerk-Button-Aufschrift "Vermerk lÃ¶schen" lautet, wird der Vermerk aus der Datenbank entfernt. 
+						if(mButton.getText() == "Vermerk lÃ¶schen") {
 						
-							// Vermerk aus der Datenbank löschen. 
+							// Vermerk aus der Datenbank entfernen. 
 							ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
-							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf.");
 							}
 
-							@Override
 							public void onSuccess(Void result) {
+								// Vermerk-Button-Aufschrift zu "Vermerk setzen" Ã¤ndern. 
 								mButton.setText("Vermerk setzen"); 
 							}
 							
@@ -202,20 +194,19 @@ public class ShowFremdprofil extends VerticalPanel {
 							
 						} 
 						
-						// Wenn die Button-Aufschrift "Vermerk setzen" lautet... 
+						// Wenn die Button-Aufschrift "Vermerk setzen" lautet, wird der Vermerk in die Datenbank eingefÃ¼gt.  
 						if(mButton.getText() == "Vermerk setzen") {
 							
-							// Vermerk in die Datenbank einfügen. 
+							// Vermerk in die Datenbank einfÃ¼gen. 
 							ClientsideSettings.getPartnerboerseAdministration().vermerkSetzen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
-								@Override
 								public void onFailure(Throwable caught) {
 									infoLabel.setText("Es trat ein Fehler auf.");
 								}
 
-								@Override
+								// Vermerk-Button-Aufschrift zu "Vermerk lÃ¶schen" Ã¤ndern. 
 								public void onSuccess(Void result) {
-									mButton.setText("Vermerk löschen"); 
+									mButton.setText("Vermerk lÃ¶schen"); 
 								} 
 								
 							});
@@ -229,14 +220,8 @@ public class ShowFremdprofil extends VerticalPanel {
 			}
 				
 		});
-		/**
-		 * ABSCHNITT MERKLISTE ENDE: Programmierung "Vermerk setzen" / "Vermerk löschen" Button. 
-		 */
-		
-		/**
-		 * ABSCHNITT SPERRLISTE BEGINN: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
-		 */
-		// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.  
+
+		// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde.  
 		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 			
 			@Override
@@ -248,28 +233,26 @@ public class ShowFremdprofil extends VerticalPanel {
 			public void onSuccess(Integer result) {
 				
 				String buttonText = "";
-
-				// Button-Aufschrift entsprechend ermitteltem Sperrstatus hinzufügen. 
+				// Wenn keine Sperrung vorliegt, lautet die Sperrung-Button-Aufschrift "Sperrung setzen". 
 				if(result == 0){
 					buttonText = "Sperrung setzen"; 
 				} else {
-					buttonText = "Sperrung löschen"; 
+				// Wenn eine Sperrung vorliegt, lautet die Sperrung-Button-Aufschrift "Sperrung lÃ¶schen". 
+					buttonText = "Sperrung lÃ¶schen"; 
 				}	
 				
-				// Button zum VerticalPanel hinzufügen. 
+				// Sperrung-Button zum VerticalPanel hinzufÃ¼gen. 
 				final Button sButton = new Button(buttonText); 
 				buttonPanel.add(sButton); 
 				
-				// ClickHandler hinzufügen. 
+				// ClickHandler fÃ¼r den Sperrung-Button hinzufÃ¼gen. 
 				sButton.addClickHandler(new ClickHandler() {
-
-					@Override
 					public void onClick(ClickEvent event) {
 						
-						// Wenn die Button-Aufschrift "Sperrung löschen" lautet... 
-						if(sButton.getText() == "Sperrung löschen") {
+						// Wenn die Button-Aufschrift "Sperrung lÃ¶schen" lautet, wird die Sperrung aus der Datenbank entfernt. 
+						if(sButton.getText() == "Sperrung lÃ¶schen") {
 						
-							// Sperrung aus der Datenbank löschen. 
+							// Sperrung aus der Datenbank entfernen.
 							ClientsideSettings.getPartnerboerseAdministration().sperrungLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 							@Override
@@ -277,9 +260,10 @@ public class ShowFremdprofil extends VerticalPanel {
 								infoLabel.setText("Es trat ein Fehler auf.");
 							}
 
-							@Override
 							public void onSuccess(Void result) {
+								// Sperrung-Button-Aufschrift zu "Sperrung setzen" Ã¤ndern. 
 								sButton.setText("Sperrung setzen"); 
+								// Seite aktualisieren. 
 								ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showFremdprofil);
@@ -289,20 +273,20 @@ public class ShowFremdprofil extends VerticalPanel {
 							
 						} 
 						
-						// Wenn die Button-Aufschrift "Sperrung setzen" lautet... 
+						// Wenn die Button-Aufschrift "Sperrung setzen" lautet, wird die Sperrung in die Datenbank eingefÃ¼gt. 
 						if(sButton.getText() == "Sperrung setzen") {
 							
-							// Sperrung in die Datenbank einfügen. 
+							// Sperrung in die Datenbank einfÃ¼gen. 
 							ClientsideSettings.getPartnerboerseAdministration().sperrungSetzen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
-								@Override
 								public void onFailure(Throwable caught) {
 									infoLabel.setText("Es trat ein Fehler auf.");
 								}
 
-								@Override
 								public void onSuccess(Void result) {
-									sButton.setText("Sperrung löschen"); 
+									// Sperrung-Button-Aufschrift zu "Sperrung lÃ¶schen" Ã¤ndern. 
+									sButton.setText("Sperrung lÃ¶schen"); 
+									// Seite aktualisieren. 
 									ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
@@ -310,26 +294,24 @@ public class ShowFremdprofil extends VerticalPanel {
 								
 							});
 							
+							// Vermerkstatus Ã¼berprÃ¼fen. 
 							ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 
-								@Override
 								public void onFailure(Throwable caught) {
 									infoLabel.setText("Es trat ein Fehler auf.");	
 								}
 
-								@Override
 								public void onSuccess(Integer result) {
-									if(result == 1){
+									// Wenn ein Vermerk vorliegt, wird dieser aus der Datenbank entfernt. 
+									if(result == 1) {
 									ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>(){
 
-										@Override
 										public void onFailure(Throwable caught) {
 											infoLabel.setText("Es trat ein Fehler auf.");	
 										}
 
-										@Override
 										public void onSuccess(Void result) {
-											infoLabel.setText("Gesperrt, von Merkliste entfernt.");
+											// Seite aktualisieren.
 											ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(showFremdprofil);
@@ -354,10 +336,11 @@ public class ShowFremdprofil extends VerticalPanel {
 			}
 				
 		});
-		/**
-		 * ABSCHNITT SPERRLISTE ENDE: Programmierung "Sperrung setzen" / "Sperrung löschen" Button. 
-		 */			
 		
+		/**
+		 * ABSCHNITT MERKLISTE UND SPERRLISTE BEGINN: 
+		 * Programmierung "Vermerk setzen" / "Vermerk lÃ¶schen", "Sperrung setzen" / "Sperrung lÃ¶schen" Button.
+		 */		
 		
 		verPanel1.add(ueberschriftLabel);
 		verPanel1.add(showFremdprofilFlexTable);

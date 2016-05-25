@@ -4,6 +4,28 @@ public class Suchprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
 	
+	private int alterMinInt; 
+	private int alterMaxInt; 
+	
+	public int getAlterMinInt() {
+		return alterMinInt;
+	}
+
+	public void setAlterMinInt(int alterMinInt) {
+		this.alterMinInt = alterMinInt;
+	}
+
+	public int getAlterMaxInt() {
+		return alterMaxInt;
+	}
+
+	public void setAlterMaxInt(int alterMaxInt) {
+		this.alterMaxInt = alterMaxInt;
+	}
+
+	/**
+	 * Nur noch vorrübergehend
+	 */
 	private String alterMin;
 	private String alterMax;
 	
@@ -22,5 +44,7 @@ public class Suchprofil extends Profil {
 	public void setAlterMax(String alterMax) {
 		this.alterMax = alterMax;
 	}
+	
+	
 
 }
