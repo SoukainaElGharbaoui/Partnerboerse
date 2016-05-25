@@ -1,7 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -9,7 +12,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+ 
 
 public class Navigator extends VerticalPanel {
 	
@@ -19,6 +23,7 @@ public class Navigator extends VerticalPanel {
 		this.loginInfo = loginInfo;
 	}
 
+	int aehnlichkeit = 0;
 	public Navigator() {
 
 		/*
@@ -214,9 +219,62 @@ public class Navigator extends VerticalPanel {
 		showPartnervorschlaegeButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				
+				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(Benutzer.getProfilId(), new AsyncCallback<List<Nutzerprofil>>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+					
+					}
+
+					@Override
+					public void onSuccess(List<Nutzerprofil> result) {
+						
+						for (Nutzerprofil np : result) {
+							
+							final int fremdprofilId = np.getProfilId();
+							
+							ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>(){
+
+								@Override
+								public void onFailure(Throwable caught) {
+								
+								}
+
+								@Override
+								public void onSuccess(Integer result) {
+									aehnlichkeit = result;
+									ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzen(Benutzer.getProfilId(), fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+
+										@Override
+										public void onFailure(Throwable caught) {
+											// TODO Auto-generated method stub
+											
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											// TODO Auto-generated method stub
+											
+										}
+										
+									});
+								}
+								
+							});
+							
+					
+						
+						}
+						
+					}
+					
+				});
+				
 				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showPartnervorschlaege);
+				
 			}
 
 		});

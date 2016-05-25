@@ -6,12 +6,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 public class ShowSperrliste extends VerticalPanel {
@@ -64,31 +67,29 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Gesperrte Nutzerprofile anzeigen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().
-		getGesperrteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Vector<Sperrliste>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(Benutzer.getProfilId(), new AsyncCallback<Sperrliste>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
+				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
-			// Vektor der gesperrten Profile abarbeiten. 
-			public void onSuccess(Vector<Sperrliste> result) {
-				
-				// Anzahl der Zeilen ermitteln. 
+			public void onSuccess(Sperrliste result) {
+				Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile(); 
 				int row = sperrlisteFlexTable.getRowCount();
 				
-				// Tabelle mit Inhalten aus der Datenbank befüllen. 
-				for(Sperrliste s : result) {
+				for(Nutzerprofil n : gemerkteNutzerprofile) {
 					row++;
 					
-					final String fremdprofilId = String.valueOf(s.getsFremdprofilId());
+					final String fremdprofilId = String.valueOf(n.getProfilId());
+					
 					sperrlisteFlexTable.setText(row, 0, fremdprofilId); 
-					sperrlisteFlexTable.setText(row, 1, s.getsVorname()); 
-					sperrlisteFlexTable.setText(row, 2, s.getsNachname());
-					sperrlisteFlexTable.setText(row, 3, s.getsGeburtsdatum());
-					sperrlisteFlexTable.setText(row, 4, s.getsGeschlecht()); 
+					sperrlisteFlexTable.setText(row, 1, n.getVorname()); 
+					sperrlisteFlexTable.setText(row, 2, n.getNachname());
+					sperrlisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+					sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());  
 					
 					// Löschen-Button hinzufügen und ausbauen. 
 					final Button loeschenButton = new Button("Löschen");
@@ -99,7 +100,7 @@ public class ShowSperrliste extends VerticalPanel {
 					sperrlisteFlexTable.setWidget(row, 6, anzeigenButton); 
 					
 					// Testzwecke: Index der FlexTable-Rows anzeigen. 
-					sperrlisteFlexTable.setText(row, 7, String.valueOf(row)); 
+					sperrlisteFlexTable.setText(row, 7, String.valueOf(row));
 					
 					// ClickHandler für den Löschen-Button hinzufügen. 
 					loeschenButton.addClickHandler(new ClickHandler() {
@@ -114,9 +115,10 @@ public class ShowSperrliste extends VerticalPanel {
 									String fremdprofilIdFlexTable = sperrlisteFlexTable.getText(i, 0);
 									
 									if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
+										
 										// Inhalte aus der Datenbank entfernen. 
 										ClientsideSettings.getPartnerboerseAdministration().
-										sperrungLoeschen(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Void>(){
+										vermerkLoeschen(Benutzer.getProfilId(), Integer.valueOf(fremdprofilId), new AsyncCallback<Void>(){
 			
 											@Override
 											public void onFailure(Throwable caught) {
@@ -130,7 +132,7 @@ public class ShowSperrliste extends VerticalPanel {
 											
 										});
 										
-										// Zeile in Tabelle löschen.
+										// Zeile in Tabelle löschen. 
 										sperrlisteFlexTable.removeRow(i);
 										break;
 									}
@@ -143,18 +145,19 @@ public class ShowSperrliste extends VerticalPanel {
 					// ClickHandler für den Anzeigen-Button hinzufügen. 
 					anzeigenButton.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
-							ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
-							RootPanel.get("Details").clear(); 
-							RootPanel.get("Details").add(showFremdprofil); 
 							
+								ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId)); 
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showFremdprofil);
 						}
 						
-					}); 
-				
+					});
+			
 				}
+				
 			}
-					
-		}); 
+			
+		});
 		
 		// Widgets zum VerticalPanel hinzufügen. 
 		verPanel.add(ueberschriftLabel);

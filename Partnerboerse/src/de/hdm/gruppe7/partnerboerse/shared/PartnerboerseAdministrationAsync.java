@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,40 +18,105 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public interface PartnerboerseAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
-
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Nutzerprofil
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Nutzerprofil anlegen.
+	 */
 	void createNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 	
+	/**
+	 * Nutzerprofil aktualisieren.
+	 */
 	void saveNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
 			String raucher, String religion, AsyncCallback<Void> callback);
 	
-
-
+	/**
+	 * Nutzerprofil löschen.
+	 */
+	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
+	
+	/**
+	 * Nutzerprofil anhand dessen Profil-ID auslesen. 
+	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 	
-	void getAllNutzerprofile(Nutzerprofil nutzerprofil, AsyncCallback<List<Nutzerprofil>> callback );
-
-//	void save(String vorname, String nachname, String geschlecht, 
-//			String haarfarbe,String koerpergroesse, String raucher, 
-//			String religion, String geburtsdatum, AsyncCallback<Void> callback);
-	
-	
-
-	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
-
-	void getAngeseheneNpFor(Nutzerprofil nutzerprofil,
-			AsyncCallback<List<Nutzerprofil>> callback);
-	
+	/**
+	 * ***********************************
+	 * Unnötig, da gleicher Mapper-Aufruf!
+	 * ***********************************
+	 */
 	void getFremdprofilById (int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
+	
+	/**
+	 * Alle Nutzerprofile auslesen.
+	 */
+	void getAllNutzerprofile(AsyncCallback<List<Nutzerprofil>> callback );
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Nutzerprofil
+	 * ***************************************************************************
+	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Suchprofil
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Suchprofil anlegen.
+	 */
+	void createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
+			AsyncCallback<Suchprofil> callback);
+	
+	/**
+	 * Suchprofil aktualisieren.
+	 */
+	void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, 
+			AsyncCallback<Void> callback);
 
 	/**
-	 * ABSCHNITT MERKLISTE: BEGINN
+	 * Suchprofil löschen.
 	 */
+	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
+	
+	/**
+	 * Suchprofil anhand der Profil-ID auslesen.
+	 */
+	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+
+	/**
+	 * Alle Suchprofile auslesen.
+	 */
+	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Suchprofil
+	 * ***************************************************************************
+	 */
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Merkliste
+	 * ***************************************************************************
+	 */
+	
 	// Alle Vermerke eines Nutzerprofils auslesen. 
-	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Vector<Merkliste>> callback);
+	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Merkliste> callback);
 	
 	// Vermerkstatus ermitteln. 
 	void getVermerkstatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
@@ -60,15 +126,21 @@ public interface PartnerboerseAdministrationAsync {
 
 	// Vermerk löschen. 
 	void vermerkLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
-	/**
-	 * ABSCHNITT MERKLISTE: ENDE
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Merkliste
+	 * ***************************************************************************
 	 */
 	
-	/**
-	 * ABSCHNITT SPERRLISTE: BEGINN
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Sperrliste
+	 * ***************************************************************************
 	 */
+	
 	// Alle Sperrungen eines Nutzerprofils auslesen. 
-	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Vector<Sperrliste>> callback);
+	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Sperrliste> callback);
 	
 	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
 	void getSperrstatusFremdprofil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
@@ -81,38 +153,48 @@ public interface PartnerboerseAdministrationAsync {
 	
 	// Sperrung löschen. 
 	void sperrungLoeschen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
-	/**
-	 * ABSCHNITT SPERRLISTE: ENDE
-	 */
 
-	/**
-	 * ABSCHNITT SUCHPROFIL: BEGINN
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Sperrliste
+	 * ***************************************************************************
 	 */
-	void createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
-			AsyncCallback<Suchprofil> callback);
 	
-	void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, 
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Partnervorschläge
+	 * ***************************************************************************
+	 */
+	
+	// Alle unangesehenen Nutzerprofile auslesen.
+	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	
+	// Besuch setzen.
+	void besuchSetzen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
-	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
 
-	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
-
-	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+	void berechneAehnlichkeitNpFor(int profilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
 
 
-
-
-	/**
-	 * ABSCHNITT SUCHPROFIL: ENDE
-	 */	
+	void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
 	
+	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
 	
-	/**
-	 * ABSCHNITT Info: BEGINN
-	 */	
+	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Partnervorschläge
+	 * ***************************************************************************
+	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Info
+	 * ***************************************************************************
+	 */
 	
 	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback); 
 	
@@ -145,22 +227,22 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAInfoByProfilId(int profilId, AsyncCallback<List<Info>> callback);
 
-	
-	/**
-	 * ABSCHNITT Info: ENDE
-	 */	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Info
+	 * ***************************************************************************
+	 */
   
-	void getAllProfile(AsyncCallback<List<Nutzerprofil>> callback);
 
-
-	void besuchSetzen(int profilId, int fremdprofilId,
-			AsyncCallback<Void> callback);
 	
-	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	
 
 	void isUserRegistered(String userEmail,
 			AsyncCallback<Boolean> isUserRegisteredCallback);
 
 
+
 }
 	
+
+

@@ -6,13 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class SperrlisteMapper {
 	
 	private static SperrlisteMapper sperrlisteMapper = null;
 
-	// Konstruktor
 	protected SperrlisteMapper() {
 	}
 
@@ -22,38 +21,42 @@ public class SperrlisteMapper {
 		}
 		return sperrlisteMapper;
 	}
+
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: Sperrliste
+	 * ***************************************************************************
+	 */
 	
 	/**
 	 * Alle Sperrungen eines Nutzerprofils auslesen.
 	 */
-	public Vector<Sperrliste> findAllSperrungenFor(int profilId) {
+	public Vector<Nutzerprofil> findGesperrteNutzerprofileFor(int profilId) {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisliste
-		Vector<Sperrliste> result = new Vector<Sperrliste>();
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt
-					.executeQuery("SELECT t_sperrung.fremdprofil_id, t_nutzerprofil.vorname, "
-							+ "t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, t_profil.geschlecht FROM t_sperrung, t_nutzerprofil, t_profil  "
-							+ "WHERE t_sperrung.nutzerprofil_id="
-							+ profilId
-							+ " AND t_nutzerprofil.nutzerprofil_id = t_sperrung.fremdprofil_id "
-							+ "AND t_profil.profil_id = t_sperrung.fremdprofil_id");
+			ResultSet rs = stmt.executeQuery("SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
+					+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht "
+					+ "FROM t_nutzerprofil, t_profil, t_sperrung "
+					+ "WHERE t_sperrung.nutzerprofil_id=" + profilId 
+					+ " AND t_nutzerprofil.nutzerprofil_id = t_sperrung.fremdprofil_id "
+					+ "AND t_profil.profil_id = t_sperrung.fremdprofil_id"); 
 
-			// Für jeden Eintrag im Suchergebnis wird nun ein Eintrag im Vektor der Sperrliste erstellt.
 			while (rs.next()) {
-				Sperrliste s = new Sperrliste();
-				s.setsFremdprofilId(rs.getInt("fremdprofil_id"));
-				s.setsVorname(rs.getString("vorname"));
-				s.setsNachname(rs.getString("nachname"));
-				s.setsGeburtsdatum(rs.getString("geburtsdatum"));
-				s.setsGeschlecht(rs.getString("geschlecht"));
+				Nutzerprofil n = new Nutzerprofil();
+				n.setProfilId(rs.getInt("nutzerprofil_id")); 
+				n.setVorname(rs.getString("vorname"));
+				n.setNachname(rs.getString("nachname"));
+				n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+				n.setGeschlecht(rs.getString("geschlecht"));
 
 				// Hinzufügen des neuen Objekts zum Ergebnisvektor.
-				result.addElement(s);
+				result.addElement(n);
 
 			}
 
@@ -156,5 +159,10 @@ public class SperrlisteMapper {
 		}
 
 	}
-
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: Sperrliste
+	 * ***************************************************************************
+	 */
 }

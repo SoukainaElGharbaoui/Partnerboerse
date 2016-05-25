@@ -19,72 +19,58 @@ public class Nutzerprofil extends Profil{
 	
 	private String vorname;
 	private String nachname; 
-	private String geburtsdatum;
+	private String geburtsdatum; 
+	private Date geburtsdatumDate;
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	private int	aehnlichkeit;
 
-	
 	public String getVorname() {
 		return vorname;
 	}
+	
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
+
 	public String getNachname() {
 		return nachname;
 	}
+
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
+
 	public String getGeburtsdatum() {
 		return geburtsdatum;
 	}
+
 	public void setGeburtsdatum(String geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
-	public List<Nutzerprofil> getPartnervorschlaegeNp() {
-		return partnervorschlaegeNp;
+
+	public Date getGeburtsdatumDate() {
+		return geburtsdatumDate;
 	}
-	public void setPartnervorschlaegeNp(List<Nutzerprofil> partnervorschlaegeNp) {
-		this.partnervorschlaegeNp = partnervorschlaegeNp;
+
+	public void setGeburtsdatumDate(Date geburtsdatumDate) {
+		this.geburtsdatumDate = geburtsdatumDate;
 	}
-	public List<Nutzerprofil> getPartnervorschlaegeSp() {
-		return partnervorschlaegeSp;
+
+
+	public int getAehnlichkeit() {
+		return aehnlichkeit;
 	}
-	public void setPartnervorschlaegeSp(List<Nutzerprofil> partnervorschlaegeSp) {
-		this.partnervorschlaegeSp = partnervorschlaegeSp;
+	public void setAehnlichkeit(int aehnlichkeit) {
+		this.aehnlichkeit = aehnlichkeit;
 	}
-	public List<Nutzerprofil> getAngeseheneNp() {
-		return angeseheneNp;
-	}
-	public void setAngeseheneNp(List<Nutzerprofil> angeseheneNp) {
-		this.angeseheneNp = angeseheneNp;
-	}
-	
+
+
 	//Konstruktor
 	public Nutzerprofil() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	private void merkeProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entferneGemerktesProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void sperreProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entsperreProfil (Nutzerprofil np) {
-		
-	}
-	
-
-	
 }
