@@ -24,6 +24,7 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	private int	aehnlichkeit;
 
 	public String getVorname() {
 		return vorname;
@@ -58,29 +59,18 @@ public class Nutzerprofil extends Profil{
 	}
 
 
+	public int getAehnlichkeit() {
+		return aehnlichkeit;
+	}
+	public void setAehnlichkeit(int aehnlichkeit) {
+		this.aehnlichkeit = aehnlichkeit;
+	}
+
+
 	//Konstruktor
 	public Nutzerprofil() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	private void merkeProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entferneGemerktesProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void sperreProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entsperreProfil (Nutzerprofil np) {
-		
-	}
-	
-
-	
 }

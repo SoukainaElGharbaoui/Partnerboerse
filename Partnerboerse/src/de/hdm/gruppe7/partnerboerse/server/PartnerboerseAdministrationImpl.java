@@ -8,6 +8,11 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+
+import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
+import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
+
+
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -411,11 +416,70 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.infoMapper.findAInfoByProfilId(profilId); 
 	}
 		
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Info
-	 * ***************************************************************************
-	 */
+
+	
+
+	
+
+
+		/*
+		 * ***************************************************************************
+		 * ABSCHNITT, Ende: Info
+		 * ***************************************************************************
+		 */
+	
+		
+		
+		
+		
+		
+		public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId) throws IllegalArgumentException {
+		
+			
+			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
+		
+			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+			
+			int aehnlichkeit = 40;
+			
+			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
+				aehnlichkeit = aehnlichkeit - 40;
+			}
+			
+			if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
+				aehnlichkeit = aehnlichkeit + 10;
+			}
+			
+			
+			if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
+				aehnlichkeit = aehnlichkeit + 10;
+			}
+			
+			if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
+				aehnlichkeit = aehnlichkeit + 20;
+			}
+			
+			if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
+				aehnlichkeit = aehnlichkeit + 20;
+			}
+		
+			return aehnlichkeit;
+			
+		}
+		
+		
+		public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
+			this.nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit); 
+		}
+		
+		public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException {
+			this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
+		}
+		
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
+				throws IllegalArgumentException {
+			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
+		}
 
 }
 

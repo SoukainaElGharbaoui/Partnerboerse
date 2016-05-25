@@ -193,6 +193,20 @@ public class EditNutzerprofil extends VerticalPanel {
 
 									}
 								});
+				//DELETE Methode
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(Benutzer.getProfilId(), new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+				
+				
+					}
+					
+				});
 
 			}
 		});

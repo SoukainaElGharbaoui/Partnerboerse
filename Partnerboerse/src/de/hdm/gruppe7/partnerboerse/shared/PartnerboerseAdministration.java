@@ -182,6 +182,18 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Besuch setzen. 
 	public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
+	//Aehnlichkeit berechnen
+	public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId)
+	throws IllegalArgumentException;
+	
+	//Aehnlichkeit in DB speichern
+	public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;
+	
+	//Aehnlichkeit aus DB loeschen
+	public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException;
+	
+	//Ausgabe der Partnervorschlaege
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: Partnervorschläge
@@ -244,6 +256,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ABSCHNITT, Ende: Info
 	 * ***************************************************************************
 	 */
+		
+	
 		
 }
 

@@ -328,7 +328,7 @@ public class NutzerprofilMapper {
 					nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 					nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
 					nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
-					nutzerprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
+					nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 					nutzerprofil.setRaucher(rs.getString("raucher"));
 					nutzerprofil.setReligion(rs.getString("religion"));
 
@@ -392,11 +392,100 @@ public class NutzerprofilMapper {
 				return besuchstatus; 
 			}
 			
+			/**
+			 * Aehnlichkeit hinzufuegen. 
+			 */
+			public void insertAehnlichkeit(int profilId, int fremdprofilId, int aehnlichkeit) { 
+				Connection con = DBConnection.connection();
+				
+				try {
+					Statement stmt = con.createStatement();
+
+					stmt.executeUpdate("INSERT INTO t_aehnlichkeitnp (nutzerprofil_id, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
+					+ profilId + "," + fremdprofilId + "," + aehnlichkeit + ")");
+
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}	
+			}
+			
+			
+			/**
+			 * Geordnete Partnervorschlaege ausgeben
+			 */
+			public List<Nutzerprofil> findGeordnetePartnervorschlaegeNp(int profilId) {
+				Connection con = DBConnection.connection();
+
+				// Ergebnisliste vorbereiten
+				List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+
+				try {
+					Statement stmt = con.createStatement();
+
+					ResultSet rs = stmt
+							.executeQuery(							
+									"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
+									+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, "
+									+ "t_profil.haarfarbe, t_profil.raucher, t_profil.religion , t_aehnlichkeitnp.aehnlichkeit "
+									+ "FROM t_nutzerprofil LEFT JOIN t_besuch "
+									+ "ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
+									+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
+									+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
+									+ "LEFT JOIN t_aehnlichkeitnp ON t_nutzerprofil.nutzerprofil_id = t_aehnlichkeitnp.fremdprofil_id "
+									+ "WHERE t_nutzerprofil.nutzerprofil_id != 1 "
+									+ "AND (t_besuch.nutzerprofil_id != 1 OR t_besuch.fremdprofil_id IS NULL) "
+									+ "AND (t_sperrung.fremdprofil_id != 1 OR t_sperrung.nutzerprofil_id IS NULL) "
+									+ "AND t_aehnlichkeitnp.nutzerprofil_id = 1 ORDER BY t_aehnlichkeitnp.aehnlichkeit DESC");
+
+
+					// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+					// Nutzerprofil-Objekt erstellt.
+					while (rs.next()) {
+						Nutzerprofil nutzerprofil = new Nutzerprofil();
+						nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+						nutzerprofil.setVorname(rs.getString("vorname"));
+						nutzerprofil.setNachname(rs.getString("nachname"));
+						nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+						nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+						nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+						nutzerprofil.setRaucher(rs.getString("raucher"));
+						nutzerprofil.setReligion(rs.getString("religion"));
+						nutzerprofil.setAehnlichkeit(rs.getInt("aehnlichkeit"));
+
+						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+						result.add(nutzerprofil);
+					}
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+				// Ergebnisliste zurÃ¼ckgeben
+				return result;
+			}
+
+			/**
+			 * Aehnlichkeit loeschen.
+			 */
+			public void deleteAehnlichkeit(int profilId) {
+				Connection con = DBConnection.connection();
+
+				try {
+					Statement stmt = con.createStatement();
+
+					stmt.executeUpdate("DELETE FROM t_aehnlichkeitnp WHERE nutzerprofil_id=" + profilId);
+
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+			}
 			/*
 			 * ***************************************************************************
 			 * ABSCHNITT, Ende: Partnervorschläge
 			 * ***************************************************************************
 			 */
-		
+
 		
 }
+

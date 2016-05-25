@@ -172,6 +172,17 @@ public interface PartnerboerseAdministrationAsync {
 	// Besuch setzen.
 	void besuchSetzen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
+
+
+	void berechneAehnlichkeitNpFor(int profilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
+
+
+	void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
+	
+	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
+	
+	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 	
 	/*
 	 * ***************************************************************************
@@ -221,6 +232,10 @@ public interface PartnerboerseAdministrationAsync {
 	 * ABSCHNITT, Ende: Info
 	 * ***************************************************************************
 	 */
+  
 
+	
 }
 	
+
+
