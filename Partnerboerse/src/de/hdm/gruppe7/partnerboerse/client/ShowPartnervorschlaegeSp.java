@@ -156,7 +156,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 							public void onSuccess(List<Nutzerprofil> result) {
 								
 														//Variable festlegen die zur Speicherung der
-														//Übereinstimmungen genutzt wird
+														//ï¿½bereinstimmungen genutzt wird
 								
 															int uebreinstimmung = 0;
 															
@@ -234,15 +234,30 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 														// die Anzahl der Uebereinstimmungen wird in prozent umgerechnet 
 															//und in der Variable prozent gespeichert
-
-															int prozent = (100 / 5)* uebreinstimmung;
+														
+														// Bisherige Prozentzahl wird als "VorgÃ¤nger" gespeichert 
+//															if (row == 1) {
+//															int prozent1 = (100 / 5)* uebreinstimmung;	
+//															}
 															
-															 
-															 
-															
+															int prozent = (100 / 5)* uebreinstimmung;	
 													
+//															int prozent1 = prozent2;
+															
+															
+														// SWAP-METHODE
+//															if (prozent1 > prozent2) {
+//																int zwischenspeicher = prozent1;
+//																prozent1 = prozent2;
+//																prozent2 = zwischenspeicher;
+//															}
+															
+															
+//															final String eigenschaftId = String.valueOf(iB
+//																	.getEigenschaftId());
+															
 														// die FlexTable wird mit den Werten der Nutzerprofile und der 
-														//Uebereinstimmungen in prozent gefüllt
+														//Uebereinstimmungen in prozent gefï¿½llt
 															
 															final String nutzerprofilId = String.valueOf(m.getProfilId());
 															partnervorschlaegeSpFlexTable.setText(row, 0, nutzerprofilId); 
@@ -252,8 +267,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 															partnervorschlaegeSpFlexTable.setText(row, 4, m.getGeburtsdatum());
 															partnervorschlaegeSpFlexTable.setText(row, 5, m.getGeschlecht());
 															
-														
-														// die Variable muss für den nächsten Durchlauf auf null gesetzt werden	
+																
+														// die Variable muss fï¿½r den nï¿½chsten Durchlauf auf null gesetzt werden	
 															uebreinstimmung = 0;
 															
 															// Anzeigen-Button hinzufÃ¼gen und ausbauen. 
@@ -266,15 +281,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 																	ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(nutzerprofilId)); 
 																	RootPanel.get("Details").clear(); 
 																	RootPanel.get("Details").add(showFremdprofil); 
-																	
-																	
-																	
+																		
 																	
 																}
 																
 															}); 
 														
-														
+									
+		
 														
 														
 														

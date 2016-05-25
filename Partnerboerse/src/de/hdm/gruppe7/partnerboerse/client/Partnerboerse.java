@@ -34,7 +34,7 @@ public  class Partnerboerse implements EntryPoint {
 		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen Darstellungsort.
 		 */
 		RootPanel.get("Navigator").add(new Navigator());
-
+		
 	}
 	
 }

@@ -1,10 +1,13 @@
 package de.hdm.gruppe7.partnerboerse.client;
-
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -13,6 +16,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 
 public class Navigator extends VerticalPanel {
 
+	
+	
 	public Navigator() {
 
 		/*
@@ -22,6 +27,7 @@ public class Navigator extends VerticalPanel {
 		 */
 		Benutzer b = new Benutzer();
 		b.setProfilId(1);
+		
 		/**
 		 * Button "Nutzerprofil anlegen" hinzufügen. !!! Gehört hier nicht
 		 * hin, dient zurzeit jedoch als Beispiel !!!
