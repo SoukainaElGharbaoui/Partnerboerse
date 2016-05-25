@@ -176,7 +176,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	/*
 	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Partnervorschläge
+	 * ABSCHNITT, Beginn: PartnervorschlägeNp
 	 * ***************************************************************************
 	 */
 	
@@ -200,9 +200,38 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
 	/*
 	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Partnervorschläge
+	 * ABSCHNITT, Ende: PartnervorschlägeNp
 	 * ***************************************************************************
 	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: PartnervorschlägeSp
+	 * ***************************************************************************
+	 */
+	
+	//Aehnlichkeit berechnen
+		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		throws IllegalArgumentException;
+		
+		//Aehnlichkeit in DB speichern
+		public void aehnlichkeitSetzenSp (int suchprofilId, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
+		
+		//Aehnlichkeit aus DB loeschen
+		public void aehnlichkeitEntfernenSp (int suchprofilId) throws IllegalArgumentException;
+		
+		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
+		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException;
+		
+//		//Ausgabe der Partnervorschlaege
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId) throws IllegalArgumentException;
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: PartnervorschlägeSp
+	 * ***************************************************************************
+	 */
+	
 	
 	/*
 	 * ***************************************************************************

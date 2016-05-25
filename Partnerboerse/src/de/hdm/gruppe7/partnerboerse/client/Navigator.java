@@ -18,6 +18,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class Navigator extends VerticalPanel {
 
 	int aehnlichkeit = 0;
+	int aehnlichkeitSp= 0;
 	public Navigator() {
 
 		/*
@@ -229,6 +230,82 @@ public class Navigator extends VerticalPanel {
 					}
 					
 				});
+				
+				
+				ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onSuccess(List<Nutzerprofil> result) {
+							
+						for (Nutzerprofil np : result){
+							
+								
+				final int fremdprofilId = np.getProfilId();
+				
+				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Integer result) {
+						aehnlichkeit = result;
+						
+						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								// TODO Auto-generated method stub
+
+																						}
+
+																					});
+																}
+
+															});
+
+										}
+						
+						
+						
+					}
+					
+					
+				});
+
+				
+						
+					
+
+									
+
+							
+
+					
+						
+					
+					
+					
+					
+				
+				
+			
+				
 				
 				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
 				RootPanel.get("Details").clear();

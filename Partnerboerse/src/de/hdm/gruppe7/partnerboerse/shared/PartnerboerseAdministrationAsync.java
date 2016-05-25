@@ -167,7 +167,7 @@ public interface PartnerboerseAdministrationAsync {
 	
 	/*
 	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Partnervorschläge
+	 * ABSCHNITT, Beginn: PartnervorschlägeNp
 	 * ***************************************************************************
 	 */
 	
@@ -191,7 +191,35 @@ public interface PartnerboerseAdministrationAsync {
 	
 	/*
 	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Partnervorschläge
+	 * ABSCHNITT, Ende: PartnervorschlägeNp
+	 * ***************************************************************************
+	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: PartnervorschlägeSp
+	 * ***************************************************************************
+	 */
+	
+	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
+
+	void aehnlichkeitSetzenSp(int suchprofilId, int fremdprofilId,
+			int aehnlichkeitSp, AsyncCallback<Void> callback);
+
+	void aehnlichkeitEntfernenSp(int suchprofilId, AsyncCallback<Void> callback);
+	
+	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
+		void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+
+	void getGeordnetePartnervorschlaegeSp(int profilId,
+			AsyncCallback<List<Nutzerprofil>> callback);
+	
+	
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: PartnervorschlägeSp
 	 * ***************************************************************************
 	 */
 	

@@ -27,7 +27,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	
-
+/**
+		 * Variablen
+		 */
+		int ergebnis = 0; 
 	
 
 	/**
@@ -35,11 +38,92 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * @param a 
 	 */
 	public ShowPartnervorschlaegeSp() {
+		
 		this.add(verPanel);
 
+		/**
+		 * Überschrift-Label hinzufügen.
+		 */
+		final Label ueberschriftLabel = new Label(
+				"Diese Nutzerprofile koennten zu ihnen passen");
+		ueberschriftLabel.addStyleDependentName("partnerboerse-label"); 
+		verPanel.add(ueberschriftLabel); 
+		
+		final Label infoLabel = new Label();
+		final Label ergebnisLabel = new Label();
+		
+		/**
+		 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen. 
+		 */
+		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable(); 
+		
+		/** 
+		 * Tabelle formatieren und CSS einbinden. 
+		 */
+		partnervorschlaegeSpFlexTable.setCellPadding(6);
+		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		partnervorschlaegeSpFlexTable.addStyleName("FlexTable"); 
+		
+		/**
+		 * Erste Zeile der Tabelle festlegen. 
+		 */
+		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
+		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
+		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
+		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
+		partnervorschlaegeSpFlexTable.setText(0, 4, "Geburtsdatum");
+		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
+		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		
-									
+		
+		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), new  AsyncCallback<List<Nutzerprofil>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf");
+				
+			}
+
+			@Override
+			public void onSuccess(List<Nutzerprofil> result) {
+				infoLabel.setText("Es trat kein Fehler auf");
+				int row = partnervorschlaegeSpFlexTable.getRowCount();
+				
+				for (Nutzerprofil np : result){
+					
+					final int fremdprofilId = np.getProfilId();
+					row++;
+					partnervorschlaegeSpFlexTable.setText(row, 0, String.valueOf(np.getProfilId())); 
+					partnervorschlaegeSpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeitSp()) + "%");
+					partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname()); 
+					partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
+					partnervorschlaegeSpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));
+					partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht()); 
+					
+					// Anzeigen-Button hinzufügen und ausbauen. 
+					final Button anzeigenButton = new Button("Anzeigen");
+					partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+					
+					// ClickHandler für den Anzeigen-Button hinzufügen. 
+					anzeigenButton.addClickHandler(new ClickHandler(){
+						public void onClick(ClickEvent event){
+							ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId); 
+							RootPanel.get("Details").clear(); 
+							RootPanel.get("Details").add(showFremdprofil); 
+							
+							
+						}
+						
+						
+					});
+					
+				}
+				
+			}
+			
+			
+		});						
 		
 				
 		
@@ -99,7 +183,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														
 														
 														
-							
+		verPanel.add(ergebnisLabel);
+		verPanel.add(infoLabel);
+		verPanel.add(partnervorschlaegeSpFlexTable);					
 
 
 	}

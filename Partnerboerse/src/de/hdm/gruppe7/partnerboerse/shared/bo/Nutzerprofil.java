@@ -24,6 +24,8 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+	private int aehnlichkeit;
+	private int aehnlichkeitSp;
 
 
 	public String getVorname() {
@@ -33,7 +35,7 @@ public class Nutzerprofil extends Profil{
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-
+	
 	
 	public String getNachname() {
 		return nachname;
@@ -57,6 +59,24 @@ public class Nutzerprofil extends Profil{
 
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
 		this.geburtsdatumDate = geburtsdatumDate;
+	}
+	
+	public int getAehnlichkeit(){
+		return aehnlichkeit;
+	}
+	
+	public void setAehnlichkeit (int aehnlichkeit){
+		
+		this.aehnlichkeit = aehnlichkeit;
+	}
+	
+	public int getAehnlichkeitSp (){
+		return aehnlichkeitSp;
+	}
+	
+	public void setAehnlichkeitSp (int aehnlichkeitSp){
+		
+		this.aehnlichkeitSp = aehnlichkeitSp;
 	}
 
 

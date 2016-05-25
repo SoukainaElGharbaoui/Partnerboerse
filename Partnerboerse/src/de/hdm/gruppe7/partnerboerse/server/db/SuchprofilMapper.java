@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class SuchprofilMapper {
@@ -276,52 +277,7 @@ public class SuchprofilMapper {
 	}
 	
 	
-	/**
-	 * Einfuegen eines <code>Suchprofil</code>-Objekts in die Datenbank.
-	 */
-	public Suchprofil insertSuchprofil(Suchprofil suchprofil) {
-		Connection con = DBConnection.connection();
-		
-		try {
-			Statement stmt = con.createStatement();
-			
-
-			
-
-			// Grueuete profil_id ermitteln. 
-
-			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil");
-
-			// Wenn wir etwas zurueckerhalten, kann dies nur einzeilig sein.
-			if (rs.next()) {	
-				
-				// suchprofil erhaelt den bisher maximalen, nun um 1 inkrementierten Primärschlüssel. 
-				suchprofil.setProfilId(rs.getInt("maxprofil_id") + 1);
-				
-				// Tabelle t_profil befuellen - funktioniert! 
-				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
-								+ "VALUES(" + suchprofil.getProfilId() + ",'" + suchprofil.getGeschlecht() + "','"
-								+ suchprofil.getHaarfarbe() + "','" + suchprofil.getKoerpergroesse() + "','"
-								+ suchprofil.getRaucher() + "','" + suchprofil.getReligion() + "')");
-				
-				// Tablle t_suchprofil befüllen - funktioniert! 
-				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, alter_von, alter_bis) "
-						+ "VALUES(" + suchprofil.getProfilId() + "," + Benutzer.getProfilId() + ",'" + suchprofil.getAlterMin() + "','"
-						+ suchprofil.getAlterMax() + "')");	
-			}
-			
-		}
-		 catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		/*
-		 * Rückgabe des Suchprofils mit evtl. korrigierter ProfilId. 
-		 */
-		return suchprofil;	
-		}
+	
 	
 	
 
@@ -370,91 +326,98 @@ public class SuchprofilMapper {
 		}
 
 	}
-
+	
+	// Aehnlichkeit berechnen und in Partnervorschlaege ausgeben
+	
 	/**
-	 * Loeschen der Daten eines <code>Suchprofil</code>-Objekts aus der Datenbank.
+	 * Aehnlichkeit hinzufuegen. 
 	 */
-	public void deleteSuchprofil(int profilId) {
+	public void insertAehnlichkeit(int suchprofilId, int fremdprofilId, int aehnlichkeitSp) { 
 		Connection con = DBConnection.connection();
 		
-		// Ergebnisvariable, d.h. die SuchprofilId
-		int suchprofilIdInt = 0;
-
 		try {
-							
 			Statement stmt = con.createStatement();
-			
-			// Holen der zu löschenden SuchprofilId aus der Tabelle t_suchprofil
-			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
-					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
-			
-			
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein.
-			if(rs.next()) {
-				suchprofilIdInt = rs.getInt("sp_id");
-			
-			// Löschen der Daten in der Tabelle t_suchprofil mit der entsprechenden ProfilId
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_suchprofil "
-					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
-			
-			// Löschen der Daten in der Tabelle t_profil mit der entsprechenden SuchprofilId
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_profil WHERE t_profil.profil_id=" + suchprofilIdInt);
-								
-			}
-			
+
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (suchprofil_id, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
+			+ suchprofilId + "," + fremdprofilId + "," + aehnlichkeitSp + ")");
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-		}
+		}	
 	}
 	
 	/**
-	 * Suchen eines Suchprofils mit vorgegebener ProfilId. 
+	 * Aehnlichkeit loeschen.
 	 */
-	public Suchprofil findBySuchprofilId(int profilId) {
-		// DB-Verbindung holen
+	public void deleteAehnlichkeitSp (int suchprofilId) {
 		Connection con = DBConnection.connection();
 
 		try {
-			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-			
-			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
-			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
-			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
-			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
-			
-					
-			/*
-			 * Da id PrimÃ¤rschlÃ¼ssel ist, kann max. nur ein Tupel
-			 * zurÃ¼ckgegeben werden. PrÃ¼fe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Suchprofil suchprofil = new Suchprofil();
-				
-				suchprofil.setProfilId(rs.getInt("suchprofil_id"));
-				suchprofil.setGeschlecht(rs.getString("geschlecht"));
-				suchprofil.setKoerpergroesse(rs.getString("koerpergroesse"));
-				suchprofil.setHaarfarbe(rs.getString("haarfarbe"));
-				suchprofil.setAlterMin(rs.getString("alter_von"));
-				suchprofil.setAlterMax(rs.getString("alter_bis"));	
-				suchprofil.setRaucher(rs.getString("raucher"));
-				suchprofil.setReligion(rs.getString("religion"));
-				
-				return suchprofil;
-					
-			}
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE suchprofil_id=" + suchprofilId);
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-			return null;
 		}
-		return null;
 
 	}
+	
+//	/**
+//	 * Geordnete Partnervorschlaege ausgeben
+//	 */
+//	public List<Nutzerprofil> findGeordnetePartnervorschlaegeNp(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		// Ergebnisliste vorbereiten
+//		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery(							
+//							"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
+//							+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, "
+//							+ "t_profil.haarfarbe, t_profil.raucher, t_profil.religion , t_aehnlichkeitsp.aehnlichkeit "
+//							+ "FROM t_nutzerprofil"
+//							+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
+//							+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
+//							+ "LEFT JOIN t_aehnlichkeitnp ON t_nutzerprofil.nutzerprofil_id = t_aehnlichkeitnp.fremdprofil_id "
+//							+ "WHERE t_nutzerprofil.nutzerprofil_id != 1 "
+//							+ "AND (t_besuch.nutzerprofil_id != 1 OR t_besuch.fremdprofil_id IS NULL) "
+//							+ "AND (t_sperrung.fremdprofil_id != 1 OR t_sperrung.nutzerprofil_id IS NULL) "
+//							+ "AND t_aehnlichkeitnp.nutzerprofil_id = 1 ORDER BY t_aehnlichkeitnp.aehnlichkeit DESC");
+//
+//
+//			// FÃƒÂ¼r jeden Eintrag im Suchergebnis wird nun ein
+//			// Nutzerprofil-Objekt erstellt.
+//			while (rs.next()) {
+//				Nutzerprofil nutzerprofil = new Nutzerprofil();
+//				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+//				nutzerprofil.setVorname(rs.getString("vorname"));
+//				nutzerprofil.setNachname(rs.getString("nachname"));
+//				nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+//				nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+//				nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+//				nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+//				nutzerprofil.setRaucher(rs.getString("raucher"));
+//				nutzerprofil.setReligion(rs.getString("religion"));
+//				
+//
+//				// HinzufÃƒÂ¼gen des neuen Objekts zur Ergebnisliste
+//				result.add(nutzerprofil);
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		// Ergebnisliste zurÃƒÂ¼ckgeben
+//		return result;
+//	}
+
+	
+	
+	
 
 }

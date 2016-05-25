@@ -487,6 +487,64 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				throws IllegalArgumentException {
 			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
 		}
+		
+public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws IllegalArgumentException {
+		
+			
+			Suchprofil referenzprofil = suchprofilMapper.findBySuchprofilId(suchprofilId);
+		
+			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+			
+			int aehnlichkeitSp = 0;
+			
+			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
+				aehnlichkeitSp  = aehnlichkeitSp  + 40;
+			}
+			
+			if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
+				aehnlichkeitSp  = aehnlichkeitSp  + 10;
+			}
+			
+			
+			if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
+				aehnlichkeitSp  = aehnlichkeitSp  + 10;
+			}
+			
+			if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
+				aehnlichkeitSp  = aehnlichkeitSp  + 20;
+			}
+			
+			if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
+				aehnlichkeitSp  = aehnlichkeitSp  + 20;
+			}
+			
+			aehnlichkeitSp = (100/ 100) * aehnlichkeitSp ;
+		
+			return aehnlichkeitSp ;
+			
+		}
+		
+		
+		public void aehnlichkeitSetzenSp (int suchprofilId, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException {
+			this.suchprofilMapper.insertAehnlichkeit(suchprofilId, fremdprofilId, aehnlichkeitSp); 
+		}
+		
+		public void aehnlichkeitEntfernenSp(int profilId) throws IllegalArgumentException {
+			this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
+		}
+		
+		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
+		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung (int profilId) throws IllegalArgumentException {
+			return this.nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
+		}
+		
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId)
+				throws IllegalArgumentException {
+			
+			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId);
+		}
+
+
 
 
 
