@@ -93,7 +93,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					final int fremdprofilId = np.getProfilId();
 					row++;
 					partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(np.getProfilId())); 
-					partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
+//					partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
 					partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
 					partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
 					partnervorschlaegeNpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));

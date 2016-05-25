@@ -8,10 +8,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/heads/master
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 
