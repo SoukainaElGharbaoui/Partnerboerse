@@ -96,7 +96,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 					partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
 					partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname()); 
 					partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
-					partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeburtsdatum());
+					partnervorschlaegeNpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));
 					partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht()); 
 									
 					// Anzeigen-Button hinzufügen und ausbauen. 

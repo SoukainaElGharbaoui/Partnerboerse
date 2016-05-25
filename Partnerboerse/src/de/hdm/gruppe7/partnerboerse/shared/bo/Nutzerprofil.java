@@ -19,7 +19,8 @@ public class Nutzerprofil extends Profil{
 	
 	private String vorname;
 	private String nachname; 
-	private String geburtsdatum;
+	private String geburtsdatum; 
+	private Date geburtsdatumDate;
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
@@ -28,62 +29,36 @@ public class Nutzerprofil extends Profil{
 	public String getVorname() {
 		return vorname;
 	}
+	
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
+
 	public String getNachname() {
 		return nachname;
 	}
+
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
+
 	public String getGeburtsdatum() {
 		return geburtsdatum;
 	}
+
 	public void setGeburtsdatum(String geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
-	public List<Nutzerprofil> getPartnervorschlaegeNp() {
-		return partnervorschlaegeNp;
-	}
-	public void setPartnervorschlaegeNp(List<Nutzerprofil> partnervorschlaegeNp) {
-		this.partnervorschlaegeNp = partnervorschlaegeNp;
-	}
-	public List<Nutzerprofil> getPartnervorschlaegeSp() {
-		return partnervorschlaegeSp;
-	}
-	public void setPartnervorschlaegeSp(List<Nutzerprofil> partnervorschlaegeSp) {
-		this.partnervorschlaegeSp = partnervorschlaegeSp;
-	}
-	public List<Nutzerprofil> getAngeseheneNp() {
-		return angeseheneNp;
-	}
-	public void setAngeseheneNp(List<Nutzerprofil> angeseheneNp) {
-		this.angeseheneNp = angeseheneNp;
-	}
-	
-	//Konstruktor
-	public Nutzerprofil() {
-		super();
-		// TODO Auto-generated constructor stub
+
+	public Date getGeburtsdatumDate() {
+		return geburtsdatumDate;
 	}
 
-	
-	private void merkeProfil (Nutzerprofil np) {
-		
+	public void setGeburtsdatumDate(Date geburtsdatumDate) {
+		this.geburtsdatumDate = geburtsdatumDate;
 	}
-	
-	private void entferneGemerktesProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void sperreProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entsperreProfil (Nutzerprofil np) {
-		
-	}
+
+
 	public int getAehnlichkeit() {
 		return aehnlichkeit;
 	}
@@ -91,5 +66,11 @@ public class Nutzerprofil extends Profil{
 		this.aehnlichkeit = aehnlichkeit;
 	}
 
-	
+
+	//Konstruktor
+	public Nutzerprofil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }
