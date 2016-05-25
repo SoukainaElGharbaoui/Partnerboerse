@@ -135,7 +135,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 					     
 					      
 					    
-					    partner.addColumn(newColumn(boundValue(result2)), newTextCell(), "Aehnlichkeit");
+					    partner.addColumn( "Aehnlichkeit");
 					    
 					    
 //					    
