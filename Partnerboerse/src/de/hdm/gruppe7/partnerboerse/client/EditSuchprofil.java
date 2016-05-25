@@ -197,9 +197,17 @@ public class EditSuchprofil extends VerticalPanel {
 		 */
 		final Label informationLabel = new Label();
 		verPanel.add(informationLabel);
+		
+		final Label warnungLabel = new Label(); 
 
 		speichernButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+					warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+					verPanel.add(warnungLabel);
+				} else {
+				
 				ClientsideSettings.getPartnerboerseAdministration().saveSuchprofil(
 						geschlechtListBox.getSelectedItemText(),
 						Integer.parseInt(alterMinTextBox.getText()), 
@@ -218,8 +226,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
-								informationLabel
-										.setText("Suchprofil erfolgreich aktualisiert.");
+								informationLabel.setText("Suchprofil erfolgreich aktualisiert.");
 								ShowSuchprofil showSuchprofil = new ShowSuchprofil();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showSuchprofil);
@@ -227,6 +234,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 						});
 
+			}
 			}
 		});
 	}
