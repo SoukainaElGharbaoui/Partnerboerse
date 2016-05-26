@@ -86,14 +86,14 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Suchprofil aktualisieren.
 	 */
-	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+	public void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException;
 	
 	/**
 	 * Suchprofil löschen.
 	 */
-	public void deleteSuchprofil(int profilId) throws IllegalArgumentException;
+	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/**
 	 * Suchprofil anhand der Profil-ID auslesen.

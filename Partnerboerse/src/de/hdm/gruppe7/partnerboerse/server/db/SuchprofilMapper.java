@@ -72,26 +72,16 @@ public class SuchprofilMapper {
 	 */
 	public void updateSuchprofil(Suchprofil s) { 
 		Connection con = DBConnection.connection();
-		
-		int suchprofilIdInt = 0; 
 
 		try {
+			
 			Statement stmt = con.createStatement(); 
-			
-			// Zu löschende suchprofil_id aus der Tabelle t_suchprofil holen.
-			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
-					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + Benutzer.getProfilId());
-			
-			// Wenn wir etwas zurückerhalten...
-			if(rs.next()) {
-				suchprofilIdInt = rs.getInt("sp_id"); 
-
-			stmt = con.createStatement();
 			stmt.executeUpdate(
 					"UPDATE t_suchprofil " 
-							+ "SET alter_von=\"" + s.getAlterMinInt() + "\", " 
+							+ "SET suchprofilname=\"" + s.getSuchprofilName() + "\", "
+							+ "alter_von=\"" + s.getAlterMinInt() + "\", " 
 							+ "alter_bis=\"" + s.getAlterMaxInt() + "\" "
-							+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId()); 
+							+ "WHERE suchprofil_id=" + s.getProfilId()); 
 			
 			stmt = con.createStatement();
 			stmt.executeUpdate(
@@ -101,9 +91,8 @@ public class SuchprofilMapper {
 							+ "haarfarbe=\"" + s.getHaarfarbe() + "\", " 
 							+ "raucher=\"" + s.getRaucher() + "\", "
 							+ "religion=\"" + s.getReligion() + "\" "
-							+ "WHERE profil_id=" + suchprofilIdInt);
-
-			}
+							+ "WHERE profil_id=" + s.getProfilId()); 
+			
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -114,7 +103,7 @@ public class SuchprofilMapper {
 	/**
 	 * Suchprofil-Objekt aus der Datenbank löschen.
 	 */
-	public void deleteSuchprofil(int profilId) {
+	public void deleteSuchprofil(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 		
 		int suchprofilIdInt = 0;
@@ -124,8 +113,9 @@ public class SuchprofilMapper {
 			Statement stmt = con.createStatement();
 			
 			// Zu löschende suchprofil_id aus der Tabelle t_suchprofil holen.
-			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id "
-					+ "FROM t_suchprofil WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+			ResultSet rs = stmt.executeQuery("SELECT suchprofil_id AS sp_id FROM t_suchprofil "
+					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId
+					+ " AND t_suchprofil.suchprofilname LIKE '" + suchprofilName + "'");
 			
 			
 			// Wenn wir etwas zurückerhalten...
@@ -135,7 +125,7 @@ public class SuchprofilMapper {
 			// Daten aus der Tabelle t_suchprofil mit der entsprechenden profil_id löschen.
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_suchprofil "
-					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId);
+					+ "WHERE t_suchprofil.suchprofil_id=" + suchprofilIdInt);
 			
 			// Daten aus der Tabelle t_profil mit der entsprechenden suchprofil_id löschen.
 			stmt = con.createStatement();
@@ -275,7 +265,7 @@ public class SuchprofilMapper {
 	}
 	
 	/**
-	 * Alle Suchprofile auslesen.
+	 * Alle Suchprofile eines Nutzerprofils auslesen.
 	 */
 	public List<Suchprofil> findAllSuchprofileFor(int profilId) {
 		Connection con = DBConnection.connection();

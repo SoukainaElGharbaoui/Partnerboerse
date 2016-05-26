@@ -84,14 +84,14 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil aktualisieren.
 	 */
-	void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+	void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, 
 			AsyncCallback<Void> callback);
 
 	/**
 	 * Suchprofil löschen.
 	 */
-	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
+	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 	
 	/**
 	 * Suchprofil anhand der Profil-ID auslesen.

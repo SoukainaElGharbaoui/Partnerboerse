@@ -176,23 +176,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			return this.suchprofilMapper.insertSuchprofil(s);
 	}
 
-	@Override
-	public void saveSuchprofil(String geschlecht, int alterMinInt,
-			int alterMaxInt, int koerpergroesseInt, String haarfarbe,
-			String raucher, String religion)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * Suchprofil aktualisieren. 
 	 */
-	public void saveSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
+	public void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException {
 		
 			Suchprofil s = new Suchprofil();
+			s.setProfilId(profilId);
 			s.setSuchprofilName(suchprofilName); 
 			s.setGeschlecht(geschlecht);
 			s.setAlterMinInt(alterMinInt);
@@ -209,8 +201,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Suchprofil löschen.
 	 */
-	public void deleteSuchprofil(int profilId) throws IllegalArgumentException {
-		this.suchprofilMapper.deleteSuchprofil(profilId);
+	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException {
+		this.suchprofilMapper.deleteSuchprofil(profilId, suchprofilName);
 	}
 	
 	/**

@@ -19,6 +19,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class ShowSuchprofil extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private HorizontalPanel auswahlPanel = new HorizontalPanel(); 
+	
+	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 
 	/**
 	 * Konstruktor
@@ -51,6 +55,12 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
+		final Button loeschenButton = new Button("Löschen");
+		
+		final Button bearbeitenButton = new Button("Bearbeiten");
+//		verPanel.add(buttonPanel);
+//		buttonPanel.add(bearbeitenButton);
+		
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
 
@@ -74,7 +84,7 @@ public class ShowSuchprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(Benutzer.getProfilId(),
-						auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
+						auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() { 
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -117,15 +127,53 @@ public class ShowSuchprofil extends VerticalPanel {
 					
 				});
 				
-				verPanel.add(showSuchprofilFlexTable); 
+				bearbeitenButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(editSuchprofil);
+						
+					}
+					
+				}); 
+				
+				loeschenButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						
+						ClientsideSettings.getPartnerboerseAdministration()
+						.deleteSuchprofil(Benutzer.getProfilId(), auswahlListBox.getSelectedItemText(),
+								new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabel.setText("Es trat ein Fehler auf");
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										infoLabel.setText("Das Suchprofil wurde erfolgreich gelöscht");
+									}
+
+								});
+						
+					}
+					
+				}); 
+				
+				verPanel.add(showSuchprofilFlexTable);
+				buttonPanel.add(bearbeitenButton);
+				buttonPanel.add(loeschenButton);
+				verPanel.add(buttonPanel);
+				verPanel.add(infoLabel); 
 				
 			}
 			
 		}); 
 		
 		verPanel.add(auswahlLabel);
-		verPanel.add(auswahlListBox); 
-		verPanel.add(anzeigenButton); 
+		auswahlPanel.add(auswahlListBox);
+		auswahlPanel.add(anzeigenButton);
+		verPanel.add(auswahlPanel); 
 		
 		
 		
