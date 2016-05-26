@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  
 
 public class Navigator extends VerticalPanel {
@@ -272,8 +273,26 @@ public class Navigator extends VerticalPanel {
 					
 				});
 				
+				//Ab hier wird die Aehnlichkeit zwischen den Suchprofilen und den Nutzerprofilen errechnet
 				
-				ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
+				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
+					
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onSuccess(List<Suchprofil> result1) {
+						
+						for (Suchprofil sp : result1){
+							
+							final int suchprofilId = sp.getProfilId();							
+				final String suchprofilName = sp.getSuchprofilName();
+				
+							ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
 					
 					@Override
 					public void onFailure(Throwable caught) {
@@ -283,13 +302,15 @@ public class Navigator extends VerticalPanel {
 					
 					@Override
 					public void onSuccess(List<Nutzerprofil> result) {
-							
-						for (Nutzerprofil np : result){
-							
+						
+												
+				for (Nutzerprofil np : result){
+								
 								
 				final int fremdprofilId = np.getProfilId();
 				
-				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>(){
+				
+				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName, new AsyncCallback<Integer>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -298,10 +319,13 @@ public class Navigator extends VerticalPanel {
 					}
 
 					@Override
-					public void onSuccess(Integer result) {
-						aehnlichkeit = result;
+					public void onSuccess(Integer result3) {
+						aehnlichkeit = result3;
 						
-						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+						
+						
+						
+						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -310,42 +334,42 @@ public class Navigator extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(Void result) {
+							public void onSuccess(Void result4) {
 								// TODO Auto-generated method stub
 
-																						}
+																													}
 
-																					});
-																}
+																												});
+																							}
 
-															});
+																						});
 
-										}
+																	}
+
+																
+															
+
+														
+
+									}
+
+								});
+							
+							
+							
+							
+							
+						}
+						
 						
 						
 						
 					}
-					
-					
 				});
-
-				
-						
-					
-
-									
-
-							
-
-					
-						
-					
-					
-					
-					
 				
 				
-			
+				
+		
 				
 				
 				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();

@@ -190,14 +190,14 @@ public class SuchprofilMapper {
 	/**
 	 * Aehnlichkeit hinzufuegen. 
 	 */
-	public void insertAehnlichkeit(int suchprofilId, int fremdprofilId, int aehnlichkeitSp) { 
+	public void insertAehnlichkeit(int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) { 
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (suchprofil_id, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
-			+ suchprofilId + "," + fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
+			+ suchprofilId + "," + suchprofilName + "," + fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -207,13 +207,13 @@ public class SuchprofilMapper {
 	/**
 	 * Aehnlichkeit loeschen.
 	 */
-	public void deleteAehnlichkeitSp (int suchprofilId) {
+	public void deleteAehnlichkeitSp (int suchprofilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE suchprofil_id=" + suchprofilId);
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE suchprofil_id=" + suchprofilId +"AND suchprofilName=" + suchprofilName);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

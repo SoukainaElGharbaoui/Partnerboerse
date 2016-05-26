@@ -542,7 +542,7 @@ public class NutzerprofilMapper {
 			/**
 			 * Geordnete Partnervorschlaege ausgeben
 			 */
-			public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId) {
+			public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) {
 				Connection con = DBConnection.connection();
 
 				// Ergebnisliste vorbereiten
@@ -553,15 +553,14 @@ public class NutzerprofilMapper {
 
 					ResultSet rs = stmt
 							.executeQuery(							
-									"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname,"
-									+ " t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe,"
-									+ " t_profil.raucher, t_profil.religion , t_aehnlichkeitsp.aehnlichkeit FROM t_nutzerprofil "
-									+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id LEFT JOIN t_sperrung"
-									+ " ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id LEFT JOIN t_aehnlichkeitsp"
-									+ " ON t_nutzerprofil.nutzerprofil_id = t_aehnlichkeitsp.fremdprofil_id"
-									+ " WHERE t_nutzerprofil.nutzerprofil_id != 1 AND (t_sperrung.fremdprofil_id != 1 "
-									+ "OR t_sperrung.nutzerprofil_id IS NULL) AND t_aehnlichkeitsp.suchprofil_id = 1"
-									+ " ORDER BY t_aehnlichkeitsp.aehnlichkeit DESC" );
+									"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
+									+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe,"
+									+ " t_profil.raucher, t_profil.religion , t_aehnlichkeitsp.aehnlichkeit"
+									+ " FROM t_nutzerprofil LEFT JOIN t_profil "
+									+ "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id , t_aehnlichkeitsp "
+									+ "WHERE t_nutzerprofil.nutzerprofil_id != 1 AND t_aehnlichkeitsp.suchprofilname = '" + suchprofilName+ "'"
+									+ "AND t_aehnlichkeitsp.fremdprofil_id = t_nutzerprofil.nutzerprofil_id "
+									+ "ORDER BY t_aehnlichkeitsp.aehnlichkeit DESC  ");
 
 
 					// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein

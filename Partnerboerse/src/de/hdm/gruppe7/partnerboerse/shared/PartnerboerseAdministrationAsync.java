@@ -95,10 +95,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 	
-	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -208,18 +204,18 @@ public interface PartnerboerseAdministrationAsync {
 	 * ***************************************************************************
 	 */
 	
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
+	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName,
 			AsyncCallback<Integer> callback);
 
-	void aehnlichkeitSetzenSp(int suchprofilId, int fremdprofilId,
-			int aehnlichkeitSp, AsyncCallback<Void> callback);
+	void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName,  int fremdprofilId,
+			int aehnlichkeitSp,  AsyncCallback<Void> callback);
 
-	void aehnlichkeitEntfernenSp(int suchprofilId, AsyncCallback<Void> callback);
+	void aehnlichkeitEntfernenSp(int suchprofilId, String suchprofilName, AsyncCallback<Void> callback);
 	
 	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
 		void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
-	void getGeordnetePartnervorschlaegeSp(int profilId,
+	void getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
 	
 	

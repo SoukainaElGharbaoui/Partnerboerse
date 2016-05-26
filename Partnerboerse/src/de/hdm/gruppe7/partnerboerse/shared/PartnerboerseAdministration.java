@@ -99,10 +99,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
-	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 	
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -221,20 +217,20 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName)
 		throws IllegalArgumentException;
 		
 		//Aehnlichkeit in DB speichern
-		public void aehnlichkeitSetzenSp (int suchprofilId, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
+		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
 		
 		//Aehnlichkeit aus DB loeschen
-		public void aehnlichkeitEntfernenSp (int suchprofilId) throws IllegalArgumentException;
+		public void aehnlichkeitEntfernenSp (int suchprofilId, String suchprofilName) throws IllegalArgumentException;
 		
 		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
 		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException;
 		
 //		//Ausgabe der Partnervorschlaege
-		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId) throws IllegalArgumentException;
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/*
 	 * ***************************************************************************

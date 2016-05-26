@@ -506,14 +506,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		}
 		
-public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws IllegalArgumentException {
+		
+		
+public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName) throws IllegalArgumentException {
 		
 			
-			Suchprofil referenzprofil = suchprofilMapper.findBySuchprofilbyName(suchprofilId);
+			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilByName(suchprofilId, suchprofilName);
 		
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
 			
 			int aehnlichkeitSp = 0;
+			
+			
+			
+			
+			
 			
 			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
 				aehnlichkeitSp  = aehnlichkeitSp  + 40;
@@ -537,18 +544,22 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			}
 			
 			aehnlichkeitSp = (100/ 100) * aehnlichkeitSp ;
+			
 		
-			return aehnlichkeitSp ;
+			
+			
+			
+			return aehnlichkeitSp;
 			
 		}
 		
 		
-		public void aehnlichkeitSetzenSp (int suchprofilId, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException {
-			this.suchprofilMapper.insertAehnlichkeit(suchprofilId, fremdprofilId, aehnlichkeitSp); 
+		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName,  int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException {
+			this.suchprofilMapper.insertAehnlichkeit(suchprofilId, suchprofilName, fremdprofilId, aehnlichkeitSp); 
 		}
 		
-		public void aehnlichkeitEntfernenSp(int profilId) throws IllegalArgumentException {
-			this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
+		public void aehnlichkeitEntfernenSp(int profilId, String suchprofilName) throws IllegalArgumentException {
+			this.suchprofilMapper.deleteAehnlichkeitSp(profilId, suchprofilName);
 		}
 		
 		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
@@ -556,10 +567,10 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			return this.nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
 		}
 		
-		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId)
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName)
 				throws IllegalArgumentException {
 			
-			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId);
+			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilName);
 		}
 
 

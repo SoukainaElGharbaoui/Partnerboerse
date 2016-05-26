@@ -11,7 +11,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -26,6 +28,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * VerticalPanel hinzuf√ºgen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private HorizontalPanel auswahlPanel = new HorizontalPanel(); 
 	
 /**
 		 * Variablen
@@ -46,11 +50,15 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 */
 		final Label ueberschriftLabel = new Label(
 				"Diese Nutzerprofile koennten zu ihnen passen");
+		final Label ueberschriftLabel2 = new Label("W‰hlen Sie ein Suchprofil aus");
 		ueberschriftLabel.addStyleDependentName("partnerboerse-label"); 
-		verPanel.add(ueberschriftLabel); 
+		verPanel.add(ueberschriftLabel2);
+	
 		
 		final Label infoLabel = new Label();
 		final Label ergebnisLabel = new Label();
+		final ListBox auswahlListBox = new ListBox(); 
+		final Button anzeigenSpButton = new Button("Partnervorschlaege anzeigen");
 		
 		/**
 		 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen. 
@@ -76,8 +84,29 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
+				new AsyncCallback<List<Suchprofil>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf."); 
+						
+					}
+
+					@Override
+					public void onSuccess(List<Suchprofil> result) {
+						for(Suchprofil s : result) {
+							auswahlListBox.addItem(s.getSuchprofilName()); 
+						}
+							
+					}
+			
+		});
 		
-		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), new  AsyncCallback<List<Nutzerprofil>>(){
+		anzeigenSpButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event){
+				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), 
+						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -123,9 +152,23 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 			}
 			
 			
-		});						
+		});
+				verPanel.add(ergebnisLabel);
+		verPanel.add(infoLabel);	
+		verPanel.add(ueberschriftLabel);
+			verPanel.add(partnervorschlaegeSpFlexTable);	
+			 
+			}
+			
+			
+		});
 		
-				
+		
+							
+		verPanel.add(ueberschriftLabel2);
+		auswahlPanel.add(auswahlListBox);
+		auswahlPanel.add(anzeigenSpButton);
+		verPanel.add(auswahlPanel); 	
 		
 			
 			
@@ -183,9 +226,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 														
 														
 														
-		verPanel.add(ergebnisLabel);
-		verPanel.add(infoLabel);
-		verPanel.add(partnervorschlaegeSpFlexTable);					
+							
 
 
 	}
