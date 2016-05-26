@@ -1,9 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
@@ -31,230 +31,298 @@ public class InfoMapper {
 		return infoMapper;
 	}
 
-	public List<Eigenschaft> findAllEigenschaftenB() {
-		Connection con = DBConnection.connection();
-
-		// Ergebnisliste vorbereiten
-		List<Eigenschaft> result = new ArrayList<Eigenschaft>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_eigenschaft "
-							+ "WHERE typ='B' ORDER BY eigenschaft_id ");
-
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
-			while (rs.next()) {
-				Eigenschaft eigenschaft = new Eigenschaft();
-				eigenschaft.setTyp(rs.getString("typ"));
-				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
-
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(eigenschaft);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
-
-	
-	
-
-	public List<Eigenschaft> findAllEigenschaftenA() {
-		Connection con = DBConnection.connection();
-
-		// Ergebnisliste vorbereiten
-		List<Eigenschaft> result = new ArrayList<Eigenschaft>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_eigenschaft "
-							+ "WHERE typ='A' ORDER BY eigenschaft_id ");
-
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
-			while (rs.next()) {
-				Eigenschaft eigenschaft = new Eigenschaft();
-				eigenschaft.setTyp(rs.getString("typ"));
-				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
-
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(eigenschaft);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
-	
-	
-	
-	
-	// FindAllAuswahloptionen erstellen
-		public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
-			Connection con = DBConnection.connection();
-
-			// Ergebnisliste vorbereiten
-			List<Auswahloption> result = new ArrayList<Auswahloption>();
-
-			try {
-				Statement stmt = con.createStatement();
-
-				ResultSet rs = stmt
-						.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
-								+ "FROM t_auswahloption WHERE eigenschaft_id="
-								+ eigenschaftId);
-
-				// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
-				// Nutzerprofil-Objekt erstellt.
-				while (rs.next()) {
-					Auswahloption auswahloption = new Auswahloption();
-					auswahloption.setAuswahloptionId(rs.getInt("auswahloption_id"));
-					auswahloption.setEigenschaftId(rs.getInt("eigenschaft_id"));
-					auswahloption.setOptionsbezeichnung(rs
-							.getString("optionsbezeichnung"));
-
-					// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-					result.add(auswahloption);
-				}
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
-			// Ergebnisliste zurÃ¼ckgeben
-			return result;
-		}
+//	public List<Eigenschaft> findAllEigenschaftenB() {
+//		Connection con = DBConnection.connection();
+//
+//		// Ergebnisliste vorbereiten
+//		List<Eigenschaft> result = new ArrayList<Eigenschaft>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT * FROM t_eigenschaft "
+//							+ "WHERE typ='B' ORDER BY eigenschaft_id ");
+//
+//			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+//			// Nutzerprofil-Objekt erstellt.
+//			while (rs.next()) {
+//				Eigenschaft eigenschaft = new Eigenschaft();
+//				eigenschaft.setTyp(rs.getString("typ"));
+//				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
+//
+//				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+//				result.add(eigenschaft);
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		// Ergebnisliste zurÃ¼ckgeben
+//		return result;
+//	}
+//
+//	
+//	
+//
+//	public List<Eigenschaft> findAllEigenschaftenA() {
+//		Connection con = DBConnection.connection();
+//
+//		// Ergebnisliste vorbereiten
+//		List<Eigenschaft> result = new ArrayList<Eigenschaft>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT * FROM t_eigenschaft "
+//							+ "WHERE typ='A' ORDER BY eigenschaft_id ");
+//
+//			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+//			// Nutzerprofil-Objekt erstellt.
+//			while (rs.next()) {
+//				Eigenschaft eigenschaft = new Eigenschaft();
+//				eigenschaft.setTyp(rs.getString("typ"));
+//				eigenschaft.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				eigenschaft.setErlaeuterung(rs.getString("erlaeuterung"));
+//
+//				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+//				result.add(eigenschaft);
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		// Ergebnisliste zurÃ¼ckgeben
+//		return result;
+//	}
+//	
+//	
+//	
+//	
+//	// FindAllAuswahloptionen erstellen
+//		public List<Auswahloption> findAllAuswahloptionen(int eigenschaftId) {
+//			Connection con = DBConnection.connection();
+//
+//			// Ergebnisliste vorbereiten
+//			List<Auswahloption> result = new ArrayList<Auswahloption>();
+//
+//			try {
+//				Statement stmt = con.createStatement();
+//
+//				ResultSet rs = stmt
+//						.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
+//								+ "FROM t_auswahloption WHERE eigenschaft_id="
+//								+ eigenschaftId);
+//
+//				// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+//				// Nutzerprofil-Objekt erstellt.
+//				while (rs.next()) {
+//					Auswahloption auswahloption = new Auswahloption();
+//					auswahloption.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//					auswahloption.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//					auswahloption.setOptionsbezeichnung(rs
+//							.getString("optionsbezeichnung"));
+//
+//					// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+//					result.add(auswahloption);
+//				}
+//			} catch (SQLException e2) {
+//				e2.printStackTrace();
+//			}
+//
+//			// Ergebnisliste zurÃ¼ckgeben
+//			return result;
+//		}
 		
+//
+//	
+//	
+//	public List<Beschreibungsinfo> findAllInfosB(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		List<Beschreibungsinfo> result = new ArrayList<Beschreibungsinfo>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT "
+//							+ "t_beschreibungsinfo.nutzerprofil_id, "
+//							+ "t_beschreibungsinfo.infotext, "
+//							+ "t_beschreibungsinfo.eigenschaft_id "
+////							+ "t_eigenschaft.erlaeuterung "
+//							+ "FROM t_beschreibungsinfo, t_eigenschaft "
+//							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
+//							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+//							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
+//
+//			while (rs.next()) {
+//				Beschreibungsinfo infoB = new Beschreibungsinfo();
+//				infoB.setNutzerprofilId(profilId);
+//				infoB.setEigenschaftId(rs.getInt("eigenschaft_id"));
+////				infoB.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+//				infoB.setInfotext(rs.getString("infotext"));
+//
+//				result.add(infoB);
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
 
 	
-	
-	public List<Beschreibungsinfo> findAllInfosB(int profilId) {
+	public List<Info> findAllInfosNeu(int nutzerprofilId){
 		Connection con = DBConnection.connection();
-
-		List<Beschreibungsinfo> result = new ArrayList<Beschreibungsinfo>();
-
+		
+		List<Info> result = new ArrayList<Info>();
+		
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT "
-							+ "t_beschreibungsinfo.nutzerprofil_id, "
-							+ "t_beschreibungsinfo.infotext, "
-							+ "t_beschreibungsinfo.eigenschaft_id "
-//							+ "t_eigenschaft.erlaeuterung "
-							+ "FROM t_beschreibungsinfo, t_eigenschaft "
-							+ "WHERE t_beschreibungsinfo.nutzerprofil_id=" + profilId
-							+ " AND t_beschreibungsinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-							+ "ORDER BY t_beschreibungsinfo.eigenschaft_id ");
-
-			while (rs.next()) {
-				Beschreibungsinfo infoB = new Beschreibungsinfo();
-				infoB.setNutzerprofilId(profilId);
-				infoB.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				infoB.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-				infoB.setInfotext(rs.getString("infotext"));
-
-				result.add(infoB);
+					.executeQuery("SELECT * FROM t_info1 WHERE nutzerprofil_id=" + nutzerprofilId);
+			
+//							SELECT * FROM t_info1 WHERE nutzerprofil_id=1 klappt !
+			
+			while(rs.next()){
+				Info i = new Info();
+				i.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+				i.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				i.setInfotext(rs.getString("infotext"));
+				
+			result.add(i);
 			}
+
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-		}
-
-		return result;
-	}
-
-	
-	
-	
-		public Auswahloption findOptionById(int eigenschaftId, int nutzerprofilId) {
-			Connection con = DBConnection.connection();
-			
-			try {
-				Statement stmt = con.createStatement();
-	
-				ResultSet rs = stmt
-						.executeQuery("SELECT "
-//								+ "t_auswahlinfo.auswahloption_id, "
-//								+ "t_auswahlinfo.eigenschaft_id, "
-								+ "t_auswahloption.optionsbezeichnung "
-								+ "FROM t_auswahlinfo, t_auswahloption, t_eigenschaft "
-								+ "WHERE t_auswahloption.eigenschaft_id=" + eigenschaftId
-								+ " AND t_auswahloption.nutzerprofil_id=" + nutzerprofilId
-								+ " AND t_auswahlinfo.eigenschaft_id = t_auswahloption.eigenschaft_id "
-								+ "AND t_auswahlinfo.auswahloption_id = t_auswahloption.auswahloption_id "
-								+ "AND t_eigenschaft.typ='A'");
-				
-				if (rs.next()) {
-			
-					Auswahloption optionA = new Auswahloption();
-					optionA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-					
-				return optionA;
-				
-				}
-				
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-				return null;
-
-			}
 			return null;
 		}
-		
-	
-	
-	public List<Auswahlinfo> findAllInfosA(int profilId) {
-		Connection con = DBConnection.connection();
-
-		List<Auswahlinfo> result = new ArrayList<Auswahlinfo>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT "
-//							+ "t_eigenschaft.erlaeuterung, "
-//							+ "t_auswahloption.optionsbezeichnung, "
-							+ "t_auswahlinfo.nutzerprofil_id, "
-							+ "t_auswahlinfo.eigenschaft_id, "
-							+ "t_auswahlinfo.auswahloption_id "
-							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
-							+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
-							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
-							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
-							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
-							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
-
-			while (rs.next()) {
-								
-				Auswahlinfo infoA = new Auswahlinfo();
-				infoA.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
-				infoA.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				infoA.setAuswahloptionId(rs.getInt("auswahloption_id"));
-				
-//				infoA.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
-//				infoA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-
-				result.add(infoA);
-
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
 		return result;
 	}
+	
+	
+	
+
+	public Eigenschaft findEigenschaftById(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+		
+//		SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id=1		klappt !
+		
+		Eigenschaft eig = new Eigenschaft();
+		
+		try {
+		
+		Statement stmt = con.createStatement();
+		
+		ResultSet rs = stmt
+				.executeQuery("SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id=" + eigenschaftId);
+		
+		while(rs.next()){
+		Eigenschaft e = new Eigenschaft();
+		e.setEigenschaftId(rs.getInt("eigenschaft_id"));
+		e.setErlaeuterung(rs.getString("erlaeuterung"));
+		e.setTyp(rs.getString("typ"));
+		
+//		String eigenschaftbez = rs.getString("erlaeuterung");
+//		return eigenschaftbez;
+		
+//		return e;
+		
+		eig = e;
+		}
+	
+	} catch (SQLException e2) {
+		e2.printStackTrace();
+		return null;
+	}
+		return eig;
+}
+	
+	
+	
+	
+	
+//		public String findOptionById(int eigenschaftId, int nutzerprofilId) {
+//			Connection con = DBConnection.connection();
+//			
+//			try {
+//				Statement stmt = con.createStatement();
+//	
+//				ResultSet rs = stmt
+//						.executeQuery("SELECT "
+//								+ "t_auswahloption.optionsbezeichnung "
+//								+ "FROM t_auswahloption, t_auswahlinfo "
+//								+ "WHERE t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+//								+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+//								+ "AND t_auswahlinfo.nutzerprofil_id=" + nutzerprofilId
+//								+ " AND t_auswahloption.eigenschaft_id=" + eigenschaftId);
+				
+//				if (rs.next()) {
+//				Auswahloption optionA = new Auswahloption();
+//				
+//				String optionsbez = rs.getString("optionsbezeichnung");
+//				
+////					optionA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+//					
+////				return optionA;
+//				return optionsbez;
+//				
+////				}
+//				
+//			} catch (SQLException e2) {
+//				e2.printStackTrace();
+//				return null;
+//			}
+////			return null;
+//		}
+//		
+//	
+//	
+//	public List<Auswahlinfo> findAllInfosA(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		List<Auswahlinfo> result = new ArrayList<Auswahlinfo>();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT "
+////							+ "t_eigenschaft.erlaeuterung, "
+////							+ "t_auswahloption.optionsbezeichnung, "
+//							+ "t_auswahlinfo.nutzerprofil_id, "
+//							+ "t_auswahlinfo.eigenschaft_id, "
+//							+ "t_auswahlinfo.auswahloption_id "
+//							+ "FROM t_eigenschaft, t_auswahloption, t_auswahlinfo "
+//							+ "WHERE t_auswahlinfo.nutzerprofil_id=" + profilId
+//							+ " AND t_auswahlinfo.eigenschaft_id = t_eigenschaft.eigenschaft_id "
+//							+ "AND t_auswahloption.eigenschaft_id = t_auswahlinfo.eigenschaft_id "
+//							+ "AND t_auswahloption.auswahloption_id = t_auswahlinfo.auswahloption_id "
+//							+ "ORDER BY t_auswahlinfo.eigenschaft_id ");
+//
+//			while (rs.next()) {
+//								
+//				Auswahlinfo infoA = new Auswahlinfo();
+//				infoA.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+//				infoA.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				infoA.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//				
+////				infoA.setEigenschaftErlaeuterung(rs.getString("erlaeuterung"));
+////				infoA.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
+//
+//				result.add(infoA);
+//
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
 
 //	
 //	public Info findByInfoAId(String optionsbezeichnung, int eigenschaftId) {
@@ -290,48 +358,48 @@ public class InfoMapper {
 //
 //
 //	
-	public Beschreibungsinfo insertBeschreibungsinfo(Beschreibungsinfo infoB) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (nutzerprofil_id, eigenschaft_id, infotext) "
-					+ "VALUES("
-					+ infoB.getNutzerprofilId()
-					+ ","
-					+ infoB.getEigenschaftId()
-					+ ",'"
-					+ infoB.getInfotext()
-					+ "')");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-		return infoB;
-	}
-
-	public Auswahlinfo insertAuswahlinfo(Auswahlinfo infoA) {
-		Connection con = DBConnection.connection();
-
-		int auswahloptionId = infoA.getAuswahloptionId() + 1;
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO t_auswahlinfo (nutzerprofil_id, eigenschaft_id, auswahloption_id) "
-					+ "VALUES("
-					+ infoA.getNutzerprofilId()
-					+ ","
-					+ infoA.getEigenschaftId() + ",'" + auswahloptionId + "')");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		return infoA;
-	}
-	
+//	public Beschreibungsinfo insertBeschreibungsinfo(Beschreibungsinfo infoB) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt.executeUpdate("INSERT INTO t_beschreibungsinfo (nutzerprofil_id, eigenschaft_id, infotext) "
+//					+ "VALUES("
+//					+ infoB.getNutzerprofilId()
+//					+ ","
+//					+ infoB.getEigenschaftId()
+//					+ ",'"
+//					+ infoB.getInfotext()
+//					+ "')");
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//		return infoB;
+//	}
+//
+//	public Auswahlinfo insertAuswahlinfo(Auswahlinfo infoA) {
+//		Connection con = DBConnection.connection();
+//
+//		int auswahloptionId = infoA.getAuswahloptionId() + 1;
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt.executeUpdate("INSERT INTO t_auswahlinfo (nutzerprofil_id, eigenschaft_id, auswahloption_id) "
+//					+ "VALUES("
+//					+ infoA.getNutzerprofilId()
+//					+ ","
+//					+ infoA.getEigenschaftId() + ",'" + auswahloptionId + "')");
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return infoA;
+//	}
+//	
 //
 //	public void updateInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) {
 //		Connection con = DBConnection.connection();
@@ -364,26 +432,26 @@ public class InfoMapper {
 //		}
 //	}
 //
-	
-	
-	
-	
-	public void updateInfoB(Beschreibungsinfo infoB) {
-		Connection con = DBConnection.connection();
-		
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("UPDATE t_beschreibungsinfo "
-					+ "SET infotext=\"" + infoB.getInfotext() + "\" "
-					+ "WHERE nutzerprofil_id=" + infoB.getNutzerprofilId()
-					+ " AND eigenschaft_id=" + infoB.getEigenschaftId());
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-	}
+//	
+//	
+//	
+//	
+//	public void updateInfoB(Beschreibungsinfo infoB) {
+//		Connection con = DBConnection.connection();
+//		
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt.executeUpdate("UPDATE t_beschreibungsinfo "
+//					+ "SET infotext=\"" + infoB.getInfotext() + "\" "
+//					+ "WHERE nutzerprofil_id=" + infoB.getNutzerprofilId()
+//					+ " AND eigenschaft_id=" + infoB.getEigenschaftId());
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//	}
 
 	
 
@@ -446,6 +514,7 @@ public class InfoMapper {
 			e2.printStackTrace();
 		}
 	}
+
 	
 	
 }

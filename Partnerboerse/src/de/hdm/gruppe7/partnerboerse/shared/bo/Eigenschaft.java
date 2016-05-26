@@ -37,24 +37,5 @@ public class Eigenschaft extends BusinessObject {
 	//Konstruktor
 	public Eigenschaft(){
 	}
-	
-//	public String toString() {
-//	    return super.toString() + "Eigenschaft-ID: #" + this.eigenschaftId 
-//	    		+ "Erlaeuterung: " + this.erlaeuterung 
-//	    		+ "Typ: " + this.typ; 
-//	  }
-//	
-//	public boolean equals(Object o) {
-//	    if (o != null && o instanceof Eigenschaft) {
-//	      Eigenschaft eig = (Eigenschaft) o;
-//	      try {
-//	        return super.equals(eig);
-//	      }
-//	      catch (IllegalArgumentException e) {
-//	        return false;
-//	      }
-//	    }
-//	    return false;
-//	  }
 
 }

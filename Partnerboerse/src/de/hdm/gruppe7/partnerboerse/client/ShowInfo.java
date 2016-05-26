@@ -1,6 +1,8 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -12,10 +14,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+
+
+
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 
 public class ShowInfo extends VerticalPanel {
 
@@ -24,7 +29,7 @@ public class ShowInfo extends VerticalPanel {
 	private String eigenschaftIdB;
 	private String nutzerprofilId;
 	private String optionsbezeichnung;
-	private int row;
+//	private int row;
 	private int i;
 	
 	// Tabelle für Beschreibungsinfo
@@ -57,7 +62,7 @@ public class ShowInfo extends VerticalPanel {
 		 * Erste Zeile der Tabelle festlegen.
 		 */
 		showInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
-		showInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
+		showInfoFlexTable.setText(0, 1, "Eigenschaft");
 		showInfoFlexTable.setText(0, 2, "Infotext");
 
 		/**
@@ -73,66 +78,117 @@ public class ShowInfo extends VerticalPanel {
 		final Label informationLabel = new Label();
 		
 		
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(Benutzer.getProfilId(), 
+				new AsyncCallback<List<String>>(){
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
-				new AsyncCallback<List<Beschreibungsinfo>>() {
-		
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es trat ein Fehler auf.");
+						informationLabel.setText("Fehler");						
 					}
 
 					@Override
-					public void onSuccess(List<Beschreibungsinfo> result) {
+					public void onSuccess(List<String> result) {
+						informationLabel.setText("Es hat funktioniert! YEAH!");						
+
 						
-						row = showInfoFlexTable.getRowCount();
-
-						for (Beschreibungsinfo i : result) {
-							row++;
-
-							nutzerprofilId = String.valueOf(i.getNutzerprofilId());
-							eigenschaftIdB = String.valueOf(i.getEigenschaftId());
-
-							showInfoFlexTable.setText(row, 0, nutzerprofilId);
-							showInfoFlexTable.setText(row, 1, eigenschaftIdB);
+						int row1 = showInfoFlexTable.getRowCount();
+						int size = result.size();
 							
-							showInfoFlexTable.setText(row, 2, i.getInfotext());
+						for (int i = 0; i < size; i++) {
+
+						String nutzerprofilId = result.get(i);
+						String erlaeuterung = result.get(i+1);
+						String infotext = result.get(i+2);
+									
+						showInfoFlexTable.setText(row1, 0, nutzerprofilId);
+						showInfoFlexTable.setText(row1, 1, erlaeuterung);
+						showInfoFlexTable.setText(row1, 2, infotext);
+						
+						row1++;
+						i++; i++;
 						}
 					}
-				});
+		});
+		
+
+//		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
+//				new AsyncCallback<List<Beschreibungsinfo>>() {
+//		
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						informationLabel.setText("Es trat ein Fehler auf.");
+//					}
+//
+//					@Override
+//					public void onSuccess(List<Beschreibungsinfo> result) {
+//						
+//						int row = showInfoFlexTable.getRowCount();
+//
+//						for (Beschreibungsinfo i : result) {
+//							row++;
+//
+//							nutzerprofilId = String.valueOf(i.getNutzerprofilId());
+//							eigenschaftIdB = String.valueOf(i.getEigenschaftId());
+//
+//							showInfoFlexTable.setText(row, 0, nutzerprofilId);
+//							showInfoFlexTable.setText(row, 1, eigenschaftIdB);
+//							
+//							showInfoFlexTable.setText(row, 2, i.getInfotext());
+//						}
+//					}
+//				});
 		
 		verPanel.add(showInfoFlexTable);
 
 		
-
-		row = showInfoFlexTable.getRowCount();
-		
-		for (i = 0; i < row; i++) {
-
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosGesamt(Benutzer.getProfilId(), 
-				new AsyncCallback<String[]>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es trat ein Fehler auf.");						
-					}
-
-					@Override
-					public void onSuccess(String[] result) {
-						
-						informationLabel.setText("Es hat funktioniert.");	
-						
-////					row = showInfoFlexTable.getRowCount();
+//		ClientsideSettings.getPartnerboerseAdministration().getAllInfosGesamt(Benutzer.getProfilId(), 
+//				new AsyncCallback<Vector<String[]>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						informationLabel.setText("HIIIIILFE ! Es ist ein Fehler aufgetreten.");					
+//					}
+//
+//					@Override
+//					public void onSuccess(Vector<String[]> result) {
+//					
+//					int row1 = showInfoFlexTable.getRowCount();
+//					int size = result.size();
 //						
-//						for (String iA : result) {
-//						i++;
-						
-						showInfoFlexTable.setText(i, 0, result[0]);
-						showInfoFlexTable.setText(i, 1, result[1]);
-						showInfoFlexTable.setText(i, 2, result[2]);
-						}
-					});
-				}	
+//					for (int i = 0; i < size; i++) {
+//						
+//					String[] st = (String[]) result.get(i);
+//								
+//					showInfoFlexTable.setText(row1, 0, st[0]);
+//					showInfoFlexTable.setText(row1, 1, st[1]);
+//					showInfoFlexTable.setText(row1, 2, st[2]);
+//					
+//					informationLabel.setText(st[2]);
+//					}
+//						 
+//					}
+//		});
+
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						informationLabel.setText("Es trat ein Fehler auf.");						
+//					}
+//
+//					@Override
+//					public void onSuccess(String[] result) {
+//						
+//						informationLabel.setText("Es hat funktioniert.");	
+//						
+//////					row = showInfoFlexTable.getRowCount();
+////						
+////						for (String iA : result) {
+////						i++;
+//						
+//						showInfoFlexTable.setText(i, 0, result[0]);
+//						showInfoFlexTable.setText(i, 1, result[1]);
+//						showInfoFlexTable.setText(i, 2, result[2]);
+//						}
+//					});	
 //		});
 //						
 //		}

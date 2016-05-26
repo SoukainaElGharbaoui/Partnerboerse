@@ -13,9 +13,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 public class EditInfo extends VerticalPanel {
@@ -80,114 +80,114 @@ public class EditInfo extends VerticalPanel {
 		/**
 		 * GUI für Beschreibungsinfo
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(
-				Benutzer.getProfilId(), new AsyncCallback<List<Beschreibungsinfo>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabelProfilId.setText("Es trat ein Fehler auf.");
-					}
-
-					@Override
-					public void onSuccess(List<Beschreibungsinfo> result) {
-
-						infoLabelProfilId
-								.setText("Die Profil-Id wurde erfolgreich ermittelt.");
-
-						// Anzahl der Zeilen ermitteln.
-						int row = editInfoFlexTable.getRowCount();
-
-						// Tabelle mit Inhalten aus der Datenbank befüllen.
-						for (Beschreibungsinfo iB : result) {
-							row++;
-
-							final String eigenschaftId = String.valueOf(iB
-									.getEigenschaftId());
-							final String nutzerprofilId = String.valueOf(iB
-									.getNutzerprofilId());
-							
-							editInfoFlexTable.setText(row, 0, nutzerprofilId);
-							editInfoFlexTable.setText(row, 1, eigenschaftId);
-
-							final TextArea textArea = new TextArea();
-							textArea.setText(iB.getInfotext());
-
-							editInfoFlexTable.setWidget(row, 3, textArea);
-
-							final Button loeschenButton = new Button("Löschen");
-							editInfoFlexTable.setWidget(row, 4, loeschenButton);
-
-							loeschenButton.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
-
-									for (int i = 2; i <= editInfoFlexTable
-											.getRowCount();) {
-
-										ClientsideSettings
-												.getPartnerboerseAdministration()
-												.deleteOneInfoB(
-														Benutzer.getProfilId(),
-														Integer.valueOf(eigenschaftId),
-														new AsyncCallback<Void>() {
-
-															@Override
-															public void onFailure(
-																	Throwable caught) {
-																infoLabelLoeschenB
-																		.setText("Es trat ein Fehler auf");
-															}
-
-															@Override
-															public void onSuccess(
-																	Void result) {
-																infoLabelLoeschenB
-																		.setText("Die Beschreibungsinfo wurde erfolgreich gelöscht");
-															}
-
-														});
-
-										editInfoFlexTable.removeRow(i);
-										break;
-									}
-								}
-							});
-
-							updateInfosButton
-									.addClickHandler(new ClickHandler() {
-										public void onClick(ClickEvent event) {
-
-											String neuerInfotext = textArea
-													.getText();
-
-											ClientsideSettings
-													.getPartnerboerseAdministration()
-													.saveInfoB(
-															Benutzer.getProfilId(),
-															Integer.valueOf(eigenschaftId),
-															neuerInfotext,
-															new AsyncCallback<Void>() {
-
-																@Override
-																public void onFailure(
-																		Throwable caught) {
-
-																	infoLabelSaveIB
-																			.setText("Beim Speichern des neuen Infotextes trat ein Fehler auf");
-																}
-
-																@Override
-																public void onSuccess(
-																		Void result) {
-																	infoLabelSaveIB
-																			.setText("Das Aktualisieren des Infotextes war erfolgreich");
-																}
-															});
-										}
-									});
-
-						}
-					}
-				});
+//		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(
+//				Benutzer.getProfilId(), new AsyncCallback<List<Beschreibungsinfo>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabelProfilId.setText("Es trat ein Fehler auf.");
+//					}
+//
+//					@Override
+//					public void onSuccess(List<Beschreibungsinfo> result) {
+//
+//						infoLabelProfilId
+//								.setText("Die Profil-Id wurde erfolgreich ermittelt.");
+//
+//						// Anzahl der Zeilen ermitteln.
+//						int row = editInfoFlexTable.getRowCount();
+//
+//						// Tabelle mit Inhalten aus der Datenbank befüllen.
+//						for (Beschreibungsinfo iB : result) {
+//							row++;
+//
+//							final String eigenschaftId = String.valueOf(iB
+//									.getEigenschaftId());
+//							final String nutzerprofilId = String.valueOf(iB
+//									.getNutzerprofilId());
+//							
+//							editInfoFlexTable.setText(row, 0, nutzerprofilId);
+//							editInfoFlexTable.setText(row, 1, eigenschaftId);
+//
+//							final TextArea textArea = new TextArea();
+//							textArea.setText(iB.getInfotext());
+//
+//							editInfoFlexTable.setWidget(row, 3, textArea);
+//
+//							final Button loeschenButton = new Button("Löschen");
+//							editInfoFlexTable.setWidget(row, 4, loeschenButton);
+//
+//							loeschenButton.addClickHandler(new ClickHandler() {
+//								public void onClick(ClickEvent event) {
+//
+//									for (int i = 2; i <= editInfoFlexTable
+//											.getRowCount();) {
+//
+//										ClientsideSettings
+//												.getPartnerboerseAdministration()
+//												.deleteOneInfoB(
+//														Benutzer.getProfilId(),
+//														Integer.valueOf(eigenschaftId),
+//														new AsyncCallback<Void>() {
+//
+//															@Override
+//															public void onFailure(
+//																	Throwable caught) {
+//																infoLabelLoeschenB
+//																		.setText("Es trat ein Fehler auf");
+//															}
+//
+//															@Override
+//															public void onSuccess(
+//																	Void result) {
+//																infoLabelLoeschenB
+//																		.setText("Die Beschreibungsinfo wurde erfolgreich gelöscht");
+//															}
+//
+//														});
+//
+//										editInfoFlexTable.removeRow(i);
+//										break;
+//									}
+//								}
+//							});
+//
+//							updateInfosButton
+//									.addClickHandler(new ClickHandler() {
+//										public void onClick(ClickEvent event) {
+//
+//											String neuerInfotext = textArea
+//													.getText();
+//
+//											ClientsideSettings
+//													.getPartnerboerseAdministration()
+//													.saveInfoB(
+//															Benutzer.getProfilId(),
+//															Integer.valueOf(eigenschaftId),
+//															neuerInfotext,
+//															new AsyncCallback<Void>() {
+//
+//																@Override
+//																public void onFailure(
+//																		Throwable caught) {
+//
+//																	infoLabelSaveIB
+//																			.setText("Beim Speichern des neuen Infotextes trat ein Fehler auf");
+//																}
+//
+//																@Override
+//																public void onSuccess(
+//																		Void result) {
+//																	infoLabelSaveIB
+//																			.setText("Das Aktualisieren des Infotextes war erfolgreich");
+//																}
+//															});
+//										}
+//									});
+//
+//						}
+//					}
+//				});
 //
 //		/**
 //		 * GUI für Auswahlinfo

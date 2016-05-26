@@ -1,15 +1,18 @@
 
 package de.hdm.gruppe7.partnerboerse.shared;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
+
+
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -230,16 +233,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Liste aller Suchprofile
 	 * @throws IllegalArgumentException
 	 */
-	
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
+	
+	
+	public List<String> getAllInfosNeu(int nutzerprofilId) 
+			throws IllegalArgumentException;
+	
 
-	public Beschreibungsinfo createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
-			throws IllegalArgumentException;
-	
-	public Auswahlinfo createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
-			throws IllegalArgumentException;
-	
+//
+//	public Beschreibungsinfo createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
+//			throws IllegalArgumentException;
+//	
+//	public Auswahlinfo createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
+//			throws IllegalArgumentException;
+//	
 	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
@@ -254,11 +262,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Eigenschaft> getAllEigenschaftenA()
 			throws IllegalArgumentException;
 	
-	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
-			throws IllegalArgumentException;
-	
-	public List<Beschreibungsinfo> getAllInfosB(int profilId)
-			throws IllegalArgumentException;
+//	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
+//			throws IllegalArgumentException;
+//	
+//	public List<Beschreibungsinfo> getAllInfosB(int profilId)
+//			throws IllegalArgumentException;
 
 //	public List<Auswahlinfo> getAllInfosA(int profilId)
 //			throws IllegalArgumentException;
@@ -266,7 +274,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 //	public Auswahloption getOptionById(int eigenschaftId, int nutzerprofilId)
 //			throws IllegalArgumentException;
 	
-	public String[] getAllInfosGesamt(int profilId) throws IllegalArgumentException;
+	public Vector<String[]> getAllInfosGesamt(int profilId) throws IllegalArgumentException;
 	
 //	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
 //			throws IllegalArgumentException;

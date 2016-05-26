@@ -65,15 +65,15 @@ public class Navigator extends VerticalPanel {
 		 */
 		final Button infoAnlegenButton = new Button("Info anlegen");
 		
-		infoAnlegenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				CreateInfo createInfo = new CreateInfo();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createInfo);
-			}
-		});
-		
+//		infoAnlegenButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				CreateInfo createInfo = new CreateInfo();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(createInfo);
+//			}
+//		});
+//		
 		infoAnlegenButton.setStyleName("navigatorbutton"); 
 		this.add(infoAnlegenButton);
 		
