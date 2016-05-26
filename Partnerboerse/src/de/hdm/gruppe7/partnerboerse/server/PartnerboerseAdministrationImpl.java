@@ -405,39 +405,90 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 		
 		
+	public int berechneInfoAehnlichkeitNpFor(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		
+		int aehnlichkeit = 0;
+		
+		List<Info> referenzinfo = infoMapper.findAInfoByProfilId(profilId);
+		List<Info> vergleichsinfo = infoMapper.findAInfoByProfilId(fremdprofilId);
+		
+		for (Info rin : referenzinfo){
+			
+				for (Info vin : vergleichsinfo){
+		
+			if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+				if (rin.getAuswahloptionId() == vin.getAuswahloptionId()){
+					aehnlichkeit= aehnlichkeit + 20;
+				}
+			}
+		}
+		}
+		
+		return aehnlichkeit;
+		
+	}
+	
 		
 		
 		public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		
 			
 			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
-		
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findAInfoByProfilId(profilId);
+			List<Info> vergleichsinfo = infoMapper.findAInfoByProfilId(fremdprofilId);
+			List<Info> referenzinfob = infoMapper.findBInfoByProfilId(profilId);
+			List<Info> vergleichsinfob = infoMapper.findBInfoByProfilId(fremdprofilId);
 			
-			int aehnlichkeit = 40;
+			int aehnlichkeit = 0;
+			int counter = 6;
 			
 			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
-				aehnlichkeit = aehnlichkeit - 40;
+				aehnlichkeit = aehnlichkeit - 1;
 			}
 			
 			if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
-				aehnlichkeit = aehnlichkeit + 10;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
 			
 			if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
-				aehnlichkeit = aehnlichkeit + 10;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
 			if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
-				aehnlichkeit = aehnlichkeit + 20;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
 			if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
-				aehnlichkeit = aehnlichkeit + 20;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
+			
 		
+			for (Info rin : referenzinfo){
+					for (Info vin : vergleichsinfo){
+				if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+					counter++;
+					if (rin.getAuswahloptionId() == vin.getAuswahloptionId()){
+						aehnlichkeit= aehnlichkeit + 1;
+					}
+				}
+			}
+			}
+			
+			
+			for (Info rinb : referenzinfob){
+				for (Info vinb : vergleichsinfob){
+			if (rinb.getEigenschaftId() == vinb.getEigenschaftId()){
+				counter++;
+				if (rinb.getInfotext().equals(vinb.getInfotext())){
+					aehnlichkeit= aehnlichkeit + 1;
+				}
+			}
+		}
+		}
+			aehnlichkeit = aehnlichkeit * (100 / counter);
+			
 			return aehnlichkeit;
 			
 		}

@@ -474,6 +474,11 @@ public class InfoMapper {
 			e2.printStackTrace();
 		}
 	}
+/**
+ * alle Auswahlinfos für ein Profil auslesen
+ * @param profilId
+ * @return
+ */
 	public List<Info> findAInfoByProfilId(int profilId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
@@ -494,6 +499,43 @@ public class InfoMapper {
 				
 				Info info = new Info();
 				info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				result.add(info);
+				}
+			
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		
+			return result;
+		}
+	
+	
+	
+	/**
+	 * Alle Beschreibungsinfos für ein Profil auslesen
+	 * @return
+	 */
+	public List<Info> findBInfoByProfilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+		
+		List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃƒÂ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt
+					.executeQuery("SELECT infotext, eigenschaft_id "
+							+ "FROM t_beschreibungsinfo "
+							+ "WHERE t_beschreibungsinfo.nutzerprofil_id =" + profilId);
+
+			
+				while (rs.next()) {
+				
+				Info info = new Info();
+				info.setInfotext(rs.getString("infotext"));
 				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				result.add(info);
 				}
