@@ -206,7 +206,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen.
+	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	@Override
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException {
@@ -214,25 +214,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Alle Suchprofile auslesen.
+	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
 	 */
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofile();
 	}
 	
 	/**
-	 * Alle Suchprofile eines Nutzers auslesen.
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
 	}
 	
 	/**
-	 * Suchprofil anhand des Namens auslesen.
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENDIG)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
 	}
+	
 	
 	/*
 	 * ***************************************************************************

@@ -51,7 +51,7 @@ public class Navigator extends VerticalPanel {
 		 * Button "Nutzerprofil anzeigen" hinzufügen
 		 */
 		final Button showEigenesNpButton = new Button(
-				"Nutzerprofil anzeigen");
+				"Mein Nutzerprofil");
 		
 		showEigenesNpButton.addClickHandler(new ClickHandler() {
 
@@ -101,25 +101,25 @@ public class Navigator extends VerticalPanel {
 		/**
 		 * Button "Suchprofil anlegen" hinzufügen
 		 */
-		final Button suchprofilAnlegenButton = new Button("Suchprofil anlegen");
-		
-		suchprofilAnlegenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createSuchprofil);
-			}
-		});
-
-		suchprofilAnlegenButton.setStyleName("navigatorbutton"); 
-		this.add(suchprofilAnlegenButton);
+//		final Button suchprofilAnlegenButton = new Button("Suchprofil anlegen");
+//		
+//		suchprofilAnlegenButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(createSuchprofil);
+//			}
+//		});
+//
+//		suchprofilAnlegenButton.setStyleName("navigatorbutton"); 
+//		this.add(suchprofilAnlegenButton);
 
 		/**
-		 * Button "Suchprofil anzeigen" hinzufügen.
+		 * Button "Suchprofile anzeigen" hinzufügen.
 		 */
 		final Button showSuchprofilButton = new Button(
-				"Suchprofil anzeigen");
+				"Meine Suchprofile");
 		
 		showSuchprofilButton.addClickHandler(new ClickHandler() {
 
@@ -137,7 +137,7 @@ public class Navigator extends VerticalPanel {
 		/**
 		 * Button "Merkliste anzeigen" hinzufügen
 		 */
-		final Button merklisteAnzeigenButton = new Button("Merkliste anzeigen");
+		final Button merklisteAnzeigenButton = new Button("Meine Merkliste");
 		
 		merklisteAnzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -155,7 +155,7 @@ public class Navigator extends VerticalPanel {
 		 * Button "Sperrliste anzeigen" hinzufügen
 		 */
 		final Button sperrlisteAnzeigenButton = new Button(
-				"Sperrliste anzeigen");
+				"Meine Sperrliste");
 		
 		sperrlisteAnzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -173,7 +173,7 @@ public class Navigator extends VerticalPanel {
 		 * Button "Partnervorschlaege anzeigen" hinzufügen.
 		 */
 		final Button showPartnervorschlaegeButton = new Button(
-				"Partnervorschläge anzeigen");
+				"Meine Partnervorschläge");
 		
 		showPartnervorschlaegeButton.addClickHandler(new ClickHandler() {
 

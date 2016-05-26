@@ -94,22 +94,22 @@ public interface PartnerboerseAdministrationAsync {
 	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen.
+	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Alle Suchprofile auslesen.
+	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 	
 	/**
-	 * Alle Suchprofile eines Nutzers auslesen.
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback); 
 	
 	/**
-	 * Suchprofil anhand des Namens auslesen.
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
 

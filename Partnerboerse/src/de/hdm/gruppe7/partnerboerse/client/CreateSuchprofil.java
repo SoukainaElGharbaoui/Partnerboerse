@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -11,6 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class CreateSuchprofil extends VerticalPanel {
@@ -58,11 +61,9 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setText(6, 0, "Raucher");
 		createSuchprofilFlexTable.setText(7, 0, "Religion");
 
-		
 		/**
 		 * Erzeugen von Eingabefeldern fuer die zweite Spalte
 		 */
-		
 		final Label editLabel = new Label();
 		final TextBox suchprofilnameTextBox = new TextBox(); 
 		createSuchprofilFlexTable.setWidget(0, 2, suchprofilnameTextBox); 
@@ -93,7 +94,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 
 		final ListBox raucherListBox = new ListBox();
-		raucherListBox.addItem("Keine Angabe");
+		raucherListBox.addItem("Keine Auswahl");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		createSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
@@ -119,7 +120,8 @@ public class CreateSuchprofil extends VerticalPanel {
 	 * infoLabel für die Benutzerinformation erzeugen.
 	 */
 	final Label infoLabel = new Label();
-	final Label warnungLabel = new Label(); 
+	final Label warnungLabel1 = new Label(); 
+	final Label warnungLabel2 = new Label(); 
 
 	final Button createSuchprofilButton = new Button(
 			"Suchprofil anlegen");
@@ -133,9 +135,34 @@ public class CreateSuchprofil extends VerticalPanel {
 	createSuchprofilButton.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
 			
+			// Prüfen, ob Suchprofilname für diesen Nutzer bereis existiert.
+//			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
+//					new AsyncCallback<List<Suchprofil>>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							infoLabel.setText("Es trat ein Fehler auf."); 
+//							
+//						}
+//
+//						@Override
+//						public void onSuccess(List<Suchprofil> result) {
+//							for(Suchprofil s : result) {
+//								if(suchprofilnameTextBox.getText().equals(s.getSuchprofilName())) {
+//									warnungLabel1.setText("Der Suchprofilname existiert bereits.");
+//									verPanel.add(warnungLabel1); 	
+//								} 		
+//							}
+//	
+//								
+//						}
+//				
+//			});
+			
+			// Prüfen, ob Alter von < Alter bis. 
 			if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
-				warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
-				verPanel.add(warnungLabel);
+				warnungLabel2.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+				verPanel.add(warnungLabel2);
 			} else {
 
 			ClientsideSettings.getPartnerboerseAdministration()
@@ -156,10 +183,10 @@ public class CreateSuchprofil extends VerticalPanel {
 
 								@Override
 								public void onSuccess(Suchprofil result) {
-									infoLabel.setText("'" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
-//									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-//									RootPanel.get("Details").clear();
-//									RootPanel.get("Details").add(showSuchprofil);
+//									infoLabel.setText("Das Suchprofil '" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSuchprofil);
 								}
 
 							});
