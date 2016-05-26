@@ -74,31 +74,41 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil anlegen.
 	 */
-	void createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+	void createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt, 
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
 	/**
 	 * Suchprofil aktualisieren.
 	 */
-	void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+	void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, 
 			AsyncCallback<Void> callback);
 
 	/**
 	 * Suchprofil löschen.
 	 */
-	void deleteSuchprofil(int profilId, AsyncCallback<Void> callback);
+	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen.
+	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Alle Suchprofile auslesen.
+	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+	
+	/**
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 */
+	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback); 
+	
+	/**
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 */
+	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
 
 	/*
 	 * ***************************************************************************
