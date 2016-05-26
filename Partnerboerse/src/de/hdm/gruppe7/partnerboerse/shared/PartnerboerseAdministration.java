@@ -80,7 +80,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Suchprofil anlegen.
 	 */
-	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt, 
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
 	
 	/**
@@ -104,6 +104,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Alle Suchprofile auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
+	
+	/**
+	 * Alle Suchprofile eines Nutzers auslesen.
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
+	
+	/**
+	 * Suchprofil anhand des Namens auslesen.
+	 */
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/*
 	 * ***************************************************************************

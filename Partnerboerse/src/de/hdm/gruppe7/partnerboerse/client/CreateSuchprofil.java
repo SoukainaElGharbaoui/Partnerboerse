@@ -49,14 +49,14 @@ public class CreateSuchprofil extends VerticalPanel {
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
-		
-		createSuchprofilFlexTable.setText(0, 0, "Geschlecht");
-		createSuchprofilFlexTable.setText(1, 0, "Alter von");
-		createSuchprofilFlexTable.setText(2, 0, "Alter bis");
-		createSuchprofilFlexTable.setText(3, 0, "Körpergröße");
-		createSuchprofilFlexTable.setText(4, 0, "Haarfarbe");
-		createSuchprofilFlexTable.setText(5, 0, "Raucher");
-		createSuchprofilFlexTable.setText(6, 0, "Religion");
+		createSuchprofilFlexTable.setText(0, 0, "Suchprofilname");
+		createSuchprofilFlexTable.setText(1, 0, "Geschlecht");
+		createSuchprofilFlexTable.setText(2, 0, "Alter von");
+		createSuchprofilFlexTable.setText(3, 0, "Alter bis");
+		createSuchprofilFlexTable.setText(4, 0, "Körpergröße");
+		createSuchprofilFlexTable.setText(5, 0, "Haarfarbe");
+		createSuchprofilFlexTable.setText(6, 0, "Raucher");
+		createSuchprofilFlexTable.setText(7, 0, "Religion");
 
 		
 		/**
@@ -64,21 +64,23 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		
 		final Label editLabel = new Label();
+		final TextBox suchprofilnameTextBox = new TextBox(); 
+		createSuchprofilFlexTable.setWidget(0, 2, suchprofilnameTextBox); 
 
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
-		createSuchprofilFlexTable.setWidget(0, 2, geschlechtListBox);
+		createSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
 		
 		final TextBox alterMinTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(1, 2, alterMinTextBox);
+		createSuchprofilFlexTable.setWidget(2, 2, alterMinTextBox);
 
 		final TextBox alterMaxTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(2, 2, alterMaxTextBox);
+		createSuchprofilFlexTable.setWidget(3, 2, alterMaxTextBox);
 
 		final TextBox koerpergroesseTextBox = new TextBox();
-		createSuchprofilFlexTable.setWidget(3, 2, koerpergroesseTextBox);
+		createSuchprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
 
 		final ListBox haarfarbeListBox = new ListBox();
 		haarfarbeListBox.addItem("Keine Auswahl");
@@ -88,13 +90,13 @@ public class CreateSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
-		createSuchprofilFlexTable.setWidget(4, 2, haarfarbeListBox);
+		createSuchprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
-		createSuchprofilFlexTable.setWidget(5, 2, raucherListBox);
+		createSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		final ListBox religionListBox = new ListBox();
 		religionListBox.addItem("Keine Auswahl");
@@ -103,7 +105,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
-		createSuchprofilFlexTable.setWidget(6, 2, religionListBox);
+		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 		
 		/**
 		 * Zum Panel hinzufï¿½gen
@@ -137,7 +139,8 @@ public class CreateSuchprofil extends VerticalPanel {
 			} else {
 
 			ClientsideSettings.getPartnerboerseAdministration()
-					.createSuchprofil(geschlechtListBox.getSelectedItemText(),
+					.createSuchprofil(suchprofilnameTextBox.getText(), 
+							geschlechtListBox.getSelectedItemText(),
 							Integer.parseInt(alterMinTextBox.getText()),
 							Integer.parseInt(alterMaxTextBox.getText()),
 							Integer.parseInt(koerpergroesseTextBox.getText()),
@@ -148,15 +151,15 @@ public class CreateSuchprofil extends VerticalPanel {
 
 								@Override
 								public void onFailure(Throwable caught) {
-									infoLabel
-											.setText("Es trat ein Fehler auf");
+									infoLabel.setText("Es trat ein Fehler auf");
 								}
 
 								@Override
 								public void onSuccess(Suchprofil result) {
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showSuchprofil);
+									infoLabel.setText("'" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
+//									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+//									RootPanel.get("Details").clear();
+//									RootPanel.get("Details").add(showSuchprofil);
 								}
 
 							});

@@ -8,7 +8,6 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 
@@ -156,11 +155,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Suchprofil anlegen. 
 	 */
-	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
-	
+	@Override
+	public Suchprofil createSuchprofil(String suchprofilName,
+			String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher,
+			String religion) throws IllegalArgumentException {
+		
 			Suchprofil s = new Suchprofil();
+			s.setSuchprofilName(suchprofilName); 
 			s.setGeschlecht(geschlecht);
 			s.setAlterMinInt(alterMinInt);
 			s.setAlterMaxInt(alterMaxInt);
@@ -168,20 +170,30 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			s.setHaarfarbe(haarfarbe);
 			s.setRaucher(raucher);
 			s.setReligion(religion);
-			
+		
 			s.setProfilId(1);
 
 			return this.suchprofilMapper.insertSuchprofil(s);
 	}
 
+	@Override
+	public void saveSuchprofil(String geschlecht, int alterMinInt,
+			int alterMaxInt, int koerpergroesseInt, String haarfarbe,
+			String raucher, String religion)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * Suchprofil aktualisieren. 
 	 */
-	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+	public void saveSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException {
 		
 			Suchprofil s = new Suchprofil();
+			s.setSuchprofilName(suchprofilName); 
 			s.setGeschlecht(geschlecht);
 			s.setAlterMinInt(alterMinInt);
 			s.setAlterMaxInt(alterMaxInt);
@@ -214,6 +226,20 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofile();
+	}
+	
+	/**
+	 * Alle Suchprofile eines Nutzers auslesen.
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
+		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
+	}
+	
+	/**
+	 * Suchprofil anhand des Namens auslesen.
+	 */
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
 	}
 	
 	/*
@@ -480,6 +506,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				throws IllegalArgumentException {
 			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
 		}
+
 
 }
 

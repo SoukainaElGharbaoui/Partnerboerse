@@ -77,7 +77,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil anlegen.
 	 */
-	void createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
+	void createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt, 
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 	
@@ -102,6 +102,16 @@ public interface PartnerboerseAdministrationAsync {
 	 * Alle Suchprofile auslesen.
 	 */
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
+	
+	/**
+	 * Alle Suchprofile eines Nutzers auslesen.
+	 */
+	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback); 
+	
+	/**
+	 * Suchprofil anhand des Namens auslesen.
+	 */
+	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
 
 	/*
 	 * ***************************************************************************
