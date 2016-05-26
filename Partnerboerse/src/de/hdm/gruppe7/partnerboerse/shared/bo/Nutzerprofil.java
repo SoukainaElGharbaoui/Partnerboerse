@@ -24,8 +24,12 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> partnervorschlaegeNp;
 	private List <Nutzerprofil> partnervorschlaegeSp;
 	private List <Nutzerprofil> angeseheneNp;
+
 	private int aehnlichkeit;
 	private int aehnlichkeitSp;
+
+
+    private String emailAddress;
 
 
 	public String getVorname() {
@@ -70,6 +74,7 @@ public class Nutzerprofil extends Profil{
 		this.aehnlichkeit = aehnlichkeit;
 	}
 	
+
 	public int getAehnlichkeitSp (){
 		return aehnlichkeitSp;
 	}
@@ -80,11 +85,23 @@ public class Nutzerprofil extends Profil{
 	}
 
 
+	public String getEmailAddress(){
+		return emailAddress;
+	}
+	
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+		
+	}
+
+
 
 	//Konstruktor
 	public Nutzerprofil() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }
