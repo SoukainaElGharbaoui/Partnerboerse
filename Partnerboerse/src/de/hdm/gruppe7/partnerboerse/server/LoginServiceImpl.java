@@ -18,13 +18,11 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Override
 	public LoginInfo login(String requestUri) {
 		
 		UserService userService = UserServiceFactory.getUserService(); 
 		User user = userService.getCurrentUser();
 		LoginInfo loginInfo = new LoginInfo();
-		// TODO Auto-generated method stub
 		
 		if (user != null){
 			loginInfo.setLoggedIn(true);

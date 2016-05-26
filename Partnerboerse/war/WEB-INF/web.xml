@@ -16,6 +16,16 @@
     <url-pattern>/partnerboerseadministration</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>loginService</servlet-name>
+  <servlet-class>de.hdm.gruppe7.partnerboerse.server.LoginServiceImpl</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>loginService</servlet-name>
+  <url-pattern>/partnerboerse/login</url-pattern>
+</servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Partnerboerse.html</welcome-file>

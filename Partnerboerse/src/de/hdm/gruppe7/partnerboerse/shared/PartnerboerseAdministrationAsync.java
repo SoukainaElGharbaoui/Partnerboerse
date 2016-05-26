@@ -245,6 +245,13 @@ public interface PartnerboerseAdministrationAsync {
   
 
 	
+	
+
+	void isUserRegistered(String userEmail,
+			AsyncCallback<Boolean> isUserRegisteredCallback);
+
+
+
 }
 	
 

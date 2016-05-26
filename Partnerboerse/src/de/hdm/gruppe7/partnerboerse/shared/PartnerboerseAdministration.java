@@ -267,7 +267,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ***************************************************************************
 	 */
 		
+
+		
+		boolean isUserRegistered(String userEmail);
+
+		
 	
+
 		
 }
 

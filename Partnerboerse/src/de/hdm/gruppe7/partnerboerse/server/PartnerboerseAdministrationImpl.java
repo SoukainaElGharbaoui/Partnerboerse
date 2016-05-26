@@ -501,5 +501,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 
 
+		@Override
+		public boolean isUserRegistered(String userEmail) {
+			return false;
+		}
+
+
 }
 

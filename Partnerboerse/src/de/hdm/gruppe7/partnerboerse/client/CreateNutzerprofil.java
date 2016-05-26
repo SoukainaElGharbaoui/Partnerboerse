@@ -21,6 +21,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class CreateNutzerprofil extends VerticalPanel {
 
 		private VerticalPanel verPanel = new VerticalPanel();
+
+		private LoginInfo loginInfo;
 		private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 		private FlexTable createNutzerprofilFlexTable = new FlexTable();
 		private TextBox vornameTextBox = new TextBox();
@@ -39,8 +41,16 @@ public class CreateNutzerprofil extends VerticalPanel {
 		
 		private Label informationLabel = new Label();
 
+
+
+		/**
+		 * Konstruktor hinzufügen. 
+		 */
+	
+
 		private Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 		
+
 		public CreateNutzerprofil() {
 			this.add(verPanel);
 
@@ -123,6 +133,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(informationLabel); 
 
+
+	}
+
+		public CreateNutzerprofil(LoginInfo loginInfo) {
+			this.loginInfo = loginInfo;
+		
 		// ClickHandler für den createNutzerprofil-Button hinzufügen.
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 
