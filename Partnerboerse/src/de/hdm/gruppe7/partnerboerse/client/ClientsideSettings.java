@@ -14,6 +14,8 @@ public class ClientsideSettings extends CommonSettings {
 	private static PartnerboerseAdministrationAsync partnerboerseAdministration = null;
 	
 	private static ReportGeneratorAsync reportGenerator = null;
+	
+	private static LoginServiceAsync loginService = null;
 
 	private static final String LOGGER_NAME = "PartnerboerseProjekt Web Client";
 
@@ -36,6 +38,14 @@ public class ClientsideSettings extends CommonSettings {
 	public static de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync getReportGenerator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static LoginServiceAsync getLoginService(){
+		
+		if(loginService == null){
+			loginService = GWT.create(LoginService.class);
+		}
+		return loginService;
 	}
 
 	// /**
