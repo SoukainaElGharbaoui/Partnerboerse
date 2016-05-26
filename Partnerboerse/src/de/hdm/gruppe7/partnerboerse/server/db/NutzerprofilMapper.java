@@ -577,6 +577,7 @@ public class NutzerprofilMapper {
 						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 						nutzerprofil.setRaucher(rs.getString("raucher"));
 						nutzerprofil.setReligion(rs.getString("religion"));
+						nutzerprofil.setAehnlichkeitSp(rs.getInt("aehnlichkeit"));
 						
 
 						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
