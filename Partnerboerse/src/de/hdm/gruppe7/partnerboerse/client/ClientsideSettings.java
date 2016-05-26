@@ -1,6 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.logging.Logger;
+import java.util.logging.Logger;‚
 
 import com.google.gwt.core.client.GWT;
 

@@ -8,7 +8,6 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 
@@ -67,13 +66,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Nutzerprofil anlegen. 
 	 */
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
+	public Nutzerprofil createNutzerprofil(String emailAddress, String vorname, String nachname,
 			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
 		// Neues Nutzerprofil-Objekt erstellen. 
 		Nutzerprofil n = new Nutzerprofil();
+		n.setEmailAddress(emailAddress);
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
@@ -156,11 +156,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Suchprofil anlegen. 
 	 */
-	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
-	
+	@Override
+	public Suchprofil createSuchprofil(String suchprofilName,
+			String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher,
+			String religion) throws IllegalArgumentException {
+		
 			Suchprofil s = new Suchprofil();
+			s.setSuchprofilName(suchprofilName); 
 			s.setGeschlecht(geschlecht);
 			s.setAlterMinInt(alterMinInt);
 			s.setAlterMaxInt(alterMaxInt);
@@ -168,7 +171,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			s.setHaarfarbe(haarfarbe);
 			s.setRaucher(raucher);
 			s.setReligion(religion);
-			
+		
 			s.setProfilId(1);
 
 			return this.suchprofilMapper.insertSuchprofil(s);
@@ -177,11 +180,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Suchprofil aktualisieren. 
 	 */
-	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
+	public void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
 			throws IllegalArgumentException {
 		
 			Suchprofil s = new Suchprofil();
+			s.setProfilId(profilId);
+			s.setSuchprofilName(suchprofilName); 
 			s.setGeschlecht(geschlecht);
 			s.setAlterMinInt(alterMinInt);
 			s.setAlterMaxInt(alterMaxInt);
@@ -197,12 +202,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Suchprofil löschen.
 	 */
-	public void deleteSuchprofil(int profilId) throws IllegalArgumentException {
-		this.suchprofilMapper.deleteSuchprofil(profilId);
+	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException {
+		this.suchprofilMapper.deleteSuchprofil(profilId, suchprofilName);
 	}
 	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen.
+	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	@Override
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException {
@@ -210,11 +215,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Alle Suchprofile auslesen.
+	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
 	 */
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofile();
 	}
+	
+	/**
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
+		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
+	}
+	
+	/**
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENDIG)
+	 */
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
+	}
+	
 	
 	/*
 	 * ***************************************************************************
@@ -481,10 +501,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
 		}
 
+
 		@Override
 		public boolean isUserRegistered(String userEmail) {
 			return false;
 		}
+
+		
+
+		
 
 
 }
