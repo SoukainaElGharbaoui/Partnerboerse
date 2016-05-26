@@ -44,10 +44,10 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		showSuchprofilFlexTable.setText(0, 0, "Suchprofil-Id");
 		showSuchprofilFlexTable.setText(1, 0, "Geschlecht");
-		showSuchprofilFlexTable.setText(2, 0, "Koerpergroesse");
-		showSuchprofilFlexTable.setText(3, 0, "Haarfarbe");
-		showSuchprofilFlexTable.setText(4, 0, "Alter von");
-		showSuchprofilFlexTable.setText(5, 0, "Alter bis");
+		showSuchprofilFlexTable.setText(2, 0, "Alter von");
+		showSuchprofilFlexTable.setText(3, 0, "Alter bis");
+		showSuchprofilFlexTable.setText(4, 0, "Koerpergroesse");
+		showSuchprofilFlexTable.setText(5, 0, "Haarfarbe");
 		showSuchprofilFlexTable.setText(6, 0, "Raucher");
 		showSuchprofilFlexTable.setText(7, 0, "Religion");
 
@@ -83,22 +83,22 @@ public class ShowSuchprofil extends VerticalPanel {
 						// Geschlecht aus der Datenbank holen
 						showSuchprofilFlexTable.setText(1, 1,
 								result.getGeschlecht());
-
-						// Koerpergroesse aus der Datenbank holen
-						showSuchprofilFlexTable.setText(2, 1,
-								result.getKoerpergroesse());
-
-						// Haarfarbe aus der Datenbank holen
-						showSuchprofilFlexTable.setText(3, 1,
-								result.getHaarfarbe());
-
+						
 						// AlterMax aus der Datenbank holen
-						showSuchprofilFlexTable.setText(4, 1,
-								result.getAlterMin());
+						showSuchprofilFlexTable.setText(2, 1, Integer.toString(
+								result.getAlterMinInt()));
 
 						// AlterMin aus der Datenbank holen
+						showSuchprofilFlexTable.setText(3, 1, Integer.toString(
+								result.getAlterMaxInt()));
+
+						// Koerpergroesse aus der Datenbank holen
+						showSuchprofilFlexTable.setText(4, 1, Integer.toString(
+								result.getKoerpergroesseInt()));
+
+						// Haarfarbe aus der Datenbank holen
 						showSuchprofilFlexTable.setText(5, 1,
-								result.getAlterMax());
+								result.getHaarfarbe());
 
 						// Raucher aus der Datenbank holen
 						showSuchprofilFlexTable.setText(6, 1,

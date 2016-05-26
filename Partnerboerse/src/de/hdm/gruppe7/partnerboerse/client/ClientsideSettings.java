@@ -12,7 +12,7 @@ import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 public class ClientsideSettings extends CommonSettings {
 
 	private static PartnerboerseAdministrationAsync partnerboerseAdministration = null;
-
+	
 	private static ReportGeneratorAsync reportGenerator = null;
 
 	private static final String LOGGER_NAME = "PartnerboerseProjekt Web Client";
@@ -22,6 +22,7 @@ public class ClientsideSettings extends CommonSettings {
 	public static Logger getLogger() {
 		return log;
 	}
+	
 
 	public static PartnerboerseAdministrationAsync getPartnerboerseAdministration() {
 
@@ -29,6 +30,12 @@ public class ClientsideSettings extends CommonSettings {
 			partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 		}
 		return partnerboerseAdministration;
+	}
+
+
+	public static de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync getReportGenerator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// /**
