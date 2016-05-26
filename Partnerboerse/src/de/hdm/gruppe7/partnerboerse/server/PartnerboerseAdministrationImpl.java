@@ -8,7 +8,6 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 
@@ -67,13 +66,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Nutzerprofil anlegen. 
 	 */
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
+	public Nutzerprofil createNutzerprofil(String emailAddress, String vorname, String nachname,
 			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
 		// Neues Nutzerprofil-Objekt erstellen. 
 		Nutzerprofil n = new Nutzerprofil();
+		n.setEmailAddress(emailAddress);
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
@@ -485,6 +485,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		public boolean isUserRegistered(String userEmail) {
 			return false;
 		}
+
+		
+
+		
 
 
 }

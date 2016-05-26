@@ -25,13 +25,10 @@ public interface PartnerboerseAdministrationAsync {
 	 * ***************************************************************************
 	 */
 	
-	/**
-	 * Nutzerprofil anlegen.
-	 */
-	void createNutzerprofil(String vorname, String nachname,
-			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
-			String haarfarbe, String raucher, String religion,
-			AsyncCallback<Nutzerprofil> callback);
+	void createNutzerprofil(String emailAddress, String vorname,
+			String nachname, String geschlecht, Date geburtsdatumDate,
+			int koerpergroesseInt, String haarfarbe, String raucher,
+			String religion, AsyncCallback<Nutzerprofil> callback);
 	
 	/**
 	 * Nutzerprofil aktualisieren.
