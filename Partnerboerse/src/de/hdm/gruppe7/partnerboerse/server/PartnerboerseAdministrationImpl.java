@@ -284,12 +284,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 
-	public List<String> getAllInfosNeu(int nutzerprofilId) {
+	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
-//		List<List<String>> infoList = new ArrayList<List<String>>();
-
 		List<Info> result = new ArrayList<Info>();
+		
 		result = this.infoMapper.findAllInfosNeu(nutzerprofilId);
 
 		for (Info i : result) {
@@ -300,22 +299,25 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				e = this.infoMapper.findEigenschaftById(eigenschaftId);
 
 				list1.add(String.valueOf(i.getNutzerprofilId()));
+				list1.add(String.valueOf(eigenschaftId));
 				list1.add(e.getErlaeuterung());
 				list1.add(String.valueOf(i.getInfotext()));
-
-				// list1.set(0, String.valueOf(i.getNutzerprofilId()));
-				// list1.set(1, e.getErlaeuterung());
-				// list1.set(2, String.valueOf(i.getInfotext()));
-
-				
-//				return list1;
 			}
-//		System.out.println(infoList);
-//		return infoList;
 		System.out.println(list1);
 		return list1;
 	}
-
+	
+	
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
+		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
+		
+		System.out.println("Hat funktioniert.");
+	}
+	
+	
+	
+	
+	
 	// public List<Info> getAllInfos
 
 	// Vector<String[]> aL = new Vector<String[]>();
@@ -457,21 +459,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
-
-	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
-		this.infoMapper.deleteAllInfos(profilId);
-	}
-
-	public void deleteOneInfoB(int profilId, int eigenschaftId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
-	}
-
-	public void deleteOneInfoA(int profilId, int eigenschaftId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
-	}
-
+//
+//	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
+//		this.infoMapper.deleteAllInfos(profilId);
+//	}
+//
+//	public void deleteOneInfoB(int profilId, int eigenschaftId)
+//			throws IllegalArgumentException {
+//		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
+//	}
+//
+//	public void deleteOneInfoA(int profilId, int eigenschaftId)
+//			throws IllegalArgumentException {
+//		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
+//	}
+//
 	// Besuch hinzufuegen.
 	public void besuchSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -483,33 +485,33 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 	}
 
-	// unnötig
-	@Override
-	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Eigenschaft> getAllEigenschaftenB()
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Eigenschaft> getAllEigenschaftenA()
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vector<String[]> getAllInfosGesamt(int profilId)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	// unnötig
+//	@Override
+//	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
+//			throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public List<Eigenschaft> getAllEigenschaftenB()
+//			throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Eigenschaft> getAllEigenschaftenA()
+//			throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public Vector<String[]> getAllInfosGesamt(int profilId)
+//			throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

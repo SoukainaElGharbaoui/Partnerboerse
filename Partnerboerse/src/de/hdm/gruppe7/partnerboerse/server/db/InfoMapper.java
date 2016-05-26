@@ -210,9 +210,7 @@ public class InfoMapper {
 	public Eigenschaft findEigenschaftById(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 		
-//		SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id=1		klappt !
-		
-		Eigenschaft eig = new Eigenschaft();
+		Eigenschaft e = new Eigenschaft();
 		
 		try {
 		
@@ -222,25 +220,35 @@ public class InfoMapper {
 				.executeQuery("SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id=" + eigenschaftId);
 		
 		while(rs.next()){
-		Eigenschaft e = new Eigenschaft();
 		e.setEigenschaftId(rs.getInt("eigenschaft_id"));
 		e.setErlaeuterung(rs.getString("erlaeuterung"));
 		e.setTyp(rs.getString("typ"));
-		
-//		String eigenschaftbez = rs.getString("erlaeuterung");
-//		return eigenschaftbez;
-		
-//		return e;
-		
-		eig = e;
 		}
 	
 	} catch (SQLException e2) {
 		e2.printStackTrace();
 		return null;
 	}
-		return eig;
+		return e;
 }
+	
+	
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId) {
+		Connection con = DBConnection.connection();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_info1 "
+					+ "WHERE nutzerprofil_id=" + profilId
+					+ " AND eigenschaft_id=" + eigenschaftId);
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -455,65 +463,65 @@ public class InfoMapper {
 
 	
 
-	/**
-	 * Gesamte Info löschen.
-	 */
-	public void deleteAllInfos(int profilId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
-					+ profilId);
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
-					+ profilId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-
-	
-	/**
-	 * Eine gesamte Beschreibungsinfo löschen.
-	 */
-	public void deleteOneInfoB(int profilId, int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
-					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
-
-	
-	/**
-	 * Eine gesamte Auswahlinfo löschen.
-	 */
-	public void deleteOneInfoA(int profilId, int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
-					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
+//	/**
+//	 * Gesamte Info löschen.
+//	 */
+//	public void deleteAllInfos(int profilId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
+//					+ profilId);
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
+//					+ profilId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//
+//	
+//	/**
+//	 * Eine gesamte Beschreibungsinfo löschen.
+//	 */
+//	public void deleteOneInfoB(int profilId, int eigenschaftId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo WHERE nutzerprofil_id="
+//					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
+//
+//	
+//	/**
+//	 * Eine gesamte Auswahlinfo löschen.
+//	 */
+//	public void deleteOneInfoA(int profilId, int eigenschaftId) {
+//		Connection con = DBConnection.connection();
+//
+//		try {
+//			Statement stmt = con.createStatement();
+//
+//			stmt = con.createStatement();
+//			stmt.executeUpdate("DELETE FROM t_auswahlinfo WHERE nutzerprofil_id="
+//					+ profilId + " AND eigenschaft_id=" + eigenschaftId);
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//	}
 
 	
 	
