@@ -26,6 +26,31 @@ public class Nutzerprofil extends Profil{
 	private List <Nutzerprofil> angeseheneNp;
 	private int	aehnlichkeit;
     private String emailAddress;
+    
+    private boolean loggedIn;
+	private String loginUrl;
+	private String logoutUrl;
+	
+	public boolean isLoggedIn(){
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean b) {
+		loggedIn = b;
+	}
+	
+	public boolean getLoggedIn(){
+		return loggedIn;
+	}
+	
+	public void setLogoutUrl(String createLogoutURL) {
+		this.logoutUrl = createLogoutURL;
+	}
+	public String getLogoutUrl(){
+		return logoutUrl;
+	}
+	
+	
 
 	public String getVorname() {
 		return vorname;
@@ -81,6 +106,14 @@ public class Nutzerprofil extends Profil{
 	public Nutzerprofil() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
 	}
 
 	

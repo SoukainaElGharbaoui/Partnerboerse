@@ -11,6 +11,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class NutzerprofilMapper {
 
 	private static NutzerprofilMapper nutzerprofilMapper = null;
+	
+	
 
 	protected NutzerprofilMapper() {
 	}
@@ -54,9 +56,9 @@ public class NutzerprofilMapper {
 
 				// Tablle t_nutzerprofil befüllen.
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum) "
+				stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum, email) "
 						+ "VALUES(" + n.getProfilId() + ",'" + n.getVorname() + "','" + n.getNachname() + "','"
-						+ n.getGeburtsdatumDate() + "')");
+						+ n.getGeburtsdatumDate() + "','" + n.getEmailAddress() +"')");
 			}
 
 		} catch (SQLException e2) {
@@ -190,6 +192,7 @@ public class NutzerprofilMapper {
 				n.setHaarfarbe(rs.getString("haarfarbe"));
 				n.setRaucher(rs.getString("raucher"));
 				n.setReligion(rs.getString("religion"));
+				n.setEmailAddress(rs.getString("email"));
 				return n;
 
 			}
@@ -199,6 +202,20 @@ public class NutzerprofilMapper {
 		}
 		return null;
 	}
+	
+	/**
+	 *  *********************************
+	 *  Nutzer mit Email suchen
+	 *  *********************************
+	 */
+	public Nutzerprofil findByNutzerprofilMitEmail(String email) throws SQLException {
+		Connection con = DBConnection.connection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT nutzerprofil_id FROM t_nutzerprofil WHERE email ='" + email + "'");
+			if(rs.next()) return findByNutzerprofilId(rs.getInt("nutzerprofil_id"));
+			return null;
+	}
+
 
 	/**
 	 * ***********************************
@@ -267,6 +284,7 @@ public class NutzerprofilMapper {
 				n.setKoerpergroesse(rs.getString("koerpergroesse"));
 				n.setRaucher(rs.getString("raucher"));
 				n.setReligion(rs.getString("religion"));
+				
 
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
 				result.add(n);
@@ -486,6 +504,5 @@ public class NutzerprofilMapper {
 			 * ***************************************************************************
 			 */
 
-		
 }
 
