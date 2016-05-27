@@ -93,9 +93,9 @@ public class Partnerboerse implements EntryPoint {
 
 					public void onSuccess(String result) {
 						
-						Anchor link = new Anchor("TESTLINK");
-						link.setHref(result);
-						RootPanel.get().add(link);
+//						Anchor link = new Anchor("TESTLINK");
+//						link.setHref(result);
+						RootPanel.get().add(signInLink);
 						loadLogin();
 						signInLink.setHref(result);
 					}
@@ -126,32 +126,32 @@ public class Partnerboerse implements EntryPoint {
 
 	}
 
-//	private void isUserRegistered(String userEmail) {
-//
-//		AsyncCallback<Boolean> isUserRegisteredCallback = new AsyncCallback<Boolean>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				ClientsideSettings.getLogger().severe(
-//						"Fehler bei Benutzerüberprüfung");
-//
-//			}
-//
-//			@Override
-//			public void onSuccess(Boolean result) {
-//				if (result == false) {
-//					RootPanel.get("Details").clear();
-//					RootPanel.get("Space").clear();
-//					createNutzerprofil = new CreateNutzerprofil(loginInfo);
-//
-//				}
-//
-//			}
-//
-//		};
-//		partnerboerseAdministration.isUserRegistered(userEmail,
-//				isUserRegisteredCallback);
-//	}
+	private void isUserRegistered(String userEmail) {
+
+		AsyncCallback<Boolean> isUserRegisteredCallback = new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe(
+						"Fehler bei Benutzerüberprüfung");
+
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result == false) {
+					RootPanel.get("Details").clear();
+					RootPanel.get("Space").clear();
+					createNutzerprofil = new CreateNutzerprofil(loginInfo);
+
+				}
+
+			}
+
+		};
+		partnerboerseAdministration.isUserRegistered(userEmail,
+				isUserRegisteredCallback);
+	}
 
 	private void loadLogin() {
 		// Assemble login panel.
@@ -161,5 +161,7 @@ public class Partnerboerse implements EntryPoint {
 		RootPanel.get("Navigator").add(loginPanel);
 		
 	}
+	
+	
 
 }
