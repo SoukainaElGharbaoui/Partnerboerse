@@ -31,8 +31,7 @@ public class ClientsideSettings extends CommonSettings {
 	public static PartnerboerseAdministrationAsync getPartnerboerseAdministration() {
 
 		if (partnerboerseAdministration == null) {
-			partnerboerseAdministration = GWT
-					.create(PartnerboerseAdministration.class);
+			partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 		}
 		return partnerboerseAdministration;
 	}
@@ -42,17 +41,17 @@ public class ClientsideSettings extends CommonSettings {
 		return null;
 	}
 
-	public static LoginServiceAsync getLoginService() {
+	// public static LoginServiceAsync getLoginService() {
+	//
+	// if (loginService == null) {
+	// loginService = GWT.create(LoginService.class);
+	// }
+	// return loginService;
+	// }
 
-		if (loginService == null) {
-			loginService = GWT.create(LoginService.class);
-		}
-		return loginService;
-	}
-	
-	public static void setAktuellerUser( Nutzerprofil np){
+	public static void setAktuellerUser(Nutzerprofil np) {
 		aktuellerUser = np;
-		
+
 	}
 
 	public static Nutzerprofil getAktuellerUser() {
