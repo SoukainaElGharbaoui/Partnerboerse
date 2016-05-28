@@ -12,30 +12,23 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.client.LoginInfo;
 
 public class ShowLogin extends VerticalPanel {
-	
+
 	private VerticalPanel verPanel = new VerticalPanel();
-	
-	public ShowLogin(){
+
+	public ShowLogin() {
 		this.add(verPanel);
-		
+
 		final TextBox loginField = new TextBox();
-		
+
 		final Label ueberschriftLabel = new Label("Login");
-		
+
 		final Button loginButton = new Button("Anmelden");
 		final Button logoutButton = new Button("Abmelden");
-		
-		
-		
-		
-		
+
 		verPanel.add(loginField);
 		verPanel.add(loginButton);
 		verPanel.add(logoutButton);
 		verPanel.add(ueberschriftLabel);
 
 	}
-	}
-	
-	
-
+}

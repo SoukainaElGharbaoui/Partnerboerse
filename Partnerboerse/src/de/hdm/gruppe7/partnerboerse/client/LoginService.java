@@ -8,9 +8,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 @RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService {
 
-//	public LoginInfo login(String requestUri);
-	
-	
 	Nutzerprofil login(String requestUri) throws Exception;
 
 }

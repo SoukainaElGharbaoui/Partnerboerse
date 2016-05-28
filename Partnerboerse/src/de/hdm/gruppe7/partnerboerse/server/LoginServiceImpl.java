@@ -13,8 +13,7 @@ import de.hdm.gruppe7.partnerboerse.client.LoginService;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class LoginServiceImpl extends RemoteServiceServlet implements
-		LoginService {
+public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
 	/**
 	 * 
@@ -44,26 +43,26 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 
-		Nutzerprofil n = new Nutzerprofil(); // NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
+		Nutzerprofil n = new Nutzerprofil();
+		// NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
 		if (user != null) {
 
 			// EXISTING PROFILE
-			Nutzerprofil bestehendesProfil = NutzerprofilMapper
-					.nutzerprofilMapper().findByNutzerprofilMitEmail(
-							user.getEmail());
+			Nutzerprofil bestehendesProfil = NutzerprofilMapper.nutzerprofilMapper()
+					.findByNutzerprofilMitEmail(user.getEmail());
 			if (bestehendesProfil != null) {
 				n.setLoggedIn(true);
 				bestehendesProfil.setLoggedIn(true);
-				bestehendesProfil.setLogoutUrl(userService
-						.createLogoutURL(requestUri));
+				bestehendesProfil.setLogoutUrl(userService.createLogoutURL(requestUri));
 				bestehendesProfil.setEmailAddress(user.getEmail());
-				
+
 				ClientsideSettings.setAktuellerUser(bestehendesProfil);
 				return bestehendesProfil;
-			}// NO PROFILE
-			n.setLoggedIn(true);
+			} // NO PROFILE
 
+			n.setLoggedIn(true);
 			n.setEmailAddress(user.getEmail());
+
 		} else { // USER = NULL
 			n.setLoggedIn(false);
 
