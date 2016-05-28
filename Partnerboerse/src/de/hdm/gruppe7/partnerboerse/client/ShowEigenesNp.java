@@ -61,6 +61,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(6, 0, "Haarfarbe");
 		showEigenesNpFlexTable.setText(7, 0, "Raucherstatus");
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
+		showEigenesNpFlexTable.setText(9, 0, "EMail");
+
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -132,6 +134,11 @@ public class ShowEigenesNp extends VerticalPanel {
 						// und in Tabelle eintragen
 
 						showEigenesNpFlexTable.setText(8, 1, result.getReligion());
+						
+						// EMail aus der Datenbank holen
+						// und in Tabelle eintragen
+
+						showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
 
 					}
 

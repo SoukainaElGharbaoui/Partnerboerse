@@ -32,7 +32,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil anlegen.
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException;
 
 	/**

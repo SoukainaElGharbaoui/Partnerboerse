@@ -27,7 +27,7 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 
 	void createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Nutzerprofil> callback);
 
 	/**

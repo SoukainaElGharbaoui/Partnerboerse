@@ -22,15 +22,14 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class CreateNutzerprofil extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
+	
 
-	private LoginInfo loginInfo;
+
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
-
-	private TextBox emailTextBox = new TextBox();
 
 	// Geburtsdatum
 	private DateBox geburtsdatumDateBox = new DateBox();
@@ -52,7 +51,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 	public CreateNutzerprofil() {
 		this.add(verPanel);
-
+		
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		createNutzerprofilFlexTable.setCellPadding(6);
@@ -67,7 +66,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
-		createNutzerprofilFlexTable.setText(8, 0, "EMail");
 
 		// Vorname
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
@@ -127,9 +125,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		createNutzerprofilFlexTable.setWidget(7, 2, religionListBox);
 
-		// EMail
-		createNutzerprofilFlexTable.setWidget(8, 2, emailTextBox);
-
 		// Widgets zum VerticalPanel hinzufügen.
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createNutzerprofilFlexTable);
@@ -150,8 +145,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 				ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
 						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
-						emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
+						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(), new AsyncCallback<Nutzerprofil>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -162,11 +156,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 							@Override
 							public void onSuccess(Nutzerprofil result) {
 								informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-
 							}
 
 						});
-
 			}
 
 		});
