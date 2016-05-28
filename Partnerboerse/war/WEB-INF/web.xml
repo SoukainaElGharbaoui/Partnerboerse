@@ -16,7 +16,19 @@
     <url-pattern>/partnerboerseadministration</url-pattern>
   </servlet-mapping>
   
-  <servlet>
+    <!-- Servlets -->
+    <servlet>
+    <servlet-name>reportGeneratorServlet</servlet-name>
+    <servlet-class>de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reportGeneratorServlet</servlet-name>
+    <url-pattern>/reportgenerator</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Servlets -->
+   <!-- <servlet>
   <servlet-name>loginService</servlet-name>
   <servlet-class>de.hdm.gruppe7.partnerboerse.server.LoginServiceImpl</servlet-class>
 </servlet>
@@ -24,7 +36,7 @@
 <servlet-mapping>
   <servlet-name>loginService</servlet-name>
   <url-pattern>/partnerboerse/login</url-pattern>
-</servlet-mapping>
+</servlet-mapping> -->
   
   <!-- Default page to serve -->
   <welcome-file-list>

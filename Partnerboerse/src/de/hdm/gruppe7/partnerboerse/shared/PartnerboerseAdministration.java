@@ -116,6 +116,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/*
+	 * Suchprofil-Report
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException;
+	
+	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: Suchprofil
 	 * ***************************************************************************

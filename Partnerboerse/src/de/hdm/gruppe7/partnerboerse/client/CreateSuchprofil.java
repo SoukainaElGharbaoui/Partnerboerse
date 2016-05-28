@@ -72,6 +72,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
+		geschlechtListBox.setItemSelected(0, true);
 		createSuchprofilFlexTable.setWidget(1, 2, geschlechtListBox);
 		
 		final TextBox alterMinTextBox = new TextBox();
@@ -91,12 +92,14 @@ public class CreateSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
+		haarfarbeListBox.setItemSelected(0, true); 
 		createSuchprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
 
 		final ListBox raucherListBox = new ListBox();
 		raucherListBox.addItem("Keine Auswahl");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
+		raucherListBox.setItemSelected(0, true); 
 		createSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		final ListBox religionListBox = new ListBox();
@@ -106,6 +109,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
+		religionListBox.setItemSelected(0, true); 
 		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 		
 		/**
@@ -135,63 +139,105 @@ public class CreateSuchprofil extends VerticalPanel {
 	createSuchprofilButton.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
 			
-			// Prüfen, ob Suchprofilname für diesen Nutzer bereis existiert.
-//			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
-//					new AsyncCallback<List<Suchprofil>>() {
-//
-//						@Override
-//						public void onFailure(Throwable caught) {
-//							infoLabel.setText("Es trat ein Fehler auf."); 
-//							
-//						}
-//
-//						@Override
-//						public void onSuccess(List<Suchprofil> result) {
-//							for(Suchprofil s : result) {
-//								if(suchprofilnameTextBox.getText().equals(s.getSuchprofilName())) {
-//									warnungLabel1.setText("Der Suchprofilname existiert bereits.");
-//									verPanel.add(warnungLabel1); 	
-//								} 		
-//							}
-//	
-//								
-//						}
-//				
-//			});
 			
-			// Prüfen, ob Alter von < Alter bis. 
-			if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
-				warnungLabel2.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
-				verPanel.add(warnungLabel2);
-			} else {
+//			 Prüfen, ob Suchprofilname für diesen Nutzer bereis existiert.
+			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
+					new AsyncCallback<List<Suchprofil>>() {
 
-			ClientsideSettings.getPartnerboerseAdministration()
-					.createSuchprofil(suchprofilnameTextBox.getText(), 
-							geschlechtListBox.getSelectedItemText(),
-							Integer.parseInt(alterMinTextBox.getText()),
-							Integer.parseInt(alterMaxTextBox.getText()),
-							Integer.parseInt(koerpergroesseTextBox.getText()),
-							haarfarbeListBox.getSelectedItemText(),
-							raucherListBox.getSelectedItemText(),
-							religionListBox.getSelectedItemText(),
-							new AsyncCallback<Suchprofil>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							infoLabel.setText("Es trat ein Fehler auf."); 
+							
+						}
 
-								@Override
-								public void onFailure(Throwable caught) {
-									infoLabel.setText("Es trat ein Fehler auf");
+						@Override
+						public void onSuccess(List<Suchprofil> result) {
+							int vorhanden = 0;
+							for(Suchprofil s : result) {
+								if(suchprofilnameTextBox.getText().equals(s.getSuchprofilName())) {
+//									warnungLabel1.setText("Der Suchprofilname existiert bereits.");
+//									verPanel.add(warnungLabel1); 
+									vorhanden = 1;
+									break; 
+								} 		
+							}
+							
+							if(vorhanden == 1) {
+								warnungLabel2.setText("Suchprofil schon vorhanden"); 
+								verPanel.add(warnungLabel2);
+							} else {
+								// Prüfen, ob Alter von < Alter bis. 
+								if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+									warnungLabel2.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+									verPanel.add(warnungLabel2);
+								} else {
+
+								ClientsideSettings.getPartnerboerseAdministration()
+										.createSuchprofil(suchprofilnameTextBox.getText(), 
+												geschlechtListBox.getSelectedItemText(),
+												Integer.parseInt(alterMinTextBox.getText()),
+												Integer.parseInt(alterMaxTextBox.getText()),
+												Integer.parseInt(koerpergroesseTextBox.getText()),
+												haarfarbeListBox.getSelectedItemText(),
+												raucherListBox.getSelectedItemText(),
+												religionListBox.getSelectedItemText(),
+												new AsyncCallback<Suchprofil>() {
+
+													@Override
+													public void onFailure(Throwable caught) {
+														infoLabel.setText("Es trat ein Fehler auf");
+													}
+
+													@Override
+													public void onSuccess(Suchprofil result) {
+//														infoLabel.setText("Das Suchprofil '" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
+														ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+														RootPanel.get("Details").clear();
+														RootPanel.get("Details").add(showSuchprofil);
+													}
+
+												});
+
 								}
+							}								
+						}
+				
+			});
+			
 
-								@Override
-								public void onSuccess(Suchprofil result) {
-//									infoLabel.setText("Das Suchprofil '" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showSuchprofil);
-								}
-
-							});
-
-		}
+//			// Prüfen, ob Alter von < Alter bis. 
+//			if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+//				warnungLabel2.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+//				verPanel.add(warnungLabel2);
+//			} else {
+//
+//			ClientsideSettings.getPartnerboerseAdministration()
+//					.createSuchprofil(suchprofilnameTextBox.getText(), 
+//							geschlechtListBox.getSelectedItemText(),
+//							Integer.parseInt(alterMinTextBox.getText()),
+//							Integer.parseInt(alterMaxTextBox.getText()),
+//							Integer.parseInt(koerpergroesseTextBox.getText()),
+//							haarfarbeListBox.getSelectedItemText(),
+//							raucherListBox.getSelectedItemText(),
+//							religionListBox.getSelectedItemText(),
+//							new AsyncCallback<Suchprofil>() {
+//
+//								@Override
+//								public void onFailure(Throwable caught) {
+//									infoLabel.setText("Es trat ein Fehler auf");
+//								}
+//
+//								@Override
+//								public void onSuccess(Suchprofil result) {
+////									infoLabel.setText("Das Suchprofil '" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
+//									ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+//									RootPanel.get("Details").clear();
+//									RootPanel.get("Details").add(showSuchprofil);
+//								}
+//
+//							});
+//
+//		}
 		
 	}
 	});

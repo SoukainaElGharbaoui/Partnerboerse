@@ -112,6 +112,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
+	
+	/*
+	 * Suchprofil-Report
+	 */
+	void getAllSuchprofileFor(Nutzerprofil n, AsyncCallback<List<Suchprofil>> callback);  
 
 	/*
 	 * ***************************************************************************

@@ -234,6 +234,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
 	}
 	
+	/*
+	 * Suchprofil-Report
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException {
+		return this.suchprofilMapper.findAllSuchprofileFor(n); 
+	}
 	
 	/*
 	 * ***************************************************************************

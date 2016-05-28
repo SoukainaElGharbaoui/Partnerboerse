@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class SuchprofilMapper {
@@ -265,7 +267,7 @@ public class SuchprofilMapper {
 	}
 	
 	/**
-	 * Alle Suchprofile eines Nutzerprofils auslesen.
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> findAllSuchprofileFor(int profilId) {
 		Connection con = DBConnection.connection();
@@ -284,13 +286,13 @@ public class SuchprofilMapper {
 			// Suchprofil-Objekt erstellt.
 			while (rs.next()) {
 				Suchprofil s = new Suchprofil();
-				s.setProfilId(rs.getInt("profil_id"));
+				s.setProfilId(rs.getInt("suchprofil_id"));
 				s.setSuchprofilName(rs.getString("suchprofilname"));
-				s.setAlterMin(rs.getString("alter_von"));
-				s.setAlterMax(rs.getString("alter_bis"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));
 				s.setGeschlecht(rs.getString("geschlecht"));
 				s.setHaarfarbe(rs.getString("haarfarbe"));
-				s.setKoerpergroesse(rs.getString("koerpergroesse"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
 				s.setRaucher(rs.getString("raucher"));
 				s.setReligion(rs.getString("religion"));
 
@@ -304,6 +306,16 @@ public class SuchprofilMapper {
 		// Ergebnisliste zurueckgeben
 		return result;
 	}
+	
+	 /**
+	  * Alle Suchprofile eines Nutzers auslesen.
+	  * Diese Methode ruft die gleichnamige Methode mit dem Übergabeparameter Profil-ID auf.
+	  * @param n
+	  * @return
+	  */
+	 public List<Suchprofil> findAllSuchprofileFor(Nutzerprofil n){
+		 return findAllSuchprofileFor(n.getProfilId()); 
+	 }
 	
 	/**
 	 * Suchprofil mit vorgegebener Profil-ID suchen.
@@ -349,6 +361,8 @@ public class SuchprofilMapper {
 		}
 		return null;
 	}
+	 
+
 	
 	
 
