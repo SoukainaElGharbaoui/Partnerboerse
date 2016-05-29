@@ -97,6 +97,21 @@ public interface PartnerboerseAdministrationAsync {
 	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
+	
+	/**
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 */
+	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
+	
+	/**
+	 * Existens des Suchprofilnamens beim Anlegen überprüfen.
+	 */
+	void pruefeSuchprofilname(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
+	
+	/**
+	 * Existens des Suchprofilnamens beim Editieren überprüfen.
+	 */
+	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, AsyncCallback<String> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -108,16 +123,11 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback); 
 	
-	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
-	 */
-	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback); 
-	
 	/*
 	 * Suchprofil-Report
 	 */
-	void getAllSuchprofileFor(Nutzerprofil n, AsyncCallback<List<Suchprofil>> callback);  
-
+	void getAllSuchprofileFor(Nutzerprofil n, AsyncCallback<List<Suchprofil>> callback); 
+	
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: Suchprofil

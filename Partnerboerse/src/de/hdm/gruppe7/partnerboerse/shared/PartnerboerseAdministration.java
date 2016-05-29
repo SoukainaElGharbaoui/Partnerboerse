@@ -101,6 +101,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 	
 	/**
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 */
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
+	
+	/**
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 */
+	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
+	
+	/**
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
+	 */
+	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException;
+		
+	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
 	 */
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
@@ -109,11 +124,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
-	
-	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
-	 */
-	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/*
 	 * Suchprofil-Report

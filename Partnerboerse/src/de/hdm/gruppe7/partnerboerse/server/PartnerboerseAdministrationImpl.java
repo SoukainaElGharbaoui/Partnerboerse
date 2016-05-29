@@ -212,6 +212,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findBySuchprofilId(profilId);
 	}
+	
+	/**
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENDIG)
+	 */
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
+	}
+	
+	/**
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 */
+	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilname(profilId, suchprofilname); 
+	}
+	
+	/**
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
+	 */
+	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profilId, suchprofilId); 
+	}
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
@@ -226,14 +247,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
 	}
-	
-	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENDIG)
-	 */
-	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
-		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
-	}
-	
+
 	/*
 	 * Suchprofil-Report
 	 */

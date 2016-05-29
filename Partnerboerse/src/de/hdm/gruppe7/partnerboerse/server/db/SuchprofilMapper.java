@@ -188,6 +188,51 @@ public class SuchprofilMapper {
 	}
 	
 	/**
+	 * Suchprofil mit vorgegebener Profil-ID suchen.
+	 */
+	public Suchprofil findSuchprofilByName(int profilId, String suchprofilName) { 
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil INNER JOIN t_profil "
+					+ "ON t_suchprofil.suchprofil_id = t_profil.profil_id "
+					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId
+					+ " AND t_suchprofil.suchprofilname LIKE '" + suchprofilName + "'");
+					
+			/*
+			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
+			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Suchprofil s = new Suchprofil();
+				
+				s.setProfilId(rs.getInt("suchprofil_id"));
+				s.setSuchprofilName(rs.getString("suchprofilname"));   
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));	
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
+				
+				return s;
+					
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	/**
 	 * ************************
 	 * Brauchen wir das???
 	 * ************************
@@ -267,6 +312,60 @@ public class SuchprofilMapper {
 	}
 	
 	/**
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 */
+	public int pruefeSuchprofilname(int profilId, String suchprofilName) {
+		Connection con = DBConnection.connection();
+		
+		// Ergebnisvariable (Ausgang: Der Suchprofilname liegt nicht vor.)
+		int existenz = 0; 
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM t_suchprofil "
+					+ "WHERE nutzerprofil_id=" + profilId + " AND suchprofilname LIKE '" + suchprofilName + "'");
+			
+			if (rs.next()) {
+		        if(rs.getInt("COUNT(*)") == 1)
+		        	// Der Suchprofilname existiert bereits.
+		        	existenz = 1; 
+		      } else {
+		    	  // Der Suchprofilname existiert bisher nicht.
+		    	  existenz = 0; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return existenz; 
+	}
+	
+	/**
+	 * Existenz des Suchprofilnames beim Editieren überprüfen.
+	 */
+	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) {
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT suchprofilname FROM t_suchprofil "
+					+ "WHERE nutzerprofil_id=" + profilId + " AND suchprofil_id=" + suchprofilId);
+			
+			if (rs.next()) {
+				String suchprofilname = rs.getString("suchprofilname"); 
+				return suchprofilname; 
+		      }
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null; 
+		}
+		return null;
+	}
+	
+	/**
 	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> findAllSuchprofileFor(int profilId) {
@@ -317,50 +416,7 @@ public class SuchprofilMapper {
 		 return findAllSuchprofileFor(n.getProfilId()); 
 	 }
 	
-	/**
-	 * Suchprofil mit vorgegebener Profil-ID suchen.
-	 */
-	public Suchprofil findSuchprofilByName(int profilId, String suchprofilName) { 
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil INNER JOIN t_profil "
-					+ "ON t_suchprofil.suchprofil_id = t_profil.profil_id "
-					+ "WHERE t_suchprofil.nutzerprofil_id=" + profilId
-					+ " AND t_suchprofil.suchprofilname LIKE '" + suchprofilName + "'");
-					
-			/*
-			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
-			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Suchprofil s = new Suchprofil();
-				
-				s.setProfilId(rs.getInt("suchprofil_id"));
-				s.setSuchprofilName(rs.getString("suchprofilname"));   
-				s.setGeschlecht(rs.getString("geschlecht"));
-				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
-				s.setHaarfarbe(rs.getString("haarfarbe"));
-				s.setAlterMinInt(rs.getInt("alter_von"));
-				s.setAlterMaxInt(rs.getInt("alter_bis"));	
-				s.setRaucher(rs.getString("raucher"));
-				s.setReligion(rs.getString("religion"));
-				
-				return s;
-					
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
-	}
+	
 	 
 
 	
