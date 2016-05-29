@@ -281,7 +281,7 @@ public class Navigator extends VerticalPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
-						
+//						
 					}
 					
 					@Override
@@ -310,7 +310,7 @@ public class Navigator extends VerticalPanel {
 				final int fremdprofilId = np.getProfilId();
 				
 				
-				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName, new AsyncCallback<Integer>(){
+				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName , new AsyncCallback<Integer>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -325,7 +325,7 @@ public class Navigator extends VerticalPanel {
 						
 						
 						
-						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), "Nina",  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
 
 							@Override
 							public void onFailure(Throwable caught) {

@@ -197,7 +197,7 @@ public class SuchprofilMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
-			+ suchprofilId + "," + suchprofilName + "," + fremdprofilId + "," + aehnlichkeitSp + ")");
+			+ suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

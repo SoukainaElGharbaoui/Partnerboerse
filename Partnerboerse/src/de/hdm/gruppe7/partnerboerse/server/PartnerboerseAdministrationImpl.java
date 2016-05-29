@@ -492,8 +492,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 		
 		
-		public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
-			this.nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit); 
+		public void aehnlichkeitSetzen(int profilId,  int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
+			this.nutzerprofilMapper.insertAehnlichkeit(profilId,  fremdprofilId, aehnlichkeit); 
 		}
 		
 		public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException {
