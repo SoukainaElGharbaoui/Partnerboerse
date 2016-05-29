@@ -136,10 +136,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(informationLabel);
 
-	}
-
-	public CreateNutzerprofil(Nutzerprofil n) {
-		// this.loginInfo = loginInfo;
+	
 
 		// ClickHandler für den createNutzerprofil-Button hinzufügen.
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
@@ -170,8 +167,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 			}
 
 		});
-
+		
 	}
+
+
 
 	Date getGeburtsdatum() {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
