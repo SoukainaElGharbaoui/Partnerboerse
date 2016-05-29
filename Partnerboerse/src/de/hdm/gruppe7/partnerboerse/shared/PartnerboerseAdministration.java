@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 
 
+
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
@@ -233,6 +235,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Liste aller Suchprofile
 	 * @throws IllegalArgumentException
 	 */
+	
+	public List<Eigenschaft> getAllEigenschaftenNeu()
+			throws IllegalArgumentException;
+	
+	
 	public List<Suchprofil> getAllSuchprofile()
 			throws IllegalArgumentException;
 	
@@ -244,6 +251,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId)
 			throws IllegalArgumentException;
 
+	
+	public Auswahleigenschaft getEigAById(int eigenschaftId)
+			throws IllegalArgumentException;
 //
 //	public Beschreibungsinfo createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
 //			throws IllegalArgumentException;

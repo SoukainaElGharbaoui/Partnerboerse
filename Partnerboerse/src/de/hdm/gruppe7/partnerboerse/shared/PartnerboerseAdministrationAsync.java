@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 
+
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
@@ -121,6 +123,8 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	
 	
+	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
+	
 	void getAllInfosNeu(int nutzerprofilId,
 			AsyncCallback<List<String>> callback);
 	
@@ -128,6 +132,9 @@ public interface PartnerboerseAdministrationAsync {
 	void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId,
 			AsyncCallback<Void> callback);
 
+	
+	void getEigAById(int eigenschaftId,
+			AsyncCallback<Auswahleigenschaft> callback);
 	
 	
 //	void createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext, AsyncCallback<Beschreibungsinfo> callback); 

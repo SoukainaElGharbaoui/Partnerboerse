@@ -1,20 +1,20 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
-
-
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 
 public class EditInfo extends VerticalPanel {
 
@@ -24,13 +24,20 @@ public class EditInfo extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	Button loeschenButton = new Button("Löschen");
+	
+
 
 //	private int neueAuswahloptionId;
 //	int eigenschaftIdA;
 //	String bisherigeAuswahloption;
-	private int row1;
-	private int nutzerprofilIdInt;
-	private int eigenschaftIdInt;
+//	private int nutzerprofilIdInt;
+//	private int eigenschaftIdInt;
+//	private String infotext;
+//	private String typ;
+	
+	private FlexTable editInfoFlexTable = new FlexTable();
+	private int row;
+
 	
 	/**
 	 * Konstruktor hinzufügen.
@@ -38,12 +45,6 @@ public class EditInfo extends VerticalPanel {
 
 	public EditInfo() {
 		this.add(verPanel);
-
-		/**
-		 * Tabelle zur Anzeige der Eigenschaften hinzufügen.
-		 */
-
-		final FlexTable editInfoFlexTable = new FlexTable();
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -82,7 +83,6 @@ public class EditInfo extends VerticalPanel {
 		final Button updateInfosButton = new Button("&Auml;nderungen speichern");
 
 
-		
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(Benutzer.getProfilId(), 
 				new AsyncCallback<List<String>>(){
 
@@ -93,10 +93,10 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<String> result) {
-						informationLabel.setText("Das Anzeigen der Infos hat funktioniert.");						
-
+						informationLabel.setText("Das Anzeigen der Infos hat funktioniert.");			
 						
-						row1 = editInfoFlexTable.getRowCount();
+						row = editInfoFlexTable.getRowCount();
+
 						int size = result.size();
 							
 						for (int i = 0; i < size; i++) {
@@ -104,19 +104,68 @@ public class EditInfo extends VerticalPanel {
 						String nutzerprofilId = result.get(i);
 						String eigenschaftId = result.get(i+1);
 						String erlaeuterung = result.get(i+2);
-						String infotext = result.get(i+3);
-									
-						editInfoFlexTable.setText(row1, 0, nutzerprofilId);
-						editInfoFlexTable.setText(row1, 1, eigenschaftId);
-						editInfoFlexTable.setText(row1, 2, erlaeuterung);
-						editInfoFlexTable.setText(row1, 3, infotext);
-					
+						final String infotext = result.get(i+3);
+						final String typ = result.get(i+4);
 						
+						editInfoFlexTable.setText(row, 0, nutzerprofilId);
+						editInfoFlexTable.setText(row, 1, eigenschaftId);
+						editInfoFlexTable.setText(row, 2, erlaeuterung);
+						
+						final int nutzerprofilIdInt = Integer.valueOf(nutzerprofilId);
+						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
+						
+						
+						if (typ == "B") {
+							
+							TextBox tb = new TextBox();
+							tb.setText(infotext);
+							editInfoFlexTable.setWidget(row, 3, tb);
+						}
+						
+						
+						else if (typ == "A") {
+							
+							final ListBox lb = new ListBox();
+							editInfoFlexTable.setWidget(row, 3, lb);
+							
+														
+							ClientsideSettings.getPartnerboerseAdministration().getEigAById(
+									eigenschaftIdInt, new AsyncCallback<Auswahleigenschaft>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											informationLabel.setText("Fehler bei Holen der Auswahloptionen.");													
+										}
+
+										@Override
+										public void onSuccess(
+												Auswahleigenschaft result) {
+											
+											List<String> optionen = new ArrayList<String>();
+											optionen = result.getOptionen();
+											
+											for (int o = 0; o < optionen.size(); o++) {
+												lb.addItem(optionen.get(o));
+												
+												informationLabel.setText("Das Herausholen der Auswahloptionen "
+														+ "hat funktioniert.");
+											}
+											
+											for (int a = 0; a < lb.getItemCount(); a++) {
+												
+												if (lb.getValue(a).equals(infotext)) {
+													lb.setItemSelected(a, true);	
+												}
+												
+												informationLabel.setText("Das Setzen der bisher "
+														+ "ausgewählten Option funktioniert.");
+											}
+										}
+									});
+						}
+ 						
 						loeschenButton = new Button("Löschen");
-						editInfoFlexTable.setWidget(row1, 4, loeschenButton);
-						
-						nutzerprofilIdInt = Integer.valueOf(nutzerprofilId);
-						eigenschaftIdInt = Integer.valueOf(eigenschaftId);
+						editInfoFlexTable.setWidget(row, 4, loeschenButton);
 						
 						loeschenButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
@@ -135,13 +184,16 @@ public class EditInfo extends VerticalPanel {
 											informationLabel.setText("Das Löschen der Info hat funktioniert.");		
 										}
 									});
-								
-								editInfoFlexTable.removeRow(row1);							
+
+									editInfoFlexTable.removeRow(row);;								
 							}
 						});
-						
-						row1++; 
-						i++; i++; i++;
+							
+						row++; 
+						i++; i++; i++; i++; 
+//						if (row == 3) {
+//							break;
+//						}
 
 						}
 						}

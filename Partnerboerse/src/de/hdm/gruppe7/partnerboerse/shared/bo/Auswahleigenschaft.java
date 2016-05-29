@@ -1,16 +1,19 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Auswahleigenschaft extends Eigenschaft {
 
 	private static final long serialVersionUID = 1L;
-	private String[] optionen = new String[10];
+	private List<String> optionen = new ArrayList<String>();
 	
-	
-	public String[] getOptionen() {
+	public List<String> getOptionen() {
 		return optionen;
 	}
 
-	public void setOptionen(String[] optionen) {
+	public void setOptionen(List<String> optionen) {
 		this.optionen = optionen;
-	}
+	}	
+	
 }

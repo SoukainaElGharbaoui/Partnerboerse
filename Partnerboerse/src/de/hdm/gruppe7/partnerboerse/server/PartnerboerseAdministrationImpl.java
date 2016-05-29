@@ -14,6 +14,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 //import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
@@ -284,6 +285,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
 
+	
+	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaftenNeu();
+	}
+	
 	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
@@ -302,6 +308,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				list1.add(String.valueOf(eigenschaftId));
 				list1.add(e.getErlaeuterung());
 				list1.add(String.valueOf(i.getInfotext()));
+				list1.add(e.getTyp());
 			}
 		System.out.println(list1);
 		return list1;
@@ -310,12 +317,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
-		
-		System.out.println("Hat funktioniert.");
 	}
 	
 	
-	
+	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
+		Auswahleigenschaft optionen = new Auswahleigenschaft();
+		optionen = this.infoMapper.findEigAById(eigenschaftId);
+		System.out.println(optionen.getOptionen());
+		
+		return optionen;
+//		return this.infoMapper.findEigAById(eigenschaftId);
+		
+	}
 	
 	
 	// public List<Info> getAllInfos

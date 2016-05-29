@@ -96,6 +96,7 @@ public class ShowInfo extends VerticalPanel {
 						String eigenschaftId = result.get(i+1);
 						String erlaeuterung = result.get(i+2);
 						String infotext = result.get(i+3);
+						String typ = result.get(i+4);
 									
 						showInfoFlexTable.setText(row1, 0, nutzerprofilId);
 						showInfoFlexTable.setText(row1, 1, eigenschaftId);
@@ -103,7 +104,7 @@ public class ShowInfo extends VerticalPanel {
 						showInfoFlexTable.setText(row1, 3, infotext);
 						
 						row1++;
-						i++; i++; i++;
+						i++; i++; i++; i++;
 						}
 					}
 		});
