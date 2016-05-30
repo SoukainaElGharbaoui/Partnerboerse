@@ -1,4 +1,4 @@
-package de.hdm.gruppe7.partnerboerse.client;
+ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
