@@ -9,21 +9,25 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ClientsideSettings extends CommonSettings {
 
 	private static PartnerboerseAdministrationAsync partnerboerseAdministration = null;
-	
+
 	private static ReportGeneratorAsync reportGenerator = null;
+
+	private static LoginServiceAsync loginService = null;
 
 	private static final String LOGGER_NAME = "PartnerboerseProjekt Web Client";
 
 	private static final Logger log = Logger.getLogger(LOGGER_NAME);
 
+	private static Nutzerprofil aktuellerUser = null;
+
 	public static Logger getLogger() {
 		return log;
 	}
-	
 
 	public static PartnerboerseAdministrationAsync getPartnerboerseAdministration() {
 
@@ -39,9 +43,20 @@ public class ClientsideSettings extends CommonSettings {
 			reportGenerator = GWT.create(ReportGenerator.class); 
 		}
 		return reportGenerator; 
+
 	}
 
-	
-	 
+	public static void setAktuellerUser(Nutzerprofil np) {
+		aktuellerUser = np;
 
+	}
+
+	public static Nutzerprofil getAktuellerUser() {
+		return aktuellerUser;
+	}
+	
 }
+
+
+
+

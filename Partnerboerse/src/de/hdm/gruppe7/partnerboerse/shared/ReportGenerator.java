@@ -44,7 +44,7 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 
 @RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
-	
+
 	/**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
 	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
@@ -66,5 +66,6 @@ public interface ReportGenerator extends RemoteService {
 	   */
 	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
 	  (Nutzerprofil n) throws IllegalArgumentException;
+
 
 }
