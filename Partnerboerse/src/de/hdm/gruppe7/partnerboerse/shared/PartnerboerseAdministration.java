@@ -222,14 +222,14 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public void deleteSuchprofil(int profilId) throws IllegalArgumentException;
 
+	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
+
 	/**
 	 * Ausgeben aller Suchprfile.
 	 * 
 	 * @return Liste aller Suchprofile
 	 * @throws IllegalArgumentException
 	 */
-
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
 
 	public List<Eigenschaft> getAllEigenschaftenNeu()
 			throws IllegalArgumentException;
@@ -238,6 +238,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	public List<String> getAllInfosNeu(int nutzerprofilId)
+			throws IllegalArgumentException;
+
+	public void deleteAllInfosNeu(int profilId)
 			throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId)

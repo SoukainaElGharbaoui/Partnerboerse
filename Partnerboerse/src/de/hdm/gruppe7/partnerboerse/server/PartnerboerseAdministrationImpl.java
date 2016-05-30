@@ -325,9 +325,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	
-//	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
-//		this.infoMapper.deleteAllInfos(profilId);
-//	}
+	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
+		this.infoMapper.deleteAllInfosNeu(profilId);
+	}
 	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();

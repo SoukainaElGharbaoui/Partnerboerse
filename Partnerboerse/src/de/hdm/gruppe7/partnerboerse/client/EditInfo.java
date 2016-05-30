@@ -66,19 +66,6 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
 
-		/**
-		 * InfoLabel erstellen um Text auszugeben
-		 */
-//		final Label infoLabelProfilId = new Label();
-//		final Label infoLabelLoeschenB = new Label();
-//		final Label infoLabelSaveIB = new Label();
-//
-//		final Label infoLabelLoeschenA = new Label();
-//		final Label infoLabelInfosA = new Label();
-//		final Label infoLabelOptionen = new Label();
-//		final Label infoLabelInfoA = new Label();
-//		final Label infoLabelSaveIA = new Label();
-		
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
 
@@ -168,6 +155,8 @@ public class EditInfo extends VerticalPanel {
 						
 						loeschenButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
+								
+								for (int i = 1; i <= editInfoFlexTable.getRowCount();) {
 									
 									ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu
 									(nutzerprofilIdInt, eigenschaftIdInt, 
@@ -180,18 +169,20 @@ public class EditInfo extends VerticalPanel {
 
 										@Override
 										public void onSuccess(Void result) {
-											informationLabel.setText("Das Löschen der Info hat funktioniert.");		
+											informationLabel.setText("Das Löschen der Info hat funktioniert.");	
 										}
 									});
-
-									editInfoFlexTable.removeRow(row);;								
+									
+								editInfoFlexTable.removeRow(i);
+								break;
+								}
 							}
 						});
 							
 						row++; 
 						i++; i++; i++; i++; 
-						}
-						}
+					}
+				}
 			});
 		
 

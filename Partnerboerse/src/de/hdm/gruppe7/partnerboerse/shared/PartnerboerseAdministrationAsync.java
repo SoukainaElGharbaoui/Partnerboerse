@@ -124,6 +124,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllInfosNeu(int profilId,
 			AsyncCallback<List<String>> callback);
 	
+	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
 
 	void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId,
 			AsyncCallback<Void> callback);

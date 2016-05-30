@@ -17,11 +17,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 public class ShowInfo extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
-
-	/**
-	 * Tabelle erzeugen, in der die Beschreibungsinfos dargestellt werden.
-	 */
-	final FlexTable showInfoFlexTable = new FlexTable();
+	private Label ueberschriftLabel = new Label("Ihre Infos:");
+	private Label informationLabel = new Label();
+	
+	private FlexTable showInfoFlexTable = new FlexTable();
 
 	/**
 	 * Konstruktor
@@ -32,7 +31,7 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
-		final Label ueberschriftLabel = new Label("Ihre Infos:");
+		
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
@@ -58,7 +57,7 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
-		final Label informationLabel = new Label();
+		
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
 				Benutzer.getProfilId(), new AsyncCallback<List<String>>() {
@@ -115,8 +114,23 @@ public class ShowInfo extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-//				ClientsideSettings.getPartnerboerseAdministration()
-				
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
+						Benutzer.getProfilId(), new AsyncCallback<Void>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+								
+								ShowEigenesNp showNp = new ShowEigenesNp();
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showNp);
+							}
+						});
 			}
 		});
 		

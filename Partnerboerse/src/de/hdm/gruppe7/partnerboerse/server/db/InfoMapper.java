@@ -131,6 +131,22 @@ public class InfoMapper {
 	}
 
 	
+	public void deleteAllInfosNeu(int profilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_info1 "
+					+ "WHERE nutzerprofil_id=" + profilId);
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
