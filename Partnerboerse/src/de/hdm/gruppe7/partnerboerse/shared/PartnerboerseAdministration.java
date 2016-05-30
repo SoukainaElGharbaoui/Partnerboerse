@@ -1,20 +1,12 @@
-
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-
-
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -62,8 +54,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			String geschlecht, String geburtsdatum, int koerpergroesseInt,
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException;
-	
-	
+
 	/**
 	 * Das existierende Nutzerprofil updaten.
 	 * 
@@ -75,11 +66,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 
-	
 	public void saveNutzerprofil(String vorname, String nachname,
-			String geschlecht, String geburtsdatum, int koerpergroesseInt, String haarfarbe, 
-			String raucher, String religion) throws IllegalArgumentException;
-
+			String geschlecht, String geburtsdatum, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
+			throws IllegalArgumentException;
 
 	/**
 	 * Suchen eines Nutzerprofil-Objekts, dessen ProfilId bekannt ist.
@@ -92,43 +82,41 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public Nutzerprofil getNutzerprofilById(int profilId)
 			throws IllegalArgumentException;
-	
+
 	/**
 	 * Suchen eines Fremdprofil-Objekt, dessen FremdprofilId bekannt ist
 	 */
-	
+
 	public Nutzerprofil getFremdprofilById(int fremdprofilId)
 			throws IllegalArgumentException;
-	
+
 	/**
 	 * Alle Nutzerprofile ausgeben
+	 * 
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	
-	public List<Nutzerprofil> getAllNutzerprofile (Nutzerprofil nutzerprofil)
-	throws IllegalArgumentException;
-	
+
+	public List<Nutzerprofil> getAllNutzerprofile(Nutzerprofil nutzerprofil)
+			throws IllegalArgumentException;
+
 	/**
 	 * Speichern eines Nutzerprofil-Objekts in der Datenbank.
 	 * 
 	 * @param nutzerprofil
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
-     */
-	
-	
-	public void saveSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
-			throws IllegalArgumentException;
-	
-
-	
-	/**
-	 * l�schen eines Nutzerprofils in der Datenbank
-	 * @param profilId
 	 */
 
+	public void saveSuchprofil(String geschlecht, int alterMinInt,
+			int alterMaxInt, int koerpergroesseInt, String haarfarbe,
+			String raucher, String religion) throws IllegalArgumentException;
+
+	/**
+	 * l�schen eines Nutzerprofils in der Datenbank
+	 * 
+	 * @param profilId
+	 */
 
 	void deleteNutzerprofil(int profilId);
 
@@ -151,65 +139,68 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Alle Vermerke eines Nutzerprofils auslesen.
 	public Vector<Merkliste> getGemerkteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
-	
-	// Vermerkstatus ermitteln. 
+
+	// Vermerkstatus ermitteln.
 	public int getVermerkstatus(int profilId, int fremdprofilId)
-			throws IllegalArgumentException; 
-	
+			throws IllegalArgumentException;
+
 	// Vermerk einfügen.
 	public void vermerkSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
 
-	// Vermerk löschen. 
+	// Vermerk löschen.
 	public void vermerkLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
+
 	/**
 	 * ABSCHNITT MERKLISTE: ENDE
 	 */
-	
+
 	/**
 	 * ABSCHNITT SPERRLISTE: BEGINN
 	 */
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Vector<Sperrliste> getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException;
-	
-	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId)
-			throws IllegalArgumentException; 
-	
+			throws IllegalArgumentException;
+
 	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
-			throws IllegalArgumentException; 
-	
+			throws IllegalArgumentException;
+
 	// Sperrung einfügen.
 	public void sperrungSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
-	
-	// Sperrung löschen. 
+
+	// Sperrung löschen.
 	public void sperrungLoeschen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
+
 	/**
 	 * ABSCHNITT SPERRLISTE: ENDE
 	 */
-	
-	
-	
+
 	/**
 	 * ABSCHNITT SUCHPROFIL: BEGINN
 	 */
-	
+
 	/**
 	 * Ein neues Suchprofil anlegen.
 	 * 
-	 * @param alterMin, alterMax, geschlecht, haarfarbe, koerpergroesse, raucher, religion
+	 * @param alterMin
+	 *            , alterMax, geschlecht, haarfarbe, koerpergroesse, raucher,
+	 *            religion
 	 * @return fertiges Suchprofil-Objekt
 	 * @throws IllegalArgumentException
 	 */
 
-	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt, int alterMaxInt, 
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
-	
+	public Suchprofil createSuchprofil(String geschlecht, int alterMinInt,
+			int alterMaxInt, int koerpergroesseInt, String haarfarbe,
+			String raucher, String religion);
+
 	/**
 	 * Speichern eines Suchprofil-Objekts in der Datenbank.
 	 * 
@@ -217,8 +208,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            zu sicherndes Objekt.
 	 * @throws IllegalArgumentException
 	 */
-//	public Suchprofil save(String alterMin, String alterMax, String geschlecht, String haarfarbe,
-//			String koerpergroesse, String raucher, String religion) throws IllegalArgumentException;
+	// public Suchprofil save(String alterMin, String alterMax, String
+	// geschlecht, String haarfarbe,
+	// String koerpergroesse, String raucher, String religion) throws
+	// IllegalArgumentException;
 
 	/**
 	 * L�schen des �bergebenen Suchprofils.
@@ -227,109 +220,54 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 *            das zu loeschende Suchprofil
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteSuchprofil(int profilId)
-			throws IllegalArgumentException;
+	public void deleteSuchprofil(int profilId) throws IllegalArgumentException;
 
 	/**
 	 * Ausgeben aller Suchprfile.
+	 * 
 	 * @return Liste aller Suchprofile
 	 * @throws IllegalArgumentException
 	 */
-	
+
+	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
+
 	public List<Eigenschaft> getAllEigenschaftenNeu()
 			throws IllegalArgumentException;
-	
-	
-	public List<Suchprofil> getAllSuchprofile()
+
+	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
-	
-	
-	public List<String> getAllInfosNeu(int nutzerprofilId) 
+
+	public List<String> getAllInfosNeu(int nutzerprofilId)
 			throws IllegalArgumentException;
-	
-	
+
 	public void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId)
 			throws IllegalArgumentException;
 
-	
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;
-//
-//	public Beschreibungsinfo createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) 
-//			throws IllegalArgumentException;
-//	
-//	public Auswahlinfo createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) 
-//			throws IllegalArgumentException;
-//	
-//	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-//			throws IllegalArgumentException;
-//	
-//	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//
-//	
-//	public List<Eigenschaft> getAllEigenschaftenB()
-//			throws IllegalArgumentException;
-//	
-//	public List<Eigenschaft> getAllEigenschaftenA()
-//			throws IllegalArgumentException;
-//	
-//	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//	public List<Beschreibungsinfo> getAllInfosB(int profilId)
-//			throws IllegalArgumentException;
 
-//	public List<Auswahlinfo> getAllInfosA(int profilId)
-//			throws IllegalArgumentException;
-//	
-//	public Auswahloption getOptionById(int eigenschaftId, int nutzerprofilId)
-//			throws IllegalArgumentException;
+	/**
+	 * Auslesen eines Suchprofils anhand der ID
+	 * 
+	 * @param profilId
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 
-//	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//	public void deleteAllInfos(int profilId)
-//		throws IllegalArgumentException;
-//
-//	public void deleteOneInfoB(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//	public void deleteOneInfoA(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException;
-//	
-//	public List<Info> getAInfoByProfilId(int profilId)
-//			throws IllegalArgumentException;
-/**
- *Auslesen eines Suchprofils anhand der ID
- * @param profilId
- * @return
- * @throws IllegalArgumentException
- */
-	
-	
 	public Suchprofil getSuchprofilById(int profilId)
 			throws IllegalArgumentException;
+
 	/**
 	 * ABSCHNITT SUCHPROFIL: ENDE
 	 */
-	
-	public List<Nutzerprofil> getAllProfile()
-			throws IllegalArgumentException;
+
+	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException;
 
 	// Besuch hinzufuegen.
 	public void besuchSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException;
-	
-		
-		public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
-				throws IllegalArgumentException;
 
-		
-		
+	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+			throws IllegalArgumentException;
+
 }
-
-		
-
-

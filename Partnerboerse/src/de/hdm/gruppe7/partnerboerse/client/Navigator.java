@@ -3,8 +3,6 @@ package de.hdm.gruppe7.partnerboerse.client;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -77,21 +75,6 @@ public class Navigator extends VerticalPanel {
 		infoAnlegenButton.setStyleName("navigatorbutton"); 
 		this.add(infoAnlegenButton);
 		
-		/**
-		 * Button "Info anzeigen" hinzufügen
-		 */
-//		final Button showInfoButton = new Button("Info anzeigen");
-//		
-//		showInfoButton.addClickHandler(new ClickHandler() {
-//
-//			public void onClick(ClickEvent event) {
-//				ShowInfo showInfo = new ShowInfo();
-//				RootPanel.get("Details").clear();
-//				RootPanel.get("Details").add(showInfo);
-//			}
-//		});
-//
-//		this.add(showInfoButton);
 
 		/**
 		 * Button "Suchprofil anlegen" hinzufügen
@@ -182,59 +165,6 @@ public class Navigator extends VerticalPanel {
 
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton"); 
 		this.add(showPartnervorschlaegeButton);
-		
-		
-		
 
 	}
-
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button eigenesProfilButton = new Button("Eigenes Profil anzeigen");
-	// navPanel2.add(eigenesProfilButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button profilBearbeitenButton = new
-	// Button("Eigenes Profil bearbeiten");
-	// navPanel2.add(profilBearbeitenButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button eigenesProfilLoeschen = new
-	// Button("Eigenes Profil l&ouml;schen");
-	// navPanel2.add(eigenesProfilLoeschen);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button merklisteButton = new Button("Merkliste anzeigen");
-	// navPanel2.add(merklisteButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button sperrlisteButton = new Button("Sperrliste anzeigen");
-	// navPanel2.add(sperrlisteButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button partnervorschlaegeOhneSpButton = new
-	// Button("Unangesehene Partnervorschlaege anzeigen");
-	// navPanel2.add(partnervorschlaegeOhneSpButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button partnervorschlaegeMitSpButton = new
-	// Button("Partnervorschlaege auf Basis Ihrer Suche anzeigen");
-	// navPanel2.add(partnervorschlaegeMitSpButton);
-	//
-	//
-	//
-
 }

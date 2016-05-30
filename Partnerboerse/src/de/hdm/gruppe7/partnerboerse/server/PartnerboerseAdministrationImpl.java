@@ -1,11 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.server;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
@@ -15,9 +13,6 @@ import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -262,12 +257,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	public void deleteSuchprofil(int profilId) throws IllegalArgumentException {
-
 		this.suchprofilMapper.deleteSuchprofil(profilId);
 	}
 
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
-
 		return this.suchprofilMapper.findAllSuchprofile();
 	}
 
@@ -315,10 +308,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	
+	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext) 
+			throws IllegalArgumentException {
+		
+		Info i = new Info();
+		i.setNutzerprofilId(profilId);
+		i.setEigenschaftId(eigenschaftId);
+		i.setInfotext(infotext);
+		
+		return this.infoMapper.insertInfoNeu(i);
+	}
+	
+	
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 	
+	
+//	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
+//		this.infoMapper.deleteAllInfos(profilId);
+//	}
 	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
@@ -330,163 +339,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 	}
 	
-	
-	// public List<Info> getAllInfos
-
-	// Vector<String[]> aL = new Vector<String[]>();
-	// String[] a = new String[3];
-	//
-	// List<Auswahlinfo> listIA = this.infoMapper.findAllInfosA(profilId);
-	// Auswahlinfo auswahl = new Auswahlinfo();
-	//
-	// auswahl.setListIA(listIA);
-	//
-	// for (Auswahlinfo iA: listIA) {
-	//
-	// // Auswahloption optionA =
-	// this.infoMapper.findOptionById(iA.getEigenschaftId(),
-	// iA.getNutzerprofilId());
-	// // String optionsbez = optionA.getOptionsbezeichnung();
-	//
-	// String optionsbez = this.infoMapper.findOptionById(iA.getEigenschaftId(),
-	// iA.getNutzerprofilId());
-	//
-	// a[0] = String.valueOf(iA.getNutzerprofilId());
-	// a[1] = String.valueOf(iA.getEigenschaftId());
-	// a[2] = optionsbez;
-	//
-	// aL.add(a);
-	// }
-	// return aL;
-	// }
-
-	//
-	// public Beschreibungsinfo createBeschreibungsinfo(int profilId, int
-	// eigenschaftId, String infotext) throws IllegalArgumentException {
-	//
-	// Beschreibungsinfo infoB = new Beschreibungsinfo();
-	// infoB.setNutzerprofilId(profilId);
-	// infoB.setEigenschaftId(eigenschaftId);
-	// infoB.setInfotext(infotext);
-	//
-	// return this.infoMapper.insertBeschreibungsinfo(infoB);
-	// }
-	//
-	// public Auswahlinfo createAuswahlinfo(int profilId, int eigenschaftId, int
-	// auswahloptionIdInt) throws IllegalArgumentException {
-	//
-	// Auswahlinfo infoA = new Auswahlinfo();
-	// infoA.setNutzerprofilId(profilId);
-	// infoA.setEigenschaftId(eigenschaftId);
-	// infoA.setAuswahloptionId(auswahloptionIdInt);
-	//
-	// return this.infoMapper.insertAuswahlinfo(infoA);
-	// }
-	//
-
-	// public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-	// throws IllegalArgumentException {
-	//
-	// Beschreibungsinfo infoB = new Beschreibungsinfo();
-	// infoB.setNutzerprofilId(profilId);
-	// infoB.setEigenschaftId(eigenschaftId);
-	// infoB.setInfotext(infotext);
-	//
-	// this.infoMapper.updateInfoB(infoB);
-	// }
-	//
-	// public void saveInfoA(int profilId, int neueAuswahloptionId, int
-	// eigenschaftId)
-	// throws IllegalArgumentException {
-	//
-	// this.infoMapper.updateInfoA(profilId, neueAuswahloptionId,
-	// eigenschaftId);
-	//
-	// }
-
-	//
-	// public List<Eigenschaft> getAllEigenschaftenB() throws
-	// IllegalArgumentException {
-	// return this.infoMapper.findAllEigenschaftenB();
-	// }
-	//
-	// public List<Eigenschaft> getAllEigenschaftenA() throws
-	// IllegalArgumentException {
-	// return this.infoMapper.findAllEigenschaftenA();
-	// }
-	//
-	// public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId)
-	// throws IllegalArgumentException {
-	// return this.infoMapper.findAllAuswahloptionen(eigenschaftId);
-	// }
-	//
-	// public List<Beschreibungsinfo> getAllInfosB(int profilId) throws
-	// IllegalArgumentException {
-	// return this.infoMapper.findAllInfosB(profilId);
-	// }
-
-	// public List<Auswahlinfo> getAllInfosA(int profilId) throws
-	// IllegalArgumentException {
-	// return this.infoMapper.findAllInfosA(profilId);
-	// }
-	//
-	// public Auswahloption getOptionById(int eigenschaftId, int nutzerprofilId)
-	// throws IllegalArgumentException {
-	// return this.infoMapper.findOptionById(eigenschaftId, nutzerprofilId);
-	// }
-
-	// public Vector<String[]> getAllInfosGesamt(int profilId) {
-	//
-	// Vector<String[]> aL = new Vector<String[]>();
-	// String[] a = new String[3];
-	//
-	// List<Auswahlinfo> listIA = this.infoMapper.findAllInfosA(profilId);
-	// Auswahlinfo auswahl = new Auswahlinfo();
-	//
-	// auswahl.setListIA(listIA);
-	//
-	// for (Auswahlinfo iA: listIA) {
-	//
-	// // Auswahloption optionA =
-	// this.infoMapper.findOptionById(iA.getEigenschaftId(),
-	// iA.getNutzerprofilId());
-	// // String optionsbez = optionA.getOptionsbezeichnung();
-	//
-	// String optionsbez = this.infoMapper.findOptionById(iA.getEigenschaftId(),
-	// iA.getNutzerprofilId());
-	//
-	// a[0] = String.valueOf(iA.getNutzerprofilId());
-	// a[1] = String.valueOf(iA.getEigenschaftId());
-	// a[2] = optionsbez;
-	//
-	// aL.add(a);
-	// }
-	// return aL;
-	// }
-
-	// public Info getInfoAById(String optionsbezeichnung, int eigenschaftId)
-	// throws IllegalArgumentException {
-	// return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
-	// }
 
 	public List<Nutzerprofil> getAllProfile() throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
-//
-//	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
-//		this.infoMapper.deleteAllInfos(profilId);
-//	}
-//
-//	public void deleteOneInfoB(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException {
-//		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
-//	}
-//
-//	public void deleteOneInfoA(int profilId, int eigenschaftId)
-//			throws IllegalArgumentException {
-//		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
-//	}
-//
+
+
 	// Besuch hinzufuegen.
 	public void besuchSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -497,34 +355,5 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 	}
-
-//	// unnötig
-//	@Override
-//	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-//			throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public List<Eigenschaft> getAllEigenschaftenB()
-//			throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Eigenschaft> getAllEigenschaftenA()
-//			throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Vector<String[]> getAllInfosGesamt(int profilId)
-//			throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 }

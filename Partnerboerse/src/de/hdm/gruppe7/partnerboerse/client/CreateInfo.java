@@ -9,17 +9,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
-
-
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahlinfo;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungsinfo;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
@@ -29,6 +23,14 @@ public class CreateInfo extends VerticalPanel {
 	 * VerticalPanel hinzufügen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private FlexTable showEigenschaftFlexTable = new FlexTable();
+	
+	private String nEingabe;
+	
+	private Button createInfosButton = new Button("Info anlegen");
+	private Label ueberschriftLabel = new Label("Info anlegen:"); 
+	private Label informationLabelB = new Label();
+	private Label informationLabelA = new Label();
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -39,7 +41,8 @@ public class CreateInfo extends VerticalPanel {
 		/**
 		 * Tabelle zur Anzeige der Eigenschaften hinzufügen.
 		 */
-		final FlexTable showEigenschaftFlexTable = new FlexTable();
+		
+		
 
 		/**
 		 * Erste Zeile der Tabelle festlegen.
@@ -58,19 +61,13 @@ public class CreateInfo extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen. 
 		 */
-		final Label ueberschriftLabel = new Label("Info anlegen:"); 
+		
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		
 		/**
 		 * Information-Labels für die Benutzerinformation hinzufügen.
 		 */
-		final Label informationLabelB = new Label();
-		final Label informationLabelA = new Label();
 		
-		/**
-		 * Info-Anlegen-Button hinzufügen. 
-		 */
-		final Button createInfosButton = new Button("Info anlegen");
 		
 		
 		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenNeu(
@@ -88,15 +85,54 @@ public class CreateInfo extends VerticalPanel {
 						for (Eigenschaft e : result) {
 							row++;
 		
-							final String eigenschaftId = String.valueOf(e.getEigenschaftId());
+							String eigenschaftId = String.valueOf(e.getEigenschaftId());
+							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 							
 							showEigenschaftFlexTable.setText(row, 0, eigenschaftId);
 							showEigenschaftFlexTable.setText(row, 1, e.getErlaeuterung());
 							
+
 							if (e.getTyp() == "B") {
 								
 								final TextArea textArea = new TextArea();
 								showEigenschaftFlexTable.setWidget(row, 2, textArea);
+								
+								
+								
+								createInfosButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										
+										if(textArea.getText() != null) {
+											nEingabe = textArea.getText();
+										}
+										
+										else {
+											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
+										}
+										
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+									
+													@Override
+													public void onFailure(Throwable caught) {
+														informationLabelB.setText("Es trat ein Fehler auf.");
+													}
+									
+													@Override
+													public void onSuccess(Info result) {
+														informationLabelB.setText("Die Infos wurden "
+																+ "erfolgreich angelegt.");
+														
+														ShowEigenesNp showNp = new ShowEigenesNp();
+														RootPanel.get("Details").clear();
+														RootPanel.get("Details").add(showNp);
+													}
+									
+										});
+												
+								}
+								}); 
+								
 							}
 							
 							else if (e.getTyp() == "A") {
@@ -104,7 +140,7 @@ public class CreateInfo extends VerticalPanel {
 								final ListBox lb = new ListBox();
 								
 								ClientsideSettings.getPartnerboerseAdministration().getEigAById(
-										Integer.valueOf(eigenschaftId), new AsyncCallback<Auswahleigenschaft>() {
+										eigenschaftIdInt, new AsyncCallback<Auswahleigenschaft>() {
 
 											@Override
 											public void onFailure(
@@ -125,159 +161,41 @@ public class CreateInfo extends VerticalPanel {
 											}	
 								});
 								showEigenschaftFlexTable.setWidget(row, 2, lb);
+								
+								
+								createInfosButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										
+										nEingabe = lb.getSelectedItemText();
+										
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+									
+													@Override
+													public void onFailure(Throwable caught) {
+														informationLabelA.setText("Es trat ein Fehler auf.");
+													}
+									
+													@Override
+													public void onSuccess(Info result) {
+														informationLabelA.setText("Die Infos wurden "
+																+ "erfolgreich angelegt.");
+														
+														
+														ShowEigenesNp showNp = new ShowEigenesNp();
+														RootPanel.get("Details").clear();
+														RootPanel.get("Details").add(showNp);
+													}
+										});
+								}
+								}); 
 							}
-							
-							
-							
-							
 							
 						}
 					}
 		});
 		
 		
-		
-//		/**
-//		 * GUI für die Beschreibungseigenschaften definieren.
-//		 */
-//		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenB(new AsyncCallback<List<Eigenschaft>>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				informationLabelB.setText("Es trat ein Fehler auf");
-//			}
-//
-//			@Override
-//			public void onSuccess(List<Eigenschaft> result) {
-//				
-//				// Anzahl der Zeilen ermitteln.
-//				int row = showEigenschaftFlexTable.getRowCount();
-//
-//				// Tabelle mit Inhalten aus der Datenbank befüllen.
-//				for (Eigenschaft e : result) {
-//					row++;
-//
-//					final String eigenschaftId = String.valueOf(e.getEigenschaftId());
-//					
-//					showEigenschaftFlexTable.setText(row, 0, eigenschaftId);
-//					showEigenschaftFlexTable.setText(row, 1, e.getErlaeuterung());
-//
-//					final TextArea textArea = new TextArea();
-//					
-//					showEigenschaftFlexTable.setWidget(row, 2, textArea);
-//					
-//					
-//					
-//					// ClickHandler für den Info-Anlegen-Button hinzufügen. 
-//					createInfosButton.addClickHandler(new ClickHandler() {
-//
-//						public void onClick(ClickEvent event) {
-//							
-//							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId); 
-//							
-//							
-//							
-////							ClientsideSettings.getPartnerboerseAdministration().createBeschreibungsinfo(Benutzer.getProfilId(),
-////							eigenschaftIdInt, textArea.getText(), new AsyncCallback<Beschreibungsinfo>() {
-////
-////								@Override
-////								public void onFailure(Throwable caught) {
-////									informationLabelB.setText("Es trat ein Fehler auf");
-////								}
-////
-////								@Override
-////								public void onSuccess(Beschreibungsinfo result) {
-////									informationLabelB.setText("Die Beschreibungsinfo wurde erfolgreich angelegt");
-////								}
-////
-////							});
-////				
-////						}
-////						
-////					}); 
-////
-////				}
-////
-////			}
-////		});
-//	
-//	/**
-//	 * GUI für die Auswahleigenschaften hinzufügen. 
-//	 */
-////	ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaftenA(new AsyncCallback<List<Eigenschaft>>() {
-////
-////		@Override
-////		public void onFailure(Throwable caught) {
-////			informationLabelA.setText("Es trat ein Fehler auf");
-////		}
-////
-////		@Override
-////		public void onSuccess(List<Eigenschaft> result) {
-////			// Anzahl der Zeilen ermitteln.
-////			int row = showEigenschaftFlexTable.getRowCount();
-////
-////			// Tabelle mit Inhalten aus der Datenbank befüllen.
-////			for (Eigenschaft e : result) {
-////				row++;
-////
-////				final String eigenschaftId = String.valueOf(e.getEigenschaftId());
-////
-////				showEigenschaftFlexTable.setText(row, 0, eigenschaftId);
-////				showEigenschaftFlexTable.setText(row, 1, e.getErlaeuterung());
-////				
-////				final ListBox neueListBox = new ListBox();
-////
-////				showEigenschaftFlexTable.setWidget(row, 2, neueListBox);
-////						
-////						// Auswahloptionen abrufen. 
-////						ClientsideSettings.getPartnerboerseAdministration().getAllAuswahloptionen
-////							(Integer.valueOf(eigenschaftId), new AsyncCallback<List<Auswahloption>>() {
-////
-////							@Override
-////							public void onFailure(Throwable caught) {
-////								informationLabelA.setText("Es trat ein Fehler auf");	
-////							}
-////
-////							@Override
-////							public void onSuccess(List<Auswahloption> result) {
-////							
-////							for(Auswahloption a : result){
-////								neueListBox.addItem(a.getOptionsbezeichnung());
-////							}
-////							}
-////				
-////						});
-//						
-////						// ClickHandler für den Info-Anlegen-Button hinzufügen. 
-////						createInfosButton.addClickHandler(new ClickHandler() {
-////
-////							public void onClick(ClickEvent event) {
-////								final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
-////								
-////									ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(Benutzer.getProfilId(), 
-////											eigenschaftIdInt, neueListBox.getSelectedIndex(), new AsyncCallback<Auswahlinfo>() {
-////								
-////									@Override
-////									public void onFailure(Throwable caught) {
-////									informationLabelA.setText("Es trat ein Fehler auf");
-////									}
-////								
-////									@Override
-////									public void onSuccess(Auswahlinfo result) {
-////									informationLabelA.setText("Die Auswahlinfo wurde erfolgreich angelegt");
-////									}
-////								
-////									});
-////								
-////							}
-////							
-////						}); 
-////						
-////			}
-////		}
-////
-////	});
-//	
 	verPanel.add(ueberschriftLabel);  
 	verPanel.add(showEigenschaftFlexTable);
 	verPanel.add(createInfosButton);
