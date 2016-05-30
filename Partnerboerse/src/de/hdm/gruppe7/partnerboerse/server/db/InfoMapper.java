@@ -64,7 +64,7 @@ public class InfoMapper {
 		try {
 			 Statement stmt = con.createStatement();
 			
-			 stmt.executeUpdate("INSERT INTO t_info1 (nutzerprofil_id, eigenschaft_id, infotext) "
+			 stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) "
 			 + "VALUES(" + i.getNutzerprofilId() + "," + i.getEigenschaftId() 
 			 + ",'" + i.getInfotext() +  "')");
 			
@@ -86,7 +86,7 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_info1 WHERE nutzerprofil_id="
+					.executeQuery("SELECT * FROM t_info1 WHERE profil_id="
 							+ nutzerprofilId);
 
 //			ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id, erlaeuterung FROM t_eigenschaft "
@@ -94,7 +94,7 @@ public class InfoMapper {
 
 			while (rs.next()) {
 				Info i = new Info();
-				i.setNutzerprofilId(rs.getInt("nutzerprofil_id"));
+				i.setNutzerprofilId(rs.getInt("profil_id"));
 				i.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				i.setInfotext(rs.getString("infotext"));
 
@@ -227,7 +227,7 @@ public class InfoMapper {
 
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_info1 "
-					+ "WHERE nutzerprofil_id=" + profilId);
+					+ "WHERE profil_id=" + profilId);
 		
 	} catch (SQLException e2) {
 	e2.printStackTrace();
@@ -243,7 +243,7 @@ public class InfoMapper {
 		
 		Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_info1 "
-					+ "WHERE nutzerprofil_id=" + profilId
+					+ "WHERE profil_id=" + profilId
 					+ " AND eigenschaft_id=" + eigenschaftId);
 		}
 		catch (SQLException e2) {
