@@ -9,93 +9,131 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 
 /**
- * Realisierung eines exemplarischen Nutzerprofils. 
+ * Realisierung eines exemplarischen Nutzerprofils.
+ * 
  * @author Nina BaumgÃ¤rtner
  */
 
-public class Nutzerprofil extends Profil{
+public class Nutzerprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String vorname;
-	private String nachname; 
-	private String geburtsdatum;
-	private List <Nutzerprofil> partnervorschlaegeNp;
-	private List <Nutzerprofil> partnervorschlaegeSp;
-	private List <Nutzerprofil> angeseheneNp;
 
-	
+	// WICHTIG FÜR LOGIN
+	private boolean loggedIn = false;
+	private String loginUrl;
+	private String logoutUrl;
+	private String emailAddress;
+	private String nickname;
+	private boolean status = false;
+
+	// ATTRIBUTE NUTZERPROFIL
+	private String vorname;
+	private String nachname;
+	private String geburtsdatum;
+	private Date geburtsdatumDate;
+	private List<Nutzerprofil> partnervorschlaegeNp;
+	private List<Nutzerprofil> partnervorschlaegeSp;
+	private List<Nutzerprofil> angeseheneNp;
+	private int aehnlichkeit;
+
+	// Konstruktor
+	public Nutzerprofil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	// METHODEN NUTZERPROFIL
 	public String getVorname() {
 		return vorname;
 	}
+
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
+
 	public String getNachname() {
 		return nachname;
 	}
+
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
+
 	public String getGeburtsdatum() {
 		return geburtsdatum;
 	}
+
 	public void setGeburtsdatum(String geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
-	public List<Nutzerprofil> getPartnervorschlaegeNp() {
-		return partnervorschlaegeNp;
-	}
-	public void setPartnervorschlaegeNp(List<Nutzerprofil> partnervorschlaegeNp) {
-		this.partnervorschlaegeNp = partnervorschlaegeNp;
-	}
-	public List<Nutzerprofil> getPartnervorschlaegeSp() {
-		return partnervorschlaegeSp;
-	}
-	public void setPartnervorschlaegeSp(List<Nutzerprofil> partnervorschlaegeSp) {
-		this.partnervorschlaegeSp = partnervorschlaegeSp;
-	}
-	public List<Nutzerprofil> getAngeseheneNp() {
-		return angeseheneNp;
-	}
-	public void setAngeseheneNp(List<Nutzerprofil> angeseheneNp) {
-		this.angeseheneNp = angeseheneNp;
-	}
-	
-//	//Konstruktor
-//	public Nutzerprofil(String geschlecht, int koerpergroesseInt, 
-//			 String haarfarbe, String raucher, String religion, 
-//			 String vorname, String nachname, String geburtsdatum) {
-//		
-//		super(geschlecht, koerpergroesseInt, haarfarbe, raucher, religion);
-//		
-//		this.vorname = vorname; 
-//		this.nachname = nachname;
-//		this.geburtsdatum = geburtsdatum;
-//	}
 
-	
-	// Konstrukor
-	public Nutzerprofil(){
-		super();
+	public Date getGeburtsdatumDate() {
+		return geburtsdatumDate;
 	}
-	
-	private void merkeProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entferneGemerktesProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void sperreProfil (Nutzerprofil np) {
-		
-	}
-	
-	private void entsperreProfil (Nutzerprofil np) {
-		
-	}
-	
 
-	
+	public void setGeburtsdatumDate(Date geburtsdatumDate) {
+		this.geburtsdatumDate = geburtsdatumDate;
+	}
+
+	public int getAehnlichkeit() {
+		return aehnlichkeit;
+	}
+
+	public void setAehnlichkeit(int aehnlichkeit) {
+		this.aehnlichkeit = aehnlichkeit;
+	}
+
+	// METHODEN LOGIN
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean b) {
+		loggedIn = b;
+	}
+
+	public boolean getLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLogoutUrl(String createLogoutURL) {
+		this.logoutUrl = createLogoutURL;
+	}
+
+	public String getLogoutUrl() {
+		return logoutUrl;
+	}
+
+	public void setNickname(String nickname2) {
+
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
+	}
+
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
 }

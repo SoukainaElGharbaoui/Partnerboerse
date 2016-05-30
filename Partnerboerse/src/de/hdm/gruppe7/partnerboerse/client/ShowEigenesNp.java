@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -19,18 +20,17 @@ public class ShowEigenesNp extends VerticalPanel {
 	 * HorizontalPanel
 	 */
 	private HorizontalPanel horPanel = new HorizontalPanel();
-	
+
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel1 = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
-	
+
 	/**
 	 * Label Button
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
-	
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -42,7 +42,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		 * Label für Überschrift erstellen
 		 */
 		final Label ueberschriftLabel = new Label("Ihr Nutzerprofil:");
-		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
@@ -61,8 +61,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(6, 0, "Haarfarbe");
 		showEigenesNpFlexTable.setText(7, 0, "Raucherstatus");
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
-		
-		
+
 		/**
 		 * Tabelle formatieren und CSS einbinden.
 		 */
@@ -76,152 +75,160 @@ public class ShowEigenesNp extends VerticalPanel {
 
 		final Label infoLabel = new Label();
 
-		ClientsideSettings.getPartnerboerseAdministration()
-				.getNutzerprofilById(Benutzer.getProfilId(),
-						new AsyncCallback<Nutzerprofil>() {
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+				new AsyncCallback<Nutzerprofil>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
+					@Override
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
 
-							}
+					}
 
-							@Override
-							public void onSuccess(Nutzerprofil result) {
+					@Override
+					public void onSuccess(Nutzerprofil result) {
 
-								// Nutzerprofil-Id aus der Datenabank holen
-								// und in Tabelle eintragen
+						// Nutzerprofil-Id aus der Datenabank holen
+						// und in Tabelle eintragen
 
-								final String nutzerprofilId = String
-										.valueOf(result.getProfilId());
-								showEigenesNpFlexTable.setText(0, 1,
-										nutzerprofilId);
+						final String nutzerprofilId = String.valueOf(result.getProfilId());
+						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
-								// Vorname aus Datenbank aus der Datenbank holen
-								// und in Tabelle eintragen
+						// Vorname aus Datenbank aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(1, 1,
-										result.getVorname());
+						showEigenesNpFlexTable.setText(1, 1, result.getVorname());
 
-								// Nachname aus der Datenbank holen
-								// und in Tabelle eintragen
+						// Nachname aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(2, 1,
-										result.getNachname());
-								
-								// Geschlecht aus der Datenbank holen
-								// und in Tabelle eintragen
+						showEigenesNpFlexTable.setText(2, 1, result.getNachname());
 
-								showEigenesNpFlexTable.setText(3, 1,
-										result.getGeschlecht());
+						// Geschlecht aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								// Geburtsdatum aus der Datenbank holen
-								// und in Tabelle eintragen
+						showEigenesNpFlexTable.setText(3, 1, result.getGeschlecht());
 
-								showEigenesNpFlexTable.setText(4, 1,
-										result.getGeburtsdatum());
-								
-								// Koerpergroesse aus der Datenbank holen
-								// und in Tabelle eintragen
+						// Geburtsdatum aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								showEigenesNpFlexTable.setText(5, 1,
-										(Integer.toString(result.getKoerpergroesseInt())));
-								
-								// Haarfarbe aus der Datenbank holen
-								// und in Tabelle eintragen
+						showEigenesNpFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
 
-								showEigenesNpFlexTable.setText(6, 1,
-										result.getHaarfarbe());
+						// Koerpergroesse aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								// Raucher aus der Datenbank holen
-								// und in Tabelle eintragen
+						showEigenesNpFlexTable.setText(5, 1, (Integer.toString(result.getKoerpergroesseInt())));
 
-								showEigenesNpFlexTable.setText(7, 1,
-										result.getRaucher());
+						// Haarfarbe aus der Datenbank holen
+						// und in Tabelle eintragen
 
-								// Religion aus der Datenbank holen
-								// und in Tabelle eintragen
+						showEigenesNpFlexTable.setText(6, 1, result.getHaarfarbe());
 
-								showEigenesNpFlexTable.setText(8, 1,
-										result.getReligion());
+						// Raucher aus der Datenbank holen
+						// und in Tabelle eintragen
 
+						showEigenesNpFlexTable.setText(7, 1, result.getRaucher());
 
+						// Religion aus der Datenbank holen
+						// und in Tabelle eintragen
 
+						showEigenesNpFlexTable.setText(8, 1, result.getReligion());
 
-							}
-
+					}
 
 				});
 		verPanel1.add(ueberschriftLabel);
 		verPanel1.add(showEigenesNpFlexTable);
 		verPanel1.add(infoLabel);
 
+		// Löschen-Button hinzufügen und ausbauen.
+		final Button loeschenButton = new Button("Löschen");
+		verPanel1.add(buttonPanel);
+		buttonPanel.add(loeschenButton);
 
+		// Bearbeiten-Button hinzufügen und ausbauen.
+		final Button bearbeitenButton = new Button("Bearbeiten");
+		verPanel1.add(buttonPanel);
+		buttonPanel.add(bearbeitenButton);
 
-								// Löschen-Button hinzufügen und ausbauen.
-								final Button loeschenButton = new Button("Löschen");
-								verPanel1.add(buttonPanel);
-								buttonPanel.add(loeschenButton);
+		// ClickHandler für den Bearbeiten-Button
+		// hinzufügen.
 
-								// Bearbeiten-Button hinzufügen und ausbauen.
-								final Button bearbeitenButton = new Button("Bearbeiten");
-								verPanel1.add(buttonPanel);
-								buttonPanel.add(bearbeitenButton);
+		bearbeitenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Benutzer.getProfilId());
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(editNutzerprofil);
 
-								// ClickHandler für den Bearbeiten-Button
-								// hinzufügen.
+			}
+		});
 
-								bearbeitenButton.addClickHandler(new ClickHandler() {
-											public void onClick(ClickEvent event) {
-												EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Benutzer.getProfilId());
-												RootPanel.get("Details")
-														.clear();
-												RootPanel.get("Details").add(
-														editNutzerprofil);
+		// ClickHandler für den Löschen-Button
+		// hinzufügen.
 
-											}
-										});
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
 
-								// ClickHandler für den Löschen-Button
-								// hinzufügen.
+				final DialogBox loeschenDialogBox = new DialogBox();
 
-								loeschenButton
-										.addClickHandler(new ClickHandler() {
-											public void onClick(ClickEvent event) {
+				loeschenDialogBox.setText("Information");
+				loeschenDialogBox.setAnimationEnabled(true);
+				// Schließen-Button hinzufügen.
+				final Button jaButton = new Button("Ja");
+				final Button neinButton = new Button("Nein");
+				// VerticalPanel hinzufügen.
+				final VerticalPanel loeschenVerPanel = new VerticalPanel();
+				// Label hinzufügen.
+				final Label loeschenLabel = new Label("Möchten Sie Ihr Nutzerprofil wirklich löschen?");
+				// Widgets zum VerticalPanel hinzufügen.
+				loeschenVerPanel.add(loeschenLabel);
+				loeschenVerPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+				loeschenVerPanel.add(jaButton);
+				loeschenVerPanel.add(neinButton);
+				loeschenDialogBox.setWidget(loeschenVerPanel);
+				loeschenDialogBox.center();
 
-												ClientsideSettings
-														.getPartnerboerseAdministration()
-														.deleteNutzerprofil(
-																Benutzer.getProfilId(),
-																new AsyncCallback<Void>() {
+				// ClickHandler für den Ja-Button hinzufügen.
+				jaButton.addClickHandler(new ClickHandler() {
 
-																	@Override
-																	public void onFailure(
-																			Throwable caught) {
-																		infoLabel
-																				.setText("Es trat ein Fehler auf");
-																	}
+					@Override
+					public void onClick(ClickEvent event) {
+						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(Benutzer.getProfilId(),
+								new AsyncCallback<Void>() {
 
-																	@Override
-																	public void onSuccess(
-																			Void result) {
-																		infoLabel
-																				.setText("Ihr Profil wurde erfolgreich gelöscht");
-																	}
+									@Override
+									public void onFailure(Throwable caught) {
+										infoLabel.setText("Es trat ein Fehler auf.");
+									}
 
-																});
+									@Override
+									public void onSuccess(Void result) {
+										infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
+									}
 
-											}
-										});
+								});
+					}
+
+				});
+
+				// ClickHandler für den Nein-Button hinzufügen.
+				neinButton.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						loeschenDialogBox.hide();
+
+					}
+
+				});
+
+			}
+		});
 
 		ShowInfo showInfo = new ShowInfo();
 		verPanel2.add(showInfo);
 		horPanel.add(verPanel1);
 		horPanel.add(verPanel2);
-								
-							}
-				
 
 	}
 
-
+}

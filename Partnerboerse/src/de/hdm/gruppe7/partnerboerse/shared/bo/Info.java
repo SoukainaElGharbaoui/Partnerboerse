@@ -1,21 +1,32 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
 public class Info extends BusinessObject {
-	
+
 	private static final long serialVersionUID = 1L;
 
+//	// Attribute
+//	private int infoId;
+//	private String infotext;
+//	private int eigenschaftId;
+//	private String eigenschaftErlaeuterung;
+	
 	private int nutzerprofilId;
 	private int eigenschaftId;
 	private String infotext;
 
-	
-	//Konstruktor
+	// Konstruktor
 	public Info() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	
-	//Getter- & Settermethoden
+	// Getter- & Settermethoden
+
+//	public int getAuswahloptionId() {
+//		return auswahloptionId;
+//	}
+//
+//	public void setAuswahloptionId(int auswahloptionId) {
+//		this.auswahloptionId = auswahloptionId;
+//	}
 
 	public int getNutzerprofilId() {
 		return nutzerprofilId;
@@ -33,6 +44,16 @@ public class Info extends BusinessObject {
 		this.eigenschaftId = eigenschaftId;
 	}
 
+
+//	public int getInfoId() {
+//		return infoId;
+//	}
+//
+//	public void setInfoId(int infoId) {
+//		this.infoId = infoId;
+//	}
+
+
 	public String getInfotext() {
 		return infotext;
 	}
@@ -40,5 +61,5 @@ public class Info extends BusinessObject {
 	public void setInfotext(String infotext) {
 		this.infotext = infotext;
 	}
-	
+
 }
