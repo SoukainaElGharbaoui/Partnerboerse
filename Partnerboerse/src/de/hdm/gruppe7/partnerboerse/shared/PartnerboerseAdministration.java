@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -8,7 +7,9 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
+//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -29,10 +30,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 
 
-
-	
-
-	
+	/**
+	 * Nutzerprofil anlegen.
+	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
 			throws IllegalArgumentException;
@@ -44,9 +44,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 
-
 	/**
-	 * Nutzerprofil lÃ¶schen.
+	 * Nutzerprofil löschen.
 	 */
 	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
@@ -88,40 +87,40 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil löschen.
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
 
-	
-	
 	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
+	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
 	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
-	
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÃœBERARBEITET VON MILENA - NOTWENIG)
-	 */
-	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
-	
+	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET VON MILENA - NOTWENIG)
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
 	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
 	 */
 	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException;
 		
-	
+	/**
+	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
+	 */
+	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
 
+	/**
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
+	 * NOTWENIG)
+	 */
+	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
 	
 	/**
 	 * Suchprofil-Report
@@ -154,10 +153,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Vermerkstatus ermitteln.
 	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Vermerk einfÃ¼gen.
+	// Vermerk einfügen.
 	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Vermerk lÃ¶schen.
+	// Vermerk löschen.
 	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
 	/*
@@ -177,16 +176,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException;
 
-	// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde.
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// PrÃ¼fen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung einfÃ¼gen.
+	// Sperrung einfügen.
 	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung lÃ¶schen.
+	// Sperrung löschen.
 	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
@@ -196,16 +195,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 
 	/*
-<<<<<<< HEAD
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: PartnervorschlÃ¤geNp
-	 * ***************************************************************************
-=======
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Beginn: PartnervorschlägeNp
 	 * *************************************************************************
 	 * **
->>>>>>> refs/heads/master
 	 */
 
 	// Alle unangesehenen Nutzerprofile auslesen.
@@ -226,10 +219,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Ausgabe der Partnervorschlaege
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
 	/*
-
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: PartnervorschlÃ¤geNp
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: PartnervorschlägeNp
+	 * *************************************************************************
+	 * **
+	 * 
 	 */
 	
 	/*
@@ -259,9 +253,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * ABSCHNITT, Ende: PartnervorschlÃ¤geSp
 	 * ***************************************************************************
 	 */
-	
-	
-	
+
 
 	/*
 	 * *************************************************************************
@@ -269,44 +261,59 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-
-
-
-		
 	
-
-	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
+	public List<Eigenschaft> getAllEigenschaftenNeu()
+			throws IllegalArgumentException;
+	
+	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
+	
+	public List<String> getAllInfosNeu(int nutzerprofilId)
 			throws IllegalArgumentException;
 
+	public void deleteAllInfosNeu(int profilId)
+			throws IllegalArgumentException;
 
-	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) throws IllegalArgumentException;
+	public void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId)
+			throws IllegalArgumentException;
 
-
-	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) throws IllegalArgumentException;
-
-	public void saveInfoB(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException;
-
-	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException;
-
-	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException;
-
-	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException;
-
-	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException;
-
-	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException;
-
-	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException;
-
-	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException;
-
-	public void deleteAllInfos(int profilId) throws IllegalArgumentException;
-
-	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException;
-
-	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException;
-
-	public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException;
+	public Auswahleigenschaft getEigAById(int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
+			throws IllegalArgumentException;
+	
+	
+//	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
+//			throws IllegalArgumentException;
+//
+//	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) throws IllegalArgumentException;
+//
+//	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) throws IllegalArgumentException;
+//
+//	public void saveInfoB(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException;
+//
+//	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException;
+//
+//	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException;
+//
+//	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException;
+//
+//	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException;
+//
+//	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException;
+//
+//	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException;
+//
+//	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException;
+//
+//	public void deleteAllInfos(int profilId) throws IllegalArgumentException;
+//
+//	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException;
+//
+//	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException;
+//
+//	public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -320,6 +327,5 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void insertEmail(String emailAddress) throws IllegalArgumentException;
 
 	Nutzerprofil login(String requestUri) throws Exception;
-
 
 }

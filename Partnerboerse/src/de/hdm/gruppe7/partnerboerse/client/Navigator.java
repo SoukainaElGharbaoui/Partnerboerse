@@ -8,11 +8,12 @@ import java.util.List;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -137,40 +138,8 @@ public class Navigator extends VerticalPanel {
 		infoAnlegenButton.setStyleName("navigatorbutton");
 		this.add(infoAnlegenButton);
 
-		/**
-		 * Button "Info anzeigen" hinzufügen
-		 */
-		// final Button showInfoButton = new Button("Info anzeigen");
-		//
-		// showInfoButton.addClickHandler(new ClickHandler() {
-		//
-		// public void onClick(ClickEvent event) {
-		// ShowInfo showInfo = new ShowInfo();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showInfo);
-		// }
-		// });
-		//
-		// this.add(showInfoButton);
 
-		/**
-		 * Button "Suchprofil anlegen" hinzufügen
-		 */
-		// final Button suchprofilAnlegenButton = new Button("Suchprofil
-		// anlegen");
-		//
-		// suchprofilAnlegenButton.addClickHandler(new ClickHandler() {
-		//
-		// public void onClick(ClickEvent event) {
-		// CreateSuchprofil createSuchprofil = new CreateSuchprofil();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(createSuchprofil);
-		// }
-		// });
-		//
-		// suchprofilAnlegenButton.setStyleName("navigatorbutton");
-		// this.add(suchprofilAnlegenButton);
-
+		
 		/**
 		 * Button "Suchprofile anzeigen" hinzufügen.
 		 */
@@ -398,8 +367,7 @@ public class Navigator extends VerticalPanel {
 		
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
-		
-		
+
 		
 		// Suchprofil-Report
 		final Button suchprofilReportButton = new Button("Mein Suchprofil-Report");
@@ -417,11 +385,5 @@ public class Navigator extends VerticalPanel {
 
 		suchprofilReportButton.setStyleName("navigatorbutton"); 
 		this.add(suchprofilReportButton);
-		
-
-
 	}
-
-	
-
 }
