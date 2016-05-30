@@ -46,7 +46,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * Ãœberschrift-Label hinzufÃ¼gen.
+		 * Label, AuswahlBox und Buttons erstellen
 		 */
 		final Label ueberschriftLabel = new Label(
 				"Diese Nutzerprofile koennten zu ihnen passen");
@@ -83,6 +83,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
+		/**
+		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
+		 */
 		
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
@@ -103,8 +106,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 			
 		});
 		
+		/**
+		 * Bei Betätigung des AnzeigenButtons werden alle Partnervorschlaege anhand des 
+		 * gewählen Suchprofils ausgegeben, nach Aehnlichkeit geordnet
+		 */
+		
 		anzeigenSpButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event){
+				
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), 
 						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
 
@@ -130,7 +139,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 					partnervorschlaegeSpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));
 					partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht()); 
 					
-					// Anzeigen-Button hinzufÃ¼gen und ausbauen. 
+					// Anzeigen-Button für das Fremdprofil hinzufÃ¼gen und ausbauen. 
 					final Button anzeigenButton = new Button("Anzeigen");
 					partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
 					
@@ -153,17 +162,22 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 			
 			
 		});
+				/**
+				 * Alle Elemente dem verPanel hinzufügen
+				 */
 				verPanel.add(ergebnisLabel);
-		verPanel.add(infoLabel);	
-		verPanel.add(ueberschriftLabel);
-			verPanel.add(partnervorschlaegeSpFlexTable);	
+				verPanel.add(infoLabel);
+				verPanel.add(ueberschriftLabel);
+				verPanel.add(partnervorschlaegeSpFlexTable);	
 			 
 			}
 			
 			
 		});
 		
-		
+		/**
+		 * Alle Elemente dem vertical und horizontal Panel hinzufügen
+		 */
 							
 		verPanel.add(ueberschriftLabel2);
 		auswahlPanel.add(auswahlListBox);

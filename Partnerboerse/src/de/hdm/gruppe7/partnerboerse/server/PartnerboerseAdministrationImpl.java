@@ -470,17 +470,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		
 		
 		
-public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName) throws IllegalArgumentException {
+public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws IllegalArgumentException {
 		
 			
-			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilByName(suchprofilId, suchprofilName);
+			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
 		
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
 			
 			int aehnlichkeitSp = 0;
-			
-			
-			
 			
 			
 			
@@ -516,12 +513,12 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String
 		}
 		
 		
-		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName,  int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException {
-			this.suchprofilMapper.insertAehnlichkeit(suchprofilId, suchprofilName, fremdprofilId, aehnlichkeitSp); 
+		public void aehnlichkeitSetzenSp (int nutzerprofilId, int suchprofilId, String suchprofilName,  int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException {
+			this.suchprofilMapper.insertAehnlichkeit(nutzerprofilId,suchprofilId, suchprofilName, fremdprofilId, aehnlichkeitSp); 
 		}
 		
-		public void aehnlichkeitEntfernenSp(int profilId, String suchprofilName) throws IllegalArgumentException {
-			this.suchprofilMapper.deleteAehnlichkeitSp(profilId, suchprofilName);
+		public void aehnlichkeitEntfernenSp(int nutzerprofilId) throws IllegalArgumentException {
+			this.suchprofilMapper.deleteAehnlichkeitSp(nutzerprofilId);
 		}
 		
 		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.

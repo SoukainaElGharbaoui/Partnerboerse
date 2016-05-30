@@ -239,14 +239,14 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName)
+		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
 		throws IllegalArgumentException;
 		
 		//Aehnlichkeit in DB speichern
-		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
+		public void aehnlichkeitSetzenSp (int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
 		
 		//Aehnlichkeit aus DB loeschen
-		public void aehnlichkeitEntfernenSp (int suchprofilId, String suchprofilName) throws IllegalArgumentException;
+		public void aehnlichkeitEntfernenSp (int nutzerprofilId) throws IllegalArgumentException;
 		
 		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
 		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException;

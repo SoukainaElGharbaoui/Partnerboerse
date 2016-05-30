@@ -230,6 +230,21 @@ public class EditSuchprofil extends VerticalPanel {
 		speichernButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
+					
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Es trat ein Fehler auf."); 
+						
+					}
+					
+					
+					public void onSuccess(Void result) {
+						
+						
+					}
+					
+				});
+				
 				// Prüfen, ob der Suchprofilname beim Editieren verändert wird.
 				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(Benutzer.getProfilId(), 
 						Integer.parseInt(suchprofilIdLabel.getText()), new AsyncCallback<String>() {

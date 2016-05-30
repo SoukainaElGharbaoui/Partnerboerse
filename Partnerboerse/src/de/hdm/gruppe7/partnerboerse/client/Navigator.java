@@ -34,7 +34,7 @@ public class Navigator extends VerticalPanel {
 	int aehnlichkeit = 0;
 
 	public Navigator() {
-
+		VerticalPanel verPanel1 = new VerticalPanel();
 		/*
 		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
 		 * seine eigene Profil-ID gesetzt (hier noch temporär - normalerweisen
@@ -79,9 +79,16 @@ public class Navigator extends VerticalPanel {
 		// }
 		//
 		// });
+		
+		/**
+		 * Information-Label hinzuf�gen.
+		 */
+		final Label infoLabel = new Label();
+
 
 		// logoutButton.setStyleName("navigatorbutton");
 		// this.add(logoutButton);
+		
 		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
 
 		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
@@ -284,100 +291,97 @@ public class Navigator extends VerticalPanel {
 				
 				//Ab hier wird die Aehnlichkeit zwischen den Suchprofilen und den Nutzerprofilen errechnet
 				
-				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
-					
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+//				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
+//					
+//					
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//					}
+//					
+//					@Override
+//					public void onSuccess(List<Suchprofil> result1) {
 //						
-					}
-					
-					@Override
-					public void onSuccess(List<Suchprofil> result1) {
-						
-						for (Suchprofil sp : result1){
-							
-							final int suchprofilId = sp.getProfilId();							
-				final String suchprofilName = sp.getSuchprofilName();
-				
-							ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onSuccess(List<Nutzerprofil> result) {
-						
-												
-				for (Nutzerprofil np : result){
-								
-								
-				final int fremdprofilId = np.getProfilId();
-				
-				
-				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName , new AsyncCallback<Integer>(){
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onSuccess(Integer result3) {
-						aehnlichkeit = result3;
-						
-						
-						
-						
-						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
-
-							@Override
-							public void onSuccess(Void result4) {
-								// TODO Auto-generated method stub
-
-																													}
-
-																												});
-																							}
-
-																						});
-
-																	}
-
-																
-															
-
-														
-
-									}
-
-								});
-							
-							
-							
-							
-							
-						}
-						
-						
-						
-						
-					}
-				});
-				
-				
-				
+//						for (Suchprofil sp : result1){
+//							
+//							final int suchprofilId = sp.getProfilId();							
+//				final String suchprofilName = sp.getSuchprofilName();
+//				
+//							ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
+//					
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//						
+//					}
+//					
+//					@Override
+//					public void onSuccess(List<Nutzerprofil> result) {
+//						
+//												
+//				for (Nutzerprofil np : result){
+//								
+//								
+//				final int fremdprofilId = np.getProfilId();
+//				
+//				
+//				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName , new AsyncCallback<Integer>(){
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//					}
+//
+//					@Override
+//					public void onSuccess(Integer result3) {
+//						aehnlichkeit = result3;
+//						
+//						
+//						
+//						
+//						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+//
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								infoLabel.setText("Es trat ein Fehler auf.");
+//							}
+//
+//							@Override
+//							public void onSuccess(Void result4) {
+//								// TODO Auto-generated method stub
+//
+//																													}
+//
+//																												});
+//																							}
+//
+//																						});
+//
+//																	}
+//
+//																
+//															
+//
+//														
+//
+//									}
+//
+//								});
+//							
+//							
+//							
+//							
+//							
+//						}
+//						
+//						
+//						
+//						
+//					}
+//				});
+//				
+//				
+//				
 		
 				
 				
@@ -390,9 +394,12 @@ public class Navigator extends VerticalPanel {
 
 		});
 
+		verPanel1.add(infoLabel);
+		
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
-
+		
+		
 		
 		// Suchprofil-Report
 		final Button suchprofilReportButton = new Button("Mein Suchprofil-Report");

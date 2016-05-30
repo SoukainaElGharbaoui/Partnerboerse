@@ -223,13 +223,13 @@ public interface PartnerboerseAdministrationAsync {
 	 * ***************************************************************************
 	 */
 	
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String suchprofilName,
+	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName,  int fremdprofilId,
+	void aehnlichkeitSetzenSp(int nutzerprofilId, int suchprofilId, String suchprofilName,  int fremdprofilId,
 			int aehnlichkeitSp,  AsyncCallback<Void> callback);
 
-	void aehnlichkeitEntfernenSp(int suchprofilId, String suchprofilName, AsyncCallback<Void> callback);
+	void aehnlichkeitEntfernenSp(int nutzerprofilId, AsyncCallback<Void> callback);
 	
 	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
 		void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);

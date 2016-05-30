@@ -238,14 +238,14 @@ public class SuchprofilMapper {
 	/**
 	 * Aehnlichkeit hinzufuegen. 
 	 */
-	public void insertAehnlichkeit(int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) { 
+	public void insertAehnlichkeit(int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) { 
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
-			+ suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
+			+ nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -255,13 +255,13 @@ public class SuchprofilMapper {
 	/**
 	 * Aehnlichkeit loeschen.
 	 */
-	public void deleteAehnlichkeitSp (int suchprofilId, String suchprofilName) {
+	public void deleteAehnlichkeitSp (int nutzerprofilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE suchprofil_id=" + suchprofilId +"AND suchprofilName=" + suchprofilName);
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE nutzerprofil_id=" + nutzerprofilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -377,6 +377,44 @@ public class SuchprofilMapper {
 	public List<Suchprofil> findAllSuchprofileFor(Nutzerprofil n){
 		 return findAllSuchprofileFor(n.getProfilId()); 
 	 }
+
+	
+	
+	
+	public Suchprofil findSuchprofilById(int suchprofilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil, t_profil " + "WHERE profil_id= " + suchprofilId
+					+ " AND suchprofil_id=" + suchprofilId);
+
+			/*
+			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden. Prüfen, ob
+			 * ein Ergebnis-Tupel vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Nutzerprofil-Objekt umwandeln.
+				Suchprofil s = new Suchprofil();
+				s.setProfilId(rs.getInt("suchprofil_id"));
+				s.setSuchprofilName(rs.getString("suchprofilname"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
+				return s;
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 
 	
 	
