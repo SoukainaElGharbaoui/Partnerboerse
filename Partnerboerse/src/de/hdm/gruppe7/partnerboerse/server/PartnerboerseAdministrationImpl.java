@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
-
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
@@ -28,15 +30,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 @SuppressWarnings("serial")
-public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
-		implements PartnerboerseAdministration {
+public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implements PartnerboerseAdministration {
 
 	/**
 	 * Referenz auf die DatenbankMapper.
 	 **/
 	private NutzerprofilMapper nutzerprofilMapper = null;
 	private SuchprofilMapper suchprofilMapper = null;
-
 	private MerklisteMapper merklisteMapper = null; 
 	private SperrlisteMapper sperrlisteMapper = null; 
 	private InfoMapper infoMapper = null;
@@ -45,38 +45,38 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * No-Argument-Konstruktor.
 	 */
-	public PartnerboerseAdministrationImpl() throws IllegalArgumentException { 
+	public PartnerboerseAdministrationImpl() throws IllegalArgumentException {
 	}
 
 	/**
-	 * Initialsierungsmethode, die für jede Instanz von <code>PartnerboerseAdministrationImpl</code> aufgerufen werden muss.
+	 * Initialsierungsmethode, die für jede Instanz von
+	 * <code>PartnerboerseAdministrationImpl</code> aufgerufen werden muss.
 	 */
 	@Override
 	public void init() throws IllegalArgumentException {
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
 		this.suchprofilMapper = SuchprofilMapper.suchprofilMapper();
-		this.merklisteMapper = MerklisteMapper.merklisteMapper(); 
-		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper(); 
+		this.merklisteMapper = MerklisteMapper.merklisteMapper();
+		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper();
 		this.infoMapper = InfoMapper.infoMapper();
 	}
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Nutzerprofil
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Nutzerprofil
+	 * *************************************************************************
+	 * **
 	 */
 
 	/**
-	 * Nutzerprofil anlegen. 
+	 * Nutzerprofil anlegen.
 	 */
-	public Nutzerprofil createNutzerprofil(String emailAddress, String vorname, String nachname,
-			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
-			String haarfarbe, String raucher, String religion)
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
 			throws IllegalArgumentException {
 
-		// Neues Nutzerprofil-Objekt erstellen. 
+		// Neues Nutzerprofil-Objekt erstellen.
 		Nutzerprofil n = new Nutzerprofil();
-		n.setEmailAddress(emailAddress);
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
@@ -85,21 +85,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
 		n.setReligion(religion);
+		// n.setEmailAddress(emailAddress);
 
 		// Vorläufige Profil-ID setzen.
 		n.setProfilId(1);
 
 		return this.nutzerprofilMapper.insertNutzerprofil(n);
 	}
-	
+
 	/**
-	 * Nutzerprofil aktualisieren. 
+	 * Nutzerprofil aktualisieren.
 	 */
-	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, 
-			Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, 
-			String raucher, String religion) throws IllegalArgumentException {
-		
-		Nutzerprofil n = new Nutzerprofil(); 
+	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
+
+		Nutzerprofil n = new Nutzerprofil();
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
@@ -111,32 +111,31 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		this.nutzerprofilMapper.updateNutzerprofil(n);
 	}
-	
+
 	/**
 	 * Nutzerprofil löschen.
 	 */
 	@Override
 	public void deleteNutzerprofil(int profilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteNutzerprofil(profilId);	
+		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
 	}
 
 	/**
-	 * Nutzerprofil anhand dessen Profil-ID auslesen. 
+	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	@Override
 	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
-	
+
 	/**
-	 * ***********************************
-	 * Unnötig, da gleicher Mapper-Aufruf!
+	 * *********************************** Unnötig, da gleicher Mapper-Aufruf!
 	 * ***********************************
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
 	}
-	
+
 	/**
 	 * Alle Nutzerprofile auslesen.
 	 */
@@ -147,63 +146,62 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return this.nutzerprofilMapper.findAllNutzerprofile();
 	}
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Nutzerprofil
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Nutzerprofil
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Suchprofil
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Suchprofil
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	/**
-	 * Suchprofil anlegen. 
+	 * Suchprofil anlegen.
 	 */
 	@Override
-	public Suchprofil createSuchprofil(String suchprofilName,
-			String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher,
-			String religion) throws IllegalArgumentException {
-		
-			Suchprofil s = new Suchprofil();
-			s.setSuchprofilName(suchprofilName); 
-			s.setGeschlecht(geschlecht);
-			s.setAlterMinInt(alterMinInt);
-			s.setAlterMaxInt(alterMaxInt);
-			s.setKoerpergroesseInt(koerpergroesseInt);
-			s.setHaarfarbe(haarfarbe);
-			s.setRaucher(raucher);
-			s.setReligion(religion);
-		
-			s.setProfilId(1);
+	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
 
-			return this.suchprofilMapper.insertSuchprofil(s);
+		Suchprofil s = new Suchprofil();
+		s.setSuchprofilName(suchprofilName);
+		s.setGeschlecht(geschlecht);
+		s.setAlterMinInt(alterMinInt);
+		s.setAlterMaxInt(alterMaxInt);
+		s.setKoerpergroesseInt(koerpergroesseInt);
+		s.setHaarfarbe(haarfarbe);
+		s.setRaucher(raucher);
+		s.setReligion(religion);
+
+		s.setProfilId(1);
+
+		return this.suchprofilMapper.insertSuchprofil(s);
 	}
 
 	/**
-	 * Suchprofil aktualisieren. 
+	 * Suchprofil aktualisieren.
 	 */
 	public void saveSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion) 
-			throws IllegalArgumentException {
-		
-			Suchprofil s = new Suchprofil();
-			s.setProfilId(profilId);
-			s.setSuchprofilName(suchprofilName); 
-			s.setGeschlecht(geschlecht);
-			s.setAlterMinInt(alterMinInt);
-			s.setAlterMaxInt(alterMaxInt);
-			s.setKoerpergroesseInt(koerpergroesseInt);
-			s.setHaarfarbe(haarfarbe);
-			s.setRaucher(raucher);
-			s.setReligion(religion);
-		
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
+
+		Suchprofil s = new Suchprofil();
+		s.setProfilId(profilId);
+		s.setSuchprofilName(suchprofilName);
+		s.setGeschlecht(geschlecht);
+		s.setAlterMinInt(alterMinInt);
+		s.setAlterMaxInt(alterMaxInt);
+		s.setKoerpergroesseInt(koerpergroesseInt);
+		s.setHaarfarbe(haarfarbe);
+		s.setRaucher(raucher);
+		s.setReligion(religion);
+
 		this.suchprofilMapper.updateSuchprofil(s);
-	
+
 	}
 
 	/**
@@ -212,10 +210,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profilId, suchprofilName);
 	}
-	
-	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
-	 */
+
 	
 
 	/**
@@ -230,8 +225,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
+
 	}
-	
 	/**
 	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENDIG)
 	 */
@@ -239,272 +234,239 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName); 
 	}
 	
+	/**
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 */
+	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilname(profilId, suchprofilname); 
+	}
 	
+	/**
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
+	 */
+	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profilId, suchprofilId); 
+	}
+
+	
+
+
+	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException {
+		return this.suchprofilMapper.findAllSuchprofileFor(n); 
+	}
+
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Suchprofil
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Suchprofil
+	 * *************************************************************************
+	 * **
 	 */
 
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Merkliste
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Merkliste
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	// Alle Vermerke eines Nutzerprofils auslesen.
 	public Merkliste getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
-		
-		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>(); 
-		
-		result = this.merklisteMapper.findGemerkteNutzerprofileFor(profilId); 
-		
-		Merkliste gemerkteNutzerprofile = new Merkliste(); 
-		
-		gemerkteNutzerprofile.setGemerkteNutzerprofile(result); 
-		
-		return gemerkteNutzerprofile; 
+
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
+
+		result = this.merklisteMapper.findGemerkteNutzerprofileFor(profilId);
+
+		Merkliste gemerkteNutzerprofile = new Merkliste();
+
+		gemerkteNutzerprofile.setGemerkteNutzerprofile(result);
+
+		return gemerkteNutzerprofile;
 	}
-	
-	// Vermerkstatus ermitteln. 
+
+	// Vermerkstatus ermitteln.
 	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId); 
+		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId);
 	}
-	
-	// Vermerk einfügen. 
+
+	// Vermerk einfügen.
 	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.merklisteMapper.insertVermerk(profilId, fremdprofilId); 
+		this.merklisteMapper.insertVermerk(profilId, fremdprofilId);
 	}
-	
-	// Vermerk löschen. 
+
+	// Vermerk löschen.
 	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.merklisteMapper.deleteVermerk(profilId, fremdprofilId); 
+		this.merklisteMapper.deleteVermerk(profilId, fremdprofilId);
 	}
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Merkliste
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Merkliste
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Sperrliste
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Sperrliste
+	 * *************************************************************************
+	 * **
 	 */
-	// Alle Sperrungen eines Nutzerprofils auslesen. 
+	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
-		
-		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>(); 
-		
-		result = this.sperrlisteMapper.findGesperrteNutzerprofileFor(profilId); 
-		
-		Sperrliste gesperrteNutzerprofile = new Sperrliste(); 
-		
-		gesperrteNutzerprofile.setGesperrteNutzerprofile(result); 
-		
+
+		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
+
+		result = this.sperrlisteMapper.findGesperrteNutzerprofileFor(profilId);
+
+		Sperrliste gesperrteNutzerprofile = new Sperrliste();
+
+		gesperrteNutzerprofile.setGesperrteNutzerprofile(result);
+
 		return gesperrteNutzerprofile;
 	}
-	
-	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde. 
+
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId); 
+		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId);
 	}
-	
-	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde. 
+
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profilId, fremdprofilId); 
+		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profilId, fremdprofilId);
 	}
-	
-	// Sperrung einfügen. 
+
+	// Sperrung einfügen.
 	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.sperrlisteMapper.insertSperrung(profilId, fremdprofilId); 
+		this.sperrlisteMapper.insertSperrung(profilId, fremdprofilId);
 	}
-		
-	// Sperrung löschen. 
+
+	// Sperrung löschen.
 	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.sperrlisteMapper.deleteSperrung(profilId, fremdprofilId); 
+		this.sperrlisteMapper.deleteSperrung(profilId, fremdprofilId);
 	}
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Sperrliste
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Sperrliste
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Partnervorschläge
-	 * ***************************************************************************
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Partnervorschläge
+	 * *************************************************************************
+	 * **
 	 */
-	
+
 	// Alle unangesehenen Nutzerprofile auslesen.
 	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 	}
-	
+
 	// Besuch setzen.
 	public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.insertBesuch(profilId, fremdprofilId); 
-	}
-	
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: Partnervorschläge
-	 * ***************************************************************************
-	 */
-	
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: Info
-	 * ***************************************************************************
-	 */
-	
-	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-		
-		Info info = new Info();
-		info.setNutzerprofilId(profilId);
-		info.setEigenschaftId(eigenschaftId);
-		info.setInfotext(infotext);
-		
-		return this.infoMapper.insertBeschreibungsinfo(info);
-	}
-	
-	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionIdInt) throws IllegalArgumentException {
-		
-		Info info = new Info();
-		info.setNutzerprofilId(profilId);
-		info.setEigenschaftId(eigenschaftId);
-		info.setAuswahloptionId(auswahloptionIdInt);
-		
-		return this.infoMapper.insertAuswahlinfo(info);
-	}
-	
-	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId)
-	throws IllegalArgumentException {
-		
-		this.infoMapper.updateInfoA(profilId, neueAuswahloptionId, eigenschaftId);
-	
-	}
-	
-	public void saveInfoB(int profilId, int eigenschaftId, String infotext)
-			throws IllegalArgumentException {
-				
-		this.infoMapper.updateInfoB(profilId, eigenschaftId, infotext);
-	}
-	
-	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
-		return this.infoMapper.findAllEigenschaftenB();
-	}
-	
-	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException {
-		return this.infoMapper.findAllEigenschaftenA();
-	}
-	
-	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException {
-		return this.infoMapper.findAllAuswahloptionen(eigenschaftId);
-	}
-	
-	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosB(profilId);
-	}
-	
-	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosA(profilId);
-	}
-	
-	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException {
-		return this.infoMapper.findOptionById(eigenschaftId);
-	}
-	
-	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
-		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
-	}
-	
-	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
-		
-		this.infoMapper.deleteAllInfos(profilId);
-	}
-	
-	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException {
-		
-		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
+		this.nutzerprofilMapper.insertBesuch(profilId, fremdprofilId);
 	}
 
-	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException {
-	
-		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
-	}
-
-	public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException {
-		return this.infoMapper.findAInfoByProfilId(profilId); 
-	}
-		
-
-	
-
-	
-
-
-		/*
-		 * ***************************************************************************
-		 * ABSCHNITT, Ende: Info
-		 * ***************************************************************************
+			
+		/**
+		 * Methode zur Berechnung der �hnlichkeit zwischen zwei Nutzerprofilen
 		 */
-	
-		
-		
-		
-		
-		
 		public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId) throws IllegalArgumentException {
 		
-			
+			// Erforderliche Daten abrufen
 			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
-		
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findAInfoByProfilId(profilId);
+			List<Info> vergleichsinfo = infoMapper.findAInfoByProfilId(fremdprofilId);
+			List<Info> referenzinfob = infoMapper.findBInfoByProfilId(profilId);
+			List<Info> vergleichsinfob = infoMapper.findBInfoByProfilId(fremdprofilId);
 			
-			int aehnlichkeit = 40;
+			// Variablen zur Berechnung der Aehnlichkeit
+			int aehnlichkeit = 3;
+			int counter = 7;
 			
+			// Vergleich der Profildaten
 			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
-				aehnlichkeit = aehnlichkeit - 40;
+				aehnlichkeit = aehnlichkeit - 3;
 			}
 			
 			if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
-				aehnlichkeit = aehnlichkeit + 10;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
-			
-			
+						
 			if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
-				aehnlichkeit = aehnlichkeit + 10;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
 			if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
-				aehnlichkeit = aehnlichkeit + 20;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
 			if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
-				aehnlichkeit = aehnlichkeit + 20;
+				aehnlichkeit = aehnlichkeit + 1;
 			}
-		
+			
+			// Vergleich der Auswahlinfos
+			for (Info rin : referenzinfo){
+					for (Info vin : vergleichsinfo){
+				if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+					counter++;
+					if (rin.getAuswahloptionId() == vin.getAuswahloptionId()){
+						aehnlichkeit= aehnlichkeit + 1;
+					}
+				}
+			}
+			}
+			
+			// Vergleich der Beschreibungsinfos
+			for (Info rinb : referenzinfob){
+				for (Info vinb : vergleichsinfob){
+			if (rinb.getEigenschaftId() == vinb.getEigenschaftId()){
+				counter++;
+				if (rinb.getInfotext().equals(vinb.getInfotext())){
+					aehnlichkeit= aehnlichkeit + 1;
+				}
+			}
+		}
+		}
+			
+			// Berechnung der Aehnlichkeit
+			aehnlichkeit = aehnlichkeit * (100 / counter);
+			
+			// R�ckgabewert
 			return aehnlichkeit;
 			
 		}
 		
-		
-		public void aehnlichkeitSetzen(int profilId,  int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
-			this.nutzerprofilMapper.insertAehnlichkeit(profilId,  fremdprofilId, aehnlichkeit); 
+
+		/**
+		 *  Aehnlichkeit setzen
+		 */
+		public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
+			this.nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit); 
+
 		}
 		
+		/**
+		 * Aehnlichkeit entfernen
+		 */
 		public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException {
 			this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 		}
 		
+		/**
+		 * Methode zur Ausgabe einer Liste von Partnervorschlaegen (Unangesehene Profile, 
+		 * von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
+		 */
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
 				throws IllegalArgumentException {
 			return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
 
 		}
+
 		
 		
 		
@@ -582,20 +544,160 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, String
 
 
 
+	
 
-		
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Partnervorschläge
+	 * *************************************************************************
+	 * **
+	 */
+
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Info
+	 * *************************************************************************
+	 * **
+	 */
+
+	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException {
+
+		Info info = new Info();
+		info.setNutzerprofilId(profilId);
+		info.setEigenschaftId(eigenschaftId);
+		info.setInfotext(infotext);
+
+		return this.infoMapper.insertBeschreibungsinfo(info);
+	}
+
+	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionIdInt)
+			throws IllegalArgumentException {
+
+		Info info = new Info();
+		info.setNutzerprofilId(profilId);
+		info.setEigenschaftId(eigenschaftId);
+		info.setAuswahloptionId(auswahloptionIdInt);
+
+		return this.infoMapper.insertAuswahlinfo(info);
+	}
+
+	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) throws IllegalArgumentException {
+
+		this.infoMapper.updateInfoA(profilId, neueAuswahloptionId, eigenschaftId);
+
+	}
+
+	public void saveInfoB(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+
+		this.infoMapper.updateInfoB(profilId, eigenschaftId, infotext);
+	}
+
+	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaftenB();
+	}
+
+	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException {
+		return this.infoMapper.findAllEigenschaftenA();
+	}
+
+	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findAllAuswahloptionen(eigenschaftId);
+	}
+
+	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosB(profilId);
+	}
+
+	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosA(profilId);
+	}
+
+	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findOptionById(eigenschaftId);
+	}
+
+	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findByInfoAId(optionsbezeichnung, eigenschaftId);
+	}
+
+	public void deleteAllInfos(int profilId) throws IllegalArgumentException {
+
+		this.infoMapper.deleteAllInfos(profilId);
+	}
+
+	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException {
+
+		this.infoMapper.deleteOneInfoB(profilId, eigenschaftId);
+	}
+
+	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException {
+
+		this.infoMapper.deleteOneInfoA(profilId, eigenschaftId);
+	}
+
+	public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAInfoByProfilId(profilId);
+	}
+
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Info
+	 * *************************************************************************
+	 * **
+	 */
 
 
-		@Override
-		public boolean isUserRegistered(String userEmail) {
-			return false;
+	@Override
+	public boolean isUserRegistered(String userEmail) {
+		return false;
+	}
+
+	@Override
+	public void insertEmail(String emailAddress) throws IllegalArgumentException {
+		this.nutzerprofilMapper.insertEmail(emailAddress);
+
+	}
+
+	public Nutzerprofil login(String requestUri) throws Exception {
+
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+
+		Nutzerprofil n = new Nutzerprofil();
+		// NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
+		if (user != null) {
+
+			// EXISTING PROFILE
+			Nutzerprofil bestehendesProfil = NutzerprofilMapper.nutzerprofilMapper()
+					.findByNutzerprofilMitEmail(user.getEmail());
+			if (bestehendesProfil != null) {
+				n.setLoggedIn(true);
+				bestehendesProfil.setLoggedIn(true);
+				bestehendesProfil.setLogoutUrl(userService.createLogoutURL(requestUri));
+				bestehendesProfil.setEmailAddress(user.getEmail());
+
+				ClientsideSettings.setAktuellerUser(bestehendesProfil);
+				return bestehendesProfil;
+			} // NO PROFILE
+
+			n.setLoggedIn(true);
+			n.setEmailAddress(user.getEmail());
+
+		} else { // USER = NULL
+			n.setLoggedIn(false);
+
 		}
+		n.setLoginUrl(userService.createLoginURL(requestUri));
+		return n;
+	}
 
-		
 
-		
 
 
 
 }
+
+
+
 

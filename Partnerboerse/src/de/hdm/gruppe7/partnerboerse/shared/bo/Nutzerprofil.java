@@ -9,13 +9,15 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 
 /**
- * Realisierung eines exemplarischen Nutzerprofils. 
+ * Realisierung eines exemplarischen Nutzerprofils.
+ * 
  * @author Nina BaumgÃ¤rtner
  */
 
-public class Nutzerprofil extends Profil{
+public class Nutzerprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
+
 	
 	private String vorname;
 	private String nachname; 
@@ -29,13 +31,28 @@ public class Nutzerprofil extends Profil{
 	private int aehnlichkeitSp;
 
 
-    private String emailAddress;
 
+	// WICHTIG FÜR LOGIN
+	private boolean loggedIn = false;
+	private String loginUrl;
+	private String logoutUrl;
+	private String emailAddress;
+	private String nickname;
+	private boolean status = false;
 
+	
+
+	// Konstruktor
+	public Nutzerprofil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	// METHODEN NUTZERPROFIL
 	public String getVorname() {
 		return vorname;
 	}
-	
+
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
@@ -64,15 +81,19 @@ public class Nutzerprofil extends Profil{
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
 		this.geburtsdatumDate = geburtsdatumDate;
 	}
-	
-	public int getAehnlichkeit(){
+
+
+	public int getAehnlichkeit() {
+
 		return aehnlichkeit;
 	}
-	
-	public void setAehnlichkeit (int aehnlichkeit){
-		
+
+
+	public void setAehnlichkeit(int aehnlichkeit) {
+
 		this.aehnlichkeit = aehnlichkeit;
 	}
+
 	
 
 	public int getAehnlichkeitSp (){
@@ -88,20 +109,55 @@ public class Nutzerprofil extends Profil{
 	public String getEmailAddress(){
 		return emailAddress;
 	}
-	
+
+	// METHODEN LOGIN
+	public boolean isLoggedIn() {
+		return loggedIn;
+
+	}
+
+	public void setLoggedIn(boolean b) {
+		loggedIn = b;
+	}
+
+	public boolean getLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLogoutUrl(String createLogoutURL) {
+		this.logoutUrl = createLogoutURL;
+	}
+
+	public String getLogoutUrl() {
+		return logoutUrl;
+	}
+
+	public void setNickname(String nickname2) {
+
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
-		
 	}
 
-
-
-	//Konstruktor
-	public Nutzerprofil() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
 	}
 
-	
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
 
 }

@@ -29,7 +29,7 @@ public class ShowFremdinfo extends VerticalPanel {
 		 * Label �berschrift
 		 */
 		final Label ueberschriftLabel = new Label("Infos dieser Person:");
-		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		// Tabelle für Beschreibungsinfo
 
@@ -56,89 +56,83 @@ public class ShowFremdinfo extends VerticalPanel {
 		 * InfoLabel erstellen um Text auszugeben
 		 */
 		final Label infoLabel = new Label();
-		
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(
-				profilId, new AsyncCallback<List<Info>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(profilId, new AsyncCallback<List<Info>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf.");
+			}
 
-					@Override
-					public void onSuccess(List<Info> result) {
-						// Anzahl der Zeilen ermitteln.
-						int row = showInfoFlexTable.getRowCount();
+			@Override
+			public void onSuccess(List<Info> result) {
+				// Anzahl der Zeilen ermitteln.
+				int row = showInfoFlexTable.getRowCount();
 
-						// Tabelle mit Inhalten aus der Datenbank befüllen.
-						for (Info i : result) {
-							row++;
-							
-							final String fremdprofilId = String.valueOf(i.getNutzerprofilId());
-							
-							showInfoFlexTable.setText(row, 0, fremdprofilId);
-							showInfoFlexTable.setText(row, 1, i.getEigenschaftErlaeuterung());
-							showInfoFlexTable.setText(row, 2, i.getInfotext());
-						}
-					}
-				});
+				// Tabelle mit Inhalten aus der Datenbank befüllen.
+				for (Info i : result) {
+					row++;
+
+					final String fremdprofilId = String.valueOf(i.getNutzerprofilId());
+
+					showInfoFlexTable.setText(row, 0, fremdprofilId);
+					showInfoFlexTable.setText(row, 1, i.getEigenschaftErlaeuterung());
+					showInfoFlexTable.setText(row, 2, i.getInfotext());
+				}
+			}
+		});
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
-				
-				
-				// Tabelle für Auswahlinfo
 
-				/**
-				 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
-				 */
-				final FlexTable showInfoFlexTableAuswahl = new FlexTable();
+		// Tabelle für Auswahlinfo
 
-				/**
-				 * Erste Zeile der Tabelle festlegen.
-				 */
-				showInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
-				showInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
-				showInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
+		/**
+		 * Tabelle erzeugen, in der das Suchprofil dargestellt wird.
+		 */
+		final FlexTable showInfoFlexTableAuswahl = new FlexTable();
 
-				/**
-				 * Tabelle formatieren und CSS einbinden.
-				 */
-				showInfoFlexTableAuswahl.setCellPadding(6);
-				showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
-				showInfoFlexTableAuswahl.addStyleName("FlexTable");
-				
-				
-				ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(
-						profilId, new AsyncCallback<List<Info>>() {
+		/**
+		 * Erste Zeile der Tabelle festlegen.
+		 */
+		showInfoFlexTableAuswahl.setText(0, 0, "Nutzerprofil-Id");
+		showInfoFlexTableAuswahl.setText(0, 1, "Eigenschaft");
+		showInfoFlexTableAuswahl.setText(0, 2, "Auswahloption");
 
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-							}
+		/**
+		 * Tabelle formatieren und CSS einbinden.
+		 */
+		showInfoFlexTableAuswahl.setCellPadding(6);
+		showInfoFlexTableAuswahl.getRowFormatter().addStyleName(0, "TableHeader");
+		showInfoFlexTableAuswahl.addStyleName("FlexTable");
 
-							@Override
-							public void onSuccess(List<Info> result) {
-								// Anzahl der Zeilen ermitteln.
-								int row = showInfoFlexTableAuswahl.getRowCount();
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(profilId, new AsyncCallback<List<Info>>() {
 
-								// Tabelle mit Inhalten aus der Datenbank befüllen.
-								for (Info iA : result) {
-									row++;
-									
-									final String fremdprofilId = String.valueOf(iA.getNutzerprofilId());
-									
-									showInfoFlexTableAuswahl.setText(row, 0, fremdprofilId);
-									showInfoFlexTableAuswahl.setText(row, 1, iA.getEigenschaftErlaeuterung());
-									showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
-								}
-							}
-						});	
-				
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf.");
+			}
 
-				verPanel.add(showInfoFlexTableAuswahl);
-				verPanel.add(infoLabel);
+			@Override
+			public void onSuccess(List<Info> result) {
+				// Anzahl der Zeilen ermitteln.
+				int row = showInfoFlexTableAuswahl.getRowCount();
+
+				// Tabelle mit Inhalten aus der Datenbank befüllen.
+				for (Info iA : result) {
+					row++;
+
+					final String fremdprofilId = String.valueOf(iA.getNutzerprofilId());
+
+					showInfoFlexTableAuswahl.setText(row, 0, fremdprofilId);
+					showInfoFlexTableAuswahl.setText(row, 1, iA.getEigenschaftErlaeuterung());
+					showInfoFlexTableAuswahl.setText(row, 2, iA.getOptionsbezeichnung());
+				}
+			}
+		});
+
+		verPanel.add(showInfoFlexTableAuswahl);
+		verPanel.add(infoLabel);
 
 	}
 }

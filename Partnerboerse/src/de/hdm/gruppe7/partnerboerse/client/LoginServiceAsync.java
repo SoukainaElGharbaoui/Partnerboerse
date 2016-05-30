@@ -2,12 +2,11 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface LoginServiceAsync {
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-//	void login(String requestUri, AsyncCallback<LoginInfo> callback);
+public interface LoginServiceAsync {
 	
-	void login(String requestUri, AsyncCallback callback);
+	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 	
-	void hallo(AsyncCallback<String> callback);
 
 }
