@@ -125,9 +125,9 @@ public class CreateInfo extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										if(textArea.getText() != null) {
+										if (textArea.getText() != null) {
 											
-											if(textArea.getText() != beschreibungstext) {
+											if (textArea.getText() != beschreibungstext) {
 												nEingabe = textArea.getText();
 											}
 										}
@@ -153,12 +153,9 @@ public class CreateInfo extends VerticalPanel {
 														RootPanel.get("Details").clear();
 														RootPanel.get("Details").add(showNp);
 													}
-									
 										});
-												
 								}
 								}); 
-								
 							}
 							
 							else if (e.getTyp() == "A") {

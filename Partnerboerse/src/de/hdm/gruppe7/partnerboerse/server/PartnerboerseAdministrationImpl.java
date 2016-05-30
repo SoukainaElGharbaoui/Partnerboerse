@@ -566,10 +566,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
+		System.out.println(profilId + ", " + eigenschaftId);
 	}
 	
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)  throws IllegalArgumentException {
-		return this.infoMapper.findEigBByIdNeu(eigenschaftId);
+		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
+		eigB = this.infoMapper.findEigBByIdNeu(eigenschaftId);
+		System.out.println(eigB.getBeschreibungstext());
+		
+		return eigB;
+		//		return this.infoMapper.findEigBByIdNeu(eigenschaftId);
 	}
 	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
