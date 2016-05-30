@@ -72,7 +72,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Entsprechendes Fremdprofil abrufen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getFremdprofilById(fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override

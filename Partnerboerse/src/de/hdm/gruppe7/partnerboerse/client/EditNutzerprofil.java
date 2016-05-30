@@ -69,7 +69,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(2, 2, nachnameTextBox);
 
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("Maennlich");
+		geschlechtListBox.addItem("Männlich");
 		editNutzerprofilFlexTable.setWidget(3, 2, geschlechtListBox);
 
 		// Geburtdatum
@@ -116,9 +116,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				new AsyncCallback<Nutzerprofil>() {
 					@Override
 					public void onFailure(Throwable caught) {
-
-						informationLabel.setText("Es trat ein Fehler auf");
-
+						informationLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override

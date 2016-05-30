@@ -1,4 +1,4 @@
-package de.hdm.gruppe7.partnerboerse.client;
+ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -29,8 +29,11 @@ public class EditSuchprofil extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
+
+
 		 *  Überschrift-Label hinzufügen. 
-		 */
+
+		**/ 
 		final Label ueberschriftLabel = new Label("Suchprofil bearbeiten:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
@@ -120,7 +123,12 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(8, 2, religionListBox);
 
 		/**
+
+		 
+		 *
+
 		 * Daten des Suchprofils in die Tabelle einfügen. 
+
 		 */
 		// InfoLabel hinzufügen. 
 		final Label infoLabel = new Label();
@@ -183,8 +191,11 @@ public class EditSuchprofil extends VerticalPanel {
 			
 		});
 
-		/**
+/*
+		 
+
 		 * Widgets zum VerticalPanel hinzufügen. 
+
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);
@@ -192,14 +203,22 @@ public class EditSuchprofil extends VerticalPanel {
 		verPanel.add(editLabel);
 
 		/**
+
+		 * �nderungen Speichern-Button hinzufügen und ausbauen.
+
 		 * Änderungen-Speichern-Button hinzufügen und ausbauen.
+
 		 */
 		final Button speichernButton = new Button("Suchprofil aktualisieren");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(speichernButton);
 
 		/**
+
+		 
+
 		 * ClickHandler für den Änderungen-Speichern-Button hinzufügen.
+
 		 */
 		final Label informationLabel = new Label();
 		verPanel.add(informationLabel);
@@ -210,6 +229,21 @@ public class EditSuchprofil extends VerticalPanel {
 
 		speichernButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
+					
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Es trat ein Fehler auf."); 
+						
+					}
+					
+					
+					public void onSuccess(Void result) {
+						
+						
+					}
+					
+				});
 				
 				// Prüfen, ob der Suchprofilname beim Editieren verändert wird.
 				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(Benutzer.getProfilId(), 

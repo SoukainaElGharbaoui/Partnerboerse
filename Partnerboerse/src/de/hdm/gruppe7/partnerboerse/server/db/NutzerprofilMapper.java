@@ -248,7 +248,10 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Alle Nutzerprofile auslesen.
+
+	 * Auslesen aller Nutzerprofile.
+	 * @param nutzerprofil 
+
 	 */
 	public Vector<Nutzerprofil> findAllNutzerprofile() {
 		Connection con = DBConnection.connection();
@@ -454,15 +457,127 @@ public class NutzerprofilMapper {
 				nutzerprofil.setAehnlichkeit(rs.getInt("aehnlichkeit"));
 
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(nutzerprofil);
+				result.add(nutzerprofil);}
+			
+			} catch (SQLException e2) {
+				e2.printStackTrace();
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+
+			// Ergebnisliste zurÃ¼ckgeben
+			return result;
 		}
 
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
+			/*
+			 * ***************************************************************************
+			 * ABSCHNITT, Ende: Partnervorschläge
+			 * ***************************************************************************
+			 */
+			
+			/**
+			 * Alle Nutzerprofile die mich nicht gesperrt haben
+			 */
+			
+			public List<Nutzerprofil> findNutzerprofileOhneGesetzeSperrung(int profilId){
+				
+				Connection con = DBConnection.connection();
+
+		
+
+				// Ergebnisliste vorbereiten
+				List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+				
+				try {
+					Statement stmt = con.createStatement();
+					
+					ResultSet rs = stmt
+							.executeQuery("SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, "
+									+ "t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, t_profil.geschlecht, "
+									+ "t_profil.koerpergroesse, t_profil.haarfarbe, t_profil.raucher, t_profil.religion "
+									+ "FROM t_nutzerprofil LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
+									+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
+									+ "WHERE t_nutzerprofil.nutzerprofil_id !=" + profilId + " AND (t_sperrung.fremdprofil_id !=" + profilId
+									+ "OR t_sperrung.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil.nutzerprofil_id" );
+					
+					while (rs.next()){
+						
+						Nutzerprofil nutzerprofil = new Nutzerprofil();
+						nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+						nutzerprofil.setVorname(rs.getString("vorname"));
+						nutzerprofil.setNachname(rs.getString("nachname"));
+						nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+						nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+						nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+						nutzerprofil.setRaucher(rs.getString("raucher"));
+						nutzerprofil.setReligion(rs.getString("religion"));
+
+						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+						result.add(nutzerprofil);
+						
+						
+					}
+				} catch (SQLException e2){
+					e2.printStackTrace();
+				}
+				
+				// Ergebnisliste zurÃ¼ckgeben
+				return result;
+			}
+			
+			
+			/**
+			 * Geordnete Partnervorschlaege ausgeben
+			 */
+			public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) {
+				Connection con = DBConnection.connection();
+
+				// Ergebnisliste vorbereiten
+				List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+
+				try {
+					Statement stmt = con.createStatement();
+
+					ResultSet rs = stmt
+							.executeQuery(							
+									"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
+									+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe,"
+									+ " t_profil.raucher, t_profil.religion , t_aehnlichkeitsp.aehnlichkeit"
+									+ " FROM t_nutzerprofil LEFT JOIN t_profil "
+									+ "ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id , t_aehnlichkeitsp "
+									+ "WHERE t_nutzerprofil.nutzerprofil_id != 1 AND t_aehnlichkeitsp.suchprofilname = '" + suchprofilName+ "'"
+									+ "AND t_aehnlichkeitsp.fremdprofil_id = t_nutzerprofil.nutzerprofil_id "
+									+ "ORDER BY t_aehnlichkeitsp.aehnlichkeit DESC  ");
+
+
+					// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+					// Nutzerprofil-Objekt erstellt.
+					while (rs.next()) {
+						Nutzerprofil nutzerprofil = new Nutzerprofil();
+						nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+						nutzerprofil.setVorname(rs.getString("vorname"));
+						nutzerprofil.setNachname(rs.getString("nachname"));
+						nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+						nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+						nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+						nutzerprofil.setRaucher(rs.getString("raucher"));
+						nutzerprofil.setReligion(rs.getString("religion"));
+						nutzerprofil.setAehnlichkeitSp(rs.getInt("aehnlichkeit"));
+						
+
+						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+						result.add(nutzerprofil);
+					}
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+				// Ergebnisliste zurÃ¼ckgeben
+				return result;
+			}
+		
+
+	
 
 	/**
 	 * Aehnlichkeit loeschen.
@@ -502,5 +617,6 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
+
 
 }

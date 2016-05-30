@@ -140,53 +140,9 @@ public class SuchprofilMapper {
 		}
 	}
 	
-	/**
-	 * Suchprofil mit vorgegebener Profil-ID suchen.
-	 */
-	public Suchprofil findBySuchprofilId(int profilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfüllen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery(
-			
-			"SELECT t_suchprofil.alter_von, t_suchprofil.alter_bis, t_suchprofil.suchprofil_id, "
-			+ "t_suchprofil.nutzerprofil_id, t_profil.koerpergroesse, t_profil.geschlecht, " 
-			+ "t_profil.haarfarbe, t_profil.religion, t_profil.raucher " 
-			+ "FROM t_suchprofil INNER JOIN t_profil ON t_suchprofil.suchprofil_id = t_profil.profil_id");
-			
-					
-			/*
-			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
-			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
-			 */
-			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				Suchprofil s = new Suchprofil();
-				
-				s.setProfilId(rs.getInt("suchprofil_id"));
-				s.setGeschlecht(rs.getString("geschlecht"));
-				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
-				s.setHaarfarbe(rs.getString("haarfarbe"));
-				s.setAlterMinInt(rs.getInt("alter_von"));
-				s.setAlterMaxInt(rs.getInt("alter_bis"));	
-				s.setRaucher(rs.getString("raucher"));
-				s.setReligion(rs.getString("religion"));
-				
-				return s;
-					
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			return null;
-		}
-		return null;
-	}
 	
+
+
 	/**
 	 * Suchprofil mit vorgegebener Profil-ID suchen.
 	 */
@@ -232,45 +188,8 @@ public class SuchprofilMapper {
 		return null;
 	}
 	
-	/**
-	 * ************************
-	 * Brauchen wir das???
-	 * ************************
-	 */
-//	/**
-//	 * Suchen eines Nutzerprofils mit vorgegebener ProfilId. 
-//	 */
-//	public Suchprofil findBySuchprofilId(int profilId) {
-//		// DB-Verbindung holen
-//		Connection con = DBConnection.connection();
-//
-//		try {
-//			// Leeres SQL-Statement (JDBC) anlegen
-//			Statement stmt = con.createStatement();
-//
-//			// Statement ausfüllen und als Query an die DB schicken
-//			ResultSet rs = stmt.executeQuery(
-//					"SELECT profil_id, alterMin, alterMax FROM t_suchprofil " + "WHERE profil_id=" + profilId);
-//
-//			/*
-//			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
-//			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
-//			 */
-//			if (rs.next()) {
-//				// Ergebnis-Tupel in Objekt umwandeln
-//				Suchprofil suchprofil = new Suchprofil();
-//				suchprofil.setProfilId(rs.getInt("profil_id"));
-//				suchprofil.setAlterMin(rs.getInt("Alter minimal"));
-//				suchprofil.setAlterMax(rs.getInt("Alter maximal"));
-//				return suchprofil;
-//			}
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//			return null;
-//		}
-//
-//		return null;
-//	}
+	
+
 
 	/**
 	 * Alle Suchprofile auslesen.
@@ -309,8 +228,51 @@ public class SuchprofilMapper {
 
 		// Ergebnisliste zurueckgeben
 		return result;
+
 	}
 	
+
+	
+	// Aehnlichkeit berechnen und in Partnervorschlaege ausgeben
+	
+	/**
+	 * Aehnlichkeit hinzufuegen. 
+	 */
+	public void insertAehnlichkeit(int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) { 
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) " + "VALUES (" 
+			+ nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}	
+	}
+	
+	/**
+	 * Aehnlichkeit loeschen.
+	 */
+	public void deleteAehnlichkeitSp (int nutzerprofilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp WHERE nutzerprofil_id=" + nutzerprofilId);
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+	
+
+
+	
+
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
@@ -412,12 +374,47 @@ public class SuchprofilMapper {
 	  * @param n
 	  * @return
 	  */
-	 public List<Suchprofil> findAllSuchprofileFor(Nutzerprofil n){
+	public List<Suchprofil> findAllSuchprofileFor(Nutzerprofil n){
 		 return findAllSuchprofileFor(n.getProfilId()); 
 	 }
+
 	
 	
-	 
+	
+	public Suchprofil findSuchprofilById(int suchprofilId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil, t_profil " + "WHERE profil_id= " + suchprofilId
+					+ " AND suchprofil_id=" + suchprofilId);
+
+			/*
+			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden. Prüfen, ob
+			 * ein Ergebnis-Tupel vorliegt.
+			 */
+			if (rs.next()) {
+				// Ergebnis-Tupel in Nutzerprofil-Objekt umwandeln.
+				Suchprofil s = new Suchprofil();
+				s.setProfilId(rs.getInt("suchprofil_id"));
+				s.setSuchprofilName(rs.getString("suchprofilname"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
+				return s;
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 
 	
 	
