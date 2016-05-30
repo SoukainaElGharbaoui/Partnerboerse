@@ -13,6 +13,7 @@ import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -327,6 +328,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profilId);
+	}
+	
+	public Beschreibungseigenschaft getEigBById(int eigenschaftId)  throws IllegalArgumentException {
+		return this.infoMapper.findEigBById(eigenschaftId);
 	}
 	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {

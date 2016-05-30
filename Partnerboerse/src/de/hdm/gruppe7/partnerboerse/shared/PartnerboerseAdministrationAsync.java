@@ -6,8 +6,8 @@ import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -128,11 +128,12 @@ public interface PartnerboerseAdministrationAsync {
 
 	void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId,
 			AsyncCallback<Void> callback);
-
 	
 	void getEigAById(int eigenschaftId,
 			AsyncCallback<Auswahleigenschaft> callback);
 	
+	void getEigBById(int eigenschaftId,
+			AsyncCallback<Beschreibungseigenschaft> callback);
 	
 	
 	/**

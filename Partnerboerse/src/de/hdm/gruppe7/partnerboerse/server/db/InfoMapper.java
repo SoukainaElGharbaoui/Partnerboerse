@@ -1,6 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.server.db;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
@@ -163,6 +164,7 @@ public class InfoMapper {
 		}
 	}
 
+	
 	public Auswahleigenschaft findEigAById(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
@@ -187,6 +189,36 @@ public class InfoMapper {
 
 			eigA.setOptionen(optionen);
 			return eigA;
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	public Beschreibungseigenschaft findEigBById(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+		
+		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
+
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM t_beschreibungseigenschaft1 "
+							+ "WHERE eigenschaft_id=" + eigenschaftId);
+
+			while (rs.next()) {
+
+				eigB.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				eigB.setBeschreibungstext(rs.getString("beschreibungstext"));
+			}
+
+			return eigB;
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();

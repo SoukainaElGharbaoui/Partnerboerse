@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
@@ -248,6 +249,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;
+	
+	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
+			throws IllegalArgumentException;
+
 
 	/**
 	 * Auslesen eines Suchprofils anhand der ID

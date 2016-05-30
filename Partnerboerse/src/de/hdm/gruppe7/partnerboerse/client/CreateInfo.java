@@ -12,8 +12,10 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
@@ -25,6 +27,7 @@ public class CreateInfo extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
+	private String beschreibungstext;
 	private String nEingabe;
 	
 	private Button createInfosButton = new Button("Info anlegen");
@@ -97,13 +100,36 @@ public class CreateInfo extends VerticalPanel {
 								final TextArea textArea = new TextArea();
 								showEigenschaftFlexTable.setWidget(row, 2, textArea);
 								
+								ClientsideSettings.getPartnerboerseAdministration().getEigBById(eigenschaftIdInt, 
+										new AsyncCallback<Beschreibungseigenschaft>(){
+
+											@Override
+											public void onFailure(
+													Throwable caught) {
+												informationLabelB.setText("Beim Herausholen des Beschreibungstextes "
+														+ "ist ein Fehler aufgetreten.");												
+											}
+
+											@Override
+											public void onSuccess(
+													Beschreibungseigenschaft result) {
+												informationLabelB.setText("Das Herausholen des Beschreibungstextes hat "
+														+ "funktioniert.");			
+												
+												beschreibungstext = result.getBeschreibungstext();
+												textArea.setText(beschreibungstext);
+											}
+								});
 								
 								
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
 										if(textArea.getText() != null) {
-											nEingabe = textArea.getText();
+											
+											if(textArea.getText() != beschreibungstext) {
+												nEingabe = textArea.getText();
+											}
 										}
 										
 										else {
