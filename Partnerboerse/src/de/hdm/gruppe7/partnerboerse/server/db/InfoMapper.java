@@ -58,7 +58,7 @@ public class InfoMapper {
 	
 	
 	
-	public Info insertInfoNeu(Info i) {
+	public Info insertInfoNeu(Info i){
 		Connection con = DBConnection.connection();
 		
 		try {
