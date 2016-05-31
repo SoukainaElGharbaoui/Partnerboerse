@@ -127,19 +127,14 @@ public class CreateInfo extends VerticalPanel {
 									public void onClick(ClickEvent event) {
 										
 										if (textArea.getText() != null) {
-											
-											if (textArea.getText() != beschreibungstext) {
 												nEingabe = textArea.getText();
-											}
 										}
-										
+									
 										else {
 											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
 										}
 										
 										
-										
-//										profilId = Benutzer.getProfilId();
 										
 										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
