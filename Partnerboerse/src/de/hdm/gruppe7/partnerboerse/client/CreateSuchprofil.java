@@ -28,6 +28,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private VerticalPanel verPanel = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
+	int suchprofilId;
 	
 
 	/**
@@ -51,6 +52,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
 		 */
 		final FlexTable createSuchprofilFlexTable = new FlexTable();
+		
+		final FlexTable showSuchprofilFlexTable= new FlexTable();
 		
 		
 		/**
@@ -205,9 +208,9 @@ public class CreateSuchprofil extends VerticalPanel {
 
 												@Override
 												public void onSuccess(Suchprofil result) {
-													ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-													RootPanel.get("Details").clear();
-													RootPanel.get("Details").add(showSuchprofil);
+//													ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+//													RootPanel.get("Details").clear();
+//													RootPanel.get("Details").add(showSuchprofil);
 												}
 
 											});
@@ -218,6 +221,30 @@ public class CreateSuchprofil extends VerticalPanel {
 						}
 				
 			});
+			
+			ClientsideSettings.getPartnerboerseAdministration().
+			getSuchprofilByName(Benutzer.getProfilId(), suchprofilnameTextBox.getText(), new  AsyncCallback<Suchprofil>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Suchprofil result) {
+					suchprofilId = result.getProfilId();
+					
+				}
+				
+				
+			});
+			
+			CreateInfoSp createInfoSp = new CreateInfoSp(
+					suchprofilId);
+			RootPanel.get("Details").clear();
+			RootPanel.get("Details").add(createInfoSp);
+
 			
 		}
 		
@@ -295,8 +322,8 @@ public class CreateSuchprofil extends VerticalPanel {
 //	}
 //	});
 	
-	CreateInfo createInfo = new CreateInfo();
-	verPanel2.add(createInfo);
+	
+	
 
 }
 	

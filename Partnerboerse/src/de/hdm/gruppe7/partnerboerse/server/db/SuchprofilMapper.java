@@ -383,7 +383,9 @@ public class SuchprofilMapper {
 	
 	public Suchprofil findSuchprofilById(int suchprofilId) {
 		Connection con = DBConnection.connection();
-
+		
+		
+		
 		try {
 			Statement stmt = con.createStatement();
 
@@ -415,8 +417,6 @@ public class SuchprofilMapper {
 		}
 		return null;
 	}
-
 	
 	
-
 }

@@ -18,8 +18,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
+import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 
 public class CreateNutzerprofil extends VerticalPanel {
 	
@@ -181,8 +182,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		});
 		
 		
-		CreateInfo createInfo = new CreateInfo();
-		verPanel2.add(createInfo);
+		
+		CreateInfoNp createInfoNp = new CreateInfoNp();
+		verPanel2.add(createInfoNp);
 		
 	}
 
