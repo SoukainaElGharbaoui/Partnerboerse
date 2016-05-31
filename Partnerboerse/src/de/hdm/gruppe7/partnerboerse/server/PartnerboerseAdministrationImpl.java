@@ -383,10 +383,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			// Erforderliche Daten abrufen
 			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-			List<Info> referenzinfo = infoMapper.findAInfoByProfilId(profilId);
-			List<Info> vergleichsinfo = infoMapper.findAInfoByProfilId(fremdprofilId);
-			List<Info> referenzinfob = infoMapper.findBInfoByProfilId(profilId);
-			List<Info> vergleichsinfob = infoMapper.findBInfoByProfilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findInfosByProfilId(profilId);
+			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(profilId);
+			
 			
 			// Variablen zur Berechnung der Aehnlichkeit
 			int aehnlichkeit = 3;
@@ -413,24 +412,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
-			// Vergleich der Auswahlinfos
-			for (Info rin : referenzinfo){
-					for (Info vin : vergleichsinfo){
-				if (rin.getEigenschaftId() == vin.getEigenschaftId()){
-					counter++;
-//					if (rin.getAuswahloptionId() == vin.getAuswahloptionId()){
-//						aehnlichkeit= aehnlichkeit + 1;
-//					}
-				}
-			}
-			}
+			
 			
 			// Vergleich der Beschreibungsinfos
-			for (Info rinb : referenzinfob){
-				for (Info vinb : vergleichsinfob){
-			if (rinb.getEigenschaftId() == vinb.getEigenschaftId()){
+			for (Info rin : referenzinfo){
+				for (Info vin : vergleichsinfo){
+			if (rin.getEigenschaftId() == vin.getEigenschaftId()){
 				counter++;
-				if (rinb.getInfotext().equals(vinb.getInfotext())){
+				if (rin.getInfotext().equals(vin.getInfotext())){
 					aehnlichkeit= aehnlichkeit + 1;
 				}
 			}

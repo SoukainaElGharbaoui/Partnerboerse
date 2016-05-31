@@ -251,6 +251,34 @@ public class InfoMapper {
 		}
 	}
 		
+	public List<Info> findInfosByProfilId(int profilId){
+		
+				// DB-Verbindung holen
+				Connection con = DBConnection.connection();
+
+				List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+						Statement stmt = con.createStatement();
+			
+						ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE t_info1.profil_id =" + profilId); 
+						
+		while (rs.next()) { 
+							Info info = new Info();
+							info.setInfotext(rs.getString("infotext"));
+							info.setNutzerprofilId(rs.getInt("profil_id"));
+							info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+							result.add(info);
+							
+							
+						}
+		
+		}catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	/**
 	 * Caros Methoden: Beginn
