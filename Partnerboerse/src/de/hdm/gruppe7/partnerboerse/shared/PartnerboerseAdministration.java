@@ -243,20 +243,24 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
-	public List<String> getAllInfosNeu(int nutzerprofilId)
+	public List<String> getAllInfosNeu(int profilId)
 			throws IllegalArgumentException;
 
 	public void deleteAllInfosNeu(int profilId)
 			throws IllegalArgumentException;
 
-	public void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId)
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
+	
+	public void saveInfoNeu(int profilId, int eigenschaftId, String infotext)
+				throws IllegalArgumentException;
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;
 	
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
+
 	
 	
 //	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)

@@ -32,8 +32,9 @@ public class EditInfo extends VerticalPanel {
 	
 	private int row;
 //	private int eigenschaftIdInt;
-	private int nutzerprofilIdInt;
+	private int profilIdInt;
 	private String infotext;
+//	private String infotextNeu;
 	private String typ;
 	
 	/**
@@ -81,25 +82,52 @@ public class EditInfo extends VerticalPanel {
 							
 						for (int i = 0; i < size; i++) {
 
-						String nutzerprofilId = result.get(i);
+						String profilId = result.get(i);
 						String eigenschaftId = result.get(i+1);
 						String erlaeuterung = result.get(i+2);
 						infotext = result.get(i+3);
 						typ = result.get(i+4);
 						
-						editInfoFlexTable.setText(row, 0, nutzerprofilId);
+						editInfoFlexTable.setText(row, 0, profilId);
 						editInfoFlexTable.setText(row, 1, eigenschaftId);
 						editInfoFlexTable.setText(row, 2, erlaeuterung);
 						
-						nutzerprofilIdInt = Integer.valueOf(nutzerprofilId);
+						profilIdInt = Integer.valueOf(profilId);
 						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 						
 						
 						if (typ == "B") {
 							
-							TextBox tb = new TextBox();
+							final TextBox tb = new TextBox();
 							tb.setText(infotext);
 							editInfoFlexTable.setWidget(row, 3, tb);
+							
+							updateInfosButton.addClickHandler(new ClickHandler() {
+								public void onClick(ClickEvent event) {
+									
+							String infotextNeuB = tb.getText();
+									
+									ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+											profilIdInt, eigenschaftIdInt, infotextNeuB, 
+											new AsyncCallback<Void>(){
+
+												@Override
+												public void onFailure(
+														Throwable caught) {
+													informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+															+ "aufgetreten.");
+												}
+
+												@Override
+												public void onSuccess(
+														Void result) {
+													informationLabel.setText("Das Aktualisieren der Infos "
+															+ "hat funktioniert.");													
+												}
+												
+											});
+								}
+							});
 						}
 						
 						
@@ -142,6 +170,31 @@ public class EditInfo extends VerticalPanel {
 											}
 										}
 									});
+							
+							
+							String infotextNeuA = lb.getSelectedValue();
+							
+							ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+									profilIdInt, eigenschaftIdInt, infotextNeuA, 
+									new AsyncCallback<Void>(){
+
+										@Override
+										public void onFailure(
+												Throwable caught) {
+											informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+													+ "aufgetreten.");
+										}
+
+										@Override
+										public void onSuccess(
+												Void result) {
+											informationLabel.setText("Das Aktualisieren der Infos "
+													+ "hat funktioniert.");													
+										}
+										
+									});
+							
+							
 						}
  						
 						loeschenButton = new Button("Löschen");
@@ -157,7 +210,7 @@ public class EditInfo extends VerticalPanel {
 									if (Integer.valueOf(tableEigenschaftId) == eigenschaftIdInt) {
 
 										ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu
-										(nutzerprofilIdInt, eigenschaftIdInt, 
+										(profilIdInt, eigenschaftIdInt, 
 												new AsyncCallback<Void>() {
 
 											@Override
@@ -181,12 +234,31 @@ public class EditInfo extends VerticalPanel {
 						});
 						
 						
-						updateInfosButton.addClickHandler(new ClickHandler() {
-							public void onClick(ClickEvent event) {
-								
-//								ClientsideSettings
-							}
-						});
+//						updateInfosButton.addClickHandler(new ClickHandler() {
+//							public void onClick(ClickEvent event) {
+//								
+//								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+//										profilIdInt, eigenschaftIdInt, infotextNeu, 
+//										new AsyncCallback<Void>(){
+//
+//											@Override
+//											public void onFailure(
+//													Throwable caught) {
+//												informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+//														+ "aufgetreten.");
+//											}
+//
+//											@Override
+//											public void onSuccess(
+//													Void result) {
+//												informationLabel.setText("Das Aktualisieren der Infos "
+//														+ "hat funktioniert.");													
+//											}
+//											
+//											
+//										});							
+//							}
+//						});
 							
 						row++; 
 						i++; i++; i++; i++; 

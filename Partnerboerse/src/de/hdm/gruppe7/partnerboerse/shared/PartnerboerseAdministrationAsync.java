@@ -264,7 +264,10 @@ public interface PartnerboerseAdministrationAsync {
 
 	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
 
-	void deleteOneInfoNeu(int nutzerprofilId, int eigenschaftId,
+	void deleteOneInfoNeu(int profilId, int eigenschaftId,
+			AsyncCallback<Void> callback);
+	
+	void saveInfoNeu(int profilId, int eigenschaftId, String infotext, 
 			AsyncCallback<Void> callback);
 
 	void getEigAById(int eigenschaftId,

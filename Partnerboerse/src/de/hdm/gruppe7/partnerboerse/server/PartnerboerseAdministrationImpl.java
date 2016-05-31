@@ -538,7 +538,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				Eigenschaft e = new Eigenschaft();
 				e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
 
-				list1.add(String.valueOf(i.getNutzerprofilId()));
+				list1.add(String.valueOf(i.getProfilId()));
 				list1.add(String.valueOf(eigenschaftId));
 				list1.add(e.getErlaeuterung());
 				list1.add(String.valueOf(i.getInfotext()));
@@ -553,7 +553,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			throws IllegalArgumentException {
 		
 		Info i = new Info();
-		i.setNutzerprofilId(profilId);
+		i.setProfilId(profilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
 		
@@ -585,6 +585,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		
 		return optionen;
 //		return this.infoMapper.findEigAById(eigenschaftId);
+	}
+	
+	public void saveInfoNeu(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+
+		System.out.println(profilId + ", " + eigenschaftId + ", " + infotext);
+		
+		Info i = new Info();
+		i.setProfilId(profilId);
+		i.setEigenschaftId(eigenschaftId);
+		i.setInfotext(infotext);
+		
+		this.infoMapper.updateInfosNeu(i);
+
 	}
 
 //	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException {
