@@ -387,7 +387,7 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil1, t_profil " + "WHERE profil_id= " + suchprofilId
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil1, t_profil1 " + "WHERE profil_id= " + suchprofilId
 					+ " AND suchprofil_id=" + suchprofilId);
 
 			/*

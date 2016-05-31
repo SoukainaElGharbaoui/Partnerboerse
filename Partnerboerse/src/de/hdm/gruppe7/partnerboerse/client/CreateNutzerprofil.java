@@ -10,6 +10,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -18,10 +19,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
 
 public class CreateNutzerprofil extends VerticalPanel {
+	
+	
+	private HorizontalPanel horPanel = new HorizontalPanel();
 
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private VerticalPanel verPanel2 = new VerticalPanel();
 
 	private LoginInfo loginInfo;
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
@@ -51,7 +58,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
 
 	public CreateNutzerprofil() {
+		this.add(horPanel);
 		this.add(verPanel);
+		this.add(verPanel2);
+		
+		horPanel.add(verPanel);
+		horPanel.add(verPanel2);
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
@@ -168,6 +180,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		});
 		
+		
+		CreateInfo createInfo = new CreateInfo();
+		verPanel2.add(createInfo);
+		
 	}
 
 
@@ -176,6 +192,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
+		
+		
 	}
 
 }

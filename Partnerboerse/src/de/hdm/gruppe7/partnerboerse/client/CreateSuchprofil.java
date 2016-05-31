@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -21,15 +22,24 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class CreateSuchprofil extends VerticalPanel {
 
 	/**
-	 * VerticalPanel hinzufügen.
+	 * VerticalPanel und HorizontalPanel hinzufügen.
 	 */
+	
+	private HorizontalPanel horPanel = new HorizontalPanel();
 	private VerticalPanel verPanel = new VerticalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();
+	
 
 	/**
 	 * Konstruktor hinzuf�gen.
 	 */
 	public CreateSuchprofil() {
+		this.add(horPanel);
 		this.add(verPanel);
+		this.add(verPanel2);
+		
+		horPanel.add(verPanel);
+		horPanel.add(verPanel2);
 	
 		/**
 		 * Label für Überschrift erstellen
@@ -284,6 +294,9 @@ public class CreateSuchprofil extends VerticalPanel {
 //		
 //	}
 //	});
+	
+	CreateInfo createInfo = new CreateInfo();
+	verPanel2.add(createInfo);
 
 }
 	
