@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link ReportGenerator}. Es wird
@@ -25,4 +26,11 @@ public interface ReportGeneratorAsync {
 	
 	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
 			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
+	
+
+//	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
+//			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);
+
+	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
+			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);
 }

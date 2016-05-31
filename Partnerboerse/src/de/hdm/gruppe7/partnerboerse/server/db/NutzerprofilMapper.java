@@ -164,7 +164,7 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil1, t_profil1 " + "WHERE profil_id= " + profilId
-					+ " AND nutzerprofil_id=" + profilId);
+					+ " AND nutzerprofil_id= " + profilId);
 
 			/*
 			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden. Prüfen, ob
