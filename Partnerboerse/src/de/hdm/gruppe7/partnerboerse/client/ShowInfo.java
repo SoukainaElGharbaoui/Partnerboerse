@@ -64,7 +64,7 @@ public class ShowInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Fehler");
+						informationLabel.setText("Es trat ein Fehler beim Herausholen der Infos auf.");
 					}
 
 					@Override
