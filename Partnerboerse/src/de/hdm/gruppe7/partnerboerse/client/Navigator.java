@@ -7,6 +7,12 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 
@@ -15,6 +21,8 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
@@ -43,6 +51,34 @@ public class Navigator extends VerticalPanel {
 		 */
 		Benutzer b = new Benutzer();
 		b.setProfilId(1);
+		
+//		Tree t = new Tree(); 
+//		
+//		TreeItem meinNutzerprofil = new TreeItem(); 
+//		meinNutzerprofil.setText("Mein Nutzerprofil");
+//		meinNutzerprofil.addTextItem("Meine Nutzerprofildaten"); 
+//		meinNutzerprofil.addTextItem("Meine Infos"); 
+//		
+//		TreeItem meineSuchprofile = new TreeItem(); 
+//		meineSuchprofile.setText("Meine Suchprofile");
+//		
+//		TreeItem andereNutzerprofile = new TreeItem(); 
+//		andereNutzerprofile.setText("Andere Nutzerprofile");
+//		andereNutzerprofile.addTextItem("Meine Merkliste"); 
+//		andereNutzerprofile.addTextItem("Meine Sperrliste"); 
+//		
+//		TreeItem meinePartnervorschlaege = new TreeItem(); 
+//		meinePartnervorschlaege.setText("Meine Partnervorschläge");
+//		meinePartnervorschlaege.addTextItem("Meine unangesehenen Partnervorschläge"); 
+//		meinePartnervorschlaege.addTextItem("Meine Partnervorschläge anhand von Suchprofilen"); 
+//		
+//		t.addItem(meinNutzerprofil); 
+//		t.addItem(meineSuchprofile);
+//		t.addItem(andereNutzerprofile);
+//		t.addItem(meinePartnervorschlaege); 
+//
+//		this.add(t); 
+		
 
 		/**
 		 * Button "Nutzerprofil anlegen" hinzufügen. !!! Gehört hier nicht hin,
