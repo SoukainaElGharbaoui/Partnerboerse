@@ -10,7 +10,7 @@ public class Info extends BusinessObject {
 //	private int eigenschaftId;
 //	private String eigenschaftErlaeuterung;
 	
-	private int nutzerprofilId;
+	private int profilId;
 	private int eigenschaftId;
 	private String infotext;
 
@@ -28,12 +28,12 @@ public class Info extends BusinessObject {
 //		this.auswahloptionId = auswahloptionId;
 //	}
 
-	public int getNutzerprofilId() {
-		return nutzerprofilId;
+	public int getProfilId() {
+		return profilId;
 	}
 
-	public void setNutzerprofilId(int profilId) {
-		this.nutzerprofilId = profilId;
+	public void setProfilId(int profilId) {
+		this.profilId = profilId;
 	}
 
 	public int getEigenschaftId() {

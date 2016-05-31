@@ -65,7 +65,7 @@ public class InfoMapper {
 			 Statement stmt = con.createStatement();
 			
 			 stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) "
-			 + "VALUES(" + i.getNutzerprofilId() + "," + i.getEigenschaftId() 
+			 + "VALUES(" + i.getProfilId() + "," + i.getEigenschaftId() 
 			 + ",'" + i.getInfotext() +  "')");
 			
 			 } catch (SQLException e2) {
@@ -94,7 +94,8 @@ public class InfoMapper {
 
 			while (rs.next()) {
 				Info i = new Info();
-				i.setNutzerprofilId(rs.getInt("profil_id"));
+				
+				i.setProfilId(rs.getInt("profil_id"));
 				i.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				i.setInfotext(rs.getString("infotext"));
 
@@ -124,29 +125,17 @@ public class InfoMapper {
 					.executeQuery("SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id="
 							+ eigenschaftId);
 			
-//			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id, optionsbezeichnung "
-//					+ "FROM t_auswahloption WHERE eigenschaft_id=" + eigenschaftId);
-
 			while (rs.next()) {
 				e.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				e.setErlaeuterung(rs.getString("erlaeuterung"));
 				e.setTyp(rs.getString("typ"));
 				
 				return e;
-				
-//				Auswahloption auswahloption = new Auswahloption();
-//				auswahloption.setAuswahloptionId(rs.getInt("auswahloption_id"));
-//				auswahloption.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				auswahloption.setOptionsbezeichnung(rs.getString("optionsbezeichnung"));
-//
-//				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-//				result.add(auswahloption);
 			}
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		// Ergebnisliste zurÃ¼ckgeben
 		return null;
 	}
 	
@@ -166,10 +155,6 @@ public class InfoMapper {
 					.executeQuery("SELECT * FROM t_auswahleigenschaft1 "
 							+ "WHERE eigenschaft_id=" + eigenschaftId);
 			
-//			ResultSet rs = stmt.executeQuery(
-//					"SELECT t_auswahlinfo.nutzerprofil_id, t_auswahlinfo.auswahloption_id, t_auswahlinfo.eigenschaft_id "
-//							+ "FROM t_auswahlinfo");
-
 			while (rs.next()) {
 
 				eigA.setEigenschaftId(rs.getInt("eigenschaft_id"));
@@ -266,7 +251,7 @@ public class InfoMapper {
 		while (rs.next()) { 
 							Info info = new Info();
 							info.setInfotext(rs.getString("infotext"));
-							info.setNutzerprofilId(rs.getInt("profil_id"));
+							info.setProfilId(rs.getInt("profil_id"));
 							info.setEigenschaftId(rs.getInt("eigenschaft_id"));
 							result.add(info);
 							
@@ -279,6 +264,51 @@ public class InfoMapper {
 		
 		return result;
 	}
+	
+	
+	public void updateInfosNeu(Info i) {
+		Connection con = DBConnection.connection();
+		
+		String infotextAlt;
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT infotext AS infotext_alt "
+					+ "FROM t_info1 WHERE profil_id=" + i.getProfilId() 
+					+ " AND eigenschaft_id=" + i.getEigenschaftId());
+
+			if (rs.next()) {
+				infotextAlt = rs.getString("infotext_alt");
+
+				stmt = con.createStatement();
+
+				stmt.executeUpdate("UPDATE t_info1 " + "SET infotext='" + i.getInfotext()
+						+ "' WHERE infotext='" + infotextAlt + "' AND profil_id=" + i.getProfilId()
+						+ " AND eigenschaft_id=" + i.getEigenschaftId());
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Caros Methoden: Beginn

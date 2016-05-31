@@ -29,6 +29,7 @@ public class CreateInfo extends VerticalPanel {
 	
 	private String beschreibungstext;
 	private String nEingabe;
+//	private int profilId;
 	
 	private Button createInfosButton = new Button("Info anlegen");
 	private Label ueberschriftLabel = new Label("Info anlegen:"); 
@@ -38,7 +39,7 @@ public class CreateInfo extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public CreateInfo() {
+	public CreateInfo() {		
 		this.add(verPanel);
 
 		/**
@@ -125,9 +126,9 @@ public class CreateInfo extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										if(textArea.getText() != null) {
+										if (textArea.getText() != null) {
 											
-											if(textArea.getText() != beschreibungstext) {
+											if (textArea.getText() != beschreibungstext) {
 												nEingabe = textArea.getText();
 											}
 										}
@@ -135,6 +136,10 @@ public class CreateInfo extends VerticalPanel {
 										else {
 											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
 										}
+										
+										
+										
+//										profilId = Benutzer.getProfilId();
 										
 										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
@@ -153,12 +158,9 @@ public class CreateInfo extends VerticalPanel {
 														RootPanel.get("Details").clear();
 														RootPanel.get("Details").add(showNp);
 													}
-									
 										});
-												
 								}
 								}); 
-								
 							}
 							
 							else if (e.getTyp() == "A") {

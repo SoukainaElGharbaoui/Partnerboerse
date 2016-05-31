@@ -24,15 +24,6 @@ public class EditInfo extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	Button loeschenButton = new Button("Löschen");
-
-
-//	private int neueAuswahloptionId;
-//	int eigenschaftIdA;
-//	String bisherigeAuswahloption;
-//	private int nutzerprofilIdInt;
-//	private int eigenschaftIdInt;
-//	private String infotext;
-//	private String typ;
 	
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Info bearbeiten:");
@@ -40,7 +31,11 @@ public class EditInfo extends VerticalPanel {
 	private Label informationLabel = new Label();
 	
 	private int row;
-	
+//	private int eigenschaftIdInt;
+	private int profilIdInt;
+	private String infotext;
+//	private String infotextNeu;
+	private String typ;
 	
 	/**
 	 * Konstruktor hinzufügen.
@@ -87,25 +82,52 @@ public class EditInfo extends VerticalPanel {
 							
 						for (int i = 0; i < size; i++) {
 
-						String nutzerprofilId = result.get(i);
+						String profilId = result.get(i);
 						String eigenschaftId = result.get(i+1);
 						String erlaeuterung = result.get(i+2);
-						final String infotext = result.get(i+3);
-						final String typ = result.get(i+4);
+						infotext = result.get(i+3);
+						typ = result.get(i+4);
 						
-						editInfoFlexTable.setText(row, 0, nutzerprofilId);
+						editInfoFlexTable.setText(row, 0, profilId);
 						editInfoFlexTable.setText(row, 1, eigenschaftId);
 						editInfoFlexTable.setText(row, 2, erlaeuterung);
 						
-						final int nutzerprofilIdInt = Integer.valueOf(nutzerprofilId);
+						profilIdInt = Integer.valueOf(profilId);
 						final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 						
 						
 						if (typ == "B") {
 							
-							TextBox tb = new TextBox();
+							final TextBox tb = new TextBox();
 							tb.setText(infotext);
 							editInfoFlexTable.setWidget(row, 3, tb);
+							
+							updateInfosButton.addClickHandler(new ClickHandler() {
+								public void onClick(ClickEvent event) {
+									
+							String infotextNeuB = tb.getText();
+									
+									ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+											profilIdInt, eigenschaftIdInt, infotextNeuB, 
+											new AsyncCallback<Void>(){
+
+												@Override
+												public void onFailure(
+														Throwable caught) {
+													informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+															+ "aufgetreten.");
+												}
+
+												@Override
+												public void onSuccess(
+														Void result) {
+													informationLabel.setText("Das Aktualisieren der Infos "
+															+ "hat funktioniert.");													
+												}
+												
+											});
+								}
+							});
 						}
 						
 						
@@ -148,6 +170,31 @@ public class EditInfo extends VerticalPanel {
 											}
 										}
 									});
+							
+							
+							String infotextNeuA = lb.getSelectedValue();
+							
+							ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+									profilIdInt, eigenschaftIdInt, infotextNeuA, 
+									new AsyncCallback<Void>(){
+
+										@Override
+										public void onFailure(
+												Throwable caught) {
+											informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+													+ "aufgetreten.");
+										}
+
+										@Override
+										public void onSuccess(
+												Void result) {
+											informationLabel.setText("Das Aktualisieren der Infos "
+													+ "hat funktioniert.");													
+										}
+										
+									});
+							
+							
 						}
  						
 						loeschenButton = new Button("Löschen");
@@ -156,28 +203,62 @@ public class EditInfo extends VerticalPanel {
 						loeschenButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
 								
-								for (int i = 1; i <= editInfoFlexTable.getRowCount();) {
+								for (int i = 1; i < editInfoFlexTable.getRowCount(); i++) {
 									
-									ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu
-									(nutzerprofilIdInt, eigenschaftIdInt, 
-											new AsyncCallback<Void>() {
-
-										@Override
-										public void onFailure(Throwable caught) {
-											informationLabel.setText("Beim Löschen der Info trat ein Fehler auf.");																
-										}
-
-										@Override
-										public void onSuccess(Void result) {
-											informationLabel.setText("Das Löschen der Info hat funktioniert.");	
-										}
-									});
+									String tableEigenschaftId = editInfoFlexTable.getText(i, 1);
 									
-								editInfoFlexTable.removeRow(i);
-								break;
+									if (Integer.valueOf(tableEigenschaftId) == eigenschaftIdInt) {
+
+										ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu
+										(profilIdInt, eigenschaftIdInt, 
+												new AsyncCallback<Void>() {
+
+											@Override
+											public void onFailure(Throwable caught) {
+												informationLabel.setText("Beim Löschen der Info trat ein Fehler auf.");																
+											}
+
+											@Override
+											public void onSuccess(Void result) {
+												informationLabel.setText("Das Löschen der Info hat funktioniert.");	
+											}
+										});
+										editInfoFlexTable.removeRow(i);
+										break;
+									}
+								
+								
 								}
+							
 							}
 						});
+						
+						
+//						updateInfosButton.addClickHandler(new ClickHandler() {
+//							public void onClick(ClickEvent event) {
+//								
+//								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
+//										profilIdInt, eigenschaftIdInt, infotextNeu, 
+//										new AsyncCallback<Void>(){
+//
+//											@Override
+//											public void onFailure(
+//													Throwable caught) {
+//												informationLabel.setText("Beim Aktualisieren ist ein Fehler "
+//														+ "aufgetreten.");
+//											}
+//
+//											@Override
+//											public void onSuccess(
+//													Void result) {
+//												informationLabel.setText("Das Aktualisieren der Infos "
+//														+ "hat funktioniert.");													
+//											}
+//											
+//											
+//										});							
+//							}
+//						});
 							
 						row++; 
 						i++; i++; i++; i++; 
@@ -189,6 +270,7 @@ public class EditInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
 		verPanel.add(informationLabel);
+		verPanel.add(updateInfosButton);
 
 	}
 }

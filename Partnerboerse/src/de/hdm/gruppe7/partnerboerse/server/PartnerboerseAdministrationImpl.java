@@ -608,7 +608,7 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 				Eigenschaft e = new Eigenschaft();
 				e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
 
-				list1.add(String.valueOf(i.getNutzerprofilId()));
+				list1.add(String.valueOf(i.getProfilId()));
 				list1.add(String.valueOf(eigenschaftId));
 				list1.add(e.getErlaeuterung());
 				list1.add(String.valueOf(i.getInfotext()));
@@ -623,7 +623,7 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			throws IllegalArgumentException {
 		
 		Info i = new Info();
-		i.setNutzerprofilId(profilId);
+		i.setProfilId(profilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
 		
@@ -636,10 +636,16 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
+		System.out.println(profilId + ", " + eigenschaftId);
 	}
 	
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)  throws IllegalArgumentException {
-		return this.infoMapper.findEigBByIdNeu(eigenschaftId);
+		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
+		eigB = this.infoMapper.findEigBByIdNeu(eigenschaftId);
+		System.out.println(eigB.getBeschreibungstext());
+		
+		return eigB;
+		//		return this.infoMapper.findEigBByIdNeu(eigenschaftId);
 	}
 	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
@@ -649,6 +655,19 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 		
 		return optionen;
 //		return this.infoMapper.findEigAById(eigenschaftId);
+	}
+	
+	public void saveInfoNeu(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+
+		System.out.println(profilId + ", " + eigenschaftId + ", " + infotext);
+		
+		Info i = new Info();
+		i.setProfilId(profilId);
+		i.setEigenschaftId(eigenschaftId);
+		i.setInfotext(infotext);
+		
+		this.infoMapper.updateInfosNeu(i);
+
 	}
 
 //	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException {
