@@ -19,9 +19,12 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditNutzerprofil extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	public VerticalPanel verPanel = new VerticalPanel();
 	public Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
 	public FlexTable editNutzerprofilFlexTable = new FlexTable();
@@ -112,7 +115,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
 
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -188,7 +191,7 @@ public class EditNutzerprofil extends VerticalPanel {
 							}
 						});
 				// DELETE Methode
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(nutzerprofil.getProfilId(),
 						new AsyncCallback<Void>() {
 
 							@Override

@@ -18,26 +18,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class Navigator extends VerticalPanel {
-
-	private Nutzerprofil loginInfo;
-
-	public Navigator(Nutzerprofil loginInfo) {
-		this.loginInfo = loginInfo;
-	}
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	int aehnlichkeit = 0;
 
 	public Navigator() {
-
-		/*
-		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
-		 * seine eigene Profil-ID gesetzt (hier noch temporär - normalerweisen
-		 * im Login nach Ermittlung über Mailadresse
-		 */
-		Benutzer b = new Benutzer();
-		b.setProfilId(1);
 
 		/**
 		 * Button "Nutzerprofil anlegen" hinzufügen. !!! Gehört hier nicht hin,
@@ -78,6 +67,7 @@ public class Navigator extends VerticalPanel {
 
 		// logoutButton.setStyleName("navigatorbutton");
 		// this.add(logoutButton);
+		
 		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
 
 		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
@@ -217,7 +207,7 @@ public class Navigator extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(nutzerprofil.getProfilId(),
 						new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
@@ -233,7 +223,7 @@ public class Navigator extends VerticalPanel {
 									final int fremdprofilId = np.getProfilId();
 
 									ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
@@ -244,7 +234,7 @@ public class Navigator extends VerticalPanel {
 												public void onSuccess(Integer result) {
 													aehnlichkeit = result;
 													ClientsideSettings.getPartnerboerseAdministration()
-															.aehnlichkeitSetzen(Benutzer.getProfilId(), fremdprofilId,
+															.aehnlichkeitSetzen(nutzerprofil.getProfilId(), fremdprofilId,
 																	aehnlichkeit, new AsyncCallback<Void>() {
 
 																		@Override

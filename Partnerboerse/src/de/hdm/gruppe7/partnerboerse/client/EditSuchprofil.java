@@ -13,9 +13,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class EditSuchprofil extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * VerticalPanel hinzufügen.
@@ -127,7 +131,7 @@ public class EditSuchprofil extends VerticalPanel {
 		// InfoLabel hinzufügen.
 		final Label infoLabel = new Label();
 
-		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(Benutzer.getProfilId(), suchprofilName,
+		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(nutzerprofil.getProfilId(), suchprofilName,
 				new AsyncCallback<Suchprofil>() {
 
 					public void onFailure(Throwable caught) {

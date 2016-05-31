@@ -27,7 +27,7 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 
 	void createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
 			AsyncCallback<Nutzerprofil> callback);
 
 	/**
@@ -247,7 +247,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
 
-	void insertEmail(String emailAddress, AsyncCallback<Void> callback);
+//	public void insertEmail(int profilId, String emailAddress, AsyncCallback<Nutzerprofil> callback);
 
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 

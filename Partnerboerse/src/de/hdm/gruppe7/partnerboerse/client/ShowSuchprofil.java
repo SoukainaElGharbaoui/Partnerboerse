@@ -14,9 +14,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil(); 
 
 	private VerticalPanel verPanel = new VerticalPanel();
 
@@ -61,7 +65,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 		final Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
 
 					@Override
@@ -92,7 +96,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		anzeigenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(nutzerprofil.getProfilId(),
 						auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
 
 							@Override
@@ -139,7 +143,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 
-						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(Benutzer.getProfilId(),
+						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(nutzerprofil.getProfilId(),
 								auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
 
 									@Override

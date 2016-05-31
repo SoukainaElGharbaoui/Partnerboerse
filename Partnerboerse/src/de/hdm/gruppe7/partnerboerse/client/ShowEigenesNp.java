@@ -13,9 +13,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowEigenesNp extends VerticalPanel {
-
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * HorizontalPanel
 	 */
@@ -32,10 +35,14 @@ public class ShowEigenesNp extends VerticalPanel {
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
 
+	
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 	public ShowEigenesNp() {
+		
+		nutzerprofil.setProfilId(nutzerprofil.getProfilId());
+		
 		this.add(horPanel);
 
 		/**
@@ -76,8 +83,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 
 		final Label infoLabel = new Label();
-
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+		
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -92,7 +99,7 @@ public class ShowEigenesNp extends VerticalPanel {
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
 
-						final String nutzerprofilId = String.valueOf(result.getProfilId());
+						String nutzerprofilId = String.valueOf(result.getProfilId());
 						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
 						// Vorname aus Datenbank aus der Datenbank holen
@@ -139,6 +146,9 @@ public class ShowEigenesNp extends VerticalPanel {
 						// und in Tabelle eintragen
 
 						showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
+						
+						infoLabel.setText("Methode wurde aufgerufen ");
+					
 
 					}
 
@@ -162,7 +172,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Benutzer.getProfilId());
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(nutzerprofil.getProfilId());
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
 
@@ -199,7 +209,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(Benutzer.getProfilId(),
+						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(nutzerprofil.getProfilId(),
 								new AsyncCallback<Void>() {
 
 									@Override

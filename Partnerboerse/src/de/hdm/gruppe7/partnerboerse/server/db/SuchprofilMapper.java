@@ -52,7 +52,7 @@ public class SuchprofilMapper {
 				// Tablle t_suchprofil befüllen: 
 				stmt = con.createStatement();
 				stmt.executeUpdate("INSERT INTO t_suchprofil (suchprofil_id, nutzerprofil_id, suchprofilname, alter_von, alter_bis) "
-						+ "VALUES(" + s.getProfilId() + "," + Benutzer.getProfilId() + ",'" + s.getSuchprofilName() + "'," 
+						+ "VALUES(" + s.getProfilId() + "," + s.getProfilId() + ",'" + s.getSuchprofilName() + "'," 
 						+ s.getAlterMinInt() + "," + s.getAlterMaxInt() + ")");	
 			}
 			

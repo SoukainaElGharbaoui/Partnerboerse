@@ -14,11 +14,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowInfo extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * Konstruktor
 	 */
@@ -62,7 +66,7 @@ public class ShowInfo extends VerticalPanel {
 		 */
 		final Label informationLabel = new Label();
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Info>>() {
 
 					@Override
@@ -116,7 +120,7 @@ public class ShowInfo extends VerticalPanel {
 		// "TableHeader");
 		// showInfoFlexTableAuswahl.addStyleName("FlexTable");
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Info>>() {
 
 					@Override
@@ -169,7 +173,7 @@ public class ShowInfo extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfos(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfos(nutzerprofil.getProfilId(),
 						new AsyncCallback<Void>() {
 
 							@Override

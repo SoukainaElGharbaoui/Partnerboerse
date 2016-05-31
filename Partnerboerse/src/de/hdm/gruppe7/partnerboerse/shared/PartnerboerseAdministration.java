@@ -32,7 +32,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil anlegen.
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
 			throws IllegalArgumentException;
 
 	/**
@@ -254,7 +254,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	boolean isUserRegistered(String userEmail);
 
-	public void insertEmail(String emailAddress) throws IllegalArgumentException;
+//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException;
 
 	Nutzerprofil login(String requestUri) throws Exception;
 

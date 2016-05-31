@@ -9,9 +9,12 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
+import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
+import de.hdm.gruppe7.partnerboerse.client.Navigator;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
@@ -70,8 +73,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil anlegen.
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException {
 
 		// Neues Nutzerprofil-Objekt erstellen.
 		Nutzerprofil n = new Nutzerprofil();
@@ -83,7 +85,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
 		n.setReligion(religion);
-		// n.setEmailAddress(emailAddress);
+		n.setEmailAddress(emailAddress);
 
 		// Vorläufige Profil-ID setzen.
 		n.setProfilId(1);
@@ -501,10 +503,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	@Override
-	public void insertEmail(String emailAddress) throws IllegalArgumentException {
-		this.nutzerprofilMapper.insertEmail(emailAddress);
-
-	}
+//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException {
+//		// Neues Nutzerprofil-Objekt erstellen.
+//				Nutzerprofil n = new Nutzerprofil();
+//				n.setEmailAddress(emailAddress);
+//
+//				// Vorläufige Profil-ID setzen.
+//				n.setProfilId(1);
+//
+//				return this.nutzerprofilMapper.insertEmail(n);
+//
+//	}
 
 	public Nutzerprofil login(String requestUri) throws Exception {
 
@@ -512,7 +521,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		User user = userService.getCurrentUser();
 
 		Nutzerprofil n = new Nutzerprofil();
-		// NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
+
+//		NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
 		if (user != null) {
 
 			// EXISTING PROFILE
@@ -530,7 +540,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 			n.setLoggedIn(true);
 			n.setEmailAddress(user.getEmail());
-
+			
 		} else { // USER = NULL
 			n.setLoggedIn(false);
 

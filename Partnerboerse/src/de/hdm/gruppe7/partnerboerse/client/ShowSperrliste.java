@@ -15,10 +15,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 public class ShowSperrliste extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -67,7 +70,7 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Gesperrte Nutzerprofile anzeigen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<Sperrliste>() {
 
 					@Override
@@ -123,7 +126,7 @@ public class ShowSperrliste extends VerticalPanel {
 											// Inhalte aus der Datenbank
 											// entfernen.
 											ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
-													Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
+													nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
 													new AsyncCallback<Void>() {
 
 														@Override

@@ -7,10 +7,13 @@ import java.util.Vector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class NutzerprofilMapper {
 
 	private static NutzerprofilMapper nutzerprofilMapper = null;
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	protected NutzerprofilMapper() {
 	}
@@ -86,14 +89,14 @@ public class NutzerprofilMapper {
 
 			stmt.executeUpdate("UPDATE t_nutzerprofil " + "SET vorname=\"" + n.getVorname() + "\", " + " nachname=\""
 					+ n.getNachname() + "\", " + " geburtsdatum=\"" + n.getGeburtsdatumDate() + "\" "
-					+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId());
+					+ "WHERE nutzerprofil_id=" + n.getProfilId());
 
 			stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE t_profil " + "SET geschlecht=\"" + n.getGeschlecht() + "\", " + " haarfarbe=\""
 					+ n.getHaarfarbe() + "\", " + " koerpergroesse=\"" + n.getKoerpergroesseInt() + "\", "
 					+ "raucher=\"" + n.getRaucher() + "\", " + " religion=\"" + n.getReligion() + "\" "
-					+ "WHERE profil_id=" + Benutzer.getProfilId());
+					+ "WHERE profil_id=" + n.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -159,14 +162,14 @@ public class NutzerprofilMapper {
 	/**
 	 * Nutzerprofil mit vorgegebener Profil-ID suchen.
 	 */
-	public Nutzerprofil findByNutzerprofilId(int profilId) {
+	public Nutzerprofil findByNutzerprofilId(int profilId ) {
 		Connection con = DBConnection.connection();
-
+		
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil, t_profil " + "WHERE profil_id= " + profilId
-					+ " AND nutzerprofil_id=" + profilId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil, t_profil " + "WHERE profil_id= "
+					+ profilId + " AND nutzerprofil_id=" + profilId);
 
 			/*
 			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden. Prüfen, ob
@@ -486,20 +489,35 @@ public class NutzerprofilMapper {
 	 * **
 	 */
 
-	/**
-	 * E-Mail bei Login setzen.
-	 */
-	public void insertEmail(String emailAdress) {
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO t_nutzerprofil (email) " + "VALUES ('" + emailAdress + "')");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-	}
+	// /**
+	// * E-Mail bei Login setzen.
+	// */
+	// public Nutzerprofil insertEmail(Nutzerprofil n) {
+	// Connection con = DBConnection.connection();
+	//
+	// try {
+	// Statement stmt = con.createStatement();
+	//
+	// // Größte profil_id aus Tabelle t_profil ermitteln.
+	// ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id
+	// FROM t_profil");
+	//
+	// // Wenn wir etwas zurückerhalten...
+	// if (rs.next()) {
+	//
+	// // Nutzerprofil-Objekt mit bisher maximalem, nun um 1
+	// // inkrementierten Primärschlüssel versehen.
+	// n.setProfilId(rs.getInt("maxprofil_id") + 1);
+	//
+	// stmt = con.createStatement();
+	// stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, email) "
+	// + "VALUES (" + n.getProfilId()
+	// + ",'" + n.getEmailAddress() + "')");
+	// }
+	// } catch (SQLException e2) {
+	// e2.printStackTrace();
+	// }
+	// return n;
+	// }
 
 }

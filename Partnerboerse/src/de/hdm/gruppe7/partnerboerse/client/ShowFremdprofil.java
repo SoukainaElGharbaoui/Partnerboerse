@@ -12,9 +12,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowFremdprofil extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzuf�gen.
 	 */
@@ -132,7 +135,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		final Button mButton = new Button();
 
 		// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
-		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(nutzerprofil.getProfilId(),
 				fremdprofilId, new AsyncCallback<Integer>() {
 
 					public void onFailure(Throwable caught) {
@@ -149,7 +152,7 @@ public class ShowFremdprofil extends VerticalPanel {
 				});
 
 		// Prüfen, ob Fremdprofil von Benutzer gemerkt wurde.
-		ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(Benutzer.getProfilId(), fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(nutzerprofil.getProfilId(), fremdprofilId,
 				new AsyncCallback<Integer>() {
 
 					@Override
@@ -184,7 +187,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 									// Vermerk aus der Datenbank entfernen.
 									ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 												public void onFailure(Throwable caught) {
 													infoLabel.setText("Es trat ein Fehler auf.");
@@ -208,7 +211,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 									// Vermerk in die Datenbank einfügen.
 									ClientsideSettings.getPartnerboerseAdministration().vermerkSetzen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 												public void onFailure(Throwable caught) {
 													infoLabel.setText("Es trat ein Fehler auf.");
@@ -233,7 +236,7 @@ public class ShowFremdprofil extends VerticalPanel {
 				});
 
 		// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
-		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getSperrstatusFremdprofil(nutzerprofil.getProfilId(),
 				fremdprofilId, new AsyncCallback<Integer>() {
 
 					@Override
@@ -270,7 +273,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 									// Sperrung aus der Datenbank entfernen.
 									ClientsideSettings.getPartnerboerseAdministration().sperrungLoeschen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
@@ -300,7 +303,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 									// Sperrung in die Datenbank einfügen.
 									ClientsideSettings.getPartnerboerseAdministration().sperrungSetzen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 												public void onFailure(Throwable caught) {
 													infoLabel.setText("Es trat ein Fehler auf.");
@@ -322,7 +325,7 @@ public class ShowFremdprofil extends VerticalPanel {
 
 									// Vermerkstatus überprüfen.
 									ClientsideSettings.getPartnerboerseAdministration().getVermerkstatus(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
 
 												public void onFailure(Throwable caught) {
 													infoLabel.setText("Es trat ein Fehler auf.");
@@ -334,7 +337,7 @@ public class ShowFremdprofil extends VerticalPanel {
 													// der Datenbank entfernt.
 													if (result == 1) {
 														ClientsideSettings.getPartnerboerseAdministration()
-																.vermerkLoeschen(Benutzer.getProfilId(), fremdprofilId,
+																.vermerkLoeschen(nutzerprofil.getProfilId(), fremdprofilId,
 																		new AsyncCallback<Void>() {
 
 																			public void onFailure(Throwable caught) {

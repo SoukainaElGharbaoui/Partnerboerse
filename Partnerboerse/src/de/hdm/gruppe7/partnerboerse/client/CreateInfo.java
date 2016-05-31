@@ -16,9 +16,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class CreateInfo extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -105,7 +109,7 @@ public class CreateInfo extends VerticalPanel {
 									final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
 									ClientsideSettings.getPartnerboerseAdministration().createBeschreibungsinfo(
-											Benutzer.getProfilId(), eigenschaftIdInt, textArea.getText(),
+											nutzerprofil.getProfilId(), eigenschaftIdInt, textArea.getText(),
 											new AsyncCallback<Info>() {
 
 												@Override
@@ -186,7 +190,7 @@ public class CreateInfo extends VerticalPanel {
 									final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 
 									ClientsideSettings.getPartnerboerseAdministration().createAuswahlinfo(
-											Benutzer.getProfilId(), eigenschaftIdInt, neueListBox.getSelectedIndex(),
+											nutzerprofil.getProfilId(), eigenschaftIdInt, neueListBox.getSelectedIndex(),
 											new AsyncCallback<Info>() {
 
 												@Override

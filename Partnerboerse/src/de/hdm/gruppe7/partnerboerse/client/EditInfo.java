@@ -16,9 +16,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditInfo extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanels hinzufügen.
 	 */
@@ -79,7 +83,7 @@ public class EditInfo extends VerticalPanel {
 		/**
 		 * GUI für Beschreibungsinfo
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosB(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Info>>() {
 
 					@Override
@@ -120,7 +124,7 @@ public class EditInfo extends VerticalPanel {
 									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
 
 										ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoB(
-												Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
+												nutzerprofil.getProfilId(), Integer.valueOf(eigenschaftId),
 												new AsyncCallback<Void>() {
 
 													@Override
@@ -148,7 +152,7 @@ public class EditInfo extends VerticalPanel {
 									String neuerInfotext = textArea.getText();
 
 									ClientsideSettings.getPartnerboerseAdministration().saveInfoB(
-											Benutzer.getProfilId(), Integer.valueOf(eigenschaftId), neuerInfotext,
+											nutzerprofil.getProfilId(), Integer.valueOf(eigenschaftId), neuerInfotext,
 											new AsyncCallback<Void>() {
 
 												@Override
@@ -174,7 +178,7 @@ public class EditInfo extends VerticalPanel {
 		/**
 		 * GUI für Auswahlinfo
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosA(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Info>>() {
 
 					@Override
@@ -257,7 +261,7 @@ public class EditInfo extends VerticalPanel {
 									for (int i = 2; i <= editInfoFlexTable.getRowCount();) {
 
 										ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoA(
-												Benutzer.getProfilId(), Integer.valueOf(eigenschaftId),
+												nutzerprofil.getProfilId(), Integer.valueOf(eigenschaftId),
 												new AsyncCallback<Void>() {
 
 													@Override
@@ -302,7 +306,7 @@ public class EditInfo extends VerticalPanel {
 													eigenschaftIdA = result.getEigenschaftId();
 
 													ClientsideSettings.getPartnerboerseAdministration().saveInfoA(
-															Benutzer.getProfilId(), neueAuswahloptionId, eigenschaftIdA,
+															nutzerprofil.getProfilId(), neueAuswahloptionId, eigenschaftIdA,
 															new AsyncCallback<Void>() {
 
 																@Override

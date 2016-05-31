@@ -14,6 +14,8 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class Partnerboerse implements EntryPoint {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
@@ -47,12 +49,23 @@ public class Partnerboerse implements EntryPoint {
 						public void onSuccess(Nutzerprofil result) {
 							// wenn der user eingeloggt ist
 							if (result.isLoggedIn()) {
-								signOutLink.setHref(result.getLogoutUrl());
-								signOutLink.setText("Als " + result.getVorname() + " ausloggen");
-								loginPanel.add(signOutLink);
-								RootPanel.get("Navigator").add(new Navigator());
-								RootPanel.get("Navigator").add(loginPanel);
-//								NutzerprofilMapper.insertEmail(getEmailAddress());
+								if (result.getVorname() != null) {
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new Navigator());
+									RootPanel.get("Navigator").add(loginPanel);
+									
+								}
+								
+								if (result.getVorname() == null) {
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new Navigator());
+									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Details").add(new CreateNutzerprofil());
+								}
 
 							}
 							// wenn der user nicht eingeloggt ist
@@ -60,7 +73,6 @@ public class Partnerboerse implements EntryPoint {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
 								RootPanel.get("Navigator").add(loginPanel);
-
 							}
 						}
 					});
