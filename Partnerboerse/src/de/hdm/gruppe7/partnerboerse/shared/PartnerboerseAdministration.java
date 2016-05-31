@@ -45,7 +45,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 
 	/**
-	 * Nutzerprofil lÃ¶schen.
+	 * Nutzerprofil löschen.
 	 */
 	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
@@ -54,11 +54,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException;
 
-	/**
-	 * *********************************** UnnÃ¶tig, da gleicher Mapper-Aufruf!
-	 * ***********************************
-	 */
-	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException;
 
 	/**
 	 * Alle Nutzerprofile auslesen.
@@ -92,7 +87,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil löschen.
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
 
@@ -102,17 +97,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET VON MILENA - NOTWENIG)
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
 	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
 	 */
 	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException;
 		
@@ -122,7 +117,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÃœBERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
@@ -158,10 +153,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Vermerkstatus ermitteln.
 	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Vermerk einfÃ¼gen.
+	// Vermerk einfügen.
 	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Vermerk lÃ¶schen.
+	// Vermerk löschen.
 	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
 	/*
@@ -181,16 +176,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException;
 
-	// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde.
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// PrÃ¼fen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung einfÃ¼gen.
+	// Sperrung einfügen.
 	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung lÃ¶schen.
+	// Sperrung löschen.
 	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
@@ -201,7 +196,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Beginn: PartnervorschlägeNp
 	 * *************************************************************************
 	 * **
 	 */
@@ -225,10 +220,40 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Ende: PartnervorschlägeNp
 	 * *************************************************************************
 	 * **
+	 * 
 	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: PartnervorschlÃ¤geSp
+	 * ***************************************************************************
+	 */
+	
+	//Aehnlichkeit berechnen
+		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		throws IllegalArgumentException;
+		
+		//Aehnlichkeit in DB speichern
+		public void aehnlichkeitSetzenSp (int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
+		
+		//Aehnlichkeit aus DB loeschen
+		public void aehnlichkeitEntfernenSp (int nutzerprofilId) throws IllegalArgumentException;
+		
+		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
+		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException;
+		
+//		//Ausgabe der Partnervorschlaege
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) throws IllegalArgumentException;
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: PartnervorschlÃ¤geSp
+	 * ***************************************************************************
+	 */
+
 
 	/*
 	 * *************************************************************************

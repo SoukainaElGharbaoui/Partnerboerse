@@ -40,7 +40,7 @@ public interface PartnerboerseAdministrationAsync {
 			String raucher, String religion, AsyncCallback<Void> callback);
 
 	/**
-	 * Nutzerprofil lÃ¶schen.
+	 * Nutzerprofil löschen.
 	 */
 	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
@@ -49,12 +49,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * *********************************** UnnÃ¶tig, da gleicher Mapper-Aufruf!
-	 * ***********************************
-	 */
-	void getFremdprofilById(int fremdprofilId,
-			AsyncCallback<Nutzerprofil> callback);
 
 	/**
 	 * Alle Nutzerprofile auslesen.
@@ -92,7 +86,7 @@ public interface PartnerboerseAdministrationAsync {
 			AsyncCallback<Void> callback);
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil löschen.
 	 */
 	void deleteSuchprofil(int profilId, String suchprofilName,
 			AsyncCallback<Void> callback);
@@ -103,20 +97,20 @@ public interface PartnerboerseAdministrationAsync {
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET
 	 * VON MILENA - NOTWENIG)
 	 */
 	void getSuchprofilByName(int profilId, String suchprofilName,
 			AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
+	 * Existens des Suchprofilnamens beim Anlegen überprüfen.
 	 */
 	void pruefeSuchprofilname(int profilId, String suchprofilname,
 			AsyncCallback<Integer> callback);
 
 	/**
-	 * Existens des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
+	 * Existens des Suchprofilnamens beim Editieren überprüfen.
 	 */
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId,
 			AsyncCallback<String> callback);
@@ -127,7 +121,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÃœBERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 
@@ -165,11 +159,11 @@ public interface PartnerboerseAdministrationAsync {
 	void getVermerkstatus(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	// Vermerk einfÃ¼gen.
+	// Vermerk einfügen.
 	void vermerkSetzen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
-	// Vermerk lÃ¶schen.
+	// Vermerk löschen.
 	void vermerkLoeschen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
@@ -191,19 +185,19 @@ public interface PartnerboerseAdministrationAsync {
 	void getGesperrteNutzerprofileFor(int profilId,
 			AsyncCallback<Sperrliste> callback);
 
-	// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde.
+	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
 	void getSperrstatusFremdprofil(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	// PrÃ¼fen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	// Sperrung einfÃ¼gen.
+	// Sperrung einfügen.
 	void sperrungSetzen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
-	// Sperrung lÃ¶schen.
+	// Sperrung löschen.
 	void sperrungLoeschen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
@@ -216,7 +210,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Beginn: Partnervorschläge
 	 * *************************************************************************
 	 * **
 	 */
@@ -242,10 +236,38 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Ende: Partnervorschläge
 	 * *************************************************************************
 	 * **
 	 */
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Beginn: PartnervorschlÃ¤geSp
+	 * ***************************************************************************
+	 */
+	
+	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
+
+	void aehnlichkeitSetzenSp(int nutzerprofilId, int suchprofilId, String suchprofilName,  int fremdprofilId,
+			int aehnlichkeitSp,  AsyncCallback<Void> callback);
+
+	void aehnlichkeitEntfernenSp(int nutzerprofilId, AsyncCallback<Void> callback);
+	
+	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
+		void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+
+	void getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName,
+			AsyncCallback<List<Nutzerprofil>> callback);
+	
+	
+	
+	/*
+	 * ***************************************************************************
+	 * ABSCHNITT, Ende: PartnervorschlÃ¤geSp
+	 * ***************************************************************************
+
 
 	/*
 	 * *************************************************************************

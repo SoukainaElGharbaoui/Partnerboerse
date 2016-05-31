@@ -39,6 +39,7 @@
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Partnerboerse.html</welcome-file>
+		<welcome-file>PartnerboerseReports.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>

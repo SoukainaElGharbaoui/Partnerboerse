@@ -58,7 +58,7 @@ public class InfoMapper {
 	
 	
 	
-	public Info insertInfoNeu(Info i) {
+	public Info insertInfoNeu(Info i){
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -94,6 +94,7 @@ public class InfoMapper {
 
 			while (rs.next()) {
 				Info i = new Info();
+				
 				i.setProfilId(rs.getInt("profil_id"));
 				i.setEigenschaftId(rs.getInt("eigenschaft_id"));
 				i.setInfotext(rs.getString("infotext"));
@@ -235,6 +236,34 @@ public class InfoMapper {
 		}
 	}
 		
+	public List<Info> findInfosByProfilId(int profilId){
+		
+				// DB-Verbindung holen
+				Connection con = DBConnection.connection();
+
+				List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+						Statement stmt = con.createStatement();
+			
+						ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE t_info1.profil_id =" + profilId); 
+						
+		while (rs.next()) { 
+							Info info = new Info();
+							info.setInfotext(rs.getString("infotext"));
+							info.setProfilId(rs.getInt("profil_id"));
+							info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+							result.add(info);
+							
+							
+						}
+		
+		}catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 	public void updateInfosNeu(Info i) {
