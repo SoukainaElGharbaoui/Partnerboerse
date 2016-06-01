@@ -42,7 +42,7 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			// Größte profil_id aus Tabelle t_profil ermitteln.
-			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id FROM t_profil");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id FROM t_profil1");
 
 			// Wenn wir etwas zurückerhalten...
 			if (rs.next()) {
@@ -54,7 +54,7 @@ public class NutzerprofilMapper {
 				// Tabelle t_profil befüllen.
 				stmt = con.createStatement();
 				stmt.executeUpdate(
-						"INSERT INTO t_profil (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
+						"INSERT INTO t_profil1 (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
 								+ "VALUES(" + n.getProfilId() + ",'" + n.getGeschlecht() + "','" + n.getHaarfarbe()
 								+ "','" + n.getKoerpergroesseInt() + "','" + n.getRaucher() + "','" + n.getReligion()
 								+ "')");
@@ -62,7 +62,7 @@ public class NutzerprofilMapper {
 				// Tablle t_nutzerprofil befüllen.
 				stmt = con.createStatement();
 				stmt.executeUpdate(
-						"INSERT INTO t_nutzerprofil (nutzerprofil_id, vorname, nachname, geburtsdatum, email) "
+						"INSERT INTO t_nutzerprofil1 (nutzerprofil_id, vorname, nachname, geburtsdatum, email) "
 								+ "VALUES(" + n.getProfilId() + ",'" + n.getVorname() + "','" + n.getNachname() + "','"
 								+ n.getGeburtsdatumDate() + "','" + n.getEmailAddress() + "')");
 			}
@@ -87,13 +87,13 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE t_nutzerprofil " + "SET vorname=\"" + n.getVorname() + "\", " + " nachname=\""
+			stmt.executeUpdate("UPDATE t_nutzerprofil1 " + "SET vorname=\"" + n.getVorname() + "\", " + " nachname=\""
 					+ n.getNachname() + "\", " + " geburtsdatum=\"" + n.getGeburtsdatumDate() + "\" "
 					+ "WHERE nutzerprofil_id=" + n.getProfilId());
 
 			stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE t_profil " + "SET geschlecht=\"" + n.getGeschlecht() + "\", " + " haarfarbe=\""
+			stmt.executeUpdate("UPDATE t_profil1 " + "SET geschlecht=\"" + n.getGeschlecht() + "\", " + " haarfarbe=\""
 					+ n.getHaarfarbe() + "\", " + " koerpergroesse=\"" + n.getKoerpergroesseInt() + "\", "
 					+ "raucher=\"" + n.getRaucher() + "\", " + " religion=\"" + n.getReligion() + "\" "
 					+ "WHERE profil_id=" + n.getProfilId());
@@ -115,44 +115,41 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_nutzerprofil " + "WHERE nutzerprofil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_nutzerprofil1 " + "WHERE nutzerprofil_id=" + profilId);
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_profil WHERE profil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_profil1 WHERE profil_id=" + profilId);
 
 			int suchprofilIdInt = 0;
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT suchprofil_id AS sp_id " + "FROM t_suchprofil WHERE nutzerprofil_id=" + profilId);
+					"SELECT suchprofil_id AS sp_id " + "FROM t_suchprofil1 WHERE nutzerprofil_id=" + profilId);
 
 			if (rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id");
 
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_suchprofil " + "WHERE nutzerprofil_id=" + profilId);
+				stmt.executeUpdate("DELETE FROM t_suchprofil1 " + "WHERE nutzerprofil_id=" + profilId);
 
 				stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM t_profil WHERE profil_id=" + suchprofilIdInt);
+				stmt.executeUpdate("DELETE FROM t_profil1 WHERE profil_id=" + suchprofilIdInt);
 			}
 
 			stmt = con.createStatement();
 			stmt = con.createStatement();
 			stmt.executeUpdate(
-					"DELETE FROM t_vermerk " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
+					"DELETE FROM t_vermerk1 " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
 
 			stmt = con.createStatement();
 			stmt.executeUpdate(
-					"DELETE FROM t_sperrung " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
+					"DELETE FROM t_sperrung1 " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
 
 			stmt = con.createStatement();
 			stmt.executeUpdate(
-					"DELETE FROM t_besuch " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
+					"DELETE FROM t_besuch1 " + "WHERE nutzerprofil_id=" + profilId + " OR fremdprofil_id=" + profilId);
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_beschreibungsinfo " + "WHERE nutzerprofil_id=" + profilId);
-
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_auswahlinfo " + "WHERE nutzerprofil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_info1 " + "WHERE nutzerprofil_id=" + profilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -168,8 +165,8 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil, t_profil " + "WHERE profil_id= "
-					+ profilId + " AND nutzerprofil_id=" + profilId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil1, t_profil1 " + "WHERE profil_id= " + profilId
+					+ " AND nutzerprofil_id=" + profilId);
 
 			/*
 			 * Es kann max. ein Ergebnis-Tupel zurückgegeben werden. Prüfen, ob
@@ -205,7 +202,7 @@ public class NutzerprofilMapper {
 	public Nutzerprofil findByNutzerprofilMitEmail(String email) throws SQLException {
 		Connection con = DBConnection.connection();
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT nutzerprofil_id FROM t_nutzerprofil WHERE email ='" + email + "'");
+		ResultSet rs = stmt.executeQuery("SELECT nutzerprofil_id FROM t_nutzerprofil1 WHERE email ='" + email + "'");
 		if (rs.next())
 			return findByNutzerprofilId(rs.getInt("nutzerprofil_id"));
 		return null;
@@ -226,7 +223,7 @@ public class NutzerprofilMapper {
 			// Statement ausfÃ¼llen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery(
 
-					"SELECT * FROM t_nutzerprofil, t_profil " + "WHERE nutzerprofil_id=" + fremdprofilId
+					"SELECT * FROM t_nutzerprofil1, t_profil1 " + "WHERE nutzerprofil_id=" + fremdprofilId
 							+ " AND profil_id=" + fremdprofilId);
 
 			/*
@@ -250,7 +247,10 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Alle Nutzerprofile auslesen.
+
+	 * Auslesen aller Nutzerprofile.
+	 * @param nutzerprofil 
+
 	 */
 	public Vector<Nutzerprofil> findAllNutzerprofile() {
 		Connection con = DBConnection.connection();
@@ -261,8 +261,8 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil, t_nutzerprofil "
-					+ "WHERE t_profil.profil_id = t_nutzerprofil.nutzerprofil_id " + "ORDER BY nutzerprofil_id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_profil1, t_nutzerprofil1 "
+					+ "WHERE t_profil1.profil_id = t_nutzerprofil1.nutzerprofil_id " + "ORDER BY nutzerprofil_id");
 
 			// Für jedes Ergebnis-Tupel ein Nutzerprofil-Objekt erstellen.
 			while (rs.next()) {
@@ -316,15 +316,15 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, t_nutzerprofil.geburtsdatum, "
-							+ "t_profil.geschlecht, t_profil.koerpergroesse, t_profil.haarfarbe, t_profil.raucher, t_profil.religion "
-							+ "FROM t_nutzerprofil LEFT JOIN t_besuch ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
-							+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
-							+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
-							+ "WHERE t_nutzerprofil.nutzerprofil_id !=" + profilId + " AND (t_besuch.nutzerprofil_id !="
-							+ profilId + " OR t_besuch.fremdprofil_id IS NULL) " + "AND (t_sperrung.fremdprofil_id !="
+					"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, "
+							+ "t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion "
+							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
+							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
+							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND (t_besuch1.nutzerprofil_id !="
+							+ profilId + " OR t_besuch1.fremdprofil_id IS NULL) " + "AND (t_sperrung1.fremdprofil_id !="
 							+ profilId
-							+ " OR t_sperrung.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil.nutzerprofil_id");
+							+ " OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -360,7 +360,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_besuch (nutzerprofil_id, fremdprofil_id) " + "VALUES (" + profilId + ","
+			stmt.executeUpdate("INSERT INTO t_besuch1 (nutzerprofil_id, fremdprofil_id) " + "VALUES (" + profilId + ","
 					+ fremdprofilId + ")");
 
 		} catch (SQLException e2) {
@@ -380,7 +380,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_besuch " + "WHERE nutzerprofil_id=" + profilId
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_besuch1 " + "WHERE nutzerprofil_id=" + profilId
 					+ " AND fremdprofil_id=" + fremdprofilId);
 
 			if (rs.next()) {
@@ -406,7 +406,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitnp (nutzerprofil_id, fremdprofil_id, aehnlichkeit) "
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitnp1 (nutzerprofil_id, fremdprofil_id, aehnlichkeit) "
 					+ "VALUES (" + profilId + "," + fremdprofilId + "," + aehnlichkeit + ")");
 
 		} catch (SQLException e2) {
@@ -427,18 +427,18 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
-							+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht, t_profil.koerpergroesse, "
-							+ "t_profil.haarfarbe, t_profil.raucher, t_profil.religion , t_aehnlichkeitnp.aehnlichkeit "
-							+ "FROM t_nutzerprofil LEFT JOIN t_besuch "
-							+ "ON t_nutzerprofil.nutzerprofil_id = t_besuch.fremdprofil_id "
-							+ "LEFT JOIN t_profil ON t_nutzerprofil.nutzerprofil_id = t_profil.profil_id "
-							+ "LEFT JOIN t_sperrung ON t_nutzerprofil.nutzerprofil_id = t_sperrung.nutzerprofil_id "
-							+ "LEFT JOIN t_aehnlichkeitnp ON t_nutzerprofil.nutzerprofil_id = t_aehnlichkeitnp.fremdprofil_id "
-							+ "WHERE t_nutzerprofil.nutzerprofil_id != 1 "
-							+ "AND (t_besuch.nutzerprofil_id != 1 OR t_besuch.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung.fremdprofil_id != 1 OR t_sperrung.nutzerprofil_id IS NULL) "
-							+ "AND t_aehnlichkeitnp.nutzerprofil_id = 1 ORDER BY t_aehnlichkeitnp.aehnlichkeit DESC");
+					"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
+							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, "
+							+ "t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion , t_aehnlichkeitnp1.aehnlichkeit "
+							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 "
+							+ "ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
+							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
+							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
+							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id "
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id != 1 "
+							+ "AND (t_besuch1.nutzerprofil_id != 1 OR t_besuch1.fremdprofil_id IS NULL) "
+							+ "AND (t_sperrung1.fremdprofil_id != 1 OR t_sperrung1.nutzerprofil_id IS NULL) "
+							+ "AND t_aehnlichkeitnp1.nutzerprofil_id = 1 ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
@@ -456,15 +456,127 @@ public class NutzerprofilMapper {
 				nutzerprofil.setAehnlichkeit(rs.getInt("aehnlichkeit"));
 
 				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
-				result.add(nutzerprofil);
+				result.add(nutzerprofil);}
+			
+			} catch (SQLException e2) {
+				e2.printStackTrace();
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
+
+			// Ergebnisliste zurÃ¼ckgeben
+			return result;
 		}
 
-		// Ergebnisliste zurÃ¼ckgeben
-		return result;
-	}
+			/*
+			 * ***************************************************************************
+			 * ABSCHNITT, Ende: Partnervorschläge
+			 * ***************************************************************************
+			 */
+			
+			/**
+			 * Alle Nutzerprofile die mich nicht gesperrt haben
+			 */
+			
+			public List<Nutzerprofil> findNutzerprofileOhneGesetzeSperrung(int profilId){
+				
+				Connection con = DBConnection.connection();
+
+		
+
+				// Ergebnisliste vorbereiten
+				List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+				
+				try {
+					Statement stmt = con.createStatement();
+					
+					ResultSet rs = stmt
+							.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, "
+									+ "t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, "
+									+ "t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion "
+									+ "FROM t_nutzerprofil1 LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
+									+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
+									+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND (t_sperrung1.fremdprofil_id !=" + profilId
+									+ "OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id" );
+					
+					while (rs.next()){
+						
+						Nutzerprofil nutzerprofil = new Nutzerprofil();
+						nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+						nutzerprofil.setVorname(rs.getString("vorname"));
+						nutzerprofil.setNachname(rs.getString("nachname"));
+						nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+						nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+						nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+						nutzerprofil.setRaucher(rs.getString("raucher"));
+						nutzerprofil.setReligion(rs.getString("religion"));
+
+						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+						result.add(nutzerprofil);
+						
+						
+					}
+				} catch (SQLException e2){
+					e2.printStackTrace();
+				}
+				
+				// Ergebnisliste zurÃ¼ckgeben
+				return result;
+			}
+			
+			
+			/**
+			 * Geordnete Partnervorschlaege ausgeben
+			 */
+			public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) {
+				Connection con = DBConnection.connection();
+
+				// Ergebnisliste vorbereiten
+				List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
+
+				try {
+					Statement stmt = con.createStatement();
+
+					ResultSet rs = stmt
+							.executeQuery(							
+									"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
+									+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe,"
+									+ " t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit"
+									+ " FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
+									+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
+									+ "WHERE t_nutzerprofil1.nutzerprofil_id != 1 AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
+									+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+									+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
+
+
+					// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+					// Nutzerprofil-Objekt erstellt.
+					while (rs.next()) {
+						Nutzerprofil nutzerprofil = new Nutzerprofil();
+						nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
+						nutzerprofil.setVorname(rs.getString("vorname"));
+						nutzerprofil.setNachname(rs.getString("nachname"));
+						nutzerprofil.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+						nutzerprofil.setGeschlecht(rs.getString("geschlecht"));
+						nutzerprofil.setHaarfarbe(rs.getString("haarfarbe"));
+						nutzerprofil.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+						nutzerprofil.setRaucher(rs.getString("raucher"));
+						nutzerprofil.setReligion(rs.getString("religion"));
+						nutzerprofil.setAehnlichkeitSp(rs.getInt("aehnlichkeit"));
+						
+
+						// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+						result.add(nutzerprofil);
+					}
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+
+				// Ergebnisliste zurÃ¼ckgeben
+				return result;
+			}
+		
+
+	
 
 	/**
 	 * Aehnlichkeit loeschen.
@@ -475,7 +587,7 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_aehnlichkeitnp WHERE nutzerprofil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitnp1 WHERE nutzerprofil_id=" + profilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -489,35 +601,20 @@ public class NutzerprofilMapper {
 	 * **
 	 */
 
-	// /**
-	// * E-Mail bei Login setzen.
-	// */
-	// public Nutzerprofil insertEmail(Nutzerprofil n) {
-	// Connection con = DBConnection.connection();
-	//
-	// try {
-	// Statement stmt = con.createStatement();
-	//
-	// // Größte profil_id aus Tabelle t_profil ermitteln.
-	// ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id
-	// FROM t_profil");
-	//
-	// // Wenn wir etwas zurückerhalten...
-	// if (rs.next()) {
-	//
-	// // Nutzerprofil-Objekt mit bisher maximalem, nun um 1
-	// // inkrementierten Primärschlüssel versehen.
-	// n.setProfilId(rs.getInt("maxprofil_id") + 1);
-	//
-	// stmt = con.createStatement();
-	// stmt.executeUpdate("INSERT INTO t_nutzerprofil (nutzerprofil_id, email) "
-	// + "VALUES (" + n.getProfilId()
-	// + ",'" + n.getEmailAddress() + "')");
-	// }
-	// } catch (SQLException e2) {
-	// e2.printStackTrace();
-	// }
-	// return n;
-	// }
+	/**
+	 * E-Mail bei Login setzen.
+	 */
+	public void insertEmail(String emailAdress) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("INSERT INTO t_nutzerprofil1 (email) " + "VALUES ('" + emailAdress + "')");
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
 
 }

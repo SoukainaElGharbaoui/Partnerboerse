@@ -42,11 +42,11 @@ public class SperrlisteMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT t_nutzerprofil.nutzerprofil_id, t_nutzerprofil.vorname, t_nutzerprofil.nachname, "
-							+ "t_nutzerprofil.geburtsdatum, t_profil.geschlecht "
-							+ "FROM t_nutzerprofil, t_profil, t_sperrung " + "WHERE t_sperrung.nutzerprofil_id="
-							+ profilId + " AND t_nutzerprofil.nutzerprofil_id = t_sperrung.fremdprofil_id "
-							+ "AND t_profil.profil_id = t_sperrung.fremdprofil_id");
+					"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
+							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht "
+							+ "FROM t_nutzerprofil1, t_profil1, t_sperrung1 " + "WHERE t_sperrung1.nutzerprofil_id="
+							+ profilId + " AND t_nutzerprofil1.nutzerprofil_id = t_sperrung1.fremdprofil_id "
+							+ "AND t_profil1.profil_id = t_sperrung1.fremdprofil_id");
 
 			while (rs.next()) {
 				Nutzerprofil n = new Nutzerprofil();
@@ -80,7 +80,7 @@ public class SperrlisteMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung " + "WHERE nutzerprofil_id=" + profilId
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung1 " + "WHERE nutzerprofil_id=" + profilId
 					+ " AND fremdprofil_id=" + fremdprofilId);
 
 			if (rs.next()) {
@@ -109,7 +109,7 @@ public class SperrlisteMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung " + "WHERE nutzerprofil_id=" + fremdprofilId
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_sperrung1 " + "WHERE nutzerprofil_id=" + fremdprofilId
 					+ " AND fremdprofil_id=" + profilId);
 
 			if (rs.next()) {
@@ -135,7 +135,7 @@ public class SperrlisteMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_sperrung (nutzerprofil_id, fremdprofil_id) " + "VALUES (" + profilId + ","
+			stmt.executeUpdate("INSERT INTO t_sperrung1 (nutzerprofil_id, fremdprofil_id) " + "VALUES (" + profilId + ","
 					+ fremdprofilId + ")");
 
 		} catch (SQLException e2) {
@@ -152,7 +152,7 @@ public class SperrlisteMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_sperrung WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id="
+			stmt.executeUpdate("DELETE FROM t_sperrung1 WHERE nutzerprofil_id=" + profilId + " AND fremdprofil_id="
 					+ fremdprofilId);
 
 		} catch (SQLException e2) {

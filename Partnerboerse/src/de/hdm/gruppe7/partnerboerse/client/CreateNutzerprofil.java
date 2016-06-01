@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
@@ -19,17 +20,16 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class CreateNutzerprofil extends VerticalPanel{
+public class CreateNutzerprofil extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	
-
 
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
+
 	private TextBox emailTextBox = new TextBox();
 
 	// Geburtsdatum
@@ -52,7 +52,7 @@ public class CreateNutzerprofil extends VerticalPanel{
 
 	public CreateNutzerprofil() {
 		this.add(verPanel);
-		
+
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		createNutzerprofilFlexTable.setCellPadding(6);
@@ -68,7 +68,6 @@ public class CreateNutzerprofil extends VerticalPanel{
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
 		createNutzerprofilFlexTable.setText(8, 0, "EMail");
-
 
 		// Vorname
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
@@ -127,8 +126,8 @@ public class CreateNutzerprofil extends VerticalPanel{
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		createNutzerprofilFlexTable.setWidget(7, 2, religionListBox);
-		
-		//Email
+
+		// EMail
 		createNutzerprofilFlexTable.setWidget(8, 2, emailTextBox);
 
 		// Widgets zum VerticalPanel hinzufügen.
@@ -136,6 +135,8 @@ public class CreateNutzerprofil extends VerticalPanel{
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(informationLabel);
+
+	
 
 		// ClickHandler für den createNutzerprofil-Button hinzufügen.
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
@@ -146,7 +147,8 @@ public class CreateNutzerprofil extends VerticalPanel{
 				ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
 						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(), emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
+						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+						emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -157,14 +159,17 @@ public class CreateNutzerprofil extends VerticalPanel{
 							@Override
 							public void onSuccess(Nutzerprofil result) {
 								informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-								
+
 							}
 
 						});
+
 			}
 
 		});
-}
+		
+	}
+
 
 
 	Date getGeburtsdatum() {

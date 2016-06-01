@@ -4,16 +4,27 @@
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
-	<!-- Servlets -->
-	<servlet>
-		<servlet-name>partnerboerseAdministrationServlet</servlet-name>
-		<servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>partnerboerseAdministrationServlet</servlet-name>
-		<url-pattern>/partnerboerseadministration</url-pattern>
-	</servlet-mapping>
+  <!-- Servlets -->
+    <servlet>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
+    <servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
+    <url-pattern>/partnerboerseadministration</url-pattern>
+  </servlet-mapping>
+  
+    <!-- Servlets -->
+    <servlet>
+    <servlet-name>reportGeneratorServlet</servlet-name>
+    <servlet-class>de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reportGeneratorServlet</servlet-name>
+    <url-pattern>/reportgenerator</url-pattern>
+  </servlet-mapping>
 
 	<servlet>
 		<servlet-name>partnerboerseAdministration</servlet-name>
@@ -28,6 +39,7 @@
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Partnerboerse.html</welcome-file>
+		<welcome-file>PartnerboerseReports.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>

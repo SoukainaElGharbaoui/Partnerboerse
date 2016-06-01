@@ -18,6 +18,20 @@ public class Nutzerprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
 
+	
+	private String vorname;
+	private String nachname; 
+	private String geburtsdatum; 
+	private Date geburtsdatumDate;
+	private List <Nutzerprofil> partnervorschlaegeNp;
+	private List <Nutzerprofil> partnervorschlaegeSp;
+	private List <Nutzerprofil> angeseheneNp;
+
+	private int aehnlichkeit;
+	private int aehnlichkeitSp;
+
+
+
 	// WICHTIG FÜR LOGIN
 	private boolean loggedIn = false;
 	private String loginUrl;
@@ -26,15 +40,7 @@ public class Nutzerprofil extends Profil {
 	private String nickname;
 	private boolean status = false;
 
-	// ATTRIBUTE NUTZERPROFIL
-	private String vorname;
-	private String nachname;
-	private String geburtsdatum;
-	private Date geburtsdatumDate;
-	private List<Nutzerprofil> partnervorschlaegeNp;
-	private List<Nutzerprofil> partnervorschlaegeSp;
-	private List<Nutzerprofil> angeseheneNp;
-	private int aehnlichkeit;
+	
 
 	// Konstruktor
 	public Nutzerprofil() {
@@ -50,7 +56,8 @@ public class Nutzerprofil extends Profil {
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-
+	
+	
 	public String getNachname() {
 		return nachname;
 	}
@@ -75,17 +82,38 @@ public class Nutzerprofil extends Profil {
 		this.geburtsdatumDate = geburtsdatumDate;
 	}
 
+
 	public int getAehnlichkeit() {
+
 		return aehnlichkeit;
 	}
 
+
 	public void setAehnlichkeit(int aehnlichkeit) {
+
 		this.aehnlichkeit = aehnlichkeit;
+	}
+
+	
+
+	public int getAehnlichkeitSp (){
+		return aehnlichkeitSp;
+	}
+	
+	public void setAehnlichkeitSp (int aehnlichkeitSp){
+		
+		this.aehnlichkeitSp = aehnlichkeitSp;
+	}
+
+
+	public String getEmailAddress(){
+		return emailAddress;
 	}
 
 	// METHODEN LOGIN
 	public boolean isLoggedIn() {
 		return loggedIn;
+
 	}
 
 	public void setLoggedIn(boolean b) {
@@ -114,10 +142,6 @@ public class Nutzerprofil extends Profil {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
 	}
 
 	public void setLoginUrl(String loginUrl) {

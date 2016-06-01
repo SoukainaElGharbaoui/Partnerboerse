@@ -32,7 +32,12 @@ public class ShowSuchprofil extends VerticalPanel {
 	 * Konstruktor
 	 */
 	public ShowSuchprofil() {
+		
 		this.add(verPanel);
+		
+		/**
+		 * Labels, AuswahlBox, Buttons und FlexTable erstellen
+		 */
 
 		final Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
 		auswahlLabel.addStyleName("partnerboerse-label");
@@ -40,14 +45,27 @@ public class ShowSuchprofil extends VerticalPanel {
 		final Label infoLabel = new Label();
 
 		final ListBox auswahlListBox = new ListBox();
+		
+		final FlexTable showSuchprofilFlexTable = new FlexTable();
 
 		final Button anzeigenButton = new Button("Anzeigen");
 
-		final FlexTable showSuchprofilFlexTable = new FlexTable();
+		final Button loeschenButton = new Button("Löschen");
+
+		final Button bearbeitenButton = new Button("Bearbeiten");
+
+		final Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
+		/**
+		 * FelxTable formatieren
+		 */
 
 		showSuchprofilFlexTable.setCellPadding(6);
 		showSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showSuchprofilFlexTable.addStyleName("FlexTable");
+		
+		/*
+		 * Erste Zeile der FlexTable definieren
+		 */
 
 		showSuchprofilFlexTable.setText(0, 0, "Suchprofil-id");
 		showSuchprofilFlexTable.setText(1, 0, "Suchprofilname");
@@ -59,11 +77,9 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 
-		final Button loeschenButton = new Button("Löschen");
-
-		final Button bearbeitenButton = new Button("Bearbeiten");
-
-		final Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
+		/**
+		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gef�llt
+		 */
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
@@ -83,9 +99,30 @@ public class ShowSuchprofil extends VerticalPanel {
 					}
 
 				});
+		
+		/**
+		 * Bei Bet�tigung des createSuchrprofilButtons werden alle Aehnlichkeiten gel�scht
+		 */
 
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				ClientsideSettings.getPartnerboerseAdministration().
+				aehnlichkeitEntfernenSp(nutzerprofil.getProfilId(), new AsyncCallback<Void>(){
+					
+					public void onFailure(Throwable caught) {
+						
+						
+					}
+					
+					
+					public void onSuccess(Void result) {
+						
+						
+					}
+					
+				});
+
 				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
@@ -142,6 +179,21 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
+						
+						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(nutzerprofil.getProfilId(), new AsyncCallback<Void>(){
+							
+							public void onFailure(Throwable caught) {
+								
+								
+							}
+							
+							
+							public void onSuccess(Void result) {
+								
+								
+							}
+							
+						});
 
 						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(nutzerprofil.getProfilId(),
 								auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {

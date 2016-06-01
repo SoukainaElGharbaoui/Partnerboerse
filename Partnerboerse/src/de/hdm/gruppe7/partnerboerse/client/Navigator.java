@@ -7,18 +7,31 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
+
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
 
 public class Navigator extends VerticalPanel {
 	
@@ -27,6 +40,8 @@ public class Navigator extends VerticalPanel {
 	int aehnlichkeit = 0;
 
 	public Navigator() {
+
+		VerticalPanel verPanel1 = new VerticalPanel();
 
 		/**
 		 * Button "Nutzerprofil anlegen" hinzufügen. !!! Gehört hier nicht hin,
@@ -64,6 +79,12 @@ public class Navigator extends VerticalPanel {
 		// }
 		//
 		// });
+		
+		/**
+		 * Information-Label hinzuf�gen.
+		 */
+		final Label infoLabel = new Label();
+
 
 		// logoutButton.setStyleName("navigatorbutton");
 		// this.add(logoutButton);
@@ -116,40 +137,8 @@ public class Navigator extends VerticalPanel {
 		infoAnlegenButton.setStyleName("navigatorbutton");
 		this.add(infoAnlegenButton);
 
-		/**
-		 * Button "Info anzeigen" hinzufügen
-		 */
-		// final Button showInfoButton = new Button("Info anzeigen");
-		//
-		// showInfoButton.addClickHandler(new ClickHandler() {
-		//
-		// public void onClick(ClickEvent event) {
-		// ShowInfo showInfo = new ShowInfo();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showInfo);
-		// }
-		// });
-		//
-		// this.add(showInfoButton);
 
-		/**
-		 * Button "Suchprofil anlegen" hinzufügen
-		 */
-		// final Button suchprofilAnlegenButton = new Button("Suchprofil
-		// anlegen");
-		//
-		// suchprofilAnlegenButton.addClickHandler(new ClickHandler() {
-		//
-		// public void onClick(ClickEvent event) {
-		// CreateSuchprofil createSuchprofil = new CreateSuchprofil();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(createSuchprofil);
-		// }
-		// });
-		//
-		// suchprofilAnlegenButton.setStyleName("navigatorbutton");
-		// this.add(suchprofilAnlegenButton);
-
+		
 		/**
 		 * Button "Suchprofile anzeigen" hinzufügen.
 		 */
@@ -266,6 +255,105 @@ public class Navigator extends VerticalPanel {
 
 						});
 
+
+				
+				//Ab hier wird die Aehnlichkeit zwischen den Suchprofilen und den Nutzerprofilen errechnet
+				
+//				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
+//					
+//					
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//					}
+//					
+//					@Override
+//					public void onSuccess(List<Suchprofil> result1) {
+//						
+//						for (Suchprofil sp : result1){
+//							
+//							final int suchprofilId = sp.getProfilId();							
+//				final String suchprofilName = sp.getSuchprofilName();
+//				
+//							ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
+//					
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//						
+//					}
+//					
+//					@Override
+//					public void onSuccess(List<Nutzerprofil> result) {
+//						
+//												
+//				for (Nutzerprofil np : result){
+//								
+//								
+//				final int fremdprofilId = np.getProfilId();
+//				
+//				
+//				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId,  suchprofilName , new AsyncCallback<Integer>(){
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						infoLabel.setText("Es trat ein Fehler auf.");
+//					}
+//
+//					@Override
+//					public void onSuccess(Integer result3) {
+//						aehnlichkeit = result3;
+//						
+//						
+//						
+//						
+//						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+//
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								infoLabel.setText("Es trat ein Fehler auf.");
+//							}
+//
+//							@Override
+//							public void onSuccess(Void result4) {
+//								// TODO Auto-generated method stub
+//
+//																													}
+//
+//																												});
+//																							}
+//
+//																						});
+//
+//																	}
+//
+//																
+//															
+//
+//														
+//
+//									}
+//
+//								});
+//							
+//							
+//							
+//							
+//							
+//						}
+//						
+//						
+//						
+//						
+//					}
+//				});
+//				
+//				
+//				
+		
+				
+				
+
 				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showPartnervorschlaege);
@@ -274,58 +362,27 @@ public class Navigator extends VerticalPanel {
 
 		});
 
+		verPanel1.add(infoLabel);
+		
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
 
+		
+		// Suchprofil-Report
+		final Button suchprofilReportButton = new Button("Mein Suchprofil-Report");
+		
+		suchprofilReportButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				int debug = 1;
+				debug = debug + 2;
+				SuchprofilReport suchprofilReport = new SuchprofilReport();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(suchprofilReport);
+			}
+		});
+
+		suchprofilReportButton.setStyleName("navigatorbutton"); 
+		this.add(suchprofilReportButton);
 	}
-
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button eigenesProfilButton = new Button("Eigenes Profil anzeigen");
-	// navPanel2.add(eigenesProfilButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button profilBearbeitenButton = new
-	// Button("Eigenes Profil bearbeiten");
-	// navPanel2.add(profilBearbeitenButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button eigenesProfilLoeschen = new
-	// Button("Eigenes Profil l&ouml;schen");
-	// navPanel2.add(eigenesProfilLoeschen);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button merklisteButton = new Button("Merkliste anzeigen");
-	// navPanel2.add(merklisteButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button sperrlisteButton = new Button("Sperrliste anzeigen");
-	// navPanel2.add(sperrlisteButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button partnervorschlaegeOhneSpButton = new
-	// Button("Unangesehene Partnervorschlaege anzeigen");
-	// navPanel2.add(partnervorschlaegeOhneSpButton);
-	//
-	// /**
-	// * Erzeugen eines Navigation-Buttons.
-	// */
-	// final Button partnervorschlaegeMitSpButton = new
-	// Button("Partnervorschlaege auf Basis Ihrer Suche anzeigen");
-	// navPanel2.add(partnervorschlaegeMitSpButton);
-	//
-	//
-	//
-
 }
