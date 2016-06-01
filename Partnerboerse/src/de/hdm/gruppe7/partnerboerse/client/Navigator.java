@@ -404,36 +404,5 @@ public class Navigator extends VerticalPanel {
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
 
-		
-		// Suchprofil-Report
-		final Button suchprofilReportButton = new Button("Mein Suchprofil-Report");
-		
-		suchprofilReportButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				SuchprofilReport suchprofilReport = new SuchprofilReport();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(suchprofilReport);
-			}
-		});
-
-		suchprofilReportButton.setStyleName("navigatorbutton"); 
-		this.add(suchprofilReportButton);
-		
-		
-		// Partnervorschlaege-Report
-				final Button partnervorschlaegeReportButton = new Button("Mein Dummer-Report");
-				
-				partnervorschlaegeReportButton.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-						ShowUnangesehenePartnervorschlaegeReport showUnangesehenePartnervorschlaegeReport = new ShowUnangesehenePartnervorschlaegeReport();
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showUnangesehenePartnervorschlaegeReport);
-					}
-				});
-
-				partnervorschlaegeReportButton.setStyleName("navigatorbutton"); 
-				this.add(partnervorschlaegeReportButton);
 	}
 }

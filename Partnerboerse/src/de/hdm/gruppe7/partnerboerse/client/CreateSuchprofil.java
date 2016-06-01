@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -157,6 +158,7 @@ public class CreateSuchprofil extends VerticalPanel {
 							
 							// Wenn der Suchprofilname bereits existiert...
 							if(suchprofilnameVorhanden == 1) {
+//								Window.alert("Der Suchprofilname existiert bereits.");
 								warnungLabel1.setText("Der Suchprofilname existiert bereits."); 
 								verPanel.add(warnungLabel1);
 								
@@ -164,6 +166,7 @@ public class CreateSuchprofil extends VerticalPanel {
 								
 								// Prüfen, ob der Suchprofilname leer ist.
 								if(suchprofilnameTextBox.getText().isEmpty()) {
+//									Window.alert("Der Suchprofilname darf nicht leer sein.");
 									warnungLabel2.setText("Der Suchprofilname darf nicht leer sein."); 
 									verPanel.add(warnungLabel2);
 									
@@ -171,7 +174,9 @@ public class CreateSuchprofil extends VerticalPanel {
 								
 								// Prüfen, ob Alter von kleiner als Alter bis ist. 
 								if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+//									Window.alert("'Alter von' muss kleiner als 'Alter bis' sein."); 
 									warnungLabel3.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
+									createSuchprofilFlexTable.setWidget(2, 3, warnungLabel1); 
 									verPanel.add(warnungLabel3);
 									
 								} else {
