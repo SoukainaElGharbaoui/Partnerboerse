@@ -17,6 +17,7 @@ import de.hdm.gruppe7.partnerboerse.shared.report.CompositeParagraph;
 import de.hdm.gruppe7.partnerboerse.shared.report.Report;
 import de.hdm.gruppe7.partnerboerse.shared.report.Row;
 import de.hdm.gruppe7.partnerboerse.shared.report.SimpleParagraph;
+import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
 
 /**
  * Implementierung des <code>ReportGenerator</code>-Interface. 
@@ -176,6 +177,108 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 			// Zeile dem Report hinzufügen.
 			result.addRow(suchprofilRow);
+		}
+
+	    /*
+	     * Fertigen Report zurückgeben.
+	     */
+		return result;
+
+	}
+
+	
+	
+	
+	
+	/**
+	 * <code>UnangesehenePartnervorschlaegeReport</code>-Objekte erstellen.
+	 * 
+	 * @param n das Nutzerprofil-Objekt bzgl. dessen der Report erstellt werden soll.
+	 * @return der fertige Report
+	 */
+	public UnangesehenePartnervorschlaegeReport createUnangesehenePartnervorschlaegeReport(Nutzerprofil n) 
+			throws IllegalArgumentException {
+		
+		if (this.getPartnerboerseAdministration() == null) {
+			return null;
+		}
+
+	    /*
+	     * Leeren Report anlegen.
+	     */
+		UnangesehenePartnervorschlaegeReport result = new UnangesehenePartnervorschlaegeReport();
+
+		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		result.setTitle("Suchprofil-Report für " + n.getVorname() + " " + n.getNachname()); 
+
+		// Imressum hinzufügen.
+		this.addImprint(result);
+
+		/*
+		 *  Erstellungsdatum hinzufügen.
+		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
+		 *  der Instantiierung des Date-Objekts.
+		 */
+		result.setCreated(new Date());
+
+	    /*
+	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
+	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
+	     */
+		CompositeParagraph header = new CompositeParagraph();
+
+		// Name und Vorname des Nutzers aufnehmen.
+		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
+		
+		// Nutzerprofil-ID aufnehmen.
+	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
+
+		// Zusammengestellte Kopfdaten zum Report hinzufügen.
+		result.setHeaderData(header);
+		
+	    /*
+	     * Ab hier: Suchprofil-Informationen zeilenweise hinzufügen.
+	     */
+		// Kopfzeile für die Suchprofil-Tabelle anlegen.
+		Row headline = new Row();
+
+		// Überschriften der Kopfzeile ablegen.
+		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Vornamee"));
+		headline.addColumn(new Column("Nachname"));
+		headline.addColumn(new Column("Geschlecht"));
+		headline.addColumn(new Column("Geburtsdatum"));
+		headline.addColumn(new Column("Körpergröße"));
+		headline.addColumn(new Column("Haarfarbe"));
+		headline.addColumn(new Column("Raucherstatus"));
+		headline.addColumn(new Column("Religion"));
+
+		// Kopfzeile hinzufügen.
+		result.addRow(headline);
+
+	    /*
+	     * Sämtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
+	     */
+		List<Nutzerprofil> nutzerprofile = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeNp(n.getProfilId()); 
+
+		for (Nutzerprofil pv : nutzerprofile) {
+			
+			// Eine leere Zeile anlegen.
+			Row nutzerprofilRow = new Row();
+
+			// Zeile befüllen.
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getProfilId())));
+			nutzerprofilRow.addColumn(new Column(pv.getVorname()));
+			nutzerprofilRow.addColumn(new Column(pv.getNachname()));
+			nutzerprofilRow.addColumn(new Column(pv.getGeschlecht()));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getGeburtsdatumDate())));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getKoerpergroesseInt())));
+			nutzerprofilRow.addColumn(new Column(pv.getHaarfarbe()));
+			nutzerprofilRow.addColumn(new Column(pv.getRaucher()));
+			nutzerprofilRow.addColumn(new Column(pv.getReligion()));
+
+			// Zeile dem Report hinzufügen.
+			result.addRow(nutzerprofilRow);
 		}
 
 	    /*

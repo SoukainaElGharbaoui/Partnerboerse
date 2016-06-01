@@ -402,8 +402,6 @@ public class Navigator extends VerticalPanel {
 		suchprofilReportButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				int debug = 1;
-				debug = debug + 2;
 				SuchprofilReport suchprofilReport = new SuchprofilReport();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(suchprofilReport);
@@ -412,5 +410,21 @@ public class Navigator extends VerticalPanel {
 
 		suchprofilReportButton.setStyleName("navigatorbutton"); 
 		this.add(suchprofilReportButton);
+		
+		
+		// Partnervorschlaege-Report
+				final Button partnervorschlaegeReportButton = new Button("Mein Dummer-Report");
+				
+				partnervorschlaegeReportButton.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						ShowUnangesehenePartnervorschlaegeReport showUnangesehenePartnervorschlaegeReport = new ShowUnangesehenePartnervorschlaegeReport();
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showUnangesehenePartnervorschlaegeReport);
+					}
+				});
+
+				partnervorschlaegeReportButton.setStyleName("navigatorbutton"); 
+				this.add(partnervorschlaegeReportButton);
 	}
 }
