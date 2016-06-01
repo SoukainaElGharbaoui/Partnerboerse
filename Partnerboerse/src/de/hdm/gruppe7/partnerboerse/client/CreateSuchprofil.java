@@ -10,6 +10,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -22,15 +23,25 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class CreateSuchprofil extends VerticalPanel {
 
 	/**
-	 * VerticalPanel hinzufügen.
+	 * VerticalPanel und HorizontalPanel hinzufügen.
 	 */
+	
+	private HorizontalPanel horPanel = new HorizontalPanel();
 	private VerticalPanel verPanel = new VerticalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();
+	
+	
 
 	/**
 	 * Konstruktor hinzuf�gen.
 	 */
 	public CreateSuchprofil() {
+		this.add(horPanel);
 		this.add(verPanel);
+		this.add(verPanel2);
+		
+		horPanel.add(verPanel);
+		horPanel.add(verPanel2);
 	
 		/**
 		 * Label für Überschrift erstellen
@@ -42,6 +53,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
 		 */
 		final FlexTable createSuchprofilFlexTable = new FlexTable();
+		
+		final FlexTable showSuchprofilFlexTable= new FlexTable();
 		
 		
 		/**
@@ -200,9 +213,9 @@ public class CreateSuchprofil extends VerticalPanel {
 
 												@Override
 												public void onSuccess(Suchprofil result) {
-													ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-													RootPanel.get("Details").clear();
-													RootPanel.get("Details").add(showSuchprofil);
+//													ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+//													RootPanel.get("Details").clear();
+//													RootPanel.get("Details").add(showSuchprofil);
 												}
 
 											});
@@ -214,81 +227,38 @@ public class CreateSuchprofil extends VerticalPanel {
 				
 			});
 			
+			ClientsideSettings.getPartnerboerseAdministration().
+			getSuchprofilByName(Benutzer.getProfilId(), suchprofilnameTextBox.getText(), new  AsyncCallback<Suchprofil>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Suchprofil result) {
+					int suchprofilId = result.getProfilId();
+					CreateInfoSp createInfoSp = new CreateInfoSp(
+					suchprofilId);
+			RootPanel.get("Details").clear();
+			RootPanel.get("Details").add(createInfoSp);
+				}
+				
+				
+			});
+			
+			
+
+			
 		}
 		
 	}); 
 
-//	createSuchprofilButton.addClickHandler(new ClickHandler() {
-//		public void onClick(ClickEvent event) {
-//			
-//			
-////			 Prüfen, ob Suchprofilname für diesen Nutzer bereis existiert.
-//			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
-//					new AsyncCallback<List<Suchprofil>>() {
-//
-//						@Override
-//						public void onFailure(Throwable caught) {
-//							infoLabel.setText("Es trat ein Fehler auf."); 
-//							
-//						}
-//
-//						@Override
-//						public void onSuccess(List<Suchprofil> result) {
-//							int vorhanden = 0;
-//							for(Suchprofil s : result) {
-//								if(suchprofilnameTextBox.getText().equals(s.getSuchprofilName())) {
-////									warnungLabel1.setText("Der Suchprofilname existiert bereits.");
-////									verPanel.add(warnungLabel1); 
-//									vorhanden = 1;
-//									break; 
-//								} 		
-//							}
-//							
-//							if(vorhanden == 1) {
-//								warnungLabel2.setText("Suchprofil schon vorhanden"); 
-//								verPanel.add(warnungLabel2);
-//							} else {
-//								// Prüfen, ob Alter von < Alter bis. 
-//								if(Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
-//									warnungLabel2.setText("'Alter von' muss kleiner als 'Alter bis' sein."); 
-//									verPanel.add(warnungLabel2);
-//								} else {
-//
-//								ClientsideSettings.getPartnerboerseAdministration()
-//										.createSuchprofil(suchprofilnameTextBox.getText(), 
-//												geschlechtListBox.getSelectedItemText(),
-//												Integer.parseInt(alterMinTextBox.getText()),
-//												Integer.parseInt(alterMaxTextBox.getText()),
-//												Integer.parseInt(koerpergroesseTextBox.getText()),
-//												haarfarbeListBox.getSelectedItemText(),
-//												raucherListBox.getSelectedItemText(),
-//												religionListBox.getSelectedItemText(),
-//												new AsyncCallback<Suchprofil>() {
-//
-//													@Override
-//													public void onFailure(Throwable caught) {
-//														infoLabel.setText("Es trat ein Fehler auf");
-//													}
-//
-//													@Override
-//													public void onSuccess(Suchprofil result) {
-////														infoLabel.setText("Das Suchprofil '" + suchprofilnameTextBox.getText() + "' wurde erfolgreich angelegt.");
-//														ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-//														RootPanel.get("Details").clear();
-//														RootPanel.get("Details").add(showSuchprofil);
-//													}
-//
-//												});
-//
-//								}
-//							}								
-//						}
-//				
-//			});
-//						
-//		
-//	}
-//	});
+
+	
+	
+	
 
 }
 	
