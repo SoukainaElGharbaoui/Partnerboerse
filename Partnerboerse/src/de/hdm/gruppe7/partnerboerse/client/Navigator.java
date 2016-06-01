@@ -131,10 +131,16 @@ public class Navigator extends VerticalPanel {
 		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				
+				
 				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createNutzerprofil);
-				nutzerprofilAnlegenButton.setVisible(false);
+				
+				
+				
+			
+				
 			}
 		});
 
@@ -157,22 +163,7 @@ public class Navigator extends VerticalPanel {
 		showEigenesNpButton.setStyleName("navigatorbutton");
 		this.add(showEigenesNpButton);
 
-		/**
-		 * Button "Info anlegen" hinzufügen
-		 */
-		final Button infoAnlegenButton = new Button("Info anlegen");
-
-		infoAnlegenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				CreateInfo createInfo = new CreateInfo();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createInfo);
-			}
-		});
-
-		infoAnlegenButton.setStyleName("navigatorbutton");
-		this.add(infoAnlegenButton);
+		
 
 
 		
@@ -404,22 +395,5 @@ public class Navigator extends VerticalPanel {
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
 
-		
-		// Suchprofil-Report
-		final Button suchprofilReportButton = new Button("Mein Suchprofil-Report");
-		
-		suchprofilReportButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				int debug = 1;
-				debug = debug + 2;
-				SuchprofilReport suchprofilReport = new SuchprofilReport();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(suchprofilReport);
-			}
-		});
-
-		suchprofilReportButton.setStyleName("navigatorbutton"); 
-		this.add(suchprofilReportButton);
 	}
 }

@@ -61,7 +61,7 @@ public class Partnerboerse implements EntryPoint {
 		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
 		 * Darstellungsort.
 		 */
-		// RootPanel.get("Navigator").add(new Navigator());
+//		 RootPanel.get("Navigator").add(new Navigator());
 
 		// Check login status using login service.
 		// LoginServiceAsync loginService = GWT.create(Nutzerprofil.class);

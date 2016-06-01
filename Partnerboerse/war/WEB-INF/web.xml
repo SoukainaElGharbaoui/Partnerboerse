@@ -12,6 +12,16 @@
   
   <servlet-mapping>
     <servlet-name>partnerboerseAdministrationServlet</servlet-name>
+    <url-pattern>/Partnerboerse/partnerboerseadministration</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
+    <url-pattern>/partnerboersereports/partnerboerseadministration</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
     <url-pattern>/partnerboerseadministration</url-pattern>
   </servlet-mapping>
   
@@ -23,9 +33,15 @@
   
   <servlet-mapping>
     <servlet-name>reportGeneratorServlet</servlet-name>
-    <url-pattern>/reportgenerator</url-pattern>
+    <url-pattern>/Partnerboerse/reportgenerator</url-pattern>
   </servlet-mapping>
-
+  
+    <servlet-mapping>
+    <servlet-name>reportGeneratorServlet</servlet-name>
+    <url-pattern>/partnerboersereports/reportgenerator</url-pattern>
+  </servlet-mapping>
+  
+    
 	<servlet>
 		<servlet-name>partnerboerseAdministration</servlet-name>
 		<servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
