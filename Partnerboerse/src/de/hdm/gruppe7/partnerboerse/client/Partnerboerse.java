@@ -20,6 +20,7 @@ public class Partnerboerse implements EntryPoint {
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
+	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface
@@ -36,7 +37,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Darstellungsort.
 		 */
 
-		PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
+		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
 		try {
 			ClientsideSettings.getPartnerboerseAdministration().login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
@@ -49,16 +50,23 @@ public class Partnerboerse implements EntryPoint {
 						public void onSuccess(Nutzerprofil result) {
 							// wenn der user eingeloggt ist
 							if (result.isLoggedIn()) {
-								if (result.getVorname() != null) {
+								
+								if (result.getEmailAddress() != null) {
+									partnerboerseAdministration.setUser(result, new AsyncCallback(){
+										public void onFailure(Throwable caught) {
+										}
+										public void onSuccess(Object result) {
+										}
+									});
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Navigator").add(new Navigator());
 									RootPanel.get("Navigator").add(loginPanel);
-									
 								}
 								
-								if (result.getVorname() == null) {
+								if (result.getEmailAddress() == null) {
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
@@ -66,7 +74,7 @@ public class Partnerboerse implements EntryPoint {
 									RootPanel.get("Navigator").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
-
+								
 							}
 							// wenn der user nicht eingeloggt ist
 							if (!result.isLoggedIn()) {

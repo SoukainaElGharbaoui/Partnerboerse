@@ -43,7 +43,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private MerklisteMapper merklisteMapper = null; 
 	private SperrlisteMapper sperrlisteMapper = null; 
 	private InfoMapper infoMapper = null;
-
+	private Nutzerprofil profil;
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -62,6 +62,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.merklisteMapper = MerklisteMapper.merklisteMapper();
 		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper();
 		this.infoMapper = InfoMapper.infoMapper();
+	}
+	
+	public void setUser(Nutzerprofil n){
+		this.profil = n;
 	}
 
 	/*
@@ -126,8 +130,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	@Override
-	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
+	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
+	}
+	
+	public Nutzerprofil findByNutzerprofilMitEmail() throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findByNutzerprofilMitEmail(profil.getEmailAddress());
 	}
 
 	/**
@@ -596,12 +604,12 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	}	
 		
 	
-	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
+	public List<String> getAllInfosNeu() throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
 		List<Info> result = new ArrayList<Info>();
 		
-		result = this.infoMapper.findAllInfosNeu(nutzerprofilId);
+		result = this.infoMapper.findAllInfosNeu(profil.getProfilId());
 
 		for (Info i : result) {
 
@@ -621,11 +629,11 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	}
 		
 	
-	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext) 
+	public Info createInfoNeu(int eigenschaftId, String infotext) 
 			throws IllegalArgumentException {
 		
 		Info i = new Info();
-		i.setProfilId(profilId);
+		i.setProfilId(profil.getProfilId());
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
 		

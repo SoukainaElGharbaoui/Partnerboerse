@@ -11,13 +11,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowEigenesNp extends VerticalPanel {
+
+	private Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	private String userEmail;
 	
 	/**
 	 * HorizontalPanel
@@ -35,13 +38,14 @@ public class ShowEigenesNp extends VerticalPanel {
 	 */
 	HorizontalPanel buttonPanel = new HorizontalPanel();
 
-	
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public ShowEigenesNp() {
+	public ShowEigenesNp(Nutzerprofil user) {
+
+		this.nutzerprofil = user;
 		
-		nutzerprofil.setProfilId(nutzerprofil.getProfilId());
+		userEmail = user.getEmailAddress();
 		
 		this.add(horPanel);
 
@@ -70,7 +74,6 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
 		showEigenesNpFlexTable.setText(9, 0, "EMail");
 
-
 		/**
 		 * Tabelle formatieren und CSS einbinden.
 		 */
@@ -83,8 +86,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 
 		final Label infoLabel = new Label();
-		
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
+
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -141,14 +144,13 @@ public class ShowEigenesNp extends VerticalPanel {
 						// und in Tabelle eintragen
 
 						showEigenesNpFlexTable.setText(8, 1, result.getReligion());
-						
+
 						// EMail aus der Datenbank holen
 						// und in Tabelle eintragen
 
 						showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
-						
+
 						infoLabel.setText("Methode wurde aufgerufen ");
-					
 
 					}
 
@@ -209,8 +211,8 @@ public class ShowEigenesNp extends VerticalPanel {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(nutzerprofil.getProfilId(),
-								new AsyncCallback<Void>() {
+						ClientsideSettings.getPartnerboerseAdministration()
+								.deleteNutzerprofil(nutzerprofil.getProfilId(), new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {

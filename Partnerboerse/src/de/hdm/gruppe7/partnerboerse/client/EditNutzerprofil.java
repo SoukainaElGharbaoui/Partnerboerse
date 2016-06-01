@@ -115,7 +115,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
 
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -184,7 +184,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
 

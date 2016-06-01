@@ -199,12 +199,32 @@ public class NutzerprofilMapper {
 	 * ********************************* Nutzer mit Email suchen
 	 * *********************************
 	 */
-	public Nutzerprofil findByNutzerprofilMitEmail(String email) throws SQLException {
+	public Nutzerprofil findByNutzerprofilMitEmail(String email) {
 		Connection con = DBConnection.connection();
+		try {
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT nutzerprofil_id FROM t_nutzerprofil1 WHERE email ='" + email + "'");
-		if (rs.next())
-			return findByNutzerprofilId(rs.getInt("nutzerprofil_id"));
+		ResultSet rs = stmt.executeQuery("SELECT * FROM t_nutzerprofil1, t_profil1 WHERE email ='" + email + "'");
+		
+		if (rs.next()){
+//			return findByNutzerprofilId(rs.getInt("nutzerprofil_id"));
+		// Ergebnis-Tupel in Nutzerprofil-Objekt umwandeln.
+		Nutzerprofil n = new Nutzerprofil();
+		n.setProfilId(rs.getInt("nutzerprofil_id"));
+		n.setVorname(rs.getString("vorname"));
+		n.setNachname(rs.getString("nachname"));
+		n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
+		n.setGeschlecht(rs.getString("geschlecht"));
+		n.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+		n.setHaarfarbe(rs.getString("haarfarbe"));
+		n.setRaucher(rs.getString("raucher"));
+		n.setReligion(rs.getString("religion"));
+		n.setEmailAddress(rs.getString("email"));
+		return n;
+		}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
 		return null;
 	}
 

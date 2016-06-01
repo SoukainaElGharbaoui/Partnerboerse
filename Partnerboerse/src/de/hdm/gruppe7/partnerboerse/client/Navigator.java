@@ -111,7 +111,7 @@ public class Navigator extends VerticalPanel {
 		showEigenesNpButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+				ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showEigenesNp);
 			}

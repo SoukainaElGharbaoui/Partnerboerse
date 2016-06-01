@@ -145,7 +145,7 @@ public class CreateInfo extends VerticalPanel {
 										
 //										profilId = Benutzer.getProfilId();
 										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(nutzerprofil.getProfilId(),
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 									
 													@Override
@@ -158,7 +158,7 @@ public class CreateInfo extends VerticalPanel {
 														informationLabelB.setText("Die Infos wurden "
 																+ "erfolgreich angelegt.");
 														
-														ShowEigenesNp showNp = new ShowEigenesNp();
+														ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 														RootPanel.get("Details").clear();
 														RootPanel.get("Details").add(showNp);
 													}
@@ -200,7 +200,7 @@ public class CreateInfo extends VerticalPanel {
 										
 										nEingabe = lb.getSelectedItemText();
 										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(nutzerprofil.getProfilId(),
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 									
 													@Override
@@ -214,7 +214,7 @@ public class CreateInfo extends VerticalPanel {
 																+ "erfolgreich angelegt.");
 														
 														
-														ShowEigenesNp showNp = new ShowEigenesNp();
+														ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 														RootPanel.get("Details").clear();
 														RootPanel.get("Details").add(showNp);
 													}

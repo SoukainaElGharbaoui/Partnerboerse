@@ -63,8 +63,7 @@ public class ShowInfo extends VerticalPanel {
 		 */
 		
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
-				nutzerprofil.getProfilId(), new AsyncCallback<List<String>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(new AsyncCallback<List<String>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -130,7 +129,7 @@ public class ShowInfo extends VerticalPanel {
 							public void onSuccess(Void result) {
 								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 								
-								ShowEigenesNp showNp = new ShowEigenesNp();
+								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 							}
