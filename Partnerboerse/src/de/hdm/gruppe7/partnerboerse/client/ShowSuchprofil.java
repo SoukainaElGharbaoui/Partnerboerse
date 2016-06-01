@@ -21,8 +21,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class ShowSuchprofil extends VerticalPanel {
 	
 	Nutzerprofil nutzerprofil = new Nutzerprofil(); 
+	private HorizontalPanel horPanel = new HorizontalPanel();
 
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private VerticalPanel verPanel2 = new VerticalPanel();
+	
+	private VerticalPanel verPanel3 = new VerticalPanel();
 
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
@@ -33,7 +38,15 @@ public class ShowSuchprofil extends VerticalPanel {
 	 */
 	public ShowSuchprofil() {
 		
+		this.add(horPanel);
+		
 		this.add(verPanel);
+		this.add(verPanel2);
+		this.add(verPanel3);
+		
+		horPanel.add(verPanel2);
+		horPanel.add(verPanel3);
+		
 		
 		/**
 		 * Labels, AuswahlBox, Buttons und FlexTable erstellen
@@ -224,11 +237,14 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				});
 
-				verPanel.add(showSuchprofilFlexTable);
+				verPanel2.add(showSuchprofilFlexTable);
 				buttonPanel.add(bearbeitenButton);
 				buttonPanel.add(loeschenButton);
-				verPanel.add(buttonPanel);
-				verPanel.add(infoLabel);
+				verPanel2.add(buttonPanel);
+				verPanel2.add(infoLabel);
+				
+				ShowInfo showInfo = new ShowInfo();
+				verPanel3.add(showInfo);
 
 			}
 
