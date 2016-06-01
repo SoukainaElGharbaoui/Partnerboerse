@@ -164,6 +164,22 @@ public class Navigator extends VerticalPanel {
 		this.add(showEigenesNpButton);
 
 		
+		/**
+		 * Info anlegen Button zu Testzwecken wieder hinzugefügt
+		 */
+		
+		final Button createInfoButton = new Button("Info anlegen");
+		createInfoButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				CreateInfo createInfo = new CreateInfo();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createInfo);
+			}
+		});
+
+		createInfoButton.setStyleName("navigatorbutton");
+		this.add(createInfoButton);
 
 
 		

@@ -27,9 +27,13 @@ public class CreateInfo extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
-	private String beschreibungstext;
-	private String nEingabe;
+	private int row;
 //	private int eigenschaftIdInt;
+	private String beschreibungstext;
+	private String nEingabeB;
+	private String nEingabeA;
+
+	//	private int eigenschaftIdInt;
 //	private int profilId;
 	
 	private Button createInfosButton = new Button("Info anlegen");
@@ -79,7 +83,7 @@ public class CreateInfo extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Eigenschaft> result) {
-						int row = showEigenschaftFlexTable.getRowCount();
+						row = showEigenschaftFlexTable.getRowCount();
 		
 						for (Eigenschaft e : result) {
 							row++;
@@ -121,43 +125,88 @@ public class CreateInfo extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										if (textArea.getText() != null) {
+										for (int i = 2; i < showEigenschaftFlexTable.getRowCount(); i++) {
 											
-//											if(textArea.getText().equals(beschreibungstext)) {
-//												textArea.setText("");
-//												nEingabe = textArea.getText();
-//											}
-//											
-//											else {
-												nEingabe = textArea.getText();
-//											}
+											String textAreaEigenschaftId = showEigenschaftFlexTable.getText(i, 0);
+																						
+											if(Integer.valueOf(textAreaEigenschaftId).equals(eigenschaftIdInt)) {
+												
+												if (textArea.getText() == null) {
+											
+													informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
+												}
+												
+												else if (textArea.getText() != null) {
+													
+													if(textArea.getText().equals(beschreibungstext)) {
+														informationLabelA.setText(String.valueOf(eigenschaftIdInt));
+														informationLabelB.setText("Es wurde keine neue Eingabe gemacht.");
+														
+													}
+													
+													else {
+														nEingabeB = textArea.getText();
+														
+														ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+																eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+														
+																		@Override
+																		public void onFailure(Throwable caught) {
+																			informationLabelB.setText("Es trat ein Fehler auf.");
+																		}
+														
+																		@Override
+																		public void onSuccess(Info result) {
+//																			informationLabelB.setText("Die Infos wurden "
+//																					+ "erfolgreich angelegt.");
+																			
+//																			ShowEigenesNp showNp = new ShowEigenesNp();
+//																			RootPanel.get("Details").clear();
+//																			RootPanel.get("Details").add(showNp);
+																		}
+															});
+													}
+												}
+											}
 										}
-									
+
+																			
+											
+											
+											
+
+//											else {
+//												nEingabeB = textArea.getText();
+//												
+//												ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+//														eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+//												
+//																@Override
+//																public void onFailure(Throwable caught) {
+//																	informationLabelB.setText("Es trat ein Fehler auf.");
+//																}
+//												
+//																@Override
+//																public void onSuccess(Info result) {
+////																	informationLabelB.setText("Die Infos wurden "
+////																			+ "erfolgreich angelegt.");
+//																	
+////																	ShowEigenesNp showNp = new ShowEigenesNp();
+////																	RootPanel.get("Details").clear();
+////																	RootPanel.get("Details").add(showNp);
+//																}
+//													});
+//												}
+//											
+//											}
+//										}
+//									
 //										else {
 //											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
 //										}
-										
-										
-										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
-											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-									
-													@Override
-													public void onFailure(Throwable caught) {
-														informationLabelB.setText("Es trat ein Fehler auf.");
-													}
-									
-													@Override
-													public void onSuccess(Info result) {
-														informationLabelB.setText("Die Infos wurden "
-																+ "erfolgreich angelegt.");
-														
-														ShowEigenesNp showNp = new ShowEigenesNp();
-														RootPanel.get("Details").clear();
-														RootPanel.get("Details").add(showNp);
-													}
-										});
-								}
+//											}
+//											}
+									}
 								}); 
 							}
 							
@@ -192,10 +241,10 @@ public class CreateInfo extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										nEingabe = lb.getSelectedItemText();
+										nEingabeA = lb.getSelectedItemText();
 										
 										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
-											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+											eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
 									
 													@Override
 													public void onFailure(Throwable caught) {
@@ -204,13 +253,13 @@ public class CreateInfo extends VerticalPanel {
 									
 													@Override
 													public void onSuccess(Info result) {
-														informationLabelA.setText("Die Infos wurden "
-																+ "erfolgreich angelegt.");
-														
-														
-														ShowEigenesNp showNp = new ShowEigenesNp();
-														RootPanel.get("Details").clear();
-														RootPanel.get("Details").add(showNp);
+//														informationLabelA.setText("Die Infos wurden "
+//																+ "erfolgreich angelegt.");
+//														
+//														
+//														ShowEigenesNp showNp = new ShowEigenesNp();
+//														RootPanel.get("Details").clear();
+//														RootPanel.get("Details").add(showNp);
 													}
 										});
 								}
