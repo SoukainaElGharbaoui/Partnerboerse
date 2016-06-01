@@ -32,16 +32,11 @@ public class EditInfo extends VerticalPanel {
 	private Label informationLabel = new Label();
 	
 	private int row;
-//	private int eigenschaftIdInt;
 	private int profilIdInt;
-//	private String infotext;
-//	private String infotextNeu;
-//	private String typ;
 	
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-
 	public EditInfo() {
 		this.add(verPanel);
 
@@ -238,40 +233,10 @@ public class EditInfo extends VerticalPanel {
 										editInfoFlexTable.removeRow(i);
 										break;
 									}
-								
-								
 								}
-							
 							}
 						});
 						
-						
-//						updateInfosButton.addClickHandler(new ClickHandler() {
-//							public void onClick(ClickEvent event) {
-//								
-//								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
-//										profilIdInt, eigenschaftIdInt, infotextNeu, 
-//										new AsyncCallback<Void>(){
-//
-//											@Override
-//											public void onFailure(
-//													Throwable caught) {
-//												informationLabel.setText("Beim Aktualisieren ist ein Fehler "
-//														+ "aufgetreten.");
-//											}
-//
-//											@Override
-//											public void onSuccess(
-//													Void result) {
-//												informationLabel.setText("Das Aktualisieren der Infos "
-//														+ "hat funktioniert.");													
-//											}
-//											
-//											
-//										});							
-//							}
-//						});
-							
 						row++; 
 						i++; i++; i++; i++; 
 					}

@@ -29,6 +29,7 @@ public class CreateInfo extends VerticalPanel {
 	
 	private String beschreibungstext;
 	private String nEingabe;
+//	private int eigenschaftIdInt;
 //	private int profilId;
 	
 	private Button createInfosButton = new Button("Info anlegen");
@@ -41,12 +42,6 @@ public class CreateInfo extends VerticalPanel {
 	 */
 	public CreateInfo() {		
 		this.add(verPanel);
-
-		/**
-		 * Tabelle zur Anzeige der Eigenschaften hinzufügen.
-		 */
-		
-		
 
 		/**
 		 * Erste Zeile der Tabelle festlegen.
@@ -127,12 +122,20 @@ public class CreateInfo extends VerticalPanel {
 									public void onClick(ClickEvent event) {
 										
 										if (textArea.getText() != null) {
+											
+//											if(textArea.getText().equals(beschreibungstext)) {
+//												textArea.setText("");
+//												nEingabe = textArea.getText();
+//											}
+//											
+//											else {
 												nEingabe = textArea.getText();
+//											}
 										}
 									
-										else {
-											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
-										}
+//										else {
+//											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
+//										}
 										
 										
 										
