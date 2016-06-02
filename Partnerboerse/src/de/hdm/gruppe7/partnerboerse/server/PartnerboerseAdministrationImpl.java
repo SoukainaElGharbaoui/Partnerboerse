@@ -42,6 +42,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private InfoMapper infoMapper = null;
 
 
+
 	/**
 	 * No-Argument-Konstruktor.
 	 */
@@ -498,18 +499,22 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			}
 			
 			// Vergleich der Infos
-						for (Info rin : referenzinfo){
+						for (Info rin : referenzinfo){		
 							for (Info vin : vergleichsinfo){
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+							counter = counter+1;
 							if (rin.getInfotext().equals(vin.getInfotext())){
-								aehnlichkeitSp= aehnlichkeitSp + 10;
-								counter = counter+10;
+								 aehnlichkeitSp= aehnlichkeitSp + 10;
+								
+								
 							}
 						}
 					}
 					}
 			
 						aehnlichkeitSp = aehnlichkeitSp * (100 /counter);
+						
+						
 			
 		
 			
