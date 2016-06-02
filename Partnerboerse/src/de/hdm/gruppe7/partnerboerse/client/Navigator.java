@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.shared.GWT;
 
@@ -15,11 +17,12 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
-
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -27,7 +30,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  
 
@@ -44,6 +46,8 @@ public class Navigator extends VerticalPanel {
 
 	public Navigator() {
 		VerticalPanel verPanel1 = new VerticalPanel();
+		MenuBar naviBar = new MenuBar();
+		
 		/*
 		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
 		 * seine eigene Profil-ID gesetzt (hier noch temporär - normalerweisen
@@ -392,8 +396,11 @@ public class Navigator extends VerticalPanel {
 
 		verPanel1.add(infoLabel);
 		
+		
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
+		
+
 
 	}
 }

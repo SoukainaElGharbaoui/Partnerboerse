@@ -85,7 +85,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
 		n.setReligion(religion);
-		// n.setEmailAddress(emailAddress);
+		n.setEmailAddress(emailAddress);
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		n.setProfilId(1);

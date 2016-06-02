@@ -35,6 +35,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
+	private Label reqLabel = new Label("*");
+	private Label reqLabel2 = new Label("*");
+	private Label reqLabel3 = new Label("*");
+	Label warnungLabel = new Label();
+	
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
 
@@ -67,6 +72,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		horPanel.add(verPanel2);
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		reqLabel.setStyleName("red_label");
+		reqLabel2.setStyleName("red_label");
+		reqLabel3.setStyleName("red_label");
 
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
@@ -84,15 +92,18 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		// Vorname
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
+		createNutzerprofilFlexTable.setWidget(0, 3, reqLabel);
 
 		// Nachname
 		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
+		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
 		// Geschlecht
-		geschlechtListBox.addItem("Keine Auswahl");
+		geschlechtListBox.addItem("nicht binär");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
+//		createNutzerprofilFlexTable.setWidget(2, 3, reqLabel3);
 
 		// Geburtsdatum
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
@@ -111,28 +122,30 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.setValue(new Date());
 
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
+		
 
 		// Körpergröße
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		
 
 		// Haarfarbe
-		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
 		haarfarbeListBox.addItem("Schwarz");
 		haarfarbeListBox.addItem("Grau");
 		haarfarbeListBox.addItem("Glatze");
+		haarfarbeListBox.addItem("Andere");
 		createNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
+		
 
 		// Raucher
-		raucherListBox.addItem("Keine Angabe");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		createNutzerprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		// Religion
-		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("ohne Bekenntnis");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -148,6 +161,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(informationLabel);
+		
 
 	
 
@@ -171,11 +185,16 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Nutzerprofil result) {
+								
+								if(vornameTextBox.getText().length() == 0  && nachnameTextBox.getText().length()== 0){
+									warnungLabel.setText("Bitte geben Sie Ihren Vor- und Nachnamen ein.");
+									verPanel.add(warnungLabel);
+								} else {
 								informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 
 							}
 
-						});
+							}});
 				
 				CreateInfoNp createInfoNp = new CreateInfoNp();
 		RootPanel.get("Details").clear();

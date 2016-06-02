@@ -615,5 +615,8 @@ public class NutzerprofilMapper {
 		}
 	}
 
+	
+		
+
 
 }

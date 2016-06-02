@@ -101,6 +101,12 @@ div#Trailer {
   margin-bottom: 10px;
 }
 
+.red_label {
+    color: red;
+    font-size: 8pt;
+    overflow: hidden;
+}
+
 /* MERKLISTE ENDE */
 
 
