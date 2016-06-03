@@ -420,6 +420,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				counter++;
 				if (rin.getInfotext().equals(vin.getInfotext())){
 					aehnlichkeit = aehnlichkeit + 1;
+
 				}
 			}
 		}
@@ -466,12 +467,13 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 		
 			
 			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
-		
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findInfosByProfilId(suchprofilId);
+			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(fremdprofilId);
 			
 			int aehnlichkeitSp = 0;
 			
-			
+			int counter = 100;
 			
 			if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
 				aehnlichkeitSp  = aehnlichkeitSp  + 40;
@@ -494,7 +496,19 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 				aehnlichkeitSp  = aehnlichkeitSp  + 20;
 			}
 			
-			aehnlichkeitSp = (100/ 100) * aehnlichkeitSp ;
+			// Vergleich der Infos
+						for (Info rin : referenzinfo){
+							for (Info vin : vergleichsinfo){
+						if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+							if (rin.getInfotext().equals(vin.getInfotext())){
+								aehnlichkeitSp= aehnlichkeitSp + 10;
+								counter = counter+10;
+							}
+						}
+					}
+					}
+			
+						aehnlichkeitSp = aehnlichkeitSp * (100 /counter);
 			
 		
 			

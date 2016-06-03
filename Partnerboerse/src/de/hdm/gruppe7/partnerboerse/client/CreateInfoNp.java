@@ -19,7 +19,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
-public class CreateInfo extends VerticalPanel {
+public class CreateInfoNp extends VerticalPanel {
 
 	/**
 	 * VerticalPanel hinzufügen. 
@@ -29,7 +29,7 @@ public class CreateInfo extends VerticalPanel {
 	
 	private String beschreibungstext;
 	private String nEingabe;
-//	private int profilId;
+	
 	
 	private Button createInfosButton = new Button("Info anlegen");
 	private Label ueberschriftLabel = new Label("Info anlegen:"); 
@@ -39,8 +39,9 @@ public class CreateInfo extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public CreateInfo() {		
+	public CreateInfoNp() {		
 		this.add(verPanel);
+		
 
 		/**
 		 * Tabelle zur Anzeige der Eigenschaften hinzufügen.
