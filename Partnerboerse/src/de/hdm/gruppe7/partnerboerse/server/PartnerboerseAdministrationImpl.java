@@ -383,8 +383,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			// Erforderliche Daten abrufen
 			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-			List<Info> referenzinfo = infoMapper.findInfosByProfilId(profilId);
-			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(profilId);
+			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
+			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 			
 			
 			// Variablen zur Berechnung der Aehnlichkeit
@@ -606,6 +606,9 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 		return this.infoMapper.findAllEigenschaftenNeu();
 	}	
 		
+	public List<Info> getAllInfosNeuReport(int nutzerprofilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosNeu(nutzerprofilId);
+	}
 	
 	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
 

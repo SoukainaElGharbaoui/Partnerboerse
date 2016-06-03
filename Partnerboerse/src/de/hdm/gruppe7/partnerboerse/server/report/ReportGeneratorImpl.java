@@ -2,15 +2,17 @@ package de.hdm.gruppe7.partnerboerse.server.report;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
+
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.Column;
 import de.hdm.gruppe7.partnerboerse.shared.report.CompositeParagraph;
@@ -287,5 +289,56 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		return result;
 
 	}
+	
+	
+	
+	/**
+	 * Alle Infos eines Nutzers
+	 * 
+	 */
 
+	
+	public AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np) throws IllegalArgumentException{
+		
+		
+		if (this.getPartnerboerseAdministration() == null){
+			return null;
+		}
+		
+		AllInfosOfNutzerReport result = new AllInfosOfNutzerReport();
+		
+		result.setTitle("Alle Infos des Nutzers");
+		
+		this.addImprint(result);
+		
+		result.setCreated(new Date());
+		
+		//Kopfdaten
+		CompositeParagraph header = new CompositeParagraph();
+		
+		header.addSubParagraph(new SimpleParagraph(np.getVorname() + ", "
+		        + np.getNachname()));
+		
+	    result.setHeaderData(header);
+
+	    //Report
+	    Row headline = new Row();
+	    headline.addColumn(new Column("EigenschaftId"));
+	    headline.addColumn(new Column("Infotext"));
+		
+	    result.addRow(headline);
+	    
+	    
+	    List<Info> infos = this.partnerboerseAdministration.getAllInfosNeuReport(np.getProfilId());
+	    
+	    for (Info in : infos) {
+	    	Row infoRow = new Row();
+	        infoRow.addColumn(new Column(String.valueOf(in.getEigenschaftId())));
+	        infoRow.addColumn(new Column(in.getInfotext()));
+	        result.addRow(infoRow);
+	    }
+	    
+		return result;
+		
+	}
 }
