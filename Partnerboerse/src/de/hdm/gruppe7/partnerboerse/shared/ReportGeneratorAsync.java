@@ -3,7 +3,6 @@ package de.hdm.gruppe7.partnerboerse.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
 
@@ -35,6 +34,5 @@ public interface ReportGeneratorAsync {
 	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
 			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);
 
-	void createAllInfosOfNutzerReport(Nutzerprofil n,
-			AsyncCallback<AllInfosOfNutzerReport> callback);
+	
 }

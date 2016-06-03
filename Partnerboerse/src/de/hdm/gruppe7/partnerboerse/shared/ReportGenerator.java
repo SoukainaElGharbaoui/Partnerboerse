@@ -40,7 +40,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
 
@@ -75,5 +74,5 @@ public interface ReportGenerator extends RemoteService {
 	  (Nutzerprofil n) throws IllegalArgumentException;
 	  
 	  
-	  public abstract AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil n) throws IllegalArgumentException;
+	  
 }
