@@ -412,15 +412,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
-			
-			
+		
 			// Vergleich der Beschreibungsinfos
 			for (Info rin : referenzinfo){
 				for (Info vin : vergleichsinfo){
 			if (rin.getEigenschaftId() == vin.getEigenschaftId()){
 				counter++;
 				if (rin.getInfotext().equals(vin.getInfotext())){
-					aehnlichkeit= aehnlichkeit + 1;
+					aehnlichkeit = aehnlichkeit + 1;
 				}
 			}
 		}
