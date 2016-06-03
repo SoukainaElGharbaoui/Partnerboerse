@@ -4,11 +4,20 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+
+
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
+import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
@@ -31,10 +40,12 @@ import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaege
  * 
  * Modifizierender @author Milena Weinmann
  */
+
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
+	private InfoMapper infoMapper = null;
 	/**
 	 * Ein ReportGenerator benötigt Zugriff auf die PartnerboerseAdministration, da diese die
 	 * essentiellen Methoden für die Koexistenz von Datenobjekten (vgl. bo-Package) bietet.
@@ -198,6 +209,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * @param n das Nutzerprofil-Objekt bzgl. dessen der Report erstellt werden soll.
 	 * @return der fertige Report
 	 */
+	/* (non-Javadoc)
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createUnangesehenePartnervorschlaegeReport(de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil)
+	 */
 	public UnangesehenePartnervorschlaegeReport createUnangesehenePartnervorschlaegeReport(Nutzerprofil n) 
 			throws IllegalArgumentException {
 		
@@ -246,6 +260,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		// Überschriften der Kopfzeile ablegen.
 		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Aehnlichkeit"));
 		headline.addColumn(new Column("Vornamee"));
 		headline.addColumn(new Column("Nachname"));
 		headline.addColumn(new Column("Geschlecht"));
@@ -254,7 +269,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		headline.addColumn(new Column("Haarfarbe"));
 		headline.addColumn(new Column("Raucherstatus"));
 		headline.addColumn(new Column("Religion"));
+		
+		List<Eigenschaft> eigenschaften = this.partnerboerseAdministration.getAllEigenschaftenNeu();
+		int max = 0;
+		for(Eigenschaft e : eigenschaften) {
+			
+			headline.addColumn(new Column(e.getErlaeuterung()));
+			max++;
+		}
 
+
+		
 		// Kopfzeile hinzufügen.
 		result.addRow(headline);
 
@@ -270,6 +295,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 			// Zeile befüllen.
 			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getProfilId())));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getAehnlichkeit()) + "%"));
 			nutzerprofilRow.addColumn(new Column(pv.getVorname()));
 			nutzerprofilRow.addColumn(new Column(pv.getNachname()));
 			nutzerprofilRow.addColumn(new Column(pv.getGeschlecht()));
@@ -278,7 +304,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			nutzerprofilRow.addColumn(new Column(pv.getHaarfarbe()));
 			nutzerprofilRow.addColumn(new Column(pv.getRaucher()));
 			nutzerprofilRow.addColumn(new Column(pv.getReligion()));
-
+			
+			List<Info> info = this.partnerboerseAdministration.getAllInfosNeuReport(pv.getProfilId());
+			int counter = 1;
+			for (Info in : info) {
+				
+				while (counter < max){
+					
+				if (in.getEigenschaftId() == counter){
+					nutzerprofilRow.addColumn(new Column(in.getInfotext()));
+					break;
+				} else {
+					nutzerprofilRow.addColumn(new Column(""));	
+					counter ++;
+				}
+				
+				}
+				counter ++;
+			}
 			// Zeile dem Report hinzufügen.
 			result.addRow(nutzerprofilRow);
 		}
@@ -323,7 +366,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 	    //Report
 	    Row headline = new Row();
-	    headline.addColumn(new Column("EigenschaftId"));
+	    headline.addColumn(new Column("Eigenschaft"));
 	    headline.addColumn(new Column("Infotext"));
 		
 	    result.addRow(headline);
