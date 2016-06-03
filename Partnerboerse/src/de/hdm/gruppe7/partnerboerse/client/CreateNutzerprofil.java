@@ -38,7 +38,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel = new Label("*");
 	private Label reqLabel2 = new Label("*");
 	private Label reqLabel3 = new Label("*");
-	Label warnungLabel = new Label();
+	final Label warnungLabel = new Label();
 	
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
@@ -170,36 +170,42 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-
-				ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
-						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
-						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
-						emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								informationLabel.setText("Es trat ein Fehler auf");
-								RootPanel.get().add(new Label(caught.toString()));
-							}
-
-							@Override
-							public void onSuccess(Nutzerprofil result) {
-								
-								if(vornameTextBox.getText().length() == 0  && nachnameTextBox.getText().length()== 0){
-									warnungLabel.setText("Bitte geben Sie Ihren Vor- und Nachnamen ein.");
+				
+								if(vornameTextBox.getText().length()== 0){
+									warnungLabel.setText("Bitte geben Sie Ihren vollen Namen ein");
 									verPanel.add(warnungLabel);
-								} else {
-								informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
+									
+								} else if (nachnameTextBox.getText().length()==0){
+									warnungLabel.setText("Bitte geben Sie Ihren vollen Namen ein");
+									verPanel.add(warnungLabel);			
+								
+			}
+								else {
+									
+									ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
+											nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
+											Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
+											raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+											emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
 
-							}
+												@Override
+												public void onFailure(Throwable caught) {
+													informationLabel.setText("Es trat ein Fehler auf");
+													
+												}
 
-							}});
-				
-				CreateInfoNp createInfoNp = new CreateInfoNp();
-		RootPanel.get("Details").clear();
-		RootPanel.get("Details").add(createInfoNp);
-				
+												@Override
+												public void onSuccess(Nutzerprofil result) {													
+													informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
+
+												}
+
+												});
+									CreateInfoNp createInfoNp = new CreateInfoNp();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createInfoNp);
+							
+								}
 
 			}
 

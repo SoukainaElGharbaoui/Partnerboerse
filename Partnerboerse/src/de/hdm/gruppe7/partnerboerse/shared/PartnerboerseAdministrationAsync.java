@@ -349,6 +349,9 @@ public interface PartnerboerseAdministrationAsync {
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback)
 			throws Exception;
 
+	void pruefeNutzername(String vorname, String nachname,
+			AsyncCallback<String> callback);
+
 	
 
 }

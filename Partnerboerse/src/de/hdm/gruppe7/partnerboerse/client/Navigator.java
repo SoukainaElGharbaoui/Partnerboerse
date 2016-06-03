@@ -61,7 +61,7 @@ public class Navigator extends VerticalPanel {
 //		TreeItem meinNutzerprofil = new TreeItem(); 
 //		meinNutzerprofil.setText("Mein Nutzerprofil");
 //		meinNutzerprofil.addTextItem("Meine Nutzerprofildaten"); 
-//		meinNutzerprofil.addTextItem("Meine Infos"); 
+//    	meinNutzerprofil.addTextItem("Meine Infos"); 
 //		
 //		TreeItem meineSuchprofile = new TreeItem(); 
 //		meineSuchprofile.setText("Meine Suchprofile");
@@ -71,8 +71,8 @@ public class Navigator extends VerticalPanel {
 //		andereNutzerprofile.addTextItem("Meine Merkliste"); 
 //		andereNutzerprofile.addTextItem("Meine Sperrliste"); 
 //		
-//		TreeItem meinePartnervorschlaege = new TreeItem(); 
-//		meinePartnervorschlaege.setText("Meine Partnervorschläge");
+//	    TreeItem meinePartnervorschlaege = new TreeItem(); 
+//	    meinePartnervorschlaege.setText("Meine Partnervorschläge");
 //		meinePartnervorschlaege.addTextItem("Meine unangesehenen Partnervorschläge"); 
 //		meinePartnervorschlaege.addTextItem("Meine Partnervorschläge anhand von Suchprofilen"); 
 //		

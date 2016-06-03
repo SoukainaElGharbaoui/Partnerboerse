@@ -332,6 +332,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	Nutzerprofil login(String requestUri) throws Exception;
 
+	public String pruefeNutzername(String vorname, String nachname) throws IllegalArgumentException;
+
 	
 
 }

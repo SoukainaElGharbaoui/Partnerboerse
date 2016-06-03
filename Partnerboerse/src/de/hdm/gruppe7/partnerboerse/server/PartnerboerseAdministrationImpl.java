@@ -11,6 +11,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
@@ -772,6 +773,13 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 		}
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
+	}
+
+	@Override
+	public String pruefeNutzername(String vorname, String nachname)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
