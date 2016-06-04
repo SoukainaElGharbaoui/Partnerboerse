@@ -15,10 +15,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 public class ShowSperrliste extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -69,6 +72,7 @@ public class ShowSperrliste extends VerticalPanel {
 		 */
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getGesperrteNutzerprofileFor(new AsyncCallback<Sperrliste>() {
+
 
 					@Override
 					public void onFailure(Throwable caught) {

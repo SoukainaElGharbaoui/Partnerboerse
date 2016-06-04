@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
@@ -92,6 +94,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
 
+
 			@Override
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf.");
@@ -109,8 +112,12 @@ public class ShowSuchprofil extends VerticalPanel {
 		});
 
 		/**
+<<<<<<< HEAD
 		 * Bei Bet�tigung des createSuchrprofilButtons werden alle
 		 * Aehnlichkeiten gel�scht
+=======
+		 * Bei Bet�tigung des createSuchrprofilButtons werden alle Aehnlichkeiten gel�scht
+>>>>>>> branch 'NinaBaumgaertner' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
 		 */
 
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
@@ -184,6 +191,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
+
 
 						ClientsideSettings.getPartnerboerseAdministration()
 								.aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {

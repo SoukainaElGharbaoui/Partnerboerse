@@ -18,10 +18,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class CreateSuchprofil extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel und HorizontalPanel hinzufügen.
 	 */
@@ -156,7 +159,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			
 			// Prüfen, ob der Suchprofilname bereits existiert.
-			ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(Benutzer.getProfilId(), suchprofilnameTextBox.getText(), 
+			ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(nutzerprofil.getProfilId(), suchprofilnameTextBox.getText(), 
 					new AsyncCallback<Integer>() {
 
 						public void onFailure(Throwable caught) {
@@ -229,6 +232,7 @@ public class CreateSuchprofil extends VerticalPanel {
 			
 			ClientsideSettings.getPartnerboerseAdministration().
 			getSuchprofilByName(suchprofilnameTextBox.getText(), new  AsyncCallback<Suchprofil>(){
+
 
 				@Override
 				public void onFailure(Throwable caught) {

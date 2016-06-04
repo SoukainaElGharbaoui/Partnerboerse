@@ -25,13 +25,13 @@ public class Profil extends BusinessObject {
 	public void setKoerpergroesseInt(int koerpergroesseInt) {
 		this.koerpergroesseInt = koerpergroesseInt;
 	}
-
-	public int getProfilId() {
-		return profilId;
-	}
-
+	
 	public void setProfilId(int profilId) {
 		this.profilId = profilId;
+	}
+	
+	public int getProfilId() {
+		return this.profilId;
 	}
 
 	public String getGeschlecht() {

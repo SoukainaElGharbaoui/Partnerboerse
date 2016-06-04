@@ -19,9 +19,12 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditNutzerprofil extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	public VerticalPanel verPanel = new VerticalPanel();
 	public Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
 	public FlexTable editNutzerprofilFlexTable = new FlexTable();
@@ -187,7 +190,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
 
@@ -195,6 +198,7 @@ public class EditNutzerprofil extends VerticalPanel {
 						});
 				// DELETE Methode
 				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(
+
 						new AsyncCallback<Void>() {
 
 							@Override

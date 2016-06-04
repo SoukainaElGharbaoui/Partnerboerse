@@ -16,6 +16,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowPartnervorschlaege extends VerticalPanel {
 	private int aehnlichkeit = 0;
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	public ShowPartnervorschlaege() {
 		
@@ -55,6 +57,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
+
 					
 					
 					@Override

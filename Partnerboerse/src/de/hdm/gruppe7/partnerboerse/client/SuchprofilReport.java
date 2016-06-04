@@ -18,6 +18,8 @@ import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
  */
 public class SuchprofilReport extends VerticalPanel {
 	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -38,6 +40,7 @@ public class SuchprofilReport extends VerticalPanel {
 		 * Nutzer auslesen.
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override

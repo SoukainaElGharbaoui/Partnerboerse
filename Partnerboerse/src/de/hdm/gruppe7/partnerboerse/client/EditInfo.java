@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
@@ -15,9 +16,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class EditInfo extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanels hinzufügen.
 	 */
@@ -64,6 +68,7 @@ public class EditInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(new AsyncCallback<List<String>>() {
+
 
 			@Override
 			public void onFailure(Throwable caught) {

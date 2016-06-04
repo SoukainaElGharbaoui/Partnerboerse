@@ -59,6 +59,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException;
 
+
 	/**
 	 * Alle Nutzerprofile auslesen.
 	 */
@@ -160,8 +161,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Vermerk einf�gen.
 	public void vermerkSetzen(int fremdprofilId) throws IllegalArgumentException;
 
+
 	// Vermerk l�schen.
 	public void vermerkLoeschen(int fremdprofilId) throws IllegalArgumentException;
+
 
 	/*
 	 * *************************************************************************
@@ -183,14 +186,19 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
 
+
 	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;
 
+
 	// Sperrung einf�gen.
+
 	public void sperrungSetzen(int fremdprofilId) throws IllegalArgumentException;
+
 
 	// Sperrung l�schen.
 	public void sperrungLoeschen(int fremdprofilId) throws IllegalArgumentException;
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Sperrliste
@@ -332,7 +340,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	boolean isUserRegistered(String userEmail);
 
-	public void insertEmail(String emailAddress) throws IllegalArgumentException;
+//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException;
 
 	Nutzerprofil login(String requestUri) throws Exception;
 	

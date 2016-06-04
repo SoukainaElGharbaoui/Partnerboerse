@@ -2,27 +2,20 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.client.gui.NutzerprofilForm;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
-import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class Partnerboerse implements EntryPoint {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
@@ -47,7 +40,7 @@ public class Partnerboerse implements EntryPoint {
 		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
 		try {
-			partnerboerseAdministration.login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
+			ClientsideSettings.getPartnerboerseAdministration().login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
 					new AsyncCallback<Nutzerprofil>() {
 
 						public void onFailure(Throwable caught) {
@@ -84,6 +77,7 @@ public class Partnerboerse implements EntryPoint {
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
 
+
 							}
 
 							// wenn der user nicht eingeloggt ist
@@ -91,7 +85,6 @@ public class Partnerboerse implements EntryPoint {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
 								RootPanel.get("Navigator").add(loginPanel);
-
 							}
 						}
 					});
@@ -101,4 +94,5 @@ public class Partnerboerse implements EntryPoint {
 		}
 
 	}
+
 }

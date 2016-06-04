@@ -28,17 +28,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
- 
 
 
 public class Navigator extends VerticalPanel {
-
-	private LoginInfo loginInfo;
-
-	public Navigator(LoginInfo loginInfo) {
-		this.loginInfo = loginInfo;
-	}
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	int aehnlichkeit = 0;
 
@@ -147,7 +144,7 @@ public class Navigator extends VerticalPanel {
 		showEigenesNpButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+				ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showEigenesNp);
 			}
@@ -217,7 +214,9 @@ public class Navigator extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 
+
 				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(
+
 						new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
@@ -245,6 +244,7 @@ public class Navigator extends VerticalPanel {
 													aehnlichkeit = result;
 													ClientsideSettings.getPartnerboerseAdministration()
 															.aehnlichkeitSetzen(fremdprofilId,
+
 																	aehnlichkeit, new AsyncCallback<Void>() {
 
 																		@Override

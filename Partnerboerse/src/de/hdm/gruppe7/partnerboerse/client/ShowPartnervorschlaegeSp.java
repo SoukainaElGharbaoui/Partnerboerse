@@ -20,10 +20,13 @@ import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -86,8 +89,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gef�llt
 		 */
+
 		
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(
+
 				new AsyncCallback<List<Suchprofil>>() {
 
 					@Override
@@ -115,6 +120,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 			public void onClick(ClickEvent event){
 				
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp( 
+
 						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
 
 			@Override

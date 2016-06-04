@@ -13,9 +13,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class EditSuchprofil extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * VerticalPanel hinzufügen. 
@@ -131,11 +135,11 @@ public class EditSuchprofil extends VerticalPanel {
 
 		 */
 		// InfoLabel hinzufügen. 
-		final Label infoLabel = new Label();
-		
+		final Label infoLabel = new Label();		
 		
 		
 		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(suchprofilName, 
+
 				new AsyncCallback<Suchprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -231,6 +235,7 @@ public class EditSuchprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(new AsyncCallback<Void>(){
+
 					
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Es trat ein Fehler auf."); 
@@ -246,7 +251,7 @@ public class EditSuchprofil extends VerticalPanel {
 				});
 				
 				// Prüfen, ob der Suchprofilname beim Editieren verändert wird.
-				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(Benutzer.getProfilId(), 
+				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(nutzerprofil.getProfilId(), 
 						Integer.parseInt(suchprofilIdLabel.getText()), new AsyncCallback<String>() {
 
 							@Override
@@ -315,7 +320,7 @@ public class EditSuchprofil extends VerticalPanel {
 								// Wenn der Suchprofilname verändert wurde...
 								if(suchprofilnameVeraendert == 1) {
 									// Prüfen, ob der aktualisierte Suchprofilname bereits existiert.
-									ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(Benutzer.getProfilId(), suchprofilNameTextBox.getText(), 
+									ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(nutzerprofil.getProfilId(), suchprofilNameTextBox.getText(), 
 											new AsyncCallback<Integer>() {
 					
 												public void onFailure(Throwable caught) {

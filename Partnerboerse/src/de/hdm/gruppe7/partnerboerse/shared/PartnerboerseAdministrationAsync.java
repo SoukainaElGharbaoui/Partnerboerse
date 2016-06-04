@@ -155,8 +155,10 @@ public interface PartnerboerseAdministrationAsync {
 	// Vermerk einf�gen.
 	void vermerkSetzen(int fremdprofilId, AsyncCallback<Void> callback);
 
+
 	// Vermerk l�schen.
 	void vermerkLoeschen(int fremdprofilId, AsyncCallback<Void> callback);
+
 
 	/*
 	 * *************************************************************************
@@ -178,14 +180,18 @@ public interface PartnerboerseAdministrationAsync {
 	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
 	void getSperrstatusFremdprofil(int fremdprofilId, AsyncCallback<Integer> callback);
 
+
 	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int fremdprofilId, AsyncCallback<Integer> callback);
+
 
 	// Sperrung einf�gen.
 	void sperrungSetzen(int fremdprofilId, AsyncCallback<Void> callback);
 
+
 	// Sperrung l�schen.
 	void sperrungLoeschen(int fremdprofilId, AsyncCallback<Void> callback);
+
 
 	/*
 	 * *************************************************************************
@@ -260,7 +266,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
+
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
+
 
 	void deleteAllInfosNeu(AsyncCallback<Void> callback);
 
@@ -317,7 +325,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
 
-	void insertEmail(String emailAddress, AsyncCallback<Void> callback);
+//	public void insertEmail(int profilId, String emailAddress, AsyncCallback<Nutzerprofil> callback);
 
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 

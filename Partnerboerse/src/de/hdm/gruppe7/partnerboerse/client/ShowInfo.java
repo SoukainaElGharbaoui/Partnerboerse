@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowInfo extends VerticalPanel {
 
@@ -22,6 +23,8 @@ public class ShowInfo extends VerticalPanel {
 	private Label informationLabel = new Label();
 
 	private FlexTable showInfoFlexTable = new FlexTable();
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * Konstruktor
@@ -129,7 +132,8 @@ public class ShowInfo extends VerticalPanel {
 							public void onSuccess(Void result) {
 								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp();
+								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 							}
