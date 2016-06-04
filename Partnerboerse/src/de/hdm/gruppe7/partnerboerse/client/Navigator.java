@@ -44,13 +44,6 @@ public class Navigator extends VerticalPanel {
 
 	public Navigator() {
 		VerticalPanel verPanel1 = new VerticalPanel();
-		/*
-		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
-		 * seine eigene Profil-ID gesetzt (hier noch temporär - normalerweisen
-		 * im Login nach Ermittlung über Mailadresse
-		 */
-		Benutzer b = new Benutzer();
-		b.setProfilId(1);
 		
 //		Tree t = new Tree(); 
 //		
@@ -224,7 +217,7 @@ public class Navigator extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().getUnangeseheneNutzerprofile(
 						new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
@@ -240,7 +233,7 @@ public class Navigator extends VerticalPanel {
 									final int fremdprofilId = np.getProfilId();
 
 									ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+											fremdprofilId, new AsyncCallback<Integer>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
@@ -251,7 +244,7 @@ public class Navigator extends VerticalPanel {
 												public void onSuccess(Integer result) {
 													aehnlichkeit = result;
 													ClientsideSettings.getPartnerboerseAdministration()
-															.aehnlichkeitSetzen(Benutzer.getProfilId(), fremdprofilId,
+															.aehnlichkeitSetzen(fremdprofilId,
 																	aehnlichkeit, new AsyncCallback<Void>() {
 
 																		@Override

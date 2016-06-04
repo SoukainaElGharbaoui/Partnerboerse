@@ -135,7 +135,7 @@ public class EditSuchprofil extends VerticalPanel {
 		
 		
 		
-		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(Benutzer.getProfilId(), suchprofilName, 
+		ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(suchprofilName, 
 				new AsyncCallback<Suchprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -230,7 +230,7 @@ public class EditSuchprofil extends VerticalPanel {
 		speichernButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(new AsyncCallback<Void>(){
 					
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Es trat ein Fehler auf."); 

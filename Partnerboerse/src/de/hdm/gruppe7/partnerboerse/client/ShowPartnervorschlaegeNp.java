@@ -68,7 +68,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
 
-		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(
 				new AsyncCallback<List<Nutzerprofil>>() {
 
 					@Override
@@ -102,7 +102,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 									// Besuch in die Datenbank einfügen.
 									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+											fremdprofilId, new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {

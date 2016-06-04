@@ -50,7 +50,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 */
 		final Label ueberschriftLabel = new Label(
 				"Diese Nutzerprofile koennten zu ihnen passen");
-		final Label ueberschriftLabel2 = new Label("Wählen Sie ein Suchprofil aus");
+		final Label ueberschriftLabel2 = new Label("Wï¿½hlen Sie ein Suchprofil aus");
 		ueberschriftLabel.addStyleDependentName("partnerboerse-label"); 
 		verPanel.add(ueberschriftLabel2);
 	
@@ -84,10 +84,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
 		
 		/**
-		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
+		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gefï¿½llt
 		 */
 		
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(
 				new AsyncCallback<List<Suchprofil>>() {
 
 					@Override
@@ -107,14 +107,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		});
 		
 		/**
-		 * Bei Betätigung des AnzeigenButtons werden alle Partnervorschlaege anhand des 
-		 * gewählen Suchprofils ausgegeben, nach Aehnlichkeit geordnet
+		 * Bei Betï¿½tigung des AnzeigenButtons werden alle Partnervorschlaege anhand des 
+		 * gewï¿½hlen Suchprofils ausgegeben, nach Aehnlichkeit geordnet
 		 */
 		
 		anzeigenSpButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event){
 				
-				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), 
+				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp( 
 						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
 
 			@Override
@@ -139,7 +139,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 					partnervorschlaegeSpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));
 					partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht()); 
 					
-					// Anzeigen-Button für das Fremdprofil hinzufÃ¼gen und ausbauen. 
+					// Anzeigen-Button fï¿½r das Fremdprofil hinzufÃ¼gen und ausbauen. 
 					final Button anzeigenButton = new Button("Anzeigen");
 					partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
 					
@@ -163,7 +163,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 			
 		});
 				/**
-				 * Alle Elemente dem verPanel hinzufügen
+				 * Alle Elemente dem verPanel hinzufï¿½gen
 				 */
 				verPanel.add(ergebnisLabel);
 				verPanel.add(infoLabel);
@@ -176,7 +176,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		});
 		
 		/**
-		 * Alle Elemente dem vertical und horizontal Panel hinzufügen
+		 * Alle Elemente dem vertical und horizontal Panel hinzufï¿½gen
 		 */
 							
 		verPanel.add(ueberschriftLabel2);

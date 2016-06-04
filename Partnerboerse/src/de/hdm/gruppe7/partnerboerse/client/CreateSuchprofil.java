@@ -228,7 +228,7 @@ public class CreateSuchprofil extends VerticalPanel {
 			});
 			
 			ClientsideSettings.getPartnerboerseAdministration().
-			getSuchprofilByName(Benutzer.getProfilId(), suchprofilnameTextBox.getText(), new  AsyncCallback<Suchprofil>(){
+			getSuchprofilByName(suchprofilnameTextBox.getText(), new  AsyncCallback<Suchprofil>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

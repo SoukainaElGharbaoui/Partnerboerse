@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class ShowInfo extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
-	
+
 	private FlexTable showInfoFlexTable = new FlexTable();
 
 	/**
@@ -31,7 +32,7 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Label �berschrift
 		 */
-		
+
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
@@ -57,7 +58,6 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
-		
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
 				new AsyncCallback<List<String>>() {
@@ -80,7 +80,7 @@ public class ShowInfo extends VerticalPanel {
 							String eigenschaftId = result.get(i + 1);
 							String erlaeuterung = result.get(i + 2);
 							String infotext = result.get(i + 3);
-//							String typ = result.get(i + 4);
+							// String typ = result.get(i + 4);
 
 							showInfoFlexTable.setText(row1, 0, nutzerprofilId);
 							showInfoFlexTable.setText(row1, 1, eigenschaftId);
@@ -96,7 +96,6 @@ public class ShowInfo extends VerticalPanel {
 					}
 				});
 
-
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
@@ -109,13 +108,17 @@ public class ShowInfo extends VerticalPanel {
 		final Button bearbeitenButton = new Button("Bearbeiten");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
-
 		
+		final Button erstellenButton = new Button("Infos anlegen");
+		verPanel.add(buttonPanel);
+		buttonPanel.add(erstellenButton);	
+		
+
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
-						Benutzer.getProfilId(), new AsyncCallback<Void>(){
+						new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -125,7 +128,7 @@ public class ShowInfo extends VerticalPanel {
 							@Override
 							public void onSuccess(Void result) {
 								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
-								
+
 								ShowEigenesNp showNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
@@ -133,13 +136,20 @@ public class ShowInfo extends VerticalPanel {
 						});
 			}
 		});
-		
-		
+
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				EditInfo editInfo = new EditInfo();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfo);
+			}
+		});
+		
+		erstellenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				CreateInfoNp createInfoNp = new CreateInfoNp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createInfoNp);
 			}
 		});
 

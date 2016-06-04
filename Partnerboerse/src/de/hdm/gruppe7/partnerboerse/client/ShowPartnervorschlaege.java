@@ -46,7 +46,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 		final Button showPartnervorschlaegeSpButton = new Button("Partnervorschlaege mit Suchprofil anzeigen");
 		
 		/**
-		 * Bei Betätigung des Buttons werden alle Suchprofile des Nutzers mit allen Nutzerprofilen 
+		 * Bei Betï¿½tigung des Buttons werden alle Suchprofile des Nutzers mit allen Nutzerprofilen 
 		 * verglichen und in der Datenbank gespeichert
 		 */
 
@@ -54,7 +54,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 			
 			public void onClick(ClickEvent event) {
 				
-				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
+				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
 					
 					
 					@Override
@@ -105,7 +105,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 										
 						// die Aehnlichket wird in der Datenbank gespeichert
 										ClientsideSettings.getPartnerboerseAdministration().
-										aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilId, suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
+										aehnlichkeitSetzenSp(suchprofilId, suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
 				
 											@Override
 											public void onFailure(Throwable caught) {
