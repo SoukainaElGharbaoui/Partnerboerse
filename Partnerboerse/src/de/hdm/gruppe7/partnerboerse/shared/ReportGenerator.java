@@ -72,4 +72,7 @@ public interface ReportGenerator extends RemoteService {
 	  
 	  public abstract UnangesehenePartnervorschlaegeReport createUnangesehenePartnervorschlaegeReport
 	  (Nutzerprofil n) throws IllegalArgumentException;
+	  
+	  
+	  
 }

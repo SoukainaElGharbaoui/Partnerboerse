@@ -31,6 +31,8 @@ public class ShowSuchprofil extends VerticalPanel {
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
+	
+	
 
 	/**
 	 * Konstruktor
@@ -184,6 +186,10 @@ public class ShowSuchprofil extends VerticalPanel {
 
 								// Religion aus der Datenbank holen
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
+								
+								int profilId = result.getProfilId();
+								
+								
 
 							}
 
@@ -234,6 +240,9 @@ public class ShowSuchprofil extends VerticalPanel {
 					}
 
 				});
+				
+				
+
 
 				verPanel2.add(showSuchprofilFlexTable);
 				buttonPanel.add(bearbeitenButton);
@@ -242,12 +251,16 @@ public class ShowSuchprofil extends VerticalPanel {
 				verPanel2.add(infoLabel);
 
 				ShowInfo showInfo = new ShowInfo();
+				
+//				ShowInfo showInfo = new ShowInfo(Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
 				verPanel3.add(showInfo);
+				
 
 			}
 
 		});
-
+		
+	
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(auswahlListBox);

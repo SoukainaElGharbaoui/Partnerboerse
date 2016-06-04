@@ -63,7 +63,9 @@ public class ShowInfo extends VerticalPanel {
 		 */
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
+
 				new AsyncCallback<List<String>>() {
+
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -120,9 +122,7 @@ public class ShowInfo extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
-						new AsyncCallback<Void>() {
-
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>(){
 							@Override
 							public void onFailure(Throwable caught) {
 								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");

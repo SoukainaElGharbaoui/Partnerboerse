@@ -159,7 +159,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			
 			// Prüfen, ob der Suchprofilname bereits existiert.
-			ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(nutzerprofil.getProfilId(), suchprofilnameTextBox.getText(), 
+			ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(suchprofilnameTextBox.getText(), 
 					new AsyncCallback<Integer>() {
 
 						public void onFailure(Throwable caught) {

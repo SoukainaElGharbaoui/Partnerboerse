@@ -105,12 +105,12 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Existens des Suchprofilnamens beim Anlegen �berpr�fen.
 	 */
-	void pruefeSuchprofilname(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
+	void pruefeSuchprofilname(String suchprofilname, AsyncCallback<Integer> callback);
 
 	/**
 	 * Existens des Suchprofilnamens beim Editieren �berpr�fen.
 	 */
-	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, AsyncCallback<String> callback);
+	void pruefeSuchprofilnameEdit(int suchprofilId, AsyncCallback<String> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -243,7 +243,7 @@ public interface PartnerboerseAdministrationAsync {
 	void aehnlichkeitEntfernenSp(AsyncCallback<Void> callback);
 
 	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-	void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	void getNutzerprofileOhneGesetzteSperrung(AsyncCallback<List<Nutzerprofil>> callback);
 
 	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
@@ -265,7 +265,9 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 
 	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
-
+	
+	void getAllInfosNeuReport(AsyncCallback<List<Info>> callback);
+	
 
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
 

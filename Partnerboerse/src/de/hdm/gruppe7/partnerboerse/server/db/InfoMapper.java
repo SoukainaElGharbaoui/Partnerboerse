@@ -72,6 +72,10 @@ public class InfoMapper {
 		return i;
 	}
 
+	
+	
+
+	
 	public List<Info> findAllInfosNeu(int nutzerprofilId) {
 		Connection con = DBConnection.connection();
 

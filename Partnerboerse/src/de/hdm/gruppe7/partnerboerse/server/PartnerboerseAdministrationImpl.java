@@ -44,8 +44,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private SperrlisteMapper sperrlisteMapper = null;
 	private InfoMapper infoMapper = null;
 	private Nutzerprofil profil;
-	private Suchprofil suchprofil;
-
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -65,8 +63,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper();
 		this.infoMapper = InfoMapper.infoMapper();
 	}
-	
-
 
 	public void setUser(Nutzerprofil n) {
 		this.profil = n;
@@ -83,7 +79,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil anlegen.
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException {
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
+			throws IllegalArgumentException {
 
 		// Neues Nutzerprofil-Objekt erstellen.
 		// Nutzerprofil n = new Nutzerprofil();
@@ -96,7 +93,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setRaucher(raucher);
 		profil.setReligion(religion);
 		profil.setEmailAddress(emailAddress);
-
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		profil.setProfilId(1);
@@ -250,15 +246,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
 	 */
-	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilname(profilId, suchprofilname);
+	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilname(profil.getProfilId(), suchprofilname);
 	}
 
 	/**
 	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
 	 */
-	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profilId, suchprofilId);
+	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profil.getProfilId(), suchprofilId);
 	}
 
 	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
@@ -392,8 +388,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		// Erforderliche Daten abrufen
 		Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
 		Nutzerprofil vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-		List<Info> referenzinfo = infoMapper.findInfosByProfilId(profil.getProfilId());
-		List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(profil.getProfilId());
+		List<Info> referenzinfo = infoMapper.findAllInfosNeu(profil.getProfilId());
+		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 
 		// Variablen zur Berechnung der Aehnlichkeit
 		int aehnlichkeit = 3;
@@ -427,6 +423,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					counter++;
 					if (rin.getInfotext().equals(vin.getInfotext())) {
 						aehnlichkeit = aehnlichkeit + 1;
+
 					}
 				}
 			}
@@ -467,10 +464,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws IllegalArgumentException {
 
 		Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
-
 		Nutzerprofil vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
+		List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
+		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 
 		int aehnlichkeitSp = 0;
+
+		int counter = 100;
 
 		if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
 			aehnlichkeitSp = aehnlichkeitSp + 40;
@@ -492,31 +492,44 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			aehnlichkeitSp = aehnlichkeitSp + 20;
 		}
 
-		aehnlichkeitSp = (100 / 100) * aehnlichkeitSp;
+		// Vergleich der Infos
+		for (Info rin : referenzinfo) {
+			for (Info vin : vergleichsinfo) {
+				if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
+					counter = counter + 10;
+					if (rin.getInfotext().equals(vin.getInfotext())) {
+						aehnlichkeitSp = aehnlichkeitSp + 10;
+
+					}
+				}
+			}
+		}
+
+		aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
 
 		return aehnlichkeitSp;
 
 	}
 
-	public void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp) throws IllegalArgumentException {
+	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
+	public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profil.getProfilId());
+	}
+
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException {
+
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profil.getProfilId(), suchprofilName);
+
+	}
+
+	public void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp)
+			throws IllegalArgumentException {
 		this.suchprofilMapper.insertAehnlichkeit(profil.getProfilId(), suchprofilId, suchprofilName, fremdprofilId,
 				aehnlichkeitSp);
 	}
 
 	public void aehnlichkeitEntfernenSp() throws IllegalArgumentException {
 		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
-	}
-
-	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
-	public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
-	}
-
-	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName)
-			throws IllegalArgumentException {
-
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profil.getProfilId(), suchprofilName);
 	}
 
 	/*
@@ -535,6 +548,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
 		return this.infoMapper.findAllEigenschaftenNeu();
+
 	}
 
 	public List<String> getAllInfosNeu() throws IllegalArgumentException {
@@ -559,6 +573,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 		System.out.println(list1);
 		return list1;
+	}
+
+	public List<Info> getAllInfosNeuReport() throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosNeu(profil.getProfilId());
 	}
 
 	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
@@ -623,27 +641,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return false;
 	}
 
-	@Override
-//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException {
-//		// Neues Nutzerprofil-Objekt erstellen.
-//				Nutzerprofil n = new Nutzerprofil();
-//				n.setEmailAddress(emailAddress);
-//
-//				// Vorläufige Profil-ID setzen.
-//				n.setProfilId(1);
-//
-//				return this.nutzerprofilMapper.insertEmail(n);
-//
-//	}
-
 	public Nutzerprofil login(String requestUri) throws Exception {
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 
 		Nutzerprofil n = new Nutzerprofil();
-
-//		NutzerprofilMapper.nutzerprofilMapper().findByNutzerprofilMitEmail(user.getEmail());
 		if (user != null) {
 
 			// EXISTING PROFILE
@@ -661,7 +664,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 			n.setLoggedIn(true);
 			n.setEmailAddress(user.getEmail());
-			
+
 		} else { // USER = NULL
 			n.setLoggedIn(false);
 

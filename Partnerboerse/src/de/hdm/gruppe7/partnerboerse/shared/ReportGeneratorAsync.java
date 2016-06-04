@@ -33,4 +33,6 @@ public interface ReportGeneratorAsync {
 
 	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
 			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);
+
+	
 }

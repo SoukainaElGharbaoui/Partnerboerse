@@ -251,7 +251,7 @@ public class EditSuchprofil extends VerticalPanel {
 				});
 				
 				// Prüfen, ob der Suchprofilname beim Editieren verändert wird.
-				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(nutzerprofil.getProfilId(), 
+				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit( 
 						Integer.parseInt(suchprofilIdLabel.getText()), new AsyncCallback<String>() {
 
 							@Override
@@ -320,7 +320,7 @@ public class EditSuchprofil extends VerticalPanel {
 								// Wenn der Suchprofilname verändert wurde...
 								if(suchprofilnameVeraendert == 1) {
 									// Prüfen, ob der aktualisierte Suchprofilname bereits existiert.
-									ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(nutzerprofil.getProfilId(), suchprofilNameTextBox.getText(), 
+									ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilname(suchprofilNameTextBox.getText(), 
 											new AsyncCallback<Integer>() {
 					
 												public void onFailure(Throwable caught) {

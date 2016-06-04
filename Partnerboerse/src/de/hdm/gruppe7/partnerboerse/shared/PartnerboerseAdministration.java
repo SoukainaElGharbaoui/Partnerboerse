@@ -109,12 +109,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
 	 */
-	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
+	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
 	
 	/**
 	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
 	 */
-	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException;
+	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
 		
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -255,7 +255,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 		public void aehnlichkeitEntfernenSp () throws IllegalArgumentException;
 		
 		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId) throws IllegalArgumentException;
+		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException;
 		
 //		//Ausgabe der Partnervorschlaege
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException;
@@ -280,8 +280,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createInfoNeu(int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
-	public List<String> getAllInfosNeu()
+	public List<String> getAllInfosNeu() throws IllegalArgumentException;
+
+	public List<Info> getAllInfosNeuReport()
 			throws IllegalArgumentException;
+
 
 	public void deleteAllInfosNeu()
 			throws IllegalArgumentException;
