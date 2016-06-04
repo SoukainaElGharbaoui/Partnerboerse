@@ -15,6 +15,8 @@ public class PartnerboerseReport implements EntryPoint {
 	Button unangesehenePartnervorschlaegeButton = new Button("Unangesehene Partnervorschläge");
 	
 	Button partnervorschlaegeSuchprofilButton = new Button("Partnervorschläge anhand von Suchprofilen");
+	
+
 
 	@Override
 	public void onModuleLoad() {
@@ -37,6 +39,10 @@ public class PartnerboerseReport implements EntryPoint {
 		// ClickHandler etc. einbauen
 		RootPanel.get("Navigator").add(partnervorschlaegeSuchprofilButton);
 	
+		
+		
+		
+		
 	}
 	
 	

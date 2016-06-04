@@ -30,7 +30,7 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 	 */
 	final Label infoLabel = new Label(); 
 	final Label ueberschriftLabel = new Label();
-	ueberschriftLabel.setText("Schonmal hier juhuu");
+	ueberschriftLabel.setText("Einen Moment bitte...");
 	
 	
 	/**

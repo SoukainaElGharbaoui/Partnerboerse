@@ -281,7 +281,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void createInfoNeu(int profilId, int eigenschaftId, String infotext,
 			AsyncCallback<Info> callback);
-
+	
+	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
+	
 	void getAllInfosNeu(int profilId, AsyncCallback<List<String>> callback);
 
 	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);

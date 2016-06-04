@@ -268,6 +268,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
+	public List<Info> getAllInfosNeuReport(int profilId)
+			throws IllegalArgumentException;
+	
 	public List<String> getAllInfosNeu(int profilId)
 			throws IllegalArgumentException;
 
