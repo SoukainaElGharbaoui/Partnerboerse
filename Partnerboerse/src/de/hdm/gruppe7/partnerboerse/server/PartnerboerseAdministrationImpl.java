@@ -470,8 +470,8 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			
 			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-			List<Info> referenzinfo = infoMapper.findInfosByProfilId(suchprofilId);
-			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
+			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 			
 			int aehnlichkeitSp = 0;
 			
@@ -502,7 +502,7 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 						for (Info rin : referenzinfo){		
 							for (Info vin : vergleichsinfo){
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()){
-							counter = counter+1;
+							counter= counter + 10;
 							if (rin.getInfotext().equals(vin.getInfotext())){
 								 aehnlichkeitSp= aehnlichkeitSp + 10;
 								
