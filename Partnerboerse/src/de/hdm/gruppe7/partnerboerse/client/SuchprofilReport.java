@@ -37,7 +37,7 @@ public class SuchprofilReport extends VerticalPanel {
 		/**
 		 * Nutzer auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(), 
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override

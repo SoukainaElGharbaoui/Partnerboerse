@@ -87,14 +87,14 @@ public class NutzerprofilMapper {
 
 			stmt.executeUpdate("UPDATE t_nutzerprofil1 " + "SET vorname=\"" + n.getVorname() + "\", " + " nachname=\""
 					+ n.getNachname() + "\", " + " geburtsdatum=\"" + n.getGeburtsdatumDate() + "\" "
-					+ "WHERE nutzerprofil_id=" + Benutzer.getProfilId());
+					+ "WHERE nutzerprofil_id=" + n.getProfilId());
 
 			stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE t_profil1 " + "SET geschlecht=\"" + n.getGeschlecht() + "\", " + " haarfarbe=\""
 					+ n.getHaarfarbe() + "\", " + " koerpergroesse=\"" + n.getKoerpergroesseInt() + "\", "
 					+ "raucher=\"" + n.getRaucher() + "\", " + " religion=\"" + n.getReligion() + "\" "
-					+ "WHERE profil_id=" + Benutzer.getProfilId());
+					+ "WHERE profil_id=" + n.getProfilId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -116,7 +116,7 @@ public class NutzerprofilMapper {
 			stmt.executeUpdate("DELETE FROM t_nutzerprofil1 " + "WHERE nutzerprofil_id=" + profilId);
 
 			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM t_profil1 WHERE profil_id=" + profilId);
+			stmt.executeUpdate("DELETE FROM t_profil1 " + "WHERE profil_id=" + profilId);
 
 			int suchprofilIdInt = 0;
 

@@ -64,7 +64,7 @@ public class EditInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(Benutzer.getProfilId(), 
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
 				new AsyncCallback<List<String>>(){
 
 					@Override

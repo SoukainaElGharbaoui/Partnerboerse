@@ -60,7 +60,7 @@ public class ShowInfo extends VerticalPanel {
 		
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
-				Benutzer.getProfilId(), new AsyncCallback<List<String>>() {
+				new AsyncCallback<List<String>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {

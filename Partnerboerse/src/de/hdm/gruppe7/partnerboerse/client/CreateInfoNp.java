@@ -142,7 +142,7 @@ public class CreateInfoNp extends VerticalPanel {
 										
 //										profilId = Benutzer.getProfilId();
 										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 									
 													@Override
@@ -197,7 +197,7 @@ public class CreateInfoNp extends VerticalPanel {
 										
 										nEingabe = lb.getSelectedItemText();
 										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
 											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 									
 													@Override

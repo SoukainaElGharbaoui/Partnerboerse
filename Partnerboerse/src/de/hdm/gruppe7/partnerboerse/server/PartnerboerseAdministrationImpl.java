@@ -40,6 +40,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private MerklisteMapper merklisteMapper = null; 
 	private SperrlisteMapper sperrlisteMapper = null; 
 	private InfoMapper infoMapper = null;
+	private Nutzerprofil profil;
 
 
 	/**
@@ -61,6 +62,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.infoMapper = InfoMapper.infoMapper();
 	}
 
+	public void setUser(Nutzerprofil n) {
+		this.profil = n;
+	}
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Nutzerprofil
@@ -85,7 +90,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setHaarfarbe(haarfarbe);
 		n.setRaucher(raucher);
 		n.setReligion(religion);
-		// n.setEmailAddress(emailAddress);
+		n.setEmailAddress(emailAddress);
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		n.setProfilId(1);
@@ -97,35 +102,36 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException {
 
 		Nutzerprofil n = new Nutzerprofil();
-		n.setVorname(vorname);
-		n.setNachname(nachname);
-		n.setGeschlecht(geschlecht);
-		n.setGeburtsdatumDate(geburtsdatumDate);
-		n.setKoerpergroesseInt(koerpergroesseInt);
-		n.setHaarfarbe(haarfarbe);
-		n.setRaucher(raucher);
-		n.setReligion(religion);
+		profil.setVorname(vorname);
+		profil.setNachname(nachname);
+		profil.setGeschlecht(geschlecht);
+		profil.setGeburtsdatumDate(geburtsdatumDate);
+		profil.setKoerpergroesseInt(koerpergroesseInt);
+		profil.setHaarfarbe(haarfarbe);
+		profil.setRaucher(raucher);
+		profil.setReligion(religion);
+		profil.setEmailAddress(emailAddress);
 
-		this.nutzerprofilMapper.updateNutzerprofil(n);
+		this.nutzerprofilMapper.updateNutzerprofil(profil);
 	}
 
 	/**
 	 * Nutzerprofil lÃ¶schen.
 	 */
 	@Override
-	public void deleteNutzerprofil(int profilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
+	public void deleteNutzerprofil() throws IllegalArgumentException {
+		this.nutzerprofilMapper.deleteNutzerprofil(profil.getProfilId());
 	}
 
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	@Override
-	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
+	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
 	}
 
 	/**
@@ -594,12 +600,12 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	}	
 		
 	
-	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
+	public List<String> getAllInfosNeu() throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
 		List<Info> result = new ArrayList<Info>();
 		
-		result = this.infoMapper.findAllInfosNeu(nutzerprofilId);
+		result = this.infoMapper.findAllInfosNeu(profil.getProfilId());
 
 		for (Info i : result) {
 
@@ -619,11 +625,11 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	}
 		
 	
-	public Info createInfoNeu(int profilId, int eigenschaftId, String infotext) 
+	public Info createInfoNeu(int eigenschaftId, String infotext) 
 			throws IllegalArgumentException {
 		
 		Info i = new Info();
-		i.setProfilId(profilId);
+		i.setProfilId(profil.getProfilId());
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
 		

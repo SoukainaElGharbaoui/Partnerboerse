@@ -37,7 +37,7 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 	 * Nutzer auslesen.
 	 */
 	
-	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(1, new AsyncCallback<Nutzerprofil>(){
+	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(new AsyncCallback<Nutzerprofil>(){
 
 		@Override
 		public void onFailure(Throwable caught) {

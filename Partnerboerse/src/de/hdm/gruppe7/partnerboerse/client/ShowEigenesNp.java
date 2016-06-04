@@ -75,7 +75,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 		final Label infoLabel = new Label();
 
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -155,7 +155,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(Benutzer.getProfilId());
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
 
@@ -192,7 +192,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(Benutzer.getProfilId(),
+						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(
 								new AsyncCallback<Void>() {
 
 									@Override

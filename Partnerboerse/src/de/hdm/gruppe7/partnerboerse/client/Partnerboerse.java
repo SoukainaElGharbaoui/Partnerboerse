@@ -24,25 +24,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class Partnerboerse implements EntryPoint {
 
-	// private PartnerboerseAdministrationAsync partnerboerseAdministration =
-	// ClientsideSettings
-	// .getPartnerboerseAdministration();
-	// private ReportGeneratorAsync reportGeneratorAsync = ClientsideSettings
-	// .getReportGenerator();
-	// private VerticalPanel verPanel;
-	// private VerticalPanel content;
-	// private Label lbl;
-	// private Navigator showEigenesNpButton;
-	// private Navigator merklisteAnzeigenButton;
-	// private Navigator sperrlisteAnzeigenButton;
-	// private Navigator showSuchprofilButton;
-
-	// private CreateNutzerprofil createNutzerprofil;
-	// private Boolean test;
-	// private LoginInfo loginInfo = new LoginInfo();
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
+	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface
@@ -50,9 +35,6 @@ public class Partnerboerse implements EntryPoint {
 	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
-	// private final PartnerboerseAdministrationAsync
-	// partnerboerseAdministration = GWT
-	// .create(PartnerboerseAdministration.class);
 
 	public void onModuleLoad() {
 
@@ -61,29 +43,8 @@ public class Partnerboerse implements EntryPoint {
 		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
 		 * Darstellungsort.
 		 */
-//		 RootPanel.get("Navigator").add(new Navigator());
 
-		// Check login status using login service.
-		// LoginServiceAsync loginService = GWT.create(Nutzerprofil.class);
-
-		PartnerboerseAdministrationAsync partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
-
-		// loginService.login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
-		// new AsyncCallback<LoginInfo>() {
-		// public void onFailure(Throwable error) {
-		// RootPanel.get().add(new Label(error.toString()));
-		// }
-		//
-		// public void onSuccess(LoginInfo result) {
-		// RootPanel.get().add(new Label(result.toString()));
-		// loginInfo = result;
-		// if (loginInfo.isLoggedIn()) {
-		// loadPartnerboerse();
-		// } else {
-		// loadLogin();
-		// }
-		// }
-		// });
+		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
 		try {
 			partnerboerseAdministration.login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
@@ -96,12 +57,35 @@ public class Partnerboerse implements EntryPoint {
 						public void onSuccess(Nutzerprofil result) {
 							// wenn der user eingeloggt ist
 							if (result.isLoggedIn()) {
-								signOutLink.setHref(result.getLogoutUrl());
-								signOutLink.setText("Als " + result.getVorname() + " ausloggen");
-								loginPanel.add(signOutLink);
-								RootPanel.get("Navigator").add(new Navigator());
-								RootPanel.get("Navigator").add(loginPanel);
+
+								if (result.getEmailAddress() != null) {
+									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
+										public void onFailure(Throwable caught) {
+										}
+
+										public void onSuccess(Void result) {
+										}
+									});
+
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText(
+											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new Navigator());
+									RootPanel.get("Navigator").add(loginPanel);
+								}
+
+								if (result.getEmailAddress() == null) {
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new Navigator());
+									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Details").add(new CreateNutzerprofil());
+								}
+
 							}
+
 							// wenn der user nicht eingeloggt ist
 							if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
@@ -117,70 +101,4 @@ public class Partnerboerse implements EntryPoint {
 		}
 
 	}
-
-	// private void loadPartnerboerse() {
-	// String emailAddress = loginInfo.getEmailAddress();
-	// isUserRegistered(userEmail);
-	//
-	// verPanel = new VerticalPanel();
-	//
-	// showEigenesNpButton = new Navigator(loginInfo);
-	// merklisteAnzeigenButton = new Navigator(loginInfo);
-	// sperrlisteAnzeigenButton = new Navigator(loginInfo);
-	// showSuchprofilButton = new Navigator(loginInfo);
-	//
-	// signOutLink.setHref(loginInfo.getLogoutUrl());
-	// RootPanel.get("Navigator").add(signOutLink);
-	//
-	// content = new VerticalPanel();
-	// lbl = new Label("Willkommen auf unserer Partnerboerse");
-	// lbl.setStyleName("label");
-	// content.add(lbl);
-	//
-	// RootPanel.get("Navigator").add(content);
-	//
-	// }
-
-	// private void isUserRegistered(String userEmail) {
-	//
-	// AsyncCallback<Boolean> isUserRegisteredCallback = new
-	// AsyncCallback<Boolean>() {
-	//
-	// @Override
-	// public void onFailure(Throwable caught) {
-	// ClientsideSettings.getLogger().severe(
-	// "Fehler bei Benutzerüberprüfung");
-	//
-	// }
-	//
-	// @Override
-	// public void onSuccess(Boolean result) {
-	// if (result == false) {
-	// RootPanel.get("Details").clear();
-	// RootPanel.get("Space").clear();
-	//
-	//
-	// }
-	//
-	// }
-	//
-	// };
-	// partnerboerseAdministration.isUserRegistered(userEmail,
-	// isUserRegisteredCallback);
-	// }
-
-	// private void loadLogin() {
-	// // Assemble login panel.
-	// loginPanel.add(loginLabel);
-	// loginPanel.add(signInLink);
-	// RootPanel.get("Navigator").add(loginPanel);
-	//
-	// }
-	// private void loadLogout(){
-	// signOutLink.setHref(loginInfo.getLoginUrl());
-	// loginPanel.add(loginLabel);
-	// loginPanel.add(signOutLink);
-	// RootPanel.get("Navigator").add(loginPanel);
-	// }
-
 }
