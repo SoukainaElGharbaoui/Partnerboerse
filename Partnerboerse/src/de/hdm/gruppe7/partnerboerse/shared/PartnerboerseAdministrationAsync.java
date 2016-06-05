@@ -271,6 +271,8 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
 
+	void getAllInfosNeuSp(int suchprofilId, AsyncCallback<List<String>> callback);
+
 
 	void deleteAllInfosNeu(AsyncCallback<Void> callback);
 

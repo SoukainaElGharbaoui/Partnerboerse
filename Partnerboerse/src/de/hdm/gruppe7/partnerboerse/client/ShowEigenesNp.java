@@ -245,8 +245,8 @@ public class ShowEigenesNp extends VerticalPanel {
 			}
 		});
 
-		ShowInfo showInfo = new ShowInfo();
-		verPanel2.add(showInfo);
+		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
+		verPanel2.add(showInfoNp);
 		horPanel.add(verPanel1);
 		horPanel.add(verPanel2);
 

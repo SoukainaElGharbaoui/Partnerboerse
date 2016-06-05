@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -281,6 +282,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeu() throws IllegalArgumentException;
+	
+	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
+
 
 	public List<Info> getAllInfosNeuReport()
 			throws IllegalArgumentException;

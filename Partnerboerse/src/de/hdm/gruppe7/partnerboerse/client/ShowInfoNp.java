@@ -16,20 +16,22 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class ShowInfo extends VerticalPanel {
+public class ShowInfoNp extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
 
 	private FlexTable showInfoFlexTable = new FlexTable();
-	
+
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * Konstruktor
+	 * 
+	 * @param integer
 	 */
-	public ShowInfo() {
+	public ShowInfoNp(int profilId) {
 		this.add(verPanel);
 
 		/**
@@ -65,7 +67,6 @@ public class ShowInfo extends VerticalPanel {
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
 
 				new AsyncCallback<List<String>>() {
-
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -113,31 +114,30 @@ public class ShowInfo extends VerticalPanel {
 		final Button bearbeitenButton = new Button("Bearbeiten");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
-		
+
 		final Button erstellenButton = new Button("Infos anlegen");
 		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);	
-		
+		buttonPanel.add(erstellenButton);
 
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>(){
-							@Override
-							public void onFailure(Throwable caught) {
-								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
-							}
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+					@Override
+					public void onSuccess(Void result) {
+						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+						ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showNp);
-							}
-						});
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showNp);
+					}
+				});
 			}
 		});
 
@@ -148,7 +148,7 @@ public class ShowInfo extends VerticalPanel {
 				RootPanel.get("Details").add(editInfo);
 			}
 		});
-		
+
 		erstellenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				CreateInfoNp createInfoNp = new CreateInfoNp();

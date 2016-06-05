@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.List;
@@ -14,8 +15,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
@@ -31,8 +30,6 @@ public class ShowSuchprofil extends VerticalPanel {
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	
-	
 
 	/**
 	 * Konstruktor
@@ -52,7 +49,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 * Labels, AuswahlBox, Buttons und FlexTable erstellen
 		 */
 
-		final Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
+		final Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
 		auswahlLabel.addStyleName("partnerboerse-label");
 
 		final Label infoLabel = new Label();
@@ -63,7 +60,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 		final Button anzeigenButton = new Button("Anzeigen");
 
-		final Button loeschenButton = new Button("Löschen");
+		final Button loeschenButton = new Button("LÃ¶schen");
 
 		final Button bearbeitenButton = new Button("Bearbeiten");
 
@@ -91,11 +88,10 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 
 		/**
-		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gef�llt
+		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
 		 */
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
-
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -114,12 +110,8 @@ public class ShowSuchprofil extends VerticalPanel {
 		});
 
 		/**
-<<<<<<< HEAD
-		 * Bei Bet�tigung des createSuchrprofilButtons werden alle
-		 * Aehnlichkeiten gel�scht
-=======
-		 * Bei Bet�tigung des createSuchrprofilButtons werden alle Aehnlichkeiten gel�scht
->>>>>>> branch 'NinaBaumgaertner' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
+		 * Bei Betätigung des createSuchrprofilButtons werden alle
+		 * Aehnlichkeiten gelöscht
 		 */
 
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
@@ -186,10 +178,10 @@ public class ShowSuchprofil extends VerticalPanel {
 
 								// Religion aus der Datenbank holen
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-								
-								int profilId = result.getProfilId();
-								
-								
+
+								ShowInfoSp showInfoSp = new ShowInfoSp(
+										Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
+								verPanel3.add(showInfoSp);
 
 							}
 
@@ -197,7 +189,6 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-
 
 						ClientsideSettings.getPartnerboerseAdministration()
 								.aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {
@@ -222,7 +213,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-										infoLabel.setText("Das Suchprofil wurde erfolgreich gelöscht");
+										infoLabel.setText("Das Suchprofil wurde erfolgreich gelÃ¶scht");
 									}
 
 								});
@@ -240,9 +231,6 @@ public class ShowSuchprofil extends VerticalPanel {
 					}
 
 				});
-				
-				
-
 
 				verPanel2.add(showSuchprofilFlexTable);
 				buttonPanel.add(bearbeitenButton);
@@ -250,17 +238,10 @@ public class ShowSuchprofil extends VerticalPanel {
 				verPanel2.add(buttonPanel);
 				verPanel2.add(infoLabel);
 
-				ShowInfo showInfo = new ShowInfo();
-				
-//				ShowInfo showInfo = new ShowInfo(Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
-				verPanel3.add(showInfo);
-				
-
 			}
 
 		});
-		
-	
+
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(auswahlListBox);
