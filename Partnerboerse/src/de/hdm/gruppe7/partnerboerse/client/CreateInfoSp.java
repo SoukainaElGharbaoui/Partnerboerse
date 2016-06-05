@@ -131,7 +131,7 @@ public class CreateInfoSp extends VerticalPanel {
 										// profilId = Benutzer.getProfilId();
 
 										ClientsideSettings.getPartnerboerseAdministration()
-												.createInfoNeu(eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+												.createInfoNeuSp(suchprofilId, eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 
 													@Override
 													public void onFailure(Throwable caught) {
@@ -185,7 +185,7 @@ public class CreateInfoSp extends VerticalPanel {
 										nEingabe = lb.getSelectedItemText();
 
 										ClientsideSettings.getPartnerboerseAdministration()
-												.createInfoNeu(eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+												.createInfoNeuSp(suchprofilId, eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
 
 													@Override
 													public void onFailure(Throwable caught) {

@@ -612,15 +612,35 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		return this.infoMapper.insertInfoNeu(i);
 	}
+	
+	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+
+		Info i = new Info();
+		i.setProfilId(suchprofilId);
+		i.setEigenschaftId(eigenschaftId);
+		i.setInfotext(infotext);
+
+		return this.infoMapper.insertInfoNeu(i);
+	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
 	}
 
+	public void deleteAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
+		this.infoMapper.deleteAllInfosNeu(suchprofilId);
+	}
+	
 	public void deleteOneInfoNeu(int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profil.getProfilId(), eigenschaftId);
 		System.out.println(profil.getProfilId() + ", " + eigenschaftId);
 	}
+	
+	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId) throws IllegalArgumentException {
+		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
+		System.out.println(suchprofilId + ", " + eigenschaftId);
+	}
+
 
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId) throws IllegalArgumentException {
 		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
@@ -646,6 +666,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		Info i = new Info();
 		i.setProfilId(profil.getProfilId());
+		i.setEigenschaftId(eigenschaftId);
+		i.setInfotext(infotext);
+
+		this.infoMapper.updateInfosNeu(i);
+
+	}
+	
+	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+
+		System.out.println(suchprofilId + ", " + eigenschaftId + ", " + infotext);
+
+		Info i = new Info();
+		i.setProfilId(suchprofilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
 

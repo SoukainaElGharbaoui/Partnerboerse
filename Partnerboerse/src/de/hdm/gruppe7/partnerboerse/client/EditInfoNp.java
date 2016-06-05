@@ -18,7 +18,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class EditInfo extends VerticalPanel {
+public class EditInfoNp extends VerticalPanel {
 
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
@@ -45,7 +45,7 @@ public class EditInfo extends VerticalPanel {
 	 * Konstruktor hinzufügen.
 	 */
 
-	public EditInfo() {
+	public EditInfoNp() {
 		this.add(verPanel);
 
 		/**

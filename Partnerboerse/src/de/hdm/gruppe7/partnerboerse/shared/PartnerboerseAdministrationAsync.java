@@ -266,6 +266,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 	
+	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
+
+	
 	void getAllInfosNeuReport(AsyncCallback<List<Info>> callback);
 	
 
@@ -275,10 +278,19 @@ public interface PartnerboerseAdministrationAsync {
 
 
 	void deleteAllInfosNeu(AsyncCallback<Void> callback);
+	
+	void deleteAllInfosNeuSp(int suchprofilId, AsyncCallback<Void> callback);
+
 
 	void deleteOneInfoNeu(int eigenschaftId, AsyncCallback<Void> callback);
 
+	void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	
 	void saveInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Void> callback);
+	
+	void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Void> callback);
+
 
 	void getEigAById(int eigenschaftId, AsyncCallback<Auswahleigenschaft> callback);
 

@@ -281,6 +281,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Info createInfoNeu(int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
+	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
+	
 	public List<String> getAllInfosNeu() throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
@@ -292,12 +295,21 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public void deleteAllInfosNeu()
 			throws IllegalArgumentException;
+	
+	public void deleteAllInfosNeuSp(int suchprofilId)
+			throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int eigenschaftId)
 			throws IllegalArgumentException;
 	
+	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
+			throws IllegalArgumentException;
+	
 	public void saveInfoNeu(int eigenschaftId, String infotext)
 				throws IllegalArgumentException;
+	
+	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+			throws IllegalArgumentException;
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;
