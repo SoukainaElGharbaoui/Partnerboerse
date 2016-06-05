@@ -35,8 +35,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
-	private Label reqLabel = new Label("*");
-	private Label reqLabel2 = new Label("*");
+	private Label reqLabel = new Label("* Pflichtfeld");
+	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("*");
 	final Label warnungLabel = new Label();
 	

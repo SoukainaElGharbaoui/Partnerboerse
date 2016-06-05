@@ -1,6 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.shared.GWT;
@@ -9,8 +10,10 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -23,6 +26,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -46,7 +50,7 @@ public class Navigator extends VerticalPanel {
 
 	public Navigator() {
 		VerticalPanel verPanel1 = new VerticalPanel();
-		MenuBar naviBar = new MenuBar();
+		
 		
 		/*
 		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
@@ -56,32 +60,39 @@ public class Navigator extends VerticalPanel {
 		Benutzer b = new Benutzer();
 		b.setProfilId(1);
 		
-//		Tree t = new Tree(); 
+//		Tree tree = new Tree(); 
 //		
 //		TreeItem meinNutzerprofil = new TreeItem(); 
 //		meinNutzerprofil.setText("Mein Nutzerprofil");
-//		meinNutzerprofil.addTextItem("Meine Nutzerprofildaten"); 
-//    	meinNutzerprofil.addTextItem("Meine Infos"); 
+//		meinNutzerprofil.addTextItem("Meine Nutzerprofildaten");  
+//   	    meinNutzerprofil.addStyleName("navi");
 //		
 //		TreeItem meineSuchprofile = new TreeItem(); 
 //		meineSuchprofile.setText("Meine Suchprofile");
+//		
 //		
 //		TreeItem andereNutzerprofile = new TreeItem(); 
 //		andereNutzerprofile.setText("Andere Nutzerprofile");
 //		andereNutzerprofile.addTextItem("Meine Merkliste"); 
 //		andereNutzerprofile.addTextItem("Meine Sperrliste"); 
 //		
+//		
 //	    TreeItem meinePartnervorschlaege = new TreeItem(); 
 //	    meinePartnervorschlaege.setText("Meine Partnervorschläge");
 //		meinePartnervorschlaege.addTextItem("Meine unangesehenen Partnervorschläge"); 
-//		meinePartnervorschlaege.addTextItem("Meine Partnervorschläge anhand von Suchprofilen"); 
+//		meinePartnervorschlaege.addTextItem("Meine Partnervorschläge anhand von Suchprofilen");
 //		
-//		t.addItem(meinNutzerprofil); 
-//		t.addItem(meineSuchprofile);
-//		t.addItem(andereNutzerprofile);
-//		t.addItem(meinePartnervorschlaege); 
-//
-//		this.add(t); 
+//		
+//		tree.addItem(meinNutzerprofil); 
+//		tree.addItem(meineSuchprofile);
+//		tree.addItem(andereNutzerprofile);
+//		tree.addItem(meinePartnervorschlaege); 
+//		RootPanel.get().add(tree);
+		
+
+		
+		
+		
 		
 
 		/**
@@ -130,95 +141,95 @@ public class Navigator extends VerticalPanel {
 		// logoutButton.setStyleName("navigatorbutton");
 		// this.add(logoutButton);
 		
-		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
-
-		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				
-				
-				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createNutzerprofil);
-				
-				
-				
-			
-				
-			}
-		});
-
-		nutzerprofilAnlegenButton.setStyleName("navigatorbutton");
-		this.add(nutzerprofilAnlegenButton);
-
-		/**
-		 * Button "Nutzerprofil anzeigen" hinzufügen
-		 */
-		final Button showEigenesNpButton = new Button("Mein Nutzerprofil");
-		showEigenesNpButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showEigenesNp);
-			}
-		});
-
-		showEigenesNpButton.setStyleName("navigatorbutton");
-		this.add(showEigenesNpButton);
-
-		
-
-
-		
-		/**
-		 * Button "Suchprofile anzeigen" hinzufügen.
-		 */
-		final Button showSuchprofilButton = new Button("Meine Suchprofile");
-		showSuchprofilButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showSuchprofil);
-			}
-
-		});
-
-		showSuchprofilButton.setStyleName("navigatorbutton");
-		this.add(showSuchprofilButton);
-
-		/**
-		 * Button "Merkliste anzeigen" hinzufügen
-		 */
-		final Button merklisteAnzeigenButton = new Button("Meine Merkliste");
-		merklisteAnzeigenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowMerkliste showMerkliste = new ShowMerkliste();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showMerkliste);
-			}
-		});
-
-		merklisteAnzeigenButton.setStyleName("navigatorbutton");
-		this.add(merklisteAnzeigenButton);
-
-		/**
-		 * Button "Sperrliste anzeigen" hinzufügen
-		 */
-		final Button sperrlisteAnzeigenButton = new Button("Meine Sperrliste");
-		sperrlisteAnzeigenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowSperrliste showSperrliste = new ShowSperrliste();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showSperrliste);
-			}
-		});
-
-		sperrlisteAnzeigenButton.setStyleName("navigatorbutton");
-		this.add(sperrlisteAnzeigenButton);
+//		final Button nutzerprofilAnlegenButton = new Button ("Nutzerprofil anlegen");
+//		
+//		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				
+//				
+//				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(createNutzerprofil);
+//				
+//				
+//				
+//			
+//				
+//			}
+//		});
+//
+//		nutzerprofilAnlegenButton.setStyleName("navigatorbutton");
+//		this.add(nutzerprofilAnlegenButton);
+//
+//		/**
+//		 * Button "Nutzerprofil anzeigen" hinzufügen
+//		 */
+//		final Button showEigenesNpButton = new Button("Mein Nutzerprofil");
+//		showEigenesNpButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(showEigenesNp);
+//			}
+//		});
+//
+//		showEigenesNpButton.setStyleName("navigatorbutton");
+//		this.add(showEigenesNpButton);
+//
+//		
+//
+//
+//		
+//		/**
+//		 * Button "Suchprofile anzeigen" hinzufügen.
+//		 */
+//		final Button showSuchprofilButton = new Button("Meine Suchprofile");
+//		showSuchprofilButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(showSuchprofil);
+//			}
+//
+//		});
+//
+//		showSuchprofilButton.setStyleName("navigatorbutton");
+//		this.add(showSuchprofilButton);
+//
+//		/**
+//		 * Button "Merkliste anzeigen" hinzufügen
+//		 */
+//		final Button merklisteAnzeigenButton = new Button("Meine Merkliste");
+//		merklisteAnzeigenButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				ShowMerkliste showMerkliste = new ShowMerkliste();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(showMerkliste);
+//			}
+//		});
+//
+//		merklisteAnzeigenButton.setStyleName("navigatorbutton");
+//		this.add(merklisteAnzeigenButton);
+//
+//		/**
+//		 * Button "Sperrliste anzeigen" hinzufügen
+//		 */
+//		final Button sperrlisteAnzeigenButton = new Button("Meine Sperrliste");
+//		sperrlisteAnzeigenButton.addClickHandler(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				ShowSperrliste showSperrliste = new ShowSperrliste();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(showSperrliste);
+//			}
+//		});
+//
+//		sperrlisteAnzeigenButton.setStyleName("navigatorbutton");
+//		this.add(sperrlisteAnzeigenButton);
 
 		/**
 		 * Button "Partnervorschlaege anzeigen" hinzufügen.
@@ -400,7 +411,120 @@ public class Navigator extends VerticalPanel {
 		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
 		this.add(showPartnervorschlaegeButton);
 		
+		
+		MenuBar menu = new MenuBar();
+		menu.setAutoOpen(true);
+		menu.setWidth("3000px");
+		menu.setAnimationEnabled(true);
 
+		   // Create the file menu
+		   MenuBar nutzerprofilMenu = new MenuBar(true);
+		   nutzerprofilMenu.setAnimationEnabled(true);
 
-	}
+		   nutzerprofilMenu.addItem("Mein Nutzerprofil", new Command() {
+		      @Override
+		      public void execute() {
+		    	  ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showEigenesNp);
+		      }
+		   });
+		   
+		   nutzerprofilMenu.addItem("Nutzerprofil anlegen", new Command(){
+
+			@Override
+			public void execute() {
+				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createNutzerprofil);
+				
+			}
+			   
+		   });
+		   
+		   nutzerprofilMenu.addSeparator();
+//		   nutzerprofilMenu.addItem("Exit", new Command() {
+//		      @Override
+//		      public void execute() {
+//		         showSelectedMenuItem("Exit");
+//		      }
+//		   });
+
+		   // Menü für das Suchprofil
+		   MenuBar suchprofilMenu = new MenuBar(true);
+		   suchprofilMenu.setAnimationEnabled(true);
+
+		   suchprofilMenu.addItem("Meine Suchprofile", new Command() {
+		      @Override
+		      public void execute() {
+		    	  ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSuchprofil);
+		      }
+		   });
+		   
+		   MenuBar sperrlisteMenu = new MenuBar(true);
+		   sperrlisteMenu.setAnimationEnabled(true);
+		   
+		   sperrlisteMenu.addItem("Gesperrte Kontakte anzeigen",  new Command(){
+
+			@Override
+			public void execute() {
+				ShowSperrliste showSperrliste = new ShowSperrliste();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showSperrliste);
+				
+			}
+			   
+		   });
+		   
+		   MenuBar merklisteMenu = new MenuBar(true);
+		   merklisteMenu.setAnimationEnabled(true);
+		   
+		   merklisteMenu.addItem("Merkliste anzeigen", new Command(){
+
+			@Override
+			public void execute() {
+				ShowMerkliste showMerkliste = new ShowMerkliste();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showMerkliste);
+				
+			}
+			   
+		   });
+		   
+		   MenuBar partnervorschlaegeMenu = new MenuBar(true);
+		   partnervorschlaegeMenu.setAnimationEnabled(true);
+		   
+		   partnervorschlaegeMenu.addItem("Meine Partnervorschlaege", new Command(){
+
+			@Override
+			public void execute() {
+				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaege);
+
+				
+			}
+			   
+		   });
+
+		   menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Meine Sperrliste", sperrlisteMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Meine Merkliste", merklisteMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+
+		   //add the menu to the root panel
+		   RootPanel.get("Navigator").add(menu);
+	}	
 }
+		
+
+
+	
+
