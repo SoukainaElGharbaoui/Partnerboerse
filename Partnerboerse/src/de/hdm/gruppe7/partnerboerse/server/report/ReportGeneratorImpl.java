@@ -9,6 +9,7 @@ import java.util.List;
 
 
 
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -21,10 +22,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
-
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.Column;
 import de.hdm.gruppe7.partnerboerse.shared.report.CompositeParagraph;
+import de.hdm.gruppe7.partnerboerse.shared.report.PartnervorschlaegeSpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.Report;
 import de.hdm.gruppe7.partnerboerse.shared.report.Row;
 import de.hdm.gruppe7.partnerboerse.shared.report.SimpleParagraph;
@@ -225,7 +226,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		UnangesehenePartnervorschlaegeReport result = new UnangesehenePartnervorschlaegeReport();
 
 		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
-		result.setTitle("Suchprofil-Report f�r " + n.getVorname() + " " + n.getNachname()); 
+		result.setTitle("Unangesehene Partnervorschlaege Report f�r " + n.getVorname() + " " + n.getNachname()); 
 
 		// Imressum hinzuf�gen.
 		this.addImprint(result);
@@ -333,6 +334,136 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 	}
 	
+	
+	/**
+	 * <code>UnangesehenePartnervorschlaegeReport</code>-Objekte erstellen.
+	 * 
+	 * @param n das Nutzerprofil-Objekt bzgl. dessen der Report erstellt werden soll.
+	 * @return der fertige Report
+	 */
+	/* (non-Javadoc)
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createUnangesehenePartnervorschlaegeReport(de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil)
+	 */
+	public PartnervorschlaegeSpReport createPartnervorschlaegeSpReport(Nutzerprofil n, String suchprofilname) 
+			throws IllegalArgumentException {
+		
+		if (this.getPartnerboerseAdministration() == null) {
+			return null;
+		}
+
+	    /*
+	     * Leeren Report anlegen.
+	     */
+		PartnervorschlaegeSpReport result = new PartnervorschlaegeSpReport();
+
+		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
+		result.setTitle("Suchprofil Partnervorschlaege Report f�r " + n.getVorname() + " " + n.getNachname()); 
+
+		// Imressum hinzuf�gen.
+		this.addImprint(result);
+
+		/*
+		 *  Erstellungsdatum hinzuf�gen.
+		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
+		 *  der Instantiierung des Date-Objekts.
+		 */
+		result.setCreated(new Date());
+
+	    /*
+	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
+	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
+	     */
+		CompositeParagraph header = new CompositeParagraph();
+
+		// Name und Vorname des Nutzers aufnehmen.
+		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
+		
+		// Nutzerprofil-ID aufnehmen.
+	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
+
+		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
+		result.setHeaderData(header);
+		
+	    /*
+	     * Ab hier: Suchprofil-Informationen zeilenweise hinzuf�gen.
+	     */
+		// Kopfzeile f�r die Suchprofil-Tabelle anlegen.
+		Row headline = new Row();
+
+		// �berschriften der Kopfzeile ablegen.
+		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Aehnlichkeit"));
+		headline.addColumn(new Column("Vornamee"));
+		headline.addColumn(new Column("Nachname"));
+		headline.addColumn(new Column("Geschlecht"));
+		headline.addColumn(new Column("Geburtsdatum"));
+		headline.addColumn(new Column("K�rpergr��e"));
+		headline.addColumn(new Column("Haarfarbe"));
+		headline.addColumn(new Column("Raucherstatus"));
+		headline.addColumn(new Column("Religion"));
+		
+		List<Eigenschaft> eigenschaften = this.partnerboerseAdministration.getAllEigenschaftenNeu();
+		int max = 0;
+		for(Eigenschaft e : eigenschaften) {
+			
+			headline.addColumn(new Column(e.getErlaeuterung()));
+			max++;
+		}
+
+
+		
+		// Kopfzeile hinzuf�gen.
+		result.addRow(headline);
+
+	    /*
+	     * S�mtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
+	     */
+		List<Nutzerprofil> nutzerprofile = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeSp(suchprofilname); 
+
+		for (Nutzerprofil pv : nutzerprofile) {
+			
+			// Eine leere Zeile anlegen.
+			Row nutzerprofilRow = new Row();
+
+			// Zeile bef�llen.
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getProfilId())));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getAehnlichkeit()) + "%"));
+			nutzerprofilRow.addColumn(new Column(pv.getVorname()));
+			nutzerprofilRow.addColumn(new Column(pv.getNachname()));
+			nutzerprofilRow.addColumn(new Column(pv.getGeschlecht()));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getGeburtsdatumDate())));
+			nutzerprofilRow.addColumn(new Column(String.valueOf(pv.getKoerpergroesseInt())));
+			nutzerprofilRow.addColumn(new Column(pv.getHaarfarbe()));
+			nutzerprofilRow.addColumn(new Column(pv.getRaucher()));
+			nutzerprofilRow.addColumn(new Column(pv.getReligion()));
+			
+			List<Info> info = this.partnerboerseAdministration.getAllInfosNeuReport();
+			int counter = 1;
+			for (Info in : info) {
+				
+				while (counter < max){
+					
+				if (in.getEigenschaftId() == counter){
+					nutzerprofilRow.addColumn(new Column(in.getInfotext()));
+					break;
+				} else {
+					nutzerprofilRow.addColumn(new Column(""));	
+					counter ++;
+				}
+				
+				}
+				counter ++;
+			}
+			// Zeile dem Report hinzuf�gen.
+			result.addRow(nutzerprofilRow);
+		}
+
+	    /*
+	     * Fertigen Report zur�ckgeben.
+	     */
+		return result;
+
+	}
 	
 	
 }

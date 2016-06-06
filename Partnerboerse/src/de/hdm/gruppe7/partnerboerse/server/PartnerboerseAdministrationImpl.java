@@ -253,7 +253,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
 	 */
-	public String pruefeSuchprofilnameEdit( int suchprofilId) throws IllegalArgumentException {
+	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profil.getProfilId(), suchprofilId);
 	}
 
@@ -503,9 +503,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					}
 				}
 			}
+
 		}
 
-		aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
+		aehnlichkeitSp = (counter / 100 * aehnlichkeitSp);
 
 		return aehnlichkeitSp;
 
@@ -553,48 +554,48 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	public List<String> getAllInfosNeu() throws IllegalArgumentException {
 
-			List<String> list1 = new ArrayList<String>();
-			List<Info> result = new ArrayList<Info>();
-			
-			result = this.infoMapper.findAllInfosNeu(profil.getProfilId());
+		List<String> list1 = new ArrayList<String>();
+		List<Info> result = new ArrayList<Info>();
 
-			for (Info i : result) {
+		result = this.infoMapper.findAllInfosNeu(profil.getProfilId());
 
-					int eigenschaftId = i.getEigenschaftId();
+		for (Info i : result) {
 
-					Eigenschaft e = new Eigenschaft();
-					e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
+			int eigenschaftId = i.getEigenschaftId();
 
-					list1.add(String.valueOf(i.getProfilId()));
-					list1.add(String.valueOf(eigenschaftId));
-					list1.add(e.getErlaeuterung());
-					list1.add(String.valueOf(i.getInfotext()));
-					list1.add(e.getTyp());
-				}
-			System.out.println(list1);
-			return list1;
+			Eigenschaft e = new Eigenschaft();
+			e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
+
+			list1.add(String.valueOf(i.getProfilId()));
+			list1.add(String.valueOf(eigenschaftId));
+			list1.add(e.getErlaeuterung());
+			list1.add(String.valueOf(i.getInfotext()));
+			list1.add(e.getTyp());
 		}
-	
+		System.out.println(list1);
+		return list1;
+	}
+
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
 		List<Info> result = new ArrayList<Info>();
-		
+
 		result = this.infoMapper.findAllInfosNeu(suchprofilId);
 
 		for (Info i : result) {
 
-				int eigenschaftId = i.getEigenschaftId();
+			int eigenschaftId = i.getEigenschaftId();
 
-				Eigenschaft e = new Eigenschaft();
-				e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
+			Eigenschaft e = new Eigenschaft();
+			e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
 
-				list1.add(String.valueOf(i.getProfilId()));
-				list1.add(String.valueOf(eigenschaftId));
-				list1.add(e.getErlaeuterung());
-				list1.add(String.valueOf(i.getInfotext()));
-				list1.add(e.getTyp());
-			}
+			list1.add(String.valueOf(i.getProfilId()));
+			list1.add(String.valueOf(eigenschaftId));
+			list1.add(e.getErlaeuterung());
+			list1.add(String.valueOf(i.getInfotext()));
+			list1.add(e.getTyp());
+		}
 		System.out.println(list1);
 		return list1;
 	}
@@ -612,7 +613,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		return this.infoMapper.insertInfoNeu(i);
 	}
-	
+
 	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
 
 		Info i = new Info();
@@ -630,17 +631,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public void deleteAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(suchprofilId);
 	}
-	
+
 	public void deleteOneInfoNeu(int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profil.getProfilId(), eigenschaftId);
 		System.out.println(profil.getProfilId() + ", " + eigenschaftId);
 	}
-	
+
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
 		System.out.println(suchprofilId + ", " + eigenschaftId);
 	}
-
 
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId) throws IllegalArgumentException {
 		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
@@ -672,7 +672,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.infoMapper.updateInfosNeu(i);
 
 	}
-	
+
 	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
 
 		System.out.println(suchprofilId + ", " + eigenschaftId + ", " + infotext);
@@ -697,7 +697,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public boolean isUserRegistered(String userEmail) {
 		return false;
 	}
-	
+
 	public Nutzerprofil login(String requestUri) throws Exception {
 
 		UserService userService = UserServiceFactory.getUserService();
