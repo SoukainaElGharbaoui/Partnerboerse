@@ -21,7 +21,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
+
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -105,9 +105,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 
 									// Besuch in die Datenbank einfügen.
-									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(
-											fremdprofilId, new AsyncCallback<Void>() {
-
+									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(fremdprofilId,
+											new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
