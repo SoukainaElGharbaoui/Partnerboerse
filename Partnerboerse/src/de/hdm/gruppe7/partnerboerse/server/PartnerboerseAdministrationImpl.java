@@ -509,7 +509,7 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 					}
 					}
 			
-						aehnlichkeitSp = aehnlichkeitSp * (100 /counter);
+						aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
 			
 		
 			
