@@ -25,7 +25,7 @@ public class ShowInfo extends VerticalPanel {
 	/**
 	 * Konstruktor
 	 */
-	public ShowInfo() {
+	public ShowInfo(final int profilId) {
 		this.add(verPanel);
 
 		/**
@@ -60,7 +60,7 @@ public class ShowInfo extends VerticalPanel {
 		
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
-				Benutzer.getProfilId(), new AsyncCallback<List<String>>() {
+				profilId, new AsyncCallback<List<String>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -115,7 +115,7 @@ public class ShowInfo extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
-						Benutzer.getProfilId(), new AsyncCallback<Void>(){
+						profilId, new AsyncCallback<Void>(){
 
 							@Override
 							public void onFailure(Throwable caught) {

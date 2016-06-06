@@ -42,6 +42,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private InfoMapper infoMapper = null;
 
 
+
 	/**
 	 * No-Argument-Konstruktor.
 	 */
@@ -383,8 +384,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			// Erforderliche Daten abrufen
 			Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profilId);
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-			List<Info> referenzinfo = infoMapper.findInfosByProfilId(profilId);
-			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(profilId);
+			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
+			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 			
 			
 			// Variablen zur Berechnung der Aehnlichkeit
@@ -412,16 +413,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
-			
-			
+		
 			// Vergleich der Beschreibungsinfos
 			for (Info rin : referenzinfo){
 				for (Info vin : vergleichsinfo){
 			if (rin.getEigenschaftId() == vin.getEigenschaftId()){
-				
+				counter++;
 				if (rin.getInfotext().equals(vin.getInfotext())){
-					aehnlichkeit= aehnlichkeit + 1;
-					counter++;
+					aehnlichkeit = aehnlichkeit + 1;
+
 				}
 			}
 		}
@@ -469,8 +469,8 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			
 			Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
 			Nutzerprofil  vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-			List<Info> referenzinfo = infoMapper.findInfosByProfilId(suchprofilId);
-			List<Info> vergleichsinfo = infoMapper.findInfosByProfilId(fremdprofilId);
+			List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
+			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 			
 			int aehnlichkeitSp = 0;
 			
@@ -498,18 +498,23 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 			}
 			
 			// Vergleich der Infos
-						for (Info rin : referenzinfo){
+						for (Info rin : referenzinfo){		
 							for (Info vin : vergleichsinfo){
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()){
+							counter= counter + 10;
 							if (rin.getInfotext().equals(vin.getInfotext())){
-								aehnlichkeitSp= aehnlichkeitSp + 10;
-								counter = counter+10;
+								 aehnlichkeitSp= aehnlichkeitSp + 10;
+								
+								
 							}
 						}
 					}
 					}
 			
+
 						aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
+
+
 			
 		
 			
@@ -607,6 +612,9 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 		return this.infoMapper.findAllEigenschaftenNeu();
 	}	
 		
+	public List<Info> getAllInfosNeuReport(int nutzerprofilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosNeu(nutzerprofilId);
+	}
 	
 	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {
 

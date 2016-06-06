@@ -188,15 +188,17 @@ public class EditNutzerprofil extends VerticalPanel {
 							}
 						});
 				// DELETE Methode
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernen(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(),
 						new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
+								informationLabel.setText(" nicht entfernt");
 							}
 
 							@Override
 							public void onSuccess(Void result) {
+								informationLabel.setText("entfernt");
 
 							}
 
