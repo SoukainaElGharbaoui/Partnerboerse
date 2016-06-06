@@ -30,14 +30,14 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 	 */
 	final Label infoLabel = new Label(); 
 	final Label ueberschriftLabel = new Label();
-	ueberschriftLabel.setText("Schonmal hier juhuu");
+	ueberschriftLabel.setText("Einen Moment bitte...");
 	
 	
 	/**
 	 * Nutzer auslesen.
 	 */
 	
-	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(1, new AsyncCallback<Nutzerprofil>(){
+	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(new AsyncCallback<Nutzerprofil>(){
 
 		@Override
 		public void onFailure(Throwable caught) {

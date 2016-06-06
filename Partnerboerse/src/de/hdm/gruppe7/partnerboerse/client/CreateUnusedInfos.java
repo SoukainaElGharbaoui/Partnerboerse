@@ -14,12 +14,14 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateUnusedInfos extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
 	/**
 	 * VerticalPanel hinzufügen. 
@@ -27,7 +29,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
 	
-	private int profilId = Benutzer.getProfilId();
+//	private int profilId = Benutzer.getProfilId();
 	private String eigenschaftId;
 	private String beschreibungstext;
 	private String nEingabeB;
@@ -65,13 +67,12 @@ public class CreateUnusedInfos extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		
 		
-		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaftenNeu(profilId, 
+		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaftenNeu(
 				new AsyncCallback<List<Eigenschaft>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
-						
 					}
 
 					@Override
@@ -82,9 +83,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 						for (Eigenschaft e : result) {
 							row++;
 							
-//							eigenschaftIdInt = 0;
-//							typ = null;
-		
 							eigenschaftId = String.valueOf(e.getEigenschaftId());
 							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
 							final String typ = e.getTyp();
@@ -120,7 +118,39 @@ public class CreateUnusedInfos extends VerticalPanel {
 								});
 								
 								
-								
+								createInfosButton.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										
+										nEingabeB = textArea.getText();
+										
+										if (nEingabeB.equals(beschreibungstext)) {
+
+											return;
+										}
+										
+										else if (!nEingabeB.equals(beschreibungstext)) {
+											
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+											
+															@Override
+															public void onFailure(Throwable caught) {
+																informationLabelB.setText("Es trat ein Fehler auf.");
+															}
+											
+															@Override
+															public void onSuccess(Info result) {
+																informationLabelB.setText("Die Infos wurden "
+																		+ "erfolgreich angelegt.");
+																
+																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+																RootPanel.get("Details").clear();
+																RootPanel.get("Details").add(showNp);
+															}
+												});
+										}
+									}
+								});
 							}
 							
 							
@@ -170,7 +200,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 										
 										if(!nEingabeA.equals("Keine Auswahl")) {
 										
-											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(Benutzer.getProfilId(),
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
 													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
 										
 														@Override
@@ -183,7 +213,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 															informationLabelA.setText("Die Infos wurden "
 																	+ "erfolgreich angelegt.");
 																														
-															ShowEigenesNp showNp = new ShowEigenesNp();
+															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 															RootPanel.get("Details").clear();
 															RootPanel.get("Details").add(showNp);
 														}

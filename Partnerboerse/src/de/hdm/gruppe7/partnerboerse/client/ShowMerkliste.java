@@ -16,8 +16,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowMerkliste extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * VerticalPanel hinzufügen.
@@ -64,174 +67,184 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		merklisteFlexTable.addStyleName("FlexTable");
 
-		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(Benutzer.getProfilId(),
-				new AsyncCallback<Merkliste>() {
+		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(new AsyncCallback<Merkliste>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
 
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 
-					@Override
-					public void onSuccess(Merkliste result) {
-						Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
-						int row = merklisteFlexTable.getRowCount();
+			}
 
-						for (Nutzerprofil n : gemerkteNutzerprofile) {
-							row++;
+			@Override
+			public void onSuccess(Merkliste result) {
+				Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
+				int row = merklisteFlexTable.getRowCount();
 
-							final String fremdprofilId = String.valueOf(n.getProfilId());
+				for (Nutzerprofil n : gemerkteNutzerprofile) {
+					row++;
 
-							merklisteFlexTable.setText(row, 0, fremdprofilId);
-							merklisteFlexTable.setText(row, 1, n.getVorname());
-							merklisteFlexTable.setText(row, 2, n.getNachname());
-							merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
-							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
+					final String fremdprofilId = String.valueOf(n.getProfilId());
 
-							// Löschen-Button hinzufügen und ausbauen.
-							final Button loeschenButton = new Button("Löschen");
-							merklisteFlexTable.setWidget(row, 5, loeschenButton);
+					merklisteFlexTable.setText(row, 0, fremdprofilId);
+					merklisteFlexTable.setText(row, 1, n.getVorname());
+					merklisteFlexTable.setText(row, 2, n.getNachname());
+					merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+					merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
-							// Anzeigen-Button hinzufügen und ausbauen.
-							final Button anzeigenButton = new Button("Anzeigen");
-							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
+					// Löschen-Button hinzufügen und ausbauen.
+					final Button loeschenButton = new Button("Löschen");
+					merklisteFlexTable.setWidget(row, 5, loeschenButton);
 
-							// Testzwecke: Index der FlexTable-Rows anzeigen.
-							merklisteFlexTable.setText(row, 7, String.valueOf(row));
+					// Anzeigen-Button hinzufügen und ausbauen.
+					final Button anzeigenButton = new Button("Anzeigen");
+					merklisteFlexTable.setWidget(row, 6, anzeigenButton);
 
-							// ClickHandler für den Löschen-Button hinzufügen.
-							loeschenButton.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
+					// Testzwecke: Index der FlexTable-Rows anzeigen.
+					merklisteFlexTable.setText(row, 7, String.valueOf(row));
 
-									/**
-									 * Tabelle nach Fremdprofil-ID durchsuchen;
-									 * Index = Die Zeile, die gelöscht werden
-									 * soll. Achtung: Die Tabelle darf erst ab
-									 * Zeile 2 verwendet werden (Zeile 1 =
-									 * Header-Zeile).
-									 */
-									for (int i = 2; i <= merklisteFlexTable.getRowCount(); i++) {
+					// ClickHandler für den Löschen-Button hinzufügen.
+					loeschenButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
 
-										String fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
+							/**
+							 * Tabelle nach Fremdprofil-ID durchsuchen; Index =
+							 * Die Zeile, die gelöscht werden soll. Achtung: Die
+							 * Tabelle darf erst ab Zeile 2 verwendet werden
+							 * (Zeile 1 = Header-Zeile).
+							 */
+							for (int i = 2; i <= merklisteFlexTable.getRowCount(); i++) {
 
-										if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
+								String fremdprofilIdFlexTable = merklisteFlexTable.getText(i, 0);
 
-											// Inhalte aus der Datenbank
-											// entfernen.
-											ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
-													Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
-													new AsyncCallback<Void>() {
+								if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
 
-														@Override
-														public void onFailure(Throwable caught) {
-															infoLabel.setText("Es trat ein Fehler auf.");
-														}
+									// Inhalte aus der Datenbank
+									// entfernen.
+									ClientsideSettings.getPartnerboerseAdministration()
+											.vermerkLoeschen(Integer.valueOf(fremdprofilId), new AsyncCallback<Void>() {
 
-														@Override
-														public void onSuccess(Void result) {
-															infoLabel.setText(
-																	"Das Nutzerprofil wurde erfolgreich von Ihrer Merkliste entfernt.");
-														}
-
-													});
-
-											// Zeile in Tabelle löschen.
-											merklisteFlexTable.removeRow(i);
-											break;
-										}
-									}
-
-								}
-
-							});
-
-							// ClickHandler für den Anzeigen-Button hinzufügen.
-							anzeigenButton.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
-
-									// Prüfen, ob Benutzer von Fremdprofil
-									// gesperrt wurde.
-									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
-											Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
-											new AsyncCallback<Integer>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
 													infoLabel.setText("Es trat ein Fehler auf.");
-
 												}
 
 												@Override
-												public void onSuccess(Integer result) {
-													// Wenn keine Sperrung
-													// vorliegt...
-													if (result == 0) {
-														ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-																Integer.valueOf(fremdprofilId));
-														RootPanel.get("Details").clear();
-														RootPanel.get("Details").add(showFremdprofil);
-
-														// Wenn eine Sperrung
-														// vorliegt...
-													} else {
-														
-														// Bildschirmmeldung ausgeben.
-														Window.alert("Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
-														
-//														
-//														// DialobBox hinzufügen.
-//														final DialogBox sperrungDialogBox = new DialogBox();
-//
-//														sperrungDialogBox.setText("Information");
-//														sperrungDialogBox.setAnimationEnabled(true);
-//														// Schließen-Button
-//														// hinzufügen.
-//														final Button schliessenButton = new Button("Schließen");
-//														// VerticalPanel
-//														// hinzufügen.
-//														final VerticalPanel sperrungVerPanel = new VerticalPanel();
-//														// Label hinzufügen.
-//														final Label sperrungLabel = new Label(
-//																"Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
-//														// Widgets zum
-//														// VerticalPanel
-//														// hinzufügen.
-//														sperrungVerPanel.add(sperrungLabel);
-//														sperrungVerPanel
-//																.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-//														sperrungVerPanel.add(schliessenButton);
-//														sperrungDialogBox.setWidget(sperrungVerPanel);
-//														sperrungDialogBox.center();
-//
-//														// ClickHandler für den
-//														// Schließen-Button
-//														// hinzufügen.
-//														schliessenButton.addClickHandler(new ClickHandler() {
-//
-//															@Override
-//															public void onClick(ClickEvent event) {
-//																sperrungDialogBox.hide();
-//
-//															}
-
-//														});
-
-													}
-
+												public void onSuccess(Void result) {
+													infoLabel.setText(
+															"Das Nutzerprofil wurde erfolgreich von Ihrer Merkliste entfernt.");
 												}
 
 											});
 
+									// Zeile in Tabelle löschen.
+									merklisteFlexTable.removeRow(i);
+									break;
 								}
-
-							});
+							}
 
 						}
 
-					}
+					});
 
-				});
+					// ClickHandler für den Anzeigen-Button hinzufügen.
+					anzeigenButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+
+							// Prüfen, ob Benutzer von Fremdprofil
+							// gesperrt wurde.
+							ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
+									Integer.valueOf(fremdprofilId), new AsyncCallback<Integer>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											infoLabel.setText("Es trat ein Fehler auf.");
+
+										}
+
+										@Override
+										public void onSuccess(Integer result) {
+											// Wenn keine Sperrung
+											// vorliegt...
+											if (result == 0) {
+												ShowFremdprofil showFremdprofil = new ShowFremdprofil(
+														Integer.valueOf(fremdprofilId));
+												RootPanel.get("Details").clear();
+												RootPanel.get("Details").add(showFremdprofil);
+
+												// Wenn eine Sperrung
+												// vorliegt...
+											} else {
+
+												// Bildschirmmeldung ausgeben.
+												Window.alert(
+														"Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
+
+												//
+												// // DialobBox hinzufügen.
+												// final DialogBox
+												// sperrungDialogBox = new
+												// DialogBox();
+												//
+												// sperrungDialogBox.setText("Information");
+												// sperrungDialogBox.setAnimationEnabled(true);
+												// // Schließen-Button
+												// // hinzufügen.
+												// final Button schliessenButton
+												// = new Button("Schließen");
+												// // VerticalPanel
+												// // hinzufügen.
+												// final VerticalPanel
+												// sperrungVerPanel = new
+												// VerticalPanel();
+												// // Label hinzufügen.
+												// final Label sperrungLabel =
+												// new Label(
+												// "Sie können dieses
+												// Nutzerprofil nicht anzeigen,
+												// da Sie von diesem gesperrt
+												// wurden.");
+												// // Widgets zum
+												// // VerticalPanel
+												// // hinzufügen.
+												// sperrungVerPanel.add(sperrungLabel);
+												// sperrungVerPanel
+												// .setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+												// sperrungVerPanel.add(schliessenButton);
+												// sperrungDialogBox.setWidget(sperrungVerPanel);
+												// sperrungDialogBox.center();
+												//
+												// // ClickHandler für den
+												// // Schließen-Button
+												// // hinzufügen.
+												// schliessenButton.addClickHandler(new
+												// ClickHandler() {
+												//
+												// @Override
+												// public void
+												// onClick(ClickEvent event) {
+												// sperrungDialogBox.hide();
+												//
+												// }
+
+												// });
+
+											}
+
+										}
+
+									});
+
+						}
+
+					});
+
+				}
+
+			}
+
+		});
 
 		// Widgets zum VerticalPanel hinzufügen.
 		verPanel.add(ueberschriftLabel);

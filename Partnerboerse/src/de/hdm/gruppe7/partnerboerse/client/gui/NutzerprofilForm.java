@@ -21,6 +21,7 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 /**
  * Formular für die Darstellung des selektierten Nutzerprofils
@@ -28,7 +29,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class NutzerprofilForm extends VerticalPanel {
 	PartnerboerseAdministrationAsync partnerboerseAdministration = ClientsideSettings.getPartnerboerseAdministration();
 
-	// private int nutzerprofilId = Benutzer.getProfilId();
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	Nutzerprofil nutzerprofilToDisplay = null;
 	// CustomerAccountsTreeViewModel catvm = null; Alles mit catvm brauchen wir
@@ -127,7 +128,7 @@ public class NutzerprofilForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (nutzerprofilToDisplay != null) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+				ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 						new AnzeigeNpCallback());
 
 				// nutzerprofilToDisplay.setVorname(getVorname();
