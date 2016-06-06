@@ -28,7 +28,8 @@ public class CreateInfoSp extends VerticalPanel {
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
 	private String beschreibungstext;
-	private String nEingabe;
+	private String nEingabeB;
+	private String nEingabeA;
 	
 	
 	private Button createInfosButton = new Button("Info anlegen");
@@ -127,41 +128,76 @@ public class CreateInfoSp extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										if (textArea.getText() != null) {
+										nEingabeB = textArea.getText();
+										
+										if (nEingabeB.equals(beschreibungstext)) {
+
+											return;
+										}
+										
+										else if (!nEingabeB.equals(beschreibungstext)) {
 											
-											if (textArea.getText() != beschreibungstext) {
-												nEingabe = textArea.getText();
-											}
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
+													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+											
+															@Override
+															public void onFailure(Throwable caught) {
+																informationLabelB.setText("Es trat ein Fehler auf.");
+															}
+											
+															@Override
+															public void onSuccess(Info result) {
+																informationLabelB.setText("Die Infos wurden "
+																		+ "erfolgreich angelegt.");
+																
+																ShowEigenesNp showNp = new ShowEigenesNp();
+																RootPanel.get("Details").clear();
+																RootPanel.get("Details").add(showNp);
+															}
+												});
 										}
-										
-										else {
-											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
-										}
-										
-										
-										
-//										profilId = Benutzer.getProfilId();
-										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
-											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-									
-													@Override
-													public void onFailure(Throwable caught) {
-														informationLabelB.setText("Es trat ein Fehler auf.");
-													}
-									
-													@Override
-													public void onSuccess(Info result) {
-														informationLabelB.setText("Die Infos wurden "
-																+ "erfolgreich angelegt." + suchprofilId);
-														
-//														ShowEigenesNp showNp = new ShowEigenesNp();
-//														RootPanel.get("Details").clear();
-//														RootPanel.get("Details").add(showNp);
-													}
-										});
-								}
+									}
 								}); 
+								
+								
+//								createInfosButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										
+//										if (textArea.getText() != null) {
+//											
+//											if (textArea.getText() != beschreibungstext) {
+//												nEingabe = textArea.getText();
+//											}
+//										}
+//										
+//										else {
+//											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
+//										}
+//										
+//										
+//										
+////										profilId = Benutzer.getProfilId();
+//										
+//										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
+//											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+//									
+//													@Override
+//													public void onFailure(Throwable caught) {
+//														informationLabelB.setText("Es trat ein Fehler auf.");
+//													}
+//									
+//													@Override
+//													public void onSuccess(Info result) {
+//														informationLabelB.setText("Die Infos wurden "
+//																+ "erfolgreich angelegt." + suchprofilId);
+//														
+////														ShowEigenesNp showNp = new ShowEigenesNp();
+////														RootPanel.get("Details").clear();
+////														RootPanel.get("Details").add(showNp);
+//													}
+//										});
+//								}
+//								}); 
 							}
 							
 							else if (e.getTyp() == "A") {
@@ -195,29 +231,64 @@ public class CreateInfoSp extends VerticalPanel {
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
 										
-										nEingabe = lb.getSelectedItemText();
+										nEingabeA = lb.getSelectedItemText();
 										
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
-											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-									
-													@Override
-													public void onFailure(Throwable caught) {
-														informationLabelA.setText("Es trat ein Fehler auf.");
-													}
-									
-													@Override
-													public void onSuccess(Info result) {
-														informationLabelA.setText("Die Infos wurden "
-																+ "erfolgreich angelegt.");
-														
-														
-//														ShowEigenesNp showNp = new ShowEigenesNp();
-//														RootPanel.get("Details").clear();
-//														RootPanel.get("Details").add(showNp);
-													}
-										});
+										if(!nEingabeA.equals("Keine Auswahl")) {
+										
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
+													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
+										
+														@Override
+														public void onFailure(Throwable caught) {
+															informationLabelA.setText("Es trat ein Fehler auf.");
+														}
+										
+														@Override
+														public void onSuccess(Info result) {
+															informationLabelA.setText("Die Infos wurden "
+																	+ "erfolgreich angelegt.");
+																														
+															ShowEigenesNp showNp = new ShowEigenesNp();
+															RootPanel.get("Details").clear();
+															RootPanel.get("Details").add(showNp);
+														}
+											});
+										}
+										
+										else {
+											return;
+										}
+										
 								}
 								}); 
+								
+								
+//								createInfosButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										
+//										nEingabe = lb.getSelectedItemText();
+//										
+//										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
+//											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
+//									
+//													@Override
+//													public void onFailure(Throwable caught) {
+//														informationLabelA.setText("Es trat ein Fehler auf.");
+//													}
+//									
+//													@Override
+//													public void onSuccess(Info result) {
+//														informationLabelA.setText("Die Infos wurden "
+//																+ "erfolgreich angelegt.");
+//														
+//														
+////														ShowEigenesNp showNp = new ShowEigenesNp();
+////														RootPanel.get("Details").clear();
+////														RootPanel.get("Details").add(showNp);
+//													}
+//										});
+//								}
+//								}); 
 							}
 							
 						}

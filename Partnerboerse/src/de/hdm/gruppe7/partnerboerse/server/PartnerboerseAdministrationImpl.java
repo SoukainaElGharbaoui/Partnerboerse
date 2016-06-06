@@ -592,6 +592,14 @@ public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws
 	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
 		return this.infoMapper.findAllEigenschaftenNeu();
 	}	
+	
+	
+	public List<Eigenschaft> getAllUnusedEigenschaftenNeu(int profilId) throws IllegalArgumentException {
+		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profilId);
+		System.out.println(listE);
+		return listE;
+	}
 		
 	
 	public List<String> getAllInfosNeu(int nutzerprofilId) throws IllegalArgumentException {

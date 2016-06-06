@@ -172,7 +172,7 @@ public class Navigator extends VerticalPanel {
 		createInfoButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				CreateInfo createInfo = new CreateInfo();
+				CreateInfoNp createInfo = new CreateInfoNp();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createInfo);
 			}

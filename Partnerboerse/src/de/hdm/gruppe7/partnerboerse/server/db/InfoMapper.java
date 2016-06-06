@@ -57,6 +57,39 @@ public class InfoMapper {
 	}
 	
 	
+	public List<Eigenschaft> findAllUnusedEigenschaftenNeu(int profilId) {
+		Connection con = DBConnection.connection();
+		
+		List<Eigenschaft> result = new ArrayList<Eigenschaft>();
+		
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT t_eigenschaft1.eigenschaft_id, "
+							+ "t_eigenschaft1.erlaeuterung, t_eigenschaft1.typ "
+							+ "FROM t_eigenschaft1 LEFT JOIN t_info1 "
+							+ "ON t_eigenschaft1.eigenschaft_id = t_info1.eigenschaft_id "
+							+ "WHERE t_info1.profil_id !=" + profilId + " OR t_info1.eigenschaft_id IS NULL");
+			
+			while (rs.next()) {
+				Eigenschaft e = new Eigenschaft();
+				e.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				e.setErlaeuterung(rs.getString("erlaeuterung"));
+				e.setTyp(rs.getString("typ"));
+
+				result.add(e);
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		return result;
+		
+	}
+	
+	
 	
 	public Info insertInfoNeu(Info i){
 		Connection con = DBConnection.connection();

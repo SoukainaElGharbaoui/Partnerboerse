@@ -20,6 +20,10 @@ public class ShowInfo extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
 	
+	private Button loeschenButton = new Button("Alle Infos löschen");
+	private Button bearbeitenButton = new Button("Bearbeiten");
+	private Button createRestlicheInfosButton = new Button("Weitere Infos anlegen");
+	
 	private FlexTable showInfoFlexTable = new FlexTable();
 
 	/**
@@ -102,13 +106,15 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
 
-		final Button loeschenButton = new Button("Alle Infos löschen");
+		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
 
-		final Button bearbeitenButton = new Button("Bearbeiten");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
+		
+		verPanel.add(createRestlicheInfosButton);
+		buttonPanel.add(createRestlicheInfosButton);
 
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
@@ -140,6 +146,14 @@ public class ShowInfo extends VerticalPanel {
 				EditInfo editInfo = new EditInfo();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfo);
+			}
+		});
+		
+		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createRestlicheInfos);
 			}
 		});
 

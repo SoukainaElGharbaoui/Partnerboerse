@@ -102,7 +102,20 @@ public class EditInfo extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 									
 							String infotextNeu = tb.getText();
-									
+							
+//							if (tb.getText() == null) {
+//								informationLabel.setText("Bitte füllen Sie alle Felder aus.");
+//							}
+//							
+//							else {
+//								
+//								if (infotextNeu.equals(infotext)) {
+//									
+//									
+//								}
+//								
+//							}
+																
 									ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
 											profilIdInt, eigenschaftIdInt, infotextNeu, 
 											new AsyncCallback<Void>(){
