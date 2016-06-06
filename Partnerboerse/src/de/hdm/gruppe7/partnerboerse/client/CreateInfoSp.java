@@ -144,11 +144,15 @@ public class CreateInfoSp extends VerticalPanel {
 																informationLabelB.setText("Die Infos wurden "
 																		+ "erfolgreich angelegt.");
 																
-																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+																ShowSuchprofil showSp = new ShowSuchprofil();
 																RootPanel.get("Details").clear();
-																RootPanel.get("Details").add(showNp);
+																RootPanel.get("Details").add(showSp);
 															}
 												});
+										}
+										
+										else {
+											return;
 										}
 									}
 								}); 
@@ -245,6 +249,16 @@ public class CreateInfoSp extends VerticalPanel {
 												for (int i = 0; i < optionen.size(); i++) {
 													lb.addItem(optionen.get(i));
 												}
+												
+												for (int a = 0; a < lb.getItemCount(); a++) {
+													
+													if (lb.getValue(a).equals("Keine Auswahl")) {
+														lb.setItemSelected(a, true);	
+													}
+													
+													informationLabelA.setText("Das Setzen der Standard-Option "
+															+ "hat funktioniert.");
+												}
 											}
 										});
 								
@@ -270,9 +284,9 @@ public class CreateInfoSp extends VerticalPanel {
 															informationLabelA.setText("Die Infos wurden "
 																	+ "erfolgreich angelegt.");
 																														
-															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+															ShowSuchprofil showSp = new ShowSuchprofil();
 															RootPanel.get("Details").clear();
-															RootPanel.get("Details").add(showNp);
+															RootPanel.get("Details").add(showSp);
 														}
 											});
 										}
@@ -284,58 +298,6 @@ public class CreateInfoSp extends VerticalPanel {
 								}
 								}); 
 								
-								
-//								createInfosButton.addClickHandler(new ClickHandler() {
-//									public void onClick(ClickEvent event) {
-//										
-//										nEingabe = lb.getSelectedItemText();
-//										
-//										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(suchprofilId,
-//											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-//									
-//													@Override
-//													public void onFailure(Throwable caught) {
-//														informationLabelA.setText("Es trat ein Fehler auf.");
-//													}
-//									
-//													@Override
-//													public void onSuccess(Info result) {
-//														informationLabelA.setText("Die Infos wurden "
-//																+ "erfolgreich angelegt.");
-//														
-//														
-////														ShowEigenesNp showNp = new ShowEigenesNp();
-////														RootPanel.get("Details").clear();
-////														RootPanel.get("Details").add(showNp);
-//													}
-//										});
-//								}
-//								}); 
-
-//										nEingabe = lb.getSelectedItemText();
-//
-//										ClientsideSettings.getPartnerboerseAdministration()
-//												.createInfoNeuSp(suchprofilId, eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-//
-//													@Override
-//													public void onFailure(Throwable caught) {
-//														informationLabelA.setText("Es trat ein Fehler auf.");
-//													}
-//
-//													@Override
-//													public void onSuccess(Info result) {
-//														informationLabelA
-//																.setText("Die Infos wurden " + "erfolgreich angelegt.");
-//
-//														// ShowEigenesNp showNp
-//														// = new
-//														// ShowEigenesNp();
-//														// RootPanel.get("Details").clear();
-//														// RootPanel.get("Details").add(showNp);
-//													}
-//												});
-//									}
-//								});
 							} 	// if-Typ == A Klammer
 						}		// for-Schleife ganz oben
 					}			// on success-methode ganz oben

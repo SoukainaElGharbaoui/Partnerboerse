@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,15 +37,16 @@ public class EditInfoSp extends VerticalPanel {
 	private int row;
 	// private int eigenschaftIdInt;
 	private int suchprofilIdInt;
-	private String infotext;
+//	private String infotext;
 	// private String infotextNeu;
-	private String typ;
+//	private String typ;
 
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 
-	public EditInfoSp() {
+	public EditInfoSp(int suchprofilId) {
+		this.suchprofilIdInt = suchprofilId;
 		this.add(verPanel);
 
 		/**
@@ -66,7 +68,8 @@ public class EditInfoSp extends VerticalPanel {
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(new AsyncCallback<List<String>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeuSp(suchprofilIdInt, 
+				new AsyncCallback<List<String>>() {
 
 
 			@Override
@@ -87,8 +90,8 @@ public class EditInfoSp extends VerticalPanel {
 					String suchprofilId = result.get(i);
 					String eigenschaftId = result.get(i + 1);
 					String erlaeuterung = result.get(i + 2);
-					infotext = result.get(i + 3);
-					typ = result.get(i + 4);
+					final String infotext = result.get(i + 3);
+					final String typ = result.get(i + 4);
 
 					editInfoFlexTable.setText(row, 0, suchprofilId);
 					editInfoFlexTable.setText(row, 1, eigenschaftId);
@@ -108,8 +111,8 @@ public class EditInfoSp extends VerticalPanel {
 
 								String infotextNeuB = tb.getText();
 
-								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
-										eigenschaftIdInt, infotextNeuB, new AsyncCallback<Void>() {
+								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(
+										suchprofilIdInt, eigenschaftIdInt, infotextNeuB, new AsyncCallback<Void>() {
 
 											@Override
 											public void onFailure(Throwable caught) {
@@ -121,6 +124,11 @@ public class EditInfoSp extends VerticalPanel {
 											public void onSuccess(Void result) {
 												informationLabel
 														.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
+												
+												ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+												RootPanel.get("Details").clear();
+												RootPanel.get("Details").add(showSuchprofil);
+												
 											}
 
 										});
@@ -161,14 +169,17 @@ public class EditInfoSp extends VerticalPanel {
 											}
 
 											informationLabel.setText(
-													"Das Setzen der bisher " + "ausgewählten Option funktioniert.");
+													"Das Setzen der bisher ausgewählten Option funktioniert.");
 										}
 									}
 								});
 
+						updateInfosButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+						
 						String infotextNeuA = lb.getSelectedValue();
 
-						ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(eigenschaftIdInt,
+						ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(suchprofilIdInt, eigenschaftIdInt,
 								infotextNeuA, new AsyncCallback<Void>() {
 
 									@Override
@@ -179,10 +190,15 @@ public class EditInfoSp extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										informationLabel.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
+										
+										ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(showSuchprofil);
 									}
 
 								});
-
+							}
+						});
 					}
 
 					loeschenButton = new Button("Löschen");
@@ -198,7 +214,7 @@ public class EditInfoSp extends VerticalPanel {
 								if (Integer.valueOf(tableEigenschaftId) == eigenschaftIdInt) {
 
 									ClientsideSettings.getPartnerboerseAdministration()
-											.deleteOneInfoNeu(eigenschaftIdInt, new AsyncCallback<Void>() {
+											.deleteOneInfoNeuSp(suchprofilIdInt, eigenschaftIdInt, new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
@@ -219,33 +235,6 @@ public class EditInfoSp extends VerticalPanel {
 
 						}
 					});
-
-					// updateInfosButton.addClickHandler(new ClickHandler() {
-					// public void onClick(ClickEvent event) {
-					//
-					// ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(
-					// profilIdInt, eigenschaftIdInt, infotextNeu,
-					// new AsyncCallback<Void>(){
-					//
-					// @Override
-					// public void onFailure(
-					// Throwable caught) {
-					// informationLabel.setText("Beim Aktualisieren ist ein
-					// Fehler "
-					// + "aufgetreten.");
-					// }
-					//
-					// @Override
-					// public void onSuccess(
-					// Void result) {
-					// informationLabel.setText("Das Aktualisieren der Infos "
-					// + "hat funktioniert.");
-					// }
-					//
-					//
-					// });
-					// }
-					// });
 
 					row++;
 					i++;

@@ -259,6 +259,8 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
 	void getAllUnusedEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
+	
+	void getAllUnusedEigenschaftenNeuSp(int suchprofilId, AsyncCallback<List<Eigenschaft>> callback);
 
 	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 	

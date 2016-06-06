@@ -209,7 +209,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
-
 	}
 
 	/**
@@ -232,7 +231,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
-
 	}
 
 	/**
@@ -558,6 +556,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		System.out.println(listE);
 		return listE;
 	}
+	
+	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId) throws IllegalArgumentException {
+		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(suchprofilId);
+		System.out.println(listE);
+		return listE;
+	}
 		
 	
 	public List<String> getAllInfosNeu() throws IllegalArgumentException {
@@ -608,9 +613,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return list1;
 	}
 
+	
 	public List<Info> getAllInfosNeuReport() throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosNeu(profil.getProfilId());
 	}
+	
 
 	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
 

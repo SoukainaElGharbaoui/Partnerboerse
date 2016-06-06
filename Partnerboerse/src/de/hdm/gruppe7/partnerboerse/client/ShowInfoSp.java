@@ -21,6 +21,7 @@ public class ShowInfoSp extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
+	private int suchprofilIdInt;
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
@@ -32,6 +33,8 @@ public class ShowInfoSp extends VerticalPanel {
 	 * @param integer
 	 */
 	public ShowInfoSp(int suchprofilId) {
+		
+		this.suchprofilIdInt = suchprofilId;
 		this.add(verPanel);
 
 		/**
@@ -64,7 +67,7 @@ public class ShowInfoSp extends VerticalPanel {
 		 * InfoLabel erstellen um Text auszugeben
 		 */
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeuSp(suchprofilIdInt,
 
 				new AsyncCallback<List<String>>() {
 
@@ -115,14 +118,15 @@ public class ShowInfoSp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
 
-		final Button erstellenButton = new Button("Infos anlegen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);
+		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
+		verPanel.add(createRestlicheInfosButton);
+		buttonPanel.add(createRestlicheInfosButton);
+		
 
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>() {
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeuSp(suchprofilIdInt, new AsyncCallback<Void>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
@@ -133,7 +137,6 @@ public class ShowInfoSp extends VerticalPanel {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
 						ShowSuchprofil showSp = new ShowSuchprofil();
-//						ShowSuchprofil showSp = new ShowSuchprofil();
 
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(showSp);
@@ -144,17 +147,17 @@ public class ShowInfoSp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoSp editInfoSp = new EditInfoSp();
+				EditInfoSp editInfoSp = new EditInfoSp(suchprofilIdInt);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfoSp);
 			}
 		});
 
-		erstellenButton.addClickHandler(new ClickHandler() {
+		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateInfoNp createInfoSp = new CreateInfoNp();
+				CreateUnusedInfosSp createRestlicheInfosSp = new CreateUnusedInfosSp(suchprofilIdInt);
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createInfoSp);
+				RootPanel.get("Details").add(createRestlicheInfosSp);
 			}
 		});
 

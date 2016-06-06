@@ -276,6 +276,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
 			throws IllegalArgumentException;
 	
+	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
+			throws IllegalArgumentException;
+	
 	public Info createInfoNeu(int eigenschaftId, String infotext)
 			throws IllegalArgumentException;
 	
