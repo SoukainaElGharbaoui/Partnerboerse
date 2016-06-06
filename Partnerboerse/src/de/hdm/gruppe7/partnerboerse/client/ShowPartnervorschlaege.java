@@ -18,14 +18,15 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 	private int aehnlichkeit = 0;
 
 	public ShowPartnervorschlaege() {
-		
+
 		VerticalPanel verPanel1 = new VerticalPanel();
 		final Label infoLabel = new Label();
 
 		/**
 		 * Button "Partnervorschlaege mit Nutzerprofil anzeigen" hinzuf√ºgen.
 		 */
-		final Button showPartnervorschlaegeNpButton = new Button("Partnervorschlaege mit Nutzerprofil anzeigen");
+		final Button showPartnervorschlaegeNpButton = new Button(
+				"Partnervorschlaege mit Nutzerprofil anzeigen");
 
 		showPartnervorschlaegeNpButton.addClickHandler(new ClickHandler() {
 
@@ -43,118 +44,47 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 		/**
 		 * Button "Partnervorschlaege mit Suchprofil anzeigen" hinzuf√ºgen.
 		 */
-		final Button showPartnervorschlaegeSpButton = new Button("Partnervorschlaege mit Suchprofil anzeigen");
-		
+		final Button showPartnervorschlaegeSpButton = new Button(
+				"Partnervorschlaege mit Suchprofil anzeigen");
+
 		/**
-		 * Bei Bet‰tigung des Buttons werden alle Suchprofile des Nutzers mit allen Nutzerprofilen 
-		 * verglichen und in der Datenbank gespeichert
+		 * Bei Bet‰tigung des Buttons werden alle Suchprofile des Nutzers mit
+		 * allen Nutzerprofilen verglichen und in der Datenbank gespeichert
 		 */
 
 		showPartnervorschlaegeSpButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				
-				ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(), new AsyncCallback<List<Suchprofil>>() {
-					
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
-					
-					@Override
-					public void onSuccess(List<Suchprofil> result1) {
 
-						
-						for (Suchprofil sp : result1){
-							
-							final int suchprofilId = sp.getProfilId();							
-							final String suchprofilName = sp.getSuchprofilName();
-							
-							// Alle Nutzerprofile werden aufgerufen
-				
-							ClientsideSettings.getPartnerboerseAdministration().getAllNutzerprofile(new AsyncCallback<List<Nutzerprofil>>(){
-					
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-								
-							}
-					
-							@Override
-							public void onSuccess(List<Nutzerprofil> result) {
-						
-//								infoLabel.setText("Es hier trat kein Fehler auf.");				
-							for (Nutzerprofil np : result){
-											
-											
-							final int fremdprofilId = np.getProfilId();
-							
-							// Hier wird die Aehnlichkeit aller Nutzerprofile und den Suchprofilen errechnet
-							ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitSpFor(suchprofilId, fremdprofilId, new AsyncCallback<Integer>(){
+			public void onClick(ClickEvent event) {
+
+																
+				ClientsideSettings.getPartnerboerseAdministration()
+						.berechneAehnlichkeitSpFor(new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										infoLabel.setText("Es trat ein Fehler auf.");
+										infoLabel
+												.setText("Es trat ein Fehler auf.");
 									}
-				
+
 									@Override
-									public void onSuccess(Integer result3) {
-										//infoLabel.setText("Es hier trat kein Fehler auf.");	
-										aehnlichkeit = result3;
+									public void onSuccess(Void result3) {
+										// infoLabel.setText("Es hier trat kein Fehler auf.");
 										
-						// die Aehnlichket wird in der Datenbank gespeichert
-										ClientsideSettings.getPartnerboerseAdministration().
-										aehnlichkeitSetzenSp(Benutzer.getProfilId(), suchprofilId, suchprofilName,  fremdprofilId, aehnlichkeit, new AsyncCallback<Void>(){
-				
-											@Override
-											public void onFailure(Throwable caught) {
-												infoLabel.setText("Es trat ein Fehler auf.");
-											}
-				
-											@Override
-											public void onSuccess(Void result4) {
-												// TODO Auto-generated method stub
-				
-																																	}
 
-																												});
-																							}
-
-																						});
-
-																	}
-
-																
-															
-
-														
 
 									}
 
 								});
-							
-							
-							
-							
-							
-						}
-						
-						
-						
-						
-					}
-				});
-				
-				
-				
+
+												
+
 				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showPartnervorschlaegeSp);
 			}
 
 		});
-		
+
 		this.add(infoLabel);
 		this.add(showPartnervorschlaegeSpButton);
 

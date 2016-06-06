@@ -247,8 +247,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * ***************************************************************************
 	 */
 	
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
-			AsyncCallback<Integer> callback);
+	void berechneAehnlichkeitSpFor(AsyncCallback<Void> callback);
 
 	void aehnlichkeitSetzenSp(int nutzerprofilId, int suchprofilId, String suchprofilName,  int fremdprofilId,
 			int aehnlichkeitSp,  AsyncCallback<Void> callback);

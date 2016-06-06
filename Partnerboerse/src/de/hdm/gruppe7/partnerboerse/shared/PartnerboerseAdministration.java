@@ -233,7 +233,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		public void berechneAehnlichkeitSpFor()
 		throws IllegalArgumentException;
 		
 		//Aehnlichkeit in DB speichern
