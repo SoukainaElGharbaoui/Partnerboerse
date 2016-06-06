@@ -208,7 +208,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
 	// Aehnlichkeit berechnen
-	public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId) throws IllegalArgumentException;
+	public void berechneAehnlichkeitNpFor() throws IllegalArgumentException;
 
 	// Aehnlichkeit in DB speichern
 	public void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;

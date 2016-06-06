@@ -223,8 +223,7 @@ public interface PartnerboerseAdministrationAsync {
 	void besuchSetzen(int profilId, int fremdprofilId,
 			AsyncCallback<Void> callback);
 
-	void berechneAehnlichkeitNpFor(int profilId, int fremdprofilId,
-			AsyncCallback<Integer> callback);
+	void berechneAehnlichkeitNpFor(AsyncCallback<Void> callback);
 
 	void aehnlichkeitSetzen(int profilId, int fremdprofilId, int aehnlichkeit,
 			AsyncCallback<Void> callback);

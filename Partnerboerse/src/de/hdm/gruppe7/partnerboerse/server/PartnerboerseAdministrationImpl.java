@@ -406,44 +406,51 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Methode zur Berechnung der Ähnlichkeit zwischen zwei Nutzerprofilen
 	 */
-	public int berechneAehnlichkeitNpFor(int profilId, int fremdprofilId)
+	public void berechneAehnlichkeitNpFor()
 			throws IllegalArgumentException {
 
 		// Erforderliche Daten abrufen
-		Nutzerprofil referenzprofil = nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-		Nutzerprofil vergleichsprofil = nutzerprofilMapper
-				.findByNutzerprofilId(fremdprofilId);
-		List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
-		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+		List<Nutzerprofil> referenzprofil = nutzerprofilMapper.findUnangeseheneNutzerprofile(Benutzer.getProfilId());			
+		Nutzerprofil vergleichsprofil = nutzerprofilMapper	.findByNutzerprofilId(Benutzer.getProfilId());
+		
 
+		for (Nutzerprofil np : referenzprofil){
+			
+			
+			int fremdprofilId = np.getProfilId();
+			int profilId = vergleichsprofil.getProfilId();
+			
 		// Variablen zur Berechnung der Aehnlichkeit
 		int aehnlichkeit = 3;
 		int counter = 7;
 
 		// Vergleich der Profildaten
-		if (referenzprofil.getGeschlecht().equals(
+		if (np.getGeschlecht().equals(
 				vergleichsprofil.getGeschlecht())) {
 			aehnlichkeit = aehnlichkeit - 3;
 		}
 
-		if (referenzprofil.getHaarfarbe().equals(
+		if (np.getHaarfarbe().equals(
 				vergleichsprofil.getHaarfarbe())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil
+		if (np.getKoerpergroesseInt() == vergleichsprofil
 				.getKoerpergroesseInt()) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
+		if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
+		if (np.getReligion().equals(vergleichsprofil.getReligion())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
+		
+		
+		List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
 
 		// Vergleich der Beschreibungsinfos
 		for (Info rin : referenzinfo) {
@@ -460,9 +467,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		// Berechnung der Aehnlichkeit
 		aehnlichkeit = aehnlichkeit * (100 / counter);
-
-		// Rückgabewert
-		return aehnlichkeit;
+		
+		nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
+		
+		}
 
 	}
 
@@ -504,7 +512,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
-
 			for (Nutzerprofil np : vergleichsprofil) {
 
 				int aehnlichkeitSp = 0;

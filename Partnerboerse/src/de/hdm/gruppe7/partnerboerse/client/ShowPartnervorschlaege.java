@@ -49,7 +49,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 
 		/**
 		 * Bei Betätigung des Buttons werden alle Suchprofile des Nutzers mit
-		 * allen Nutzerprofilen verglichen und in der Datenbank gespeichert
+		 * allen Nutzerprofilen verglichen 
 		 */
 
 		showPartnervorschlaegeSpButton.addClickHandler(new ClickHandler() {
