@@ -507,8 +507,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(Benutzer.getProfilId());
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
-				.findAllNutzerprofile();
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(Benutzer.getProfilId());
 		
 		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
@@ -589,6 +588,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
 	public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung(int profilId)
 			throws IllegalArgumentException {
+		
 		return this.nutzerprofilMapper
 				.findNutzerprofileOhneGesetzeSperrung(profilId);
 	}

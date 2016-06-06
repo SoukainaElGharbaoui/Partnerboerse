@@ -29,6 +29,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * VerticalPanel hinzufÃ¼gen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel horPanelTabelle = new HorizontalPanel();
+	private VerticalPanel verPanel2 = new VerticalPanel();
 	
 	private HorizontalPanel auswahlPanel = new HorizontalPanel(); 
 	
@@ -45,6 +47,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	public ShowPartnervorschlaegeSp() {
 		
 		this.add(verPanel);
+		this.add(verPanel2);
+		this.add(horPanelTabelle);
+		this.add(auswahlPanel);
 
 		/**
 		 * Label, AuswahlBox und Buttons erstellen
@@ -66,23 +71,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 */
 		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable(); 
 		
-		/** 
-		 * Tabelle formatieren und CSS einbinden. 
-		 */
-		partnervorschlaegeSpFlexTable.setCellPadding(6);
-		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		partnervorschlaegeSpFlexTable.addStyleName("FlexTable"); 
 		
-		/**
-		 * Erste Zeile der Tabelle festlegen. 
-		 */
-		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
-		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
-		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
-		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
-		partnervorschlaegeSpFlexTable.setText(0, 4, "Geburtsdatum");
-		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
-		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+		
+		
 		
 		/**
 		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
@@ -115,6 +106,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		anzeigenSpButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event){
 				
+				horPanelTabelle.clear();
+				
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(Benutzer.getProfilId(), 
 						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
 
@@ -126,9 +119,33 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 			@Override
 			public void onSuccess(List<Nutzerprofil> result) {
-				infoLabel.setText("Es trat kein Fehler auf");
-				int row = partnervorschlaegeSpFlexTable.getRowCount();
 				
+				//Bei jeder Auswahl eines Suchprofils soll die Tabelle komplett gelöscht werden
+				partnervorschlaegeSpFlexTable.removeAllRows();
+				
+				infoLabel.setText("Es trat kein Fehler auf");
+				
+				
+				
+				/** 
+		 * Tabelle formatieren und CSS einbinden. Tabelle wird bei jedem Klick komplett neu erstellt 
+		 */
+		partnervorschlaegeSpFlexTable.setCellPadding(6);
+		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		partnervorschlaegeSpFlexTable.addStyleName("FlexTable"); 
+				/**
+		 * Erste Zeile der Tabelle festlegen. 
+		 */
+		partnervorschlaegeSpFlexTable.setText(0, 0, "F-ID");
+		partnervorschlaegeSpFlexTable.setText(0, 1, "Uebereinstimmung in %");
+		partnervorschlaegeSpFlexTable.setText(0, 2, "Vorname");
+		partnervorschlaegeSpFlexTable.setText(0, 3, "Nachname");
+		partnervorschlaegeSpFlexTable.setText(0, 4, "Geburtsdatum");
+		partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
+		partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
+		
+		// Tabelle wird befüllt und die Zeilenanzahl auf 0 gesetzt
+				int row = 0;
 				for (Nutzerprofil np : result){
 					
 					final int fremdprofilId = np.getProfilId();
@@ -169,7 +186,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				verPanel.add(ergebnisLabel);
 				verPanel.add(infoLabel);
 				verPanel.add(ueberschriftLabel);
-				verPanel.add(partnervorschlaegeSpFlexTable);	
+				horPanelTabelle.add(partnervorschlaegeSpFlexTable);	
+				verPanel.add(horPanelTabelle);
+				
 			 
 			}
 			
