@@ -66,7 +66,7 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		merklisteFlexTable.addStyleName("FlexTable");
 
-		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(
 				new AsyncCallback<Merkliste>() {
 
 					@Override
@@ -122,7 +122,7 @@ public class ShowMerkliste extends VerticalPanel {
 											// Inhalte aus der Datenbank
 											// entfernen.
 											ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(
-													Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
+													Integer.valueOf(fremdprofilId),
 													new AsyncCallback<Integer>() {
 
 														@Override
@@ -155,7 +155,7 @@ public class ShowMerkliste extends VerticalPanel {
 //									 Prüfen, ob Benutzer von Fremdprofil
 //									 gesperrt wurde.
 									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
-											Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
+											Integer.valueOf(fremdprofilId),
 											new AsyncCallback<Integer>() {
 
 												@Override

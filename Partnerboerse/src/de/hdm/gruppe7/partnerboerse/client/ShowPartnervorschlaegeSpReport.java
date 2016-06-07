@@ -42,7 +42,7 @@ public class ShowPartnervorschlaegeSpReport extends VerticalPanel {
 	/**
 	 * Nutzer auslesen.
 	 */
-	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(1, new AsyncCallback<Nutzerprofil>(){
+	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(new AsyncCallback<Nutzerprofil>(){
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -56,7 +56,7 @@ public class ShowPartnervorschlaegeSpReport extends VerticalPanel {
 			infoLabel.setText("Bitte waehlen Sie ein Suchprofil aus um fortzufahren"); 
 			
 		
-			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(1,
+			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(
 					new AsyncCallback<List<Suchprofil>>() {
 
 						@Override
@@ -89,7 +89,7 @@ public class ShowPartnervorschlaegeSpReport extends VerticalPanel {
 			infoLabel.setText("Geklickt."); 
 			 
 			
-			ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(1, new AsyncCallback<Nutzerprofil>(){
+			ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(new AsyncCallback<Nutzerprofil>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

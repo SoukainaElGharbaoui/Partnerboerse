@@ -78,7 +78,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Entsprechendes Fremdprofil abrufen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getFremdprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -135,7 +135,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		 */
 		
 		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer gesperrt wurde. 
-		ClientsideSettings.getPartnerboerseAdministration().pruefeSperrstatusFremdprofil(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+		ClientsideSettings.getPartnerboerseAdministration().pruefeSperrstatusFremdprofil(fremdprofilId, new AsyncCallback<Integer>() {
 
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf.");
@@ -159,7 +159,7 @@ public class ShowFremdprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				// Sperrstatus aendern. 
-				ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+				ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(fremdprofilId, new AsyncCallback<Integer>() {
 
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
@@ -189,7 +189,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		});
 		
 		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer vermerkt wurde. 
-		ClientsideSettings.getPartnerboerseAdministration().pruefeVermerkstatus(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+		ClientsideSettings.getPartnerboerseAdministration().pruefeVermerkstatus(fremdprofilId, new AsyncCallback<Integer>() {
 
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf.");
@@ -211,7 +211,7 @@ public class ShowFremdprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				// Vermerkstatus aendern. 
-				ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Integer>() {
+				ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(fremdprofilId, new AsyncCallback<Integer>() {
 
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");

@@ -8,14 +8,16 @@ public class Benutzer implements IsSerializable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static int profilId = 1;
-
-	public static int getProfilId() {
-		return profilId;
-	}
+	private int profilId;
 
 	public void setProfilId(int profilId) {
 		this.profilId = profilId;
 	}
+	
+	public int getProfilId() {
+		return this.profilId;
+	}
+
+	
 
 }

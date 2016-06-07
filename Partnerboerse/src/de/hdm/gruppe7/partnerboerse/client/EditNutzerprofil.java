@@ -19,15 +19,19 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditNutzerprofil extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	public VerticalPanel verPanel = new VerticalPanel();
 	public Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
 	public FlexTable editNutzerprofilFlexTable = new FlexTable();
 	public TextBox vornameTextBox = new TextBox();
 	public TextBox nachnameTextBox = new TextBox();
 	public ListBox geschlechtListBox = new ListBox();
+	public TextBox emailTextBox = new TextBox();
 
 	// Geburtsdatum
 	public DateBox geburtsdatumDateBox = new DateBox();
@@ -44,7 +48,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	public Button editNutzerprofilButton = new Button("Speichern");
 
 	// Konstruktor
-	public EditNutzerprofil(int nutzerprofilId) {
+	public EditNutzerprofil() {
 		this.add(verPanel);
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
@@ -63,6 +67,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setText(6, 0, "Haarfarbe");
 		editNutzerprofilFlexTable.setText(7, 0, "Raucherstatus");
 		editNutzerprofilFlexTable.setText(8, 0, "Religion");
+		editNutzerprofilFlexTable.setText(9, 0, "E-Mail");
 
 		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
 
@@ -111,8 +116,10 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
+		
+		editNutzerprofilFlexTable.setWidget(9, 2, emailTextBox);
 
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -153,6 +160,8 @@ public class EditNutzerprofil extends VerticalPanel {
 								raucherListBox.setSelectedIndex(i);
 							}
 						}
+						
+						emailTextBox.setText(result.getEmailAddress());
 					}
 				});
 
@@ -172,7 +181,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(vornameTextBox.getText(),
 						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(), emailTextBox.getText(),
 						new AsyncCallback<Void>() {
 							@Override
 							public void onFailure(Throwable caught) {
@@ -181,14 +190,17 @@ public class EditNutzerprofil extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+//								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
 
 							}
 						});
 				// DELETE Methode
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(),
+
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(
+
 						new AsyncCallback<Void>() {
 
 							@Override
