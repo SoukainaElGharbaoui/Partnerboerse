@@ -17,13 +17,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
-	
+
 	private HorizontalPanel horPanel = new HorizontalPanel();
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	private VerticalPanel verPanel2 = new VerticalPanel();
-	
+
 	private VerticalPanel verPanel3 = new VerticalPanel();
 
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
@@ -34,33 +34,32 @@ public class ShowSuchprofil extends VerticalPanel {
 	 * Konstruktor
 	 */
 	public ShowSuchprofil() {
-		
+
 		this.add(horPanel);
-		
+
 		this.add(verPanel);
 		this.add(verPanel2);
 		this.add(verPanel3);
-		
+
 		horPanel.add(verPanel2);
 		horPanel.add(verPanel3);
-		
-		
+
 		/**
 		 * Labels, AuswahlBox, Buttons und FlexTable erstellen
 		 */
 
-		final Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
+		final Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
 		auswahlLabel.addStyleName("partnerboerse-label");
 
 		final Label infoLabel = new Label();
 
 		final ListBox auswahlListBox = new ListBox();
-		
+
 		final FlexTable showSuchprofilFlexTable = new FlexTable();
 
 		final Button anzeigenButton = new Button("Anzeigen");
 
-		final Button loeschenButton = new Button("Löschen");
+		final Button loeschenButton = new Button("LÃ¶schen");
 
 		final Button bearbeitenButton = new Button("Bearbeiten");
 
@@ -72,7 +71,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setCellPadding(6);
 		showSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showSuchprofilFlexTable.addStyleName("FlexTable");
-		
+
 		/*
 		 * Erste Zeile der FlexTable definieren
 		 */
@@ -88,49 +87,45 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 
 		/**
-		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gef�llt
+		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
 		 */
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
-				new AsyncCallback<List<Suchprofil>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf.");
 
-					}
+			}
 
-					@Override
-					public void onSuccess(List<Suchprofil> result) {
-						for (Suchprofil s : result) {
-							auswahlListBox.addItem(s.getSuchprofilName());
-						}
+			@Override
+			public void onSuccess(List<Suchprofil> result) {
+				for (Suchprofil s : result) {
+					auswahlListBox.addItem(s.getSuchprofilName());
+				}
 
-					}
+			}
 
-				});
-		
+		});
+
 		/**
-		 * Bei Bet�tigung des createSuchrprofilButtons werden alle Aehnlichkeiten gel�scht
+		 * Bei Betätigung des createSuchrprofilButtons werden alle
+		 * Aehnlichkeiten gelöscht
 		 */
 
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				ClientsideSettings.getPartnerboerseAdministration().
-				aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
-					
+
+				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {
+
 					public void onFailure(Throwable caught) {
-						
-						
+
 					}
-					
-					
+
 					public void onSuccess(Void result) {
-						
-						
+
 					}
-					
+
 				});
 
 				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
@@ -143,8 +138,8 @@ public class ShowSuchprofil extends VerticalPanel {
 		anzeigenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getSuchprofilByName(Benutzer.getProfilId(),
-						auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
+				ClientsideSettings.getPartnerboerseAdministration()
+						.getSuchprofilByName(auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -182,31 +177,37 @@ public class ShowSuchprofil extends VerticalPanel {
 
 								// Religion aus der Datenbank holen
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-
+								
+								ShowInfoSp showInfoSp = new ShowInfoSp(Integer.valueOf(suchprofilId));
+								verPanel3.clear();
+								verPanel3.add(showInfoSp);
+//								
+//								ShowInfoSp showInfoSp = new ShowInfoSp(
+//										Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
+//								verPanel3.add(showInfoSp);
 							}
 
 						});
+				
 
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						
-						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
-							
-							public void onFailure(Throwable caught) {
-								
-								
-							}
-							
-							
-							public void onSuccess(Void result) {
-								
-								
-							}
-							
-						});
 
-						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(Benutzer.getProfilId(),
-								auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
+						ClientsideSettings.getPartnerboerseAdministration()
+								.aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {
+
+									public void onFailure(Throwable caught) {
+
+									}
+
+									public void onSuccess(Void result) {
+
+									}
+
+								});
+
+						ClientsideSettings.getPartnerboerseAdministration()
+								.deleteSuchprofil(auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -215,7 +216,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-										infoLabel.setText("Das Suchprofil wurde erfolgreich gelöscht");
+										infoLabel.setText("Das Suchprofil wurde erfolgreich gelÃ¶scht");
 									}
 
 								});
@@ -239,9 +240,6 @@ public class ShowSuchprofil extends VerticalPanel {
 				buttonPanel.add(loeschenButton);
 				verPanel2.add(buttonPanel);
 				verPanel2.add(infoLabel);
-				
-				ShowInfo showInfo = new ShowInfo();
-				verPanel3.add(showInfo);
 
 			}
 

@@ -40,7 +40,9 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.PartnervorschlaegeSpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
 
 @RemoteServiceRelativePath("reportgenerator")
@@ -72,4 +74,9 @@ public interface ReportGenerator extends RemoteService {
 	  
 	  public abstract UnangesehenePartnervorschlaegeReport createUnangesehenePartnervorschlaegeReport
 	  (Nutzerprofil n) throws IllegalArgumentException;
+	  
+	  
+	  public abstract PartnervorschlaegeSpReport createPartnervorschlaegeSpReport
+	  (Nutzerprofil n, String suchprofilname) throws IllegalArgumentException;
+	  
 }
