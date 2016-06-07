@@ -122,22 +122,23 @@ public class ShowInfoSp extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeuSp(suchprofilId, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
-					}
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeuSp(suchprofilId,
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
+							}
 
-					@Override
-					public void onSuccess(Void result) {
-						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+							@Override
+							public void onSuccess(Void result) {
+								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-						ShowSuchprofil showSp = new ShowSuchprofil();
+								ShowSuchprofil showSp = new ShowSuchprofil();
 
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showSp);
-					}
-				});
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showSp);
+							}
+						});
 			}
 		});
 

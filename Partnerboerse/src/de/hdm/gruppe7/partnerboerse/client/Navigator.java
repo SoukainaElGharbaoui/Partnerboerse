@@ -139,6 +139,7 @@ public class Navigator extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+//				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showEigenesNp);
 			}
@@ -147,6 +148,26 @@ public class Navigator extends VerticalPanel {
 		showEigenesNpButton.setStyleName("navigatorbutton");
 		this.add(showEigenesNpButton);
 
+		
+		/**
+		 * Info anlegen Button zu Testzwecken wieder hinzugefügt
+		 */
+		
+		final Button createInfoButton = new Button("Info anlegen");
+		createInfoButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				CreateInfoNp createInfo = new CreateInfoNp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createInfo);
+			}
+		});
+
+		createInfoButton.setStyleName("navigatorbutton");
+		this.add(createInfoButton);
+
+
+		
 		/**
 		 * Button "Suchprofile anzeigen" hinzufügen.
 		 */

@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
@@ -237,4 +236,5 @@ public class EditInfoSp extends VerticalPanel {
 		verPanel.add(updateInfosButton);
 
 	}
+
 }

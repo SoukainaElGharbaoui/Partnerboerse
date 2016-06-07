@@ -41,6 +41,7 @@ public class ShowEigenesNp extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
+//	public ShowEigenesNp() {
 	public ShowEigenesNp(Nutzerprofil user) {
 
 		this.nutzerprofil = user;

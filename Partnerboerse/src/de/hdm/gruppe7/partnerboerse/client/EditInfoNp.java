@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,9 +38,9 @@ public class EditInfoNp extends VerticalPanel {
 	private int row;
 	// private int eigenschaftIdInt;
 	private int profilIdInt;
-	private String infotext;
+//	private String infotext;
 	// private String infotextNeu;
-	private String typ;
+//	private String typ;
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -88,8 +89,8 @@ public class EditInfoNp extends VerticalPanel {
 					String profilId = result.get(i);
 					String eigenschaftId = result.get(i + 1);
 					String erlaeuterung = result.get(i + 2);
-					infotext = result.get(i + 3);
-					typ = result.get(i + 4);
+					final String infotext = result.get(i + 3);
+					final String typ = result.get(i + 4);
 
 					editInfoFlexTable.setText(row, 0, profilId);
 					editInfoFlexTable.setText(row, 1, eigenschaftId);
@@ -166,7 +167,11 @@ public class EditInfoNp extends VerticalPanel {
 										}
 									}
 								});
-
+						
+						
+						updateInfosButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+						
 						String infotextNeuA = lb.getSelectedValue();
 
 						ClientsideSettings.getPartnerboerseAdministration().saveInfoNeu(eigenschaftIdInt,
@@ -180,9 +185,16 @@ public class EditInfoNp extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										informationLabel.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
+										
+										ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(showEigenesNp);
+										
 									}
 
 								});
+							}
+						});
 
 					}
 

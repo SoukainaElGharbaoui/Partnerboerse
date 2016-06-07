@@ -191,6 +191,7 @@ public class EditNutzerprofil extends VerticalPanel {
 							@Override
 							public void onSuccess(Void result) {
 								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+//								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
 

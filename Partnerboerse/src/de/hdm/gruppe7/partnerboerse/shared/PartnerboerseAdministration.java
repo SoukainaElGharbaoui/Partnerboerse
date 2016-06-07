@@ -162,7 +162,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	// Vermerk einf�gen.
 	public void vermerkSetzen(int fremdprofilId) throws IllegalArgumentException;
 
-
 	// Vermerk l�schen.
 	public void vermerkLoeschen(int fremdprofilId) throws IllegalArgumentException;
 
@@ -186,16 +185,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
 	public int getSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
-
-
+	
 	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;
 
-
 	// Sperrung einf�gen.
-
 	public void sperrungSetzen(int fremdprofilId) throws IllegalArgumentException;
-
 
 	// Sperrung l�schen.
 	public void sperrungLoeschen(int fremdprofilId) throws IllegalArgumentException;
@@ -276,6 +271,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	public List<Eigenschaft> getAllEigenschaftenNeu()
+			throws IllegalArgumentException;
+	
+	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
+			throws IllegalArgumentException;
+	
+	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 	
 	public Info createInfoNeu(int eigenschaftId, String infotext)

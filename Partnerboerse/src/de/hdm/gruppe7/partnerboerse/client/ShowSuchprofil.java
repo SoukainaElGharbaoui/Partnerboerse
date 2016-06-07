@@ -178,14 +178,18 @@ public class ShowSuchprofil extends VerticalPanel {
 
 								// Religion aus der Datenbank holen
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-
-								ShowInfoSp showInfoSp = new ShowInfoSp(
-										Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
+								
+								ShowInfoSp showInfoSp = new ShowInfoSp(Integer.valueOf(suchprofilId));
+								verPanel3.clear();
 								verPanel3.add(showInfoSp);
-
+//								
+//								ShowInfoSp showInfoSp = new ShowInfoSp(
+//										Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
+//								verPanel3.add(showInfoSp);
 							}
 
 						});
+				
 
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {

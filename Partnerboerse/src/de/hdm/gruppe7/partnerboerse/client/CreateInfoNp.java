@@ -15,13 +15,15 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -29,8 +31,9 @@ public class CreateInfoNp extends VerticalPanel {
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 
 	private String beschreibungstext;
-	private String nEingabe;
-
+	private String nEingabeB;
+	private String nEingabeA;
+	
 	private Button createInfosButton = new Button("Info anlegen");
 	private Label ueberschriftLabel = new Label("Info anlegen:");
 	private Label informationLabelB = new Label();
@@ -114,45 +117,43 @@ public class CreateInfoNp extends VerticalPanel {
 												textArea.setText(beschreibungstext);
 											}
 										});
+								
 
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
+										
+										nEingabeB = textArea.getText();
+										
+										if (nEingabeB.equals(beschreibungstext)) {
 
-										if (textArea.getText() != null) {
-
-											if (textArea.getText() != beschreibungstext) {
-												nEingabe = textArea.getText();
-											}
-										}
-
-								else {
-											informationLabelB.setText("Bitte machen Sie eine Eingabe im Textfeld.");
+											return;
 										}
 										
-										
-																			
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-											eigenschaftIdInt, nEingabe, new AsyncCallback<Info>() {
-									
-													@Override
-													public void onFailure(Throwable caught) {
-														informationLabelB.setText("Es trat ein Fehler auf.");
-													}
-
-													@Override
-													public void onSuccess(Info result) {
-														informationLabelB
-																.setText("Die Infos wurden " + "erfolgreich angelegt.");
-
-														ShowEigenesNp showNp = new ShowEigenesNp(null);
-
-														RootPanel.get("Details").clear();
-														RootPanel.get("Details").add(showNp);
-													}
+										else if (!nEingabeB.equals(beschreibungstext)) {
+											
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+											
+															@Override
+															public void onFailure(Throwable caught) {
+																informationLabelB.setText("Es trat ein Fehler auf.");
+															}
+											
+															@Override
+															public void onSuccess(Info result) {
+																informationLabelB.setText("Die Infos wurden "
+																		+ "erfolgreich angelegt.");
+																
+																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+																RootPanel.get("Details").clear();
+																RootPanel.get("Details").add(showNp);
+															}
 												});
+										}
 									}
 								});
 							}
+										
 
 					else if (e.getTyp() == "A") {
 
@@ -175,37 +176,55 @@ public class CreateInfoNp extends VerticalPanel {
 												for (int i = 0; i < optionen.size(); i++) {
 													lb.addItem(optionen.get(i));
 												}
+												
+												for (int a = 0; a < lb.getItemCount(); a++) {
+												
+													if (lb.getValue(a).equals("Keine Auswahl")) {
+														lb.setItemSelected(a, true);	
+													}
+													
+													informationLabelA.setText("Das Setzen der Standard-Option "
+															+ "hat funktioniert.");
+												}
 											}
 										});
+								
+								
 								showEigenschaftFlexTable.setWidget(row, 2, lb);
 
 								createInfosButton.addClickHandler(new ClickHandler() {
 									public void onClick(ClickEvent event) {
-
-										nEingabe = lb.getSelectedItemText();
-
-										ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-												eigenschaftIdInt, nEingabe,
-												new AsyncCallback<Info>() {
-
-													@Override
-													public void onFailure(Throwable caught) {
-														informationLabelA.setText("Es trat ein Fehler auf.");
-													}
-
-													@Override
-													public void onSuccess(Info result) {
-														informationLabelA
-																.setText("Die Infos wurden " + "erfolgreich angelegt.");
-
-														ShowEigenesNp showNp = new ShowEigenesNp(null);
-
-														RootPanel.get("Details").clear();
-														RootPanel.get("Details").add(showNp);
-													}
-												});
-									}
-								});
+										
+										nEingabeA = lb.getSelectedItemText();
+										
+										if(!nEingabeA.equals("Keine Auswahl")) {
+										
+											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
+										
+														@Override
+														public void onFailure(Throwable caught) {
+															informationLabelA.setText("Es trat ein Fehler auf.");
+														}
+										
+														@Override
+														public void onSuccess(Info result) {
+															informationLabelA.setText("Die Infos wurden "
+																	+ "erfolgreich angelegt.");
+																														
+															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+															RootPanel.get("Details").clear();
+															RootPanel.get("Details").add(showNp);
+														}
+											});
+										}
+										
+										else {
+											return;
+										}
+										
+								}
+								}); 
 							}
 
 						}

@@ -118,6 +118,10 @@ public class ShowInfoNp extends VerticalPanel {
 		final Button erstellenButton = new Button("Infos anlegen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(erstellenButton);
+		
+		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
+		verPanel.add(buttonPanel);
+		buttonPanel.add(erstellenButton);
 
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -133,6 +137,7 @@ public class ShowInfoNp extends VerticalPanel {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
 						ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+//						ShowEigenesNp showNp = new ShowEigenesNp();
 
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(showNp);
@@ -154,6 +159,14 @@ public class ShowInfoNp extends VerticalPanel {
 				CreateInfoNp createInfoNp = new CreateInfoNp();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createInfoNp);
+			}
+		});
+		
+		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createRestlicheInfos);
 			}
 		});
 
