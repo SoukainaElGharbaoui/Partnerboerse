@@ -89,7 +89,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Suchprofil löschen.
 	 */
-	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
+	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException;
 
 	/**
 	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
@@ -104,7 +104,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
-	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
+	public int pruefeSuchprofilname( int profilId,String suchprofilname) throws IllegalArgumentException;
 	
 	/**
 	 * Existenz des Suchprofilnamens beim Editieren überprüfen.

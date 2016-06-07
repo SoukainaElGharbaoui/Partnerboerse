@@ -213,11 +213,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil lÃ¶schen und alle Aehnlichkeiten werden gel�scht, damit die Partnervorschlaege neu berechnet werden k�nnen
+	 *
 	 */
-	public void deleteSuchprofil(int profilId, String suchprofilName)
-			throws IllegalArgumentException {
-		this.suchprofilMapper.deleteSuchprofil(profilId, suchprofilName);
+	
+	public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentException {
+		
+		this.suchprofilMapper.deleteSuchprofil(Benutzer.getProfilId(), suchprofilName);
+		this.suchprofilMapper.deleteAehnlichkeitSp(Benutzer.getProfilId());
 	}
 
 	/**
@@ -250,9 +253,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
 	 */
-	public int pruefeSuchprofilname(int profilId, String suchprofilname)
-			throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilname(profilId,
+	public int pruefeSuchprofilname( int profilId, String suchprofilname) throws IllegalArgumentException {
+		return this.suchprofilMapper.pruefeSuchprofilname(Benutzer.getProfilId(),
 				suchprofilname);
 	}
 

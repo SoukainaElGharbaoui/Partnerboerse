@@ -88,7 +88,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil löschen.
 	 */
-	void deleteSuchprofil(int profilId, String suchprofilName,
+	void deleteSuchprofil(String suchprofilName,
 			AsyncCallback<Void> callback);
 
 	/**

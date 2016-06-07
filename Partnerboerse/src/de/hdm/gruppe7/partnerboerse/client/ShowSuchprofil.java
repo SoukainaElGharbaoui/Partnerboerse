@@ -196,23 +196,9 @@ public class ShowSuchprofil extends VerticalPanel {
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						
-						ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(Benutzer.getProfilId(), new AsyncCallback<Void>(){
-							
-							public void onFailure(Throwable caught) {
-								
-								
-							}
-							
-							
-							public void onSuccess(Void result) {
-								
-								
-							}
-							
-						});
 
-						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(Benutzer.getProfilId(),
-								auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
+
+						ClientsideSettings.getPartnerboerseAdministration().deleteSuchprofil(auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
