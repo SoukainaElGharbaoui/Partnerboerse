@@ -107,15 +107,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
 	
-	/**
-	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
-	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
+	
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
 		
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)

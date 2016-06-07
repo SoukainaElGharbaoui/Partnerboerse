@@ -102,15 +102,13 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
 
+	
+	void pruefeSuchprofilnameCreate(String suchprofilname, AsyncCallback<Integer> callback); 
+	
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	void pruefeSuchprofilname(String suchprofilname, AsyncCallback<Integer> callback);
-
-	/**
-	 * Existens des Suchprofilnamens beim Editieren �berpr�fen.
-	 */
-	void pruefeSuchprofilnameEdit(int suchprofilId, AsyncCallback<String> callback);
+	void pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)

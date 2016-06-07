@@ -208,6 +208,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId()); 
 	}
 
 	/**
@@ -239,20 +241,62 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
 	}
-
+	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
 	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilname(profil.getProfilId(), suchprofilname);
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException {
+		
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
+		
+		int ergebnis = 0; 
+		
+		// Der Suchprofilname existiert bereits. 
+		if (existenz == 1) {
+			ergebnis = 1; 
+		}
+		
+		// Der Suchprofilname ist leer.
+		if (suchprofilname.isEmpty()) {
+			ergebnis = 2; 
+		}
+		
+		return ergebnis; 
 	}
 
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profil.getProfilId(), suchprofilId);
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException {
+		
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
+		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(profil.getProfilId(), suchprofilId); 
+		
+		int ergebnis = 0; 
+		
+		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein gleichnamiges, anderes Suchprofil.
+		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
+			ergebnis = 1; 
+		} 
+		
+//		// Der Suchprofilname wurde nicht verändert. 
+//		if (existenz == 1 && (suchprofilname.equals(suchprofilnameAktuell))) {
+//			ergebnis = 2; 
+//		}
+//		
+//		// Der Suchprofilname existiert noch nicht und die TextBox ist nicht leer.
+//		if (existenz == 0 && (!suchprofilname.isEmpty())) {
+//			ergebnis = 3; 
+//		}
+		
+		// Der Suchprofilname existiert noch nicht, die TextBox ist jedoch leer. 
+		if (existenz == 0 && (suchprofilname.isEmpty())) {
+			ergebnis = 2; 
+		}
+		
+		return ergebnis; 
 	}
+
 
 	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilById(suchprofilId);
