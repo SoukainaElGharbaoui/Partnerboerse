@@ -45,7 +45,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 
 	/**
-	 * Nutzerprofil löschen.
+	 * Nutzerprofil lï¿½schen.
 	 */
 	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
@@ -87,7 +87,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil löschen.
+	 * Suchprofil lï¿½schen.
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException;
 
@@ -97,17 +97,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET VON MILENA - NOTWENIG)
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ï¿½BERARBEITET VON MILENA - NOTWENIG)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 * Existenz des Suchprofilnamens beim Anlegen ï¿½berprï¿½fen.
 	 */
 	public int pruefeSuchprofilname(int profilId, String suchprofilname) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
+	 * Existenz des Suchprofilnamens beim Editieren ï¿½berprï¿½fen.
 	 */
 	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) throws IllegalArgumentException;
 		
@@ -117,7 +117,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ï¿½BERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
@@ -149,15 +149,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Alle Vermerke eines Nutzerprofils auslesen.
 	public Merkliste getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException;
-
+	
 	// Vermerkstatus ermitteln.
-	public int getVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk einfügen.
-	public void vermerkSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk löschen.
-	public void vermerkLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
+	public int pruefeVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException;
+	
+	// Vermerkstatus aendern.
+	public int vermerkstatusAendern(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -175,18 +172,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException;
+	
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
+	public int pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException;
+		
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
+	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException;	
+	
+	// Sperrstatus aendern.
+	public int sperrstatusAendern(int profilId, int fremdprofilId) throws IllegalArgumentException;
 
-	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
-	public int getSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException;
-
-	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
-	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException;
-
-	// Sperrung einfügen.
-	public void sperrungSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException;
-
-	// Sperrung löschen.
-	public void sperrungLoeschen(int profilId, int fremdprofilId) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Sperrliste
@@ -196,7 +191,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlägeNp
+	 * ** ABSCHNITT, Beginn: Partnervorschlï¿½geNp
 	 * *************************************************************************
 	 * **
 	 */
@@ -220,7 +215,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlägeNp
+	 * ** ABSCHNITT, Ende: Partnervorschlï¿½geNp
 	 * *************************************************************************
 	 * **
 	 * 

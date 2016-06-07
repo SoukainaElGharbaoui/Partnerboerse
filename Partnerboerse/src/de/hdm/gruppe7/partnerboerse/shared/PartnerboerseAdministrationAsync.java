@@ -40,7 +40,7 @@ public interface PartnerboerseAdministrationAsync {
 			String raucher, String religion, AsyncCallback<Void> callback);
 
 	/**
-	 * Nutzerprofil löschen.
+	 * Nutzerprofil lï¿½schen.
 	 */
 	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
@@ -48,7 +48,6 @@ public interface PartnerboerseAdministrationAsync {
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
-
 
 	/**
 	 * Alle Nutzerprofile auslesen.
@@ -86,7 +85,7 @@ public interface PartnerboerseAdministrationAsync {
 			AsyncCallback<Void> callback);
 
 	/**
-	 * Suchprofil löschen.
+	 * Suchprofil lï¿½schen.
 	 */
 	void deleteSuchprofil(int profilId, String suchprofilName,
 			AsyncCallback<Void> callback);
@@ -97,20 +96,20 @@ public interface PartnerboerseAdministrationAsync {
 	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ï¿½BERARBEITET
 	 * VON MILENA - NOTWENIG)
 	 */
 	void getSuchprofilByName(int profilId, String suchprofilName,
 			AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen überprüfen.
+	 * Existens des Suchprofilnamens beim Anlegen ï¿½berprï¿½fen.
 	 */
 	void pruefeSuchprofilname(int profilId, String suchprofilname,
 			AsyncCallback<Integer> callback);
 
 	/**
-	 * Existens des Suchprofilnamens beim Editieren überprüfen.
+	 * Existens des Suchprofilnamens beim Editieren ï¿½berprï¿½fen.
 	 */
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId,
 			AsyncCallback<String> callback);
@@ -121,7 +120,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ï¿½BERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 
@@ -156,16 +155,12 @@ public interface PartnerboerseAdministrationAsync {
 			AsyncCallback<Merkliste> callback);
 
 	// Vermerkstatus ermitteln.
-	void getVermerkstatus(int profilId, int fremdprofilId,
+	void pruefeVermerkstatus(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	// Vermerk einfügen.
-	void vermerkSetzen(int profilId, int fremdprofilId,
-			AsyncCallback<Void> callback);
-
-	// Vermerk löschen.
-	void vermerkLoeschen(int profilId, int fremdprofilId,
-			AsyncCallback<Void> callback);
+	// Vermerkstatus aendern.
+	void vermerkstatusAendern(int profilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
 
 	/*
 	 * *************************************************************************
@@ -185,21 +180,17 @@ public interface PartnerboerseAdministrationAsync {
 	void getGesperrteNutzerprofileFor(int profilId,
 			AsyncCallback<Sperrliste> callback);
 
-	// Prüfen, ob Fremdprofil von Benutzer gesperrt wurde.
-	void getSperrstatusFremdprofil(int profilId, int fremdprofilId,
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	void pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	// Prüfen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int profilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
-
-	// Sperrung einfügen.
-	void sperrungSetzen(int profilId, int fremdprofilId,
-			AsyncCallback<Void> callback);
-
-	// Sperrung löschen.
-	void sperrungLoeschen(int profilId, int fremdprofilId,
-			AsyncCallback<Void> callback);
+	
+	// Sperrstatus aendern.
+	void sperrstatusAendern(int profilId, int fremdprofilId,
+			AsyncCallback<Integer> callback);
 
 	/*
 	 * *************************************************************************
@@ -210,7 +201,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Partnervorschläge
+	 * ** ABSCHNITT, Beginn: Partnervorschlï¿½ge
 	 * *************************************************************************
 	 * **
 	 */
@@ -236,62 +227,64 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Partnervorschläge
+	 * ** ABSCHNITT, Ende: Partnervorschlï¿½ge
 	 * *************************************************************************
 	 * **
 	 */
-	
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Beginn: PartnervorschlÃ¤geSp
-	 * ***************************************************************************
+	 * ***********************************
+	 * ****************************************
 	 */
-	
+
 	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId,
 			AsyncCallback<Integer> callback);
 
-	void aehnlichkeitSetzenSp(int nutzerprofilId, int suchprofilId, String suchprofilName,  int fremdprofilId,
-			int aehnlichkeitSp,  AsyncCallback<Void> callback);
+	void aehnlichkeitSetzenSp(int nutzerprofilId, int suchprofilId,
+			String suchprofilName, int fremdprofilId, int aehnlichkeitSp,
+			AsyncCallback<Void> callback);
 
-	void aehnlichkeitEntfernenSp(int nutzerprofilId, AsyncCallback<Void> callback);
-	
+	void aehnlichkeitEntfernenSp(int nutzerprofilId,
+			AsyncCallback<Void> callback);
+
 	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-		void getNutzerprofileOhneGesetzteSperrung(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	void getNutzerprofileOhneGesetzteSperrung(int profilId,
+			AsyncCallback<List<Nutzerprofil>> callback);
 
 	void getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
-	
-	
-	
+
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: PartnervorschlÃ¤geSp
-	 * ***************************************************************************
-
-
-	/*
+	 * *************************************
+	 * **************************************
+	 * 
+	 * 
+	 * /*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
 	 * *************************************************************************
 	 * **
 	 */
 
-	
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 
 	void createInfoNeu(int profilId, int eigenschaftId, String infotext,
 			AsyncCallback<Info> callback);
-	
+
 	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
-	
+
 	void getAllInfosNeu(int profilId, AsyncCallback<List<String>> callback);
 
 	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
 
 	void deleteOneInfoNeu(int profilId, int eigenschaftId,
 			AsyncCallback<Void> callback);
-	
-	void saveInfoNeu(int profilId, int eigenschaftId, String infotext, 
+
+	void saveInfoNeu(int profilId, int eigenschaftId, String infotext,
 			AsyncCallback<Void> callback);
 
 	void getEigAById(int eigenschaftId,

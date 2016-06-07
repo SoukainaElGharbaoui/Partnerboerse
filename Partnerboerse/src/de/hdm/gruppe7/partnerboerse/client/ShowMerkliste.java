@@ -5,6 +5,8 @@ import java.util.Vector;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ClosingEvent;
+import com.google.gwt.user.client.Window.ClosingHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -119,9 +121,9 @@ public class ShowMerkliste extends VerticalPanel {
 
 											// Inhalte aus der Datenbank
 											// entfernen.
-											ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
+											ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(
 													Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
-													new AsyncCallback<Void>() {
+													new AsyncCallback<Integer>() {
 
 														@Override
 														public void onFailure(Throwable caught) {
@@ -129,7 +131,7 @@ public class ShowMerkliste extends VerticalPanel {
 														}
 
 														@Override
-														public void onSuccess(Void result) {
+														public void onSuccess(Integer result) {
 															infoLabel.setText(
 																	"Das Nutzerprofil wurde erfolgreich von Ihrer Merkliste entfernt.");
 														}
@@ -150,8 +152,8 @@ public class ShowMerkliste extends VerticalPanel {
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 
-									// Prüfen, ob Benutzer von Fremdprofil
-									// gesperrt wurde.
+//									 Prüfen, ob Benutzer von Fremdprofil
+//									 gesperrt wurde.
 									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
 											Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
 											new AsyncCallback<Integer>() {
@@ -179,44 +181,44 @@ public class ShowMerkliste extends VerticalPanel {
 														// Bildschirmmeldung ausgeben.
 														Window.alert("Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
 														
-//														
-//														// DialobBox hinzufügen.
-//														final DialogBox sperrungDialogBox = new DialogBox();
+////														
+////														// DialobBox hinzufügen.
+////														final DialogBox sperrungDialogBox = new DialogBox();
+////
+////														sperrungDialogBox.setText("Information");
+////														sperrungDialogBox.setAnimationEnabled(true);
+////														// Schließen-Button
+////														// hinzufügen.
+////														final Button schliessenButton = new Button("Schließen");
+////														// VerticalPanel
+////														// hinzufügen.
+////														final VerticalPanel sperrungVerPanel = new VerticalPanel();
+////														// Label hinzufügen.
+////														final Label sperrungLabel = new Label(
+////																"Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
+////														// Widgets zum
+////														// VerticalPanel
+////														// hinzufügen.
+////														sperrungVerPanel.add(sperrungLabel);
+////														sperrungVerPanel
+////																.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+////														sperrungVerPanel.add(schliessenButton);
+////														sperrungDialogBox.setWidget(sperrungVerPanel);
+////														sperrungDialogBox.center();
+////
+////														// ClickHandler für den
+////														// Schließen-Button
+////														// hinzufügen.
+////														schliessenButton.addClickHandler(new ClickHandler() {
+////
+////															@Override
+////															public void onClick(ClickEvent event) {
+////																sperrungDialogBox.hide();
+////
+////															}
 //
-//														sperrungDialogBox.setText("Information");
-//														sperrungDialogBox.setAnimationEnabled(true);
-//														// Schließen-Button
-//														// hinzufügen.
-//														final Button schliessenButton = new Button("Schließen");
-//														// VerticalPanel
-//														// hinzufügen.
-//														final VerticalPanel sperrungVerPanel = new VerticalPanel();
-//														// Label hinzufügen.
-//														final Label sperrungLabel = new Label(
-//																"Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
-//														// Widgets zum
-//														// VerticalPanel
-//														// hinzufügen.
-//														sperrungVerPanel.add(sperrungLabel);
-//														sperrungVerPanel
-//																.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-//														sperrungVerPanel.add(schliessenButton);
-//														sperrungDialogBox.setWidget(sperrungVerPanel);
-//														sperrungDialogBox.center();
+////														});
 //
-//														// ClickHandler für den
-//														// Schließen-Button
-//														// hinzufügen.
-//														schliessenButton.addClickHandler(new ClickHandler() {
-//
-//															@Override
-//															public void onClick(ClickEvent event) {
-//																sperrungDialogBox.hide();
-//
-//															}
-
-//														});
-
 													}
 
 												}

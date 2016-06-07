@@ -90,7 +90,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 
 		/**
-		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
+		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gefï¿½llt
 		 */
 
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(Benutzer.getProfilId(),
@@ -113,7 +113,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				});
 		
 		/**
-		 * Bei Betätigung des createSuchrprofilButtons werden alle Aehnlichkeiten gelöscht
+		 * Bei Betï¿½tigung des createSuchrprofilButtons werden alle Aehnlichkeiten gelï¿½scht
 		 */
 
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
@@ -243,14 +243,26 @@ public class ShowSuchprofil extends VerticalPanel {
 				
 
 
-				verPanel2.add(showSuchprofilFlexTable);
+//				verPanel2.add(showSuchprofilFlexTable);
+//				buttonPanel.add(bearbeitenButton);
+//				buttonPanel.add(loeschenButton);
+//				verPanel2.add(buttonPanel);
+//				verPanel2.add(infoLabel);
+//				
+//				ShowInfo showInfo = new ShowInfo(Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
+//				verPanel3.add(showInfo);
+
+				verPanel.add(showSuchprofilFlexTable);
 				buttonPanel.add(bearbeitenButton);
 				buttonPanel.add(loeschenButton);
-				verPanel2.add(buttonPanel);
-				verPanel2.add(infoLabel);
+				verPanel.add(buttonPanel);
+				verPanel.add(infoLabel);
 				
 				ShowInfo showInfo = new ShowInfo(Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
-				verPanel3.add(showInfo);
+				verPanel2.clear();
+				verPanel2.add(showInfo);
+				horPanel.add(verPanel);
+				horPanel.add(verPanel2); 
 				
 
 			}
