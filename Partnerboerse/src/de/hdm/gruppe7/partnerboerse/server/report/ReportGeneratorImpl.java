@@ -46,6 +46,7 @@ import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaege
 public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
+	private Nutzerprofil np = new Nutzerprofil();
 	private InfoMapper infoMapper = null;
 	/**
 	 * Ein ReportGenerator ben�tigt Zugriff auf die PartnerboerseAdministration, da diese die
