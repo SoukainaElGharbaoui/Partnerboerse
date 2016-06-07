@@ -1,3 +1,5 @@
+
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -157,13 +159,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Merkliste getGemerkteNutzerprofileFor() throws IllegalArgumentException;
 
 	// Vermerkstatus ermitteln.
-	public int getVermerkstatus(int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk einf�gen.
-	public void vermerkSetzen(int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk l�schen.
-	public void vermerkLoeschen(int fremdprofilId) throws IllegalArgumentException;
+	public int pruefeVermerkstatus(int fremdprofilId) throws IllegalArgumentException;
+	
+	// Vermerkstatus aendern.
+	public int vermerkstatusAendern(int fremdprofilId) throws IllegalArgumentException;
 
 
 	/*
@@ -182,18 +181,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor() throws IllegalArgumentException;
-
-	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
-	public int getSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
 	
-	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
-	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
+	public int pruefeSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
+		
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
+	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;	
+	
+	// Sperrstatus aendern.
+	public int sperrstatusAendern(int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung einf�gen.
-	public void sperrungSetzen(int fremdprofilId) throws IllegalArgumentException;
-
-	// Sperrung l�schen.
-	public void sperrungLoeschen(int fremdprofilId) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -216,10 +213,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void besuchSetzen(int fremdprofilId) throws IllegalArgumentException;
 
 	// Aehnlichkeit berechnen
-	public int berechneAehnlichkeitNpFor(int fremdprofilId) throws IllegalArgumentException;
+	public void berechneAehnlichkeitNpFor() throws IllegalArgumentException;
 
-	// Aehnlichkeit in DB speichern
-	public void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;
 
 	// Aehnlichkeit aus DB loeschen
 	public void aehnlichkeitEntfernen() throws IllegalArgumentException;
@@ -241,19 +236,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		public void berechneAehnlichkeitSpFor()
 		throws IllegalArgumentException;
 		
-		//Aehnlichkeit in DB speichern
-		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
 		
 		//Aehnlichkeit aus DB loeschen
 		public void aehnlichkeitEntfernenSp () throws IllegalArgumentException;
 		
-		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException;
 		
-//		//Ausgabe der Partnervorschlaege
+		
+		//Ausgabe der Partnervorschlaege
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException;
 	
 	/*
@@ -367,3 +359,4 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void setUser(Nutzerprofil n);
 
 }
+

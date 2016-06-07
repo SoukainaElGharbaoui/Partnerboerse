@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Initialsierungsmethode, die fÃ¼r jede Instanz von
+	 * Initialsierungsmethode, die für jede Instanz von
 	 * <code>PartnerboerseAdministrationImpl</code> aufgerufen werden muss.
 	 */
 	@Override
@@ -94,7 +93,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setReligion(religion);
 		profil.setEmailAddress(emailAddress);
 
-		// VorlÃ¤ufige Profil-ID setzen.
+		// Vorläufige Profil-ID setzen.
 		profil.setProfilId(1);
 
 		return this.nutzerprofilMapper.insertNutzerprofil(profil);
@@ -122,7 +121,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Nutzerprofil lÃ¶schen.
+	 * Nutzerprofil löschen.
 	 */
 	@Override
 	public void deleteNutzerprofil() throws IllegalArgumentException {
@@ -139,7 +138,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * *********************************** UnnÃ¶tig, da gleicher Mapper-Aufruf!
+	 * *********************************** Unnötig, da gleicher Mapper-Aufruf!
 	 * ***********************************
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException {
@@ -212,10 +211,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil löschen.
 	 */
-	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
+public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentException {
+		
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
@@ -234,7 +235,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET
 	 * VON MILENA - NOTWENDIG)
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
@@ -242,14 +243,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
 	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException {
 		return this.suchprofilMapper.pruefeSuchprofilname(profil.getProfilId(), suchprofilname);
 	}
 
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren Ã¼berprÃ¼fen.
+	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
 	 */
 	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profil.getProfilId(), suchprofilId);
@@ -293,18 +294,28 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	// Vermerkstatus ermitteln.
-	public int getVermerkstatus(int fremdprofilId) throws IllegalArgumentException {
+	public int pruefeVermerkstatus(int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profil.getProfilId(), fremdprofilId);
 	}
 
-	// Vermerk einfÃ¼gen.
-	public void vermerkSetzen(int fremdprofilId) throws IllegalArgumentException {
-		this.merklisteMapper.insertVermerk(profil.getProfilId(), fremdprofilId);
-	}
+	// Vermerkstatus aendern.
+	public int vermerkstatusAendern(int fremdprofilId)
+			throws IllegalArgumentException {
+	
+		// Vermerkstatus ermitteln.
+		int vermerkstatus = this.merklisteMapper.pruefeVermerk(profil.getProfilId(),
+				fremdprofilId);
 
-	// Vermerk lÃ¶schen.
-	public void vermerkLoeschen(int fremdprofilId) throws IllegalArgumentException {
-		this.merklisteMapper.deleteVermerk(profil.getProfilId(), fremdprofilId);
+		if (vermerkstatus == 1) {
+			// Wenn ein Vermerk vorliegt, wird dieser gel�scht.
+			this.merklisteMapper.deleteVermerk(profil.getProfilId(), fremdprofilId);
+		} else {
+			// Wenn kein Vermerk vorliegt, wird ein Vermerk gesetzt.
+			this.merklisteMapper.insertVermerk(profil.getProfilId(), fremdprofilId);
+		}
+
+		return vermerkstatus;
+		
 	}
 
 	/*
@@ -320,6 +331,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * *************************************************************************
 	 * **
 	 */
+
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor() throws IllegalArgumentException {
 
@@ -334,25 +346,35 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return gesperrteNutzerprofile;
 	}
 
-	// PrÃ¼fen, ob Fremdprofil von Benutzer gesperrt wurde.
-	public int getSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException {
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
+	public int pruefeSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException {
 		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profil.getProfilId(), fremdprofilId);
 	}
 
-	// PrÃ¼fen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
 	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException {
 		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profil.getProfilId(), fremdprofilId);
 	}
 
-	// Sperrung einfÃ¼gen.
-	public void sperrungSetzen(int fremdprofilId) throws IllegalArgumentException {
-		this.sperrlisteMapper.insertSperrung(profil.getProfilId(), fremdprofilId);
+	// Sperrstatus aendern.
+	public int sperrstatusAendern(int fremdprofilId) throws IllegalArgumentException {
+
+		// Sperrstatus ermitteln. 
+		int sperrstatus = this.sperrlisteMapper.pruefeSperrungFremdprofil(profil.getProfilId(), fremdprofilId);
+
+		if (sperrstatus == 1) {
+			// Wenn eine Sperrung vorliegt, wird diese gel�scht.
+			this.sperrlisteMapper.deleteSperrung(profil.getProfilId(), fremdprofilId);
+		} else {
+			// Wenn keine Sperrung vorliegt, wird eine Sperrung gesetzt
+			// und der entsprechende Vermerk entfernt.
+			this.sperrlisteMapper.insertSperrung(profil.getProfilId(), fremdprofilId);
+			this.merklisteMapper.deleteVermerk(profil.getProfilId(), fremdprofilId);
+		}
+
+		return sperrstatus;
 	}
 
-	// Sperrung lÃ¶schen.
-	public void sperrungLoeschen(int fremdprofilId) throws IllegalArgumentException {
-		this.sperrlisteMapper.deleteSperrung(profil.getProfilId(), fremdprofilId);
-	}
 
 	/*
 	 * *************************************************************************
@@ -361,9 +383,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * **
 	 */
 
+
+
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Beginn: Partnervorschläge
 	 * *************************************************************************
 	 * **
 	 */
@@ -381,38 +405,51 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Methode zur Berechnung der Ähnlichkeit zwischen zwei Nutzerprofilen
 	 */
-	public int berechneAehnlichkeitNpFor(int fremdprofilId) throws IllegalArgumentException {
+	public void berechneAehnlichkeitNpFor()
+			throws IllegalArgumentException {
 
 		// Erforderliche Daten abrufen
-		Nutzerprofil referenzprofil = nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
-		Nutzerprofil vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-		List<Info> referenzinfo = infoMapper.findAllInfosNeu(profil.getProfilId());
-		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+		List<Nutzerprofil> referenzprofil = nutzerprofilMapper.findUnangeseheneNutzerprofile(profil.getProfilId());			
+		Nutzerprofil vergleichsprofil = nutzerprofilMapper	.findByNutzerprofilId(profil.getProfilId());
+		
 
+		for (Nutzerprofil np : referenzprofil){
+			
+			
+			int fremdprofilId = np.getProfilId();
+			int profilId = vergleichsprofil.getProfilId();
+			
 		// Variablen zur Berechnung der Aehnlichkeit
 		int aehnlichkeit = 3;
 		int counter = 7;
 
 		// Vergleich der Profildaten
-		if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
+		if (np.getGeschlecht().equals(
+				vergleichsprofil.getGeschlecht())) {
 			aehnlichkeit = aehnlichkeit - 3;
 		}
 
-		if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
+		if (np.getHaarfarbe().equals(
+				vergleichsprofil.getHaarfarbe())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
+		if (np.getKoerpergroesseInt() == vergleichsprofil
+				.getKoerpergroesseInt()) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
+		if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
+		if (np.getReligion().equals(vergleichsprofil.getReligion())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
+		
+		
+		List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
 
 		// Vergleich der Beschreibungsinfos
 		for (Info rin : referenzinfo) {
@@ -429,19 +466,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		// Berechnung der Aehnlichkeit
 		aehnlichkeit = aehnlichkeit * (100 / counter);
-
-		// Rückgabewert
-		return aehnlichkeit;
-
-	}
-
-	/**
-	 * Aehnlichkeit setzen
-	 */
-	public void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException {
-		this.nutzerprofilMapper.insertAehnlichkeit(profil.getProfilId(), fremdprofilId, aehnlichkeit);
+		
+		nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
+		
+		}
 
 	}
+
 
 	/**
 	 * Aehnlichkeit entfernen
@@ -459,61 +490,77 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-	public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId) throws IllegalArgumentException {
+	public void berechneAehnlichkeitSpFor() throws IllegalArgumentException {
 
-		Suchprofil referenzprofil = suchprofilMapper.findSuchprofilById(suchprofilId);
-		Nutzerprofil vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(fremdprofilId);
-		List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
-		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+		List<Suchprofil> referenzprofil = suchprofilMapper
+				.findAllSuchprofileFor(profil.getProfilId());
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profil.getProfilId());
+		
+		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
+		for (Suchprofil sp : referenzprofil) {
+			for (Nutzerprofil np : vergleichsprofil) {
 
-		int aehnlichkeitSp = 0;
+				int aehnlichkeitSp = 0;
+				int counter = 70;
+				
+				int suchprofilId = sp.getProfilId();
+				int fremdprofilId = np.getProfilId();
+				String suchprofilName = sp.getSuchprofilName();
 
-		int counter = 100;
+				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+				}
 
-		if (referenzprofil.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
-			aehnlichkeitSp = aehnlichkeitSp + 40;
-		}
+				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+				}
 
-		if (referenzprofil.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
-			aehnlichkeitSp = aehnlichkeitSp + 10;
-		}
+				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+				}
 
-		if (referenzprofil.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
-			aehnlichkeitSp = aehnlichkeitSp + 10;
-		}
+				if (sp.getRaucher().equals(np.getRaucher())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+				}
 
-		if (referenzprofil.getRaucher().equals(vergleichsprofil.getRaucher())) {
-			aehnlichkeitSp = aehnlichkeitSp + 20;
-		}
+				if (sp.getReligion().equals(np.getReligion())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
 
-		if (referenzprofil.getReligion().equals(vergleichsprofil.getReligion())) {
-			aehnlichkeitSp = aehnlichkeitSp + 20;
-		}
+				}
 
-		// Vergleich der Infos
-		for (Info rin : referenzinfo) {
-			for (Info vin : vergleichsinfo) {
-				if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-					counter = counter + 10;
-					if (rin.getInfotext().equals(vin.getInfotext())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+				// Holen aller Infos des Suchprofils und Nuterprofils
+				List<Info> referenzinfo = infoMapper
+						.findAllInfosNeu(suchprofilId);
+				List<Info> vergleichsinfo = infoMapper
+						.findAllInfosNeu(fremdprofilId);
+				
+				// Vergleich der Infos
+				for (Info rin : referenzinfo) {
+					for (Info vin : vergleichsinfo) {
+						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
+							counter= counter + 2;
+							if (rin.getInfotext().equals(vin.getInfotext())) {
+								aehnlichkeitSp = aehnlichkeitSp + 2;
 
+							}
+						}
 					}
 				}
-			}
+				
+				// Berechnung des Prozentwertes
+				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
+				
+				// Aehnlichkeit in die Datenbank setzen
+				suchprofilMapper.insertAehnlichkeit(profil.getProfilId(),
+						suchprofilId, suchprofilName, fremdprofilId,
+						aehnlichkeitSp);
 
+			}
 		}
 
-		aehnlichkeitSp = (counter / 100 * aehnlichkeitSp);
-
-		return aehnlichkeitSp;
-
 	}
 
-	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen.
-	public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profil.getProfilId());
-	}
+	
 
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException {
 
@@ -521,11 +568,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-	public void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp)
-			throws IllegalArgumentException {
-		this.suchprofilMapper.insertAehnlichkeit(profil.getProfilId(), suchprofilId, suchprofilName, fremdprofilId,
-				aehnlichkeitSp);
-	}
 
 	public void aehnlichkeitEntfernenSp() throws IllegalArgumentException {
 		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
@@ -533,7 +575,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge
+	 * ** ABSCHNITT, Ende: Partnervorschläge
 	 * *************************************************************************
 	 * **
 	 */

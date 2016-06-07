@@ -89,7 +89,9 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil l�schen.
 	 */
+
 	void deleteSuchprofil(String suchprofilName, AsyncCallback<Void> callback);
+
 
 	/**
 	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
@@ -150,13 +152,10 @@ public interface PartnerboerseAdministrationAsync {
 	void getGemerkteNutzerprofileFor(AsyncCallback<Merkliste> callback);
 
 	// Vermerkstatus ermitteln.
-	void getVermerkstatus(int fremdprofilId, AsyncCallback<Integer> callback);
+	void pruefeVermerkstatus(int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Vermerk einf�gen.
-	void vermerkSetzen(int fremdprofilId, AsyncCallback<Void> callback);
-
-	// Vermerk l�schen.
-	void vermerkLoeschen(int fremdprofilId, AsyncCallback<Void> callback);
+	// Vermerkstatus aendern.
+	void vermerkstatusAendern(int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/*
 	 * *************************************************************************
@@ -175,17 +174,15 @@ public interface PartnerboerseAdministrationAsync {
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	void getGesperrteNutzerprofileFor(AsyncCallback<Sperrliste> callback);
 
-	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
-	void getSperrstatusFremdprofil(int fremdprofilId, AsyncCallback<Integer> callback);
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde. 
+	void pruefeSperrstatusFremdprofil(int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int fremdprofilId, AsyncCallback<Integer> callback);
+	
+	// Sperrstatus aendern.
+	void sperrstatusAendern(int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Sperrung einf�gen.
-	void sperrungSetzen(int fremdprofilId, AsyncCallback<Void> callback);
-
-	// Sperrung l�schen.
-	void sperrungLoeschen(int fremdprofilId, AsyncCallback<Void> callback);
 
 	/*
 	 * *************************************************************************
@@ -207,9 +204,7 @@ public interface PartnerboerseAdministrationAsync {
 	// Besuch setzen.
 	void besuchSetzen(int fremdprofilId, AsyncCallback<Void> callback);
 
-	void berechneAehnlichkeitNpFor(int fremdprofilId, AsyncCallback<Integer> callback);
-
-	void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
+	void berechneAehnlichkeitNpFor(AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernen(AsyncCallback<Void> callback);
 
@@ -229,15 +224,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	void berechneAehnlichkeitSpFor(AsyncCallback<Void> callback);
 
-	void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp, AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernenSp(AsyncCallback<Void> callback);
 
-	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-	void getNutzerprofileOhneGesetzteSperrung(AsyncCallback<List<Nutzerprofil>> callback);
 
 	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
@@ -247,9 +238,9 @@ public interface PartnerboerseAdministrationAsync {
 	 * ** ABSCHNITT, Ende: PartnervorschlägeSp
 	 * *************************************************************************
 	 * **
-	 * 
-	 * 
-	 * /*
+	 */
+
+	 /*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
 	 * *************************************************************************

@@ -32,6 +32,9 @@ public class CreateSuchprofil extends VerticalPanel {
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private VerticalPanel verPanel = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
+	private Label reqLabel = new Label("* Pflichtfeld");
+	
+	
 
 	/**
 	 * Konstruktor hinzuf�gen.
@@ -48,6 +51,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Label für Überschrift erstellen
 		 */
 		final Label ueberschriftLabel = new Label("Suchprofil anlegen:");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		reqLabel.setStyleName("red_label");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
@@ -80,8 +85,10 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Erzeugen von Eingabefeldern fuer die zweite Spalte
 		 */
 		final Label editLabel = new Label();
-		final TextBox suchprofilnameTextBox = new TextBox();
+		final TextBox suchprofilnameTextBox = new TextBox(); 
 		createSuchprofilFlexTable.setWidget(0, 2, suchprofilnameTextBox);
+		createSuchprofilFlexTable.setWidget(0, 3, reqLabel);
+		
 
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");

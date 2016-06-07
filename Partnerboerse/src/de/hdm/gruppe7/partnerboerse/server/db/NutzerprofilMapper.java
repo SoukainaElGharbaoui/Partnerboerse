@@ -515,7 +515,7 @@ public class NutzerprofilMapper {
 									+ "FROM t_nutzerprofil1 LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
 									+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
 									+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND (t_sperrung1.fremdprofil_id !=" + profilId
-									+ "OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id" );
+									+ " OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id" );
 					
 					while (rs.next()){
 						
@@ -637,5 +637,7 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
+
+
 
 }
