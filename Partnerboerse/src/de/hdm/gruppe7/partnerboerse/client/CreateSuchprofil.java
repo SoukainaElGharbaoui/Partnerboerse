@@ -29,6 +29,8 @@ public class CreateSuchprofil extends VerticalPanel {
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private VerticalPanel verPanel = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
+	private Label reqLabel = new Label("* Pflichtfeld");
+	
 	
 	
 
@@ -48,6 +50,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		final Label ueberschriftLabel = new Label("Suchprofil anlegen:");
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		reqLabel.setStyleName("red_label");
 
 		/**
 		 * Tabelle zur Anzeige des eigenen Profils erstellen.
@@ -82,7 +85,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		final Label editLabel = new Label();
 		final TextBox suchprofilnameTextBox = new TextBox(); 
-		createSuchprofilFlexTable.setWidget(0, 2, suchprofilnameTextBox); 
+		createSuchprofilFlexTable.setWidget(0, 2, suchprofilnameTextBox);
+		createSuchprofilFlexTable.setWidget(0, 3, reqLabel);
 
 		final ListBox geschlechtListBox = new ListBox();
 		geschlechtListBox.addItem("Keine Auswahl");

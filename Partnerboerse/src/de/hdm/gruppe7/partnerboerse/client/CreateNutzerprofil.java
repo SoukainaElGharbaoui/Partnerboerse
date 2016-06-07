@@ -23,12 +23,11 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 
 public class CreateNutzerprofil extends VerticalPanel {
-	
-	
+
 	private HorizontalPanel horPanel = new HorizontalPanel();
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	private VerticalPanel verPanel2 = new VerticalPanel();
 
 	private LoginInfo loginInfo;
@@ -37,9 +36,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private TextBox vornameTextBox = new TextBox();
 	private Label reqLabel = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
-	private Label reqLabel3 = new Label("*");
+	private Label reqLabel3 = new Label("* Pflichtfeld");
 	final Label warnungLabel = new Label();
-	
+	final Label warnungLabel2 = new Label();
+
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
 
@@ -48,7 +48,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	// Geburtsdatum
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
-	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+	private DateTimeFormat geburtsdatumFormat = DateTimeFormat
+			.getFormat("yyyy-MM-dd");
 
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
@@ -67,7 +68,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		this.add(horPanel);
 		this.add(verPanel);
 		this.add(verPanel2);
-		
+
 		horPanel.add(verPanel);
 		horPanel.add(verPanel2);
 
@@ -75,9 +76,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
+		warnungLabel.setStyleName("red_label");
+		
 
 		createNutzerprofilFlexTable.setCellPadding(6);
-		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
+		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
 
 		createNutzerprofilFlexTable.setText(0, 0, "Vorname");
@@ -103,30 +107,32 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
-//		createNutzerprofilFlexTable.setWidget(2, 3, reqLabel3);
+		// createNutzerprofilFlexTable.setWidget(2, 3, reqLabel3);
 
 		// Geburtsdatum
-		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
-		geburtsdatumDateBox.getDatePicker().setYearAndMonthDropdownVisible(true);
+		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(
+				geburtsdatumFormat));
+		geburtsdatumDateBox.getDatePicker()
+				.setYearAndMonthDropdownVisible(true);
 		geburtsdatumDateBox.getDatePicker().setVisibleYearCount(20);
 
-		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+		geburtsdatumDateBox
+				.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
-			public void onValueChange(ValueChangeEvent<Date> event) {
-				Date geburtsdatum = event.getValue();
-				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
-				geburtsdatumInhalt.setText(geburtsdatumString);
-			}
-		});
+					public void onValueChange(ValueChangeEvent<Date> event) {
+						Date geburtsdatum = event.getValue();
+						String geburtsdatumString = DateTimeFormat.getFormat(
+								"yyyy-MM-dd").format(geburtsdatum);
+						geburtsdatumInhalt.setText(geburtsdatumString);
+					}
+				});
 
 		geburtsdatumDateBox.setValue(new Date());
 
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
-		
 
 		// Körpergröße
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
-		
 
 		// Haarfarbe
 		haarfarbeListBox.addItem("Blond");
@@ -137,7 +143,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Glatze");
 		haarfarbeListBox.addItem("Andere");
 		createNutzerprofilFlexTable.setWidget(5, 2, haarfarbeListBox);
-		
 
 		// Raucher
 		raucherListBox.addItem("Raucher");
@@ -155,76 +160,80 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		// EMail
 		createNutzerprofilFlexTable.setWidget(8, 2, emailTextBox);
+		
 
 		// Widgets zum VerticalPanel hinzufügen.
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(informationLabel);
-		
-
-	
 
 		// ClickHandler für den createNutzerprofil-Button hinzufügen.
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
-								if(vornameTextBox.getText().length()== 0){
-									warnungLabel.setText("Bitte geben Sie Ihren vollen Namen ein");
-									verPanel.add(warnungLabel);
-									
-								} else if (nachnameTextBox.getText().length()==0){
-									warnungLabel.setText("Bitte geben Sie Ihren vollen Namen ein");
-									verPanel.add(warnungLabel);			
-								
-			}
-								else {
-									
-									ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
-											nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
-											Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-											raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
-											emailTextBox.getText(), new AsyncCallback<Nutzerprofil>() {
 
-												@Override
-												public void onFailure(Throwable caught) {
-													informationLabel.setText("Es trat ein Fehler auf");
-													
-												}
+				if (vornameTextBox.getText().length() == 0) {
+					warnungLabel
+							.setText("Bitte geben Sie Ihren vollen Namen ein");
+					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
 
-												@Override
-												public void onSuccess(Nutzerprofil result) {													
-													informationLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
+				} else if (nachnameTextBox.getText().length() == 0) {
+					warnungLabel
+							.setText("Bitte geben Sie Ihren vollen Namen ein");
+					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 
-												}
+				} else {
 
-												});
-									CreateInfoNp createInfoNp = new CreateInfoNp();
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(createInfoNp);
-							
-								}
+					ClientsideSettings.getPartnerboerseAdministration()
+							.createNutzerprofil(
+									vornameTextBox.getText(),
+									nachnameTextBox.getText(),
+									geschlechtListBox.getSelectedItemText(),
+									getGeburtsdatum(),
+									Integer.parseInt(koerpergroesseTextBox
+											.getText()),
+									haarfarbeListBox.getSelectedItemText(),
+									raucherListBox.getSelectedItemText(),
+									religionListBox.getSelectedItemText(),
+									emailTextBox.getText(),
+									new AsyncCallback<Nutzerprofil>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											informationLabel
+													.setText("Es trat ein Fehler auf");
+
+										}
+
+										@Override
+										public void onSuccess(
+												Nutzerprofil result) {
+											informationLabel
+													.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
+
+										}
+
+									});
+					CreateInfoNp createInfoNp = new CreateInfoNp();
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(createInfoNp);
+
+				}
 
 			}
 
 		});
-		
-		
-		
-		
-		
+
 	}
 
-
-
 	Date getGeburtsdatum() {
-		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
+		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt
+				.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
-		
-		
+
 	}
 
 }

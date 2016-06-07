@@ -442,13 +442,32 @@ public class Navigator extends VerticalPanel {
 			   
 		   });
 		   
+		   nutzerprofilMenu.addItem("Meine Merklise", new Command(){
+
+			@Override
+			public void execute() {
+				ShowMerkliste showMerkliste = new ShowMerkliste();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showMerkliste);
+				
+			}
+			   
+		   });
+		   
+		   nutzerprofilMenu.addItem("Meine Sperrliste", new Command(){
+
+			@Override
+			public void execute() {
+				ShowSperrliste showSperrliste = new ShowSperrliste();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showSperrliste);
+				
+			}
+			   
+		   });
+		   
+		   
 		   nutzerprofilMenu.addSeparator();
-//		   nutzerprofilMenu.addItem("Exit", new Command() {
-//		      @Override
-//		      public void execute() {
-//		         showSelectedMenuItem("Exit");
-//		      }
-//		   });
 
 		   // Menü für das Suchprofil
 		   MenuBar suchprofilMenu = new MenuBar(true);
@@ -463,59 +482,55 @@ public class Navigator extends VerticalPanel {
 		      }
 		   });
 		   
-		   MenuBar sperrlisteMenu = new MenuBar(true);
-		   sperrlisteMenu.setAnimationEnabled(true);
-		   
-		   sperrlisteMenu.addItem("Gesperrte Kontakte anzeigen",  new Command(){
+		   suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command(){
 
 			@Override
 			public void execute() {
-				ShowSperrliste showSperrliste = new ShowSperrliste();
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showSperrliste);
+				RootPanel.get("Details").add(createSuchprofil);
 				
 			}
 			   
 		   });
 		   
-		   MenuBar merklisteMenu = new MenuBar(true);
-		   merklisteMenu.setAnimationEnabled(true);
+		   suchprofilMenu.addSeparator();
 		   
-		   merklisteMenu.addItem("Merkliste anzeigen", new Command(){
-
-			@Override
-			public void execute() {
-				ShowMerkliste showMerkliste = new ShowMerkliste();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showMerkliste);
-				
-			}
-			   
-		   });
+		   
 		   
 		   MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		   partnervorschlaegeMenu.setAnimationEnabled(true);
 		   
-		   partnervorschlaegeMenu.addItem("Meine Partnervorschlaege", new Command(){
+		   
+		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Suchprofil anzeigen", new Command(){
 
 			@Override
 			public void execute() {
-				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
+				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaege);
-
+				RootPanel.get("Details").add(showPartnervorschlaegeSp);
 				
 			}
 			   
 		   });
+		   
+		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Nutzerprofil anzeigen", new Command(){
+
+			@Override
+			public void execute() {
+				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaegeNp);
+				
+			}
+			   
+		   });
+		   
+		   partnervorschlaegeMenu.addSeparator();
 
 		   menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		   menu.addSeparator();
 		   menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
-		   menu.addSeparator();
-		   menu.addItem(new MenuItem("Meine Sperrliste", sperrlisteMenu));
-		   menu.addSeparator();
-		   menu.addItem(new MenuItem("Meine Merkliste", merklisteMenu));
 		   menu.addSeparator();
 		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
 
