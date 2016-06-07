@@ -17,7 +17,7 @@ public class ClientsideSettings extends CommonSettings {
 
 	private static ReportGeneratorAsync reportGenerator = null;
 
-	private static LoginServiceAsync loginService = null;
+	private static PartnerboerseAdministrationAsync loginService = null;
 
 	private static final String LOGGER_NAME = "PartnerboerseProjekt Web Client";
 

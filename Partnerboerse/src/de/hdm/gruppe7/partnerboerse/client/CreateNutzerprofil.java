@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
@@ -31,7 +32,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 	
 	private VerticalPanel verPanel2 = new VerticalPanel();
 
-	private LoginInfo loginInfo;
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
