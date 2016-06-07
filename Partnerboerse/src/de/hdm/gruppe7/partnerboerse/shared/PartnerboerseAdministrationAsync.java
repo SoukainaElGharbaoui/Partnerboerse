@@ -200,9 +200,7 @@ public interface PartnerboerseAdministrationAsync {
 	// Besuch setzen.
 	void besuchSetzen(int fremdprofilId, AsyncCallback<Void> callback);
 
-	void berechneAehnlichkeitNpFor(int fremdprofilId, AsyncCallback<Integer> callback);
-
-	void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
+	void berechneAehnlichkeitNpFor(AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernen(AsyncCallback<Void> callback);
 
@@ -222,15 +220,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	void berechneAehnlichkeitSpFor(AsyncCallback<Void> callback);
 
-	void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp, AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernenSp(AsyncCallback<Void> callback);
 
-	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-	void getNutzerprofileOhneGesetzteSperrung(AsyncCallback<List<Nutzerprofil>> callback);
 
 	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
@@ -240,9 +234,9 @@ public interface PartnerboerseAdministrationAsync {
 	 * ** ABSCHNITT, Ende: PartnervorschlägeSp
 	 * *************************************************************************
 	 * **
-	 * 
-	 * 
-	 * /*
+	 */
+
+	 /*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
 	 * *************************************************************************

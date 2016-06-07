@@ -515,7 +515,7 @@ public class NutzerprofilMapper {
 									+ "FROM t_nutzerprofil1 LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
 									+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
 									+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND (t_sperrung1.fremdprofil_id !=" + profilId
-									+ "OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id" );
+									+ " OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id" );
 					
 					while (rs.next()){
 						
@@ -559,13 +559,13 @@ public class NutzerprofilMapper {
 					ResultSet rs = stmt
 							.executeQuery(							
 									"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
-									+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe,"
-									+ " t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit"
-									+ " FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
+									+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, "
+									+ "t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit "
+									+ "FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
 									+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
-									+ "WHERE t_nutzerprofil1.nutzerprofil_id != 1 AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
-									+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
-									+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
+									+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
+									+ " AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+									+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC");
 
 
 					// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
@@ -636,5 +636,7 @@ public class NutzerprofilMapper {
 			e2.printStackTrace();
 		}
 	}
+
+
 
 }

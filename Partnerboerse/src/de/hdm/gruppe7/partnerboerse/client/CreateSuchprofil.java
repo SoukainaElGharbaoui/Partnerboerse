@@ -20,6 +20,13 @@ public class CreateSuchprofil extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
+	private VerticalPanel verPanel2 = new VerticalPanel();
+	
+	/**
+	 * Label fuer das Pflichtfeld.
+	 */
+	private Label reqLabel = new Label("* Pflichtfeld");
+	
 	/**
 	 * Label fuer die Ueberschrift hinzufuegen.
 	 */
@@ -62,9 +69,10 @@ public class CreateSuchprofil extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * CSS auf Ueberschrift anwenden.
+		 * CSS auf Ueberschrift und Pflichtfeld anwenden.
 		 */
-		ueberschriftLabel.addStyleName("partnerboerse-label");
+		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		reqLabel.setStyleName("red_label");
 
 		/**
 		 * CSS auf Tabelle anwenden und Tabelle formatieren.
@@ -91,6 +99,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * Werte).
 		 */
 		createSuchprofilFlexTable.setWidget(0, 2, suchprofilNameTextBox);
+		createSuchprofilFlexTable.setWidget(0, 3, reqLabel);
 
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
