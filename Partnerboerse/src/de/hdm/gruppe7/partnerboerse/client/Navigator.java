@@ -115,7 +115,7 @@ public class Navigator extends VerticalPanel {
 		   
 		   nutzerprofilMenu.addSeparator();
 
-		   // MenÃ¼ fÃ¼r das Suchprofil
+		   // Menü für das Suchprofil
 		   MenuBar suchprofilMenu = new MenuBar(true);
 		   suchprofilMenu.setAnimationEnabled(true);
 
@@ -223,6 +223,9 @@ public class Navigator extends VerticalPanel {
 		   RootPanel.get("Navigator").add(menu);
 	}	
 }
+		
+
+
 		
 
 
