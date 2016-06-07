@@ -114,7 +114,7 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 				
 											@Override
 											public void onSuccess(Void result4) {
-												// TODO Auto-generated method stub
+												infoLabel.setText("Es trat kein Fehler auf.");
 				
 																																	}
 
