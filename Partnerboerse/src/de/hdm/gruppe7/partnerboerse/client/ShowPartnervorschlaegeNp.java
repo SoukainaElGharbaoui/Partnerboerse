@@ -16,8 +16,11 @@ import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
+
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
 	 * VerticalPanel hinzufügen.
@@ -68,7 +71,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
 
-		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(
+
 				new AsyncCallback<List<Nutzerprofil>>() {
 
 					@Override
@@ -101,8 +105,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 
 									// Besuch in die Datenbank einfügen.
-									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(
-											Benutzer.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
+									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(fremdprofilId,
+											new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {

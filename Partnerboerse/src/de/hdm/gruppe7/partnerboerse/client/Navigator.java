@@ -1,5 +1,8 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.shared.GWT;
 
@@ -7,8 +10,10 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -16,9 +21,17 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 
+
+
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
+
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
+
+
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -28,228 +41,190 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
- 
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
+
+
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class Navigator extends VerticalPanel {
 
-	private LoginInfo loginInfo;
-
-	public Navigator(LoginInfo loginInfo) {
-		this.loginInfo = loginInfo;
-	}
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	int aehnlichkeit = 0;
 
 	public Navigator() {
+		
 		VerticalPanel verPanel1 = new VerticalPanel();
-		/*
-		 * Nachdem der Benutzer sich an der Partnerbörse angemeldet hat wird
-		 * seine eigene Profil-ID gesetzt (hier noch temporär - normalerweisen
-		 * im Login nach Ermittlung über Mailadresse
-		 */
-		Benutzer b = new Benutzer();
-		b.setProfilId(1);
-		
-//		Tree t = new Tree(); 
-//		
-//		TreeItem meinNutzerprofil = new TreeItem(); 
-//		meinNutzerprofil.setText("Mein Nutzerprofil");
-//		meinNutzerprofil.addTextItem("Meine Nutzerprofildaten"); 
-//		meinNutzerprofil.addTextItem("Meine Infos"); 
-//		
-//		TreeItem meineSuchprofile = new TreeItem(); 
-//		meineSuchprofile.setText("Meine Suchprofile");
-//		
-//		TreeItem andereNutzerprofile = new TreeItem(); 
-//		andereNutzerprofile.setText("Andere Nutzerprofile");
-//		andereNutzerprofile.addTextItem("Meine Merkliste"); 
-//		andereNutzerprofile.addTextItem("Meine Sperrliste"); 
-//		
-//		TreeItem meinePartnervorschlaege = new TreeItem(); 
-//		meinePartnervorschlaege.setText("Meine Partnervorschläge");
-//		meinePartnervorschlaege.addTextItem("Meine unangesehenen Partnervorschläge"); 
-//		meinePartnervorschlaege.addTextItem("Meine Partnervorschläge anhand von Suchprofilen"); 
-//		
-//		t.addItem(meinNutzerprofil); 
-//		t.addItem(meineSuchprofile);
-//		t.addItem(andereNutzerprofile);
-//		t.addItem(meinePartnervorschlaege); 
-//
-//		this.add(t); 
-		
 
-		/**
-		 * Button "Nutzerprofil anlegen" hinzufügen. !!! Gehört hier nicht hin,
-		 * dient zurzeit jedoch als Beispiel !!!
-		 * 
-		 */
+	
+		MenuBar menu = new MenuBar();
+		menu.setAutoOpen(true);
+		menu.setWidth("3000px");
+		menu.setAnimationEnabled(true);
 
-		// final Button loginButton = new Button("Anmelden");
-		// loginButton.addClickHandler(new ClickHandler(){
-		//
-		// public void onClick(ClickEvent event) {
-		//
-		// ShowLogin showLogin = new ShowLogin();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showLogin);
-		// loginButton.setVisible(false);
-		//
-		// }
-		//
-		// });
-		//
-		// loginButton.setStyleName("navigatorbutton");
-		// this.add(loginButton);
+		   // Create the file menu
+		   MenuBar nutzerprofilMenu = new MenuBar(true);
+		   nutzerprofilMenu.setAnimationEnabled(true);
 
-		// final Button logoutButton = new Button("Abmelden");
-		// loginButton.addClickHandler(new ClickHandler(){
-		//
-		// public void onClick(ClickEvent event) {
-		//
-		// ShowLogin showLogin = new ShowLogin();
-		// RootPanel.get("Details").clear();
-		// RootPanel.get("Details").add(showLogin);
-		// logoutButton.setVisible(false);
-		//
-		// }
-		//
-		// });
-		
-		/**
-		 * Information-Label hinzuf�gen.
-		 */
-		final Label infoLabel = new Label();
+		   nutzerprofilMenu.addItem("Mein Nutzerprofil", new Command() {
+		      @Override
+		      public void execute() {
+		    	  ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showEigenesNp);
+		      }
+		   });
+		   
+		   nutzerprofilMenu.addItem("Nutzerprofil anlegen", new Command(){
 
-
-		// logoutButton.setStyleName("navigatorbutton");
-		// this.add(logoutButton);
-		
-		final Button nutzerprofilAnlegenButton = new Button("Nutzerprofil anlegen");
-
-		nutzerprofilAnlegenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				
-				
+			@Override
+			public void execute() {
 				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createNutzerprofil);
 				
-				
-				
 			}
-		});
+			   
+		   });
+		   
+		   nutzerprofilMenu.addItem("Meine Merklise", new Command(){
 
-		nutzerprofilAnlegenButton.setStyleName("navigatorbutton");
-		this.add(nutzerprofilAnlegenButton);
-
-		/**
-		 * Button "Nutzerprofil anzeigen" hinzufügen
-		 */
-		final Button showEigenesNpButton = new Button("Mein Nutzerprofil");
-		showEigenesNpButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showEigenesNp);
-			}
-		});
-
-		showEigenesNpButton.setStyleName("navigatorbutton");
-		this.add(showEigenesNpButton);
-
-	
-		
-		/**
-		 * Button "Suchprofile anzeigen" hinzufügen.
-		 */
-		final Button showSuchprofilButton = new Button("Meine Suchprofile");
-		showSuchprofilButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showSuchprofil);
-			}
-
-		});
-
-		showSuchprofilButton.setStyleName("navigatorbutton");
-		this.add(showSuchprofilButton);
-
-		/**
-		 * Button "Merkliste anzeigen" hinzufügen
-		 */
-		final Button merklisteAnzeigenButton = new Button("Meine Merkliste");
-		merklisteAnzeigenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
+			@Override
+			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showMerkliste);
+				
 			}
-		});
+			   
+		   });
+		   
+		   nutzerprofilMenu.addItem("Meine Sperrliste", new Command(){
 
-		merklisteAnzeigenButton.setStyleName("navigatorbutton");
-		this.add(merklisteAnzeigenButton);
-
-		/**
-		 * Button "Sperrliste anzeigen" hinzufügen
-		 */
-		final Button sperrlisteAnzeigenButton = new Button("Meine Sperrliste");
-		sperrlisteAnzeigenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
+			@Override
+			public void execute() {
 				ShowSperrliste showSperrliste = new ShowSperrliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSperrliste);
+				
 			}
-		});
+			   
+		   });
+		   
+		   
+		   nutzerprofilMenu.addSeparator();
 
-		sperrlisteAnzeigenButton.setStyleName("navigatorbutton");
-		this.add(sperrlisteAnzeigenButton);
+		   // Menü für das Suchprofil
+		   MenuBar suchprofilMenu = new MenuBar(true);
+		   suchprofilMenu.setAnimationEnabled(true);
 
-		/**
-		 * Button "Partnervorschlaege anzeigen" hinzufügen.
-		 */
-		final Button showPartnervorschlaegeButton = new Button("Meine Partnervorschläge");
-		showPartnervorschlaegeButton.addClickHandler(new ClickHandler() {
+		   suchprofilMenu.addItem("Meine Suchprofile", new Command() {
+		      @Override
+		      public void execute() {
+		    	  ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSuchprofil);
+		      }
+		   });
+		   
+		   suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command(){
 
-			public void onClick(ClickEvent event) {
-
-
-									ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
-											 new AsyncCallback<Void>() {
-
-												@Override
-												public void onFailure(Throwable caught) {
-
-												}
-
-												@Override
-												public void onSuccess( Void result) {
-													
-													
-												}
-
-											});
-
-
-				ShowPartnervorschlaege showPartnervorschlaege = new ShowPartnervorschlaege();
+			@Override
+			public void execute() {
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaege);
-
+				RootPanel.get("Details").add(createSuchprofil);
+				
 			}
+			   
+		   });
+		   
+		   suchprofilMenu.addSeparator();
+		   
+		   
+		   
+		   MenuBar partnervorschlaegeMenu = new MenuBar(true);
+		   partnervorschlaegeMenu.setAnimationEnabled(true);
+		   
+		   
+		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Suchprofil anzeigen", new Command(){
 
-		});
+			@Override
+			public void execute() {
+				
+				ClientsideSettings.getPartnerboerseAdministration()
+				.berechneAehnlichkeitSpFor(new AsyncCallback<Void>() {
 
-		verPanel1.add(infoLabel);
-		
-		showPartnervorschlaegeButton.setStyleName("navigatorbutton");
-		this.add(showPartnervorschlaegeButton);
+							@Override
+							public void onFailure(Throwable caught) {
+//								infoLabel
+//										.setText("Es trat ein Fehler auf.");
+							}
 
-	}
+							@Override
+							public void onSuccess(Void result3) {
+								// infoLabel.setText("Es hier trat kein Fehler auf.");
+								
+
+
+							}
+
+						});
+				
+				
+				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaegeSp);
+				
+			}
+			   
+		   });
+		   
+		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Nutzerprofil anzeigen", new Command(){
+
+			@Override
+			public void execute() {
+				
+				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
+						 new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+
+							}
+
+							@Override
+							public void onSuccess( Void result) {
+								
+								
+							}
+
+						});
+				
+				
+				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaegeNp);
+				
+			}
+			   
+		   });
+		   
+		   partnervorschlaegeMenu.addSeparator();
+
+		   menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
+		   menu.addSeparator();
+		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+
+		   //add the menu to the root panel
+		   RootPanel.get("Navigator").add(menu);
+	}	
 }
+		
+
+
+	
+

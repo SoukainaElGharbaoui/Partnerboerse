@@ -67,7 +67,7 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Gesperrte Nutzerprofile anzeigen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(Benutzer.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(
 				new AsyncCallback<Sperrliste>() {
 
 					@Override
@@ -122,9 +122,9 @@ public class ShowSperrliste extends VerticalPanel {
 
 											// Inhalte aus der Datenbank
 											// entfernen.
-											ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
-													Benutzer.getProfilId(), Integer.valueOf(fremdprofilId),
-													new AsyncCallback<Void>() {
+											ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(
+													Integer.valueOf(fremdprofilId),
+													new AsyncCallback<Integer>() {
 
 														@Override
 														public void onFailure(Throwable caught) {
@@ -132,7 +132,7 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														@Override
-														public void onSuccess(Void result) {
+														public void onSuccess(Integer result) {
 															infoLabel.setText(
 																	"Das Nutzerprofil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
