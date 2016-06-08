@@ -563,7 +563,7 @@ public class NutzerprofilMapper {
 									+ " t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit"
 									+ " FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
 									+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
-									+ "WHERE t_nutzerprofil1.nutzerprofil_id != 1 AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
+									+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
 									+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
 									+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
 

@@ -246,6 +246,8 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
+	
+//	void allEigenschaftElemente( int eigenschaftId, AsyncCallback<Eigenschaft> callback);
 
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
