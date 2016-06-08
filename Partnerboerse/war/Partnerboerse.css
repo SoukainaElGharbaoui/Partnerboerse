@@ -16,15 +16,15 @@ div#Header {
 }
 
 div#Navigator {
-<<<<<<< HEAD
+
 	 /*max-height: 300px; */
 	/*overflow:scroll;*/
 	border: 3px solid silver; 
-=======
+
 	/*  max-height: 300px; */
 	 /*overflow:scroll; */
 	border: 0px solid silver; 
->>>>>>> refs/heads/master
+
 	padding: 3em 4em;
 	width: 200px; 
 	height: 700px;
