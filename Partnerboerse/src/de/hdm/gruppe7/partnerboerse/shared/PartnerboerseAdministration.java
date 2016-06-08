@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -108,15 +107,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
 	
-	/**
-	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
-	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
+	
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
 		
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -212,10 +209,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void besuchSetzen(int fremdprofilId) throws IllegalArgumentException;
 
 	// Aehnlichkeit berechnen
-	public int berechneAehnlichkeitNpFor(int fremdprofilId) throws IllegalArgumentException;
+	public void berechneAehnlichkeitNpFor() throws IllegalArgumentException;
 
-	// Aehnlichkeit in DB speichern
-	public void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;
 
 	// Aehnlichkeit aus DB loeschen
 	public void aehnlichkeitEntfernen() throws IllegalArgumentException;
@@ -237,19 +232,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		public void berechneAehnlichkeitSpFor()
 		throws IllegalArgumentException;
 		
-		//Aehnlichkeit in DB speichern
-		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
 		
 		//Aehnlichkeit aus DB loeschen
 		public void aehnlichkeitEntfernenSp () throws IllegalArgumentException;
 		
-		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException;
 		
-//		//Ausgabe der Partnervorschlaege
+		
+		//Ausgabe der Partnervorschlaege
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException;
 	
 	/*
@@ -363,4 +355,3 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void setUser(Nutzerprofil n);
 
 }
-

@@ -231,8 +231,8 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("REPLACE INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) VALUES  (" 
-			+ nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) "
+					+ "VALUES  (" + nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -259,7 +259,7 @@ public class SuchprofilMapper {
 	/**
 	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
 	 */
-	public int pruefeSuchprofilname(int profilId, String suchprofilName) {
+	public int pruefeSuchprofilnameExistenz(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisvariable (Ausgang: Der Suchprofilname liegt nicht vor.)
@@ -289,7 +289,7 @@ public class SuchprofilMapper {
 	/**
 	 * Existenz des Suchprofilnames beim Editieren überprüfen.
 	 */
-	public String pruefeSuchprofilnameEdit(int profilId, int suchprofilId) {
+	public String getSuchprofilName(int profilId, int suchprofilId) {
 		Connection con = DBConnection.connection();
 
 		try {

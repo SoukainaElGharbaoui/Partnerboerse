@@ -102,15 +102,13 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
 
+	
+	void pruefeSuchprofilnameCreate(String suchprofilname, AsyncCallback<Integer> callback); 
+	
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	void pruefeSuchprofilname(String suchprofilname, AsyncCallback<Integer> callback);
-
-	/**
-	 * Existens des Suchprofilnamens beim Editieren �berpr�fen.
-	 */
-	void pruefeSuchprofilnameEdit(int suchprofilId, AsyncCallback<String> callback);
+	void pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -202,9 +200,7 @@ public interface PartnerboerseAdministrationAsync {
 	// Besuch setzen.
 	void besuchSetzen(int fremdprofilId, AsyncCallback<Void> callback);
 
-	void berechneAehnlichkeitNpFor(int fremdprofilId, AsyncCallback<Integer> callback);
-
-	void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit, AsyncCallback<Void> callback);
+	void berechneAehnlichkeitNpFor(AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernen(AsyncCallback<Void> callback);
 
@@ -224,15 +220,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	void berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId, AsyncCallback<Integer> callback);
+	void berechneAehnlichkeitSpFor(AsyncCallback<Void> callback);
 
-	void aehnlichkeitSetzenSp(int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp, AsyncCallback<Void> callback);
 
 	void aehnlichkeitEntfernenSp(AsyncCallback<Void> callback);
 
-	// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-	void getNutzerprofileOhneGesetzteSperrung(AsyncCallback<List<Nutzerprofil>> callback);
 
 	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
@@ -242,9 +234,9 @@ public interface PartnerboerseAdministrationAsync {
 	 * ** ABSCHNITT, Ende: PartnervorschlägeSp
 	 * *************************************************************************
 	 * **
-	 * 
-	 * 
-	 * /*
+	 */
+
+	 /*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
 	 * *************************************************************************
