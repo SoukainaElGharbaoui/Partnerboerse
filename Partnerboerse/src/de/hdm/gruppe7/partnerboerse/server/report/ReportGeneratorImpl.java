@@ -108,97 +108,97 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * @param n das Nutzerprofil-Objekt bzgl. dessen der Report erstellt werden soll.
 	 * @return der fertige Report
 	 */
-	public AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport(Nutzerprofil n) 
-			throws IllegalArgumentException {
-		
-		if (this.getPartnerboerseAdministration() == null) {
-			return null;
-		}
-
-	    /*
-	     * Leeren Report anlegen.
-	     */
-		AllSuchprofileOfNutzerReport result = new AllSuchprofileOfNutzerReport();
-
-		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
-		result.setTitle("Suchprofil-Report f�r " + n.getVorname() + " " + n.getNachname()); 
-
-		// Imressum hinzuf�gen.
-		this.addImprint(result);
-
-		/*
-		 *  Erstellungsdatum hinzuf�gen.
-		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
-		 *  der Instantiierung des Date-Objekts.
-		 */
-		result.setCreated(new Date());
-
-	    /*
-	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
-	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
-	     */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Nutzers aufnehmen.
-		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
-		
-		// Nutzerprofil-ID aufnehmen.
-	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
-
-		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
-		result.setHeaderData(header);
-		
-	    /*
-	     * Ab hier: Suchprofil-Informationen zeilenweise hinzuf�gen.
-	     */
-		// Kopfzeile f�r die Suchprofil-Tabelle anlegen.
-		Row headline = new Row();
-
-		// �berschriften der Kopfzeile ablegen.
-		headline.addColumn(new Column("ID"));
-		headline.addColumn(new Column("Suchprofilname"));
-		headline.addColumn(new Column("Geschlecht"));
-		headline.addColumn(new Column("Alter von"));
-		headline.addColumn(new Column("Alter bis"));
-		headline.addColumn(new Column("K�rpergr��e"));
-		headline.addColumn(new Column("Haarfarbe"));
-		headline.addColumn(new Column("Raucherstatus"));
-		headline.addColumn(new Column("Religion"));
-
-		// Kopfzeile hinzuf�gen.
-		result.addRow(headline);
-
-	    /*
-	     * S�mtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
-	     */
-		List<Suchprofil> suchprofile = this.partnerboerseAdministration.getAllSuchprofileFor(n); 
-
-		for (Suchprofil s : suchprofile) {
-			
-			// Eine leere Zeile anlegen.
-			Row suchprofilRow = new Row();
-
-			// Zeile bef�llen.
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getProfilId())));
-			suchprofilRow.addColumn(new Column(s.getSuchprofilName()));
-			suchprofilRow.addColumn(new Column(s.getGeschlecht()));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMinInt())));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMaxInt())));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getKoerpergroesseInt())));
-			suchprofilRow.addColumn(new Column(s.getHaarfarbe()));
-			suchprofilRow.addColumn(new Column(s.getRaucher()));
-			suchprofilRow.addColumn(new Column(s.getReligion()));
-
-			// Zeile dem Report hinzuf�gen.
-			result.addRow(suchprofilRow);
-		}
-
-	    /*
-	     * Fertigen Report zur�ckgeben.
-	     */
-		return result;
-
-	}
+//	public AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport(Nutzerprofil n) 
+//			throws IllegalArgumentException {
+//		
+//		if (this.getPartnerboerseAdministration() == null) {
+//			return null;
+//		}
+//
+//	    /*
+//	     * Leeren Report anlegen.
+//	     */
+//		AllSuchprofileOfNutzerReport result = new AllSuchprofileOfNutzerReport();
+//
+//		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
+//		result.setTitle("Suchprofil-Report f�r " + n.getVorname() + " " + n.getNachname()); 
+//
+//		// Imressum hinzuf�gen.
+//		this.addImprint(result);
+//
+//		/*
+//		 *  Erstellungsdatum hinzuf�gen.
+//		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
+//		 *  der Instantiierung des Date-Objekts.
+//		 */
+//		result.setCreated(new Date());
+//
+//	    /*
+//	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
+//	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
+//	     */
+//		CompositeParagraph header = new CompositeParagraph();
+//
+//		// Name und Vorname des Nutzers aufnehmen.
+//		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
+//		
+//		// Nutzerprofil-ID aufnehmen.
+//	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
+//
+//		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
+//		result.setHeaderData(header);
+//		
+//	    /*
+//	     * Ab hier: Suchprofil-Informationen zeilenweise hinzuf�gen.
+//	     */
+//		// Kopfzeile f�r die Suchprofil-Tabelle anlegen.
+//		Row headline = new Row();
+//
+//		// �berschriften der Kopfzeile ablegen.
+//		headline.addColumn(new Column("ID"));
+//		headline.addColumn(new Column("Suchprofilname"));
+//		headline.addColumn(new Column("Geschlecht"));
+//		headline.addColumn(new Column("Alter von"));
+//		headline.addColumn(new Column("Alter bis"));
+//		headline.addColumn(new Column("K�rpergr��e"));
+//		headline.addColumn(new Column("Haarfarbe"));
+//		headline.addColumn(new Column("Raucherstatus"));
+//		headline.addColumn(new Column("Religion"));
+//
+//		// Kopfzeile hinzuf�gen.
+//		result.addRow(headline);
+//
+//	    /*
+//	     * S�mtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
+//	     */
+//		List<Suchprofil> suchprofile = this.partnerboerseAdministration.getAllSuchprofileFor(n); 
+//
+//		for (Suchprofil s : suchprofile) {
+//			
+//			// Eine leere Zeile anlegen.
+//			Row suchprofilRow = new Row();
+//
+//			// Zeile bef�llen.
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getProfilId())));
+//			suchprofilRow.addColumn(new Column(s.getSuchprofilName()));
+//			suchprofilRow.addColumn(new Column(s.getGeschlecht()));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMinInt())));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMaxInt())));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getKoerpergroesseInt())));
+//			suchprofilRow.addColumn(new Column(s.getHaarfarbe()));
+//			suchprofilRow.addColumn(new Column(s.getRaucher()));
+//			suchprofilRow.addColumn(new Column(s.getReligion()));
+//
+//			// Zeile dem Report hinzuf�gen.
+//			result.addRow(suchprofilRow);
+//		}
+//
+//	    /*
+//	     * Fertigen Report zur�ckgeben.
+//	     */
+//		return result;
+//
+//	}
 
 	
 	

@@ -180,9 +180,11 @@ public class CreateSuchprofil extends VerticalPanel {
 										
 										 @Override
 										 public void onSuccess(Suchprofil result) {
-										 ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-										 RootPanel.get("Details").clear();
-										 RootPanel.get("Details").add(showSuchprofil);
+											 // Suchprofil-ID ermitteln und an CreateInfoSp weitergeben.
+											 int suchprofilId = result.getProfilId();
+											 CreateInfoSp createInfoSp = new CreateInfoSp(suchprofilId);
+											 RootPanel.get("Details").clear();
+											 RootPanel.get("Details").add(createInfoSp);
 										 }
 										
 										 });
@@ -198,26 +200,6 @@ public class CreateSuchprofil extends VerticalPanel {
 			}
 
 		});
-
-//		ClientsideSettings.getPartnerboerseAdministration()
-//				.getSuchprofilByName(suchprofilNameTextBox.getText(),
-//						new AsyncCallback<Suchprofil>() {
-//
-//							@Override
-//							public void onFailure(Throwable caught) {
-//								// TODO Auto-generated method stub
-//
-//							}
-//
-//							@Override
-//							public void onSuccess(Suchprofil result) {
-//								int suchprofilId = result.getProfilId();
-//								CreateInfoSp createInfoSp = new CreateInfoSp(suchprofilId);
-//								RootPanel.get("Details").clear();
-//								RootPanel.get("Details").add(createInfoSp);
-//							}
-//
-//						});
 
 		/**
 		 * Widgets zum VerticalPanel hinzufuegen.

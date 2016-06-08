@@ -53,7 +53,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		/**
 		 * Label für Überschrift erstellen
 		 */
-		final Label ueberschriftLabel = new Label("Ihr Nutzerprofil:");
+		final Label ueberschriftLabel = new Label("Ihr Profil:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**

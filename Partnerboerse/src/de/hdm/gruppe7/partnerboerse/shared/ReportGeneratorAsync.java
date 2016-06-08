@@ -26,8 +26,8 @@ public interface ReportGeneratorAsync {
 
 	void init(AsyncCallback<Void> callback);
 	
-	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
-			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
+//	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
+//			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
 
 	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
 			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);

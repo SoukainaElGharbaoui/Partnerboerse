@@ -57,18 +57,18 @@ public interface ReportGenerator extends RemoteService {
 	   */
 	  public void init() throws IllegalArgumentException;
 	  
-	  /**
-	   * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. 
-	   * Dieser Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
-	   * 
-	   * @param c eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der Report
-	   *          erstellt werden soll.
-	   * @return das fertige Reportobjekt
-	   * @throws IllegalArgumentException
-	   * @see AllSuchprofileOfNutzerReport
-	   */
-	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
-	  (Nutzerprofil n) throws IllegalArgumentException;
+//	  /**
+//	   * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. 
+//	   * Dieser Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
+//	   * 
+//	   * @param c eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der Report
+//	   *          erstellt werden soll.
+//	   * @return das fertige Reportobjekt
+//	   * @throws IllegalArgumentException
+//	   * @see AllSuchprofileOfNutzerReport
+//	   */
+//	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
+//	  (Nutzerprofil n) throws IllegalArgumentException;
 
 
 	  

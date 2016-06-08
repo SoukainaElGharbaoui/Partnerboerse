@@ -171,7 +171,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Suchprofil anlegen.
 	 */
-	@Override
 	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
 
@@ -213,30 +212,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
 	}
 
 	/**
-	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofile();
-	}
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
-	 * NOTWENIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
-	 * VON MILENA - NOTWENDIG)
+	 * Suchprofil anhand anhand des Suchprofilnamens auslesen. 
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
@@ -284,27 +274,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			ergebnis = 2; 
 		}
 		
-//		// Der Suchprofilname wurde nicht verändert. 
-//		if (existenz == 1 && (suchprofilname.equals(suchprofilnameAktuell))) {
-//			ergebnis = 2; 
-//		}
-//		
-//		// Der Suchprofilname existiert noch nicht und die TextBox ist nicht leer.
-//		if (existenz == 0 && (!suchprofilname.isEmpty())) {
-//			ergebnis = 3; 
-//		}
-		
 		return ergebnis; 
-	}
-
-
-	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.findSuchprofilById(suchprofilId);
-
-	}
-
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofileFor(n);
 	}
 
 	/*
