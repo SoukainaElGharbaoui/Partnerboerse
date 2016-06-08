@@ -71,7 +71,6 @@ public class ShowPartnervorschlaege extends VerticalPanel {
 										// infoLabel.setText("Es hier trat kein Fehler auf.");
 										
 
-
 									}
 
 								});

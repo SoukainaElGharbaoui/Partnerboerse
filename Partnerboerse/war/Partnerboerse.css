@@ -16,15 +16,21 @@ div#Header {
 }
 
 div#Navigator {
-	/*  max-height: 300px; */
-	/* overflow:scroll; */
+<<<<<<< HEAD
+	 /*max-height: 300px; */
+	/*overflow:scroll;*/
 	border: 3px solid silver; 
+=======
+	/*  max-height: 300px; */
+	 /*overflow:scroll; */
+	border: 0px solid silver; 
+>>>>>>> refs/heads/master
 	padding: 3em 4em;
 	width: 200px; 
-	height: 500px;
+	height: 700px;
 	
 	background: #ffffff;
-}
+} 
 
 div#Space{
 	width: 100px; 
@@ -47,7 +53,7 @@ div#Trailer {
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
-	/* position: sticky; */
+	position: fixed;
 	
 	background: #d7d7d7;
 }

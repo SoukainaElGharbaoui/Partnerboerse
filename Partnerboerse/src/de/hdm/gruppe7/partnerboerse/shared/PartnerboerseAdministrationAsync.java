@@ -1,8 +1,8 @@
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -87,52 +87,29 @@ public interface PartnerboerseAdministrationAsync {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, AsyncCallback<Void> callback);
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
-
 	void deleteSuchprofil(String suchprofilName, AsyncCallback<Void> callback);
-
-
+	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
+	 * Alle Suchprofile eines Nutzers anzeigen.
 	 */
-	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
-
+	void getAllSuchprofileFor(AsyncCallback<List<Suchprofil>> callback);
+	
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET
-	 * VON MILENA - NOTWENIG)
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
 	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
-
+	
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen �berpr�fen.
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
 	 */
-	void pruefeSuchprofilname(String suchprofilname, AsyncCallback<Integer> callback);
-
+	void pruefeSuchprofilnameCreate(String suchprofilname, AsyncCallback<Integer> callback); 
+	
 	/**
-	 * Existens des Suchprofilnamens beim Editieren �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	void pruefeSuchprofilnameEdit(int suchprofilId, AsyncCallback<String> callback);
-
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
-	 */
-
-	void getAllSuchprofileFor(AsyncCallback<List<Suchprofil>> callback);
-
-	/**
-	 * Suchprofil-Report
-	 * 
-	 * @param n
-	 * @param callback
-	 */
-	void getAllSuchprofileFor(Nutzerprofil n, AsyncCallback<List<Suchprofil>> callback);
+	void pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	/*
 	 * *************************************************************************
@@ -246,8 +223,6 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
-	
-//	void allEigenschaftElemente( int eigenschaftId, AsyncCallback<Eigenschaft> callback);
 
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
@@ -260,7 +235,7 @@ public interface PartnerboerseAdministrationAsync {
 	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
 	
-	void getAllInfosNeuReport(AsyncCallback<List<Info>> callback);
+	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
 	
 
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
@@ -287,6 +262,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
+	void getEigenschaftstextById(int eigenschaftId,
+			AsyncCallback<String> callback);
+	
 	// void createBeschreibungsinfo(int profilId, int eigenschaftId, String
 	// infotext, AsyncCallback<Info> callback);
 	//

@@ -1,5 +1,3 @@
-
-
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -95,51 +93,29 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException;
-
-	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
-
-	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET VON MILENA - NOTWENIG)
-	 */
-	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
-	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
-	
-	/**
-	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
-	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
-		
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
 	
 	/**
-	 * Suchprofil-Report
-	 * @param n
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException;
+	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
+
+	/**
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 */
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
-	
-	
+	/**
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
+	 */
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -284,7 +260,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
 
 
-	public List<Info> getAllInfosNeuReport()
+	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
 
 
@@ -312,7 +288,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	
+
+	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+
+
+
+
 	
 //	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
@@ -359,6 +340,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	Nutzerprofil login(String requestUri) throws Exception;
 	
 	public void setUser(Nutzerprofil n);
+
+
 
 }
 

@@ -33,7 +33,7 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Nutzerprofile befinden sich auf Ihrer Sperrliste:");
+		final Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
