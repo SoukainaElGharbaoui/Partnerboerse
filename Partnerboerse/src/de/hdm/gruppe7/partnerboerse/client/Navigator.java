@@ -128,21 +128,7 @@ public class Navigator extends VerticalPanel {
 				 * Sobald ein neues Suchprofil angelegt wird, wird die Tabelle in der Datenbank, die die Partnervorschlaege
 				 * anhand von Suchprofilen enthaelt, geleert. 
 				 */
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-				});
+		
 				
 				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();

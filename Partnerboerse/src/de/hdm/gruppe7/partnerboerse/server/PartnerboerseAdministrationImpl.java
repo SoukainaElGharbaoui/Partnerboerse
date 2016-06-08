@@ -97,6 +97,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		profil.setProfilId(1);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 
 		return this.nutzerprofilMapper.insertNutzerprofil(profil);
 	}
@@ -120,6 +123,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setEmailAddress(emailAddress);
 
 		this.nutzerprofilMapper.updateNutzerprofil(profil);
+		// Wenn das Nutzerprofil bearbeitet oder neu angelegt wird, sollen alle Aehnlichkeiten gelöscht werden.
+		//Damit sie neu generiert werden können
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 	}
 
 	/**
@@ -127,7 +134,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 	@Override
 	public void deleteNutzerprofil() throws IllegalArgumentException {
+		
 		this.nutzerprofilMapper.deleteNutzerprofil(profil.getProfilId());
+		
 	}
 
 	/**
@@ -187,6 +196,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		profil.setProfilId(profil.getProfilId());
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 
 		return this.suchprofilMapper.insertSuchprofil(s, profil);
 	}
@@ -218,6 +229,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	/**
@@ -679,8 +691,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(profil.getProfilId());
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
-
+		
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
+		
 		return this.infoMapper.insertInfoNeu(i);
+		
 	}
 
 	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
@@ -689,21 +704,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(suchprofilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
-
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+		
 		return this.infoMapper.insertInfoNeu(i);
 	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 	}
 
 	public void deleteAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(suchprofilId);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	public void deleteOneInfoNeu(int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profil.getProfilId(), eigenschaftId);
 		System.out.println(profil.getProfilId() + ", " + eigenschaftId);
+		
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 	}
 
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId) throws IllegalArgumentException {
@@ -737,6 +758,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(profil.getProfilId());
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
+		
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 
 		this.infoMapper.updateInfosNeu(i);
 
@@ -750,6 +773,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(suchprofilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 
 		this.infoMapper.updateInfosNeu(i);
 
