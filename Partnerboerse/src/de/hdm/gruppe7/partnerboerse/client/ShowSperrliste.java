@@ -15,13 +15,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 public class ShowSperrliste extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
 	/**
 	 * VerticalPanel hinzufügen.
 	 */
@@ -70,9 +67,8 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Gesperrte Nutzerprofile anzeigen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration()
-				.getGesperrteNutzerprofileFor(new AsyncCallback<Sperrliste>() {
-
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(
+				new AsyncCallback<Sperrliste>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -126,8 +122,9 @@ public class ShowSperrliste extends VerticalPanel {
 
 											// Inhalte aus der Datenbank
 											// entfernen.
-											ClientsideSettings.getPartnerboerseAdministration().vermerkLoeschen(
-													Integer.valueOf(fremdprofilId), new AsyncCallback<Void>() {
+											ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(
+													Integer.valueOf(fremdprofilId),
+													new AsyncCallback<Integer>() {
 
 														@Override
 														public void onFailure(Throwable caught) {
@@ -135,7 +132,7 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														@Override
-														public void onSuccess(Void result) {
+														public void onSuccess(Integer result) {
 															infoLabel.setText(
 																	"Das Nutzerprofil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
