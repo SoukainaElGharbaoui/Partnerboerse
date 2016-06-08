@@ -2,7 +2,9 @@
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -465,7 +467,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			
 		// Variablen zur Berechnung der Aehnlichkeit
 		int aehnlichkeit = 3;
-		int counter = 7;
+		int counter = 16;
 
 		// Vergleich der Profildaten
 		if (np.getGeschlecht().equals(
@@ -481,7 +483,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		if (np.getKoerpergroesseInt() == vergleichsprofil
 				.getKoerpergroesseInt()) {
 			aehnlichkeit = aehnlichkeit + 1;
-		}
+			}
+		
 
 		if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
 			aehnlichkeit = aehnlichkeit + 1;
@@ -490,7 +493,48 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		if (np.getReligion().equals(vergleichsprofil.getReligion())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
+		// Berechnung des Alters des Fremdprofils
+		GregorianCalendar geburtstagVgl = new GregorianCalendar();
+        geburtstagVgl.setTime(vergleichsprofil.getGeburtsdatumDate());
+        GregorianCalendar heute = new GregorianCalendar();
+        int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+        if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
+        {
+            alter = alter - 1;
+        }
+        else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH))
+        {
+            if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE))
+            {
+                alter = alter - 1;
+            }
+        }
+        // Berechnung des Alters des eigenen Profils
+        GregorianCalendar geburtstagRef = new GregorianCalendar();
+        geburtstagRef.setTime(np.getGeburtsdatumDate());
+        GregorianCalendar heute1 = new GregorianCalendar();
+        int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+        if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
+        {
+            alterRef = alterRef - 1;
+        }
+        else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
+        {
+            if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE))
+            {
+                alterRef = alterRef - 1;
+            }
+        }
+        if(alter+5 <= alterRef){
+        	if(alter-5 >= alterRef){
+        		aehnlichkeit = aehnlichkeit +3;
+        	}
+        	
+        }
+        
+		System.out.println("Das Alter betraegt" + alterRef);
 		
+		System.out.println("Alter = " + alter);
 		
 		List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
@@ -560,6 +604,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				}
 
 				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					if(sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()){
+						
+					}
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 				}
 
@@ -571,6 +618,37 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 
 				}
+				
+				
+				
+				//Berechnung des Alters des eigenen Profils
+				
+				GregorianCalendar geburtstag = new GregorianCalendar();
+		        geburtstag.setTime(np.getGeburtsdatumDate());
+		        GregorianCalendar heute = new GregorianCalendar();
+		        int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+		        if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH))
+		        {
+		            alter = alter - 1;
+		        }
+		        else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH))
+		        {
+		            if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE))
+		            {
+		                alter = alter - 1;
+		            }
+		        }
+		        if(sp.getAlterMaxInt() >= alter){
+		        	 if(sp.getAlterMinInt() <= alter){
+						 aehnlichkeitSp = aehnlichkeitSp + 10;
+					 }
+		        }
+				
+
+				
+				 
+		        
+		        
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper
