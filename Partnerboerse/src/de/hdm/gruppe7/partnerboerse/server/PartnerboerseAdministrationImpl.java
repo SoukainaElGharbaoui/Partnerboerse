@@ -3,7 +3,9 @@ package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.google.appengine.api.users.User;
@@ -544,27 +546,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * *************************************************************************
 	 * **
 	 */
+	
+	 public List<Eigenschaft> getAllEigenschaftenNeu() throws
+	 IllegalArgumentException {
+	 return this.infoMapper.findAllEigenschaftenNeu();
+	 }
 
-	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
-		return this.infoMapper.findAllEigenschaftenNeu();
-	}	
-	
-	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profil.getProfilId());
 		System.out.println(listE);
 		return listE;
 	}
-	
+
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId) throws IllegalArgumentException {
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(suchprofilId);
 		System.out.println(listE);
 		return listE;
 	}
-		
-	
+
 	public List<String> getAllInfosNeu() throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
@@ -585,7 +586,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			list1.add(String.valueOf(i.getInfotext()));
 			list1.add(e.getTyp());
 		}
-//		System.out.println(list1);
+		// System.out.println(list1);
 		return list1;
 	}
 
@@ -609,15 +610,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			list1.add(String.valueOf(i.getInfotext()));
 			list1.add(e.getTyp());
 		}
-//		System.out.println(list1);
+		// System.out.println(list1);
 		return list1;
 	}
 
-	
 	public List<Info> getAllInfosNeuReport() throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosNeu(profil.getProfilId());
 	}
-	
 
 	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
 
@@ -669,7 +668,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
 		optionen = this.infoMapper.findEigAByIdNeu(eigenschaftId);
-//		System.out.println(optionen.getOptionen());
+		// System.out.println(optionen.getOptionen());
 
 		return optionen;
 		// return this.infoMapper.findEigAById(eigenschaftId);

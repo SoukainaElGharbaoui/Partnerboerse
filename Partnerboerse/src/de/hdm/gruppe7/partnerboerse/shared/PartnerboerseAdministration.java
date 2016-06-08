@@ -2,6 +2,7 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -269,7 +270,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-	
+
 	public List<Eigenschaft> getAllEigenschaftenNeu()
 			throws IllegalArgumentException;
 	
