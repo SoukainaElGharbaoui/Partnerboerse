@@ -1,8 +1,8 @@
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -235,7 +235,7 @@ public interface PartnerboerseAdministrationAsync {
 	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
 	
-	void getAllInfosNeuReport(AsyncCallback<List<Info>> callback);
+	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
 	
 
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
@@ -262,6 +262,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
+	void getEigenschaftstextById(int eigenschaftId,
+			AsyncCallback<String> callback);
+	
 	// void createBeschreibungsinfo(int profilId, int eigenschaftId, String
 	// infotext, AsyncCallback<Info> callback);
 	//
@@ -314,3 +317,4 @@ public interface PartnerboerseAdministrationAsync {
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
 }
+

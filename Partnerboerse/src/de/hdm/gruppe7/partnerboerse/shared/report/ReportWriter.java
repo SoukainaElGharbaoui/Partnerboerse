@@ -31,5 +31,15 @@ public abstract class ReportWriter {
 	   * @param r der zu übersetzende Report
 	   */
 	public abstract void process(AllSuchprofileOfNutzerReport r);
+	
+	
+	public abstract void process(AllInfosOfNutzerReport r);
+	
+	
+	public abstract void process(AllPartnervorschlaegeNpReport r);
 
+	
+	public abstract void process(AllPartnervorschlaegeSpReport r);
+	
+	
 }

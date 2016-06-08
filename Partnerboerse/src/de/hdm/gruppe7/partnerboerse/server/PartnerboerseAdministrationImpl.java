@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.Navigator;
@@ -42,7 +44,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private MerklisteMapper merklisteMapper = null;
 	private SperrlisteMapper sperrlisteMapper = null;
 	private InfoMapper infoMapper = null;
-	private Nutzerprofil profil;
+	Nutzerprofil profil = new Nutzerprofil();
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -668,9 +670,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	
-	public List<Info> getAllInfosNeuReport() throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosNeu(profil.getProfilId());
-	}
+	
 	
 
 	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
@@ -755,6 +755,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
+
+
+	@Override
+	public List<Info> getAllInfosNeuReport(int profilId)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.infoMapper.findAllInfosNeu(1);
+	}
+
+	@Override
+	public String getEigenschaftstextById(int eigenschaftId)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
+	}
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info
@@ -798,5 +813,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
 	}
+
 
 }

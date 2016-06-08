@@ -258,7 +258,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
 
 
-	public List<Info> getAllInfosNeuReport()
+	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
 
 
@@ -286,7 +286,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	
+
+	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+
+
+
+
 	
 //	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
@@ -334,4 +339,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public void setUser(Nutzerprofil n);
 
+
+
 }
+

@@ -27,6 +27,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
@@ -114,7 +115,7 @@ public class Navigator extends VerticalPanel {
 		   
 		   nutzerprofilMenu.addSeparator();
 
-		   // Menü für das Suchprofil
+		   // Men� f�r das Suchprofil
 		   MenuBar suchprofilMenu = new MenuBar(true);
 		   suchprofilMenu.setAnimationEnabled(true);
 		   
@@ -240,6 +241,9 @@ public class Navigator extends VerticalPanel {
 		   RootPanel.get("Navigator").add(menu);
 	}	
 }
+		
+
+
 		
 
 

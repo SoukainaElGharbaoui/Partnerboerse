@@ -10,9 +10,9 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
-import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
-public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
+public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 	
 	/**
 	 * VerticalPanel hinzufügen.
@@ -20,35 +20,23 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 	VerticalPanel verPanel = new VerticalPanel(); 
 	
 	/**
-	 * Konstruktor hinzufügen.
-	 */
-	public ShowUnangesehenePartnervorschlaegeReport(){
-	this.add(verPanel);
-	
-	/**
 	 * Label zur Information hinzufügen.
 	 */
 	final Label infoLabel = new Label(); 
 	final Label ueberschriftLabel = new Label();
-	ueberschriftLabel.setText("Einen Moment bitte...");
 	
 	
 	/**
-	 * Nutzer auslesen.
+	 * Konstruktor hinzufügen.
+	 */
+	public ShowAllPartnervorschlaegeNpReport(){
+	this.add(verPanel);
+	ueberschriftLabel.setText("Einen Moment bitte...");
+	/**
+	 * Report auslesen.
 	 */
 	
-	ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(new AsyncCallback<Nutzerprofil>(){
-
-		@Override
-		public void onFailure(Throwable caught) {
-			infoLabel.setText("Es HIER trat ein Fehler auf."); 
-		}
-
-		@Override
-		public void onSuccess(Nutzerprofil n) {
-			if(n != null){
-				
-				ClientsideSettings.getReportGenerator().createUnangesehenePartnervorschlaegeReport(n, new AsyncCallback<UnangesehenePartnervorschlaegeReport>(){
+				ClientsideSettings.getReportGenerator().createAllPartnervorschlaegeNpReport(new AsyncCallback<AllPartnervorschlaegeNpReport>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -57,10 +45,10 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 
 					@Override
 					public void onSuccess(
-							UnangesehenePartnervorschlaegeReport report) {
+							AllPartnervorschlaegeNpReport report) {
 						 	if(report != null){
 						 		/*
-					        	 * Neue HTML-Seite für den Suchprofil-Report erzeugen.
+					        	 * Neue HTML-Seite fuer den Suchprofil-Report erzeugen.
 					        	 */
 								HTMLReportWriter writer = new HTMLReportWriter();
 						        writer.process(report);
@@ -72,16 +60,11 @@ public class ShowUnangesehenePartnervorschlaegeReport extends VerticalPanel {
 					
 				});
 				
-			}
-		
-		}
-		
-	});
 	
 	
-	verPanel.add(infoLabel);
+	
 	verPanel.add(ueberschriftLabel);
-	
+	verPanel.add(infoLabel);
 	
 	}	
 }
