@@ -1,8 +1,8 @@
+
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -89,9 +89,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil l�schen.
 	 */
-
 	void deleteSuchprofil(String suchprofilName, AsyncCallback<Void> callback);
-
 
 	/**
 	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
@@ -104,15 +102,13 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
 
+	
+	void pruefeSuchprofilnameCreate(String suchprofilname, AsyncCallback<Integer> callback); 
+	
 	/**
-	 * Existens des Suchprofilnamens beim Anlegen �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	void pruefeSuchprofilname(String suchprofilname, AsyncCallback<Integer> callback);
-
-	/**
-	 * Existens des Suchprofilnamens beim Editieren �berpr�fen.
-	 */
-	void pruefeSuchprofilnameEdit(int suchprofilId, AsyncCallback<String> callback);
+	void pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -285,6 +281,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
+	void getEigenschaftstextById(int eigenschaftId,
+			AsyncCallback<String> callback);
+	
 	// void createBeschreibungsinfo(int profilId, int eigenschaftId, String
 	// infotext, AsyncCallback<Info> callback);
 	//
@@ -336,7 +335,5 @@ public interface PartnerboerseAdministrationAsync {
 
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
-	void getEigenschaftstextById(int eigenschaftId,
-			AsyncCallback<String> callback);
-
 }
+

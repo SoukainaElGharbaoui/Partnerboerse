@@ -10,8 +10,9 @@ import java.util.List;
 
 
 
-
-import java.util.Vector;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -19,6 +20,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
+import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -444,4 +446,46 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	     */
 	    return result;
 	  }
+
+	
+	
+	
+	
+	public boolean isUserRegistered(String userEmail) {
+		return false;
+	}
+
+	public Nutzerprofil login(String requestUri) throws Exception {
+
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+
+		Nutzerprofil n = new Nutzerprofil();
+		if (user != null) {
+
+			// EXISTING PROFILE
+			Nutzerprofil bestehendesProfil = NutzerprofilMapper.nutzerprofilMapper()
+					.findByNutzerprofilMitEmail(user.getEmail());
+			if (bestehendesProfil != null) {
+				n.setLoggedIn(true);
+				bestehendesProfil.setLoggedIn(true);
+				bestehendesProfil.setLogoutUrl(userService.createLogoutURL(requestUri));
+				bestehendesProfil.setEmailAddress(user.getEmail());
+
+				ClientsideSettings.setAktuellerUser(bestehendesProfil);
+				return bestehendesProfil;
+			} // NO PROFILE
+
+			n.setLoggedIn(true);
+			n.setEmailAddress(user.getEmail());
+
+		} else { // USER = NULL
+			n.setLoggedIn(false);
+
+		}
+		n.setLoginUrl(userService.createLoginURL(requestUri));
+		return n;
+	}
+	
+
 }

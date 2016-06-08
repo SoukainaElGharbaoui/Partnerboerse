@@ -1,5 +1,3 @@
-
-
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
@@ -109,15 +107,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
 	
-	/**
-	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
-	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
+	
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
 		
 	/**
 	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
@@ -310,7 +306,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	
+
+	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+
+
+
+
 	
 //	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
@@ -358,7 +359,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public void setUser(Nutzerprofil n);
 
-	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+
 
 }
 

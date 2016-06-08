@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.Navigator;
@@ -42,7 +44,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private MerklisteMapper merklisteMapper = null;
 	private SperrlisteMapper sperrlisteMapper = null;
 	private InfoMapper infoMapper = null;
-	private Nutzerprofil profil;
+	Nutzerprofil profil = new Nutzerprofil();
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -51,7 +53,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Initialsierungsmethode, die für jede Instanz von
+	 * Initialsierungsmethode, die fÃ¼r jede Instanz von
 	 * <code>PartnerboerseAdministrationImpl</code> aufgerufen werden muss.
 	 */
 	@Override
@@ -93,7 +95,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setReligion(religion);
 		profil.setEmailAddress(emailAddress);
 
-		// Vorläufige Profil-ID setzen.
+		// VorlÃ¤ufige Profil-ID setzen.
 		profil.setProfilId(1);
 
 		return this.nutzerprofilMapper.insertNutzerprofil(profil);
@@ -121,7 +123,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Nutzerprofil löschen.
+	 * Nutzerprofil lÃ¶schen.
 	 */
 	@Override
 	public void deleteNutzerprofil() throws IllegalArgumentException {
@@ -138,7 +140,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * *********************************** Unnötig, da gleicher Mapper-Aufruf!
+	 * *********************************** UnnÃ¶tig, da gleicher Mapper-Aufruf!
 	 * ***********************************
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException {
@@ -208,15 +210,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId()); 
 	}
 
 	/**
-	 * Suchprofil löschen.
+	 * Suchprofil lÃ¶schen.
 	 */
-public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentException {
-		
+	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
-		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	/**
@@ -227,7 +229,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	}
 
 	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
+	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
 	 * NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
@@ -235,26 +237,68 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÜBERARBEITET
+	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
 	 * VON MILENA - NOTWENDIG)
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
 	}
-
+	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen überprüfen.
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
 	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilname(profil.getProfilId(), suchprofilname);
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException {
+		
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
+		
+		int ergebnis = 0; 
+		
+		// Der Suchprofilname existiert bereits. 
+		if (existenz == 1) {
+			ergebnis = 1; 
+		}
+		
+		// Der Suchprofilname ist leer.
+		if (suchprofilname.isEmpty()) {
+			ergebnis = 2; 
+		}
+		
+		return ergebnis; 
 	}
 
 	/**
-	 * Existenz des Suchprofilnamens beim Editieren überprüfen.
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.pruefeSuchprofilnameEdit(profil.getProfilId(), suchprofilId);
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException {
+		
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
+		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(profil.getProfilId(), suchprofilId); 
+		
+		int ergebnis = 0; 
+		
+		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein gleichnamiges, anderes Suchprofil.
+		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
+			ergebnis = 1; 
+		} 
+		
+		// Der Suchprofilname existiert noch nicht, die TextBox ist jedoch leer. 
+		if (existenz == 0 && (suchprofilname.isEmpty())) {
+			ergebnis = 2; 
+		}
+		
+//		// Der Suchprofilname wurde nicht verändert. 
+//		if (existenz == 1 && (suchprofilname.equals(suchprofilnameAktuell))) {
+//			ergebnis = 2; 
+//		}
+//		
+//		// Der Suchprofilname existiert noch nicht und die TextBox ist nicht leer.
+//		if (existenz == 0 && (!suchprofilname.isEmpty())) {
+//			ergebnis = 3; 
+//		}
+		
+		return ergebnis; 
 	}
+
 
 	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilById(suchprofilId);
@@ -307,7 +351,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 				fremdprofilId);
 
 		if (vermerkstatus == 1) {
-			// Wenn ein Vermerk vorliegt, wird dieser gel�scht.
+			// Wenn ein Vermerk vorliegt, wird dieser gelöscht.
 			this.merklisteMapper.deleteVermerk(profil.getProfilId(), fremdprofilId);
 		} else {
 			// Wenn kein Vermerk vorliegt, wird ein Vermerk gesetzt.
@@ -363,7 +407,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 		int sperrstatus = this.sperrlisteMapper.pruefeSperrungFremdprofil(profil.getProfilId(), fremdprofilId);
 
 		if (sperrstatus == 1) {
-			// Wenn eine Sperrung vorliegt, wird diese gel�scht.
+			// Wenn eine Sperrung vorliegt, wird diese gelöscht.
 			this.sperrlisteMapper.deleteSperrung(profil.getProfilId(), fremdprofilId);
 		} else {
 			// Wenn keine Sperrung vorliegt, wird eine Sperrung gesetzt
@@ -387,7 +431,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Partnervorschläge
+	 * ** ABSCHNITT, Beginn: PartnervorschlÃ¤ge
 	 * *************************************************************************
 	 * **
 	 */
@@ -403,7 +447,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	}
 
 	/**
-	 * Methode zur Berechnung der Ähnlichkeit zwischen zwei Nutzerprofilen
+	 * Methode zur Berechnung der Ã„hnlichkeit zwischen zwei Nutzerprofilen
 	 */
 	public void berechneAehnlichkeitNpFor()
 			throws IllegalArgumentException {
@@ -486,7 +530,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	 * Profile, von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(1);
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profil.getProfilId());
 
 	}
 
@@ -575,7 +619,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Partnervorschläge
+	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge
 	 * *************************************************************************
 	 * **
 	 */
@@ -656,9 +700,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	}
 
 	
-	public List<Info> getAllInfosNeuReport(int profilId) throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosNeu(profilId);
-	}
+	
 	
 
 	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
@@ -743,6 +785,21 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 
 	}
 
+
+
+	@Override
+	public List<Info> getAllInfosNeuReport(int profilId)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.infoMapper.findAllInfosNeu(1);
+	}
+
+	@Override
+	public String getEigenschaftstextById(int eigenschaftId)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
+	}
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info
@@ -787,8 +844,5 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 		return n;
 	}
 
-	public String getEinenschaftstextById(int eigenschaftId) throws IllegalArgumentException {
-		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
-		
-	}
+
 }
