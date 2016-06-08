@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.server.db;
 
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -107,7 +108,7 @@ public class InfoMapper {
 		return i;
 	}
 
-	public List<Info> findAllInfosNeu(int nutzerprofilId) {
+	public List<Info> findAllInfosNeu(int profilId) {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
@@ -115,7 +116,7 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + nutzerprofilId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + profilId);
 
 			// ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id,
 			// erlaeuterung FROM t_eigenschaft "
@@ -363,6 +364,31 @@ public class InfoMapper {
 		}
 
 		return result;
+	}
+
+	public String findEigenschaftstextById(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+
+		String eigenschaftstext = new String();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
+
+			while (rs.next()) {
+
+				eigenschaftstext = rs.getString("erlaeuterung");
+			}
+
+			return eigenschaftstext;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return eigenschaftstext;
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class PartnerboerseReport implements EntryPoint {
 		
 		unangesehenePartnervorschlaegeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event){
-				ShowUnangesehenePartnervorschlaegeReport showUnangesehenePartnervorschlaegeReport = new ShowUnangesehenePartnervorschlaegeReport();
+				ShowAllPartnervorschlaegeNpReport showUnangesehenePartnervorschlaegeReport = new ShowAllPartnervorschlaegeNpReport();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showUnangesehenePartnervorschlaegeReport);
 			}
@@ -38,7 +38,7 @@ public class PartnerboerseReport implements EntryPoint {
 		
 		partnervorschlaegeSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event){
-				ShowPartnervorschlaegeSpReport showPartnervorschlaegeSpReport = new ShowPartnervorschlaegeSpReport();
+				ShowAllPartnervorschlaegeSpReport showPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showPartnervorschlaegeSpReport);
 			}

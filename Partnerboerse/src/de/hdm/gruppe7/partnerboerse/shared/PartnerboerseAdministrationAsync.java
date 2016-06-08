@@ -258,7 +258,7 @@ public interface PartnerboerseAdministrationAsync {
 	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
 	
-	void getAllInfosNeuReport(AsyncCallback<List<Info>> callback);
+	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
 	
 
 	void getAllInfosNeu(AsyncCallback<List<String>> callback);
@@ -335,5 +335,8 @@ public interface PartnerboerseAdministrationAsync {
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
+
+	void getEigenschaftstextById(int eigenschaftId,
+			AsyncCallback<String> callback);
 
 }

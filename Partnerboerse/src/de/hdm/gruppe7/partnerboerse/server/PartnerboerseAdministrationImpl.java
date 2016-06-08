@@ -486,7 +486,7 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	 * Profile, von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profil.getProfilId());
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(1);
 
 	}
 
@@ -656,8 +656,8 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 	}
 
 	
-	public List<Info> getAllInfosNeuReport() throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosNeu(profil.getProfilId());
+	public List<Info> getAllInfosNeuReport(int profilId) throws IllegalArgumentException {
+		return this.infoMapper.findAllInfosNeu(profilId);
 	}
 	
 
@@ -787,4 +787,8 @@ public void deleteSuchprofil(String suchprofilName)throws IllegalArgumentExcepti
 		return n;
 	}
 
+	public String getEinenschaftstextById(int eigenschaftId) throws IllegalArgumentException {
+		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
+		
+	}
 }

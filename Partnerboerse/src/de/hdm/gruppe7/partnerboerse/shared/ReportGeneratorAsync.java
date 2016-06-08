@@ -3,10 +3,12 @@ package de.hdm.gruppe7.partnerboerse.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.PartnervorschlaegeSpReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
 /**
  * Das asynchrone Gegenstück des Interface {@link ReportGenerator}. Es wird
@@ -29,11 +31,14 @@ public interface ReportGeneratorAsync {
 	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
 			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
 
-	void createUnangesehenePartnervorschlaegeReport(Nutzerprofil n,
-			AsyncCallback<UnangesehenePartnervorschlaegeReport> callback);
+	void createAllInfosOfNutzerReport(Nutzerprofil np,
+			AsyncCallback<AllInfosOfNutzerReport> callback);
 
-	void createPartnervorschlaegeSpReport(Nutzerprofil n, String suchprofilname,
-			AsyncCallback<PartnervorschlaegeSpReport> callback);
+	void createAllPartnervorschlaegeNpReport(
+			AsyncCallback<AllPartnervorschlaegeNpReport> callback);
+
+	void createAllPartnervorschlaegeSpReport(
+			AsyncCallback<AllPartnervorschlaegeSpReport> callback);
 
 
 }

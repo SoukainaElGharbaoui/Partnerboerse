@@ -455,10 +455,13 @@ public class NutzerprofilMapper {
 							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
 							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
 							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id != 1 "
-							+ "AND (t_besuch1.nutzerprofil_id != 1 OR t_besuch1.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung1.fremdprofil_id != 1 OR t_sperrung1.nutzerprofil_id IS NULL) "
-							+ "AND t_aehnlichkeitnp1.nutzerprofil_id = 1 ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id != " + profilId
+							+ " AND (t_besuch1.nutzerprofil_id !=" + profilId
+							+ " OR t_besuch1.fremdprofil_id IS NULL) "
+							+ "AND (t_sperrung1.fremdprofil_id !=" + profilId
+							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
+							+ "AND t_aehnlichkeitnp1.nutzerprofil_id =" + profilId
+							+ " ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
