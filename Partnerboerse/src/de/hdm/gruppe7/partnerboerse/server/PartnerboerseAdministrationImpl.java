@@ -532,27 +532,67 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
-
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+				
+				if(sp.getGeschlecht().equals("keine Auswhal")){
 					aehnlichkeitSp = aehnlichkeitSp + 30;
+					
+				} else {
+				
+					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+					}
 				}
-
-				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+				
+				if(sp.getHaarfarbe().equals("keine Auswhal") ){				
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					
+				} else {
+					
+					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
 				}
-
-				if (sp.getRaucher().equals(np.getRaucher())) {
+				
+				
+//				if (sp.getKoerpergroesseInt() == ) {
+//					aehnlichkeitSp = aehnlichkeitSp + 10;
+//					
+//				}else {
+					
+					if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				if (sp.getReligion().equals(np.getReligion())) {
+					}
+					
+//				}
+				
+				
+				if(sp.getRaucher().equals("keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
+					
+				} else {
+					
+					if (sp.getRaucher().equals(np.getRaucher())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
 				}
+
+				if (sp.getRaucher().equals("keine Auswahl") ){
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					
+				} else {
+					
+					if (sp.getReligion().equals(np.getReligion())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
+					
+				}
+
+				
+				
+				
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper
@@ -565,10 +605,24 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
 							counter= counter + 2;
-							if (rin.getInfotext().equals(vin.getInfotext())) {
+							
+							if (rin.getInfotext().equals("keine Auswahl") ){
+								
 								aehnlichkeitSp = aehnlichkeitSp + 2;
-
+								
+							} else {
+								
+								if (rin.getInfotext().isEmpty()){
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+									
+							} else {
+								if (rin.getInfotext().equals(vin.getInfotext())) {
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+								}
+								}
+								
 							}
+							
 						}
 					}
 				}
