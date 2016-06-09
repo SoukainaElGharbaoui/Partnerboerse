@@ -98,10 +98,14 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(2, 2, geschlechtListBox);
 		
 		editSuchprofilFlexTable.setWidget(3, 2, alterMinTextBox);
-
+		
 		editSuchprofilFlexTable.setWidget(4, 2, alterMaxTextBox);
 
 		editSuchprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
+		
+		int defaultValue = 0; 
+		
+		koerpergroesseTextBox.getElement().setPropertyString("placeholder", String.valueOf(defaultValue));  
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");

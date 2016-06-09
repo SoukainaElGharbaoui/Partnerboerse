@@ -34,6 +34,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
 	private FlexTable showSuchprofilFlexTable = new FlexTable();
+	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen"); 
 	private Button anzeigenButton = new Button("Anzeigen");
 	private Button loeschenButton = new Button("Löschen");
 	private Button bearbeitenButton = new Button("Bearbeiten");
@@ -81,12 +82,33 @@ public class ShowSuchprofil extends VerticalPanel {
 			}
 
 			public void onSuccess(List<Suchprofil> result) {
-				for (Suchprofil s : result) {
-					auswahlListBox.addItem(s.getSuchprofilName());
+				if(result.isEmpty()) {
+					auswahlListBox.setVisible(false); 
+					anzeigenButton.setVisible(false); 
+					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+					createSuchprofilButton.setVisible(true); 
+				} else {
+					for (Suchprofil s : result) {
+						auswahlListBox.addItem(s.getSuchprofilName());
 				}
+					createSuchprofilButton.setVisible(false); 
+			}
 			}
 		});
 
+		/** 
+		 * ClickHandler fuer den Suchprofil-Anlegen-Button hinzufuegen.
+		 */
+		createSuchprofilButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				// Seite zum Anlegen eines neuen Suchprofils aufrufen.
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createSuchprofil);
+			}
+			
+		}); 
+		
 		/**
 		 * ClickHandler fuer den Anzeigen-Button hinzufuegen. 
 		 */
@@ -138,7 +160,6 @@ public class ShowSuchprofil extends VerticalPanel {
 							}
 
 						});
-				
 
 				/**
 				 * ClickHandler fuer den Loeschen-Button hinzufuegen.
@@ -172,6 +193,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				 */
 				bearbeitenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
+						// Seite zum Bearbeiten eines Suchprofils hinzufuegen.
 						EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(editSuchprofil);
@@ -193,6 +215,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		suchprofilPanel.add(auswahlLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenButton);
+		auswahlPanel.add(createSuchprofilButton); 
 		suchprofilPanel.add(auswahlPanel);
 
 	}
