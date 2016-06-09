@@ -262,6 +262,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
+
 	void getEigenschaftstextById(int eigenschaftId,
 			AsyncCallback<String> callback);
 	
@@ -317,4 +318,3 @@ public interface PartnerboerseAdministrationAsync {
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
 }
-

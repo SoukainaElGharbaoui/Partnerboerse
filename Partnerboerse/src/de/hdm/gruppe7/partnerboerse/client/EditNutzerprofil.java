@@ -232,22 +232,10 @@ public class EditNutzerprofil extends VerticalPanel {
 
 							}
 						});
+
 				}
 
-				/**
-				 * Aehnlichkeit aus der Datenbank entfernen.
-				 */
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(
 
-						new AsyncCallback<Void>() {
-
-							public void onFailure(Throwable caught) {
-							}
-
-							public void onSuccess(Void result) {
-							}
-
-						});
 
 			}
 		});

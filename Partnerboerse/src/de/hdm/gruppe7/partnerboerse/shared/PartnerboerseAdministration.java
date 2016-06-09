@@ -238,6 +238,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * **
 	 */
 	
+//	public Eigenschaft allEigenschaftElemente(int eigenschaftId)throws IllegalArgumentException;
+	
 	public List<Eigenschaft> getAllEigenschaftenNeu()
 			throws IllegalArgumentException;
 	

@@ -16,18 +16,18 @@ div#Header {
 }
 
 div#Navigator {
-<<<<<<< HEAD
+
 	 /*max-height: 300px; */
 	/*overflow:scroll;*/
 	border: 3px solid silver; 
-=======
+
 	/*  max-height: 300px; */
 	 /*overflow:scroll; */
 	border: 0px solid silver; 
->>>>>>> refs/heads/master
+
 	padding: 3em 4em;
-	width: 200px; 
-	height: 700px;
+	width: 100px; 
+	height: 720px;
 	
 	background: #ffffff;
 } 
@@ -53,9 +53,9 @@ div#Trailer {
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
-	position: fixed;
+	/*position: fixed;*/
 	
-	background: #d7d7d7;
+	background: #8080ff;
 }
 
 .partnerboerse-menubutton {

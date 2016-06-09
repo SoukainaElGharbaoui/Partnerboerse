@@ -628,32 +628,28 @@ public class NutzerprofilMapper {
 	/**
 	 * Geordnete Partnervorschlaege ausgeben
 	 */
-	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId,
-			String suchprofilName) {
+	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisliste vorbereiten
 		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
-
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
-							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, "
-							+ "t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit "
-							+ "FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
+					.executeQuery(							
+							"SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
+							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe,"
+							+ " t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit"
+							+ " FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
 							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id !="
-							+ profilId
-							+ " AND t_aehnlichkeitsp1.suchprofilname = '"
-							+ suchprofilName
-							+ "'"
-							+ " AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
-							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC");
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
+							+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
 
-			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+
+			// Für jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -667,15 +663,16 @@ public class NutzerprofilMapper {
 				nutzerprofil.setRaucher(rs.getString("raucher"));
 				nutzerprofil.setReligion(rs.getString("religion"));
 				nutzerprofil.setAehnlichkeitSp(rs.getInt("aehnlichkeit"));
+				
 
-				// HinzufÃ¼gen des neuen Objekts zur Ergebnisliste
+				// Hinzufügen des neuen Objekts zur Ergebnisliste
 				result.add(nutzerprofil);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Ergebnisliste zurÃ¼ckgeben
+		// Ergebnisliste zurückgeben
 		return result;
 	}
 
