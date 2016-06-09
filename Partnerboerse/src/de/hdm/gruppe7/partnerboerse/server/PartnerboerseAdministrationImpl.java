@@ -480,8 +480,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
-		if (np.getKoerpergroesseInt() == vergleichsprofil
+		if (np.getKoerpergroesseInt() +5 >= vergleichsprofil
 				.getKoerpergroesseInt()) {
+			if(np.getKoerpergroesseInt()-5 <= vergleichsprofil.getKoerpergroesseInt())
 			aehnlichkeit = aehnlichkeit + 1;
 			}
 		
@@ -525,8 +526,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
                 alterRef = alterRef - 1;
             }
         }
-        if(alter+5 <= alterRef){
-        	if(alter-5 >= alterRef){
+        if(alter+5 >= alterRef){
+        	if(alter-5 <= alterRef){
         		aehnlichkeit = aehnlichkeit +3;
         	}
         	
@@ -596,19 +597,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				String suchprofilName = sp.getSuchprofilName();
 
 				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					aehnlichkeitSp = aehnlichkeitSp + 30;
+					aehnlichkeitSp = aehnlichkeitSp + 20;
 				}
 
 				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 				}
 
-				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
-					if(sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()){
-						
+				if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
+					if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
+						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+					
 				}
+				
+				
 
 				if (sp.getRaucher().equals(np.getRaucher())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
@@ -621,7 +624,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				
 				
 				
-				//Berechnung des Alters des eigenen Profils
+				//Berechnung des Alters des Fremdprofils
 				
 				GregorianCalendar geburtstag = new GregorianCalendar();
 		        geburtstag.setTime(np.getGeburtsdatumDate());

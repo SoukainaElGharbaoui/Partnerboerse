@@ -60,7 +60,7 @@ public class Navigator extends VerticalPanel {
 	
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("3000px");
+		menu.setWidth("900px");
 		menu.setAnimationEnabled(true);
 
 		   // Create the file menu
@@ -115,7 +115,7 @@ public class Navigator extends VerticalPanel {
 		   
 		   nutzerprofilMenu.addSeparator();
 
-		   // Menü für das Suchprofil
+		   // Menï¿½ fï¿½r das Suchprofil
 		   MenuBar suchprofilMenu = new MenuBar(true);
 		   suchprofilMenu.setAnimationEnabled(true);
 

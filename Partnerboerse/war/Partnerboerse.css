@@ -47,7 +47,7 @@ div#Trailer {
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
-	position: fixed;
+	/*position: fixed;*/
 	
 	background: #d7d7d7;
 }
