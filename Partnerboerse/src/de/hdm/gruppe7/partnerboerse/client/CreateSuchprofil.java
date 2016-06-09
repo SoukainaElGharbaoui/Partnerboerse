@@ -19,8 +19,6 @@ public class CreateSuchprofil extends VerticalPanel {
 	 * VerticalPanel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-
-	private VerticalPanel verPanel2 = new VerticalPanel();
 	
 	/**
 	 * Label fuer das Pflichtfeld.
@@ -58,9 +56,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	 * Label für die Benutzerinformation hinzufuegen.
 	 */
 	private Label infoLabel = new Label();
-	private Label warnungLabel1 = new Label();
-	private Label warnungLabel2 = new Label();
-	private Label warnungLabel3 = new Label();
+	private Label warnungLabel = new Label();
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -73,6 +69,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		reqLabel.setStyleName("red_label");
+		warnungLabel.setStyleName("red_label");
 
 		/**
 		 * CSS auf Tabelle anwenden und Tabelle formatieren.
@@ -151,15 +148,18 @@ public class CreateSuchprofil extends VerticalPanel {
 							public void onSuccess(Integer result) {
 								// Wenn der Suchprofilname bereits existiert...
 								if(result == 1) {
-									warnungLabel1.setText("Der Suchprofilname existiert bereits");	
+									warnungLabel.setText("Der Suchprofilname existiert bereits");	
+									createSuchprofilFlexTable.setWidget(0, 4, warnungLabel); 
 								} else {
 									// Wenn der Suchprofilname leer ist...
 									if (result == 2) {
-										warnungLabel2.setText("Der Suchprofilname darf nicht leer sein."); 
+										warnungLabel.setText("Der Suchprofilname darf nicht leer sein."); 
+										createSuchprofilFlexTable.setWidget(0, 4, warnungLabel); 
 									} else {
 										// Wenn Alter von groesser als Alter bis ist...
 										if (Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
-											warnungLabel3.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
+											warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
+											createSuchprofilFlexTable.setWidget(2, 4, warnungLabel); 
 									} else {
 										// Suchprofil anlegen.
 										 ClientsideSettings.getPartnerboerseAdministration().createSuchprofil(
@@ -208,9 +208,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		verPanel.add(createSuchprofilFlexTable);
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(infoLabel);
-		verPanel.add(warnungLabel1);
-		verPanel.add(warnungLabel2);
-		verPanel.add(warnungLabel3);
+
 
 	}
 
