@@ -35,7 +35,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * Nutzerprofil aktualisieren.
 	 */
 	void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
 	/**
@@ -261,6 +261,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getEigAById(int eigenschaftId, AsyncCallback<Auswahleigenschaft> callback);
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
+
 
 	void getEigenschaftstextById(int eigenschaftId,
 			AsyncCallback<String> callback);

@@ -117,6 +117,18 @@ public class SuchprofilMapper {
 			if (rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id");
 
+				// Daten aus der Tabelle t_aehnlichkeitsp mit der entsprechenden
+				// suchprofil_id löschen.
+				stmt = con.createStatement();
+				stmt.executeUpdate(
+						"DELETE FROM t_aehnlichkeitsp1 " + "WHERE t_aehnlichkeitsp1.suchprofil_id=" + suchprofilIdInt);
+				
+				// Daten aus der Tabelle t_aehnlichkeitsp mit der entsprechenden
+				// suchprofil_id löschen.
+				stmt = con.createStatement();
+				stmt.executeUpdate(
+						"DELETE FROM t_info1 " + "WHERE t_info1.profil_id=" + suchprofilIdInt);
+				
 				// Daten aus der Tabelle t_suchprofil mit der entsprechenden
 				// profil_id löschen.
 				stmt = con.createStatement();
