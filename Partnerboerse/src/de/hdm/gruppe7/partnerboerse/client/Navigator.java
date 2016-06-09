@@ -67,7 +67,7 @@ public class Navigator extends VerticalPanel {
 		   MenuBar nutzerprofilMenu = new MenuBar(true);
 		   nutzerprofilMenu.setAnimationEnabled(true);
 
-		   nutzerprofilMenu.addItem("Mein Nutzerprofil", new Command() {
+		   nutzerprofilMenu.addItem("Profil anzeigen", new Command() {
 		      @Override
 		      public void execute() {
 		    	  ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
@@ -76,7 +76,7 @@ public class Navigator extends VerticalPanel {
 		      }
 		   });
 		   
-		   nutzerprofilMenu.addItem("Nutzerprofil anlegen", new Command(){
+		   nutzerprofilMenu.addItem("Neues Profil anlegen", new Command(){
 
 			@Override
 			public void execute() {
@@ -88,7 +88,7 @@ public class Navigator extends VerticalPanel {
 			   
 		   });
 		   
-		   nutzerprofilMenu.addItem("Meine Merklise", new Command(){
+		   nutzerprofilMenu.addItem("Merklise anzeigen", new Command(){
 
 			@Override
 			public void execute() {
@@ -100,7 +100,7 @@ public class Navigator extends VerticalPanel {
 			   
 		   });
 		   
-		   nutzerprofilMenu.addItem("Meine Sperrliste", new Command(){
+		   nutzerprofilMenu.addItem("Sperrliste anzeigen", new Command(){
 
 			@Override
 			public void execute() {
@@ -118,20 +118,18 @@ public class Navigator extends VerticalPanel {
 		   // Men� f�r das Suchprofil
 		   MenuBar suchprofilMenu = new MenuBar(true);
 		   suchprofilMenu.setAnimationEnabled(true);
-
-		   suchprofilMenu.addItem("Meine Suchprofile", new Command() {
-		      @Override
-		      public void execute() {
-		    	  ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showSuchprofil);
-		      }
-		   });
 		   
 		   suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command(){
 
 			@Override
 			public void execute() {
+				
+				/**
+				 * Sobald ein neues Suchprofil angelegt wird, wird die Tabelle in der Datenbank, die die Partnervorschlaege
+				 * anhand von Suchprofilen enthaelt, geleert. 
+				 */
+		
+				
 				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
@@ -140,15 +138,51 @@ public class Navigator extends VerticalPanel {
 			   
 		   });
 		   
+		   suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
+			      @Override
+			      public void execute() {
+			    	  ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showSuchprofil);
+			      }
+			   });
+		   
 		   suchprofilMenu.addSeparator();
-		   
-		   
-		   
+
 		   MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		   partnervorschlaegeMenu.setAnimationEnabled(true);
 		   
+		   partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege anzeigen", new Command(){
+
+			@Override
+			public void execute() {
+				
+				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
+						 new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+
+							}
+
+							@Override
+							public void onSuccess( Void result) {
+								
+								
+							}
+
+						});
+				
+				
+				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showPartnervorschlaegeNp);
+				
+			}
+			   
+		   });
 		   
-		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Suchprofil anzeigen", new Command(){
+		   partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen anzeigen", new Command(){
 
 			@Override
 			public void execute() {
@@ -176,36 +210,6 @@ public class Navigator extends VerticalPanel {
 				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showPartnervorschlaegeSp);
-				
-			}
-			   
-		   });
-		   
-		   partnervorschlaegeMenu.addItem("Partnervorschlaege mit Nutzerprofil anzeigen", new Command(){
-
-			@Override
-			public void execute() {
-				
-				ClientsideSettings.getPartnerboerseAdministration().berechneAehnlichkeitNpFor(
-						 new AsyncCallback<Void>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-
-							}
-
-							@Override
-							public void onSuccess( Void result) {
-								
-								
-							}
-
-						});
-				
-				
-				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaegeNp);
 				
 			}
 			   

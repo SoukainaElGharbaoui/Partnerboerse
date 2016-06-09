@@ -34,8 +34,8 @@ public class CreateInfoSp extends VerticalPanel {
 	private String nEingabeB;
 	private String nEingabeA;
 	
-	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Info anlegen:");
+	private Button createInfosButton = new Button("Suchprofil-Info anlegen");
+	private Label ueberschriftLabel = new Label("Suchprofil-Info anlegen:");
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
 

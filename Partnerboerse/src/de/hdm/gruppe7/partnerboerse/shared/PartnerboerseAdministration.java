@@ -42,7 +42,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException;
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
@@ -93,49 +93,29 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException;
-
+	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
-	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
-
+	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
+	
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET VON MILENA - NOTWENIG)
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
-	
-	
+
+	/**
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 */
 	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
 	/**
 	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
 	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
-		
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
-	 */
-	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
-	
-	/**
-	 * Suchprofil-Report
-	 * @param n
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException;
-	
-	
-	
 
 	/*
 	 * *************************************************************************
@@ -257,6 +237,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
+	
+//	public Eigenschaft allEigenschaftElemente(int eigenschaftId)throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllEigenschaftenNeu()
 			throws IllegalArgumentException;

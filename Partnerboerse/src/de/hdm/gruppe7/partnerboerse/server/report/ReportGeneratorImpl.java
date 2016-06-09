@@ -116,97 +116,98 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * @param n das Nutzerprofil-Objekt bzgl. dessen der Report erstellt werden soll.
 	 * @return der fertige Report
 	 */
-	public AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport(Nutzerprofil n) 
-			throws IllegalArgumentException {
-		
-		if (this.getPartnerboerseAdministration() == null) {
-			return null;
-		}
+//	public AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport(Nutzerprofil n) 
+//			throws IllegalArgumentException {
+//		
+//		if (this.getPartnerboerseAdministration() == null) {
+//			return null;
+//		}
+//
+//	    /*
+//	     * Leeren Report anlegen.
+//	     */
+//		AllSuchprofileOfNutzerReport result = new AllSuchprofileOfNutzerReport();
+//
+//		// Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
+//		result.setTitle("Suchprofil-Report fï¿½r " + n.getVorname() + " " + n.getNachname()); 
+//
+//		// Imressum hinzufï¿½gen.
+//		this.addImprint(result);
+//
+//		/*
+//		 *  Erstellungsdatum hinzufï¿½gen.
+//		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
+//		 *  der Instantiierung des Date-Objekts.
+//		 */
+//		result.setCreated(new Date());
+//
+//	    /*
+//	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
+//	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
+//	     */
+//		CompositeParagraph header = new CompositeParagraph();
+//
+//		// Name und Vorname des Nutzers aufnehmen.
+//		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
+//		
+//		// Nutzerprofil-ID aufnehmen.
+//	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
+//
+//		// Zusammengestellte Kopfdaten zum Report hinzufï¿½gen.
+//		result.setHeaderData(header);
+//		
+//	    /*
+//	     * Ab hier: Suchprofil-Informationen zeilenweise hinzufï¿½gen.
+//	     */
+//		// Kopfzeile fï¿½r die Suchprofil-Tabelle anlegen.
+//		Row headline = new Row();
+//
+//		// ï¿½berschriften der Kopfzeile ablegen.
+//		headline.addColumn(new Column("ID"));
+//		headline.addColumn(new Column("Suchprofilname"));
+//		headline.addColumn(new Column("Geschlecht"));
+//		headline.addColumn(new Column("Alter von"));
+//		headline.addColumn(new Column("Alter bis"));
+//		headline.addColumn(new Column("Kï¿½rpergrï¿½ï¿½e"));
+//		headline.addColumn(new Column("Haarfarbe"));
+//		headline.addColumn(new Column("Raucherstatus"));
+//		headline.addColumn(new Column("Religion"));
+//
+//		// Kopfzeile hinzufï¿½gen.
+//		result.addRow(headline);
+//
+//	    /*
+//	     * Sï¿½mtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
+//	     */
+//		List<Suchprofil> suchprofile = this.partnerboerseAdministration.getAllSuchprofileFor(n); 
+//
+//		for (Suchprofil s : suchprofile) {
+//			
+//			// Eine leere Zeile anlegen.
+//			Row suchprofilRow = new Row();
+//
+//			// Zeile befï¿½llen.
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getProfilId())));
+//			suchprofilRow.addColumn(new Column(s.getSuchprofilName()));
+//			suchprofilRow.addColumn(new Column(s.getGeschlecht()));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMinInt())));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMaxInt())));
+//			suchprofilRow.addColumn(new Column(String.valueOf(s.getKoerpergroesseInt())));
+//			suchprofilRow.addColumn(new Column(s.getHaarfarbe()));
+//			suchprofilRow.addColumn(new Column(s.getRaucher()));
+//			suchprofilRow.addColumn(new Column(s.getReligion()));
+//
+//			// Zeile dem Report hinzufï¿½gen.
+//			result.addRow(suchprofilRow);
+//		}
+//
+//	    /*
+//	     * Fertigen Report zurï¿½ckgeben.
+//	     */
+//		return result;
+//
+//	}
 
-	    /*
-	     * Leeren Report anlegen.
-	     */
-		AllSuchprofileOfNutzerReport result = new AllSuchprofileOfNutzerReport();
-
-		// Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
-		result.setTitle("Suchprofil-Report fuer " + n.getVorname() + " " + n.getNachname()); 
-
-		// Imressum hinzufï¿½gen.
-		this.addImprint(result);
-
-		/*
-		 *  Erstellungsdatum hinzufï¿½gen.
-		 *  new Date() erzeugt autom. einen "Timestamp" des Zeitpunkts 
-		 *  der Instantiierung des Date-Objekts.
-		 */
-		result.setCreated(new Date());
-
-	    /*
-	     * Ab hier: Kopfdaten des Reports zusammenstellen. 
-	     * Die Kopfdaten sind mehrzeilig, daher die Verwendung von CompositeParagraph.
-	     */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Nutzers aufnehmen.
-		header.addSubParagraph(new SimpleParagraph(n.getVorname() + " " + n.getNachname())); 
-		
-		// Nutzerprofil-ID aufnehmen.
-	    header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + n.getProfilId()));
-
-		// Zusammengestellte Kopfdaten zum Report hinzufï¿½gen.
-		result.setHeaderData(header);
-		
-	    /*
-	     * Ab hier: Suchprofil-Informationen zeilenweise hinzufï¿½gen.
-	     */
-		// Kopfzeile fï¿½r die Suchprofil-Tabelle anlegen.
-		Row headline = new Row();
-
-		// ï¿½berschriften der Kopfzeile ablegen.
-		headline.addColumn(new Column("ID"));
-		headline.addColumn(new Column("Suchprofilname"));
-		headline.addColumn(new Column("Geschlecht"));
-		headline.addColumn(new Column("Alter von"));
-		headline.addColumn(new Column("Alter bis"));
-		headline.addColumn(new Column("Kï¿½rpergrï¿½ï¿½e"));
-		headline.addColumn(new Column("Haarfarbe"));
-		headline.addColumn(new Column("Raucherstatus"));
-		headline.addColumn(new Column("Religion"));
-
-		// Kopfzeile hinzufï¿½gen.
-		result.addRow(headline);
-
-	    /*
-	     * Sï¿½mtliche Suchprofile des Nutzers ausgelesen und in die Tabelle eintragen.
-	     */
-		List<Suchprofil> suchprofile = this.partnerboerseAdministration.getAllSuchprofileFor(n); 
-
-		for (Suchprofil s : suchprofile) {
-			
-			// Eine leere Zeile anlegen.
-			Row suchprofilRow = new Row();
-
-			// Zeile befï¿½llen.
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getProfilId())));
-			suchprofilRow.addColumn(new Column(s.getSuchprofilName()));
-			suchprofilRow.addColumn(new Column(s.getGeschlecht()));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMinInt())));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getAlterMaxInt())));
-			suchprofilRow.addColumn(new Column(String.valueOf(s.getKoerpergroesseInt())));
-			suchprofilRow.addColumn(new Column(s.getHaarfarbe()));
-			suchprofilRow.addColumn(new Column(s.getRaucher()));
-			suchprofilRow.addColumn(new Column(s.getReligion()));
-
-			// Zeile dem Report hinzufï¿½gen.
-			result.addRow(suchprofilRow);
-		}
-
-	    /*
-	     * Fertigen Report zurï¿½ckgeben.
-	     */
-		return result;
-
-	}
 
 	
 	
@@ -223,18 +224,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	      return null;
 
 	    /*
-	     * Zunächst legen wir uns einen leeren Report an.
+	     * Zunï¿½chst legen wir uns einen leeren Report an.
 	     */
 	    AllInfosOfNutzerReport result = new AllInfosOfNutzerReport();
 
-		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		// Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
 		result.setTitle(np.getVorname() + " " + np.getNachname());
 
-		// Imressum hinzufügen
+		// Imressum hinzufï¿½gen
 		this.addImprint(result);
 
 		/*
-		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+		 * Datum der Erstellung hinzufï¿½gen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		 */
 		result.setCreated(new Date());
@@ -254,15 +255,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
 				+ np.getProfilId()));
 
-		// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+		// Hinzufï¿½gen der zusammengestellten Kopfdaten zu dem Report
 		result.setHeaderData(header);
 
 	    /*
-	     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
+	     * Ab hier erfolgt ein zeilenweises Hinzufï¿½gen von Konto-Informationen.
 	     */
 	    
 	    /*
-	     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
+	     * Zunï¿½chst legen wir eine Kopfzeile fï¿½r die Konto-Tabelle an.
 	     */
 	    Row headline = new Row();
 
@@ -270,18 +271,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	     * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
 	     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
 	     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-	     * Überschriften ab.
+	     * ï¿½berschriften ab.
 	     */
 	  	
 	    headline.addColumn(new Column("Eigenschaft"));
 		
 		 headline.addColumn(new Column("Infotext"));
 
-	    // Hinzufügen der Kopfzeile
+	    // Hinzufï¿½gen der Kopfzeile
 	    result.addRow(headline);
 
 	    /*
-	     * Nun werden sämtliche Infos des Kunden ausgelesen 
+	     * Nun werden sï¿½mtliche Infos des Kunden ausgelesen 
 	     */
 	    
 	    
@@ -293,18 +294,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	      // Eine leere Zeile anlegen.
 	      Row infoRow = new Row();
 
-	      // Spalten  hinzufügen
+	      // Spalten  hinzufï¿½gen
 
 	    infoRow.addColumn(new Column(String.valueOf(i.getEigenschaftId())));
 	    //infoRow.addColumn(new Column(this.partnerboerseAdministration.getEigenschaftstextById(i.getEigenschaftId())));
 	    infoRow.addColumn(new Column(i.getInfotext()));
 
-	      // und schließlich die Zeile dem Report hinzufügen.
+	      // und schlieï¿½lich die Zeile dem Report hinzufï¿½gen.
 	      result.addRow(infoRow);
 	    }
 
 	    /*
-	     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
+	     * Zum Schluss mï¿½ssen wir noch den fertigen Report zurï¿½ckgeben.
 	     */
 	    return result;
 	  }
@@ -323,14 +324,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	      return null;
 
 	    /*
-	     * Zunächst legen wir uns einen leeren Report an.
+	     * Zunï¿½chst legen wir uns einen leeren Report an.
 	     */
 	    AllPartnervorschlaegeNpReport result = new AllPartnervorschlaegeNpReport();
 
-	    // Jeder Report hat einen Titel (Bezeichnung / überschrift).
+	    // Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
 	    result.setTitle("Alle unangesegenen Partnervorschlaege und deren Infos");
 
-	    // Imressum hinzufügen
+	    // Imressum hinzufï¿½gen
 	    this.addImprint(result);
 
 	 		/*
@@ -358,16 +359,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		result.setHeaderData(header);
 	    /*
 	     * Da AllAccountsOfAllCustomersReport-Objekte aus einer Sammlung von
-	     * AllAccountsOfCustomerReport-Objekten besteht, benötigen wir keine
-	     * Kopfdaten für diesen Report-Typ. Wir geben einfach keine Kopfdaten an...
+	     * AllAccountsOfCustomerReport-Objekten besteht, benï¿½tigen wir keine
+	     * Kopfdaten fï¿½r diesen Report-Typ. Wir geben einfach keine Kopfdaten an...
 	     */
 
 	    /*
-	     * Nun müssen sämtliche Kunden-Objekte ausgelesen werden. Anschließend wir
-	     * für jedes Kundenobjekt c ein Aufruf von
-	     * createAllAccountsOfCustomerReport(c) durchgeführt und somit jeweils ein
+	     * Nun mï¿½ssen sï¿½mtliche Kunden-Objekte ausgelesen werden. Anschlieï¿½end wir
+	     * fï¿½r jedes Kundenobjekt c ein Aufruf von
+	     * createAllAccountsOfCustomerReport(c) durchgefï¿½hrt und somit jeweils ein
 	     * AllAccountsOfCustomerReport-Objekt erzeugt. Diese Objekte werden
-	     * sukzessive der result-Variable hinzugefügt. Sie ist vom Typ
+	     * sukzessive der result-Variable hinzugefï¿½gt. Sie ist vom Typ
 	     * AllAccountsOfAllCustomersReport, welches eine Subklasse von
 	     * CompositeReport ist.
 	     */
@@ -376,13 +377,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 	    for (Nutzerprofil np : allNutzer) {
 	      /*
-	       * Anlegen des jew. Teil-Reports und Hinzufügen zum Gesamt-Report.
+	       * Anlegen des jew. Teil-Reports und Hinzufï¿½gen zum Gesamt-Report.
 	       */
 	      result.addSubReport(this.createAllInfosOfNutzerReport(np));
 	    }
 
 	    /*
-	     * Zu guter Letzt müssen wir noch den fertigen Report zurückgeben.
+	     * Zu guter Letzt mï¿½ssen wir noch den fertigen Report zurï¿½ckgeben.
 	     */
 	    return result;
 	  }
@@ -401,34 +402,34 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	      return null;
 
 	    /*
-	     * Zunächst legen wir uns einen leeren Report an.
+	     * Zunï¿½chst legen wir uns einen leeren Report an.
 	     */
 	    AllPartnervorschlaegeSpReport result = new AllPartnervorschlaegeSpReport();
 
-	    // Jeder Report hat einen Titel (Bezeichnung / überschrift).
+	    // Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
 	    result.setTitle("Alle unangesegenen Partnervorschlaege und deren Infos");
 
-	    // Imressum hinzufügen
+	    // Imressum hinzufï¿½gen
 	    this.addImprint(result);
 
 	    /*
-	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+	     * Datum der Erstellung hinzufï¿½gen. new Date() erzeugt autom. einen
 	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 	     */
 	    result.setCreated(new Date());
 
 	    /*
 	     * Da AllAccountsOfAllCustomersReport-Objekte aus einer Sammlung von
-	     * AllAccountsOfCustomerReport-Objekten besteht, benötigen wir keine
-	     * Kopfdaten für diesen Report-Typ. Wir geben einfach keine Kopfdaten an...
+	     * AllAccountsOfCustomerReport-Objekten besteht, benï¿½tigen wir keine
+	     * Kopfdaten fï¿½r diesen Report-Typ. Wir geben einfach keine Kopfdaten an...
 	     */
 
 	    /*
-	     * Nun müssen sämtliche Kunden-Objekte ausgelesen werden. Anschließend wir
-	     * für jedes Kundenobjekt c ein Aufruf von
-	     * createAllAccountsOfCustomerReport(c) durchgeführt und somit jeweils ein
+	     * Nun mï¿½ssen sï¿½mtliche Kunden-Objekte ausgelesen werden. Anschlieï¿½end wir
+	     * fï¿½r jedes Kundenobjekt c ein Aufruf von
+	     * createAllAccountsOfCustomerReport(c) durchgefï¿½hrt und somit jeweils ein
 	     * AllAccountsOfCustomerReport-Objekt erzeugt. Diese Objekte werden
-	     * sukzessive der result-Variable hinzugefügt. Sie ist vom Typ
+	     * sukzessive der result-Variable hinzugefï¿½gt. Sie ist vom Typ
 	     * AllAccountsOfAllCustomersReport, welches eine Subklasse von
 	     * CompositeReport ist.
 	     */
@@ -436,13 +437,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 	    for (Nutzerprofil np : allNutzer) {
 	      /*
-	       * Anlegen des jew. Teil-Reports und Hinzufügen zum Gesamt-Report.
+	       * Anlegen des jew. Teil-Reports und Hinzufï¿½gen zum Gesamt-Report.
 	       */
 	      result.addSubReport(this.createAllInfosOfNutzerReport(np));
 	    }
 
 	    /*
-	     * Zu guter Letzt müssen wir noch den fertigen Report zurückgeben.
+	     * Zu guter Letzt mï¿½ssen wir noch den fertigen Report zurï¿½ckgeben.
 	     */
 	    return result;
 	  }

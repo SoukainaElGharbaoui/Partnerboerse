@@ -72,6 +72,10 @@ public class CreateInfoNp extends VerticalPanel {
 		/**
 		 * Information-Labels für die Benutzerinformation hinzufügen.
 		 */
+		
+		
+		
+		
 
 		ClientsideSettings.getPartnerboerseAdministration()
 				.getAllEigenschaftenNeu(new AsyncCallback<List<Eigenschaft>>() {

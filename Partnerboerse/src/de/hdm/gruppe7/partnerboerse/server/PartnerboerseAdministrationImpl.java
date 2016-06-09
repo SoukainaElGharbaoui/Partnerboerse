@@ -8,12 +8,21 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
+
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
@@ -99,15 +108,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		profil.setProfilId(1);
-
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
+		
 		return this.nutzerprofilMapper.insertNutzerprofil(profil);
+		
 	}
 
 	/**
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
 		// Nutzerprofil n = new Nutzerprofil();
@@ -119,9 +132,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setHaarfarbe(haarfarbe);
 		profil.setRaucher(raucher);
 		profil.setReligion(religion);
-		profil.setEmailAddress(emailAddress);
-
+		
 		this.nutzerprofilMapper.updateNutzerprofil(profil);
+		
+		// Wenn das Nutzerprofil bearbeitet oder neu angelegt wird, sollen alle Aehnlichkeiten gel�scht werden.
+		//Damit sie neu generiert werden k�nnen
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
+
 	}
 
 	/**
@@ -175,7 +193,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Suchprofil anlegen.
 	 */
-	@Override
 	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
 
@@ -190,6 +207,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		profil.setProfilId(profil.getProfilId());
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 
 		return this.suchprofilMapper.insertSuchprofil(s, profil);
 	}
@@ -217,30 +236,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
 	}
 
 	/**
-	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofile();
-	}
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
-	 * NOTWENIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
-	 * VON MILENA - NOTWENDIG)
+	 * Suchprofil anhand anhand des Suchprofilnamens auslesen. 
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
@@ -288,27 +298,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			ergebnis = 2; 
 		}
 		
-//		// Der Suchprofilname wurde nicht verändert. 
-//		if (existenz == 1 && (suchprofilname.equals(suchprofilnameAktuell))) {
-//			ergebnis = 2; 
-//		}
-//		
-//		// Der Suchprofilname existiert noch nicht und die TextBox ist nicht leer.
-//		if (existenz == 0 && (!suchprofilname.isEmpty())) {
-//			ergebnis = 3; 
-//		}
-		
 		return ergebnis; 
-	}
-
-
-	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.findSuchprofilById(suchprofilId);
-
-	}
-
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofileFor(n);
 	}
 
 	/*
@@ -448,8 +438,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.nutzerprofilMapper.insertBesuch(profil.getProfilId(), fremdprofilId);
 	}
 
+
 	/**
-	 * Methode zur Berechnung der Ã„hnlichkeit zwischen zwei Nutzerprofilen
+	 * Methode zur Berechnung der Ähnlichkeit zwischen zwei Nutzerprofilen
 	 */
 	public void berechneAehnlichkeitNpFor()
 			throws IllegalArgumentException {
@@ -467,7 +458,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			
 		// Variablen zur Berechnung der Aehnlichkeit
 		int aehnlichkeit = 3;
-		int counter = 16;
+		int counter = 7;
 
 		// Vergleich der Profildaten
 		if (np.getGeschlecht().equals(
@@ -480,12 +471,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			aehnlichkeit = aehnlichkeit + 1;
 		}
 
+		
 		if (np.getKoerpergroesseInt() +5 >= vergleichsprofil
 				.getKoerpergroesseInt()) {
 			if(np.getKoerpergroesseInt()-5 <= vergleichsprofil.getKoerpergroesseInt())
 			aehnlichkeit = aehnlichkeit + 1;
 			}
-		
 
 		if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
 			aehnlichkeit = aehnlichkeit + 1;
@@ -494,48 +485,45 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		if (np.getReligion().equals(vergleichsprofil.getReligion())) {
 			aehnlichkeit = aehnlichkeit + 1;
 		}
-		// Berechnung des Alters des Fremdprofils
-		GregorianCalendar geburtstagVgl = new GregorianCalendar();
-        geburtstagVgl.setTime(vergleichsprofil.getGeburtsdatumDate());
-        GregorianCalendar heute = new GregorianCalendar();
-        int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
-        if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
-        {
-            alter = alter - 1;
-        }
-        else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH))
-        {
-            if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE))
-            {
-                alter = alter - 1;
-            }
-        }
-        // Berechnung des Alters des eigenen Profils
-        GregorianCalendar geburtstagRef = new GregorianCalendar();
-        geburtstagRef.setTime(np.getGeburtsdatumDate());
-        GregorianCalendar heute1 = new GregorianCalendar();
-        int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
-        if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
-        {
-            alterRef = alterRef - 1;
-        }
-        else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
-        {
-            if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE))
-            {
-                alterRef = alterRef - 1;
-            }
-        }
-        if(alter+5 >= alterRef){
-        	if(alter-5 <= alterRef){
-        		aehnlichkeit = aehnlichkeit +3;
-        	}
-        	
-        }
-        
-		System.out.println("Das Alter betraegt" + alterRef);
 		
-		System.out.println("Alter = " + alter);
+		// Berechnung des Alters des Fremdprofils
+				GregorianCalendar geburtstagVgl = new GregorianCalendar();
+		        geburtstagVgl.setTime(vergleichsprofil.getGeburtsdatumDate());
+		        GregorianCalendar heute = new GregorianCalendar();
+		        int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+		        if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
+		        {
+		            alter = alter - 1;
+		        }
+		        else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH))
+		        {
+		            if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE))
+		            {
+		                alter = alter - 1;
+		            }
+		        }
+		        // Berechnung des Alters des eigenen Profils
+		        GregorianCalendar geburtstagRef = new GregorianCalendar();
+		        geburtstagRef.setTime(np.getGeburtsdatumDate());
+		        GregorianCalendar heute1 = new GregorianCalendar();
+		        int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+		        if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
+		        {
+		            alterRef = alterRef - 1;
+		        }
+		        else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
+		        {
+		            if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE))
+		            {
+		                alterRef = alterRef - 1;
+		            }
+		        }
+		        if(alter+5 >= alterRef){
+		        	if(alter-5 <= alterRef){
+		        		aehnlichkeit = aehnlichkeit +3;
+		        	}
+		        	
+		        }
 		
 		List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
 		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
@@ -579,6 +567,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
+
+
+
 	public void berechneAehnlichkeitSpFor() throws IllegalArgumentException {
 
 		List<Suchprofil> referenzprofil = suchprofilMapper
@@ -595,36 +586,67 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
-
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					aehnlichkeitSp = aehnlichkeitSp + 20;
+				
+				if(sp.getGeschlecht().equals("keine Auswhal")){
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+					
+				} else {
+				
+					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+					}
 				}
-
-				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+				
+				if(sp.getHaarfarbe().equals("keine Auswhal") ){				
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
-					if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+					
+				} else {
+					
+					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
 					
 				}
 				
 				
-
-				if (sp.getRaucher().equals(np.getRaucher())) {
+//				if (sp.getKoerpergroesseInt() == ) {
+//					aehnlichkeitSp = aehnlichkeitSp + 10;
+//					
+//				}else {
+					
+					
+//				}
+					if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
+						if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
+							aehnlichkeitSp = aehnlichkeitSp + 10;
+						}
+						
+					}
+				
+				if(sp.getRaucher().equals("keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
+					
+				} else {
+					
+					if (sp.getRaucher().equals(np.getRaucher())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
 				}
 
-				if (sp.getReligion().equals(np.getReligion())) {
+				if (sp.getRaucher().equals("keine Auswahl") ){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
+					
+				} else {
+					
+					if (sp.getReligion().equals(np.getReligion())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
+					
 				}
-				
-				
-				
-				//Berechnung des Alters des Fremdprofils
+
+//Berechnung des Alters des Fremdprofils
 				
 				GregorianCalendar geburtstag = new GregorianCalendar();
 		        geburtstag.setTime(np.getGeburtsdatumDate());
@@ -647,11 +669,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					 }
 		        }
 				
-
 				
-				 
-		        
-		        
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper
@@ -664,10 +682,24 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
 							counter= counter + 2;
-							if (rin.getInfotext().equals(vin.getInfotext())) {
+							
+							if (rin.getInfotext().equals("keine Auswahl") ){
+								
 								aehnlichkeitSp = aehnlichkeitSp + 2;
-
+								
+							} else {
+								
+								if (rin.getInfotext().isEmpty()){
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+									
+							} else {
+								if (rin.getInfotext().equals(vin.getInfotext())) {
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+								}
+								}
+								
 							}
+							
 						}
 					}
 				}
@@ -790,6 +822,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(profil.getProfilId());
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
+		
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 
 		return this.infoMapper.insertInfoNeu(i);
 	}
@@ -800,26 +834,32 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setProfilId(suchprofilId);
 		i.setEigenschaftId(eigenschaftId);
 		i.setInfotext(infotext);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 
 		return this.infoMapper.insertInfoNeu(i);
 	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 	}
 
 	public void deleteAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(suchprofilId);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	public void deleteOneInfoNeu(int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profil.getProfilId(), eigenschaftId);
 		System.out.println(profil.getProfilId() + ", " + eigenschaftId);
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 	}
 
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
 		System.out.println(suchprofilId + ", " + eigenschaftId);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId) throws IllegalArgumentException {
@@ -850,6 +890,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setInfotext(infotext);
 
 		this.infoMapper.updateInfosNeu(i);
+		
+		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
 
 	}
 
@@ -863,6 +905,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		i.setInfotext(infotext);
 
 		this.infoMapper.updateInfosNeu(i);
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+
 
 	}
 

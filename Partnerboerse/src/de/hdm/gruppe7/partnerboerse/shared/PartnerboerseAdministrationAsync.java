@@ -35,7 +35,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * Nutzerprofil aktualisieren.
 	 */
 	void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
 	/**
@@ -87,48 +87,29 @@ public interface PartnerboerseAdministrationAsync {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, AsyncCallback<Void> callback);
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
 	void deleteSuchprofil(String suchprofilName, AsyncCallback<Void> callback);
-
+	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
+	 * Alle Suchprofile eines Nutzers anzeigen.
 	 */
-	void getSuchprofilById(int profilId, AsyncCallback<Suchprofil> callback);
-
+	void getAllSuchprofileFor(AsyncCallback<List<Suchprofil>> callback);
+	
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET
-	 * VON MILENA - NOTWENIG)
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
 	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
-
 	
+	/**
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 */
 	void pruefeSuchprofilnameCreate(String suchprofilname, AsyncCallback<Integer> callback); 
 	
 	/**
 	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
 	void pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname, AsyncCallback<Integer> callback);
-
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	void getAllSuchprofile(AsyncCallback<List<Suchprofil>> callback);
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
-	 */
-
-	void getAllSuchprofileFor(AsyncCallback<List<Suchprofil>> callback);
-
-	/**
-	 * Suchprofil-Report
-	 * 
-	 * @param n
-	 * @param callback
-	 */
-	void getAllSuchprofileFor(Nutzerprofil n, AsyncCallback<List<Suchprofil>> callback);
 
 	/*
 	 * *************************************************************************
@@ -281,6 +262,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
+
 	void getEigenschaftstextById(int eigenschaftId,
 			AsyncCallback<String> callback);
 	
@@ -336,4 +318,3 @@ public interface PartnerboerseAdministrationAsync {
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
 }
-

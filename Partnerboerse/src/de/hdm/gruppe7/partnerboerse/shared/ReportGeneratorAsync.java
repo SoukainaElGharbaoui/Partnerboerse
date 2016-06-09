@@ -28,8 +28,8 @@ public interface ReportGeneratorAsync {
 
 	void init(AsyncCallback<Void> callback);
 	
-	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
-			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
+//	void createAllSuchprofileOfNutzerReport(Nutzerprofil n,
+//			AsyncCallback<AllSuchprofileOfNutzerReport> callback);
 
 	void createAllInfosOfNutzerReport(Nutzerprofil np,
 			AsyncCallback<AllInfosOfNutzerReport> callback);
