@@ -41,9 +41,10 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.PartnervorschlaegeSpReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.UnangesehenePartnervorschlaegeReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
 @RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
@@ -57,26 +58,28 @@ public interface ReportGenerator extends RemoteService {
 	   */
 	  public void init() throws IllegalArgumentException;
 	  
-	  /**
-	   * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. 
-	   * Dieser Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
-	   * 
-	   * @param c eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der Report
-	   *          erstellt werden soll.
-	   * @return das fertige Reportobjekt
-	   * @throws IllegalArgumentException
-	   * @see AllSuchprofileOfNutzerReport
-	   */
-	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
-	  (Nutzerprofil n) throws IllegalArgumentException;
+//	  /**
+//	   * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. 
+//	   * Dieser Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
+//	   * 
+//	   * @param c eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der Report
+//	   *          erstellt werden soll.
+//	   * @return das fertige Reportobjekt
+//	   * @throws IllegalArgumentException
+//	   * @see AllSuchprofileOfNutzerReport
+//	   */
+//	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
+//	  (Nutzerprofil n) throws IllegalArgumentException;
 
 
-	  
-	  public abstract UnangesehenePartnervorschlaegeReport createUnangesehenePartnervorschlaegeReport
-	  (Nutzerprofil n) throws IllegalArgumentException;
-	  
-	  
-	  public abstract PartnervorschlaegeSpReport createPartnervorschlaegeSpReport
-	  (Nutzerprofil n, String suchprofilname) throws IllegalArgumentException;
+
+	AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np)
+			throws IllegalArgumentException;
+
+	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport()
+			throws IllegalArgumentException;
+
+	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport()
+			throws IllegalArgumentException;
 	  
 }

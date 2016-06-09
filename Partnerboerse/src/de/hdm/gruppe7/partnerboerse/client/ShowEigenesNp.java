@@ -18,48 +18,54 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowEigenesNp extends VerticalPanel {
 
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen.
+	 */
 	private Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
+	/**
+	 * Variable für die Nutzer-Email anlegen.
+	 */
 	private String userEmail;
 	
 	/**
-	 * HorizontalPanel
-	 */
-	private HorizontalPanel horPanel = new HorizontalPanel();
-
-	/**
-	 * VerticalPanel hinzufügen.
+	 * Panels hinzufuegen.
 	 */
 	private VerticalPanel verPanel1 = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
+	private VerticalPanel loeschenVerPanel = new VerticalPanel();
+	private HorizontalPanel horPanel = new HorizontalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
+	
+	/**
+	 * Widgets hinzufuegen.
+	 */
+	private Label ueberschriftLabel = new Label("Ihr Profil:");
+	private FlexTable showEigenesNpFlexTable = new FlexTable();
+	private Label infoLabel = new Label();
+	private Button loeschenButton = new Button("Löschen");
+	private Button bearbeitenButton = new Button("Bearbeiten");
+	private DialogBox loeschenDialogBox = new DialogBox();
+	private Button jaButton = new Button("Ja");
+	private Button neinButton = new Button("Nein");
+	private Label loeschenLabel = new Label("Möchten Sie Ihr Profil wirklich löschen?");
 
 	/**
-	 * Label Button
+	 * Konstruktor hinzufuegen.
 	 */
-	HorizontalPanel buttonPanel = new HorizontalPanel();
-
-	/**
-	 * Konstruktor hinzufügen.
-	 */
-//	public ShowEigenesNp() {
 	public ShowEigenesNp(Nutzerprofil user) {
 
-		this.nutzerprofil = user;
+		this.add(horPanel);
+		horPanel.add(verPanel1); 
+		horPanel.add(verPanel2); 
 		
+		this.nutzerprofil = user;
 		userEmail = user.getEmailAddress();
 		
-		this.add(horPanel);
-
 		/**
-		 * Label für Überschrift erstellen
+		 * CSS anwenden. 
 		 */
-		final Label ueberschriftLabel = new Label("Ihr Nutzerprofil:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Tabelle zur Anzeige des eigenen Profils erstellen.
-		 */
-		final FlexTable showEigenesNpFlexTable = new FlexTable();
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.
@@ -76,131 +82,89 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(9, 0, "EMail");
 
 		/**
-		 * Tabelle formatieren und CSS einbinden.
+		 * Tabelle formatieren.
 		 */
 		showEigenesNpFlexTable.setCellPadding(6);
 		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showEigenesNpFlexTable.addStyleName("FlexTable");
 
 		/**
-		 * InfoLabel erstellen um Text auszugeben
+		 * Nutzerprofil anhand der Profil-ID auslesen.
 		 */
-
-		final Label infoLabel = new Label();
-
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
 				new AsyncCallback<Nutzerprofil>() {
 
-					@Override
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
-
 					}
 
-					@Override
 					public void onSuccess(Nutzerprofil result) {
-
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
-
 						String nutzerprofilId = String.valueOf(result.getProfilId());
 						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
 						// Vorname aus Datenbank aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(1, 1, result.getVorname());
 
 						// Nachname aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(2, 1, result.getNachname());
 
 						// Geschlecht aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(3, 1, result.getGeschlecht());
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(5, 1, (Integer.toString(result.getKoerpergroesseInt())));
 
 						// Haarfarbe aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(6, 1, result.getHaarfarbe());
 
 						// Raucher aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(7, 1, result.getRaucher());
 
 						// Religion aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(8, 1, result.getReligion());
 
 						// EMail aus der Datenbank holen
 						// und in Tabelle eintragen
-
 						showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
-
-						infoLabel.setText("Methode wurde aufgerufen ");
-
 					}
 
 				});
-		verPanel1.add(ueberschriftLabel);
-		verPanel1.add(showEigenesNpFlexTable);
-		verPanel1.add(infoLabel);
-
-		// Löschen-Button hinzufügen und ausbauen.
-		final Button loeschenButton = new Button("Löschen");
-		verPanel1.add(buttonPanel);
-		buttonPanel.add(loeschenButton);
-
-		// Bearbeiten-Button hinzufügen und ausbauen.
-		final Button bearbeitenButton = new Button("Bearbeiten");
-		verPanel1.add(buttonPanel);
-		buttonPanel.add(bearbeitenButton);
-
-		// ClickHandler für den Bearbeiten-Button
-		// hinzufügen.
-
+		
+		/**
+		 * ClickHandler fuer den Button zum Bearbeiten hinzufuegen.
+		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				// Seite zum Bearbeiten des Nutzerprofils aufrufen.
 				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
-
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
 
 			}
 		});
 
-		// ClickHandler für den Löschen-Button
-		// hinzufügen.
-
+		/**
+		 * ClickHandler fuer den Loeschen-Button hinzufuegen.
+		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				final DialogBox loeschenDialogBox = new DialogBox();
-
+				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich loeschen moechte, ausbauen.
 				loeschenDialogBox.setText("Information");
 				loeschenDialogBox.setAnimationEnabled(true);
-				// Schließen-Button hinzufügen.
-				final Button jaButton = new Button("Ja");
-				final Button neinButton = new Button("Nein");
-				// VerticalPanel hinzufügen.
-				final VerticalPanel loeschenVerPanel = new VerticalPanel();
-				// Label hinzufügen.
-				final Label loeschenLabel = new Label("Möchten Sie Ihr Nutzerprofil wirklich löschen?");
-				// Widgets zum VerticalPanel hinzufügen.
 				loeschenVerPanel.add(loeschenLabel);
 				loeschenVerPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 				loeschenVerPanel.add(jaButton);
@@ -208,48 +172,57 @@ public class ShowEigenesNp extends VerticalPanel {
 				loeschenDialogBox.setWidget(loeschenVerPanel);
 				loeschenDialogBox.center();
 
-				// ClickHandler für den Ja-Button hinzufügen.
+				/**
+				 * ClickHandler fuer den Ja-Button hinzufuegen.
+				 */
 				jaButton.addClickHandler(new ClickHandler() {
-
-					@Override
 					public void onClick(ClickEvent event) {
+						// Nutzerprofil loeschen.
 						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(
 								new AsyncCallback<Void>() {
 
-
-									@Override
 									public void onFailure(Throwable caught) {
 										infoLabel.setText("Es trat ein Fehler auf.");
 									}
 
-									@Override
 									public void onSuccess(Void result) {
+										/**
+										 * Noch ausbauen: Weiterleitung auf Logout-Seite. 
+										 */
 										infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
 									}
 
 								});
-					}
+						}
 
 				});
 
-				// ClickHandler für den Nein-Button hinzufügen.
+				/**
+				 * ClickHandler fuer den Nein-Button hinzufuegen.
+				 */
 				neinButton.addClickHandler(new ClickHandler() {
-
-					@Override
 					public void onClick(ClickEvent event) {
 						loeschenDialogBox.hide();
-
 					}
-
 				});
-
 			}
 		});
 
+		/**
+		 * Infos anzeigen. 
+		 */
 		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
+		
+		/**
+		 * Widgets den Panels hinzufuegen. 
+		 */
+		verPanel1.add(ueberschriftLabel);
+		verPanel1.add(showEigenesNpFlexTable);
+		buttonPanel.add(loeschenButton);
+		buttonPanel.add(bearbeitenButton);
+		verPanel1.add(buttonPanel);
+		verPanel1.add(infoLabel);
 		verPanel2.add(showInfoNp);
-		horPanel.add(verPanel1);
-		horPanel.add(verPanel2);
 
 	}
 

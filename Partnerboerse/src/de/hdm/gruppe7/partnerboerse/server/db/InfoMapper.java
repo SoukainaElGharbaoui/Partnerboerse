@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.server.db;
 
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -111,8 +112,8 @@ public class InfoMapper {
 		return infos;
 	}
 
-	
-	public List<Info> findAllInfosNeu(int nutzerprofilId) {
+	public List<Info> findAllInfosNeu(int profilId) {
+		
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
@@ -120,11 +121,7 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + nutzerprofilId);
-
-			// ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id,
-			// erlaeuterung FROM t_eigenschaft "
-			// + "WHERE typ='B' ORDER BY eigenschaft_id ");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + profilId);
 
 			while (rs.next()) {
 				Info i = new Info();
@@ -305,6 +302,92 @@ public class InfoMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
+	}
+
+
+	public List<Info> findAInfoByProfilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id " + "FROM t_auswahlinfo "
+					+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
+
+			while (rs.next()) {
+
+				Info info = new Info();
+				// info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				result.add(info);
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * Alle Beschreibungsinfos f�r ein Profil auslesen
+	 * 
+	 * @return
+	 */
+	public List<Info> findBInfoByProfilId(int profilId) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		List<Info> result = new ArrayList<Info>();
+		try {
+			// Leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfÃ¼llen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT infotext, eigenschaft_id " + "FROM t_beschreibungsinfo "
+					+ "WHERE t_beschreibungsinfo.nutzerprofil_id =" + profilId);
+
+			while (rs.next()) {
+
+				Info info = new Info();
+				info.setInfotext(rs.getString("infotext"));
+				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+				result.add(info);
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public String findEigenschaftstextById(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+
+		String eigenschaftstext = new String();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
+
+			while (rs.next()) {
+
+				eigenschaftstext = rs.getString("erlaeuterung");
+			}
+
+			return eigenschaftstext;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return eigenschaftstext;
 	}
 
 }

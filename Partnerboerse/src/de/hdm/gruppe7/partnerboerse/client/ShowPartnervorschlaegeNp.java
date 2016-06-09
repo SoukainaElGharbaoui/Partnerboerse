@@ -41,8 +41,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Nutzerprofile koennten zu ihnen passen");
-		ueberschriftLabel.addStyleDependentName("partnerboerse-label");
+		final Label ueberschriftLabel = new Label("Diese Profile könnten Ihnen gefallen:");
+		ueberschriftLabel.addStyleName("partnerboerse-label");
 		verPanel.add(ueberschriftLabel);
 
 		final Label infoLabel = new Label();
@@ -82,7 +82,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Nutzerprofil> result) {
-						infoLabel.setText("Es trat kein Fehler auf");
 						int row = partnervorschlaegeNpFlexTable.getRowCount();
 
 						for (Nutzerprofil np : result) {
@@ -115,6 +114,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 												@Override
 												public void onSuccess(Void result) {
+													
 													ShowFremdprofil showFremdprofil = new ShowFremdprofil(
 															fremdprofilId);
 													RootPanel.get("Details").clear();

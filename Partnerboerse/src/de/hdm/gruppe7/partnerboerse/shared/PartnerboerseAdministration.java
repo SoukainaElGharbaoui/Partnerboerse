@@ -1,7 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -44,7 +43,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException;
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
@@ -95,51 +94,29 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException;
-
-	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
-
-	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET VON MILENA - NOTWENIG)
-	 */
-	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
 	
 	/**
-	 * Existenz des Suchprofilnamens beim Anlegen �berpr�fen.
-	 */
-	public int pruefeSuchprofilname(String suchprofilname) throws IllegalArgumentException;
-	
-	/**
-	 * Existenz des Suchprofilnamens beim Editieren �berpr�fen.
-	 */
-	public String pruefeSuchprofilnameEdit(int suchprofilId) throws IllegalArgumentException;
-		
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
 	
 	/**
-	 * Suchprofil-Report
-	 * @param n
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException;
+	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
+
+	/**
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 */
+	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
-	
-	
+	/**
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
+	 */
+	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -159,13 +136,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Merkliste getGemerkteNutzerprofileFor() throws IllegalArgumentException;
 
 	// Vermerkstatus ermitteln.
-	public int getVermerkstatus(int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk einf�gen.
-	public void vermerkSetzen(int fremdprofilId) throws IllegalArgumentException;
-
-	// Vermerk l�schen.
-	public void vermerkLoeschen(int fremdprofilId) throws IllegalArgumentException;
+	public int pruefeVermerkstatus(int fremdprofilId) throws IllegalArgumentException;
+	
+	// Vermerkstatus aendern.
+	public int vermerkstatusAendern(int fremdprofilId) throws IllegalArgumentException;
 
 
 	/*
@@ -184,18 +158,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Alle Sperrungen eines Nutzerprofils auslesen.
 	public Sperrliste getGesperrteNutzerprofileFor() throws IllegalArgumentException;
-
-	// Pr�fen, ob Fremdprofil von Benutzer gesperrt wurde.
-	public int getSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
 	
-	// Pr�fen, ob Benutzer von Fremdprofil gesperrt wurde.
-	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;
+	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
+	public int pruefeSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
+		
+	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
+	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;	
+	
+	// Sperrstatus aendern.
+	public int sperrstatusAendern(int fremdprofilId) throws IllegalArgumentException;
 
-	// Sperrung einf�gen.
-	public void sperrungSetzen(int fremdprofilId) throws IllegalArgumentException;
-
-	// Sperrung l�schen.
-	public void sperrungLoeschen(int fremdprofilId) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -218,10 +190,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void besuchSetzen(int fremdprofilId) throws IllegalArgumentException;
 
 	// Aehnlichkeit berechnen
-	public int berechneAehnlichkeitNpFor(int fremdprofilId) throws IllegalArgumentException;
+	public void berechneAehnlichkeitNpFor() throws IllegalArgumentException;
 
-	// Aehnlichkeit in DB speichern
-	public void aehnlichkeitSetzen(int fremdprofilId, int aehnlichkeit) throws IllegalArgumentException;
 
 	// Aehnlichkeit aus DB loeschen
 	public void aehnlichkeitEntfernen() throws IllegalArgumentException;
@@ -243,19 +213,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	
 	//Aehnlichkeit berechnen
-		public int berechneAehnlichkeitSpFor(int suchprofilId, int fremdprofilId)
+		public void berechneAehnlichkeitSpFor()
 		throws IllegalArgumentException;
 		
-		//Aehnlichkeit in DB speichern
-		public void aehnlichkeitSetzenSp (int suchprofilId, String suchprofilName, int fremdprofilId, int aehnlichkeitSp) throws IllegalArgumentException;
 		
 		//Aehnlichkeit aus DB loeschen
 		public void aehnlichkeitEntfernenSp () throws IllegalArgumentException;
 		
-		// Alle Nutzerprofile die mich nicht gesperrt haben auslesen
-		public List<Nutzerprofil> getNutzerprofileOhneGesetzteSperrung() throws IllegalArgumentException;
 		
-//		//Ausgabe der Partnervorschlaege
+		
+		//Ausgabe der Partnervorschlaege
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException;
 	
 	/*
@@ -271,11 +238,10 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-	
 
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften() 	
 			throws IllegalArgumentException;	
-	
+		
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
 			throws IllegalArgumentException;
 	
@@ -284,16 +250,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public List<Info> createInfo(List<Info> infos)
 			throws IllegalArgumentException;
-
+	
 //	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
 	
-	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException; 
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
 
-
-	public List<Info> getAllInfosNeuReport()
+	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
 
 
@@ -321,7 +286,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	
+
+	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+
+
+
+
 	
 //	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
@@ -368,5 +338,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	Nutzerprofil login(String requestUri) throws Exception;
 	
 	public void setUser(Nutzerprofil n);
+
+
 
 }
