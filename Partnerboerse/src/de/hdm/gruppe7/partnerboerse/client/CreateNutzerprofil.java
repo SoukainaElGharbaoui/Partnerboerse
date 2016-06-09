@@ -177,7 +177,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 						});
 				
-				CreateInfoNp createInfoNp = new CreateInfoNp();
+			CreateInfoNp createInfoNp = new CreateInfoNp();
 		RootPanel.get("Details").clear();
 		RootPanel.get("Details").add(createInfoNp);
 				
