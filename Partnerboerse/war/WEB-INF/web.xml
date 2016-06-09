@@ -52,6 +52,7 @@
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Partnerboerse.html</welcome-file>

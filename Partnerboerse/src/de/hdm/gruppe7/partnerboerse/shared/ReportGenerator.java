@@ -42,9 +42,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
 
 @RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
@@ -68,17 +68,25 @@ public interface ReportGenerator extends RemoteService {
 	   * @throws IllegalArgumentException
 	   * @see AllSuchprofileOfNutzerReport
 	   */
-	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
-	  (Nutzerprofil n) throws IllegalArgumentException;
-
-
+	
 	AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np)
+			throws IllegalArgumentException;
+	
+	AllProfildatenOfNutzerReport createAllProfildatenOfNutzerReport(Nutzerprofil np)
 			throws IllegalArgumentException;
 
 	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport()
 			throws IllegalArgumentException;
 
-	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport()
+	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(String suchprofilname)
 			throws IllegalArgumentException;
 	  
+	boolean isUserRegistered(String userEmail);
+
+//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException;
+
+	Nutzerprofil login(String requestUri) throws Exception;
+	
+	public void setUser(Nutzerprofil n);
+
 }

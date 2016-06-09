@@ -233,7 +233,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * NOTWENIG)
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
+		return this.suchprofilMapper.findAllSuchprofileFor(1);
 	}
 
 	/**
@@ -530,7 +530,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Profile, von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profil.getProfilId());
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(1);
 
 	}
 
@@ -791,7 +791,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return this.infoMapper.findAllInfosNeu(1);
+		return this.infoMapper.findAllInfosNeu(profilId);
 	}
 
 	@Override
