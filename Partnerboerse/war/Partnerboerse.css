@@ -20,8 +20,8 @@ div#Navigator {
 	 /*overflow:scroll; */
 	border: 0px solid silver; 
 	padding: 3em 4em;
-	width: 200px; 
-	height: 700px;
+	width: 100px; 
+	height: 720px;
 	
 	background: #ffffff;
 }
@@ -49,7 +49,7 @@ div#Trailer {
 	text-align: center;
 	/*position: fixed;*/
 	
-	background: #d7d7d7;
+	background: #8080ff;
 }
 
 .partnerboerse-menubutton {
