@@ -222,9 +222,36 @@ public class Navigator extends VerticalPanel {
 		   menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
 		   menu.addSeparator();
 		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		
+		//////////////////////////////////////////////////////////////////////////////////  
+		// Create the report menu
+		////////////////////////////////////////////////////////////////////////////////// 
+		   
+		   MenuBar reportMenu = new MenuBar(true);
+		   reportMenu.setAnimationEnabled(true);
+		   
+		   reportMenu.addItem("Partnervorschlagreport des Nuzterprofils anzeigen", new Command() {
+			      @Override
+			      public void execute() {
+			    	  ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showAllPartnervorschlaegeNpReport);
+			      }
+			   });
 
+		   reportMenu.addItem("Partnervorschlagreport des Suchprofils anzeigen", new Command() {
+			      @Override
+			      public void execute() {
+			    	  ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport();
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showAllPartnervorschlaegeSpReport);
+			      }
+			   });
+		   
+		   
 		   //add the menu to the root panel
 		   RootPanel.get("Navigator").add(menu);
+		
 	}	
 }
 		
