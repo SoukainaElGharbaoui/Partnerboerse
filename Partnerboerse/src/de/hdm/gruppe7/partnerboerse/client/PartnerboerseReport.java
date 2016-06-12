@@ -41,68 +41,68 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		}
 		
 
-//		reportGeneratorAsync = GWT.create(ReportGenerator.class);
-//
-//		try {
-//			ClientsideSettings.getReportGenerator().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
-//					new AsyncCallback<Nutzerprofil>() {
-//
-//						public void onFailure(Throwable caught) {
-//							RootPanel.get().add(new Label(caught.toString()));
-//						}
-//
-//						public void onSuccess(Nutzerprofil result) {
-//							// wenn der user eingeloggt ist
-//							if (result.isLoggedIn()) {
-//
-//								if (result.getEmailAddress() != null) {
-//									reportGeneratorAsync.setUser(result, new AsyncCallback<Void>() {
-//										public void onFailure(Throwable caught) {
-//										}
-//
-//										public void onSuccess(Void result) {}
-//										
-//									});
-//									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
-//										public void onFailure(Throwable caught) {
-//										}
-//
-//										public void onSuccess(Void result) {
-//										}
-//									});
-//									signOutLink.setHref(result.getLogoutUrl());
-//									signOutLink.setText(
-//											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
-//									loginPanel.add(signOutLink);
-//									RootPanel.get("Navigator").add(new PartnerboerseReport());
-//									RootPanel.get("Navigator").add(loginPanel);
-//								}
-//
-//								if (result.getEmailAddress() == null) {
-//									signOutLink.setHref(result.getLogoutUrl());
-//									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
-//									loginPanel.add(signOutLink);
-//									RootPanel.get("Navigator").add(new PartnerboerseReport());
-//									RootPanel.get("Navigator").add(loginPanel);
-//									RootPanel.get("Details").add(new CreateNutzerprofil());
-//								}
-//
-//
-//							}
-//
-//							// wenn der user nicht eingeloggt ist
-//							if (!result.isLoggedIn()) {
-//								signInLink.setHref(result.getLoginUrl());
-//								loginPanel.add(signInLink);
-//								RootPanel.get("Navigator").add(loginPanel);
-//							}
-//						}
-//					});
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
+		reportGeneratorAsync = GWT.create(ReportGenerator.class);
+
+		try {
+			ClientsideSettings.getReportGenerator().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
+					new AsyncCallback<Nutzerprofil>() {
+
+						public void onFailure(Throwable caught) {
+							RootPanel.get().add(new Label(caught.toString()));
+						}
+
+						public void onSuccess(Nutzerprofil result) {
+							// wenn der user eingeloggt ist
+							if (result.isLoggedIn()) {
+
+								if (result.getEmailAddress() != null) {
+									reportGeneratorAsync.setUser(result, new AsyncCallback<Void>() {
+										public void onFailure(Throwable caught) {
+										}
+
+										public void onSuccess(Void result) {}
+										
+									});
+									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
+										public void onFailure(Throwable caught) {
+										}
+
+										public void onSuccess(Void result) {
+										}
+									});
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText(
+											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new PartnerboerseReport());
+									RootPanel.get("Navigator").add(loginPanel);
+								}
+
+								if (result.getEmailAddress() == null) {
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(new PartnerboerseReport());
+									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Details").add(new CreateNutzerprofil());
+								}
+
+
+							}
+
+							// wenn der user nicht eingeloggt ist
+							if (!result.isLoggedIn()) {
+								signInLink.setHref(result.getLoginUrl());
+								loginPanel.add(signInLink);
+								RootPanel.get("Navigator").add(loginPanel);
+							}
+						}
+					});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 		
 		MenuBar menu = new MenuBar();

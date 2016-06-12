@@ -30,7 +30,6 @@ public interface ReportGeneratorAsync {
 
 	void init(AsyncCallback<Void> callback);
 	
-
 	void createAllInfosOfNutzerReport(Nutzerprofil np,
 			AsyncCallback<AllInfosOfNutzerReport> callback);
 

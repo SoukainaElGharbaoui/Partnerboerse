@@ -1,9 +1,10 @@
-
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.google.appengine.api.users.User;
@@ -105,7 +106,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
 		// Nutzerprofil n = new Nutzerprofil();
@@ -117,7 +118,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		profil.setHaarfarbe(haarfarbe);
 		profil.setRaucher(raucher);
 		profil.setReligion(religion);
-		profil.setEmailAddress(emailAddress);
 
 		this.nutzerprofilMapper.updateNutzerprofil(profil);
 	}
@@ -173,7 +173,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Suchprofil anlegen.
 	 */
-	@Override
 	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
 
@@ -215,30 +214,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil lÃ¶schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profil.getProfilId(), suchprofilName);
 	}
 
 	/**
-	 * Alle Suchprofile auslesen. (EVTL. NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofile();
-	}
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (ÜBERARBEITET VON MILENA -
-	 * NOTWENIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(1);
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (ÃœBERARBEITET
-	 * VON MILENA - NOTWENDIG)
+	 * Suchprofil anhand anhand des Suchprofilnamens auslesen. 
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
@@ -286,27 +276,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			ergebnis = 2; 
 		}
 		
-//		// Der Suchprofilname wurde nicht verändert. 
-//		if (existenz == 1 && (suchprofilname.equals(suchprofilnameAktuell))) {
-//			ergebnis = 2; 
-//		}
-//		
-//		// Der Suchprofilname existiert noch nicht und die TextBox ist nicht leer.
-//		if (existenz == 0 && (!suchprofilname.isEmpty())) {
-//			ergebnis = 3; 
-//		}
-		
 		return ergebnis; 
-	}
-
-
-	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
-		return this.suchprofilMapper.findSuchprofilById(suchprofilId);
-
-	}
-
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofileFor(n);
 	}
 
 	/*
@@ -631,9 +601,48 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * **
 	 */
 
-	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
-		return this.infoMapper.findAllEigenschaftenNeu();
-	}	
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
+			throws IllegalArgumentException {
+		
+		Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result = new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
+
+		List<Eigenschaft> listE = infoMapper.findAllEigenschaftenNeu();
+
+		List<Beschreibungseigenschaft> listEigB = new ArrayList<Beschreibungseigenschaft>();
+		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
+
+		for (int i = 0; i < listE.size(); i++) {
+
+			if (listE.get(i).getTyp().equals("B")) {
+
+				Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
+				
+				eigB.setErlaeuterung(listE.get(i).erlaeuterung);
+				
+				listEigB.add(eigB);
+
+			}
+
+			else if (listE.get(i).getTyp().equals("A")) {
+
+				Auswahleigenschaft eigA = new Auswahleigenschaft();
+				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i)
+						.getEigenschaftId());
+				
+				eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
+
+				listEigA.add(eigA);
+
+			}
+		}
+
+		result.put(listEigB, listEigA);
+		System.out.println(result.toString());
+		return result;
+		
+
+	}
+
 	
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
@@ -651,29 +660,31 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 		
 	
-	public List<String> getAllInfosNeu() throws IllegalArgumentException {
-
-		List<String> list1 = new ArrayList<String>();
-		List<Info> result = new ArrayList<Info>();
-
-		result = this.infoMapper.findAllInfosNeu(profil.getProfilId());
-
-		for (Info i : result) {
-
-			int eigenschaftId = i.getEigenschaftId();
-
+	
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException {
+		
+		Map<List<Info>, List<Eigenschaft>> result = new HashMap<List<Info>, List<Eigenschaft>>();
+		List<Info> listI = new ArrayList<Info>();
+		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+		
+		listI = this.infoMapper.findAllInfosNeu(profil.getProfilId());
+		
+		for (Info i : listI) {
+			
 			Eigenschaft e = new Eigenschaft();
-			e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
-
-			list1.add(String.valueOf(i.getProfilId()));
-			list1.add(String.valueOf(eigenschaftId));
-			list1.add(e.getErlaeuterung());
-			list1.add(String.valueOf(i.getInfotext()));
-			list1.add(e.getTyp());
+			e = this.infoMapper.findEigenschaftByIdNeu(i.getEigenschaftId());
+			
+			System.out.println(e.getErlaeuterung());
+			
+			listE.add(e);
 		}
-//		System.out.println(list1);
-		return list1;
+		
+		result.put(listI, listE);
+		return result;
 	}
+
+	
+	
 
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 
@@ -700,28 +711,24 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	
+	public List<Info> createInfo(List<Info> infos)
+			throws IllegalArgumentException {
+			
+			System.out.println(infos);
+			
+			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
+		}
+
 	
-	
-
-	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
-
-		Info i = new Info();
-		i.setProfilId(profil.getProfilId());
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-
-		return this.infoMapper.insertInfoNeu(i);
-	}
-
-	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-
-		Info i = new Info();
-		i.setProfilId(suchprofilId);
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-
-		return this.infoMapper.insertInfoNeu(i);
-	}
+//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+//
+//		Info i = new Info();
+//		i.setProfilId(suchprofilId);
+//		i.setEigenschaftId(eigenschaftId);
+//		i.setInfotext(infotext);
+//
+//		return this.infoMapper.insertInfoNeu(i);
+//	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
@@ -799,6 +806,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
+
 	}
 	/*
 	 * *************************************************************************

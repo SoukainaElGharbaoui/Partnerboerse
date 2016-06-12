@@ -1,7 +1,12 @@
 
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -13,8 +18,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+
 
 public class ShowInfoNp extends VerticalPanel {
 
@@ -25,6 +32,10 @@ public class ShowInfoNp extends VerticalPanel {
 	private FlexTable showInfoFlexTable = new FlexTable();
 
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	
+	private int row;
+	private int eigenschaftIdInt;
+	private int eigenschaftIdTable;
 
 	/**
 	 * Konstruktor
@@ -63,44 +74,69 @@ public class ShowInfoNp extends VerticalPanel {
 		/**
 		 * InfoLabel erstellen um Text auszugeben
 		 */
+		
+		
+	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(
+		@Override
+		public void onFailure(Throwable caught) {
+			informationLabel.setText("Es ist ein Fehler beim Herausholen der Infos aufgetreten.");
+		}
 
-				new AsyncCallback<List<String>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es trat ein Fehler beim Herausholen der Infos auf.");
-					}
-
-					@Override
-					public void onSuccess(List<String> result) {
-						informationLabel.setText("Es hat funktioniert! YEAH!");
-
-						int row1 = showInfoFlexTable.getRowCount();
-						int size = result.size();
-
-						for (int i = 0; i < size; i++) {
-
-							String nutzerprofilId = result.get(i);
-							String eigenschaftId = result.get(i + 1);
-							String erlaeuterung = result.get(i + 2);
-							String infotext = result.get(i + 3);
-							// String typ = result.get(i + 4);
-
-							showInfoFlexTable.setText(row1, 0, nutzerprofilId);
-							showInfoFlexTable.setText(row1, 1, eigenschaftId);
-							showInfoFlexTable.setText(row1, 2, erlaeuterung);
-							showInfoFlexTable.setText(row1, 3, infotext);
-
-							row1++;
-							i++;
-							i++;
-							i++;
-							i++;
+		@Override
+		public void onSuccess(Map<List<Info>, List<Eigenschaft>> result) {
+			
+			Set<List<Info>> output = result.keySet();
+			
+			for (List<Info> listI : output) {
+				
+				row = showInfoFlexTable.getRowCount();
+				
+				for (Info i : listI) {
+					
+					row++;
+					
+					showInfoFlexTable.setText(row, 0, String.valueOf(i.getProfilId()));
+					showInfoFlexTable.setText(row, 1, String.valueOf(i.getEigenschaftId()));
+					showInfoFlexTable.setText(row, 3, i.getInfotext());
+				}
+				
+				
+				List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+				listE = result.get(listI);
+				
+				row  = 0;
+				row = showInfoFlexTable.getRowCount();
+				
+				for (Eigenschaft e : listE) {
+					
+					row++; 
+					
+					eigenschaftIdInt = 0;
+					eigenschaftIdInt = e.getEigenschaftId();
+					
+					for (int i = 2; i < showInfoFlexTable.getRowCount(); i++) {
+						
+						eigenschaftIdTable = 0;
+						eigenschaftIdTable = Integer.valueOf(showInfoFlexTable.getText(i, 1));
+						
+						if (eigenschaftIdInt == eigenschaftIdTable) {
+							
+							showInfoFlexTable.setText(i, 2, e.getErlaeuterung());
+						}
+						
+						else {
 						}
 					}
-				});
+
+				}
+				
+				
+			}
+		}
+		
+	});
+		
 
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(ueberschriftLabel);
@@ -123,6 +159,7 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(erstellenButton);
 
+		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
@@ -137,7 +174,6 @@ public class ShowInfoNp extends VerticalPanel {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
 						ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-//						ShowEigenesNp showNp = new ShowEigenesNp();
 
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(showNp);

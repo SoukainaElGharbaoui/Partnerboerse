@@ -2,6 +2,7 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -42,7 +43,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress) throws IllegalArgumentException;
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 
 	/**
@@ -93,49 +94,29 @@ public interface PartnerboerseAdministration extends RemoteService {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 	/**
-	 * Suchprofil l�schen.
+	 * Suchprofil loeschen.
 	 */
 	public void deleteSuchprofil(String suchprofilName) throws IllegalArgumentException;
-
+	
 	/**
-	 * Suchprofil anhand der Profil-ID auslesen. (EVTL NICHT NOTWENDIG)
+	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
-	public Suchprofil getSuchprofilById(int profilId) throws IllegalArgumentException;
-
+	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
+	
 	/**
-	 * Suchprofil anhand der Profil-ID UND des Namens auslesen. (�BERARBEITET VON MILENA - NOTWENIG)
+	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
-	
-	
+
+	/**
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 */
 	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException; 
 	
 	/**
 	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
 	 */
 	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException;
-		
-	/**
-	 * Alle Suchprofile auslesen. (EVTL NICHT NOTWENDIG)
-	 */
-	public List<Suchprofil> getAllSuchprofile() throws IllegalArgumentException;
-
-	/**
-	 * Alle Suchprofile EINES NUTZERS auslesen. (�BERARBEITET VON MILENA -
-	 * NOTWENIG)
-	 */
-	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
-	
-	/**
-	 * Suchprofil-Report
-	 * @param n
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public List<Suchprofil> getAllSuchprofileFor(Nutzerprofil n) throws IllegalArgumentException;
-	
-	
-	
 
 	/*
 	 * *************************************************************************
@@ -257,26 +238,25 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-	
-	public List<Eigenschaft> getAllEigenschaftenNeu()
-			throws IllegalArgumentException;
-	
+
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften() 	
+			throws IllegalArgumentException;	
+		
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
 			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 	
-	public Info createInfoNeu(int eigenschaftId, String infotext)
+	public List<Info> createInfo(List<Info> infos)
 			throws IllegalArgumentException;
 	
-	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
-			throws IllegalArgumentException;
+//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+//			throws IllegalArgumentException;
 	
-	public List<String> getAllInfosNeu() throws IllegalArgumentException;
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
-
 
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
@@ -362,4 +342,3 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 
 }
-

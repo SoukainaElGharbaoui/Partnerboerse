@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
+import java.util.List;
+
 public class Beschreibungseigenschaft extends Eigenschaft {
 
 	private static final long serialVersionUID = 1L;

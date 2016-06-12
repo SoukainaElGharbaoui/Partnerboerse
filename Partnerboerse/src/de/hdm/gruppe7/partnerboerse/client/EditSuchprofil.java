@@ -51,9 +51,8 @@ public class EditSuchprofil extends VerticalPanel {
 	 * Labels zur Benutzerinformation hinzufuegen.
 	 */
 	private Label infoLabel = new Label();
-	private Label warnungLabel1 = new Label();
-	private Label warnungLabel2 = new Label();
-	private Label warnungLabel3 = new Label();
+	private Label reqLabel = new Label("* Pflichtfeld"); 
+	private Label warnungLabel = new Label();
 	
 	/**
 	 * Konstruktor hinzufuegen.
@@ -65,6 +64,8 @@ public class EditSuchprofil extends VerticalPanel {
 		 * CSS auf Ueberschrift anwenden. 
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		reqLabel.setStyleName("red_label");
+		warnungLabel.setStyleName("red_label");
 
 		/**
 		 * CSS auf Tabelle anwenden und Tabelle formatieren.
@@ -90,16 +91,21 @@ public class EditSuchprofil extends VerticalPanel {
 		 * Dritte Spalte der Tabelle festlegen (TextBox/ListBox zur Bearbeitung der Werte).
 		 */
 		editSuchprofilFlexTable.setWidget(1, 2, suchprofilNameTextBox);
+		editSuchprofilFlexTable.setWidget(1, 3, reqLabel); 
 		
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(2, 2, geschlechtListBox);
 		
 		editSuchprofilFlexTable.setWidget(3, 2, alterMinTextBox);
-
+		
 		editSuchprofilFlexTable.setWidget(4, 2, alterMaxTextBox);
 
 		editSuchprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
+		
+		int defaultValue = 0; 
+		
+		koerpergroesseTextBox.getElement().setPropertyString("placeholder", String.valueOf(defaultValue));  
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -211,13 +217,15 @@ public class EditSuchprofil extends VerticalPanel {
 									public void onSuccess(Integer result) {
 										// Wenn der Suchprofilname bereits existiert...
 										if (result == 1) {
-											warnungLabel1
+											warnungLabel
 													.setText("Der Suchprofilname existiert bereits.");
+											editSuchprofilFlexTable.setWidget(1, 4, warnungLabel); 
 										} else {
 											// Wenn der Suchprofilname leer ist...
 											if (result == 2) {
-												warnungLabel2
+												warnungLabel
 														.setText("Der Suchprofilname darf nicht leer sein.");
+												editSuchprofilFlexTable.setWidget(1, 4, warnungLabel); 
 											} else {
 												// Wenn Alter von groesser als Alter bis ist...
 												if (Integer
@@ -225,8 +233,9 @@ public class EditSuchprofil extends VerticalPanel {
 																.getText()) > Integer
 														.parseInt(alterMaxTextBox
 																.getText())) {
-													warnungLabel3
+													warnungLabel
 															.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
+													editSuchprofilFlexTable.setWidget(3, 4, warnungLabel); 
 												} else {
 
 													// Suchprofil aktualisieren.
@@ -296,8 +305,5 @@ public class EditSuchprofil extends VerticalPanel {
 		verPanel.add(editSuchprofilFlexTable);
 		verPanel.add(saveSuchprofilButton);
 		verPanel.add(infoLabel);
-		verPanel.add(warnungLabel1);
-		verPanel.add(warnungLabel2);
-		verPanel.add(warnungLabel3);
 	}
 }
