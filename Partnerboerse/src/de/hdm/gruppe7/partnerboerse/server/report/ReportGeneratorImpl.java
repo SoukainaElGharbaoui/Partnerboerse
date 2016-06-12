@@ -460,7 +460,7 @@ System.out.println("Partnervorschlaege:" + allNutzer);
 	      /*
 	       * Anlegen des jew. Teil-Reports und Hinzufügen zum Gesamt-Report.
 	       */
-	    result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
+//	    result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
 	      result.addSubReport(this.createAllInfosOfNutzerReport(np));
 	    }
 

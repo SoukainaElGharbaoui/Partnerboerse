@@ -530,7 +530,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Profile, von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(1);
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profil.getProfilId());
 
 	}
 
