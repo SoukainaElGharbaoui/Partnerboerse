@@ -1,5 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
+import java.util.List;
+
 public class Info extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
@@ -13,10 +15,16 @@ public class Info extends BusinessObject {
 	private int profilId;
 	private int eigenschaftId;
 	private String infotext;
+	private List<Info> infos;
+	
 
 	// Konstruktor
 	public Info() {
+//		this.eigenschaftId = profilId;
+//		this.setInfos(infos);
 	}
+	
+	
 	
 	// Getter- & Settermethoden
 
@@ -60,6 +68,18 @@ public class Info extends BusinessObject {
 
 	public void setInfotext(String infotext) {
 		this.infotext = infotext;
+	}
+
+
+
+	public List<Info> getInfos() {
+		return infos;
+	}
+
+
+
+	public void setInfos(List<Info> infos) {
+		this.infos = infos;
 	}
 
 }

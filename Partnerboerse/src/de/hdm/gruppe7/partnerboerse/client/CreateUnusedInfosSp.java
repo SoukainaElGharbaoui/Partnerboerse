@@ -132,26 +132,26 @@ public class CreateUnusedInfosSp extends VerticalPanel {
 										
 										else if (!nEingabeB.equals(beschreibungstext)) {
 											
-											ClientsideSettings.getPartnerboerseAdministration().createInfoNeuSp(suchprofilIdInt,
-													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
-											
-															@Override
-															public void onFailure(Throwable caught) {
-																informationLabelB.setText("Es trat ein Fehler auf.");
-															}
-											
-															@Override
-															public void onSuccess(Info result) {
-//																informationLabelB.setText("Die Infos wurden "
-//																		+ "erfolgreich angelegt.");
-																
-																informationLabelB.setText(String.valueOf(suchprofilIdInt));
-																
-																ShowSuchprofil showSp = new ShowSuchprofil();
-																RootPanel.get("Details").clear();
-																RootPanel.get("Details").add(showSp);
-															}
-												});
+//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeuSp(suchprofilIdInt,
+//													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+//											
+//															@Override
+//															public void onFailure(Throwable caught) {
+//																informationLabelB.setText("Es trat ein Fehler auf.");
+//															}
+//											
+//															@Override
+//															public void onSuccess(Info result) {
+////																informationLabelB.setText("Die Infos wurden "
+////																		+ "erfolgreich angelegt.");
+//																
+//																informationLabelB.setText(String.valueOf(suchprofilIdInt));
+//																
+//																ShowSuchprofil showSp = new ShowSuchprofil();
+//																RootPanel.get("Details").clear();
+//																RootPanel.get("Details").add(showSp);
+//															}
+//												});
 										}
 										
 										else {
@@ -208,24 +208,24 @@ public class CreateUnusedInfosSp extends VerticalPanel {
 										
 										if(!nEingabeA.equals("Keine Auswahl")) {
 										
-											ClientsideSettings.getPartnerboerseAdministration().createInfoNeuSp(suchprofilIdInt,
-													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
-										
-														@Override
-														public void onFailure(Throwable caught) {
-															informationLabelA.setText("Es trat ein Fehler auf.");
-														}
-										
-														@Override
-														public void onSuccess(Info result) {
-															informationLabelA.setText("Die Infos wurden "
-																	+ "erfolgreich angelegt.");
-																														
-															ShowSuchprofil showSp = new ShowSuchprofil();
-															RootPanel.get("Details").clear();
-															RootPanel.get("Details").add(showSp);
-														}
-											});
+//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeuSp(suchprofilIdInt,
+//													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
+//										
+//														@Override
+//														public void onFailure(Throwable caught) {
+//															informationLabelA.setText("Es trat ein Fehler auf.");
+//														}
+//										
+//														@Override
+//														public void onSuccess(Info result) {
+//															informationLabelA.setText("Die Infos wurden "
+//																	+ "erfolgreich angelegt.");
+//																														
+//															ShowSuchprofil showSp = new ShowSuchprofil();
+//															RootPanel.get("Details").clear();
+//															RootPanel.get("Details").add(showSp);
+//														}
+//											});
 										}
 										
 										else {

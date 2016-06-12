@@ -1,6 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.server.db;
 
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -46,6 +47,7 @@ public class InfoMapper {
 				e.setErlaeuterung(rs.getString("erlaeuterung"));
 				e.setTyp(rs.getString("typ"));
 
+				System.out.println(e.getErlaeuterung());
 				result.add(e);
 			}
 
@@ -90,24 +92,28 @@ public class InfoMapper {
 	}
 
 
-	public Info insertInfoNeu(Info i) {
+	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
 
 		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
-					+ i.getProfilId() + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-
+		
+		for (Info i : infos) {
+			
+		
+			try {
+				Statement stmt = con.createStatement();
+	
+				stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
+						+ profilId + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
+	
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
 		}
-		return i;
+		return infos;
 	}
 
-	public List<Info> findAllInfosNeu(int nutzerprofilId) {
+	public List<Info> findAllInfosNeu(int profilId) {
+		
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
@@ -115,11 +121,7 @@ public class InfoMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + nutzerprofilId);
-
-			// ResultSet rs = stmt.executeQuery("SELECT eigenschaft_id,
-			// erlaeuterung FROM t_eigenschaft "
-			// + "WHERE typ='B' ORDER BY eigenschaft_id ");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE profil_id=" + profilId);
 
 			while (rs.next()) {
 				Info i = new Info();
@@ -274,6 +276,7 @@ public class InfoMapper {
 
 		return result;
 	}
+	
 
 	public void updateInfosNeu(Info i) {
 		Connection con = DBConnection.connection();
@@ -301,9 +304,6 @@ public class InfoMapper {
 		}
 	}
 
-	/**
-	 * Caros Methoden: Beginn
-	 */
 
 	public List<Info> findAInfoByProfilId(int profilId) {
 		// DB-Verbindung holen
@@ -365,7 +365,29 @@ public class InfoMapper {
 		return result;
 	}
 
-	/**
-	 * Caros Methoden: Ende
-	 */
+	public String findEigenschaftstextById(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+
+		String eigenschaftstext = new String();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
+
+			while (rs.next()) {
+
+				eigenschaftstext = rs.getString("erlaeuterung");
+			}
+
+			return eigenschaftstext;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return eigenschaftstext;
+	}
+
 }

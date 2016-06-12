@@ -13,69 +13,56 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
 
-	private HorizontalPanel horPanel = new HorizontalPanel();
-
-	private VerticalPanel verPanel = new VerticalPanel();
-
-	private VerticalPanel verPanel2 = new VerticalPanel();
-
-	private VerticalPanel verPanel3 = new VerticalPanel();
-
+	/**
+	 * VerticalPanels und HorizontalPanels hinzufuegen.
+	 */
+	private VerticalPanel suchprofilPanel = new VerticalPanel();
+	private VerticalPanel infoPanel = new VerticalPanel();
+	
+	private HorizontalPanel gesamtPanel = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
-
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
-	 * Konstruktor
+	 * Widgets hinzufuegen. 
+	 */
+	private Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
+	private Label infoLabel = new Label();
+	private ListBox auswahlListBox = new ListBox();
+	private FlexTable showSuchprofilFlexTable = new FlexTable();
+	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen"); 
+	private Button anzeigenButton = new Button("Anzeigen");
+	private Button loeschenButton = new Button("Löschen");
+	private Button bearbeitenButton = new Button("Bearbeiten");
+
+	/**
+	 * Konstruktor hinzufuegen.
 	 */
 	public ShowSuchprofil() {
 
-		this.add(horPanel);
-
-		this.add(verPanel);
-		this.add(verPanel2);
-		this.add(verPanel3);
-
-		horPanel.add(verPanel2);
-		horPanel.add(verPanel3);
+		this.add(gesamtPanel);
+		gesamtPanel.add(suchprofilPanel);
+		gesamtPanel.add(infoPanel);
 
 		/**
-		 * Labels, AuswahlBox, Buttons und FlexTable erstellen
+		 * CSS auf Auswahl-Label anwenden. 
 		 */
-
-		final Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
 		auswahlLabel.addStyleName("partnerboerse-label");
 
-		final Label infoLabel = new Label();
-
-		final ListBox auswahlListBox = new ListBox();
-
-		final FlexTable showSuchprofilFlexTable = new FlexTable();
-
-		final Button anzeigenButton = new Button("Anzeigen");
-
-		final Button loeschenButton = new Button("LÃ¶schen");
-
-		final Button bearbeitenButton = new Button("Bearbeiten");
-
-		final Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 		/**
-		 * FelxTable formatieren
+		 * Tabelle formatieren und CSS einbinden.
 		 */
-
 		showSuchprofilFlexTable.setCellPadding(6);
 		showSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		showSuchprofilFlexTable.addStyleName("FlexTable");
 
-		/*
-		 * Erste Zeile der FlexTable definieren
+		/**
+		 * Erste Zeile der FlexTable definieren.
 		 */
-
 		showSuchprofilFlexTable.setText(0, 0, "Suchprofil-id");
 		showSuchprofilFlexTable.setText(1, 0, "Suchprofilname");
 		showSuchprofilFlexTable.setText(2, 0, "Geschlecht");
@@ -87,69 +74,56 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 
 		/**
-		 * Die AuswahlBox wird mit allen Suchprofilen des Nutzers gefüllt
+		 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
 		 */
-
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
-
-			@Override
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf.");
-
 			}
 
-			@Override
 			public void onSuccess(List<Suchprofil> result) {
-				for (Suchprofil s : result) {
-					auswahlListBox.addItem(s.getSuchprofilName());
+				if(result.isEmpty()) {
+					auswahlListBox.setVisible(false); 
+					anzeigenButton.setVisible(false); 
+					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+					createSuchprofilButton.setVisible(true); 
+				} else {
+					for (Suchprofil s : result) {
+						auswahlListBox.addItem(s.getSuchprofilName());
 				}
-
+					createSuchprofilButton.setVisible(false); 
 			}
-
+			}
 		});
 
-		/**
-		 * Bei Betätigung des createSuchrprofilButtons werden alle
-		 * Aehnlichkeiten gelöscht
+		/** 
+		 * ClickHandler fuer den Suchprofil-Anlegen-Button hinzufuegen.
 		 */
-
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
-				ClientsideSettings.getPartnerboerseAdministration().aehnlichkeitEntfernenSp(new AsyncCallback<Void>() {
-
-					public void onFailure(Throwable caught) {
-
-					}
-
-					public void onSuccess(Void result) {
-
-					}
-
-				});
-
+				// Seite zum Anlegen eines neuen Suchprofils aufrufen.
 				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 			}
-
-		});
-
+			
+		}); 
+		
+		/**
+		 * ClickHandler fuer den Anzeigen-Button hinzufuegen. 
+		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
+				// Tabelle mit Suchprofildaten befuellen.
 				ClientsideSettings.getPartnerboerseAdministration()
 						.getSuchprofilByName(auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
 
-							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf.");
-
 							}
 
-							@Override
 							public void onSuccess(Suchprofil result) {
-
 								// Suchprofil-ID
 								final String suchprofilId = String.valueOf(result.getProfilId());
 								showSuchprofilFlexTable.setText(0, 1, suchprofilId);
@@ -175,38 +149,37 @@ public class ShowSuchprofil extends VerticalPanel {
 								// Raucher
 								showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
 
-								// Religion aus der Datenbank holen
+								// Religion 
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 								
+								// Infos
 								ShowInfoSp showInfoSp = new ShowInfoSp(Integer.valueOf(suchprofilId));
-								verPanel3.clear();
-								verPanel3.add(showInfoSp);
-//								
-//								ShowInfoSp showInfoSp = new ShowInfoSp(
-//										Integer.valueOf(showSuchprofilFlexTable.getText(0, 1)));
-//								verPanel3.add(showInfoSp);
+								infoPanel.clear();
+								infoPanel.add(showInfoSp);
+
 							}
 
 						});
-				
 
+				/**
+				 * ClickHandler fuer den Loeschen-Button hinzufuegen.
+				 */
 				loeschenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 
-
-
+						// Suchprofil loeschen. 
 						ClientsideSettings.getPartnerboerseAdministration()
 								.deleteSuchprofil(auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
 
-
-									@Override
 									public void onFailure(Throwable caught) {
 										infoLabel.setText("Es trat ein Fehler auf");
 									}
 
-									@Override
 									public void onSuccess(Void result) {
-										infoLabel.setText("Das Suchprofil wurde erfolgreich gelÃ¶scht");
+										ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+										suchprofilPanel.clear();
+										infoPanel.clear();
+										suchprofilPanel.add(showSuchprofil); 
 									}
 
 								});
@@ -215,8 +188,12 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				});
 
+				/**
+				 * ClickHandler fuer den Bearbeiten-Button hinzfuegen.
+				 */
 				bearbeitenButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
+						// Seite zum Bearbeiten eines Suchprofils hinzufuegen.
 						EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(editSuchprofil);
@@ -225,21 +202,21 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				});
 
-				verPanel2.add(showSuchprofilFlexTable);
+				suchprofilPanel.add(showSuchprofilFlexTable);
 				buttonPanel.add(bearbeitenButton);
 				buttonPanel.add(loeschenButton);
-				verPanel2.add(buttonPanel);
-				verPanel2.add(infoLabel);
+				suchprofilPanel.add(buttonPanel);
+				suchprofilPanel.add(infoLabel);
 
 			}
 
 		});
 
-		verPanel.add(createSuchprofilButton);
-		verPanel.add(auswahlLabel);
+		suchprofilPanel.add(auswahlLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenButton);
-		verPanel.add(auswahlPanel);
+		auswahlPanel.add(createSuchprofilButton); 
+		suchprofilPanel.add(auswahlPanel);
 
 	}
 

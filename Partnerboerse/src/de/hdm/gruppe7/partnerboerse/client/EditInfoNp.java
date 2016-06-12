@@ -68,8 +68,7 @@ public class EditInfoNp extends VerticalPanel {
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(new AsyncCallback<List<String>>() {
-
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu (new AsyncCallback<List<String>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
