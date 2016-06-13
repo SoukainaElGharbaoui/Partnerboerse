@@ -91,21 +91,24 @@ public class InfoMapper {
 	}
 
 
-	public Info insertInfoNeu(Info i) {
+	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
 
 		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
-					+ i.getProfilId() + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-
+		
+		for (Info i : infos) {
+			
+		
+			try {
+				Statement stmt = con.createStatement();
+	
+				stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
+						+ profilId + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
+	
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
 		}
-		return i;
+		return infos;
 	}
 
 	public List<Info> findAllInfosNeu(int profilId) {

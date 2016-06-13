@@ -3,6 +3,7 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -207,7 +208,7 @@ public interface PartnerboerseAdministrationAsync {
 	void aehnlichkeitEntfernenSp(AsyncCallback<Void> callback);
 
 
-	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
+	void getGeordnetePartnervorschlaegeSp(String suchprofilName, 
 			AsyncCallback<List<Nutzerprofil>> callback);
 
 	/*
@@ -223,17 +224,22 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
+	
+	void getAllEigenschaften(AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>> asyncCallback);
+
+
 
 	void getAllEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
 	void getAllUnusedEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
 	void getAllUnusedEigenschaftenNeuSp(int suchprofilId, AsyncCallback<List<Eigenschaft>> callback);
-
-	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
+//
+//	void createInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 	
-	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
-
+//	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
+	
+	void createInfo(List<Info> infos, AsyncCallback<List<Info>> asyncCallback);
 	
 	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
 	
@@ -317,4 +323,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
+	
+
+	
 }

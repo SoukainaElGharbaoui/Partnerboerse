@@ -4,16 +4,16 @@ package de.hdm.gruppe7.partnerboerse.server;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
-
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
@@ -494,7 +494,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		// Berechnung der Aehnlichkeit
 		aehnlichkeit = aehnlichkeit * (100 / counter);
 		
-		nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
+			
+			nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
+		
 		
 		}
 
@@ -518,7 +520,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 
-
 	public void berechneAehnlichkeitSpFor() throws IllegalArgumentException {
 
 		List<Suchprofil> referenzprofil = suchprofilMapper
@@ -536,7 +537,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
 				
-				if(sp.getGeschlecht().equals("keine Auswhal")){
+				if(sp.getGeschlecht().equals("Keine Auswhal")){
 					aehnlichkeitSp = aehnlichkeitSp + 30;
 					
 				} else {
@@ -546,7 +547,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					}
 				}
 				
-				if(sp.getHaarfarbe().equals("keine Auswhal") ){				
+				if(sp.getHaarfarbe().equals("Keine Auswhal") ){				
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 					
 				} else {
@@ -570,7 +571,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 //				}
 				
 				
-				if(sp.getRaucher().equals("keine Auswahl")){
+				if(sp.getRaucher().equals("Keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 					
 				} else {
@@ -581,7 +582,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					
 				}
 
-				if (sp.getRaucher().equals("keine Auswahl") ){
+				if (sp.getRaucher().equals("Keine Auswahl") ){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 					
 				} else {
@@ -609,7 +610,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
 							counter= counter + 2;
 							
-							if (rin.getInfotext().equals("keine Auswahl") ){
+							if (rin.getInfotext().equals("Keine Auswahl") ){
 								
 								aehnlichkeitSp = aehnlichkeitSp + 2;
 								
@@ -633,10 +634,23 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				// Berechnung des Prozentwertes
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
 				
-				// Aehnlichkeit in die Datenbank setzen
-				suchprofilMapper.insertAehnlichkeit(profil.getProfilId(),
+				if(sp.getGeschlecht().equals(np.getGeschlecht())){
+					// Aehnlichkeit in die Datenbank setzen
+						suchprofilMapper.insertAehnlichkeit(profil.getProfilId(),
 						suchprofilId, suchprofilName, fremdprofilId,
 						aehnlichkeitSp);
+									
+				}else {
+					
+					if (sp.getGeschlecht().equals("Keine Auswahl")){
+						// Aehnlichkeit in die Datenbank setzen
+						suchprofilMapper.insertAehnlichkeit(profil.getProfilId(),
+						suchprofilId, suchprofilName, fremdprofilId,
+						aehnlichkeitSp);
+						
+					}
+				}
+				
 
 			}
 		}
@@ -669,6 +683,48 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * *************************************************************************
 	 * **
 	 */
+	
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
+			throws IllegalArgumentException {
+		
+		Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result = new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
+
+		List<Eigenschaft> listE = infoMapper.findAllEigenschaftenNeu();
+
+		List<Beschreibungseigenschaft> listEigB = new ArrayList<Beschreibungseigenschaft>();
+		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
+
+		for (int i = 0; i < listE.size(); i++) {
+
+			if (listE.get(i).getTyp().equals("B")) {
+
+				Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
+				
+				eigB.setErlaeuterung(listE.get(i).erlaeuterung);
+				
+				listEigB.add(eigB);
+
+			}
+
+			else if (listE.get(i).getTyp().equals("A")) {
+
+				Auswahleigenschaft eigA = new Auswahleigenschaft();
+				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i)
+						.getEigenschaftId());
+				
+				eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
+
+				listEigA.add(eigA);
+
+			}
+		}
+
+		result.put(listEigB, listEigA);
+		System.out.println(result.toString());
+		return result;
+		
+
+	}
 
 	public List<Eigenschaft> getAllEigenschaftenNeu() throws IllegalArgumentException {
 		return this.infoMapper.findAllEigenschaftenNeu();
@@ -742,29 +798,25 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	
 	
 
-	public Info createInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
+	public List<Info> createInfo(List<Info> infos)
+			throws IllegalArgumentException {
+			
+			System.out.println(infos);
+			
+			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
+		}
 
-		Info i = new Info();
-		i.setProfilId(profil.getProfilId());
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-		
-		this.nutzerprofilMapper.deleteAehnlichkeit(profil.getProfilId());
-
-		return this.infoMapper.insertInfoNeu(i);
-	}
-
-	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-
-		Info i = new Info();
-		i.setProfilId(suchprofilId);
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-		
-		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
-
-		return this.infoMapper.insertInfoNeu(i);
-	}
+//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+//
+//		Info i = new Info();
+//		i.setProfilId(suchprofilId);
+//		i.setEigenschaftId(eigenschaftId);
+//		i.setInfotext(infotext);
+//		
+//		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
+//
+//		return this.infoMapper.insertInfo(i);
+//	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());

@@ -130,24 +130,24 @@ public class CreateUnusedInfos extends VerticalPanel {
 										
 										else if (!nEingabeB.equals(beschreibungstext)) {
 											
-											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
-											
-															@Override
-															public void onFailure(Throwable caught) {
-																informationLabelB.setText("Es trat ein Fehler auf.");
-															}
-											
-															@Override
-															public void onSuccess(Info result) {
-																informationLabelB.setText("Die Infos wurden "
-																		+ "erfolgreich angelegt.");
-																
-																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-																RootPanel.get("Details").clear();
-																RootPanel.get("Details").add(showNp);
-															}
-												});
+//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+//													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+//											
+//															@Override
+//															public void onFailure(Throwable caught) {
+//																informationLabelB.setText("Es trat ein Fehler auf.");
+//															}
+//											
+//															@Override
+//															public void onSuccess(Info result) {
+//																informationLabelB.setText("Die Infos wurden "
+//																		+ "erfolgreich angelegt.");
+//																
+//																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+//																RootPanel.get("Details").clear();
+//																RootPanel.get("Details").add(showNp);
+//															}
+//												});
 										}
 									}
 								});
@@ -199,25 +199,25 @@ public class CreateUnusedInfos extends VerticalPanel {
 										nEingabeA = lb.getSelectedItemText();
 										
 										if(!nEingabeA.equals("Keine Auswahl")) {
-										
-											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
-										
-														@Override
-														public void onFailure(Throwable caught) {
-															informationLabelA.setText("Es trat ein Fehler auf.");
-														}
-										
-														@Override
-														public void onSuccess(Info result) {
-															informationLabelA.setText("Die Infos wurden "
-																	+ "erfolgreich angelegt.");
-																														
-															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-															RootPanel.get("Details").clear();
-															RootPanel.get("Details").add(showNp);
-														}
-											});
+//										
+//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+//													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
+//										
+//														@Override
+//														public void onFailure(Throwable caught) {
+//															informationLabelA.setText("Es trat ein Fehler auf.");
+//														}
+//										
+//														@Override
+//														public void onSuccess(Info result) {
+//															informationLabelA.setText("Die Infos wurden "
+//																	+ "erfolgreich angelegt.");
+//																														
+//															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+//															RootPanel.get("Details").clear();
+//															RootPanel.get("Details").add(showNp);
+//														}
+//											});
 										}
 										
 										else {

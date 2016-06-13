@@ -112,10 +112,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 				horPanelTabelle.clear();
 				
-				 
+			
 
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp( 
-						auswahlListBox.getSelectedItemText(), new  AsyncCallback<List<Nutzerprofil>>(){
+						auswahlListBox.getSelectedItemText(),  new  AsyncCallback<List<Nutzerprofil>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
