@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
@@ -48,7 +48,7 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 							AllPartnervorschlaegeNpReport report) {
 						 	if(report != null){
 						 		/*
-					        	 * Neue HTML-Seite fuer den Suchprofil-Report erzeugen.
+					        	 * Neue HTML-Seite fuer den Report erzeugen.
 					        	 */
 								HTMLReportWriter writer = new HTMLReportWriter();
 						        writer.process(report);
@@ -60,9 +60,7 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 					
 				});
 				
-	
-	
-	
+
 	verPanel.add(ueberschriftLabel);
 	verPanel.add(infoLabel);
 	
