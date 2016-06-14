@@ -68,11 +68,12 @@ public class InfoMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_eigenschaft1.eigenschaft_id, "
-							+ "t_eigenschaft1.erlaeuterung, t_eigenschaft1.typ "
-							+ "FROM t_eigenschaft1 LEFT JOIN t_info1 "
-							+ "ON t_eigenschaft1.eigenschaft_id = t_info1.eigenschaft_id "
-							+ "WHERE t_info1.profil_id !=" + profilId + " OR t_info1.eigenschaft_id IS NULL");
+					.executeQuery("SELECT * FROM t_eigenschaft1 "
+							+ "WHERE t_eigenschaft1.eigenschaft_id NOT IN (SELECT t_info1.eigenschaft_id "
+							+ "FROM t_info1 WHERE t_info1.profil_id=" + 1 + ")");
+			
+//			SELECT * FROM t_eigenschaft1 WHERE t_eigenschaft1.eigenschaft_id NOT IN 
+//			(SELECT t_info1.eigenschaft_id FROM t_info1 WHERE t_info1.profil_id = 1)
 			
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();
@@ -88,7 +89,6 @@ public class InfoMapper {
 			return null;
 		}
 		return result;
-		
 	}
 
 
@@ -220,6 +220,7 @@ public class InfoMapper {
 		}
 		return null;
 	}
+	
 
 	public void deleteAllInfosNeu(int profilId) {
 		Connection con = DBConnection.connection();
@@ -278,33 +279,35 @@ public class InfoMapper {
 	}
 	
 
-	public void updateInfosNeu(Info i) {
+	public void updateInfos(int profilId, List<Info> listI) {
 		Connection con = DBConnection.connection();
-
 		String infotextAlt;
+		
+		for (Info i : listI) {
 
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT infotext AS infotext_alt " + "FROM t_info1 WHERE profil_id="
-					+ i.getProfilId() + " AND eigenschaft_id=" + i.getEigenschaftId());
-
-			if (rs.next()) {
-				infotextAlt = rs.getString("infotext_alt");
-
-				stmt = con.createStatement();
-
-				stmt.executeUpdate(
-						"UPDATE t_info1 " + "SET infotext='" + i.getInfotext() + "' WHERE infotext='" + infotextAlt
-								+ "' AND profil_id=" + i.getProfilId() + " AND eigenschaft_id=" + i.getEigenschaftId());
-
+			try {
+				Statement stmt = con.createStatement();
+	
+				ResultSet rs = stmt.executeQuery("SELECT infotext AS infotext_alt " + "FROM t_info1 WHERE profil_id="
+						+ profilId + " AND eigenschaft_id=" + i.getEigenschaftId());
+	
+				if (rs.next()) {
+					infotextAlt = rs.getString("infotext_alt");
+	
+					stmt = con.createStatement();
+	
+					stmt.executeUpdate(
+							"UPDATE t_info1 " + "SET infotext='" + i.getInfotext() + "' WHERE infotext='" + infotextAlt
+									+ "' AND profil_id=" + profilId + " AND eigenschaft_id=" + i.getEigenschaftId());
+	
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
 			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
 		}
 	}
-
-
+	
+	
 	public List<Info> findAInfoByProfilId(int profilId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();

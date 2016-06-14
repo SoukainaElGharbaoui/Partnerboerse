@@ -88,7 +88,6 @@ public class CreateInfoNp extends VerticalPanel {
 												1, eigB.getErlaeuterung());
 
 										final TextArea textArea = new TextArea();
-										textArea.setTitle("TextArea");
 
 										showEigenschaftFlexTable.setWidget(row,
 												2, textArea);
@@ -112,7 +111,6 @@ public class CreateInfoNp extends VerticalPanel {
 												1, eigA.getErlaeuterung());
 
 										final ListBox lb = new ListBox();
-										lb.setTitle("ListBox");
 
 										showEigenschaftFlexTable.setWidget(row,
 												2, lb);
@@ -167,6 +165,7 @@ public class CreateInfoNp extends VerticalPanel {
 					infos.add(info);
 				}
 
+				
 				ClientsideSettings.getPartnerboerseAdministration().createInfo(
 						infos, new AsyncCallback<List<Info>>() {
 

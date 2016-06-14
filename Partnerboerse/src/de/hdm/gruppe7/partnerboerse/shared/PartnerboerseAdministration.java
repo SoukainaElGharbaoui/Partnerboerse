@@ -241,9 +241,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften() 	
 			throws IllegalArgumentException;	
-		
-	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
+	
+	public List<Auswahleigenschaft> getAuswahleigenschaften(List<Eigenschaft> listE) 
 			throws IllegalArgumentException;
+	
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften() 	
+			throws IllegalArgumentException;	
+	
+//	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
+//			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
@@ -274,11 +280,11 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
 			throws IllegalArgumentException;
 	
-	public void saveInfoNeu(int eigenschaftId, String infotext)
-				throws IllegalArgumentException;
-	
-	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+	public void saveInfo(List<Info> listI)
 			throws IllegalArgumentException;
+	
+//	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+//			throws IllegalArgumentException;
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;

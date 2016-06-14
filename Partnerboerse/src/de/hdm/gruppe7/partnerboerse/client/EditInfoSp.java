@@ -111,27 +111,27 @@ public class EditInfoSp extends VerticalPanel {
 
 								String infotextNeuB = tb.getText();
 
-								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(
-										suchprofilIdInt, eigenschaftIdInt, infotextNeuB, new AsyncCallback<Void>() {
-
-											@Override
-											public void onFailure(Throwable caught) {
-												informationLabel
-														.setText("Beim Aktualisieren ist ein Fehler " + "aufgetreten.");
-											}
-
-											@Override
-											public void onSuccess(Void result) {
-												informationLabel
-														.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
-												
-												ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
-												RootPanel.get("Details").clear();
-												RootPanel.get("Details").add(showSuchprofil);
-												
-											}
-
-										});
+//								ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(
+//										suchprofilIdInt, eigenschaftIdInt, infotextNeuB, new AsyncCallback<Void>() {
+//
+//											@Override
+//											public void onFailure(Throwable caught) {
+//												informationLabel
+//														.setText("Beim Aktualisieren ist ein Fehler " + "aufgetreten.");
+//											}
+//
+//											@Override
+//											public void onSuccess(Void result) {
+//												informationLabel
+//														.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
+//												
+//												ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+//												RootPanel.get("Details").clear();
+//												RootPanel.get("Details").add(showSuchprofil);
+//												
+//											}
+//
+//										});
 							}
 						});
 					}
@@ -179,24 +179,24 @@ public class EditInfoSp extends VerticalPanel {
 						
 						String infotextNeuA = lb.getSelectedValue();
 
-						ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(suchprofilIdInt, eigenschaftIdInt,
-								infotextNeuA, new AsyncCallback<Void>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										informationLabel.setText("Beim Aktualisieren ist ein Fehler " + "aufgetreten.");
-									}
-
-									@Override
-									public void onSuccess(Void result) {
-										informationLabel.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
-										
-										ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
-										RootPanel.get("Details").clear();
-										RootPanel.get("Details").add(showSuchprofil);
-									}
-
-								});
+//						ClientsideSettings.getPartnerboerseAdministration().saveInfoNeuSp(suchprofilIdInt, eigenschaftIdInt,
+//								infotextNeuA, new AsyncCallback<Void>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										informationLabel.setText("Beim Aktualisieren ist ein Fehler " + "aufgetreten.");
+//									}
+//
+//									@Override
+//									public void onSuccess(Void result) {
+//										informationLabel.setText("Das Aktualisieren der Infos " + "hat funktioniert.");
+//										
+//										ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+//										RootPanel.get("Details").clear();
+//										RootPanel.get("Details").add(showSuchprofil);
+//									}
+//
+//								});
 							}
 						});
 					}

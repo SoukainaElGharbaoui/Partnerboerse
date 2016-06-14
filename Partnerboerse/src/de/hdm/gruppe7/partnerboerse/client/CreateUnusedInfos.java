@@ -1,6 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -12,6 +15,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
@@ -36,9 +40,11 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private String nEingabeA;
 	
 	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Info anlegen:"); 
+	private Label ueberschriftLabel = new Label("Weitere Info anlegen:");
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
+	private Label informationLabel = new Label();
+	
 	
 	/**
 	 * Konstruktor hinzufügen.
@@ -66,171 +72,305 @@ public class CreateUnusedInfos extends VerticalPanel {
 		
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		
-		
-		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaftenNeu(
-				new AsyncCallback<List<Eigenschaft>>() {
-
+		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaften(
+				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
+					
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+						informationLabel.setText("Beim Herausholen der Eigenschaften trat ein Fehler auf.");
 					}
 
 					@Override
-					public void onSuccess(List<Eigenschaft> result) {
+					public void onSuccess(
+							Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
+						
+						informationLabel.setText("Die Methode wurde aufgerufen.");
 						
 						int row = showUnusedEigenschaftFlexTable.getRowCount();
 						
-						for (Eigenschaft e : result) {
-							row++;
-							
-							eigenschaftId = String.valueOf(e.getEigenschaftId());
-							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
-							final String typ = e.getTyp();
-							
-							showUnusedEigenschaftFlexTable.setText(row, 0, eigenschaftId);
-							showUnusedEigenschaftFlexTable.setText(row, 1, e.getErlaeuterung());
-							
+						Set<List<Beschreibungseigenschaft>> output = result.keySet();
 
-							if (typ.equals("B")) {
+						for (List<Beschreibungseigenschaft> listEigB : output) {
+
+							for (Beschreibungseigenschaft eigB : listEigB) {
+
+								row++;
+
+								eigenschaftId = null;
+								beschreibungstext = null;
+
+								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
+
+								showUnusedEigenschaftFlexTable.setText(row,	0, eigenschaftId);
 								
+								showUnusedEigenschaftFlexTable.setText(row, 1, eigB.getErlaeuterung());
+
 								final TextArea textArea = new TextArea();
+
 								showUnusedEigenschaftFlexTable.setWidget(row, 2, textArea);
-								
-								ClientsideSettings.getPartnerboerseAdministration().getEigBById(eigenschaftIdInt, 
-										new AsyncCallback<Beschreibungseigenschaft>(){
 
-											@Override
-											public void onFailure(
-													Throwable caught) {
-												informationLabelB.setText("Beim Herausholen des Beschreibungstextes "
-														+ "ist ein Fehler aufgetreten.");												
-											}
+								beschreibungstext = eigB.getBeschreibungstext();
 
-											@Override
-											public void onSuccess(
-													Beschreibungseigenschaft result) {
-												informationLabelB.setText("Das Herausholen des Beschreibungstextes hat "
-														+ "funktioniert.");			
-												
-												beschreibungstext = result.getBeschreibungstext();
-												textArea.setText(beschreibungstext);
-											}
-								});
-								
-								
-								createInfosButton.addClickHandler(new ClickHandler() {
-									public void onClick(ClickEvent event) {
-										
-										nEingabeB = textArea.getText();
-										
-										if (nEingabeB.equals(beschreibungstext)) {
-
-											return;
-										}
-										
-										else if (!nEingabeB.equals(beschreibungstext)) {
-											
-//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-//													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
-//											
-//															@Override
-//															public void onFailure(Throwable caught) {
-//																informationLabelB.setText("Es trat ein Fehler auf.");
-//															}
-//											
-//															@Override
-//															public void onSuccess(Info result) {
-//																informationLabelB.setText("Die Infos wurden "
-//																		+ "erfolgreich angelegt.");
-//																
-//																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-//																RootPanel.get("Details").clear();
-//																RootPanel.get("Details").add(showNp);
-//															}
-//												});
-										}
-									}
-								});
+								textArea.setText(beschreibungstext);
 							}
-							
-							
-							else if (typ.equals("A")) {
+
+							List<Auswahleigenschaft> listEigA = result.get(listEigB);
+
+							for (Auswahleigenschaft eigA : listEigA) {
+
+								row++;
+								showUnusedEigenschaftFlexTable.setText(row,
+										0, String.valueOf(eigA.getEigenschaftId()));
 								
+								showUnusedEigenschaftFlexTable.setText(row, 1, eigA.getErlaeuterung());
+
 								final ListBox lb = new ListBox();
-								
-								ClientsideSettings.getPartnerboerseAdministration().getEigAById(
-										eigenschaftIdInt, new AsyncCallback<Auswahleigenschaft>() {
 
-											@Override
-											public void onFailure(
-													Throwable caught) {
-												informationLabelA.setText("Beim Herausholen der Auswahloptionen "
-														+ "ist ein Fehler aufgetreten.");												
-											}
-
-											@Override
-											public void onSuccess(
-													Auswahleigenschaft result) {
-												
-												List<String> optionen = result.getOptionen();
-												
-												for(int i = 0; i < optionen.size(); i++) {
-													lb.addItem(optionen.get(i));
-												}
-												
-												for (int a = 0; a < lb.getItemCount(); a++) {
-													
-													if (lb.getValue(a).equals("Keine Auswahl")) {
-														lb.setItemSelected(a, true);	
-													}
-													
-													informationLabelA.setText("Das Setzen der Standard-Option "
-															+ "hat funktioniert.");
-												}
-											}	
-								});
-							
 								showUnusedEigenschaftFlexTable.setWidget(row, 2, lb);
-								
-								
-								createInfosButton.addClickHandler(new ClickHandler() {
-									public void onClick(ClickEvent event) {
-										
-										nEingabeA = lb.getSelectedItemText();
-										
-										if(!nEingabeA.equals("Keine Auswahl")) {
-										
-//											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
-//													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
-//										
-//														@Override
-//														public void onFailure(Throwable caught) {
-//															informationLabelA.setText("Es trat ein Fehler auf.");
-//														}
-//										
-//														@Override
-//														public void onSuccess(Info result) {
-//															informationLabelA.setText("Die Infos wurden "
-//																	+ "erfolgreich angelegt.");
-//																														
-//															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-//															RootPanel.get("Details").clear();
-//															RootPanel.get("Details").add(showNp);
-//														}
-//											});
-										}
-										
-										else {
-											return;
-										}
-										
+
+								List<String> optionen = eigA.getOptionen();
+
+								for (int i = 0; i < optionen.size(); i++) {
+									lb.addItem(optionen.get(i));
 								}
-								}); 
+
+								for (int a = 0; a < lb.getItemCount(); a++) {
+
+									if (lb.getValue(a).equals("Keine Auswahl")) {
+										lb.setItemSelected(a, true);
+									}
+								}
 							}
 						}
+						
+					}		
+					
+				});
+		
+		
+		createInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+				List<Info> infos = new ArrayList<Info>();
+				String infotextTable = null;
+
+				for (int i = 2; i < showUnusedEigenschaftFlexTable.getRowCount(); i++) {
+
+					String eigenschaftIdTable = showUnusedEigenschaftFlexTable
+							.getText(i, 0);
+
+					Widget w = showUnusedEigenschaftFlexTable.getWidget(i, 2);
+
+					if (w instanceof TextArea) {
+
+						infotextTable = ((TextArea) w).getText();
 					}
-			
+
+					else if (w instanceof ListBox) {
+
+						infotextTable = ((ListBox) w).getSelectedItemText();
+
+					}
+
+					Info info = new Info();
+					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+					info.setInfotext(infotextTable);
+
+					infos.add(info);
+				}
+
+				
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(
+						infos, new AsyncCallback<List<Info>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel
+										.setText("Es trat ein Fehler auf.");
+							}
+
+							@Override
+							public void onSuccess(List<Info> result) {
+								informationLabel.setText("Die Infos wurden "
+										+ "erfolgreich angelegt.");
+
+								ShowEigenesNp showNp = new ShowEigenesNp(
+										nutzerprofil);
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showNp);
+
+							}
+						});
+			}
 		});
+		
+		
+		
+		
+//		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaftenNeu(
+//				new AsyncCallback<List<Eigenschaft>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//					}
+//
+//					@Override
+//					public void onSuccess(List<Eigenschaft> result) {
+//						
+//						int row = showUnusedEigenschaftFlexTable.getRowCount();
+//						
+//						for (Eigenschaft e : result) {
+//							row++;
+//							
+//							eigenschaftId = String.valueOf(e.getEigenschaftId());
+//							final int eigenschaftIdInt = Integer.valueOf(eigenschaftId);
+//							final String typ = e.getTyp();
+//							
+//							showUnusedEigenschaftFlexTable.setText(row, 0, eigenschaftId);
+//							showUnusedEigenschaftFlexTable.setText(row, 1, e.getErlaeuterung());
+//							
+//
+//							if (typ.equals("B")) {
+//								
+//								final TextArea textArea = new TextArea();
+//								showUnusedEigenschaftFlexTable.setWidget(row, 2, textArea);
+//								
+//								ClientsideSettings.getPartnerboerseAdministration().getEigBById(eigenschaftIdInt, 
+//										new AsyncCallback<Beschreibungseigenschaft>(){
+//
+//											@Override
+//											public void onFailure(
+//													Throwable caught) {
+//												informationLabelB.setText("Beim Herausholen des Beschreibungstextes "
+//														+ "ist ein Fehler aufgetreten.");												
+//											}
+//
+//											@Override
+//											public void onSuccess(
+//													Beschreibungseigenschaft result) {
+//												informationLabelB.setText("Das Herausholen des Beschreibungstextes hat "
+//														+ "funktioniert.");			
+//												
+//												beschreibungstext = result.getBeschreibungstext();
+//												textArea.setText(beschreibungstext);
+//											}
+//								});
+//								
+//								
+//								createInfosButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										
+//										nEingabeB = textArea.getText();
+//										
+//										if (nEingabeB.equals(beschreibungstext)) {
+//
+//											return;
+//										}
+//										
+//										else if (!nEingabeB.equals(beschreibungstext)) {
+//											
+////											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+////													eigenschaftIdInt, nEingabeB, new AsyncCallback<Info>() {
+////											
+////															@Override
+////															public void onFailure(Throwable caught) {
+////																informationLabelB.setText("Es trat ein Fehler auf.");
+////															}
+////											
+////															@Override
+////															public void onSuccess(Info result) {
+////																informationLabelB.setText("Die Infos wurden "
+////																		+ "erfolgreich angelegt.");
+////																
+////																ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+////																RootPanel.get("Details").clear();
+////																RootPanel.get("Details").add(showNp);
+////															}
+////												});
+//										}
+//									}
+//								});
+//							}
+//							
+//							
+//							else if (typ.equals("A")) {
+//								
+//								final ListBox lb = new ListBox();
+//								
+//								ClientsideSettings.getPartnerboerseAdministration().getEigAById(
+//										eigenschaftIdInt, new AsyncCallback<Auswahleigenschaft>() {
+//
+//											@Override
+//											public void onFailure(
+//													Throwable caught) {
+//												informationLabelA.setText("Beim Herausholen der Auswahloptionen "
+//														+ "ist ein Fehler aufgetreten.");												
+//											}
+//
+//											@Override
+//											public void onSuccess(
+//													Auswahleigenschaft result) {
+//												
+//												List<String> optionen = result.getOptionen();
+//												
+//												for(int i = 0; i < optionen.size(); i++) {
+//													lb.addItem(optionen.get(i));
+//												}
+//												
+//												for (int a = 0; a < lb.getItemCount(); a++) {
+//													
+//													if (lb.getValue(a).equals("Keine Auswahl")) {
+//														lb.setItemSelected(a, true);	
+//													}
+//													
+//													informationLabelA.setText("Das Setzen der Standard-Option "
+//															+ "hat funktioniert.");
+//												}
+//											}	
+//								});
+//							
+//								showUnusedEigenschaftFlexTable.setWidget(row, 2, lb);
+//								
+//								
+//								createInfosButton.addClickHandler(new ClickHandler() {
+//									public void onClick(ClickEvent event) {
+//										
+//										nEingabeA = lb.getSelectedItemText();
+//										
+//										if(!nEingabeA.equals("Keine Auswahl")) {
+//										
+////											ClientsideSettings.getPartnerboerseAdministration().createInfoNeu(
+////													eigenschaftIdInt, nEingabeA, new AsyncCallback<Info>() {
+////										
+////														@Override
+////														public void onFailure(Throwable caught) {
+////															informationLabelA.setText("Es trat ein Fehler auf.");
+////														}
+////										
+////														@Override
+////														public void onSuccess(Info result) {
+////															informationLabelA.setText("Die Infos wurden "
+////																	+ "erfolgreich angelegt.");
+////																														
+////															ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+////															RootPanel.get("Details").clear();
+////															RootPanel.get("Details").add(showNp);
+////														}
+////											});
+//										}
+//										
+//										else {
+//											return;
+//										}
+//										
+//								}
+//								}); 
+//							}
+//						}
+//					}
+//			
+//		});
 		
 		
 		verPanel.add(ueberschriftLabel);  
@@ -238,6 +378,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 		verPanel.add(createInfosButton);
 		verPanel.add(informationLabelB);
 		verPanel.add(informationLabelA);
+		verPanel.add(informationLabel);
+
 	}
 
 }

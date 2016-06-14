@@ -637,20 +637,78 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 		result.put(listEigB, listEigA);
-		System.out.println(result.toString());
+//		System.out.println(result.toString());
 		return result;
+	}
+
+
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften()
+			throws IllegalArgumentException {
 		
+		Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result2 = 
+				new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
 
+		List<Eigenschaft> listE = infoMapper.findAllUnusedEigenschaftenNeu(1);
+//		System.out.println("ListE: " + listE);
+
+		List<Beschreibungseigenschaft> listEigB = new ArrayList<Beschreibungseigenschaft>();
+		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
+
+		for (int i = 0; i < listE.size(); i++) {
+			
+//			System.out.println("Erläuterung: " + listE.get(i).getErlaeuterung());
+			
+			if (listE.isEmpty() == true) {
+				
+//				System.out.println("Es wurden alle möglichen Infos angelegt, die Liste der übrigen Eigenschaften ist leer.");
+			}
+
+			else {
+				if (listE.get(i).getTyp().equals("B")) {
+					
+//					System.out.println("Es handelt sich um den Typ B.");
+
+					Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
+					
+					eigB.setErlaeuterung(listE.get(i).getErlaeuterung());
+					eigB.setTyp(listE.get(i).getTyp());
+
+					listEigB.add(eigB);
+				}
+
+				else if (listE.get(i).getTyp().equals("A")) {
+					
+//					System.out.println("Es handelt sich um den Typ A.");
+	
+					Auswahleigenschaft eigA = new Auswahleigenschaft();
+					
+					eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
+					
+					eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
+					eigA.setTyp(listE.get(i).getTyp());
+	
+					listEigA.add(eigA);
+				}
+			}
+		}
+
+		result2.put(listEigB, listEigA);
+//		System.out.println(" ListB: " + listEigB.toString());
+//		System.out.println(" ListA: " + listEigA.toString());
+
+		return result2;
 	}
-
 	
 	
-	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
-		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
-		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profil.getProfilId());
-		System.out.println(listE);
-		return listE;
-	}
+//	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
+//		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+//		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profil.getProfilId());
+//		System.out.println(listE);
+//		return listE;
+//	}
+	
+	
+	
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId) throws IllegalArgumentException {
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
@@ -756,41 +814,46 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return eigB;
 		// return this.infoMapper.findEigBByIdNeu(eigenschaftId);
 	}
+	
+	
+	public List<Auswahleigenschaft> getAuswahleigenschaften(List<Eigenschaft> listE) throws IllegalArgumentException {
+	
+		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
+				
+		for (int i = 0; i < listE.size(); i++) {
+			
+			Auswahleigenschaft eigA = new Auswahleigenschaft();
+			eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
+			
+			listEigA.add(eigA);
+		}
+		return listEigA;
+	}
 
+	
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
 		optionen = this.infoMapper.findEigAByIdNeu(eigenschaftId);
-//		System.out.println(optionen.getOptionen());
 
 		return optionen;
-		// return this.infoMapper.findEigAById(eigenschaftId);
+	}
+	
+	public void saveInfo(List<Info> listI) throws IllegalArgumentException {
+		this.infoMapper.updateInfos(profil.getProfilId(), listI);
 	}
 
-	public void saveInfoNeu(int eigenschaftId, String infotext) throws IllegalArgumentException {
 
-		System.out.println(profil.getProfilId() + ", " + eigenschaftId + ", " + infotext);
-
-		Info i = new Info();
-		i.setProfilId(profil.getProfilId());
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-
-		this.infoMapper.updateInfosNeu(i);
-
-	}
-
-	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-
-		System.out.println(suchprofilId + ", " + eigenschaftId + ", " + infotext);
-
-		Info i = new Info();
-		i.setProfilId(suchprofilId);
-		i.setEigenschaftId(eigenschaftId);
-		i.setInfotext(infotext);
-
-		this.infoMapper.updateInfosNeu(i);
-
-	}
+//	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
+//
+//		System.out.println(suchprofilId + ", " + eigenschaftId + ", " + infotext);
+//
+//		Info i = new Info();
+//		i.setProfilId(suchprofilId);
+//		i.setEigenschaftId(eigenschaftId);
+//		i.setInfotext(infotext);
+//
+//		this.infoMapper.updateInfosNeu(i);
+//	}
 
 
 

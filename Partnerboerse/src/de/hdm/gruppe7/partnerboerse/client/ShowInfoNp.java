@@ -1,12 +1,9 @@
-
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -76,7 +73,8 @@ public class ShowInfoNp extends VerticalPanel {
 		 */
 		
 		
-	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
+	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(
+			new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -151,13 +149,13 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
 
-		final Button erstellenButton = new Button("Infos anlegen");
+		final Button erstellenButton = new Button("Weitere Infos anlegen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(erstellenButton);
 		
-		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);
+//		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
+//		verPanel.add(buttonPanel);
+//		buttonPanel.add(erstellenButton);
 
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
@@ -192,19 +190,19 @@ public class ShowInfoNp extends VerticalPanel {
 
 		erstellenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateInfoNp createInfoNp = new CreateInfoNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createInfoNp);
-			}
-		});
-		
-		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
 				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}
 		});
+		
+//		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(createRestlicheInfos);
+//			}
+//		});
 
 	}
 }

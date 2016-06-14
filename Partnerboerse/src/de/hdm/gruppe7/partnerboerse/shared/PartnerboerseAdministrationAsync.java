@@ -228,7 +228,13 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllEigenschaften(AsyncCallback<Map<List<Beschreibungseigenschaft>, 
 			List<Auswahleigenschaft>>> callback);
 
-	void getAllUnusedEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
+	void getAuswahleigenschaften(List<Eigenschaft> listE, 
+			AsyncCallback<List<Auswahleigenschaft>> callback);
+	
+	void getAllUnusedEigenschaften(AsyncCallback<Map<List<Beschreibungseigenschaft>, 
+			List<Auswahleigenschaft>>> callback);
+	
+//	void getAllUnusedEigenschaftenNeu(AsyncCallback<List<Eigenschaft>> callback);
 	
 	void getAllUnusedEigenschaftenNeuSp(int suchprofilId, AsyncCallback<List<Eigenschaft>> callback);
 
@@ -253,11 +259,9 @@ public interface PartnerboerseAdministrationAsync {
 
 	void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId, AsyncCallback<Void> callback);
 
+	void saveInfo(List<Info> listI, AsyncCallback<Void> callback);
 	
-	void saveInfoNeu(int eigenschaftId, String infotext, AsyncCallback<Void> callback);
-	
-	void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Void> callback);
-
+//	void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Void> callback);
 
 	void getEigAById(int eigenschaftId, AsyncCallback<Auswahleigenschaft> callback);
 
