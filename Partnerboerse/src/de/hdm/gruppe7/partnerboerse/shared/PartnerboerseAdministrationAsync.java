@@ -37,16 +37,16 @@ public interface PartnerboerseAdministrationAsync {
 	void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
-
+	
 	/**
 	 * Nutzerprofil l�schen.
 	 */
-	void deleteNutzerprofil(AsyncCallback<Void> callback);
+	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
-	void getNutzerprofilById(AsyncCallback<Nutzerprofil> callback);
+	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 	
 
 	/**

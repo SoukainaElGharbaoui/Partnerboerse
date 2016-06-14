@@ -49,18 +49,17 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Nutzerprofil l�schen.
 	 */
-	void deleteNutzerprofil() throws IllegalArgumentException;
+	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
-	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException;
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException;
 	
 	/**
 	 * Fremdprofil anhand dessen Profil-ID auslesen.
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException;
-
 
 	/**
 	 * Alle Nutzerprofile auslesen.

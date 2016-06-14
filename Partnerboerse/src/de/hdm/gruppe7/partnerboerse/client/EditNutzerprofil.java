@@ -27,19 +27,19 @@ public class EditNutzerprofil extends VerticalPanel {
 	 * Neues Nutzerprofil-Objekt erzeugen.
 	 */
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
+
 	/**
 	 * Panel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	/**
 	 * Widgets hinzufuegen.
 	 */
 	private Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
-	
+
 	private FlexTable editNutzerprofilFlexTable = new FlexTable();
-	
+
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
@@ -53,9 +53,9 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label emailLabel = new Label();
 
 	private Label infoLabel = new Label();
-	private Label reqLabel1 = new Label("* Pflichtfeld"); 
-	private Label reqLabel2 = new Label("* Pflichtfeld"); 
-	private Label warnungLabel = new Label(); 
+	private Label reqLabel1 = new Label("* Pflichtfeld");
+	private Label reqLabel2 = new Label("* Pflichtfeld");
+	private Label warnungLabel = new Label();
 
 	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
 
@@ -72,7 +72,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-		
+
 		/**
 		 * Tabelle formatieren.
 		 */
@@ -142,13 +142,13 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
-		
+
 		editNutzerprofilFlexTable.setWidget(9, 2, emailLabel);
 
 		/**
 		 * Nutzerprofil auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -188,58 +188,55 @@ public class EditNutzerprofil extends VerticalPanel {
 								raucherListBox.setSelectedIndex(i);
 							}
 						}
-						
+
 						emailLabel.setText(result.getEmailAddress());
 					}
 				});
-
-		
 
 		/**
 		 * ClickHandler für den Nutzerprofil-Bearbeiten-Button hinzufuegen.
 		 */
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen ein");
-					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel); 
-				// Wenn kein Nachname angegeben wird...
+					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+					// Wenn kein Nachname angegeben wird...
 				} else if (nachnameTextBox.getText().length() == 0) {
-						warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein"); 
-						editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel); 
+					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein");
+					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
 				} else {
 
-				/**
-				 * Nutzerprofil aktualisieren.
-				 */
-				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(vornameTextBox.getText(),
-						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
-						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
-						new AsyncCallback<Void>() {
+					/**
+					 * Nutzerprofil aktualisieren.
+					 */
+					ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(vornameTextBox.getText(),
+							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
+							Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
+							raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+							new AsyncCallback<Void>() {
 
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf");
-							}
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf");
+								}
 
-							public void onSuccess(Void result) {
-								// Seite zum Anzeigen des eigenen Nutzerprofils aufrufen.
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showEigenesNp);
+								public void onSuccess(Void result) {
+									// Seite zum Anzeigen des eigenen
+									// Nutzerprofils aufrufen.
+									ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showEigenesNp);
 
-							}
-						});
+								}
+							});
 
 				}
 
-
-
 			}
 		});
-		
+
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */

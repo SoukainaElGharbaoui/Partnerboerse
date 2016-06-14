@@ -128,7 +128,7 @@ public class NutzerprofilForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (nutzerprofilToDisplay != null) {
 
-				ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+				ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 						new AnzeigeNpCallback());
 
 				// nutzerprofilToDisplay.setVorname(getVorname();

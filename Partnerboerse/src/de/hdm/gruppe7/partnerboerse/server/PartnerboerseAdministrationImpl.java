@@ -10,21 +10,16 @@ import java.util.Vector;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootPanel;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
-import de.hdm.gruppe7.partnerboerse.client.Navigator;
-import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -45,7 +40,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	private MerklisteMapper merklisteMapper = null;
 	private SperrlisteMapper sperrlisteMapper = null;
 	private InfoMapper infoMapper = null;
-	Nutzerprofil profil = new Nutzerprofil();
+
+	private Nutzerprofil profil = new Nutzerprofil();
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -85,21 +81,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			throws IllegalArgumentException {
 
 		// Neues Nutzerprofil-Objekt erstellen.
-		// Nutzerprofil n = new Nutzerprofil();
-		profil.setVorname(vorname);
-		profil.setNachname(nachname);
-		profil.setGeschlecht(geschlecht);
-		profil.setGeburtsdatumDate(geburtsdatumDate);
-		profil.setKoerpergroesseInt(koerpergroesseInt);
-		profil.setHaarfarbe(haarfarbe);
-		profil.setRaucher(raucher);
-		profil.setReligion(religion);
-		profil.setEmailAddress(emailAddress);
+		Nutzerprofil n = new Nutzerprofil();
+		n.setVorname(vorname);
+		n.setNachname(nachname);
+		n.setGeschlecht(geschlecht);
+		n.setGeburtsdatumDate(geburtsdatumDate);
+		n.setKoerpergroesseInt(koerpergroesseInt);
+		n.setHaarfarbe(haarfarbe);
+		n.setRaucher(raucher);
+		n.setReligion(religion);
+		n.setEmailAddress(emailAddress);
 
 		// VorlÃ¤ufige Profil-ID setzen.
-		profil.setProfilId(1);
+		n.setProfilId(1);
 
-		return this.nutzerprofilMapper.insertNutzerprofil(profil);
+		return this.nutzerprofilMapper.insertNutzerprofil(n);
 	}
 
 	/**
@@ -126,17 +122,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil lÃ¶schen.
 	 */
 	@Override
-	public void deleteNutzerprofil() throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteNutzerprofil(profil.getProfilId());
+	public void deleteNutzerprofil(int profilId) throws IllegalArgumentException {
+		profilId = profil.getProfilId();
+		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
 	}
 
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	@Override
-	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
-
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
+		profilId = profil.getProfilId();
+		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
 
 	/**
@@ -209,8 +206,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
-		
-		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId()); 
+
+		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
 	}
 
 	/**
@@ -228,55 +225,56 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
-	 * Suchprofil anhand anhand des Suchprofilnamens auslesen. 
+	 * Suchprofil anhand anhand des Suchprofilnamens auslesen.
 	 */
 	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profil.getProfilId(), suchprofilName);
 	}
-	
+
 	/**
-	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
+	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen.
 	 */
 	public int pruefeSuchprofilnameCreate(String suchprofilname) throws IllegalArgumentException {
-		
+
 		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
-		
-		int ergebnis = 0; 
-		
-		// Der Suchprofilname existiert bereits. 
+
+		int ergebnis = 0;
+
+		// Der Suchprofilname existiert bereits.
 		if (existenz == 1) {
-			ergebnis = 1; 
+			ergebnis = 1;
 		}
-		
+
 		// Der Suchprofilname ist leer.
 		if (suchprofilname.isEmpty()) {
-			ergebnis = 2; 
+			ergebnis = 2;
 		}
-		
-		return ergebnis; 
+
+		return ergebnis;
 	}
 
 	/**
-	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen. 
+	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen.
 	 */
 	public int pruefeSuchprofilnameEdit(int suchprofilId, String suchprofilname) throws IllegalArgumentException {
-		
+
 		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profil.getProfilId(), suchprofilname);
-		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(profil.getProfilId(), suchprofilId); 
-		
-		int ergebnis = 0; 
-		
-		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein gleichnamiges, anderes Suchprofil.
+		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(profil.getProfilId(), suchprofilId);
+
+		int ergebnis = 0;
+
+		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein
+		// gleichnamiges, anderes Suchprofil.
 		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
-			ergebnis = 1; 
-		} 
-		
-		// Der Suchprofilname existiert noch nicht, die TextBox ist jedoch leer. 
-		if (existenz == 0 && (suchprofilname.isEmpty())) {
-			ergebnis = 2; 
+			ergebnis = 1;
 		}
-		
-		return ergebnis; 
+
+		// Der Suchprofilname existiert noch nicht, die TextBox ist jedoch leer.
+		if (existenz == 0 && (suchprofilname.isEmpty())) {
+			ergebnis = 2;
+		}
+
+		return ergebnis;
 	}
 
 	/*
@@ -313,12 +311,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	// Vermerkstatus aendern.
-	public int vermerkstatusAendern(int fremdprofilId)
-			throws IllegalArgumentException {
-	
+	public int vermerkstatusAendern(int fremdprofilId) throws IllegalArgumentException {
+
 		// Vermerkstatus ermitteln.
-		int vermerkstatus = this.merklisteMapper.pruefeVermerk(profil.getProfilId(),
-				fremdprofilId);
+		int vermerkstatus = this.merklisteMapper.pruefeVermerk(profil.getProfilId(), fremdprofilId);
 
 		if (vermerkstatus == 1) {
 			// Wenn ein Vermerk vorliegt, wird dieser gelöscht.
@@ -329,7 +325,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 		return vermerkstatus;
-		
+
 	}
 
 	/*
@@ -373,7 +369,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	// Sperrstatus aendern.
 	public int sperrstatusAendern(int fremdprofilId) throws IllegalArgumentException {
 
-		// Sperrstatus ermitteln. 
+		// Sperrstatus ermitteln.
 		int sperrstatus = this.sperrlisteMapper.pruefeSperrungFremdprofil(profil.getProfilId(), fremdprofilId);
 
 		if (sperrstatus == 1) {
@@ -389,15 +385,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return sperrstatus;
 	}
 
-
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Sperrliste
 	 * *************************************************************************
 	 * **
 	 */
-
-
 
 	/*
 	 * *************************************************************************
@@ -419,74 +412,66 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Methode zur Berechnung der Ã„hnlichkeit zwischen zwei Nutzerprofilen
 	 */
-	public void berechneAehnlichkeitNpFor()
-			throws IllegalArgumentException {
+	public void berechneAehnlichkeitNpFor() throws IllegalArgumentException {
 
 		// Erforderliche Daten abrufen
-		List<Nutzerprofil> referenzprofil = nutzerprofilMapper.findUnangeseheneNutzerprofile(profil.getProfilId());			
-		Nutzerprofil vergleichsprofil = nutzerprofilMapper	.findByNutzerprofilId(profil.getProfilId());
-		
+		List<Nutzerprofil> referenzprofil = nutzerprofilMapper.findUnangeseheneNutzerprofile(profil.getProfilId());
+		Nutzerprofil vergleichsprofil = nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
 
-		for (Nutzerprofil np : referenzprofil){
-			
-			
+		for (Nutzerprofil np : referenzprofil) {
+
 			int fremdprofilId = np.getProfilId();
 			int profilId = vergleichsprofil.getProfilId();
-			
-		// Variablen zur Berechnung der Aehnlichkeit
-		int aehnlichkeit = 3;
-		int counter = 7;
 
-		// Vergleich der Profildaten
-		if (np.getGeschlecht().equals(
-				vergleichsprofil.getGeschlecht())) {
-			aehnlichkeit = aehnlichkeit - 3;
-		}
+			// Variablen zur Berechnung der Aehnlichkeit
+			int aehnlichkeit = 3;
+			int counter = 7;
 
-		if (np.getHaarfarbe().equals(
-				vergleichsprofil.getHaarfarbe())) {
-			aehnlichkeit = aehnlichkeit + 1;
-		}
+			// Vergleich der Profildaten
+			if (np.getGeschlecht().equals(vergleichsprofil.getGeschlecht())) {
+				aehnlichkeit = aehnlichkeit - 3;
+			}
 
-		if (np.getKoerpergroesseInt() == vergleichsprofil
-				.getKoerpergroesseInt()) {
-			aehnlichkeit = aehnlichkeit + 1;
-		}
+			if (np.getHaarfarbe().equals(vergleichsprofil.getHaarfarbe())) {
+				aehnlichkeit = aehnlichkeit + 1;
+			}
 
-		if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
-			aehnlichkeit = aehnlichkeit + 1;
-		}
+			if (np.getKoerpergroesseInt() == vergleichsprofil.getKoerpergroesseInt()) {
+				aehnlichkeit = aehnlichkeit + 1;
+			}
 
-		if (np.getReligion().equals(vergleichsprofil.getReligion())) {
-			aehnlichkeit = aehnlichkeit + 1;
-		}
-		
-		
-		List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
-		List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
+			if (np.getRaucher().equals(vergleichsprofil.getRaucher())) {
+				aehnlichkeit = aehnlichkeit + 1;
+			}
 
-		// Vergleich der Beschreibungsinfos
-		for (Info rin : referenzinfo) {
-			for (Info vin : vergleichsinfo) {
-				if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-					counter++;
-					if (rin.getInfotext().equals(vin.getInfotext())) {
-						aehnlichkeit = aehnlichkeit + 1;
+			if (np.getReligion().equals(vergleichsprofil.getReligion())) {
+				aehnlichkeit = aehnlichkeit + 1;
+			}
 
+			List<Info> referenzinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(profilId);
+
+			// Vergleich der Beschreibungsinfos
+			for (Info rin : referenzinfo) {
+				for (Info vin : vergleichsinfo) {
+					if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
+						counter++;
+						if (rin.getInfotext().equals(vin.getInfotext())) {
+							aehnlichkeit = aehnlichkeit + 1;
+
+						}
 					}
 				}
 			}
-		}
 
-		// Berechnung der Aehnlichkeit
-		aehnlichkeit = aehnlichkeit * (100 / counter);
-		
-		nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
-		
+			// Berechnung der Aehnlichkeit
+			aehnlichkeit = aehnlichkeit * (100 / counter);
+
+			nutzerprofilMapper.insertAehnlichkeit(profilId, fremdprofilId, aehnlichkeit);
+
 		}
 
 	}
-
 
 	/**
 	 * Aehnlichkeit entfernen
@@ -506,17 +491,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	public void berechneAehnlichkeitSpFor() throws IllegalArgumentException {
 
-		List<Suchprofil> referenzprofil = suchprofilMapper
-				.findAllSuchprofileFor(profil.getProfilId());
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profil.getProfilId());
-		
-		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
+		List<Suchprofil> referenzprofil = suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
+				.findNutzerprofileOhneGesetzeSperrung(profil.getProfilId());
+
+		// Vergleich der Profildaten von jeweils einem Suchprofil und einem
+		// Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 
 				int aehnlichkeitSp = 0;
 				int counter = 70;
-				
+
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
@@ -543,16 +529,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				}
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
-				List<Info> referenzinfo = infoMapper
-						.findAllInfosNeu(suchprofilId);
-				List<Info> vergleichsinfo = infoMapper
-						.findAllInfosNeu(fremdprofilId);
-				
+				List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
+				List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+
 				// Vergleich der Infos
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-							counter= counter + 2;
+							counter = counter + 2;
 							if (rin.getInfotext().equals(vin.getInfotext())) {
 								aehnlichkeitSp = aehnlichkeitSp + 2;
 
@@ -560,13 +544,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 						}
 					}
 				}
-				
+
 				// Berechnung des Prozentwertes
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
-				
+
 				// Aehnlichkeit in die Datenbank setzen
-				suchprofilMapper.insertAehnlichkeit(profil.getProfilId(),
-						suchprofilId, suchprofilName, fremdprofilId,
+				suchprofilMapper.insertAehnlichkeit(profil.getProfilId(), suchprofilId, suchprofilName, fremdprofilId,
 						aehnlichkeitSp);
 
 			}
@@ -574,14 +557,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-	
-
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException {
 
 		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profil.getProfilId(), suchprofilName);
 
 	}
-
 
 	public void aehnlichkeitEntfernenSp() throws IllegalArgumentException {
 		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());
@@ -603,7 +583,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
 			throws IllegalArgumentException {
-		
+
 		Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result = new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
 
 		List<Eigenschaft> listE = infoMapper.findAllEigenschaftenNeu();
@@ -616,9 +596,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			if (listE.get(i).getTyp().equals("B")) {
 
 				Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
-				
+
 				eigB.setErlaeuterung(listE.get(i).erlaeuterung);
-				
+
 				listEigB.add(eigB);
 
 			}
@@ -626,9 +606,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			else if (listE.get(i).getTyp().equals("A")) {
 
 				Auswahleigenschaft eigA = new Auswahleigenschaft();
-				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i)
-						.getEigenschaftId());
-				
+				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
+
 				eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
 
 				listEigA.add(eigA);
@@ -639,52 +618,44 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		result.put(listEigB, listEigA);
 		System.out.println(result.toString());
 		return result;
-		
 
 	}
 
-	
-	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profil.getProfilId());
 		System.out.println(listE);
 		return listE;
 	}
-	
+
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId) throws IllegalArgumentException {
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(suchprofilId);
 		System.out.println(listE);
 		return listE;
 	}
-		
-	
-	
+
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException {
-		
+
 		Map<List<Info>, List<Eigenschaft>> result = new HashMap<List<Info>, List<Eigenschaft>>();
 		List<Info> listI = new ArrayList<Info>();
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
-		
+
 		listI = this.infoMapper.findAllInfosNeu(profil.getProfilId());
-		
+
 		for (Info i : listI) {
-			
+
 			Eigenschaft e = new Eigenschaft();
 			e = this.infoMapper.findEigenschaftByIdNeu(i.getEigenschaftId());
-			
+
 			System.out.println(e.getErlaeuterung());
-			
+
 			listE.add(e);
 		}
-		
+
 		result.put(listI, listE);
 		return result;
 	}
-
-	
-	
 
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 
@@ -706,29 +677,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			list1.add(String.valueOf(i.getInfotext()));
 			list1.add(e.getTyp());
 		}
-//		System.out.println(list1);
+		// System.out.println(list1);
 		return list1;
 	}
 
-	
-	public List<Info> createInfo(List<Info> infos)
-			throws IllegalArgumentException {
-			
-			System.out.println(infos);
-			
-			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
-		}
+	public List<Info> createInfo(List<Info> infos) throws IllegalArgumentException {
 
-	
-//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-//
-//		Info i = new Info();
-//		i.setProfilId(suchprofilId);
-//		i.setEigenschaftId(eigenschaftId);
-//		i.setInfotext(infotext);
-//
-//		return this.infoMapper.insertInfoNeu(i);
-//	}
+		System.out.println(infos);
+
+		return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
+	}
+
+	// public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String
+	// infotext) throws IllegalArgumentException {
+	//
+	// Info i = new Info();
+	// i.setProfilId(suchprofilId);
+	// i.setEigenschaftId(eigenschaftId);
+	// i.setInfotext(infotext);
+	//
+	// return this.infoMapper.insertInfoNeu(i);
+	// }
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
@@ -760,7 +729,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public Auswahleigenschaft getEigAById(int eigenschaftId) throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
 		optionen = this.infoMapper.findEigAByIdNeu(eigenschaftId);
-//		System.out.println(optionen.getOptionen());
+		// System.out.println(optionen.getOptionen());
 
 		return optionen;
 		// return this.infoMapper.findEigAById(eigenschaftId);
@@ -792,18 +761,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-
-
 	@Override
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException {
+	public List<Info> getAllInfosNeuReport(int profilId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.infoMapper.findAllInfosNeu(profilId);
 	}
 
 	@Override
-	public String getEigenschaftstextById(int eigenschaftId)
-			throws IllegalArgumentException {
+	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
 
@@ -851,6 +816,5 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
 	}
-
 
 }
