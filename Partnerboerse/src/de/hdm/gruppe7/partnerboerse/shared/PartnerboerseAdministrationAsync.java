@@ -318,3 +318,4 @@ public interface PartnerboerseAdministrationAsync {
 	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
 }
+

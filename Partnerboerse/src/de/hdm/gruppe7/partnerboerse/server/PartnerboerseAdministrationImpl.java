@@ -102,8 +102,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil aktualisieren.
 	 */
 	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
+			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException {
 
 		// Nutzerprofil n = new Nutzerprofil();
 		profil.setVorname(vorname);

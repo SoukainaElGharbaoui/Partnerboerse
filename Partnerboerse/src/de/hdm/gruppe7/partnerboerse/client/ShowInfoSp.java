@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.List;
@@ -15,26 +14,24 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowInfoSp extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
-	private int suchprofilIdInt;
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	Suchprofil suchprofil = new Suchprofil();
 
 	/**
 	 * Konstruktor
 	 * 
 	 * @param integer
 	 */
-	public ShowInfoSp(int suchprofilId) {
-		
-		this.suchprofilIdInt = suchprofilId;
+	public ShowInfoSp(final int suchprofilId) {
 		this.add(verPanel);
 
 		/**
@@ -67,7 +64,7 @@ public class ShowInfoSp extends VerticalPanel {
 		 * InfoLabel erstellen um Text auszugeben
 		 */
 
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeuSp(suchprofilIdInt,
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeuSp(suchprofilId,
 
 				new AsyncCallback<List<String>>() {
 
@@ -118,46 +115,46 @@ public class ShowInfoSp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
 
-		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
-		verPanel.add(createRestlicheInfosButton);
-		buttonPanel.add(createRestlicheInfosButton);
-		
+		final Button erstellenButton = new Button("Infos anlegen");
+		verPanel.add(buttonPanel);
+		buttonPanel.add(erstellenButton);
 
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeuSp(suchprofilIdInt, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
-					}
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeuSp(suchprofilId,
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
+							}
 
-					@Override
-					public void onSuccess(Void result) {
-						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+							@Override
+							public void onSuccess(Void result) {
+								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-						ShowSuchprofil showSp = new ShowSuchprofil();
+								ShowSuchprofil showSp = new ShowSuchprofil();
 
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showSp);
-					}
-				});
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showSp);
+							}
+						});
 			}
 		});
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoSp editInfoSp = new EditInfoSp(suchprofilIdInt);
+				EditInfoSp editInfoSp = new EditInfoSp(suchprofilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfoSp);
 			}
 		});
 
-		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
+		erstellenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateUnusedInfosSp createRestlicheInfosSp = new CreateUnusedInfosSp(suchprofilIdInt);
+				CreateInfoSp createInfoSp = new CreateInfoSp(suchprofilId);
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createRestlicheInfosSp);
+				RootPanel.get("Details").add(createInfoSp);
 			}
 		});
 

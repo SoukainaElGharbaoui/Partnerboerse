@@ -70,7 +70,6 @@ public class EditInfoNp extends VerticalPanel {
 
 //		ClientsideSettings.getPartnerboerseAdministration().getAllInfosNeu(new AsyncCallback<List<String>>() {
 //
-//
 //			@Override
 //			public void onFailure(Throwable caught) {
 //				informationLabel.setText("Fehler");
