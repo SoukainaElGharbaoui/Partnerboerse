@@ -51,7 +51,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
-	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException;
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException;
 	
 	/**
 	 * Fremdprofil anhand dessen Profil-ID auslesen.
@@ -254,26 +254,26 @@ public interface PartnerboerseAdministration extends RemoteService {
 //	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
 //			throws IllegalArgumentException;
 	
-	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException;
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId) throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
 
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
 
-	public void deleteAllInfosNeu()
+	public int deleteAllInfosNeu(int profilId)
 			throws IllegalArgumentException;
 	
 	public void deleteAllInfosNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 
-	public void deleteOneInfoNeu(int eigenschaftId)
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
 	
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
 			throws IllegalArgumentException;
 	
-	public void saveInfo(List<Info> listI)
+	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException;
 	
 //	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
@@ -284,7 +284,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
-
 
 	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
 

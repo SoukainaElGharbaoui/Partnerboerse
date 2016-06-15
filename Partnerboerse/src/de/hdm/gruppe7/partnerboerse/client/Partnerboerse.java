@@ -53,13 +53,7 @@ public class Partnerboerse implements EntryPoint {
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
-										public void onFailure(Throwable caught) {
-										}
-
-										public void onSuccess(Void result) {
-										}
-									});
+									ClientsideSettings.setAktuellerUser(result);
 
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(

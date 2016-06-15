@@ -20,11 +20,8 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateUnusedInfos extends VerticalPanel {
-	
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
 	/**
 	 * VerticalPanel hinzufügen. 
@@ -48,9 +45,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public CreateUnusedInfos(int profilId) {	
+	public CreateUnusedInfos(final int profilId) {	
 
-		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 		
 		/**
@@ -104,7 +100,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								beschreibungstext = null;
 								
 								showUnusedEigenschaftFlexTable.setText(row,	0, 
-										String.valueOf(nutzerprofil.getProfilId()));
+										String.valueOf(profilId));
 
 								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
 
@@ -128,7 +124,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								row++;
 								
 								showUnusedEigenschaftFlexTable.setText(row,
-										0, String.valueOf(nutzerprofil.getProfilId()));
+										0, String.valueOf(profilId));
 								
 								showUnusedEigenschaftFlexTable.setText(row,
 										1, String.valueOf(eigA.getEigenschaftId()));
@@ -190,7 +186,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -207,7 +203,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -232,7 +228,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+								ShowEigenesNp showNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 							}

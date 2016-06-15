@@ -185,7 +185,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 										public void onSuccess(Nutzerprofil result) {
 											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 											
-											CreateInfoNp createInfoNp = new CreateInfoNp();
+											int profilId = result.getProfilId();
+											
+											CreateInfoNp createInfoNp = new CreateInfoNp(profilId);
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(createInfoNp);
 										}

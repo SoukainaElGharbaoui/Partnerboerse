@@ -59,7 +59,7 @@ public class Navigator extends VerticalPanel {
 		   nutzerprofilMenu.addItem("Profil anzeigen", new Command() {
 		      @Override
 		      public void execute() {
-		    	  ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+		    	  ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showEigenesNp);
 		      }

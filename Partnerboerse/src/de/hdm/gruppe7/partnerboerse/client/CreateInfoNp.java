@@ -24,7 +24,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+//	Nutzerprofil nutzerprofil = new Nutzerprofil();
+//	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
@@ -39,14 +40,16 @@ public class CreateInfoNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Info anlegen:");
 	private Label informationLabel = new Label();
 
-	public CreateInfoNp() {
+	public CreateInfoNp(final int profilId) {
+		
+//		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 
 		
-//		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
-		showEigenschaftFlexTable.setText(0, 0, "Eigenschaft-Id");
-		showEigenschaftFlexTable.setText(0, 1, "Erlaeuterung");
-		showEigenschaftFlexTable.setText(0, 2, "Anlegen");
+		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
+		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
+		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
+		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
 		showEigenschaftFlexTable.setCellPadding(6);
 		showEigenschaftFlexTable.getRowFormatter().addStyleName(0,
@@ -85,19 +88,22 @@ public class CreateInfoNp extends VerticalPanel {
 
 										eigenschaftId = null;
 										beschreibungstext = null;
+										
+										showEigenschaftFlexTable.setText(row,
+												0, String.valueOf(profilId));
 
 										eigenschaftId = String.valueOf(eigB
 												.getEigenschaftId());
-
+										
 										showEigenschaftFlexTable.setText(row,
-												0, eigenschaftId);
+												1, eigenschaftId);
 										showEigenschaftFlexTable.setText(row,
-												1, eigB.getErlaeuterung());
+												2, eigB.getErlaeuterung());
 
 										final TextArea textArea = new TextArea();
 
 										showEigenschaftFlexTable.setWidget(row,
-												2, textArea);
+												3, textArea);
 
 										beschreibungstext = eigB
 												.getBeschreibungstext();
@@ -110,16 +116,20 @@ public class CreateInfoNp extends VerticalPanel {
 									for (Auswahleigenschaft eigA : listA) {
 
 										row++;
+										
 										showEigenschaftFlexTable.setText(row,
-												0, String.valueOf(eigA
+												0, String.valueOf(profilId));
+										
+										showEigenschaftFlexTable.setText(row,
+												1, String.valueOf(eigA
 														.getEigenschaftId()));
 										showEigenschaftFlexTable.setText(row,
-												1, eigA.getErlaeuterung());
+												2, eigA.getErlaeuterung());
 
 										final ListBox lb = new ListBox();
 
 										showEigenschaftFlexTable.setWidget(row,
-												2, lb);
+												3, lb);
 
 										List<String> optionen = eigA
 												.getOptionen();
@@ -154,9 +164,9 @@ public class CreateInfoNp extends VerticalPanel {
 					k = i - 2;
 
 					String eigenschaftIdTable = showEigenschaftFlexTable
-							.getText(i, 0);
+							.getText(i, 1);
 
-					Widget w = showEigenschaftFlexTable.getWidget(i, 2);
+					Widget w = showEigenschaftFlexTable.getWidget(i, 3);
 					
 					if (w instanceof TextArea) {
 						
@@ -171,7 +181,7 @@ public class CreateInfoNp extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -188,7 +198,7 @@ public class CreateInfoNp extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -196,12 +206,6 @@ public class CreateInfoNp extends VerticalPanel {
 						}
 
 					}
-
-//					Info info = new Info();
-//					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-//					info.setInfotext(infotextTable);
-//
-//					infos.add(info);
 				}
 
 				
@@ -219,8 +223,7 @@ public class CreateInfoNp extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(
-										nutzerprofil);
+								ShowEigenesNp showNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 

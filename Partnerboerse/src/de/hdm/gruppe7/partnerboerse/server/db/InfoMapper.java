@@ -92,18 +92,17 @@ public class InfoMapper {
 	}
 
 
-	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
+	public List<Info> insertInfoNeu(List<Info> infos) {
 
 		Connection con = DBConnection.connection();
 		
 		for (Info i : infos) {
-			
 		
 			try {
 				Statement stmt = con.createStatement();
 	
 				stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
-						+ profilId + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
+						+ i.getProfilId() + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
 	
 			} catch (SQLException e2) {
 				e2.printStackTrace();

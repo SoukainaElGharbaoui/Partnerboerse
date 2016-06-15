@@ -25,8 +25,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class EditInfoNp extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
 	/**
 	 * VerticalPanels hinzufügen.
 	 */
@@ -51,7 +49,7 @@ public class EditInfoNp extends VerticalPanel {
 	 * Konstruktor hinzufügen.
 	 */
 
-	public EditInfoNp() {
+	public EditInfoNp(final int profilId) {
 		this.add(verPanel);
 
 		/**
@@ -74,7 +72,7 @@ public class EditInfoNp extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
 		
-		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(
+		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 				new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
 
 			@Override
@@ -133,7 +131,7 @@ public class EditInfoNp extends VerticalPanel {
 										informationLabel.setText("Die EigenschaftIds stimmen überein.");
 				
 										ClientsideSettings.getPartnerboerseAdministration()
-												.deleteOneInfoNeu(eigenschaftId, 
+												.deleteOneInfoNeu(profilId, eigenschaftId, 
 														new AsyncCallback<Void>() {
 				
 													@Override
@@ -257,7 +255,8 @@ public class EditInfoNp extends VerticalPanel {
 						if (((TextArea) w).getText().isEmpty()) {
 							informationLabel.setText("Das Eingabefeld ist leer.");
 							
-							ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(Integer.valueOf(eigenschaftIdTable),
+							
+							ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(profilId, Integer.valueOf(eigenschaftIdTable),
 									new AsyncCallback<Void>() {
 
 										@Override
@@ -274,7 +273,7 @@ public class EditInfoNp extends VerticalPanel {
 
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -291,7 +290,7 @@ public class EditInfoNp extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(nutzerprofil.getProfilId());
+							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -301,7 +300,7 @@ public class EditInfoNp extends VerticalPanel {
 				}
 				
 				
-				ClientsideSettings.getPartnerboerseAdministration().saveInfo(
+				ClientsideSettings.getPartnerboerseAdministration().saveInfo(profilId,
 						infos, new AsyncCallback<Void>() {
 
 							@Override
@@ -315,7 +314,7 @@ public class EditInfoNp extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+								ShowEigenesNp showNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 

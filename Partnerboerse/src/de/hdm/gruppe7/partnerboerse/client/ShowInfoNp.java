@@ -28,8 +28,6 @@ public class ShowInfoNp extends VerticalPanel {
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
 	private int row;
 	private int eigenschaftIdInt;
 	private int eigenschaftIdTable;
@@ -39,9 +37,8 @@ public class ShowInfoNp extends VerticalPanel {
 	 * 
 	 * @param integer
 	 */
-	public ShowInfoNp(int profilId) {
+	public ShowInfoNp(final int profilId) {
 		
-		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 
 		/**
@@ -75,7 +72,7 @@ public class ShowInfoNp extends VerticalPanel {
 		 */
 		
 		
-	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(
+	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 			new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
 
 		@Override
@@ -159,21 +156,35 @@ public class ShowInfoNp extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
-						new AsyncCallback<Void>() {
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
+						new AsyncCallback<Integer>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
 					}
 
 					@Override
-					public void onSuccess(Void result) {
+					public void onSuccess(Integer result) {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+						
+						// Fall, profilId gehört zu Nutzerprofil
+						if (result == 0) {
+							
+							ShowEigenesNp showNp = new ShowEigenesNp();
 
-						ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
-
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showNp);
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showNp);
+						}
+						
+						// Fall, profilId gehört zu Suchprofil
+						else if (result == 1) {
+							
+							ShowSuchprofil showSp = new ShowSuchprofil();
+							
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showSp);
+							
+						}
 					}
 				});
 			}
@@ -181,7 +192,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoNp editInfoNp = new EditInfoNp();
+				EditInfoNp editInfoNp = new EditInfoNp(profilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfoNp);
 			}
@@ -189,7 +200,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		erstellenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(nutzerprofil.getProfilId());
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}

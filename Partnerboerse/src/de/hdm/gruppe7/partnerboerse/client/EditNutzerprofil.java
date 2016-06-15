@@ -26,7 +26,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt erzeugen.
 	 */
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 	
 	/**
 	 * Panel hinzufuegen.
@@ -148,7 +148,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Nutzerprofil auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -226,7 +226,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 							public void onSuccess(Void result) {
 								// Seite zum Anzeigen des eigenen Nutzerprofils aufrufen.
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
 

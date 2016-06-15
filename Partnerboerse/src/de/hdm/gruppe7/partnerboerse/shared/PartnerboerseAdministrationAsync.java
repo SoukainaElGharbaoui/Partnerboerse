@@ -46,7 +46,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
-	void getNutzerprofilById(AsyncCallback<Nutzerprofil> callback);
+	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 	
 
 	/**
@@ -240,21 +240,21 @@ public interface PartnerboerseAdministrationAsync {
 	
 //	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
-	void getAllInfos(AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
+	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
 	
 	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
 
 	void getAllInfosNeuSp(int suchprofilId, AsyncCallback<List<String>> callback);
 
-	void deleteAllInfosNeu(AsyncCallback<Void> callback);
+	void deleteAllInfosNeu(int profilId, AsyncCallback<Integer> callback);
 	
 	void deleteAllInfosNeuSp(int suchprofilId, AsyncCallback<Void> callback);
 
-	void deleteOneInfoNeu(int eigenschaftId, AsyncCallback<Void> callback);
+	void deleteOneInfoNeu(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
 
 	void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId, AsyncCallback<Void> callback);
 
-	void saveInfo(List<Info> listI, AsyncCallback<Void> callback);
+	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
 	
 //	void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Void> callback);
 

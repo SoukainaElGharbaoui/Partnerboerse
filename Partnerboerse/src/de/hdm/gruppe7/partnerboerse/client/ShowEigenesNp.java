@@ -18,7 +18,7 @@ public class ShowEigenesNp extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen.
 	 */
-	private Nutzerprofil nutzerprofil = new Nutzerprofil();
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 	
 	/**
 	 * Variable für die Nutzer-Email anlegen.
@@ -50,14 +50,13 @@ public class ShowEigenesNp extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufuegen.
 	 */
-	public ShowEigenesNp(Nutzerprofil user) {
+	public ShowEigenesNp() {
 
 		this.add(horPanel);
 		horPanel.add(verPanel1); 
 		horPanel.add(verPanel2); 
 		
-		this.nutzerprofil = user;
-		this.userEmail = user.getEmailAddress();
+		this.userEmail = nutzerprofil.getEmailAddress();
 		
 		/**
 		 * CSS anwenden. 
@@ -88,7 +87,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		/**
 		 * Nutzerprofil anhand der Profil-ID auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {

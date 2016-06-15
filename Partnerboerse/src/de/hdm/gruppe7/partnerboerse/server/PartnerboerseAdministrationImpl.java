@@ -128,9 +128,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Nutzerprofil anhand dessen Profil-ID auslesen.
 	 */
 	@Override
-	public Nutzerprofil getNutzerprofilById() throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findByNutzerprofilId(profil.getProfilId());
-
+	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
 
 	/**
@@ -690,13 +689,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 		
 	
-	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException {
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId) throws IllegalArgumentException {
 		
 		Map<List<Info>, List<Eigenschaft>> result = new HashMap<List<Info>, List<Eigenschaft>>();
 		List<Info> listI = new ArrayList<Info>();
 		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 		
-		listI = this.infoMapper.findAllInfosNeu(profil.getProfilId());
+		listI = this.infoMapper.findAllInfosNeu(profilId);
 		
 		for (Info i : listI) {
 			
@@ -742,32 +741,46 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			
 			System.out.println(infos);
 			
-			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
+//			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
+			return this.infoMapper.insertInfoNeu(infos);
+
 		}
 
 
-	public void deleteAllInfosNeu() throws IllegalArgumentException {
-		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
+	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
+		
+		int ergebnis;
+		
+		this.infoMapper.deleteAllInfosNeu(profilId);
+		
+		Nutzerprofil np = this.nutzerprofilMapper.findByNutzerprofilId(profilId);
+				
+		if (np == null) {
+			ergebnis = 1;
+		}
+		
+		else {
+			ergebnis = 0;
+		}
+		return ergebnis;
 	}
+	
 
 	public void deleteAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(suchprofilId);
 	}
 
-	public void deleteOneInfoNeu(int eigenschaftId) throws IllegalArgumentException {
-		this.infoMapper.deleteOneInfoNeu(profil.getProfilId(), eigenschaftId);
-		System.out.println(profil.getProfilId() + ", " + eigenschaftId);
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
+		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId) throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
-		System.out.println(suchprofilId + ", " + eigenschaftId);
 	}
 
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId) throws IllegalArgumentException {
 		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
 		eigB = this.infoMapper.findEigBByIdNeu(eigenschaftId);
-		System.out.println(eigB.getBeschreibungstext());
 
 		return eigB;
 	}
@@ -795,8 +808,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return optionen;
 	}
 	
-	public void saveInfo(List<Info> listI) throws IllegalArgumentException {
-		this.infoMapper.updateInfos(profil.getProfilId(), listI);
+	public void saveInfo(int profilId, List<Info> listI) throws IllegalArgumentException {
+		this.infoMapper.updateInfos(profilId, listI);
 	}
 
 
@@ -871,6 +884,4 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
 	}
-
-
 }
