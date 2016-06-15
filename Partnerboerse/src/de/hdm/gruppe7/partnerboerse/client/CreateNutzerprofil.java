@@ -124,6 +124,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
 
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		createNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -156,14 +157,19 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Vornamen ein");
+					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
 
 					// Wenn kein Nachname angegeben wird...
 				} else if (nachnameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein");
+					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-
+					
+				// Wenn keine Koerpergroesse angegeben wird...	
+				} else if (koerpergroesseTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+					
 				} else {
 					/**
 					 * Nutzerprofil anlegen.

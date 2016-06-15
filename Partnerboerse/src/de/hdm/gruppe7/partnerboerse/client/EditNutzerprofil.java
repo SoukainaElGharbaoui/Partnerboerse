@@ -51,8 +51,10 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label emailLabel = new Label();
 
 	private Label infoLabel = new Label();
+
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
+	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
 
 	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
@@ -69,6 +71,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
+		reqLabel3.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
 		/**
@@ -121,6 +124,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumDateBox);
 
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
+		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel3);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -199,12 +203,20 @@ public class EditNutzerprofil extends VerticalPanel {
 
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Vornamen ein");
+
+					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
 					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 					// Wenn kein Nachname angegeben wird...
+
 				} else if (nachnameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein");
+
+					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
+					// Wenn keine Koerpergroesse angegeben wird...
+				} else if (koerpergroesseTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
+
 				} else {
 
 					/**
