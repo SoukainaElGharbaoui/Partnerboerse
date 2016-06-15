@@ -106,18 +106,52 @@ public class EditInfoNp extends VerticalPanel {
 						
 						row++;
 						infotext = null;
+						final int eigenschaftId = listInfos.get(i).getEigenschaftId();
 						
-						editInfoFlexTable.setText(row, 0, String.valueOf(listI.get(i).getProfilId()));
-						editInfoFlexTable.setText(row, 1, String.valueOf(listI.get(i).getEigenschaftId()));
+						
+						editInfoFlexTable.setText(row, 0, String.valueOf(listInfos.get(i).getProfilId()));
+						editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
 						
 						loeschenButton = new Button("Löschen");
 						editInfoFlexTable.setWidget(row, 4, loeschenButton);
 						
-						// löscht die letzte Zeile, egal wo man draufklickt. Aber das nur einmal.
+						
 						loeschenButton.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {
-
-								editInfoFlexTable.removeRow(row);
+								
+								for (int l = 2; l <= editInfoFlexTable.getRowCount(); l++) {
+									
+									int tableEigenschaftId = Integer.valueOf(editInfoFlexTable.getText(l, 1));
+				
+									if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
+									
+										informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
+									}
+									
+									else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
+										
+										informationLabel.setText("Die EigenschaftIds stimmen überein.");
+				
+										ClientsideSettings.getPartnerboerseAdministration()
+												.deleteOneInfoNeu(eigenschaftId, 
+														new AsyncCallback<Void>() {
+				
+													@Override
+													public void onFailure(Throwable caught) {
+														informationLabel
+																.setText("Beim Löschen der Info trat ein Fehler auf.");
+													}
+				
+													@Override
+													public void onSuccess(Void result) {
+														informationLabel.setText("Das Löschen der Info hat funktioniert.");
+													}
+										});
+										
+										editInfoFlexTable.removeRow(l);
+										break;
+									}
+								}
 							}
 						});	
 						
