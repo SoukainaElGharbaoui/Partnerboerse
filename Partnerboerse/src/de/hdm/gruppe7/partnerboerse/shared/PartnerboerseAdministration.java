@@ -2,6 +2,7 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -237,28 +238,25 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-	
-//	public Eigenschaft allEigenschaftElemente(int eigenschaftId)throws IllegalArgumentException;
-	
-	public List<Eigenschaft> getAllEigenschaftenNeu()
-			throws IllegalArgumentException;
-	
+
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften() 	
+			throws IllegalArgumentException;	
+		
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
 			throws IllegalArgumentException;
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 	
-	public Info createInfoNeu(int eigenschaftId, String infotext)
+	public List<Info> createInfo(List<Info> infos)
 			throws IllegalArgumentException;
 	
-	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
-			throws IllegalArgumentException;
+//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
+//			throws IllegalArgumentException;
 	
-	public List<String> getAllInfosNeu() throws IllegalArgumentException;
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException;
 	
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException;
-
 
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
@@ -344,4 +342,3 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 
 }
-

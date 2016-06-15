@@ -186,29 +186,20 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 										public void onFailure(Throwable caught) {
 											infoLabel.setText("Es trat ein Fehler auf");
-
 										}
-
+											
 										public void onSuccess(Nutzerprofil result) {
 											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-
+											
+											CreateInfoNp createInfoNp = new CreateInfoNp();
+											RootPanel.get("Details").clear();
+											RootPanel.get("Details").add(createInfoNp);
 										}
-
-									});
-					
-					/**
-					 * Seite zum Anlegen der Infos aufrufen.
-					 */
-					CreateInfoNp createInfoNp = new CreateInfoNp();
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(createInfoNp);
-
+								});
+						}
 				}
-
-			}
-
 		});
-		
+					
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
