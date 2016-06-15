@@ -187,6 +187,8 @@ public interface PartnerboerseAdministrationAsync {
 
 	void getGeordnetePartnervorschlaegeNp(AsyncCallback<List<Nutzerprofil>> callback);
 
+	void getGeordnetePartnervorschlaegeNpReport(Nutzerprofil nutzerprofil, AsyncCallback<List<Nutzerprofil>> callback);
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Partnervorschl�ge
@@ -208,6 +210,9 @@ public interface PartnerboerseAdministrationAsync {
 
 
 	void getGeordnetePartnervorschlaegeSp(String suchprofilName,
+			AsyncCallback<List<Nutzerprofil>> callback);
+	
+	void getGeordnetePartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
 
 	/*

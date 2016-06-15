@@ -10,21 +10,15 @@ import java.util.Vector;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
-import de.hdm.gruppe7.partnerboerse.client.Navigator;
-import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -224,7 +218,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
 	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException {
-		return this.suchprofilMapper.findAllSuchprofileFor(1);
+		return this.suchprofilMapper.findAllSuchprofileFor(profil.getProfilId());
 	}
 
 	/**
@@ -503,7 +497,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profil.getProfilId());
 
 	}
+	
+	/**
+	 * Methode zur Ausgabe einer Liste von Partnervorschlaegen für den Report (Unangesehene
+	 * Profile, von denen man nicht gesperrt wurde, geordnet nach Aehnlichkeit)
+	 */
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNpReport(Nutzerprofil nutzerprofil) throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId());
 
+	}
+/**
+ * Methode zur berechnung der Aehnlichkeit zwischen zwei Nutzerprofilen
+ */
 	public void berechneAehnlichkeitSpFor() throws IllegalArgumentException {
 
 		List<Suchprofil> referenzprofil = suchprofilMapper
@@ -582,6 +587,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilName) throws IllegalArgumentException {
+
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(nutzerprofil.getProfilId(), suchprofilName);
+
+	}
 
 	public void aehnlichkeitEntfernenSp() throws IllegalArgumentException {
 		this.suchprofilMapper.deleteAehnlichkeitSp(profil.getProfilId());

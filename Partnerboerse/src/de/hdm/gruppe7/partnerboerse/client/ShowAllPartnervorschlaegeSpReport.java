@@ -38,7 +38,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 */
 	public ShowAllPartnervorschlaegeSpReport(){
 	this.add(verPanel);
-	final Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
+	final Label auswahlLabel = new Label("Waehlen Sie das anzuzeigende Suchprofil aus.");
 	auswahlLabel.addStyleName("partnerboerse-label");
 	final ListBox auswahlListBox = new ListBox();
 	final Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");

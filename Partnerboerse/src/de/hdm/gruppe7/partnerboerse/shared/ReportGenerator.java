@@ -89,6 +89,8 @@ public interface ReportGenerator extends RemoteService {
 
 	Nutzerprofil login(String requestUri) throws Exception;
 	
+//	public void setUser(Nutzerprofil n);
+	
 	public void setUser(Nutzerprofil n);
 
 }

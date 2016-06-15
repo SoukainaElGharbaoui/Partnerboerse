@@ -103,8 +103,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	     */
 		CompositeParagraph imprint = new CompositeParagraph(); 
 		
-		imprint.addSubParagraph(new SimpleParagraph("Partnerboerse"));
-		imprint.addSubParagraph(new SimpleParagraph("XYZ")); 
+		imprint.addSubParagraph(new SimpleParagraph("Lonely Hearts"));
+
 		
 		/*
 		 * Impressum zum Report hinzufï¿½gen.
@@ -130,7 +130,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	    AllInfosOfNutzerReport result = new AllInfosOfNutzerReport();
 
 		// Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
-		result.setTitle(np.getVorname() + " " + np.getNachname());
+		result.setTitle(" ");
 
 		// Imressum hinzufï¿½gen
 		this.addImprint(result);
@@ -149,12 +149,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		CompositeParagraph header = new CompositeParagraph();
 
 		// Name und Vorname des Kunden aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Infos von " + np.getNachname() + ", "
+		header.addSubParagraph(new SimpleParagraph("Infos von: \n"  + np.getNachname() + ", "
 				+ np.getVorname()));
 
-		// Kundennummer aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
-				+ np.getProfilId()));
+//		// Kundennummer aufnehmen
+//		header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
+//				+ np.getProfilId()));
 
 		// Hinzufï¿½gen der zusammengestellten Kopfdaten zu dem Report
 		result.setHeaderData(header);
@@ -225,7 +225,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		    AllProfildatenOfNutzerReport result = new AllProfildatenOfNutzerReport();
 
 			// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-			result.setTitle("Profildaten von " + np.getVorname() + " " + np.getNachname());
+			result.setTitle(np.getVorname() + " " + np.getNachname());
 
 			// Imressum hinzufügen
 			this.addImprint(result);
@@ -244,12 +244,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			CompositeParagraph header = new CompositeParagraph();
 
 			// Name und Vorname des Kunden aufnehmen
-			header.addSubParagraph(new SimpleParagraph(np.getNachname() + ", "
+			header.addSubParagraph(new SimpleParagraph("Profildaten von: " + np.getNachname() + ", "
 					+ np.getVorname()));
 
-			// Kundennummer aufnehmen
-			header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
-					+ np.getProfilId()));
+//			// Kundennummer aufnehmen
+//			header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
+//					+ np.getProfilId()));
 
 			// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
 			result.setHeaderData(header);
@@ -392,7 +392,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	     * CompositeReport ist.
 	     */
 		
-	    List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeNp();
+	    List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeNpReport(profil);
 System.out.println("Partnervorschlaege:" + allNutzer);
 	    for (Nutzerprofil np : allNutzer) {
 	      /*
@@ -400,7 +400,7 @@ System.out.println("Partnervorschlaege:" + allNutzer);
 	       */
 	    	
 	   result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
-	  //result.addSubReport(this.createAllInfosOfNutzerReport(np));
+	   result.addSubReport(this.createAllInfosOfNutzerReport(np));
 	      
 	    }
 
@@ -457,7 +457,7 @@ System.out.println("Partnervorschlaege:" + allNutzer);
 	     * AllAccountsOfAllCustomersReport, welches eine Subklasse von
 	     * CompositeReport ist.
 	     */
-	    List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeSp(suchprofilname);
+	    List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeSpReport(profil, suchprofilname);
 
 	    for (Nutzerprofil np : allNutzer) {
 	      /*

@@ -3,9 +3,6 @@ package de.hdm.gruppe7.partnerboerse.shared;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -198,6 +195,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	// Ausgabe der Partnervorschlaege
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp() throws IllegalArgumentException;
+	
+	// Ausgabe der Partnervorschlaege für den Report
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeNpReport(Nutzerprofil nutzerprofil) throws IllegalArgumentException;
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Partnervorschlï¿½geNp
@@ -225,6 +225,9 @@ public interface PartnerboerseAdministration extends RemoteService {
 		//Ausgabe der Partnervorschlaege
 		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(String suchprofilName) throws IllegalArgumentException;
 	
+		
+		//Ausgabe der Partnervorschlaege
+		public List<Nutzerprofil> getGeordnetePartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilName) throws IllegalArgumentException;
 	/*
 	 * ***************************************************************************
 	 * ABSCHNITT, Ende: PartnervorschlÃ¤geSp
@@ -338,6 +341,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	Nutzerprofil login(String requestUri) throws Exception;
 	
 	public void setUser(Nutzerprofil n);
+
 
 
 

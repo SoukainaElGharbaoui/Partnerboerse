@@ -246,37 +246,24 @@ public class HTMLReportWriter extends ReportWriter {
 	     * jeden dieser Teil-Reports rufen wir processAllAccountsOfCustomerReport
 	     * auf. Das Ergebnis des jew. Aufrufs fügen wir dem Buffer hinzu.
 	     */
-//	    for (int i = 0; i < r.getNumSubReports(); i++) {
-//	      /*
-//	       * AllAccountsOfCustomerReport wird als Typ der SubReports vorausgesetzt.
-//	       * Sollte dies in einer erweiterten Form des Projekts nicht mehr gelten,
-//	       * so müsste hier eine detailliertere Implementierung erfolgen.
-//	       */
-//	      AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r
-//	          .getSubReportAt(i);
-//
-//	      this.process(subReport);
-//	     
-//
-//	      result.append(this.reportText + "\n");
-//	      
-//		 
-//	      /*
-//	       * Nach jeder Übersetzung eines Teilreports und anschließendem Auslesen
-//	       * sollte die Ergebnisvariable zurückgesetzt werden.
-//	       */
-//	      this.resetReportText();
-//	    }
-	    for (int j = 0; j < r.getNumSubReports(); j++) {
+
+	    for (int j = 0; j < r.getNumSubReports(); j= j + 2) {
 		      /*
 		       * AllAccountsOfCustomerReport wird als Typ der SubReports vorausgesetzt.
 		       * Sollte dies in einer erweiterten Form des Projekts nicht mehr gelten,
 		       * so müsste hier eine detailliertere Implementierung erfolgen.
 		       */
+	    
 		      AllProfildatenOfNutzerReport subReport2 = (AllProfildatenOfNutzerReport) r
 		          .getSubReportAt(j);
 
 		      this.process(subReport2);
+		      result.append(this.reportText + "\n");
+		      
+		 	 AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r
+			          .getSubReportAt(j+1);
+
+			      this.process(subReport);
 		     
 
 		      result.append(this.reportText + "\n");
@@ -339,12 +326,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 	      result.append(this.reportText + "\n");
 	      
-	      AllProfildatenOfNutzerReport subReport1 = (AllProfildatenOfNutzerReport) r
-		          .getSubReportAt(i);
-
-		      this.process(subReport1);
-
-		      result.append(this.reportText + "\n");
+	    
 	  	      /*
 	       * Nach jeder Übersetzung eines Teilreports und anschließendem Auslesen
 	       * sollte die Ergebnisvariable zurückgesetzt werden.

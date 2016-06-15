@@ -4,19 +4,13 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.ListDataProvider;
-
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
@@ -41,7 +35,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Profile könnten Ihnen gefallen:");
+		final Label ueberschriftLabel = new Label("Diese Profile koennten Ihnen gefallen:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		verPanel.add(ueberschriftLabel);
 
@@ -85,7 +79,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						int row = partnervorschlaegeNpFlexTable.getRowCount();
 
 						for (Nutzerprofil np : result) {
-
+							System.out.println("Profil geholt: " + np);
+							infoLabel.setText("Es trat kein Fehler auf");
 							final int fremdprofilId = np.getProfilId();
 							row++;
 							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
