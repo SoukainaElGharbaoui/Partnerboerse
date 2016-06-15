@@ -172,25 +172,7 @@ public class EditInfoNp extends VerticalPanel {
 							
 							editInfoFlexTable.setWidget(row, 3, textArea);
 						}
-						
-						
-//						// löscht die letzte Zeile der Tabelle (egal wo man draufdrückt)
-//						loeschenButton.addClickHandler(new ClickHandler() {
-//							public void onClick(ClickEvent event) {
-//
-//								editInfoFlexTable.removeRow(row);
-//							}
-//						});	
-						
-					} // innere For-Schleife
-					
-//					// löscht die letzte Zeile, und nur diese, wenn man darauf klickt.
-//					loeschenButton.addClickHandler(new ClickHandler() {
-//						public void onClick(ClickEvent event) {
-//
-//							editInfoFlexTable.removeRow(row);
-//						}
-//					});	
+					}
 				}
 					
 					
@@ -249,72 +231,7 @@ public class EditInfoNp extends VerticalPanel {
 						}
 					}
 				});
-		
-//		// löscht die letzte Zeile, aber nur wenn man genau darauf klickt. Sonst nichts anderes.
-//			loeschenButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//	
-//					editInfoFlexTable.removeRow(row);
-//				}
-//			});	
-		
-		
-		// löscht an dieser Stelle die erste Zeile und diese Info, wenn man auf die letzte Zeile klickt.
-//		loeschenButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				
-//				int l;
-//				int m;
-//				
-//				for (l = 2; l < editInfoFlexTable.getRowCount(); l++) {
-//					
-//					m = 0;
-//					m = l - 2;
-//					
-//					informationLabel.setText(l + ", " + m);
-//					
-//					int tableEigenschaftId = Integer.valueOf(editInfoFlexTable.getText(l, 1));
-//					int eigenschaftIdInt = listInfos.get(m).getEigenschaftId();
-//
-//					informationLabel.setText(tableEigenschaftId + ", " + eigenschaftIdInt);
-//					
-//					if (Integer.valueOf(tableEigenschaftId) != eigenschaftIdInt) {
-//						informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
-//						
-//						break;
-//					}
-//					
-//					else if (Integer.valueOf(tableEigenschaftId) == eigenschaftIdInt) {
-//						informationLabel.setText("Die EigenschaftIds stimmen überein.");
-//
-//						ClientsideSettings.getPartnerboerseAdministration()
-//								.deleteOneInfoNeu(eigenschaftIdInt, 
-//										new AsyncCallback<Void>() {
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										informationLabel
-//												.setText("Beim Löschen der Info trat ein Fehler auf.");
-//									}
-//
-//									@Override
-//									public void onSuccess(Void result) {
-//										informationLabel.setText("Das Löschen der Info hat funktioniert.");
-//									}
-//						});
-//						
-//						editInfoFlexTable.removeRow(l);
-//						break;
-//					}
-//				}
-//			}
-//		});
-
-		
-		
-		
-		
-				} // erste For-Schleife
+				} 
 			}
 		});
 		
@@ -381,8 +298,6 @@ public class EditInfoNp extends VerticalPanel {
 							infos.add(info);
 						}
 					}
-
-					
 				}
 				
 				
@@ -409,83 +324,6 @@ public class EditInfoNp extends VerticalPanel {
 					}
 				});
 				
-//		int i; 
-//		for (i = 2; i < editInfoFlexTable.getRowCount(); i++) {
-//		
-//		loeschenButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//
-//				editInfoFlexTable.removeRow(i);
-//			}
-//		});	
-//		}
-//
-//		for (int i = 2; i < editInfoFlexTable.getRowCount(); i++) {
-//			
-//			Widget w = new Widget();
-//			w = editInfoFlexTable.getWidget(i, 4);
-//					
-//			if (w instanceof Button) {
-//
-//				loeschenButton.addClickHandler(new ClickHandler() {
-//					public void onClick(ClickEvent event) {
-//						
-//						informationLabel.setText("Loeschen-Klickhandler klappt.");
-//					}
-//				});
-//			}
-//		}
-//		
-		
-//		// Verweigert im Moment die Weiterleitung auf die Seite bei Klick auf Bearbeiten-Button
-//			loeschenButton.addClickHandler(new ClickHandler() {
-//					public void onClick(ClickEvent event) {
-//						
-//						int l;
-//						int m;
-//						
-//						for (l = 2; l < editInfoFlexTable.getRowCount(); l++) {
-//							
-//							m = 0;
-//							m = l - 2;
-//							
-//							informationLabel.setText(l + ", " + m);
-//							
-//							int tableEigenschaftId = Integer.valueOf(editInfoFlexTable.getText(l, 1));
-//							int eigenschaftIdInt = listInfos.get(m).getEigenschaftId();
-//
-//							informationLabel.setText(tableEigenschaftId + ", " + eigenschaftIdInt);
-//							
-//							if (Integer.valueOf(tableEigenschaftId) != eigenschaftIdInt) {
-//								informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
-//							}
-//							
-//							else if (Integer.valueOf(tableEigenschaftId) == eigenschaftIdInt) {
-//								informationLabel.setText("Die EigenschaftIds stimmen überein.");
-//
-//								ClientsideSettings.getPartnerboerseAdministration()
-//										.deleteOneInfoNeu(eigenschaftIdInt, 
-//												new AsyncCallback<Void>() {
-//
-//											@Override
-//											public void onFailure(Throwable caught) {
-//												informationLabel
-//														.setText("Beim Löschen der Info trat ein Fehler auf.");
-//											}
-//
-//											@Override
-//											public void onSuccess(Void result) {
-//												informationLabel.setText("Das Löschen der Info hat funktioniert.");
-//											}
-//								});
-//								
-//								editInfoFlexTable.removeRow(l);
-//								break;
-//							}
-//						}
-//					}
-//				});
-
 			verPanel.add(ueberschriftLabel);
 			verPanel.add(editInfoFlexTable);
 			verPanel.add(informationLabel);

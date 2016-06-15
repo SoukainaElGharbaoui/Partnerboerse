@@ -57,7 +57,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		horPanel.add(verPanel2); 
 		
 		this.nutzerprofil = user;
-		userEmail = user.getEmailAddress();
+		this.userEmail = user.getEmailAddress();
 		
 		/**
 		 * CSS anwenden. 
@@ -99,6 +99,8 @@ public class ShowEigenesNp extends VerticalPanel {
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
 						String nutzerprofilId = String.valueOf(result.getProfilId());
+						
+						nutzerprofil.setProfilId(Integer.valueOf(nutzerprofilId));
 						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
 						// Vorname aus Datenbank aus der Datenbank holen

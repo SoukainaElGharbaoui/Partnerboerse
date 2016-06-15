@@ -48,7 +48,9 @@ public class CreateUnusedInfos extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public CreateUnusedInfos() {	
+	public CreateUnusedInfos(int profilId) {	
+
+		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 		
 		/**
@@ -230,8 +232,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(
-										nutzerprofil);
+								ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 							}

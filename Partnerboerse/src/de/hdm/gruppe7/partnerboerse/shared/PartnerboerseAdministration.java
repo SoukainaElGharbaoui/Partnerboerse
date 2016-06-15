@@ -3,14 +3,11 @@ package de.hdm.gruppe7.partnerboerse.shared;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
@@ -248,9 +245,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften() 	
 			throws IllegalArgumentException;	
 	
-//	public List<Eigenschaft> getAllUnusedEigenschaftenNeu()
-//			throws IllegalArgumentException;
-	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 	
@@ -266,7 +260,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException;
-
 
 	public void deleteAllInfosNeu()
 			throws IllegalArgumentException;
@@ -295,40 +288,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
 
-
-
-
 	
-//	public Info createBeschreibungsinfo(int profilId, int eigenschaftId, String infotext)
-//			throws IllegalArgumentException;
-//
-//	public Info createAuswahlinfo(int profilId, int eigenschaftId, int auswahloptionId) throws IllegalArgumentException;
-//
-//	public void saveInfoA(int profilId, int neueAuswahloptionId, int eigenschaftId) throws IllegalArgumentException;
-//
-//	public void saveInfoB(int profilId, int eigenschaftId, String infotext) throws IllegalArgumentException;
-//
-//	public List<Eigenschaft> getAllEigenschaftenB() throws IllegalArgumentException;
-//
-//	public List<Eigenschaft> getAllEigenschaftenA() throws IllegalArgumentException;
-//
-//	public List<Auswahloption> getAllAuswahloptionen(int eigenschaftId) throws IllegalArgumentException;
-//
-//	public List<Info> getAllInfosB(int profilId) throws IllegalArgumentException;
-//
-//	public List<Info> getAllInfosA(int profilId) throws IllegalArgumentException;
-//
-//	public Info getOptionById(int eigenschaftId) throws IllegalArgumentException;
-//
-//	public Info getInfoAById(String optionsbezeichnung, int eigenschaftId) throws IllegalArgumentException;
-//
-//	public void deleteAllInfos(int profilId) throws IllegalArgumentException;
-//
-//	public void deleteOneInfoB(int profilId, int eigenschaftId) throws IllegalArgumentException;
-//
-//	public void deleteOneInfoA(int profilId, int eigenschaftId) throws IllegalArgumentException;
-//
-//	public List<Info> getAInfoByProfilId(int profilId) throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************

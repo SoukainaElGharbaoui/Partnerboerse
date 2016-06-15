@@ -10,21 +10,15 @@ import java.util.Vector;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.CreateNutzerprofil;
-import de.hdm.gruppe7.partnerboerse.client.Navigator;
-import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SperrlisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.SuchprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -637,8 +631,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 		result.put(listEigB, listEigA);
-//		System.out.println(result.toString());
-		return result;
+			return result;
 	}
 
 
@@ -649,25 +642,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
 
 		List<Eigenschaft> listE = infoMapper.findAllUnusedEigenschaftenNeu(1);
-//		System.out.println("ListE: " + listE);
 
 		List<Beschreibungseigenschaft> listEigB = new ArrayList<Beschreibungseigenschaft>();
 		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
 
 		for (int i = 0; i < listE.size(); i++) {
 			
-//			System.out.println("Erläuterung: " + listE.get(i).getErlaeuterung());
-			
 			if (listE.isEmpty() == true) {
-				
-//				System.out.println("Es wurden alle möglichen Infos angelegt, die Liste der übrigen Eigenschaften ist leer.");
 			}
 
 			else {
 				if (listE.get(i).getTyp().equals("B")) {
 					
-//					System.out.println("Es handelt sich um den Typ B.");
-
 					Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
 					
 					eigB.setErlaeuterung(listE.get(i).getErlaeuterung());
@@ -678,8 +664,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 				else if (listE.get(i).getTyp().equals("A")) {
 					
-//					System.out.println("Es handelt sich um den Typ A.");
-	
 					Auswahleigenschaft eigA = new Auswahleigenschaft();
 					
 					eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
@@ -693,21 +677,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 		result2.put(listEigB, listEigA);
-//		System.out.println(" ListB: " + listEigB.toString());
-//		System.out.println(" ListA: " + listEigA.toString());
 
 		return result2;
 	}
-	
-	
-//	public List<Eigenschaft> getAllUnusedEigenschaftenNeu() throws IllegalArgumentException {
-//		List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
-//		listE = this.infoMapper.findAllUnusedEigenschaftenNeu(profil.getProfilId());
-//		System.out.println(listE);
-//		return listE;
-//	}
-	
-	
 	
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId) throws IllegalArgumentException {
@@ -717,7 +689,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return listE;
 	}
 		
-	
 	
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos() throws IllegalArgumentException {
 		
@@ -742,8 +713,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	
-	
-
 	public List<String> getAllInfosNeuSp(int suchprofilId) throws IllegalArgumentException {
 
 		List<String> list1 = new ArrayList<String>();
@@ -764,7 +733,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			list1.add(String.valueOf(i.getInfotext()));
 			list1.add(e.getTyp());
 		}
-//		System.out.println(list1);
 		return list1;
 	}
 
@@ -777,16 +745,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			return this.infoMapper.insertInfoNeu(profil.getProfilId(), infos);
 		}
 
-	
-//	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext) throws IllegalArgumentException {
-//
-//		Info i = new Info();
-//		i.setProfilId(suchprofilId);
-//		i.setEigenschaftId(eigenschaftId);
-//		i.setInfotext(infotext);
-//
-//		return this.infoMapper.insertInfoNeu(i);
-//	}
 
 	public void deleteAllInfosNeu() throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(profil.getProfilId());
@@ -812,7 +770,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		System.out.println(eigB.getBeschreibungstext());
 
 		return eigB;
-		// return this.infoMapper.findEigBByIdNeu(eigenschaftId);
 	}
 	
 	
@@ -860,16 +817,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	@Override
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 		return this.infoMapper.findAllInfosNeu(1);
 	}
 
 	@Override
 	public String getEigenschaftstextById(int eigenschaftId)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
 	}
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info
