@@ -234,6 +234,7 @@ public class CreateInfoNp extends VerticalPanel {
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}
+
 							}
 						});
 			}

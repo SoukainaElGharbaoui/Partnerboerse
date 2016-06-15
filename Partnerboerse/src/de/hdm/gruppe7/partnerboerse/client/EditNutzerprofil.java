@@ -17,29 +17,27 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt erzeugen.
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-	
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+
 	/**
 	 * Panel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	/**
 	 * Widgets hinzufuegen.
 	 */
 	private Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
-	
+
 	private FlexTable editNutzerprofilFlexTable = new FlexTable();
-	
+
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
@@ -53,9 +51,11 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label emailLabel = new Label();
 
 	private Label infoLabel = new Label();
-	private Label reqLabel1 = new Label("* Pflichtfeld"); 
-	private Label reqLabel2 = new Label("* Pflichtfeld"); 
-	private Label warnungLabel = new Label(); 
+
+	private Label reqLabel1 = new Label("* Pflichtfeld");
+	private Label reqLabel2 = new Label("* Pflichtfeld");
+	private Label reqLabel3 = new Label("* Pflichtfeld");
+	private Label warnungLabel = new Label();
 
 	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
 
@@ -71,8 +71,9 @@ public class EditNutzerprofil extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
+		reqLabel3.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-		
+
 		/**
 		 * Tabelle formatieren.
 		 */
@@ -123,6 +124,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumDateBox);
 
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
+		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel3);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -142,7 +144,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editNutzerprofilFlexTable.setWidget(8, 2, religionListBox);
-		
+
 		editNutzerprofilFlexTable.setWidget(9, 2, emailLabel);
 
 		/**
@@ -188,27 +190,33 @@ public class EditNutzerprofil extends VerticalPanel {
 								raucherListBox.setSelectedIndex(i);
 							}
 						}
-						
+
 						emailLabel.setText(result.getEmailAddress());
 					}
 				});
-
-		
 
 		/**
 		 * ClickHandler für den Nutzerprofil-Bearbeiten-Button hinzufuegen.
 		 */
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Vornamen ein");
-					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel); 
-				// Wenn kein Nachname angegeben wird...
+
+					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
+					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+					// Wenn kein Nachname angegeben wird...
+
 				} else if (nachnameTextBox.getText().length() == 0) {
-						warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein"); 
-						editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel); 
+
+					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
+					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
+					// Wenn keine Koerpergroesse angegeben wird...
+				} else if (koerpergroesseTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
+
 				} else {
 
 				/**
@@ -222,7 +230,7 @@ public class EditNutzerprofil extends VerticalPanel {
 						new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf");
+									infoLabel.setText("Es trat ein Fehler auf");
 							}
 
 							public void onSuccess(Void result) {
@@ -230,17 +238,14 @@ public class EditNutzerprofil extends VerticalPanel {
 								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showEigenesNp);
-
 							}
-						});
+					});
 
 				}
 
-
-
 			}
 		});
-		
+
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
@@ -248,7 +253,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		verPanel.add(editNutzerprofilFlexTable);
 		verPanel.add(editNutzerprofilButton);
 		verPanel.add(infoLabel);
-
 	}
 
 	/**

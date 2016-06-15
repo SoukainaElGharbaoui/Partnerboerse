@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
@@ -71,8 +70,6 @@ public class Partnerboerse implements EntryPoint {
 									RootPanel.get("Navigator").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
-
-
 							}
 
 							// wenn der user nicht eingeloggt ist
@@ -84,7 +81,6 @@ public class Partnerboerse implements EntryPoint {
 						}
 					});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
