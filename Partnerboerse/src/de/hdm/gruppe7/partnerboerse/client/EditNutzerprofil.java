@@ -214,7 +214,8 @@ public class EditNutzerprofil extends VerticalPanel {
 				/**
 				 * Nutzerprofil aktualisieren.
 				 */
-				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(vornameTextBox.getText(),
+				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(
+						nutzerprofil.getProfilId(), vornameTextBox.getText(),
 						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
 						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),

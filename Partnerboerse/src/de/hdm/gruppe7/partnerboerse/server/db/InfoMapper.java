@@ -70,7 +70,7 @@ public class InfoMapper {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM t_eigenschaft1 "
 							+ "WHERE t_eigenschaft1.eigenschaft_id NOT IN (SELECT t_info1.eigenschaft_id "
-							+ "FROM t_info1 WHERE t_info1.profil_id=" + 1 + ")");
+							+ "FROM t_info1 WHERE t_info1.profil_id=" + profilId + ")");
 			
 //			SELECT * FROM t_eigenschaft1 WHERE t_eigenschaft1.eigenschaft_id NOT IN 
 //			(SELECT t_info1.eigenschaft_id FROM t_info1 WHERE t_info1.profil_id = 1)
@@ -92,7 +92,7 @@ public class InfoMapper {
 	}
 
 
-	public List<Info> insertInfoNeu(List<Info> infos) {
+	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
 
 		Connection con = DBConnection.connection();
 		
@@ -102,7 +102,7 @@ public class InfoMapper {
 				Statement stmt = con.createStatement();
 	
 				stmt.executeUpdate("INSERT INTO t_info1 (profil_id, eigenschaft_id, infotext) " + "VALUES("
-						+ i.getProfilId() + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
+						+ profilId + "," + i.getEigenschaftId() + ",'" + i.getInfotext() + "')");
 	
 			} catch (SQLException e2) {
 				e2.printStackTrace();

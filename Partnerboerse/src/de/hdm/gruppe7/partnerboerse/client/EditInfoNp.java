@@ -301,7 +301,7 @@ public class EditInfoNp extends VerticalPanel {
 				
 				
 				ClientsideSettings.getPartnerboerseAdministration().saveInfo(profilId,
-						infos, new AsyncCallback<Void>() {
+						infos, new AsyncCallback<Integer>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -310,14 +310,23 @@ public class EditInfoNp extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(Void result) {
+							public void onSuccess(Integer result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
-
-								ShowEigenesNp showNp = new ShowEigenesNp();
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showNp);
-
+								
+								if (result == 0) {
+									
+									ShowEigenesNp showNp = new ShowEigenesNp();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+								}
+								
+								else if (result == 1) {
+									
+									ShowSuchprofil showSp = new ShowSuchprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
 							}
 						});
 					}

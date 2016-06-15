@@ -148,9 +148,9 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
 
-		final Button erstellenButton = new Button("Weitere Infos anlegen");
+		final Button erstelleRestlicheInfosButton = new Button("Weitere Infos anlegen");
 		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);
+		buttonPanel.add(erstelleRestlicheInfosButton);
 		
 
 		loeschenButton.addClickHandler(new ClickHandler() {
@@ -183,7 +183,6 @@ public class ShowInfoNp extends VerticalPanel {
 							
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showSp);
-							
 						}
 					}
 				});
@@ -198,7 +197,7 @@ public class ShowInfoNp extends VerticalPanel {
 			}
 		});
 
-		erstellenButton.addClickHandler(new ClickHandler() {
+		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId);
 				RootPanel.get("Details").clear();

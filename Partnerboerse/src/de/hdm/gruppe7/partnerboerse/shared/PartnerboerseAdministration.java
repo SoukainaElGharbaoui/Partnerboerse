@@ -39,7 +39,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Nutzerprofil aktualisieren.
 	 */
-	public void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
+	public void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
 
 
@@ -81,7 +81,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Suchprofil anlegen.
 	 */
-	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
+	public Suchprofil createSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
 
 	/**
@@ -98,12 +98,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 	/**
 	 * Alle Suchprofile eines Nutzers auslesen.
 	 */
-	public List<Suchprofil> getAllSuchprofileFor() throws IllegalArgumentException;
+	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException;
 	
 	/**
 	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
-	public Suchprofil getSuchprofilByName(String suchprofilName) throws IllegalArgumentException;
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException;
 
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
@@ -242,13 +242,13 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public List<Auswahleigenschaft> getAuswahleigenschaften(List<Eigenschaft> listE) 
 			throws IllegalArgumentException;
 	
-	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften() 	
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(int profilId) 	
 			throws IllegalArgumentException;	
 	
 	public List<Eigenschaft> getAllUnusedEigenschaftenNeuSp(int suchprofilId)
 			throws IllegalArgumentException;
 	
-	public List<Info> createInfo(List<Info> infos)
+	public int createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException;
 	
 //	public Info createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)
@@ -273,7 +273,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
 			throws IllegalArgumentException;
 	
-	public void saveInfo(int profilId, List<Info> listI)
+	public int saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException;
 	
 //	public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext)

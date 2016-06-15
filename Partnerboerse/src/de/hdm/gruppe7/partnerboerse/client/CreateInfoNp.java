@@ -181,7 +181,6 @@ public class CreateInfoNp extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -198,7 +197,6 @@ public class CreateInfoNp extends VerticalPanel {
 						
 						else {
 							Info info = new Info();
-							info.setProfilId(profilId);
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
@@ -209,8 +207,8 @@ public class CreateInfoNp extends VerticalPanel {
 				}
 
 				
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(
-						infos, new AsyncCallback<List<Info>>() {
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId,
+						infos, new AsyncCallback<Integer>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -219,14 +217,23 @@ public class CreateInfoNp extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(List<Info> result) {
+							public void onSuccess(Integer result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
+								
+								if (result == 0) {
+									
+									ShowEigenesNp showNp = new ShowEigenesNp();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+								}
 
-								ShowEigenesNp showNp = new ShowEigenesNp();
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showNp);
-
+								else if (result == 1) {
+									
+									ShowSuchprofil showSp = new ShowSuchprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
 							}
 						});
 			}

@@ -13,9 +13,12 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowSuchprofil extends VerticalPanel {
+	
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * VerticalPanels und HorizontalPanels hinzufuegen.
@@ -76,7 +79,9 @@ public class ShowSuchprofil extends VerticalPanel {
 		/**
 		 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(), 
+				new AsyncCallback<List<Suchprofil>>() {
+			
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf.");
 			}
@@ -87,6 +92,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					anzeigenButton.setVisible(false); 
 					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
 					createSuchprofilButton.setVisible(true); 
+					
 				} else {
 					for (Suchprofil s : result) {
 						auswahlListBox.addItem(s.getSuchprofilName());
@@ -117,16 +123,18 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				// Tabelle mit Suchprofildaten befuellen.
 				ClientsideSettings.getPartnerboerseAdministration()
-						.getSuchprofilByName(auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
+						.getSuchprofilByName(nutzerprofil.getProfilId(), 
+								auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
 
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf.");
 							}
 
 							public void onSuccess(Suchprofil result) {
+								
 								// Suchprofil-ID
-								final String suchprofilId = String.valueOf(result.getProfilId());
-								showSuchprofilFlexTable.setText(0, 1, suchprofilId);
+								int suchprofilId = result.getProfilId();
+								showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
 
 								// Suchprofilname
 								showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
@@ -153,9 +161,9 @@ public class ShowSuchprofil extends VerticalPanel {
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 								
 								// Infos
-								ShowInfoSp showInfoSp = new ShowInfoSp(Integer.valueOf(suchprofilId));
+								ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
 								infoPanel.clear();
-								infoPanel.add(showInfoSp);
+								infoPanel.add(showInfoNp);
 
 							}
 
@@ -176,7 +184,7 @@ public class ShowSuchprofil extends VerticalPanel {
 									}
 
 									public void onSuccess(Void result) {
-										ShowSuchprofil showSuchprofil = new ShowSuchprofil(); 
+										ShowSuchprofil showSuchprofil = new ShowSuchprofil();
 										suchprofilPanel.clear();
 										infoPanel.clear();
 										suchprofilPanel.add(showSuchprofil); 

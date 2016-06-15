@@ -25,7 +25,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 	
 	/**
 	 * VerticalPanel hinzufügen.
@@ -81,8 +81,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 */
 
 		
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(
-
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
 
 					@Override

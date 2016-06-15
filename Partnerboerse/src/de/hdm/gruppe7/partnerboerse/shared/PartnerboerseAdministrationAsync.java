@@ -34,7 +34,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Nutzerprofil aktualisieren.
 	 */
-	void saveNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
+	void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
@@ -76,7 +76,7 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Suchprofil anlegen.
 	 */
-	void createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
+	void createSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 
@@ -94,12 +94,12 @@ public interface PartnerboerseAdministrationAsync {
 	/**
 	 * Alle Suchprofile eines Nutzers anzeigen.
 	 */
-	void getAllSuchprofileFor(AsyncCallback<List<Suchprofil>> callback);
+	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback);
 	
 	/**
 	 * Suchprofil anhand des Suchprofilnamens auslesen.
 	 */
-	void getSuchprofilByName(String suchprofilName, AsyncCallback<Suchprofil> callback);
+	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback);
 	
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen. 
@@ -231,12 +231,12 @@ public interface PartnerboerseAdministrationAsync {
 	void getAuswahleigenschaften(List<Eigenschaft> listE, 
 			AsyncCallback<List<Auswahleigenschaft>> callback);
 	
-	void getAllUnusedEigenschaften(AsyncCallback<Map<List<Beschreibungseigenschaft>, 
+	void getAllUnusedEigenschaften(int profilId, AsyncCallback<Map<List<Beschreibungseigenschaft>, 
 			List<Auswahleigenschaft>>> callback);
 	
 	void getAllUnusedEigenschaftenNeuSp(int suchprofilId, AsyncCallback<List<Eigenschaft>> callback);
 
-	void createInfo(List<Info> infos, AsyncCallback<List<Info>> callback);
+	void createInfo(int profilId, List<Info> infos, AsyncCallback<Integer> callback);
 	
 //	void createInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Info> callback);
 
@@ -254,7 +254,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId, AsyncCallback<Void> callback);
 
-	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
+	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Integer> callback);
 	
 //	void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String infotext, AsyncCallback<Void> callback);
 

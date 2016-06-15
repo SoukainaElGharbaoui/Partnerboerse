@@ -29,7 +29,7 @@ public class SuchprofilMapper {
 	/**
 	 * Suchprofil-Objekt in die Datenbank einfügen.
 	 */
-	public Suchprofil insertSuchprofil(Suchprofil s, Nutzerprofil n) {
+	public Suchprofil insertSuchprofil(Suchprofil s, int profilId) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -57,7 +57,7 @@ public class SuchprofilMapper {
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"INSERT INTO t_suchprofil1 (suchprofil_id, nutzerprofil_id, suchprofilname, alter_von, alter_bis) "
-								+ "VALUES(" + s.getProfilId() + "," + n.getProfilId() + ",'"
+								+ "VALUES(" + s.getProfilId() + "," + profilId + ",'"
 								+ s.getSuchprofilName() + "'," + s.getAlterMinInt() + "," + s.getAlterMaxInt() + ")");
 			}
 
