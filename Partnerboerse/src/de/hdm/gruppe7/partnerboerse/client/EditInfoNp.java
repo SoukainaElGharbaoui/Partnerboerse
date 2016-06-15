@@ -337,7 +337,22 @@ public class EditInfoNp extends VerticalPanel {
 						
 						infotextTable = ((TextArea) w).getText();
 						
-						if (infotextTable == null) {
+						if (((TextArea) w).getText().isEmpty()) {
+							informationLabel.setText("Das Eingabefeld ist leer.");
+							
+							ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(Integer.valueOf(eigenschaftIdTable),
+									new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											informationLabel.setText("Beim Löschen der Info ist ein Fehler aufgetreten.");
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											informationLabel.setText("Die Info wurde gelöscht, da das Eingabefeld geleert wurde.");
+										}
+							});
 						}
 
 						else {

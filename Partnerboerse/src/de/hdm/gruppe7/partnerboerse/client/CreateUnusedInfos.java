@@ -178,8 +178,12 @@ public class CreateUnusedInfos extends VerticalPanel {
 					if (w instanceof TextArea) {
 						
 						infotextTable = ((TextArea) w).getText();
-						
+							
 						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+						}
+						
+						else if (((TextArea) w).getText().isEmpty()) {
+							informationLabelB.setText("Das Eingabefeld ist leer.");
 						}
 						
 						else {

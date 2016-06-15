@@ -162,10 +162,11 @@ public class CreateInfoNp extends VerticalPanel {
 						
 						infotextTable = ((TextArea) w).getText();
 
-						if (infotextTable == null) {
+						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
 						}
 						
-						else if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+						else if (((TextArea) w).getText().isEmpty()) {
+							informationLabel.setText("Das Eingabefeld ist leer.");
 						}
 						
 						else {
