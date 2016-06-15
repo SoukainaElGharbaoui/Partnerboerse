@@ -7,13 +7,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowFremdprofil extends VerticalPanel {
+
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * VerticalPanel hinzuf�gen.
@@ -26,12 +29,12 @@ public class ShowFremdprofil extends VerticalPanel {
 	 */
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	
+
 	/**
 	 * Vermerk-Button und Sperrung-Button hinzufuegen.
 	 */
-	private Button mButton = new Button(); 
-	private Button sButton = new Button(); 
+	private Button mButton = new Button();
+	private Button sButton = new Button();
 
 	/**
 	 * Konstruktor hinzuf�gen.
@@ -127,116 +130,141 @@ public class ShowFremdprofil extends VerticalPanel {
 
 					}
 				});
-		
+
 		/**
 		 * ABSCHNITT MERKLISTE UND SPERRLISTE BEGINN: Programmierung
 		 * "Vermerk setzen" / "Vermerk löschen", "Sperrung setzen" /
 		 * "Sperrung löschen" Button.
 		 */
-		
-		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer gesperrt wurde. 
-		ClientsideSettings.getPartnerboerseAdministration().pruefeSperrstatusFremdprofil(fremdprofilId, new AsyncCallback<Integer>() {
 
-			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
-			}
+		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer gesperrt
+		// wurde.
+		ClientsideSettings.getPartnerboerseAdministration().pruefeSperrstatusFremdprofil(nutzerprofil.getProfilId(),
+				fremdprofilId, new AsyncCallback<Integer>() {
 
-			public void onSuccess(Integer result) {
-				if (result == 1) {
-					// Falls eine Sperrung vorliegt, lautet die Aufschrift des Sperrung-Buttons "Sperrung loeschen". 
-					sButton.setText("Sperrung löschen");
-					// Falls eine Sperrung vorliegt, wird der Vermerk-Button ausgeblendet. 
-					mButton.setVisible(false); 
-				} else {
-					// Falls keine Sperrung vorliegt, lautet die Aufschrift des Sperrung-Buttons "Sperrung setzen". 
-					sButton.setText("Sperrung setzen"); 
-				}
-			}	
-		});
-		
-		// ClickHandler fuer den Sperrung-Button hinzufuegen. 
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					public void onSuccess(Integer result) {
+						if (result == 1) {
+							// Falls eine Sperrung vorliegt, lautet die
+							// Aufschrift des Sperrung-Buttons "Sperrung
+							// loeschen".
+							sButton.setText("Sperrung löschen");
+							// Falls eine Sperrung vorliegt, wird der
+							// Vermerk-Button ausgeblendet.
+							mButton.setVisible(false);
+						} else {
+							// Falls keine Sperrung vorliegt, lautet die
+							// Aufschrift des Sperrung-Buttons "Sperrung
+							// setzen".
+							sButton.setText("Sperrung setzen");
+						}
+					}
+				});
+
+		// ClickHandler fuer den Sperrung-Button hinzufuegen.
 		sButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				// Sperrstatus aendern. 
-				ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(fremdprofilId, new AsyncCallback<Integer>() {
+
+				// Sperrstatus aendern.
+				ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(nutzerprofil.getProfilId(),
+						fremdprofilId, new AsyncCallback<Integer>() {
+
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
+
+							public void onSuccess(Integer result) {
+								if (result == 0) {
+									// Falls eine Sperrung vorliegt, wird die
+									// Aufschrift des Sperrung-Buttons zu
+									// "Sperrung loeschen" geaendert.
+									sButton.setText("Sperrung löschen");
+									// Falls eine Sperrung vorliegt, wird der
+									// Vermerk-Button ausgeblendet.
+									mButton.setVisible(false);
+								} else {
+									// Falls keine Sperrung vorliegt, wird die
+									// Aufschrift des Sperrung-Buttons zu
+									// "Sperrung setzen" geaendert.
+									sButton.setText("Sperrung setzen");
+									// Falls keine Sperrung vorliegt, wird die
+									// Aufschrift des Vermerk-Buttons zu
+									// "Sperrung setzen" geaendert.
+									mButton.setText("Vermerk setzen");
+									// Falls keine Sperrung vorliegt, wird der
+									// Vermerk-Button eingeblendet.
+									mButton.setVisible(true);
+								}
+
+							}
+
+						});
+
+			}
+
+		});
+
+		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer vermerkt
+		// wurde.
+		ClientsideSettings.getPartnerboerseAdministration().pruefeVermerkstatus(nutzerprofil.getProfilId(),
+				fremdprofilId, new AsyncCallback<Integer>() {
 
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					public void onSuccess(Integer result) {
-						if (result == 0) {
-							// Falls eine Sperrung vorliegt, wird die Aufschrift des Sperrung-Buttons zu "Sperrung loeschen" geaendert.
-							sButton.setText("Sperrung löschen");
-							// Falls eine Sperrung vorliegt, wird der Vermerk-Button ausgeblendet.
-							mButton.setVisible(false); 
+						if (result == 1) {
+							// Falls ein Vermerk vorliegt, lautet die Aufschrift
+							// des Vermerk-Buttons "Vermerk loeschen".
+							mButton.setText("Vermerk löschen");
+							// Falls kein Vermerk vorliegt, lautet die
+							// Aufschrift des Vermerk-Buttons "Vermerk setzen".
 						} else {
-							// Falls keine Sperrung vorliegt, wird die Aufschrift des Sperrung-Buttons zu "Sperrung setzen" geaendert.
-							sButton.setText("Sperrung setzen"); 
-							// Falls keine Sperrung vorliegt, wird die Aufschrift des Vermerk-Buttons zu "Sperrung setzen" geaendert.
 							mButton.setText("Vermerk setzen");
-							// Falls keine Sperrung vorliegt, wird der Vermerk-Button eingeblendet.
-							mButton.setVisible(true); 
 						}
-						
 					}
-					
 				});
-				
-			}
-			
-		});
-		
-		// Beim Aufruf des Fremdprofils pruefen, ob dieses vom Benutzer vermerkt wurde. 
-		ClientsideSettings.getPartnerboerseAdministration().pruefeVermerkstatus(fremdprofilId, new AsyncCallback<Integer>() {
 
-			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
-			}
-
-			public void onSuccess(Integer result) {
-				if (result == 1) {
-					// Falls ein Vermerk vorliegt, lautet die Aufschrift des Vermerk-Buttons "Vermerk loeschen".
-					mButton.setText("Vermerk löschen");
-					// Falls kein Vermerk vorliegt, lautet die Aufschrift des Vermerk-Buttons "Vermerk setzen".
-				} else {
-					mButton.setText("Vermerk setzen"); 
-				}
-			}
-		});
-		
-		// ClickHandler fuer den Vermerk-Button hinzufuegen. 
+		// ClickHandler fuer den Vermerk-Button hinzufuegen.
 		mButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				// Vermerkstatus aendern. 
-				ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(fremdprofilId, new AsyncCallback<Integer>() {
 
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
+				// Vermerkstatus aendern.
+				ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(nutzerprofil.getProfilId(),
+						fremdprofilId, new AsyncCallback<Integer>() {
 
-					public void onSuccess(Integer result) {
-						if (result == 0) {
-							// Falls ein Vermerk vorliegt, wird die Aufschrift des Vermerk-Buttons zu "Vermerk loeschen" geaendert.
-							mButton.setText("Vermerk löschen");
-						} else {
-							// Falls kein Vermerk vorliegt, wird die Aufschrift des Vermerk-Buttons zu "Vermerk setzen" geaendert.
-							mButton.setText("Vermerk setzen"); 
-						}
-						
-					}
-					
-				});
-				
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
+
+							public void onSuccess(Integer result) {
+								if (result == 0) {
+									// Falls ein Vermerk vorliegt, wird die
+									// Aufschrift des Vermerk-Buttons zu
+									// "Vermerk loeschen" geaendert.
+									mButton.setText("Vermerk löschen");
+								} else {
+									// Falls kein Vermerk vorliegt, wird die
+									// Aufschrift des Vermerk-Buttons zu
+									// "Vermerk setzen" geaendert.
+									mButton.setText("Vermerk setzen");
+								}
+
+							}
+
+						});
+
 			}
-			
+
 		});
-		
+
 		buttonPanel.add(mButton);
 		buttonPanel.add(sButton);
-		
+
 		/**
 		 * ABSCHNITT MERKLISTE UND SPERRLISTE ENDE: Programmierung
 		 * "Vermerk setzen" / "Vermerk löschen", "Sperrung setzen" /

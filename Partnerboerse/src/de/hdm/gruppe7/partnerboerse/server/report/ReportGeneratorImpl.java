@@ -39,8 +39,11 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
-
-	Nutzerprofil profil = new Nutzerprofil();
+	
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * Ein ReportGenerator ben�tigt Zugriff auf die PartnerboerseAdministration,
@@ -48,10 +51,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * (vgl. bo-Package) bietet.
 	 */
 	private PartnerboerseAdministration partnerboerseAdministration = null;
-
-	public void setUser(Nutzerprofil n) {
-		this.profil = n;
-	}
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -316,7 +315,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return der fertige Report
 	 */
 	@Override
-	public AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport() throws IllegalArgumentException {
+	public AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil)
+			throws IllegalArgumentException {
 
 		if (this.getPartnerboerseAdministration() == null)
 			return null;
@@ -345,10 +345,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		CompositeParagraph header = new CompositeParagraph();
 
 		// Name und Vorname des Nutzers aufnehmen.
-		header.addSubParagraph(new SimpleParagraph(profil.getVorname() + " " + profil.getNachname()));
+		header.addSubParagraph(new SimpleParagraph(nutzerprofil.getVorname() + " " + nutzerprofil.getNachname()));
 
 		// Nutzerprofil-ID aufnehmen.
-		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + profil.getProfilId()));
+		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: " + nutzerprofil.getProfilId()));
 
 		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
 		result.setHeaderData(header);
@@ -369,7 +369,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * CompositeReport ist.
 		 */
 
-		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeNp();
+		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeNp(nutzerprofil);
 		System.out.println("Partnervorschlaege:" + allNutzer);
 		for (Nutzerprofil np : allNutzer) {
 			/*
@@ -432,8 +432,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * AllAccountsOfAllCustomersReport, welches eine Subklasse von
 		 * CompositeReport ist.
 		 */
-		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration
-				.getGeordnetePartnervorschlaegeSp(suchprofilname);
+		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration.getGeordnetePartnervorschlaegeSp(nutzerprofil,
+				suchprofilname);
 
 		for (Nutzerprofil np : allNutzer) {
 			/*

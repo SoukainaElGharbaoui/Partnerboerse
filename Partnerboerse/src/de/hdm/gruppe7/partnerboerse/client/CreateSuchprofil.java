@@ -11,20 +11,26 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class CreateSuchprofil extends VerticalPanel {
 
 	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	
+	/**
 	 * VerticalPanel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	/**
 	 * Label fuer das Pflichtfeld.
 	 */
 	private Label reqLabel = new Label("* Pflichtfeld");
-	
+
 	/**
 	 * Label fuer die Ueberschrift hinzufuegen.
 	 */
@@ -67,7 +73,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		/**
 		 * CSS auf Ueberschrift und Pflichtfeld anwenden.
 		 */
-		ueberschriftLabel.addStyleName("partnerboerse-label"); 
+		ueberschriftLabel.addStyleName("partnerboerse-label");
 		reqLabel.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
@@ -75,8 +81,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		 * CSS auf Tabelle anwenden und Tabelle formatieren.
 		 */
 		createSuchprofilFlexTable.setCellPadding(6);
-		createSuchprofilFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
+		createSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		createSuchprofilFlexTable.addStyleName("FlexTable");
 
 		/**
@@ -136,10 +141,10 @@ public class CreateSuchprofil extends VerticalPanel {
 		 */
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				// Suchprofilname ueberpruefen. 
-				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameCreate(suchprofilNameTextBox.getText(), 
-						new AsyncCallback<Integer>() {
+
+				// Suchprofilname ueberpruefen.
+				ClientsideSettings.getPartnerboerseAdministration()
+						.pruefeSuchprofilnameCreate(nutzerprofil, suchprofilNameTextBox.getText(), new AsyncCallback<Integer>() {
 
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf.");
@@ -147,55 +152,60 @@ public class CreateSuchprofil extends VerticalPanel {
 
 							public void onSuccess(Integer result) {
 								// Wenn der Suchprofilname bereits existiert...
-								if(result == 1) {
-									warnungLabel.setText("Der Suchprofilname existiert bereits");	
-									createSuchprofilFlexTable.setWidget(0, 4, warnungLabel); 
+								if (result == 1) {
+									warnungLabel.setText("Der Suchprofilname existiert bereits");
+									createSuchprofilFlexTable.setWidget(0, 4, warnungLabel);
 								} else {
 									// Wenn der Suchprofilname leer ist...
 									if (result == 2) {
-										warnungLabel.setText("Der Suchprofilname darf nicht leer sein."); 
-										createSuchprofilFlexTable.setWidget(0, 4, warnungLabel); 
+										warnungLabel.setText("Der Suchprofilname darf nicht leer sein.");
+										createSuchprofilFlexTable.setWidget(0, 4, warnungLabel);
 									} else {
-										// Wenn Alter von groesser als Alter bis ist...
-										if (Integer.parseInt(alterMinTextBox.getText()) > Integer.parseInt(alterMaxTextBox.getText())) {
+										// Wenn Alter von groesser als Alter bis
+										// ist...
+										if (Integer.parseInt(alterMinTextBox.getText()) > Integer
+												.parseInt(alterMaxTextBox.getText())) {
 											warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
-											createSuchprofilFlexTable.setWidget(2, 4, warnungLabel); 
-									} else {
-										// Suchprofil anlegen.
-										 ClientsideSettings.getPartnerboerseAdministration().createSuchprofil(
-										 suchprofilNameTextBox.getText(),
-										 geschlechtListBox.getSelectedItemText(),
-										 Integer.parseInt(alterMinTextBox.getText()),
-										 Integer.parseInt(alterMaxTextBox.getText()),
-										 Integer.parseInt(koerpergroesseTextBox.getText()),
-										 haarfarbeListBox.getSelectedItemText(),
-										 raucherListBox.getSelectedItemText(),
-										 religionListBox.getSelectedItemText(),
-										 new AsyncCallback<Suchprofil>() {
-										
-										 @Override
-										 public void onFailure(Throwable caught) {
-										 infoLabel.setText("Es trat ein Fehler auf");
-										 }
-										
-										 @Override
-										 public void onSuccess(Suchprofil result) {
-											 // Suchprofil-ID ermitteln und an CreateInfoSp weitergeben.
-											 int suchprofilId = result.getProfilId();
-											 CreateInfoSp createInfoSp = new CreateInfoSp(suchprofilId);
-											 RootPanel.get("Details").clear();
-											 RootPanel.get("Details").add(createInfoSp);
-										 }
-										
-										 });
-										
+											createSuchprofilFlexTable.setWidget(2, 4, warnungLabel);
+										} else {
+											// Suchprofil anlegen.
+											ClientsideSettings.getPartnerboerseAdministration().createSuchprofil(nutzerprofil,
+													suchprofilNameTextBox.getText(),
+													geschlechtListBox.getSelectedItemText(),
+													Integer.parseInt(alterMinTextBox.getText()),
+													Integer.parseInt(alterMaxTextBox.getText()),
+													Integer.parseInt(koerpergroesseTextBox.getText()),
+													haarfarbeListBox.getSelectedItemText(),
+													raucherListBox.getSelectedItemText(),
+													religionListBox.getSelectedItemText(),
+													new AsyncCallback<Suchprofil>() {
+
+														@Override
+														public void onFailure(Throwable caught) {
+															infoLabel.setText("Es trat ein Fehler auf");
+														}
+
+														@Override
+														public void onSuccess(Suchprofil result) {
+															// Suchprofil-ID
+															// ermitteln und an
+															// CreateInfoSp
+															// weitergeben.
+															int suchprofilId = result.getProfilId();
+															CreateInfoSp createInfoSp = new CreateInfoSp(suchprofilId);
+															RootPanel.get("Details").clear();
+															RootPanel.get("Details").add(createInfoSp);
+														}
+
+													});
+
+										}
 									}
 								}
-							}	
-							
-						}
-					
-				});
+
+							}
+
+						});
 
 			}
 
@@ -208,7 +218,6 @@ public class CreateSuchprofil extends VerticalPanel {
 		verPanel.add(createSuchprofilFlexTable);
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(infoLabel);
-
 
 	}
 

@@ -77,7 +77,7 @@ public interface ReportGenerator extends RemoteService {
 	AllProfildatenOfNutzerReport createAllProfildatenOfNutzerReport(Nutzerprofil np)
 			throws IllegalArgumentException;
 
-	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport()
+	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil)
 			throws IllegalArgumentException;
 
 	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(String suchprofilname)
@@ -89,6 +89,5 @@ public interface ReportGenerator extends RemoteService {
 
 	Nutzerprofil login(String requestUri) throws Exception;
 	
-	public void setUser(Nutzerprofil n);
 
 }

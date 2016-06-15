@@ -22,6 +22,11 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	
 	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	
+	/**
 	 * VerticalPanel hinzufÃ¼gen.
 	 */
 	VerticalPanel verPanel = new VerticalPanel(); 
@@ -44,9 +49,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	final Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");
 		ueberschriftLabel.setText("Einen Moment bitte...");
 	/**
-	 * AuswahlListBox befüllen
+	 * AuswahlListBox befï¿½llen
 	 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(new AsyncCallback<List<Suchprofil>>() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil, new AsyncCallback<List<Suchprofil>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

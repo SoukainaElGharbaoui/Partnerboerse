@@ -54,21 +54,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-									reportGeneratorAsync.setUser(result, new AsyncCallback<Void>() {
-										public void onFailure(Throwable caught) {
-										}
-
-										public void onSuccess(Void result) {
-										}
-
-									});
-									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
-										public void onFailure(Throwable caught) {
-										}
-
-										public void onSuccess(Void result) {
-										}
-									});
+									
+								ClientsideSettings.setAktuellerUser(result);
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");

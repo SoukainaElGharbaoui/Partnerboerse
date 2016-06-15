@@ -36,7 +36,7 @@ public interface ReportGeneratorAsync {
 	void createAllProfildatenOfNutzerReport(Nutzerprofil np,
 			AsyncCallback<AllProfildatenOfNutzerReport> callback);
 	
-	void createAllPartnervorschlaegeNpReport(
+	void createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil,
 			AsyncCallback<AllPartnervorschlaegeNpReport> callback);
 
 	void createAllPartnervorschlaegeSpReport(String suchprofilname,
@@ -49,5 +49,4 @@ public interface ReportGeneratorAsync {
 
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 
-	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 }

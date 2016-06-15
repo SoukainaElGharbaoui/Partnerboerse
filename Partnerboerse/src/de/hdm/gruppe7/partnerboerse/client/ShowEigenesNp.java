@@ -11,22 +11,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen.
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = new Nutzerprofil();
-
-	/**
-	 * Variable für die Nutzer-Email anlegen.
-	 */
-	private String userEmail;
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * Panels hinzufuegen.
@@ -53,16 +45,11 @@ public class ShowEigenesNp extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufuegen.
 	 */
-	public ShowEigenesNp(Nutzerprofil n) {
+	public ShowEigenesNp() {
 
 		this.add(horPanel);
 		horPanel.add(verPanel1);
 		horPanel.add(verPanel2);
-
-		this.nutzerprofil = n;
-
-		// this.nutzerprofil = user;
-		// userEmail = user.getEmailAddress();
 
 		/**
 		 * CSS anwenden.

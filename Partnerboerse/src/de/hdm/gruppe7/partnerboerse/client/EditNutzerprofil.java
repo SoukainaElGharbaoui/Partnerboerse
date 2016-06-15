@@ -17,16 +17,14 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 public class EditNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt erzeugen.
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * Panel hinzufuegen.
@@ -225,7 +223,7 @@ public class EditNutzerprofil extends VerticalPanel {
 								public void onSuccess(Void result) {
 									// Seite zum Anzeigen des eigenen
 									// Nutzerprofils aufrufen.
-									ShowEigenesNp showEigenesNp = new ShowEigenesNp(nutzerprofil);
+									ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showEigenesNp);
 
@@ -244,7 +242,6 @@ public class EditNutzerprofil extends VerticalPanel {
 		verPanel.add(editNutzerprofilFlexTable);
 		verPanel.add(editNutzerprofilButton);
 		verPanel.add(infoLabel);
-
 	}
 
 	/**

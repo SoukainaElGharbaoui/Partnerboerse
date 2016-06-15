@@ -181,8 +181,7 @@ public class CreateInfoNp extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 
-								ShowEigenesNp showNp = new ShowEigenesNp(
-										nutzerprofil);
+								ShowEigenesNp showNp = new ShowEigenesNp();
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNp);
 

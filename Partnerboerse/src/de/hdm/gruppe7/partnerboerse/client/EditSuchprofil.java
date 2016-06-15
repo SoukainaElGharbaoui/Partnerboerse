@@ -11,9 +11,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class EditSuchprofil extends VerticalPanel {
+	
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * VerticalPanel hinzufuegen.
@@ -130,7 +136,7 @@ public class EditSuchprofil extends VerticalPanel {
 		 * Daten des Suchprofils in die Tabelle einfuegen.
 		 */
 		ClientsideSettings.getPartnerboerseAdministration()
-				.getSuchprofilByName(suchprofilName,
+				.getSuchprofilByName(nutzerprofil, suchprofilName,
 						new AsyncCallback<Suchprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -201,7 +207,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 				// Suchprofilname ueberpruefen.
 				ClientsideSettings.getPartnerboerseAdministration()
-						.pruefeSuchprofilnameEdit(
+						.pruefeSuchprofilnameEdit(nutzerprofil,
 								Integer.parseInt(editSuchprofilFlexTable
 										.getText(0, 2)),
 								suchprofilNameTextBox.getText(),
@@ -241,7 +247,7 @@ public class EditSuchprofil extends VerticalPanel {
 													// Suchprofil aktualisieren.
 													ClientsideSettings
 															.getPartnerboerseAdministration()
-															.saveSuchprofil(
+															.saveSuchprofil(nutzerprofil,
 																	Integer.parseInt(editSuchprofilFlexTable
 																			.getText(
 																					0,

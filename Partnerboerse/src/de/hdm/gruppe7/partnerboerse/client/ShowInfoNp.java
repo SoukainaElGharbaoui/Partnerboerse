@@ -173,7 +173,7 @@ public class ShowInfoNp extends VerticalPanel {
 					public void onSuccess(Void result) {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-						ShowEigenesNp showNp = new ShowEigenesNp(nutzerprofil);
+						ShowEigenesNp showNp = new ShowEigenesNp();
 
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(showNp);
