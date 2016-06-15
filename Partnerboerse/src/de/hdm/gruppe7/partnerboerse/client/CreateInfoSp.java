@@ -1,23 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.List;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoSp extends VerticalPanel {
@@ -30,9 +17,6 @@ public class CreateInfoSp extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 
-	private String beschreibungstext;
-	private String nEingabeB;
-	private String nEingabeA;
 	
 	private Button createInfosButton = new Button("Suchprofil-Info anlegen");
 	private Label ueberschriftLabel = new Label("Suchprofil-Info anlegen:");

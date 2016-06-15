@@ -30,7 +30,6 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
 	private ReportGeneratorAsync reportGeneratorAsync;
-	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 
 	@Override
 	public void onModuleLoad() {
