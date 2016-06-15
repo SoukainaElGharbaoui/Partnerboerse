@@ -2,12 +2,6 @@ package de.hdm.gruppe7.partnerboerse.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-
-
-
-
-
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
@@ -21,35 +15,33 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
  * synchrone Interface {@link ReportGenerator}.
  * 
  * @author thies
- * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
- * angepasst. 
+ *         ---------------------------------------------------------------------
+ *         --------------------- Diese Klasse wurde, wie von Herrn Prof. Dr.
+ *         Thies in der Vorlesung gewünscht, als Grundlage übernommen und bei
+ *         Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016
+ *         "Partnerboerse" angepasst.
  * 
- * Modifizierender @author Milena Weinmann
+ *         Modifizierender @author Milena Weinmann
  */
 public interface ReportGeneratorAsync {
 
 	void init(AsyncCallback<Void> callback);
-	
-	void createAllInfosOfNutzerReport(Nutzerprofil np,
-			AsyncCallback<AllInfosOfNutzerReport> callback);
 
-	void createAllProfildatenOfNutzerReport(Nutzerprofil np,
-			AsyncCallback<AllProfildatenOfNutzerReport> callback);
-	
-	void createAllPartnervorschlaegeNpReport(
+	void createAllInfosOfNutzerReport(Nutzerprofil np, AsyncCallback<AllInfosOfNutzerReport> callback);
+
+	void createAllProfildatenOfNutzerReport(Nutzerprofil np, AsyncCallback<AllProfildatenOfNutzerReport> callback);
+
+	void createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil,
 			AsyncCallback<AllPartnervorschlaegeNpReport> callback);
 
-	void createAllPartnervorschlaegeSpReport(String suchprofilname,
+	void createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname,
 			AsyncCallback<AllPartnervorschlaegeSpReport> callback);
-
 
 	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
 
-//	public void insertEmail(int profilId, String emailAddress, AsyncCallback<Nutzerprofil> callback);
+	// public void insertEmail(int profilId, String emailAddress,
+	// AsyncCallback<Nutzerprofil> callback);
 
 	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
- 
-	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
+
 }

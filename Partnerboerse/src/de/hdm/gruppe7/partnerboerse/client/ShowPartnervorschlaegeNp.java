@@ -10,11 +10,15 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * VerticalPanel hinzufügen.
@@ -65,7 +69,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
 
-		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(
+		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId(),
 
 				new AsyncCallback<List<Nutzerprofil>>() {
 
@@ -99,8 +103,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 
 									// Besuch in die Datenbank einfügen.
-									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(fremdprofilId,
-											new AsyncCallback<Void>() {
+									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(
+											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
 												@Override
 												public void onFailure(Throwable caught) {
@@ -109,7 +113,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 												@Override
 												public void onSuccess(Void result) {
-													
+
 													ShowFremdprofil showFremdprofil = new ShowFremdprofil(
 															fremdprofilId);
 													RootPanel.get("Details").clear();
