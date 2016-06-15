@@ -153,15 +153,12 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(buttonPanel);
 		buttonPanel.add(erstellenButton);
 		
-//		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
-//		verPanel.add(buttonPanel);
-//		buttonPanel.add(erstellenButton);
 
-		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>() {
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(
+						new AsyncCallback<Void>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
@@ -195,14 +192,6 @@ public class ShowInfoNp extends VerticalPanel {
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}
 		});
-		
-//		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
-//				RootPanel.get("Details").clear();
-//				RootPanel.get("Details").add(createRestlicheInfos);
-//			}
-//		});
 
 	}
 }

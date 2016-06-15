@@ -1,12 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.core.shared.GWT;
-
-import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -21,8 +16,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 
-
-
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.InsertPanel;
@@ -30,8 +23,6 @@ import com.google.gwt.user.client.ui.Label;
 
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
-
-
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -41,9 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
-
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 

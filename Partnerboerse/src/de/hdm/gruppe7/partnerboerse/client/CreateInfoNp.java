@@ -28,6 +28,9 @@ public class CreateInfoNp extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
+	
+	private List<Beschreibungseigenschaft> listB;
+	private List<Auswahleigenschaft> listA;
 
 	private String eigenschaftId = null;
 	private String beschreibungstext = null;
@@ -39,6 +42,8 @@ public class CreateInfoNp extends VerticalPanel {
 	public CreateInfoNp() {
 		this.add(verPanel);
 
+		
+//		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
 		showEigenschaftFlexTable.setText(0, 0, "Eigenschaft-Id");
 		showEigenschaftFlexTable.setText(0, 1, "Erlaeuterung");
 		showEigenschaftFlexTable.setText(0, 2, "Anlegen");
@@ -71,6 +76,8 @@ public class CreateInfoNp extends VerticalPanel {
 										.keySet();
 
 								for (List<Beschreibungseigenschaft> listEigB : output) {
+									
+									listB = listEigB;
 
 									for (Beschreibungseigenschaft eigB : listEigB) {
 
@@ -98,10 +105,9 @@ public class CreateInfoNp extends VerticalPanel {
 										textArea.setText(beschreibungstext);
 									}
 
-									List<Auswahleigenschaft> listEigA = result
-											.get(listEigB);
+									listA = result.get(listEigB);
 
-									for (Auswahleigenschaft eigA : listEigA) {
+									for (Auswahleigenschaft eigA : listA) {
 
 										row++;
 										showEigenschaftFlexTable.setText(row,
@@ -139,30 +145,62 @@ public class CreateInfoNp extends VerticalPanel {
 
 				List<Info> infos = new ArrayList<Info>();
 				String infotextTable = null;
+				
+				int k;
 
 				for (int i = 2; i < showEigenschaftFlexTable.getRowCount(); i++) {
+					
+					k = 0;
+					k = i - 2;
 
 					String eigenschaftIdTable = showEigenschaftFlexTable
 							.getText(i, 0);
 
 					Widget w = showEigenschaftFlexTable.getWidget(i, 2);
-
+					
 					if (w instanceof TextArea) {
-
+						
 						infotextTable = ((TextArea) w).getText();
+
+						if (infotextTable == null) {
+						}
+						
+						else if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+						}
+						
+						else {
+							Info info = new Info();
+							info.setProfilId(nutzerprofil.getProfilId());
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
+
+							infos.add(info);
+						}
 					}
 
 					else if (w instanceof ListBox) {
 
 						infotextTable = ((ListBox) w).getSelectedItemText();
+						
+						if (infotextTable.equals("Keine Auswahl")) {
+						}
+						
+						else {
+							Info info = new Info();
+							info.setProfilId(nutzerprofil.getProfilId());
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
+
+							infos.add(info);
+						}
 
 					}
 
-					Info info = new Info();
-					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-					info.setInfotext(infotextTable);
-
-					infos.add(info);
+//					Info info = new Info();
+//					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+//					info.setInfotext(infotextTable);
+//
+//					infos.add(info);
 				}
 
 				
