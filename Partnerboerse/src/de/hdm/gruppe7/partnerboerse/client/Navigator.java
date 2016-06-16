@@ -128,14 +128,14 @@ public class Navigator extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
+								ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 							}
 
 						});
 
-				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 			}
 
@@ -159,15 +159,15 @@ public class Navigator extends VerticalPanel {
 							public void onSuccess(Void result3) {
 								// infoLabel.setText("Es hier trat kein Fehler
 								// auf.");
+							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showPartnervorschlaegeSp);
 
 							}
 
 						});
 
-				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaegeSp);
-
+				
 			}
 
 		});

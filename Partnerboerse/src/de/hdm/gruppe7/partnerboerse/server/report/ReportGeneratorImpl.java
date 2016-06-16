@@ -328,7 +328,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * @return der fertige Report
 	 */
 	@Override
-	public AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil)
+	public AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil np)
 			throws IllegalArgumentException {
 
 		if (this.getPartnerboerseAdministration() == null)
@@ -358,12 +358,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		CompositeParagraph header = new CompositeParagraph();
 
 		// Name und Vorname des Nutzers aufnehmen.
-		header.addSubParagraph(new SimpleParagraph(profil.getVorname() + " "
-				+ profil.getNachname()));
+		header.addSubParagraph(new SimpleParagraph(np.getVorname() + " "
+				+ np.getNachname()));
 
 		// Nutzerprofil-ID aufnehmen.
 		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
-				+ profil.getProfilId()));
+				+ np.getProfilId()));
 
 		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
 		result.setHeaderData(header);
@@ -385,15 +385,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		 */
 
 		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration
-				.getGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId());
+				.getGeordnetePartnervorschlaegeNp(np.getProfilId());
 		System.out.println("Partnervorschlaege:" + allNutzer);
-		for (Nutzerprofil np : allNutzer) {
+		for (Nutzerprofil n : allNutzer) {
 			/*
 			 * Anlegen des jew. Teil-Reports und Hinzuf�gen zum Gesamt-Report.
 			 */
 
-			result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
-			result.addSubReport(this.createAllInfosOfNutzerReport(np));
+			result.addSubReport(this.createAllProfildatenOfNutzerReport(n));
+			result.addSubReport(this.createAllInfosOfNutzerReport(n));
 
 		}
 
@@ -434,12 +434,21 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		result.setCreated(new Date());
 
 		/*
-		 * Da AllAccountsOfAllCustomersReport-Objekte aus einer Sammlung von
-		 * AllAccountsOfCustomerReport-Objekten besteht, ben�tigen wir keine
-		 * Kopfdaten f�r diesen Report-Typ. Wir geben einfach keine Kopfdaten
-		 * an...
+		 * Ab hier: Kopfdaten des Reports zusammenstellen. Die Kopfdaten sind
+		 * mehrzeilig, daher die Verwendung von CompositeParagraph.
 		 */
+		CompositeParagraph header = new CompositeParagraph();
 
+		// Name und Vorname des Nutzers aufnehmen.
+		header.addSubParagraph(new SimpleParagraph(nutzerprofil.getVorname() + " "
+				+ nutzerprofil.getNachname()));
+
+		// Nutzerprofil-ID aufnehmen.
+		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
+				+ nutzerprofil.getProfilId()));
+		
+		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
+		result.setHeaderData(header);
 		/*
 		 * Nun m�ssen s�mtliche Kunden-Objekte ausgelesen werden.
 		 * Anschlie�end wir f�r jedes Kundenobjekt c ein Aufruf von
@@ -456,7 +465,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			/*
 			 * Anlegen des jew. Teil-Reports und Hinzuf�gen zum Gesamt-Report.
 			 */
-			// result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
+			result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
 			result.addSubReport(this.createAllInfosOfNutzerReport(np));
 		}
 

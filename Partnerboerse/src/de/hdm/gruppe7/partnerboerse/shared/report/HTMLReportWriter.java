@@ -244,6 +244,7 @@ public class HTMLReportWriter extends ReportWriter {
 		          .getSubReportAt(j);
 
 		      this.process(subReport2);
+		      
 		      result.append(this.reportText + "\n");
 		      
 		 	 AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r
@@ -251,9 +252,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 			      this.process(subReport);
 		     
-
-
-			this.process(subReport2);
+			this.process(subReport);
 
 			result.append(this.reportText + "\n");
 			/*
@@ -302,19 +301,28 @@ public class HTMLReportWriter extends ReportWriter {
 		 * processAllAccountsOfCustomerReport auf. Das Ergebnis des jew. Aufrufs
 		 * f�gen wir dem Buffer hinzu.
 		 */
-		for (int i = 0; i < r.getNumSubReports(); i++) {
+		for (int j = 0; j < r.getNumSubReports(); j = j+2) {
 			/*
 			 * AllAccountsOfCustomerReport wird als Typ der SubReports
 			 * vorausgesetzt. Sollte dies in einer erweiterten Form des Projekts
 			 * nicht mehr gelten, so m�sste hier eine detailliertere
 			 * Implementierung erfolgen.
 			 */
-			AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r.getSubReportAt(i);
+		      AllProfildatenOfNutzerReport subReport2 = (AllProfildatenOfNutzerReport) r
+			          .getSubReportAt(j);
 
-			this.process(subReport);
+			      this.process(subReport2);
+			      
+			      result.append(this.reportText + "\n");
+			      
+			 	 AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r
+				          .getSubReportAt(j+1);
 
+				      this.process(subReport);
+			     
+				this.process(subReport);
 
-	      result.append(this.reportText + "\n");
+				result.append(this.reportText + "\n");
 	      
 	    
 	  	      /*

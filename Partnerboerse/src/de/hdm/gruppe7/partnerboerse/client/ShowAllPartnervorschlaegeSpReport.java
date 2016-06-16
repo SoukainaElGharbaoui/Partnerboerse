@@ -46,7 +46,6 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	final ListBox auswahlListBox = new ListBox();
 	final Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");
 
-		ueberschriftLabel.setText("Einen Moment bitte...");
 		/**
 		 * AuswahlListBox bef�llen
 		 */
