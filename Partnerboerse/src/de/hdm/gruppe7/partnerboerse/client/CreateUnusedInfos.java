@@ -111,10 +111,14 @@ public class CreateUnusedInfos extends VerticalPanel {
 								final TextArea textArea = new TextArea();
 
 								showUnusedEigenschaftFlexTable.setWidget(row, 3, textArea);
+								
+								String defaultValue = eigB.getBeschreibungstext();
+								
+								textArea.getElement().setPropertyString("placeholder", defaultValue);
 
-								beschreibungstext = eigB.getBeschreibungstext();
-
-								textArea.setText(beschreibungstext);
+//								beschreibungstext = eigB.getBeschreibungstext();
+//
+//								textArea.setText(beschreibungstext);
 							}
 
 							listA = result.get(listEigB);

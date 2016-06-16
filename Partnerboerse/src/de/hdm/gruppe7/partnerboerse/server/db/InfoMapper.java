@@ -383,7 +383,6 @@ public class InfoMapper {
 
 				eigenschaftstext = rs.getString("erlaeuterung");
 			}
-
 			return eigenschaftstext;
 
 		} catch (SQLException e2) {

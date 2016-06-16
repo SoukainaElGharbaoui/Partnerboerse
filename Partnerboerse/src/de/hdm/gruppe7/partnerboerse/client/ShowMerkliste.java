@@ -26,6 +26,39 @@ public class ShowMerkliste extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private FlexTable merklisteFlexTable = new FlexTable();
+
+	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
+	private Label informationLabel = new Label();
+	private Label infoLabel = new Label();
+
+	private Button loeschenButton = new Button("Löschen");
+	private Button anzeigenButton = new Button("Anzeigen");
+
+	private int zaehler;
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
+			
+			if (merklisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -34,20 +67,10 @@ public class ShowMerkliste extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * Überschrift-Label hinzufügen.
+		 * Überschrift- & Informationslabel formatieren und CSS einbinden.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Information-Label hinzufügen.
-		 */
-		final Label infoLabel = new Label();
-
-		/**
-		 * Tabelle zur Anzeige der gemerkten Kontakte hinzufügen.
-		 */
-		final FlexTable merklisteFlexTable = new FlexTable();
+		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Header-Zeile der Tabelle festlegen.
@@ -72,8 +95,8 @@ public class ShowMerkliste extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
+						infoLabel.setText("Es ist ein Fehler beim Herausholen der "
+								+ "gemerkten Profile aufgetreten.");
 					}
 
 					@Override
@@ -92,12 +115,10 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
-							// Löschen-Button hinzufügen und ausbauen.
-							final Button loeschenButton = new Button("Löschen");
+							// Löschen-Button der Tabelle hinzufügen.
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
 
-							// Anzeigen-Button hinzufügen und ausbauen.
-							final Button anzeigenButton = new Button("Anzeigen");
+							// Anzeigen-Button der Tabelle hinzufügen.
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
 
 							// Testzwecke: Index der FlexTable-Rows anzeigen.
@@ -133,8 +154,8 @@ public class ShowMerkliste extends VerticalPanel {
 
 														@Override
 														public void onSuccess(Integer result) {
-															infoLabel.setText(
-																	"Das Nutzerprofil wurde erfolgreich von Ihrer Merkliste entfernt.");
+															infoLabel.setText("Das Nutzerprofil wurde "
+																	+ "erfolgreich von Ihrer Merkliste entfernt.");
 														}
 
 													});
@@ -189,20 +210,26 @@ public class ShowMerkliste extends VerticalPanel {
 												}
 
 											});
-
 								}
-
 							});
-
 						}
-
+						
+						boolean befuellt = pruefeLeereTable();
+						
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setVisible(false);
+							merklisteFlexTable.setVisible(false);
+											
+							informationLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
+						}
 					}
-
 				});
 
 		// Widgets zum VerticalPanel hinzufügen.
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(merklisteFlexTable);
+		verPanel.add(informationLabel);
 		verPanel.add(infoLabel);
 
 	}

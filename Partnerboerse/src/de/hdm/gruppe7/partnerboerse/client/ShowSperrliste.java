@@ -25,6 +25,34 @@ public class ShowSperrliste extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
+	private FlexTable sperrlisteFlexTable = new FlexTable();
+	
+	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
+	private Label informationLabel = new Label();
+	
+	private int zaehler;
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < sperrlisteFlexTable.getRowCount(); k++) {
+			
+			if (sperrlisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -35,18 +63,8 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Information-Label hinzufügen.
-		 */
-		final Label infoLabel = new Label();
-
-		/**
-		 * Tabelle zur Anzeige der gesperrten Kontakte hinzufügen.
-		 */
-		final FlexTable sperrlisteFlexTable = new FlexTable();
+		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Header-Zeile der Tabelle festlegen.
@@ -74,8 +92,8 @@ public class ShowSperrliste extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
+						informationLabel.setText("Es ist ein Fehler beim Herausholen der "
+								+ "gesperrten Profile aufgetreten.");
 					}
 
 					@Override
@@ -130,12 +148,12 @@ public class ShowSperrliste extends VerticalPanel {
 
 														@Override
 														public void onFailure(Throwable caught) {
-															infoLabel.setText("Es trat ein Fehler auf.");
+															informationLabel.setText("Es trat ein Fehler auf.");
 														}
 
 														@Override
 														public void onSuccess(Integer result) {
-															infoLabel.setText(
+															informationLabel.setText(
 																	"Das Nutzerprofil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
@@ -165,14 +183,22 @@ public class ShowSperrliste extends VerticalPanel {
 
 						}
 
+						boolean befuellt = pruefeLeereTable();
+						
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setVisible(false);
+							sperrlisteFlexTable.setVisible(false);
+											
+							informationLabel.setText("Sie haben derzeit keine Profile gesperrt.");
+						}
 					}
-
-				});
+			});
 
 		// Widgets zum VerticalPanel hinzufügen.
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(sperrlisteFlexTable);
-		verPanel.add(infoLabel);
+		verPanel.add(informationLabel);
 
 	}
 

@@ -32,19 +32,49 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	/**
 	 * Label zur Information hinzufügen.
 	 */
-	final Label infoLabel = new Label();
-	final Label ueberschriftLabel = new Label();
+	private Label infoLabel = new Label();
+//	private Label informationLabel = new Label();
+	private Label ueberschriftLabel = new Label();
+	
+	private Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
+	private ListBox auswahlListBox = new ListBox();
+	private Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");
+
+	
+//	private int zaehler;
+//	
+//	public boolean pruefeLeereTable() {
+//		
+//		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
+//			
+//			if (merklisteFlexTable.getText(k, 0) == null) {
+//			}
+//			
+//			else {
+//				zaehler++;
+//			}
+//		}
+//		
+//		if (zaehler == 0) {
+//			return true;
+//		}
+//		
+//		else {
+//			return false;
+//		}
+//	}
 
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 	public ShowAllPartnervorschlaegeSpReport() {
 		this.add(verPanel);
-		final Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
+		
 		auswahlLabel.addStyleName("partnerboerse-label");
-		final ListBox auswahlListBox = new ListBox();
-		final Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");
+//		informationLabel.addStyleName("partnerboerse-label");
+		
 		ueberschriftLabel.setText("Einen Moment bitte...");
+		
 		/**
 		 * AuswahlListBox bef�llen
 		 */
@@ -54,7 +84,6 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
-
 					}
 
 					@Override
@@ -62,9 +91,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 						for (Suchprofil s : result) {
 							auswahlListBox.addItem(s.getSuchprofilName());
 						}
-
 					}
-
 				});
 
 		/**
@@ -95,17 +122,25 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
-
 							}
-
-						});
-
+							
+//							boolean befuellt = pruefeLeereTable();
+//							
+//							if (befuellt == true) {
+//								
+//								ueberschriftLabel.setVisible(false);
+//								merklisteFlexTable.setVisible(false);
+//												
+//								informationLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
+//							}
+				});
 			}
-
 		});
 
 		verPanel.add(infoLabel);
+//		verPanel.add(informationLabel);
 		verPanel.add(ueberschriftLabel);
+		
 		verPanel.add(auswahlLabel);
 		verPanel.add(auswahlListBox);
 		verPanel.add(anzeigenButton);

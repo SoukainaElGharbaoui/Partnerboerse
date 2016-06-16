@@ -24,9 +24,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
-//	Nutzerprofil nutzerprofil = new Nutzerprofil();
-//	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
@@ -42,7 +39,6 @@ public class CreateInfoNp extends VerticalPanel {
 
 	public CreateInfoNp(final int profilId) {
 		
-//		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 
 		
@@ -105,10 +101,10 @@ public class CreateInfoNp extends VerticalPanel {
 										showEigenschaftFlexTable.setWidget(row,
 												3, textArea);
 
-										beschreibungstext = eigB
-												.getBeschreibungstext();
-
-										textArea.setText(beschreibungstext);
+										
+										String defaultValue = eigB.getBeschreibungstext();
+										
+										textArea.getElement().setPropertyString("placeholder", defaultValue);
 									}
 
 									listA = result.get(listEigB);

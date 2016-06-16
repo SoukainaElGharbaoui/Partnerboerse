@@ -25,12 +25,40 @@ public class ShowInfoNp extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Ihre Infos:");
 	private Label informationLabel = new Label();
+	
+	private Button loeschenButton = new Button("Alle Infos löschen");
+	private Button bearbeitenButton = new Button("Bearbeiten");
+	private Button erstelleRestlicheInfosButton = new Button("Weitere Infos anlegen");
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
 	private int row;
 	private int eigenschaftIdInt;
 	private int eigenschaftIdTable;
+	private int zaehler;
+	
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < showInfoFlexTable.getRowCount(); k++) {
+			
+			if (showInfoFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
 
 	/**
 	 * Konstruktor
@@ -42,10 +70,10 @@ public class ShowInfoNp extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * Label �berschrift
+		 * Design der Labels
 		 */
-
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Label Button
@@ -67,10 +95,6 @@ public class ShowInfoNp extends VerticalPanel {
 		showInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showInfoFlexTable.addStyleName("FlexTable");
 
-		/**
-		 * InfoLabel erstellen um Text auszugeben
-		 */
-		
 		
 	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 			new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
@@ -82,7 +106,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Map<List<Info>, List<Eigenschaft>> result) {
-			
+				
 			Set<List<Info>> output = result.keySet();
 			
 			for (List<Info> listI : output) {
@@ -125,34 +149,40 @@ public class ShowInfoNp extends VerticalPanel {
 						else {
 						}
 					}
-
 				}
-				
-				
 			}
-		}
-		
-	});
-		
+			
+			boolean befuellt = pruefeLeereTable();
+			
+			if (befuellt == true) {
+				
+				ueberschriftLabel.setVisible(false);
+				showInfoFlexTable.setVisible(false);
+				loeschenButton.setVisible(false);
+				bearbeitenButton.setVisible(false);
+				
+				informationLabel.setText("Sie haben bisher keine Infos angelegt.");
+
+				erstelleRestlicheInfosButton.setVisible(true);
+			}
+	}
+});
 
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
-
-		final Button loeschenButton = new Button("Alle Infos löschen");
+		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
 
-		final Button bearbeitenButton = new Button("Bearbeiten");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
 
-		final Button erstelleRestlicheInfosButton = new Button("Weitere Infos anlegen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(erstelleRestlicheInfosButton);
 		
-
+		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
