@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -51,14 +52,15 @@ public class MerklisteMapper {
 	}
 
 	/**
-	 * Alle gemerkten Nutzerprofile eines Nutzers auslesen.
-	 * @param profilId Profil-ID
-	 * @return Vector<Nutzerprofil> Vektor von gemerkten Nutzerprofil-Objekten.
+	 * Alle gemerkten Nutzerprofil-Objekte eines Nutzerprofils auslesen.
+	 * @param 	profilId Die Profil-ID des Nutzerprofils, fuer das die gemerkten Nutzerprofil-Objekte
+	 * 			ausgelesen werden sollen. 
+	 * @return 	Liste von gemerkten Nutzerprofil-Objekten.
 	 */
-	public Vector<Nutzerprofil> findGemerkteNutzerprofileFor(int profilId) {
+	public List<Nutzerprofil> findGemerkteNutzerprofileFor(int profilId) {
 		Connection con = DBConnection.connection();
 
-		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
+		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -78,8 +80,7 @@ public class MerklisteMapper {
 				n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 				n.setGeschlecht(rs.getString("geschlecht"));
 
-				// Hinzufuegen des neuen Objekts zum Ergebnisvektor
-				result.addElement(n);
+				result.add(n);
 			}
 
 		} catch (SQLException e2) {
@@ -91,14 +92,13 @@ public class MerklisteMapper {
 
 	/**
 	 * Vermerkstatus pruefen.
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID
-	 * @return int Vermerkstatus
+	 * @param 	profilId Die Profil-ID des eigenen Nutzerprofils.
+	 * @param 	fremdprofilId Die Profil-ID des Nutzerprofils, das auf die Existenz eines Vermerks ueberprueft werden soll. 
+	 * @return Status, ob bereits ein Vermerk vorliegt oder nicht.
 	 */
 	public int pruefeVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisvariable (Ausgang: Es liegt kein Vermerk vor.)
 		int vermerkstatus = 0;
 
 		try {
@@ -108,10 +108,8 @@ public class MerklisteMapper {
 					+ " AND fremdprofil_id=" + fremdprofilId);
 
 			if (rs.next()) {
-				// Es liegt ein Vermerk vor.
 				vermerkstatus = 1;
 			} else {
-				// Es liegt kein Vermerk vor.
 				vermerkstatus = 0;
 			}
 
@@ -124,8 +122,8 @@ public class MerklisteMapper {
 
     /**
      * Vermerk einfuegen.
-     * @param profilId Profil-ID.
-     * @param fremdprofilId Fremdprofil-ID.
+     * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
+     * @param fremdprofilId Die Profil-ID des Nutzerprofils, das vermerkt werden soll. 
      */
 	public void insertVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
@@ -143,8 +141,8 @@ public class MerklisteMapper {
 
 	/**
 	 * Vermerk loeschen.
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID
+	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
+	 * @param fremdprofilId Die Profil-ID des Nutzerprofils, dessen Vermerk geloescht werden soll. 
 	 */
 	public void deleteVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();

@@ -3,110 +3,141 @@ package de.hdm.gruppe7.partnerboerse.shared.bo;
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * Realisierung eines exemplarischen Nutzerprofils.
- * 
- * @author Nina BaumgÃ¤rtner
+ * Realisierung eines Nutzerprofils.
  */
-
 public class Nutzerprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
 
-	
+	/**
+	 * Vorname des Nutzers. 
+	 */
 	private String vorname;
+	
+	/**
+	 * Nachname des Nutzers. 
+	 */
 	private String nachname; 
-	private String geburtsdatum; 
+	
+	/**
+	 * Geburtsdatum des Nutzers. 
+	 */
 	private Date geburtsdatumDate;
-	private List <Nutzerprofil> partnervorschlaegeNp;
-	private List <Nutzerprofil> partnervorschlaegeSp;
-	private List <Nutzerprofil> angeseheneNp;
 
+	/**
+	 * Aehnlichkeit zwischen einem Nutzerprofil und anderen Nutzerprofilen 
+	 * oder zwischen einem Suchprofil und anderen Nutzerprofilen.
+	 */
 	private int aehnlichkeit;
-	private int aehnlichkeitSp;
+	
+	/**
+	 * E-Mail-Adresse des Nutzers. 
+	 */
+	private String emailAddress;
 
-
-
-	// WICHTIG FÜR LOGIN
+	/*
+	 * ************************************
+	 * Beginn: Eventuell hier falsch platziert 
+	 * ************************************
+	 */
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;
-	private String emailAddress;
-	private String nickname;
 	private boolean status = false;
-
 	
+	/*
+	 * ************************************
+	 * Ende: Eventuell hier falsch platziert 
+	 * ************************************
+	 */
 
-	// Konstruktor
-	public Nutzerprofil() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	// METHODEN NUTZERPROFIL
+	/**
+	 * Vorname des Nutzers auslesen.
+	 * @return vorname
+	 */
 	public String getVorname() {
 		return vorname;
 	}
 
+	/**
+	 * Vorname des Nutzers setzen.
+	 * @param vorname
+	 */
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
 	
-	
+	/**
+	 * Nachname des Nutzers auslesen.
+	 * @return nachname
+	 */
 	public String getNachname() {
 		return nachname;
 	}
 
+	/**
+	 * Nachname des Nutzers setzen.
+	 * @param nachname
+	 */
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
 
-	public String getGeburtsdatum() {
-		return geburtsdatum;
-	}
-
-	public void setGeburtsdatum(String geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
-
+	/**
+	 * Geburtsdatum des Nutzers auslesen.
+	 * @return geburtsdatumDate
+	 */
 	public Date getGeburtsdatumDate() {
 		return geburtsdatumDate;
 	}
 
+	/**
+	 * Geburtsdatum des Nutzers setzen. 
+	 * @param geburtsdatumDate
+	 */
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
 		this.geburtsdatumDate = geburtsdatumDate;
 	}
 
-
+	/**
+	 * Aehnlichkeit auslesen.
+	 * @return aehnlichkeit
+	 */
 	public int getAehnlichkeit() {
-
 		return aehnlichkeit;
 	}
 
-
+	/**
+	 * Aehnlichkeit setzen. 
+	 * @param aehnlichkeit
+	 */
 	public void setAehnlichkeit(int aehnlichkeit) {
-
 		this.aehnlichkeit = aehnlichkeit;
 	}
-
 	
-
-	public int getAehnlichkeitSp (){
-		return aehnlichkeitSp;
-	}
-	
-	public void setAehnlichkeitSp (int aehnlichkeitSp){
-		
-		this.aehnlichkeitSp = aehnlichkeitSp;
-	}
-
-
+	/**
+	 * E-Mail-Adresse des Nutzers auslesen.
+	 * @return emailAddress
+	 */
 	public String getEmailAddress(){
 		return emailAddress;
 	}
+	
+	/**
+	 * E-Mail-Adresse des Nutzes setzen. 
+	 * @param emailAddress
+	 */
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 
-	// METHODEN LOGIN
+	/*
+	 * ************************************
+	 * Beginn: Eventuell hier falsch platziert 
+	 * ************************************
+	 */
+	
 	public boolean isLoggedIn() {
 		return loggedIn;
 
@@ -128,18 +159,6 @@ public class Nutzerprofil extends Profil {
 		return logoutUrl;
 	}
 
-	public void setNickname(String nickname2) {
-
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
 	public void setLoginUrl(String loginUrl) {
 		this.loginUrl = loginUrl;
 	}
@@ -155,5 +174,11 @@ public class Nutzerprofil extends Profil {
 	public boolean getStatus() {
 		return status;
 	}
+	
+	/*
+	 * ************************************
+	 * Beginn: Eventuell hier falsch platziert 
+	 * ************************************
+	 */
 
 }
