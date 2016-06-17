@@ -21,6 +21,11 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 public class ShowSperrliste extends VerticalPanel {
 
 	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+
+	/**
 	 * Vertikales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -82,7 +87,7 @@ public class ShowSperrliste extends VerticalPanel {
 		/**
 		 * Alle gesperrten Nutzerprofile eines Nutzers abfragen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(
+		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<Sperrliste>() {
 
 					public void onFailure(Throwable caught) {
@@ -155,7 +160,7 @@ public class ShowSperrliste extends VerticalPanel {
 											 * Sperrung aus der Datenbank entfernen.
 											 */
 											ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(
-													Integer.valueOf(fremdprofilId),
+													nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
 													new AsyncCallback<Integer>() {
 
 														public void onFailure(Throwable caught) {

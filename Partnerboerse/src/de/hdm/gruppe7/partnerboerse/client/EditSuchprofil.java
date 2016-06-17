@@ -11,9 +11,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class EditSuchprofil extends VerticalPanel {
+
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
 	 * VerticalPanel hinzufuegen.
@@ -78,8 +84,7 @@ public class EditSuchprofil extends VerticalPanel {
 		 * CSS auf Tabelle anwenden und Tabelle formatieren.
 		 */
 		editSuchprofilFlexTable.setCellPadding(6);
-		editSuchprofilFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
+		editSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		editSuchprofilFlexTable.addStyleName("FlexTable");
 
 		/**
@@ -138,75 +143,61 @@ public class EditSuchprofil extends VerticalPanel {
 		 * Daten des Suchprofils in die Tabelle einfuegen.
 		 */
 		ClientsideSettings.getPartnerboerseAdministration()
-				.getSuchprofilByName(suchprofilName,
+				.getSuchprofilByName(nutzerprofil.getProfilId(), suchprofilName,
 						new AsyncCallback<Suchprofil>() {
 
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					public void onSuccess(Suchprofil result) {
+						// Suchprofil-ID auslesen und einfuegen.
+						final String suchprofilId = String.valueOf(result.getProfilId());
+						editSuchprofilFlexTable.setText(0, 2, suchprofilId);
+
+						// Suchprofilname auslesen und einfuegen.
+						suchprofilNameTextBox.setText(result.getSuchprofilName());
+
+						// Geschlecht auslesen und einfügen.
+						for (int i = 0; i < geschlechtListBox.getItemCount(); i++) {
+							if (result.getGeschlecht().equals(geschlechtListBox.getValue(i))) {
+								geschlechtListBox.setSelectedIndex(i);
 							}
+						}
 
-							public void onSuccess(Suchprofil result) {
-								// Suchprofil-ID auslesen und einfuegen.
-								final String suchprofilId = String
-										.valueOf(result.getProfilId());
-								editSuchprofilFlexTable.setText(0, 2,
-										suchprofilId);
+						// AlterMin auslesen und einfügen.
+						alterMinTextBox.setText(Integer.toString(result.getAlterMinInt()));
 
-								// Suchprofilname auslesen und einfuegen.
-								suchprofilNameTextBox.setText(result
-										.getSuchprofilName());
+						// AlterMax auslesen und einfügen.
+						alterMaxTextBox.setText(Integer.toString(result.getAlterMaxInt()));
 
-								// Geschlecht auslesen und einfügen.
-								for (int i = 0; i < geschlechtListBox
-										.getItemCount(); i++) {
-									if (result.getGeschlecht().equals(
-											geschlechtListBox.getValue(i))) {
-										geschlechtListBox.setSelectedIndex(i);
-									}
-								}
+						// Körpergröße auslesen und einfügen.
+						koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 
-								// AlterMin auslesen und einfügen.
-								alterMinTextBox.setText(Integer.toString(result
-										.getAlterMinInt()));
-
-								// AlterMax auslesen und einfügen.
-								alterMaxTextBox.setText(Integer.toString(result
-										.getAlterMaxInt()));
-
-								// Körpergröße auslesen und einfügen.
-								koerpergroesseTextBox.setText(Integer
-										.toString(result.getKoerpergroesseInt()));
-
-								// Haarfarbe auslesen und einfügen.
-								for (int i = 0; i < haarfarbeListBox
-										.getItemCount(); i++) {
-									if (result.getHaarfarbe().equals(
-											haarfarbeListBox.getValue(i))) {
-										haarfarbeListBox.setSelectedIndex(i);
-									}
-								}
-
-								// Raucherstatus auslesen und einfügen.
-								for (int i = 0; i < raucherListBox
-										.getItemCount(); i++) {
-									if (result.getRaucher().equals(
-											raucherListBox.getValue(i))) {
-										raucherListBox.setSelectedIndex(i);
-									}
-								}
-
-								// Religion auslesen und einfügen.
-								for (int i = 0; i < religionListBox
-										.getItemCount(); i++) {
-									if (result.getReligion().equals(
-											religionListBox.getValue(i))) {
-										religionListBox.setSelectedIndex(i);
-									}
-								}
-
+						// Haarfarbe auslesen und einfügen.
+						for (int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
+							if (result.getHaarfarbe().equals(haarfarbeListBox.getValue(i))) {
+								haarfarbeListBox.setSelectedIndex(i);
 							}
+						}
 
-						});
+						// Raucherstatus auslesen und einfügen.
+						for (int i = 0; i < raucherListBox.getItemCount(); i++) {
+							if (result.getRaucher().equals(raucherListBox.getValue(i))) {
+								raucherListBox.setSelectedIndex(i);
+							}
+						}
+
+						// Religion auslesen und einfügen.
+						for (int i = 0; i < religionListBox.getItemCount(); i++) {
+							if (result.getReligion().equals(religionListBox.getValue(i))) {
+								religionListBox.setSelectedIndex(i);
+							}
+						}
+
+					}
+
+				});
 
 		/**
 		 * ClickHandler fuer den Suchprofil-Bearbeiten-Button hinzufuegen.
@@ -215,148 +206,101 @@ public class EditSuchprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 
 				// Suchprofilname ueberpruefen.
-				ClientsideSettings.getPartnerboerseAdministration()
-						.pruefeSuchprofilnameEdit(
-								Integer.parseInt(editSuchprofilFlexTable
-										.getText(0, 2)),
-								suchprofilNameTextBox.getText(),
-								new AsyncCallback<Integer>() {
+				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(nutzerprofil.getProfilId(),
+						Integer.parseInt(editSuchprofilFlexTable.getText(0, 2)), suchprofilNameTextBox.getText(),
+						new AsyncCallback<Integer>() {
 
-									@Override
-									public void onFailure(Throwable caught) {
-										infoLabel
-												.setText("Es trat ein Fehler auf.");
-									}
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
 
-									@Override
-									public void onSuccess(Integer result) {
-										// Wenn der Suchprofilname bereits
-										// existiert...
-										if (result == 1) {
-											warnungLabel
-													.setText("Der Suchprofilname existiert bereits.");
-											editSuchprofilFlexTable.setWidget(
-													1, 4, warnungLabel);
+							@Override
+							public void onSuccess(Integer result) {
+								// Wenn der Suchprofilname bereits
+								// existiert...
+								if (result == 1) {
+									warnungLabel.setText("Der Suchprofilname existiert bereits.");
+									editSuchprofilFlexTable.setWidget(1, 4, warnungLabel);
+								} else {
+									// Wenn der Suchprofilname leer
+									// ist...
+									if (result == 2) {
+										warnungLabel.setText("Der Suchprofilname darf nicht leer sein.");
+										editSuchprofilFlexTable.setWidget(1, 4, warnungLabel);
+									} else {
+										// Wenn kein AlterMin angegeben
+										// wurde...
+										if (alterMinTextBox.getText().length() == 0) {
+											warnungLabel.setText("Bitte geben Sie 'Alter von' an.");
+											editSuchprofilFlexTable.setWidget(3, 4, warnungLabel);
 										} else {
-											// Wenn der Suchprofilname leer
-											// ist...
-											if (result == 2) {
-												warnungLabel
-														.setText("Der Suchprofilname darf nicht leer sein.");
-												editSuchprofilFlexTable
-														.setWidget(1, 4,
-																warnungLabel);
+											// Wenn kein AlterMax
+											// angegeben wurde...
+											if (alterMaxTextBox.getText().length() == 0) {
+												warnungLabel.setText("Bitte geben Sie 'Alter bis' an.");
+												editSuchprofilFlexTable.setWidget(4, 4, warnungLabel);
 											} else {
-												// Wenn kein AlterMin angegeben
-												// wurde...
-												if (alterMinTextBox.getText()
-														.length() == 0) {
+												// Wenn Alter von
+												// groesser als Alter
+												// bis ist...
+												if (Integer.parseInt(alterMinTextBox.getText()) > Integer
+														.parseInt(alterMaxTextBox.getText())) {
 													warnungLabel
-															.setText("Bitte geben Sie 'Alter von' an.");
-													editSuchprofilFlexTable
-															.setWidget(3, 4,
-																	warnungLabel);
+															.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
+													editSuchprofilFlexTable.setWidget(3, 4, warnungLabel);
 												} else {
-													// Wenn kein AlterMax
-													// angegeben wurde...
-													if (alterMaxTextBox
-															.getText().length() == 0) {
-														warnungLabel
-																.setText("Bitte geben Sie 'Alter bis' an.");
-														editSuchprofilFlexTable
-																.setWidget(4,
-																		4,
-																		warnungLabel);
+													// Wenn keine
+													// Koerpergroesse
+													// angegeben
+													// wurde...
+													if (koerpergroesseTextBox.getText().length() == 0) {
+														warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+														editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 													} else {
-														// Wenn Alter von
-														// groesser als Alter
-														// bis ist...
-														if (Integer
-																.parseInt(alterMinTextBox
-																		.getText()) > Integer
-																.parseInt(alterMaxTextBox
-																		.getText())) {
-															warnungLabel
-																	.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
-															editSuchprofilFlexTable
-																	.setWidget(
-																			3,
-																			4,
-																			warnungLabel);
-														} else {
-															// Wenn keine
-															// Koerpergroesse
-															// angegeben
-															// wurde...
-															if (koerpergroesseTextBox
-																	.getText()
-																	.length() == 0) {
-																warnungLabel
-																		.setText("Bitte geben Sie Ihre Körpergröße an.");
-																editSuchprofilFlexTable
-																		.setWidget(
-																				5,
-																				4,
-																				warnungLabel);
-															} else {
-																// Suchprofil
-																// aktualisieren.
-																ClientsideSettings
-																		.getPartnerboerseAdministration()
-																		.saveSuchprofil(
-																				Integer.parseInt(editSuchprofilFlexTable
-																						.getText(
-																								0,
-																								2)),
-																				suchprofilNameTextBox
-																						.getText(),
-																				geschlechtListBox
-																						.getSelectedItemText(),
-																				Integer.parseInt(alterMinTextBox
-																						.getText()),
-																				Integer.parseInt(alterMaxTextBox
-																						.getText()),
-																				Integer.parseInt(koerpergroesseTextBox
-																						.getText()),
-																				haarfarbeListBox
-																						.getSelectedItemText(),
-																				raucherListBox
-																						.getSelectedItemText(),
-																				religionListBox
-																						.getSelectedItemText(),
-																				new AsyncCallback<Void>() {
+														// Suchprofil
+														// aktualisieren.
+														ClientsideSettings.getPartnerboerseAdministration()
+																.saveSuchprofil(nutzerprofil.getProfilId(),
+																		Integer.parseInt(
+																				editSuchprofilFlexTable.getText(0, 2)),
+																		suchprofilNameTextBox.getText(),
+																		geschlechtListBox.getSelectedItemText(),
+																		Integer.parseInt(alterMinTextBox.getText()),
+																		Integer.parseInt(alterMaxTextBox.getText()),
+																		Integer.parseInt(
+																				koerpergroesseTextBox.getText()),
+																		haarfarbeListBox.getSelectedItemText(),
+																		raucherListBox.getSelectedItemText(),
+																		religionListBox.getSelectedItemText(),
+																		new AsyncCallback<Void>() {
 
-																					@Override
-																					public void onFailure(
-																							Throwable caught) {
-																						infoLabel
-																								.setText("Es trat ein Fehler auf");
-																					}
+																			@Override
+																			public void onFailure(Throwable caught) {
+																				infoLabel.setText(
+																						"Es trat ein Fehler auf");
+																			}
 
-																					@Override
-																					public void onSuccess(
-																							Void result) {
-																						ShowSuchprofil showSuchprofil = new ShowSuchprofil();
-																						RootPanel
-																								.get("Details")
-																								.clear();
-																						RootPanel
-																								.get("Details")
-																								.add(showSuchprofil);
-																					}
+																			@Override
+																			public void onSuccess(Void result) {
+																				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+																				RootPanel.get("Details").clear();
+																				RootPanel.get("Details")
+																						.add(showSuchprofil);
+																			}
 
-																				});
+																		});
 
-															}
-														}
 													}
 												}
-
 											}
 										}
-									}
 
-								});
+									}
+								}
+							}
+
+						});
 
 			}
 		});

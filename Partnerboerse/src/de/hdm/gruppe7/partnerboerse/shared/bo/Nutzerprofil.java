@@ -3,10 +3,6 @@ package de.hdm.gruppe7.partnerboerse.shared.bo;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Widget;
-
-import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 
 /**
  * Realisierung eines exemplarischen Nutzerprofils.

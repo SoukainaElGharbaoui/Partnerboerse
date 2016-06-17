@@ -17,29 +17,26 @@ import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
-	
-	ReportGeneratorAsync reportGenerator = null; 
-	
+
+	ReportGeneratorAsync reportGenerator = null;
+
 	Button unangesehenePartnervorschlaegeButton = new Button("Unangesehene Partnervorschläge");
-	
+
 	Button partnervorschlaegeSuchprofilButton = new Button("Partnervorschläge anhand von Suchprofilen");
-	
+
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
 	private ReportGeneratorAsync reportGeneratorAsync;
-	private PartnerboerseAdministrationAsync partnerboerseAdministration;
-
 
 	@Override
 	public void onModuleLoad() {
-		
+
 		if (reportGenerator == null) {
 			reportGenerator = ClientsideSettings.getReportGenerator();
 		}
-		
 
 		reportGeneratorAsync = GWT.create(ReportGenerator.class);
 
@@ -56,20 +53,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-									reportGeneratorAsync.setUser(result, new AsyncCallback<Void>() {
-										public void onFailure(Throwable caught) {
-										}
-
-										public void onSuccess(Void result) {}
-										
-									});
-									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
-										public void onFailure(Throwable caught) {
-										}
-
-										public void onSuccess(Void result) {
-										}
-									});
+									
+								ClientsideSettings.setAktuellerUser(result);
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
@@ -87,7 +73,6 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
 
-
 							}
 
 							// wenn der user nicht eingeloggt ist
@@ -103,27 +88,25 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			e.printStackTrace();
 		}
 
-
-		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		menu.setWidth("3000px");
 		menu.setAnimationEnabled(true);
 
-		   // Create the file menu
-		   MenuBar partnervorschlaegeMenu = new MenuBar(true);
-		   partnervorschlaegeMenu.setAnimationEnabled(true);
+		// Create the file menu
+		MenuBar partnervorschlaegeMenu = new MenuBar(true);
+		partnervorschlaegeMenu.setAnimationEnabled(true);
 
-		   partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
-		      @Override
-		      public void execute() {
-		    	  ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showAllPartnervorschlaegeNpReport);
-		      }
-		   });
-		   
-		   partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command(){
+		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
+			@Override
+			public void execute() {
+				ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showAllPartnervorschlaegeNpReport);
+			}
+		});
+
+		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
 
 			@Override
 			public void execute() {
@@ -131,27 +114,18 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showAllPartnervorschlaegeSpReport);
-				
+
 			}
-			   
-		   });
-		   
-		  
-		   
-		   partnervorschlaegeMenu.addSeparator();
 
-		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		});
 
-		   //add the menu to the root panel
-		   RootPanel.get("Navigator").add(menu);
-		
-		
+		partnervorschlaegeMenu.addSeparator();
+
+		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+
+		// add the menu to the root panel
+		RootPanel.get("Navigator").add(menu);
+
 	}
-
-
-
-	
-	
-	
 
 }

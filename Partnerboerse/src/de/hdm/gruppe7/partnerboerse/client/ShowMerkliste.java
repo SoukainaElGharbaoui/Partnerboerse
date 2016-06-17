@@ -22,6 +22,11 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowMerkliste extends VerticalPanel {
 
 	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+
+	/**
 	 * Vertikales Panel hinzufuegen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -83,8 +88,8 @@ public class ShowMerkliste extends VerticalPanel {
 		/**
 		 * Alle gemerkten Nutzerprofile eines Nutzers abfragen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration()
-				.getGemerkteNutzerprofileFor(new AsyncCallback<Merkliste>() {
+		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(nutzerprofil.getProfilId(),
+				new AsyncCallback<Merkliste>() {
 
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf."); 
@@ -161,11 +166,9 @@ public class ShowMerkliste extends VerticalPanel {
 											/**
 											 * Vermerk aus der Datenbank entfernen.
 											 */
-											ClientsideSettings
-													.getPartnerboerseAdministration()
-													.vermerkstatusAendern(
-															Integer.valueOf(fremdprofilId),
-															new AsyncCallback<Integer>() {
+											ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(
+													nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
+													new AsyncCallback<Integer>() {
 
 																public void onFailure(
 																		Throwable caught) {
@@ -197,14 +200,11 @@ public class ShowMerkliste extends VerticalPanel {
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 
-									/**
-									 * Pruefen, ob der Nutzer vom Fremdprofil gesperrt wurde.
-									 */
-									ClientsideSettings
-											.getPartnerboerseAdministration()
-											.getSperrstatusEigenesProfil(
-													Integer.valueOf(fremdprofilId),
-													new AsyncCallback<Integer>() {
+									// Prüfen, ob Benutzer von Fremdprofil
+									// gesperrt wurde.
+									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
+											nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
+											new AsyncCallback<Integer>() {
 
 														@Override
 														public void onFailure(

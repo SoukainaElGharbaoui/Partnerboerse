@@ -11,24 +11,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
 
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen.
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
-	/**
-	 * Variable für die Nutzer-Email anlegen.
-	 */
-	private String userEmail;
-	
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+
 	/**
 	 * Panels hinzufuegen.
 	 */
@@ -37,7 +29,7 @@ public class ShowEigenesNp extends VerticalPanel {
 	private VerticalPanel loeschenVerPanel = new VerticalPanel();
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	
+
 	/**
 	 * Widgets hinzufuegen.
 	 */
@@ -55,17 +47,14 @@ public class ShowEigenesNp extends VerticalPanel {
 	 * Konstruktor hinzufuegen.
 	 * @param user Nutzerprofil
 	 */
-	public ShowEigenesNp(Nutzerprofil user) {
+	public ShowEigenesNp() {
 
 		this.add(horPanel);
-		horPanel.add(verPanel1); 
-		horPanel.add(verPanel2); 
-		
-		this.nutzerprofil = user;
-		userEmail = user.getEmailAddress();
-		
+		horPanel.add(verPanel1);
+		horPanel.add(verPanel2);
+
 		/**
-		 * CSS anwenden. 
+		 * CSS anwenden.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
@@ -93,7 +82,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		/**
 		 * Nutzerprofil anhand der Profil-ID auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -104,6 +93,8 @@ public class ShowEigenesNp extends VerticalPanel {
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
 						String nutzerprofilId = String.valueOf(result.getProfilId());
+						
+						nutzerprofil.setProfilId(Integer.valueOf(nutzerprofilId));
 						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
 						// Vorname aus Datenbank aus der Datenbank holen
@@ -144,7 +135,7 @@ public class ShowEigenesNp extends VerticalPanel {
 					}
 
 				});
-		
+
 		/**
 		 * ClickHandler fuer den Button zum Bearbeiten hinzufuegen.
 		 */
@@ -164,7 +155,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich loeschen moechte, ausbauen.
+				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich
+				// loeschen moechte, ausbauen.
 				loeschenDialogBox.setText("Information");
 				loeschenDialogBox.setAnimationEnabled(true);
 				loeschenVerPanel.add(loeschenLabel);
@@ -180,8 +172,8 @@ public class ShowEigenesNp extends VerticalPanel {
 				jaButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						// Nutzerprofil loeschen.
-						ClientsideSettings.getPartnerboerseAdministration().deleteNutzerprofil(
-								new AsyncCallback<Void>() {
+						ClientsideSettings.getPartnerboerseAdministration()
+								.deleteNutzerprofil(nutzerprofil.getProfilId(), new AsyncCallback<Void>() {
 
 									public void onFailure(Throwable caught) {
 										infoLabel.setText("Es trat ein Fehler auf.");
@@ -189,13 +181,14 @@ public class ShowEigenesNp extends VerticalPanel {
 
 									public void onSuccess(Void result) {
 										/**
-										 * Noch ausbauen: Weiterleitung auf Logout-Seite. 
+										 * Noch ausbauen: Weiterleitung auf
+										 * Logout-Seite.
 										 */
 										infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
 									}
 
 								});
-						}
+					}
 
 				});
 
@@ -211,12 +204,12 @@ public class ShowEigenesNp extends VerticalPanel {
 		});
 
 		/**
-		 * Infos anzeigen. 
+		 * Infos anzeigen.
 		 */
 		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
-		
+
 		/**
-		 * Widgets den Panels hinzufuegen. 
+		 * Widgets den Panels hinzufuegen.
 		 */
 		verPanel1.add(ueberschriftLabel);
 		verPanel1.add(showEigenesNpFlexTable);
