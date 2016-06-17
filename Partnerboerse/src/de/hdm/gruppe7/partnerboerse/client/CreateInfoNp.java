@@ -229,8 +229,8 @@ public class CreateInfoNp extends VerticalPanel {
 								}
 
 								else if (result == 1) {
-									
-									ShowSuchprofil showSp = new ShowSuchprofil();
+									String suchprofilName = null;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

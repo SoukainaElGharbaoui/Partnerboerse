@@ -219,6 +219,8 @@ public class EditSuchprofil extends VerticalPanel {
 							public void onSuccess(Integer result) {
 								// Wenn der Suchprofilname bereits
 								// existiert...
+								
+								
 								if (result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits.");
 									editSuchprofilFlexTable.setWidget(1, 4, warnungLabel);
@@ -283,7 +285,8 @@ public class EditSuchprofil extends VerticalPanel {
 
 																			@Override
 																			public void onSuccess(Void result) {
-																				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+																				String suchprofilName = suchprofilNameTextBox.getText();
+																				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
 																				RootPanel.get("Details").clear();
 																				RootPanel.get("Details")
 																						.add(showSuchprofil);
