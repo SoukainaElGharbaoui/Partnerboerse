@@ -146,6 +146,15 @@ public class CreateSuchprofil extends VerticalPanel {
 							}
 
 							public void onSuccess(Integer result) {
+								
+								if(alterMinTextBox.getText().length()==0 && alterMaxTextBox.getText().length()==0){
+									warnungLabel.setText("Bitte geben Sie einen Altersrahmen für Ihr Suchprofil an");
+									createSuchprofilFlexTable.setWidget(2, 4, warnungLabel);
+								}
+								if(koerpergroesseTextBox.getText().length()==0){
+									warnungLabel.setText("Bitte geben Sie eine Körpergröße an");
+									createSuchprofilFlexTable.setWidget(4, 4, warnungLabel);
+								}
 								// Wenn der Suchprofilname bereits existiert...
 								if(result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits");	

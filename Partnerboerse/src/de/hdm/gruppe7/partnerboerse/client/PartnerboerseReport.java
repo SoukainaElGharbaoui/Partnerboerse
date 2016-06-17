@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
+import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -36,6 +37,8 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	private Anchor signOutLink = new Anchor();
 	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 
+	private ReportGeneratorAsync reportGeneratorAsync;
+
 
 	@Override
 	public void onModuleLoad() {
@@ -45,11 +48,11 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		}
 		
 
-		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
+		reportGenerator = GWT.create(ReportGenerator.class);
 
 		try {
-			ClientsideSettings.getPartnerboerseAdministration().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
-					new AsyncCallback<Nutzerprofil>() {
+			ClientsideSettings.getReportGenerator().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
+				new AsyncCallback<Nutzerprofil>() {
 
 						public void onFailure(Throwable caught) {
 							RootPanel.get().add(new Label(caught.toString()));
@@ -60,7 +63,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-									partnerboerseAdministration.setUser(result, new AsyncCallback<Void>() {
+									reportGenerator.setUser(result, new AsyncCallback<Void>() {
 										public void onFailure(Throwable caught) {
 										}
 
@@ -71,17 +74,17 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
-									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(new PartnerboerseReport());
-									RootPanel.get("Navigator").add(loginPanel);
+								    loginPanel.add(signOutLink);
+									RootPanel.get("Details").add(new PartnerboerseReport());
+									RootPanel.get("Header").add(loginPanel);
 								}
 
 								if (result.getEmailAddress() == null) {
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(new PartnerboerseReport());
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Details").add(new PartnerboerseReport());
+									RootPanel.get("Header").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
 
@@ -89,10 +92,10 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 							}
 
 							// wenn der user nicht eingeloggt ist
-							if (!result.isLoggedIn()) {
+     						if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Header").add(loginPanel);
 							}
 						}
 					});
@@ -104,7 +107,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("3000px");
+		menu.setWidth("900px");
 		menu.setAnimationEnabled(true);
 
 		   // Create the file menu
@@ -140,7 +143,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		   menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
 
 		   //add the menu to the root panel
-		   RootPanel.get("Navigator").add(menu);
+		   RootPanel.get("Details").add(menu);
 		
 		
 	}

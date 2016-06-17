@@ -449,7 +449,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	  }
 
 	
-	
+	  @Override
+		public void setUser(Nutzerprofil n) {
+			this.profil = n;
+			
+		}
 	
 	
 	public boolean isUserRegistered(String userEmail) {
@@ -487,6 +491,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
 	}
+
 	
 
 }

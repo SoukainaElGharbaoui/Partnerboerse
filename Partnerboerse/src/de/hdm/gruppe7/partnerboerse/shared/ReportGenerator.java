@@ -52,7 +52,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
 	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-	   * {@ link PartnerboerseAdministrationImpltungImpl} notwendig. 
+	   * {@link PartnerboerseAdministrationImpltungImpl} notwendig. 
 	   * 
 	   * @throws IllegalArgumentException
 	   */
@@ -81,5 +81,14 @@ public interface ReportGenerator extends RemoteService {
 
 	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport()
 			throws IllegalArgumentException;
+	
+	boolean isUserRegistered(String userEmail);
+
+//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException;
+
+	Nutzerprofil login(String requestUri) throws Exception;
+	
+	public void setUser(Nutzerprofil n);
+
 	  
 }

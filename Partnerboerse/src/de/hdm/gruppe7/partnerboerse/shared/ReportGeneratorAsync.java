@@ -4,6 +4,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 
+
+
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
@@ -39,6 +42,12 @@ public interface ReportGeneratorAsync {
 
 	void createAllPartnervorschlaegeSpReport(
 			AsyncCallback<AllPartnervorschlaegeSpReport> callback);
+
+	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
+
+	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
+
+	void setUser(Nutzerprofil n, AsyncCallback<Void> callback);
 
 
 }

@@ -25,9 +25,9 @@ import com.google.gwt.user.client.ui.Button;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
-
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 
@@ -56,12 +56,12 @@ public class Navigator extends VerticalPanel {
 	public Navigator() {
 		
 		VerticalPanel verPanel1 = new VerticalPanel();
-
-	
+		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("900px");
+		menu.setWidth("480px");
 		menu.setAnimationEnabled(true);
+		menu.setStyleName("gwt-MenuBar-horizontal");
 
 		   // Create the file menu
 		   MenuBar nutzerprofilMenu = new MenuBar(true);
@@ -88,7 +88,7 @@ public class Navigator extends VerticalPanel {
 			   
 		   });
 		   
-		   nutzerprofilMenu.addItem("Merklise anzeigen", new Command(){
+		   nutzerprofilMenu.addItem("Merkliste anzeigen", new Command(){
 
 			@Override
 			public void execute() {

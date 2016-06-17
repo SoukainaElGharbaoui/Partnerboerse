@@ -2,6 +2,9 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
+import java.util.regex.Pattern;
+
+import sun.misc.CharacterEncoder;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -54,6 +57,17 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	final Label warnungLabel = new Label();
+	final Label warnungLabel1 = new Label();
+	CharSequence zahl = "0";
+	CharSequence zahl1 = "1";
+	CharSequence zahl2 = "2";
+	CharSequence zahl3 = "3";
+	CharSequence zahl4 = "4";
+	CharSequence zahl5 = "5";
+	CharSequence zahl6 = "6";
+	CharSequence zahl7 = "7";
+	CharSequence zahl8 = "8";
+	CharSequence zahl9 = "9";
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -149,6 +163,53 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+//				Pattern letterPattern = Pattern.compile("^[a-zA-Z]+$");
+//
+//				if (!(letterPattern.matcher(vornameTextBox.getText()).matches()))
+//				      {
+//					warnungLabel.setText("Blub");
+//					createNutzerprofilFlexTable.setWidget(0, 5, warnungLabel);
+//				}
+				
+				
+				if(geburtsdatumInhalt.getText().length() == 0){
+					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an");
+					createNutzerprofilFlexTable.setWidget(3, 3, warnungLabel);
+				}
+				if(koerpergroesseTextBox.getText().length() ==0){
+				warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an");
+				createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+				}
+				//Wenn der Vorname Zahlen enthält...
+		        if(vornameTextBox.getText().contains(zahl)||
+		        		vornameTextBox.getText().contains(zahl1)||
+		        		vornameTextBox.getText().contains(zahl2)||
+		        		vornameTextBox.getText().contains(zahl3)||
+		        		vornameTextBox.getText().contains(zahl4)||
+		        		vornameTextBox.getText().contains(zahl5)||
+		        		vornameTextBox.getText().contains(zahl6)||
+		        		vornameTextBox.getText().contains(zahl7)||
+		        		vornameTextBox.getText().contains(zahl8)||
+		        		vornameTextBox.getText().contains(zahl9)){
+				warnungLabel.setText("Ihr Name darf keine Zahlen enthalten");
+				createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+				}
+		        //Wenn der Nachname Zahlen enthält...
+		        if(nachnameTextBox.getText().contains(zahl)||
+		        		nachnameTextBox.getText().contains(zahl1)||
+		        		nachnameTextBox.getText().contains(zahl2)||
+		        		nachnameTextBox.getText().contains(zahl3)||
+		        		nachnameTextBox.getText().contains(zahl4)||
+		        		nachnameTextBox.getText().contains(zahl5)||
+		        		nachnameTextBox.getText().contains(zahl6)||
+		        		nachnameTextBox.getText().contains(zahl7)||
+		        		nachnameTextBox.getText().contains(zahl8)||
+		        		nachnameTextBox.getText().contains(zahl9)){
+		        	warnungLabel.setText("Ihr Name darf keine Zahlen enthalten");
+		        	createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+		        }
+				
+				
 
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
