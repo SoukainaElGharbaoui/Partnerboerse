@@ -659,7 +659,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge.
+	 * ** ABSCHNITT, Ende: PartnervorschlÃ¤ge
 	 * *************************************************************************
 	 * **
 	 */
