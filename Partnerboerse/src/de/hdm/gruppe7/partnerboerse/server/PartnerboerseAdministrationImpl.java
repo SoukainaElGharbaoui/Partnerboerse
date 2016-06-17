@@ -13,6 +13,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
+import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -72,7 +73,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
 			throws IllegalArgumentException {
-
+		
 		// Neues Nutzerprofil-Objekt erstellen.
 		Nutzerprofil n = new Nutzerprofil();
 		n.setVorname(vorname);
@@ -87,8 +88,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 		// VorlÃ¤ufige Profil-ID setzen.
 		n.setProfilId(1);
-
-		return this.nutzerprofilMapper.insertNutzerprofil(n);
+		
+		n = this.nutzerprofilMapper.insertNutzerprofil(n);
+		
+		return n;
 	}
 
 	/**
@@ -875,5 +878,18 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
+	}
+	
+		public boolean pruefeObNutzerNeu(String email) {
+			
+			Nutzerprofil np = this.nutzerprofilMapper.findByNutzerprofilMitEmail(email);
+			
+			if (np == null) {
+				return true;
+			}
+			
+			else {
+				return false;
+			}
 	}
 }

@@ -337,7 +337,7 @@ public class InfoMapper {
 	/**
 	 * Alle Beschreibungsinfos f�r ein Profil auslesen
 	 * 
-	 * @return
+	 * @return List<Info>
 	 */
 	public List<Info> findBInfoByProfilId(int profilId) {
 		// DB-Verbindung holen

@@ -33,8 +33,8 @@ public class ShowMerkliste extends VerticalPanel {
 	private Label informationLabel = new Label();
 	private Label infoLabel = new Label();
 
-	private Button loeschenButton = new Button("Löschen");
-	private Button anzeigenButton = new Button("Anzeigen");
+	private Button loeschenButton;
+	private Button anzeigenButton;
 
 	private int zaehler;
 	
@@ -116,9 +116,11 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Löschen-Button der Tabelle hinzufügen.
+							loeschenButton = new Button("Löschen");
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
 
 							// Anzeigen-Button der Tabelle hinzufügen.
+							anzeigenButton = new Button("Anzeigen");
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
 
 							// Testzwecke: Index der FlexTable-Rows anzeigen.

@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -24,6 +25,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
@@ -198,7 +201,6 @@ public class CreateInfoNp extends VerticalPanel {
 
 							infos.add(info);
 						}
-
 					}
 				}
 
@@ -220,6 +222,16 @@ public class CreateInfoNp extends VerticalPanel {
 								if (result == 0) {
 									
 									ShowEigenesNp showNp = new ShowEigenesNp();
+									RootPanel.get("Navigator").add(new Navigator());
+									
+									Anchor signOut = new Anchor();
+									
+									signOut.setHref(nutzerprofil.getLogoutUrl());
+									signOut.setText("Als " + nutzerprofil.getVorname() + 
+											nutzerprofil.getProfilId() + " ausloggen");
+
+									RootPanel.get("Navigator").add(signOut);
+
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}

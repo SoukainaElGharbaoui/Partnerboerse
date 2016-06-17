@@ -54,7 +54,8 @@ public class NutzerprofilMapper {
 
 				// Tabelle t_profil befüllen.
 				stmt = con.createStatement();
-				stmt.executeUpdate("INSERT INTO t_profil1 (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
+				stmt.executeUpdate("INSERT INTO t_profil1 (profil_id, geschlecht, haarfarbe, "
+						+ "koerpergroesse, raucher, religion) "
 						+ "VALUES("
 						+ n.getProfilId()
 						+ ",'"

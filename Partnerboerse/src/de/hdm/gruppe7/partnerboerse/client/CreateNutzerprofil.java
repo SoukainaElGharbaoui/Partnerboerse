@@ -57,7 +57,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
-	final Label warnungLabel = new Label();
+	private Label warnungLabel = new Label();
+	
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -171,6 +172,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 					
 				} else {
+					
 					/**
 					 * Nutzerprofil anlegen.
 					 */
@@ -187,9 +189,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 										public void onSuccess(Nutzerprofil result) {
 											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 											
-											int profilId = result.getProfilId();
+											nutzerprofil = result;
 											
-											CreateInfoNp createInfoNp = new CreateInfoNp(profilId);
+											ClientsideSettings.setAktuellerUser(nutzerprofil);
+
+											CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(createInfoNp);
 										}
@@ -197,6 +201,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 						}
 			}
 		});
+		
 
 		/**
 		 * Widgets zum Panel hinzufuegen.

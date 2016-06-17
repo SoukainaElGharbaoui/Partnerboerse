@@ -283,4 +283,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public boolean isUserRegistered(String userEmail);
 
 	public Nutzerprofil login(String requestUri) throws Exception;
+	
+	public boolean pruefeObNutzerNeu(String email) throws Exception;
 }

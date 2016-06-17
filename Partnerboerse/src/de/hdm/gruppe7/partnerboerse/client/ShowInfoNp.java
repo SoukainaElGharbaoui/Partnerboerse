@@ -122,7 +122,6 @@ public class ShowInfoNp extends VerticalPanel {
 					showInfoFlexTable.setText(row, 3, i.getInfotext());
 				}
 				
-				
 				List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 				listE = result.get(listI);
 				
@@ -163,6 +162,7 @@ public class ShowInfoNp extends VerticalPanel {
 				
 				informationLabel.setText("Sie haben bisher keine Infos angelegt.");
 
+				erstelleRestlicheInfosButton.setText("Infos anlegen");
 				erstelleRestlicheInfosButton.setVisible(true);
 			}
 	}

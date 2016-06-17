@@ -38,6 +38,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	private FlexTable editNutzerprofilFlexTable = new FlexTable();
 
+	private Label nutzerprofilIdLabel = new Label();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
@@ -98,6 +99,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Zweite und Dritte Spalte der Tabelle festlegen.
 		 */
+		editNutzerprofilFlexTable.setWidget(0, 1, nutzerprofilIdLabel);
 		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
 		editNutzerprofilFlexTable.setWidget(1, 3, reqLabel1);
 
@@ -158,6 +160,8 @@ public class EditNutzerprofil extends VerticalPanel {
 					}
 
 					public void onSuccess(Nutzerprofil result) {
+						
+						nutzerprofilIdLabel.setText(String.valueOf(result.getProfilId()));
 
 						vornameTextBox.setText(result.getVorname());
 

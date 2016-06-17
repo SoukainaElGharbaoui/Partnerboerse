@@ -30,6 +30,7 @@ public class ShowSperrliste extends VerticalPanel {
 	
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
 	private Label informationLabel = new Label();
+	private Label infoLabel = new Label();
 	
 	private int zaehler;
 	
@@ -92,7 +93,7 @@ public class ShowSperrliste extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es ist ein Fehler beim Herausholen der "
+						infoLabel.setText("Es ist ein Fehler beim Herausholen der "
 								+ "gesperrten Profile aufgetreten.");
 					}
 
@@ -148,12 +149,12 @@ public class ShowSperrliste extends VerticalPanel {
 
 														@Override
 														public void onFailure(Throwable caught) {
-															informationLabel.setText("Es trat ein Fehler auf.");
+															infoLabel.setText("Es trat ein Fehler auf.");
 														}
 
 														@Override
 														public void onSuccess(Integer result) {
-															informationLabel.setText(
+															infoLabel.setText(
 																	"Das Nutzerprofil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
@@ -199,6 +200,7 @@ public class ShowSperrliste extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(sperrlisteFlexTable);
 		verPanel.add(informationLabel);
+		verPanel.add(infoLabel);
 
 	}
 

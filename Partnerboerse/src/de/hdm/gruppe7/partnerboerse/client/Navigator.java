@@ -38,18 +38,7 @@ public class Navigator extends VerticalPanel {
 			}
 		});
 
-		nutzerprofilMenu.addItem("Neues Profil anlegen", new Command() {
-
-			@Override
-			public void execute() {
-				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createNutzerprofil);
-
-			}
-
-		});
-
+		
 		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
 
 			@Override
