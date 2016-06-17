@@ -160,6 +160,8 @@ public class CreateSuchprofil extends VerticalPanel {
 							}
 
 							public void onSuccess(Integer result) {
+								
+							
 								// Wenn der Suchprofilname bereits existiert...
 								if (result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits");

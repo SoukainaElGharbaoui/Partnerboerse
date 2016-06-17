@@ -54,7 +54,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		horPanel.add(verPanel2);
 
 		/**
-		 * CSS anwenden.
+		 * CSS anwenden
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 

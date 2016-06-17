@@ -486,11 +486,11 @@ public class NutzerprofilMapper {
 	/**
 	 * Geordnete Partnervorschlaege fuer ein Nutzerprofil anhand eines Suchprofils auslesen. 
 	 * @param profilId Die Profil-ID des Nutzerprofils, fuer das die Partnervorschlaege ausgelesen werden sollen.
-	 * @param suchprofilName Der Suchprofilname des Suchprofils, fuer das die Partnervorschlaege ausgelesen werden sollen.
+	 * @param suchprofilId Die Profil-ID des Suchprofils, fuer das die Partnervorschlaege ausgelesen werden sollen.
 	 * @return Liste von vorgeschlagenenen Nutzerprofil-Objekten. 
 	 */
-	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId,
-			String suchprofilName) {
+
+	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, int suchprofilId) {
 		Connection con = DBConnection.connection();
 
 		// Ergebnisliste vorbereiten
@@ -505,12 +505,8 @@ public class NutzerprofilMapper {
 							+ " t_profil1.raucher, t_profil1.religion , t_aehnlichkeitsp1.aehnlichkeit"
 							+ " FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
 							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id !="
-							+ profilId
-							+ " AND t_aehnlichkeitsp1.suchprofilname = '"
-							+ suchprofilName
-							+ "'"
-							+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofil_id = " + suchprofilId 
+							+ " AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
 							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
 
 			// Für jeden Eintrag im Suchergebnis wird nun ein

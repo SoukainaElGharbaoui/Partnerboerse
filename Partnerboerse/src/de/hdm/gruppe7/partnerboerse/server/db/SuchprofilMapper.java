@@ -174,10 +174,10 @@ public class SuchprofilMapper {
 	/**
 	 * Suchprofil-Objekt anhand der Profil-ID und anhand des Suchprofilnamens auslesen.
 	 * @param profilId Die Profil-ID des Nutzers, dessen Suchprofil ausgelesen werden soll.
-	 * @param suchprofilName Der Name des Suchprofils, das augelesen werden soll.
+	 * @param suchprofilname Der Name des Suchprofils, das augelesen werden soll.
 	 * @return Ausgelesenes Suchprofil-Objekt.
 	 */
-	public Suchprofil findSuchprofilByName(int profilId, String suchprofilName) {
+	public Suchprofil findSuchprofilByName(int profilId, String suchprofilname) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -185,7 +185,7 @@ public class SuchprofilMapper {
 
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil1 INNER JOIN t_profil1 "
 					+ "ON t_suchprofil1.suchprofil_id = t_profil1.profil_id " + "WHERE t_suchprofil1.nutzerprofil_id="
-					+ profilId + " AND t_suchprofil1.suchprofilname LIKE '" + suchprofilName + "'");
+					+ profilId + " AND t_suchprofil1.suchprofilname LIKE '" + suchprofilname + "'");
 
 			if (rs.next()) {
 				Suchprofil s = new Suchprofil();
@@ -273,15 +273,15 @@ public class SuchprofilMapper {
 	 * @param fremdprofilId Die Profil-ID des Vergleichsprofils.
 	 * @param aehnlichkeitSp Der einzufuegende Aehnlichkeitswert. 
 	 */
-	public void insertAehnlichkeit(int profilId, int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp) {
+
+	public void insertAehnlichkeit(int profilId, int suchprofilId, int fremdprofilId, int aehnlichkeitSp) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) "
-					+ "VALUES  (" + profilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, fremdprofil_id, aehnlichkeit) "
+					+ "VALUES  (" + profilId + "," + suchprofilId + "," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

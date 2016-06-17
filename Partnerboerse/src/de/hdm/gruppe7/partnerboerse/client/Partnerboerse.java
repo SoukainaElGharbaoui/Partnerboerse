@@ -59,7 +59,7 @@ public class Partnerboerse implements EntryPoint {
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Navigator").add(new Navigator());
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Header").add(loginPanel);
 								}
 
 								if (result.getEmailAddress() == null) {
@@ -67,7 +67,7 @@ public class Partnerboerse implements EntryPoint {
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Navigator").add(new Navigator());
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Header").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
 							}
@@ -76,7 +76,7 @@ public class Partnerboerse implements EntryPoint {
 							if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Details").add(loginPanel);
 							}
 						}
 					});

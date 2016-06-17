@@ -2,6 +2,31 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.core.shared.GWT;
+
+import java.util.List;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+
+
+
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InsertPanel;
+import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -20,10 +45,14 @@ public class Navigator extends VerticalPanel {
 
 	public Navigator() {
 
+		
+		VerticalPanel verPanel1 = new VerticalPanel();
+		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("900px");
+		menu.setWidth("480px");
 		menu.setAnimationEnabled(true);
+		menu.setStyleName("gwt-MenuBar-horizontal");
 
 		// Create the file menu
 		MenuBar nutzerprofilMenu = new MenuBar(true);
@@ -47,6 +76,7 @@ public class Navigator extends VerticalPanel {
 				RootPanel.get("Details").add(createNutzerprofil);
 
 			}
+
 
 		});
 
