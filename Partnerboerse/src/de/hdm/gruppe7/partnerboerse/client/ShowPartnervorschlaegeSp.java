@@ -104,6 +104,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(nutzerprofil.getProfilId(),
 						auswahlListBox.getSelectedItemText(), new AsyncCallback<List<Nutzerprofil>>() {
 
+
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf");

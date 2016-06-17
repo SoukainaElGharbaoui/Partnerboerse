@@ -97,6 +97,7 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 		
 		for (Info i : infos) {
+
 		
 			try {
 				Statement stmt = con.createStatement();

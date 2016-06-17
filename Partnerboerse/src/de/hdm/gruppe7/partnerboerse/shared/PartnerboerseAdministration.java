@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Vector;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -31,38 +33,70 @@ public interface PartnerboerseAdministration extends RemoteService {
 
 	/**
 	 * Nutzerprofil anlegen.
+	 * 
+	 * @param vorname
+	 * @param nachname
+	 * @param geschlecht
+	 * @param geburtsdatumDate
+	 * @param koerpergroesseInt
+	 * @param haarfarbe
+	 * @param raucher
+	 * @param religion
+	 * @param emailAddress
+	 * @return Nutzerprofil-Objekt
+	 * @throws IllegalArgumentException
 	 */
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
-			throws IllegalArgumentException;
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion,
+			String emailAddress) throws IllegalArgumentException;
 
 	/**
 	 * Nutzerprofil aktualisieren.
+	 * 
+	 * @param profilId
+	 * @param vorname
+	 * @param nachname
+	 * @param geschlecht
+	 * @param geburtsdatumDate
+	 * @param koerpergroesseInt
+	 * @param haarfarbe
+	 * @param raucher
+	 * @param religion
+	 * @throws IllegalArgumentException
 	 */
-	public void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion) throws IllegalArgumentException;
-
+	public void saveNutzerprofil(int profilId, String vorname, String nachname,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
+			throws IllegalArgumentException;
 
 	/**
-	 * Nutzerprofil l�schen.
+	 * Nutzerprofil loeschen.
+	 * 
+	 * @param profilId
+	 * @throws IllegalArgumentException
 	 */
 	void deleteNutzerprofil(int profilId) throws IllegalArgumentException;
 
 	/**
-	 * Nutzerprofil anhand dessen Profil-ID auslesen.
+	 * Nutzerprofil anhand der Profil-ID auslesen.
+	 * 
+	 * @param profilId
+	 * @return Nutzerprofil-Objekt
+	 * @throws IllegalArgumentException
 	 */
-	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException;
-	
-	/**
-	 * Fremdprofil anhand dessen Profil-ID auslesen.
-	 */
-	public Nutzerprofil getFremdprofilById(int fremdprofilId) throws IllegalArgumentException;
+	public Nutzerprofil getNutzerprofilById(int profilId)
+			throws IllegalArgumentException;
 
-
 	/**
-	 * Alle Nutzerprofile auslesen.
+	 * Fremdprofil anhand der Profil-ID auslesen.
+	 * 
+	 * @param fremdprofilId
+	 * @return Nutzerprofil-Objekt
+	 * @throws IllegalArgumentException
 	 */
-	public List<Nutzerprofil> getAllNutzerprofile() throws IllegalArgumentException;
+	public Nutzerprofil getFremdprofilById(int fremdprofilId)
+throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************
@@ -282,40 +316,43 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
+		
+	
+	
+		public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
+				throws IllegalArgumentException;
 
-	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften() 	
-			throws IllegalArgumentException;	
-	
-	public List<Auswahleigenschaft> getAuswahleigenschaften(List<Eigenschaft> listE) 
-			throws IllegalArgumentException;
-	
-	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(int profilId) 	
-			throws IllegalArgumentException;	
-	
-	public int createInfo(int profilId, List<Info> infos)
-			throws IllegalArgumentException;
-	
-	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId) throws IllegalArgumentException;
-	
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException;
+		public List<Auswahleigenschaft> getAuswahleigenschaften(
+				List<Eigenschaft> listE) throws IllegalArgumentException;
 
-	public int deleteAllInfosNeu(int profilId)
-			throws IllegalArgumentException;
-	
-	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
-			throws IllegalArgumentException;
-	
-	public int saveInfo(int profilId, List<Info> listI)
-			throws IllegalArgumentException;
-	
-	public Auswahleigenschaft getEigAById(int eigenschaftId)
-			throws IllegalArgumentException;
-	
-	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
-			throws IllegalArgumentException;
+		public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(
+				int profilId) throws IllegalArgumentException;
 
-	public String getEigenschaftstextById(int eigenschaftId) throws IllegalArgumentException;
+		public int createInfo(int profilId, List<Info> infos)
+				throws IllegalArgumentException;
+
+		public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
+				throws IllegalArgumentException;
+
+		public List<Info> getAllInfosNeuReport(int profilId)
+				throws IllegalArgumentException;
+
+		public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
+
+		public void deleteOneInfoNeu(int profilId, int eigenschaftId)
+				throws IllegalArgumentException;
+
+		public int saveInfo(int profilId, List<Info> listI)
+				throws IllegalArgumentException;
+
+		public Auswahleigenschaft getEigAById(int eigenschaftId)
+				throws IllegalArgumentException;
+
+		public Beschreibungseigenschaft getEigBById(int eigenschaftId)
+				throws IllegalArgumentException;
+
+		public String getEigenschaftstextById(int eigenschaftId)
+	throws IllegalArgumentException;
 
 	
 
