@@ -183,8 +183,6 @@ public interface PartnerboerseAdministrationAsync {
 
 	void berechneAehnlichkeitNpFor(int profilId, AsyncCallback<Void> callback);
 
-	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
-
 	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
 
@@ -203,8 +201,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 
 	void berechneAehnlichkeitSpFor(int profilId, AsyncCallback<Void> callback);
-
-	void aehnlichkeitEntfernenSp(int profilId, AsyncCallback<Void> callback);
 
 	void getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);

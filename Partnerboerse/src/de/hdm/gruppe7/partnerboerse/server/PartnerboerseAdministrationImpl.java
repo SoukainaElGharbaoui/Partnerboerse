@@ -409,7 +409,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * Methode zur Berechnung der Ã„hnlichkeit zwischen zwei Nutzerprofilen
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId) throws IllegalArgumentException {
-		this.aehnlichkeitEntfernen(profilId);
+		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 		
 		// Erforderliche Daten abrufen
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
@@ -468,12 +468,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-	/**
-	 * Aehnlichkeit entfernen
-	 */
-	public void aehnlichkeitEntfernen(int profilId) throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
-	}
+
 
 	/**
 	 * Methode zur Ausgabe einer Liste von Partnervorschlaegen (Unangesehene
@@ -498,7 +493,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
 
-		this.aehnlichkeitEntfernenSp(profilId);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 
 		List<Suchprofil> referenzprofil = suchprofilMapper.findAllSuchprofileFor(profilId);
 		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
@@ -573,10 +568,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 	}
 
-
-	public void aehnlichkeitEntfernenSp(int profilId) throws IllegalArgumentException {
-		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
-	}
 
 	/*
 	 * *************************************************************************
