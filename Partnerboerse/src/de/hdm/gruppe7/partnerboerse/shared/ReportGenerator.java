@@ -40,55 +40,49 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
-import de.hdm.gruppe7.partnerboerse.shared.report.AllSuchprofileOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
+import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
 
 @RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
 
+
 	/**
-	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
-	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-	   * {@link PartnerboerseAdministrationImpltungImpl} notwendig. 
-	   * 
-	   * @throws IllegalArgumentException
-	   */
-	  public void init() throws IllegalArgumentException;
-	  
-//	  /**
-//	   * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. 
-//	   * Dieser Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
-//	   * 
-//	   * @param c eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der Report
-//	   *          erstellt werden soll.
-//	   * @return das fertige Reportobjekt
-//	   * @throws IllegalArgumentException
-//	   * @see AllSuchprofileOfNutzerReport
-//	   */
-//	  public abstract AllSuchprofileOfNutzerReport createAllSuchprofileOfNutzerReport
-//	  (Nutzerprofil n) throws IllegalArgumentException;
+	 * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von
+	 * GWT RPC zusätzlich zum No Argument Constructor der implementierenden
+	 * Klasse {@link PartnerboerseAdministrationImpltungImpl} notwendig.
+	 * 
+	 * @throws IllegalArgumentException
+	 */
+	public void init() throws IllegalArgumentException;
 
+	/**
+	 * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. Dieser
+	 * Report-Typ stellt sämtliche Suchprofile eines Nutzers dar.
+	 * 
+	 * @param c
+	 *            eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der
+	 *            Report erstellt werden soll.
+	 * @return das fertige Reportobjekt
+	 * @throws IllegalArgumentException
+	 * @see AllSuchprofileOfNutzerReport
+	 */
 
+	AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np) throws IllegalArgumentException;
 
-	AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np)
+	AllProfildatenOfNutzerReport createAllProfildatenOfNutzerReport(Nutzerprofil np) throws IllegalArgumentException;
+
+	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil)
 			throws IllegalArgumentException;
 
-	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport()
+	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname)
 			throws IllegalArgumentException;
 
-	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport()
-			throws IllegalArgumentException;
-	
-	boolean isUserRegistered(String userEmail);
+	public boolean isUserRegistered(String userEmail);
 
-//	public Nutzerprofil insertEmail(int profilId, String emailAddress) throws IllegalArgumentException;
+	public Nutzerprofil login(String requestUri) throws Exception;
 
-	Nutzerprofil login(String requestUri) throws Exception;
-	
-	public void setUser(Nutzerprofil n);
 
-	  
 }

@@ -532,6 +532,7 @@ public class NutzerprofilMapper {
 							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
 							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
 							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id "
+
 							+ "WHERE t_nutzerprofil1.nutzerprofil_id != " + profilId
 							+ " AND (t_besuch1.nutzerprofil_id !=" + profilId
 							+ " OR t_besuch1.fremdprofil_id IS NULL) "
@@ -631,6 +632,7 @@ public class NutzerprofilMapper {
 	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 
+
 		// Ergebnisliste vorbereiten
 		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
@@ -647,7 +649,6 @@ public class NutzerprofilMapper {
 							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofilname = '" + suchprofilName+ "'"
 							+ "AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
 							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
-
 
 			// Für jeden Eintrag im Suchergebnis wird nun ein
 			// Nutzerprofil-Objekt erstellt.

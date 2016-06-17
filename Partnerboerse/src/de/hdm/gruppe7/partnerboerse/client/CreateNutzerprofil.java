@@ -25,7 +25,12 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 
 public class CreateNutzerprofil extends VerticalPanel {
-	
+
+	/**
+	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+
 	/**
 	 * Panel hinzufuegen.
 	 */
@@ -38,8 +43,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
-	private ListBox geschlechtListBox = new ListBox();
-	private TextBox emailTextBox = new TextBox();
+	private ListBox geschlechtListBox = new ListBox();;
 
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
@@ -49,9 +53,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
-	
+
 	private Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
-	
+
 	private Label infoLabel = new Label();
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
@@ -76,14 +80,14 @@ public class CreateNutzerprofil extends VerticalPanel {
 		this.add(verPanel);
 
 		/**
-		 * CSS anwenden. 
+		 * CSS anwenden.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-		
+
 		/**
 		 * Tabelle formatieren.
 		 */
@@ -134,6 +138,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
 
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
+		createNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -156,8 +161,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		createNutzerprofilFlexTable.setWidget(7, 2, religionListBox);
 
-		createNutzerprofilFlexTable.setWidget(8, 2, emailTextBox);
-		
+		createNutzerprofilFlexTable.setText(8, 2, nutzerprofil.getEmailAddress());
+
 		/**
 		 * ClickHandler fuer den Nutzerprofil-Anlegen-Button hinzufuegen.
 		 */
@@ -172,16 +177,20 @@ public class CreateNutzerprofil extends VerticalPanel {
 //				}
 				
 				
-				if(geburtsdatumInhalt.getText().length() == 0){
-					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an");
-					createNutzerprofilFlexTable.setWidget(3, 3, warnungLabel);
-				}
-				if(koerpergroesseTextBox.getText().length() ==0){
-				warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an");
-				createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
-				}
-				//Wenn der Vorname Zahlen enthält...
-		        if(vornameTextBox.getText().contains(zahl)||
+
+				// Wenn kein Vorname angegeben wird...
+				if (vornameTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
+					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+
+					// Wenn kein Nachname angegeben wird...
+				} else if (nachnameTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
+					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+					
+				// Wenn keine Koerpergroesse angegeben wird...	
+				} //Wenn der Vorname Zahlen enthält...
+				else if(vornameTextBox.getText().contains(zahl)||
 		        		vornameTextBox.getText().contains(zahl1)||
 		        		vornameTextBox.getText().contains(zahl2)||
 		        		vornameTextBox.getText().contains(zahl3)||
@@ -195,7 +204,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 				createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
 				}
 		        //Wenn der Nachname Zahlen enthält...
-		        if(nachnameTextBox.getText().contains(zahl)||
+				else if(nachnameTextBox.getText().contains(zahl)||
 		        		nachnameTextBox.getText().contains(zahl1)||
 		        		nachnameTextBox.getText().contains(zahl2)||
 		        		nachnameTextBox.getText().contains(zahl3)||
@@ -210,60 +219,42 @@ public class CreateNutzerprofil extends VerticalPanel {
 		        }
 				
 				
-
-				// Wenn kein Vorname angegeben wird...
-				if (vornameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Vornamen ein");
-					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
-
-				// Wenn kein Nachname angegeben wird...
-				} else if (nachnameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen ein");
-					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-
+				else if(geburtsdatumInhalt.getText().length() == 0){
+					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an");
+					createNutzerprofilFlexTable.setWidget(3, 3, warnungLabel);
+				}
+				else if (koerpergroesseTextBox.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+					
 				} else {
 					/**
 					 * Nutzerprofil anlegen.
 					 */
-					ClientsideSettings.getPartnerboerseAdministration()
-							.createNutzerprofil(
-									vornameTextBox.getText(),
-									nachnameTextBox.getText(),
-									geschlechtListBox.getSelectedItemText(),
-									getGeburtsdatum(),
-									Integer.parseInt(koerpergroesseTextBox
-											.getText()),
-									haarfarbeListBox.getSelectedItemText(),
-									raucherListBox.getSelectedItemText(),
-									religionListBox.getSelectedItemText(),
-									emailTextBox.getText(),
-									new AsyncCallback<Nutzerprofil>() {
+					ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
+							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
+							Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
+							raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+							nutzerprofil.getEmailAddress(), new AsyncCallback<Nutzerprofil>() {
 
 										public void onFailure(Throwable caught) {
 											infoLabel.setText("Es trat ein Fehler auf");
-
 										}
-
+											
 										public void onSuccess(Nutzerprofil result) {
 											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-
+											
+											int profilId = result.getProfilId();
+											
+											CreateInfoNp createInfoNp = new CreateInfoNp(profilId);
+											RootPanel.get("Details").clear();
+											RootPanel.get("Details").add(createInfoNp);
 										}
-
-									});
-					
-					/**
-					 * Seite zum Anlegen der Infos aufrufen.
-					 */
-					CreateInfoNp createInfoNp = new CreateInfoNp();
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(createInfoNp);
-
-				}
-
+								});
+						}
 			}
-
 		});
-		
+
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
@@ -273,7 +264,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 
 	}
-	
+
 	/**
 	 * Geburtsdatum erstellen.
 	 */
