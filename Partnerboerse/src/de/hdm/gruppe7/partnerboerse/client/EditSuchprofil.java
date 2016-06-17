@@ -52,7 +52,7 @@ public class EditSuchprofil extends VerticalPanel {
 	/**
 	 * Button zum Speichern der Aenderungen hinzufuegen.
 	 */
-	private Button saveSuchprofilButton = new Button("Suchprofil bearbeiten");
+	private Button saveSuchprofilButton = new Button("Suchprofil speichern");
 
 	/**
 	 * Labels zur Benutzerinformation hinzufuegen.

@@ -140,17 +140,19 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
 
-		final Button loeschenButton = new Button("Alle Infos löschen");
+		final Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
+		verPanel.add(buttonPanel); 
+		buttonPanel.add(erstelleRestlicheInfosButton);
+		
+		final Button bearbeitenButton = new Button("Infos bearbeiten");
+		verPanel.add(buttonPanel);
+		buttonPanel.add(bearbeitenButton);
+		
+		final Button loeschenButton = new Button("Infos löschen");
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
 
-		final Button bearbeitenButton = new Button("Bearbeiten");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(bearbeitenButton);
-
-		final Button erstelleRestlicheInfosButton = new Button("Weitere Infos anlegen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(erstelleRestlicheInfosButton);
+		
 		
 
 		loeschenButton.addClickHandler(new ClickHandler() {

@@ -1,7 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Realisierung eines Nutzerprofils.
@@ -11,17 +10,17 @@ public class Nutzerprofil extends Profil {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Vorname des Nutzers. 
+	 * Vorname.
 	 */
 	private String vorname;
 	
 	/**
-	 * Nachname des Nutzers. 
+	 * Nachname.
 	 */
 	private String nachname; 
 	
 	/**
-	 * Geburtsdatum des Nutzers. 
+	 * Geburtsdatum.
 	 */
 	private Date geburtsdatumDate;
 
@@ -32,28 +31,32 @@ public class Nutzerprofil extends Profil {
 	private int aehnlichkeit;
 	
 	/**
-	 * E-Mail-Adresse des Nutzers. 
+	 * E-Mail-Adresse. 
 	 */
 	private String emailAddress;
 
-	/*
-	 * ************************************
-	 * Beginn: Eventuell hier falsch platziert 
-	 * ************************************
+	/**
+	 * Login-URL. 
+	 */
+	private String loginUrl;
+	
+	/**
+	 * Logout-URL.
+	 */
+	private String logoutUrl;
+	
+	/**
+	 * Login-Status, auf false gesetzt. 
 	 */
 	private boolean loggedIn = false;
-	private String loginUrl;
-	private String logoutUrl;
-	private boolean status = false;
 	
-	/*
-	 * ************************************
-	 * Ende: Eventuell hier falsch platziert 
-	 * ************************************
+	/**
+	 * ???
 	 */
+	private boolean status = false;
 
 	/**
-	 * Vorname des Nutzers auslesen.
+	 * Vorname auslesen.
 	 * @return vorname
 	 */
 	public String getVorname() {
@@ -61,7 +64,7 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Vorname des Nutzers setzen.
+	 * Vorname setzen.
 	 * @param vorname
 	 */
 	public void setVorname(String vorname) {
@@ -69,7 +72,7 @@ public class Nutzerprofil extends Profil {
 	}
 	
 	/**
-	 * Nachname des Nutzers auslesen.
+	 * Nachname auslesen.
 	 * @return nachname
 	 */
 	public String getNachname() {
@@ -77,7 +80,7 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Nachname des Nutzers setzen.
+	 * Nachname setzen.
 	 * @param nachname
 	 */
 	public void setNachname(String nachname) {
@@ -85,7 +88,7 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Geburtsdatum des Nutzers auslesen.
+	 * Geburtsdatum auslesen.
 	 * @return geburtsdatumDate
 	 */
 	public Date getGeburtsdatumDate() {
@@ -93,7 +96,7 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Geburtsdatum des Nutzers setzen. 
+	 * Geburtsdatum setzen. 
 	 * @param geburtsdatumDate
 	 */
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
@@ -117,7 +120,7 @@ public class Nutzerprofil extends Profil {
 	}
 	
 	/**
-	 * E-Mail-Adresse des Nutzers auslesen.
+	 * E-Mail-Adresse auslesen.
 	 * @return emailAddress
 	 */
 	public String getEmailAddress(){
@@ -125,60 +128,83 @@ public class Nutzerprofil extends Profil {
 	}
 	
 	/**
-	 * E-Mail-Adresse des Nutzes setzen. 
+	 * E-Mail-Adresse setzen. 
 	 * @param emailAddress
 	 */
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-
-	/*
-	 * ************************************
-	 * Beginn: Eventuell hier falsch platziert 
-	 * ************************************
-	 */
 	
+	/**
+	 * Login-URL auslesen. 
+	 * @return loginUrl
+	 */
+	public String getLoginUrl() {
+		return loginUrl;
+	}
+	
+	/**
+	 * Login-URL setzen. 
+	 * @param loginUrl
+	 */
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
+	}
+
+	/**
+	 * Logout-URL auslesen.
+	 * @return logoutUrl
+	 */
+	public String getLogoutUrl() {
+		return logoutUrl;
+	}
+	
+	/**
+	 * Logout-URL setzen. 
+	 * @param createLogoutURL
+	 */
+	public void setLogoutUrl(String createLogoutURL) {
+		this.logoutUrl = createLogoutURL;
+	}
+	
+	/**
+	 * Login-Status ermitteln.
+	 * @return loggedIn
+	 */
 	public boolean isLoggedIn() {
 		return loggedIn;
 
 	}
 
+	/**
+	 * Login-Status setzen. 
+	 * @param b
+	 */
 	public void setLoggedIn(boolean b) {
 		loggedIn = b;
 	}
 
+	/**
+	 * Login-Status auslesen.
+	 * @return loggedIn
+	 */
 	public boolean getLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLogoutUrl(String createLogoutURL) {
-		this.logoutUrl = createLogoutURL;
-	}
-
-	public String getLogoutUrl() {
-		return logoutUrl;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-
+	/**
+	 * ???
+	 */
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
+	/**
+	 * ???
+	 * @return status
+	 */
 	public boolean getStatus() {
 		return status;
 	}
-	
-	/*
-	 * ************************************
-	 * Beginn: Eventuell hier falsch platziert 
-	 * ************************************
-	 */
 
 }

@@ -357,8 +357,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Liste von Nutzerprofil-Objekten
 	 * @throws IllegalArgumentException
 	 */
-//	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
-//			throws IllegalArgumentException;
+	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Besuch setzen.

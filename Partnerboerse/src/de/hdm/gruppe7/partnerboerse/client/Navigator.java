@@ -110,7 +110,7 @@ public class Navigator extends VerticalPanel {
 		MenuBar suchprofilMenu = new MenuBar(true);
 		suchprofilMenu.setAnimationEnabled(true);
 
-		suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command() {
+		suchprofilMenu.addItem("Suchprofil anlegen", new Command() {
 
 			@Override
 			public void execute() {
@@ -143,7 +143,7 @@ public class Navigator extends VerticalPanel {
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
 
-		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschläge anzeigen", new Command() {
 
 			@Override
 			public void execute() {
@@ -171,7 +171,7 @@ public class Navigator extends VerticalPanel {
 
 		});
 
-		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Partnervorschläge anhand von Suchprofilen anzeigen", new Command() {
 
 			@Override
 			public void execute() {

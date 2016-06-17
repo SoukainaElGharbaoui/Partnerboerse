@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -112,7 +114,11 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 0, fremdprofilId);
 							merklisteFlexTable.setText(row, 1, n.getVorname());
 							merklisteFlexTable.setText(row, 2, n.getNachname());
-							merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+							
+							Date geburtsdatum = n.getGeburtsdatumDate();
+							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+							
+							merklisteFlexTable.setText(row, 3, geburtsdatumString); 
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Neuen Button zum Loeschen eines Vermerk erzeugen.

@@ -34,7 +34,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	/**
 	 * Widgets hinzufuegen.
 	 */
-	private Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
+	private Label ueberschriftLabel = new Label("Profil bearbeiten:");
 
 	private FlexTable editNutzerprofilFlexTable = new FlexTable();
 
@@ -43,7 +43,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	private ListBox geschlechtListBox = new ListBox();
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
-	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
@@ -57,7 +57,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
 
-	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
+	private Button editNutzerprofilButton = new Button("Profil speichern");
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -115,7 +115,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
-				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
+				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
 			}
 		});

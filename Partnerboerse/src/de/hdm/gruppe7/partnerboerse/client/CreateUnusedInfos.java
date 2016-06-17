@@ -35,8 +35,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
 	
-	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Weitere Info anlegen:");
+	private Button createInfosButton = new Button("Infos anlegen");
+	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
 	private Label informationLabel = new Label();

@@ -465,10 +465,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Alle unangesehenen Nutzerprofile eines Nutzers auslesen.
 	 */
-//	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
-//			throws IllegalArgumentException {
-//		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
-//	}
+	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+			throws IllegalArgumentException {
+		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
+	}
 
 	/**
 	 * Besuch setzen.

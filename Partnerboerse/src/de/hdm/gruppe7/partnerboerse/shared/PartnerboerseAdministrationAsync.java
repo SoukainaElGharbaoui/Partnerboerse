@@ -147,7 +147,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-//	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
 	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 	

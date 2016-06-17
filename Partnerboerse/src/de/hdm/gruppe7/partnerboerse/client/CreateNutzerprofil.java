@@ -47,7 +47,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
-	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
@@ -117,7 +117,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
 		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
-		geschlechtListBox.addItem("nicht binär");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
@@ -129,7 +128,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
-				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
+				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
 			}
 		});
@@ -153,7 +152,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		raucherListBox.addItem("Nichtraucher");
 		createNutzerprofilFlexTable.setWidget(6, 2, raucherListBox);
 
-		religionListBox.addItem("ohne Bekenntnis");
+		religionListBox.addItem("Ohne Bekenntnis");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
