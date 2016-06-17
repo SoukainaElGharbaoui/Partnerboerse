@@ -500,83 +500,154 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId());
 	}
 /**
- * Methode zur berechnung der Aehnlichkeit zwischen zwei Nutzerprofilen
+ * Methode zur berechnung der Aehnlichkeit zwischen zwei Nutzerprofilen.
  */
 
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
 
-		this.aehnlichkeitEntfernenSp(profilId);
-
-		List<Suchprofil> referenzprofil = suchprofilMapper.findAllSuchprofileFor(profilId);
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
-				.findNutzerprofileOhneGesetzeSperrung(profilId);
-
-		// Vergleich der Profildaten von jeweils einem Suchprofil und einem
-		// Nutzerprofil
+		List<Suchprofil> referenzprofil = suchprofilMapper
+				.findAllSuchprofileFor(profilId);
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
+		
+		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 
 				int aehnlichkeitSp = 0;
 				int counter = 70;
-
+				
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
-
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+				
+				if(sp.getGeschlecht().equals("Keine Auswhal")){
 					aehnlichkeitSp = aehnlichkeitSp + 30;
+					
+				} else {
+				
+					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+					}
 				}
-
-				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+				
+				if(sp.getHaarfarbe().equals("Keine Auswhal") ){				
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					
+				} else {
+					
+					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
 				}
-
-				if (sp.getRaucher().equals(np.getRaucher())) {
+				
+				
+//				if (sp.getKoerpergroesseInt() == ) {
+//					aehnlichkeitSp = aehnlichkeitSp + 10;
+//					
+//				}else {
+					
+					if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				if (sp.getReligion().equals(np.getReligion())) {
+					}
+					
+//				}
+				
+				
+				if(sp.getRaucher().equals("Keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
+					
+				} else {
+					
+					if (sp.getRaucher().equals(np.getRaucher())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
 				}
+
+				if (sp.getRaucher().equals("Keine Auswahl") ){
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					
+				} else {
+					
+					if (sp.getReligion().equals(np.getReligion())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
+					
+				}
+
+				
+				
+				
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
-				List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
-				List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
-
+				List<Info> referenzinfo = infoMapper
+						.findAllInfosNeu(suchprofilId);
+				List<Info> vergleichsinfo = infoMapper
+						.findAllInfosNeu(fremdprofilId);
+				
 				// Vergleich der Infos
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-							counter = counter + 2;
-							if (rin.getInfotext().equals(vin.getInfotext())) {
+							counter= counter + 2;
+							
+							if (rin.getInfotext().equals("Keine Auswahl") ){
+								
 								aehnlichkeitSp = aehnlichkeitSp + 2;
-
+								
+							} else {
+								
+								if (rin.getInfotext().isEmpty()){
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+									
+							} else {
+								if (rin.getInfotext().equals(vin.getInfotext())) {
+									aehnlichkeitSp = aehnlichkeitSp + 2;
+								}
+								}
+								
 							}
+							
 						}
 					}
 				}
-
+				
 				// Berechnung des Prozentwertes
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
-
-				// Aehnlichkeit in die Datenbank setzen
-				suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId, suchprofilName,
-						fremdprofilId, aehnlichkeitSp);
+				
+				if(sp.getGeschlecht().equals(np.getGeschlecht())){
+					// Aehnlichkeit in die Datenbank setzen
+						suchprofilMapper.insertAehnlichkeit(profilId,
+						suchprofilId, fremdprofilId,
+						aehnlichkeitSp);
+									
+				}else {
+					
+					if (sp.getGeschlecht().equals("Keine Auswahl")){
+						// Aehnlichkeit in die Datenbank setzen
+						suchprofilMapper.insertAehnlichkeit(profilId,
+						suchprofilId, fremdprofilId,
+						aehnlichkeitSp);
+						
+					}
+				}
+				
 
 			}
 		}
 
-	}
+}
 
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName)
 			throws IllegalArgumentException {
+		
+	Suchprofil sp =	this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName);
+	
+	int suchprofilId = sp.getProfilId();
 
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilName);
+	return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilId);
 
 	}
 

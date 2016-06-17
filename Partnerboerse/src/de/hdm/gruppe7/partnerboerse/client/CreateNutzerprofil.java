@@ -4,7 +4,7 @@ package de.hdm.gruppe7.partnerboerse.client;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import sun.misc.CharacterEncoder;
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

@@ -289,15 +289,15 @@ public class SuchprofilMapper {
 	/**
 	 * Aehnlichkeit einfuegen.
 	 */
-	public void insertAehnlichkeit(int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId,
+	public void insertAehnlichkeit(int nutzerprofilId, int suchprofilId, int fremdprofilId,
 			int aehnlichkeitSp) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) "
-					+ "VALUES  (" + nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, fremdprofil_id, aehnlichkeit) "
+					+ "VALUES  (" + nutzerprofilId + "," + suchprofilId + "," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
