@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -16,7 +17,7 @@ public class Partnerboerse implements EntryPoint {
 	
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
-	private VerticalPanel loginPanel = new VerticalPanel();
+	private HorizontalPanel loginPanel = new HorizontalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
 	private PartnerboerseAdministrationAsync partnerboerseAdministration;
@@ -47,27 +48,23 @@ public class Partnerboerse implements EntryPoint {
 						}
 
 						public void onSuccess(Nutzerprofil result) {
-							// wenn der user nicht eingeloggt ist
-							if (result.isLoggedIn() == false) {
-								signInLink.setHref(result.getLoginUrl());
-								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
-							}
 							
 							// wenn der user eingeloggt ist
-							else if (result.isLoggedIn()) {
+							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
+									
 									ClientsideSettings.setAktuellerUser(result);
 
-									signOutLink.setHref(result.getLogoutUrl());
-									signOutLink.setText(
-											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+									signOutLink.setHref(nutzerprofil.getLogoutUrl());
+									signOutLink.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId() 
+											+ " ausloggen");
+									
 									loginPanel.add(signOutLink);
-
+									
 									
 									ClientsideSettings.getPartnerboerseAdministration()
-										.pruefeObNutzerNeu(result.getEmailAddress(),
+										.pruefeObNutzerNeu(nutzerprofil.getEmailAddress(),
 										 new AsyncCallback<Boolean>() {
 
 											@Override
@@ -83,20 +80,30 @@ public class Partnerboerse implements EntryPoint {
 												}
 											
 												else {
-													RootPanel.get("Navigator").add(new Navigator());
+													
+//													RootPanel.get("Navigator").add(new Navigator());
 													RootPanel.get("Navigator").add(loginPanel);
-											}
+												}
 											}});
 									}
 
 								if (result.getEmailAddress() == null) {
 									signOutLink.setHref(result.getLogoutUrl());
-									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+									
 									loginPanel.add(signOutLink);
 									
-									RootPanel.get("Navigator").add(new Navigator());
+//									RootPanel.get("Navigator").add(new Navigator());
+//									RootPanel.get("Navigator")
 									RootPanel.get("Navigator").add(loginPanel);
 								}
+							}
+							
+							// wenn der user nicht eingeloggt ist
+							else if (!result.isLoggedIn()) {
+								signInLink.setHref(result.getLoginUrl());
+								loginPanel.add(signInLink);
+								RootPanel.get("Navigator").add(loginPanel);
 							}
 						}
 					});

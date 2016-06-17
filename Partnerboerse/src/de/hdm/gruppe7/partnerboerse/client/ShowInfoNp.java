@@ -23,7 +23,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 public class ShowInfoNp extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	private Label ueberschriftLabel = new Label("Ihre Infos:");
+	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
 	
 	private Button loeschenButton = new Button("Alle Infos löschen");

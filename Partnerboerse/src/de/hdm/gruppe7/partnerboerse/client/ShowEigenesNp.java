@@ -95,6 +95,7 @@ public class ShowEigenesNp extends VerticalPanel {
 							}
 
 							public void onSuccess(Nutzerprofil result) {
+								
 								// Nutzerprofil-Id aus der Datenabank holen
 								// und in Tabelle eintragen
 								String nutzerprofilId = String.valueOf(result
@@ -151,7 +152,6 @@ public class ShowEigenesNp extends VerticalPanel {
 								showEigenesNpFlexTable.setText(9, 1,
 										result.getEmailAddress());
 							}
-
 						});
 
 		/**
@@ -207,7 +207,7 @@ public class ShowEigenesNp extends VerticalPanel {
 												 * auf Logout-Seite.
 												 */
 												
-												VerticalPanel loginPanel = new VerticalPanel();
+												HorizontalPanel loginPanel = new HorizontalPanel();
 												
 												Anchor signOutLink = new Anchor();
 												signOutLink.setHref(nutzerprofil.getLogoutUrl());
@@ -220,10 +220,10 @@ public class ShowEigenesNp extends VerticalPanel {
 												Anchor signIn = new Anchor();
 												signIn.setText("Jetzt einloggen");
 												 
-												 RootPanel.get("Navigator").clear();
-												 RootPanel.get("Details").clear();
+												RootPanel.get("Navigator").clear();
+												RootPanel.get("Details").clear();
 												 
-												 RootPanel.get("Navigator").add(loginPanel);
+												RootPanel.get("Navigator").add(loginPanel);
 											}
 										});
 						loeschenDialogBox.hide();

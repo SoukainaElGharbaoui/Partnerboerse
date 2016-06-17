@@ -312,6 +312,7 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
@@ -344,6 +345,7 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();

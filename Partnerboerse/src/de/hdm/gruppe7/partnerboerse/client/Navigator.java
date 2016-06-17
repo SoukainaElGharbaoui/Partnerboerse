@@ -2,14 +2,17 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 
-public class Navigator extends VerticalPanel {
+public class Navigator extends HorizontalPanel {
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
@@ -46,9 +49,7 @@ public class Navigator extends VerticalPanel {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showMerkliste);
-
 			}
-
 		});
 
 		nutzerprofilMenu.addItem("Sperrliste anzeigen", new Command() {
@@ -58,11 +59,9 @@ public class Navigator extends VerticalPanel {
 				ShowSperrliste showSperrliste = new ShowSperrliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSperrliste);
-
 			}
-
 		});
-
+		
 		nutzerprofilMenu.addSeparator();
 
 		// Men� f�r das Suchprofil
@@ -150,8 +149,7 @@ public class Navigator extends VerticalPanel {
 								// auf.");
 
 							}
-
-						});
+				});
 
 				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
 				RootPanel.get("Details").clear();
@@ -160,14 +158,36 @@ public class Navigator extends VerticalPanel {
 			}
 
 		});
-
+		
 		partnervorschlaegeMenu.addSeparator();
+		
+		// Create the file menu
+				MenuBar statusMenu = new MenuBar(true);
+				statusMenu.setAnimationEnabled(true);
+
+				statusMenu.addItem("Ausloggen", new Command() {
+					@Override
+					public void execute() {
+//						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(showEigenesNp);
+						
+						Anchor signOutLink = new Anchor();
+
+						signOutLink.setHref(nutzerprofil.getLogoutUrl());
+						signOutLink.setText("Als " + nutzerprofil.getVorname() + " ausloggen");
+						
+					}
+				});
+		
+		
 
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu
