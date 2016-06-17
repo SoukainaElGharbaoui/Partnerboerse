@@ -10,6 +10,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -44,7 +45,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
 	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-	private TextBox koerpergroesseTextBox = new TextBox();
+	private IntegerBox koerpergroesseTextBox = new IntegerBox();
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
@@ -56,6 +57,17 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
+	CharSequence zahl = "0";
+	CharSequence zahl1 = "1";
+	CharSequence zahl2 = "2";
+	CharSequence zahl3 = "3";
+	CharSequence zahl4 = "4";
+	CharSequence zahl5 = "5";
+	CharSequence zahl6 = "6";
+	CharSequence zahl7 = "7";
+	CharSequence zahl8 = "8";
+	CharSequence zahl9 = "9";
+	CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü";
 
 	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
 
@@ -209,15 +221,46 @@ public class EditNutzerprofil extends VerticalPanel {
 					// Wenn kein Nachname angegeben wird...
 
 				} else if (nachnameTextBox.getText().length() == 0) {
-
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
-					// Wenn keine Koerpergroesse angegeben wird...
-				} else if (koerpergroesseTextBox.getText().length() == 0) {
+				} //Wenn der Vorname Zahlen enthält...
+				else if(vornameTextBox.getText().contains(zahl)||
+		        		vornameTextBox.getText().contains(zahl1)||
+		        		vornameTextBox.getText().contains(zahl2)||
+		        		vornameTextBox.getText().contains(zahl3)||
+		        		vornameTextBox.getText().contains(zahl4)||
+		        		vornameTextBox.getText().contains(zahl5)||
+		        		vornameTextBox.getText().contains(zahl6)||
+		        		vornameTextBox.getText().contains(zahl7)||
+		        		vornameTextBox.getText().contains(zahl8)||
+		        		vornameTextBox.getText().contains(zahl9)){
+				warnungLabel.setText("Ihr Name darf keine Zahlen enthalten");
+				editNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+				}
+		        //Wenn der Nachname Zahlen enthält...
+				else if(nachnameTextBox.getText().contains(zahl)||
+		        		nachnameTextBox.getText().contains(zahl1)||
+		        		nachnameTextBox.getText().contains(zahl2)||
+		        		nachnameTextBox.getText().contains(zahl3)||
+		        		nachnameTextBox.getText().contains(zahl4)||
+		        		nachnameTextBox.getText().contains(zahl5)||
+		        		nachnameTextBox.getText().contains(zahl6)||
+		        		nachnameTextBox.getText().contains(zahl7)||
+		        		nachnameTextBox.getText().contains(zahl8)||
+		        		nachnameTextBox.getText().contains(zahl9)){
+		        	warnungLabel.setText("Ihr Name darf keine Zahlen enthalten");
+		        	editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+		        }	
+				// Wenn keine Koerpergroesse angegeben wird...
+				else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
 
-				} else {
+				} else if(koerpergroesseTextBox.getText().contains(alphabet)){
+					warnungLabel.setText("Ihre Eingabe darf nur Zahlen enthalten");
+					editNutzerprofilFlexTable.setWidget(5, 5, warnungLabel);
+				}
+				else {
 
 				/**
 				 * Nutzerprofil aktualisieren.

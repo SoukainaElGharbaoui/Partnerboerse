@@ -5,7 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
-
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -51,24 +50,45 @@ public class Partnerboerse implements EntryPoint {
 							// wenn der user eingeloggt ist
 							if (result.isLoggedIn()) {
 
-								if (result.getEmailAddress() != null) {
+								if (result.getEmailAddress() != null & result.getProfilId() == 0) {
 									ClientsideSettings.setAktuellerUser(result);
 
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(new Navigator());
-									RootPanel.get("Header").add(loginPanel);
+//									RootPanel.get("Navigator").add(new Navigator());
+									RootPanel.get("Navigator").add(loginPanel);
+									CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createNutzerprofil);
 								}
-
-								if (result.getEmailAddress() == null) {
+								
+								if (result.getProfilId() > 0){
+									ClientsideSettings.setAktuellerUser(result);
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Navigator").add(new Navigator());
-									RootPanel.get("Header").add(loginPanel);
-									RootPanel.get("Details").add(new CreateNutzerprofil());
+									RootPanel.get("Navigator").add(loginPanel);
+
+									
+								}
+
+								if (result.getEmailAddress() == null) {
+									
+//									RootPanel.get("Navigator").add(new Navigator());
+									
+//									RootPanel.get("Navigator").add(new CreateNutzerprofil());
+									CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createNutzerprofil);
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+									loginPanel.add(signOutLink);
+									RootPanel.get("Navigator").add(loginPanel);
+
 								}
 							}
 
@@ -76,7 +96,7 @@ public class Partnerboerse implements EntryPoint {
 							if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Details").add(loginPanel);
+								RootPanel.get("Navigator").add(loginPanel);
 							}
 						}
 					});

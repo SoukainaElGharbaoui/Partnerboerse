@@ -14,6 +14,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -49,7 +50,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label geburtsdatumInhalt = new Label();
 	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 
-	private TextBox koerpergroesseTextBox = new TextBox();
+	private IntegerBox koerpergroesseTextBox = new IntegerBox();
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
@@ -167,17 +168,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * ClickHandler fuer den Nutzerprofil-Anlegen-Button hinzufuegen.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-//				Pattern letterPattern = Pattern.compile("^[a-zA-Z]+$");
-//
-//				if (!(letterPattern.matcher(vornameTextBox.getText()).matches()))
-//				      {
-//					warnungLabel.setText("Blub");
-//					createNutzerprofilFlexTable.setWidget(0, 5, warnungLabel);
-//				}
-				
-				
-
+			public void onClick(ClickEvent event) {								
 				// Wenn kein Vorname angegeben wird...
 				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
@@ -188,7 +179,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 					
-				// Wenn keine Koerpergroesse angegeben wird...	
+					
 				} //Wenn der Vorname Zahlen enthält...
 				else if(vornameTextBox.getText().contains(zahl)||
 		        		vornameTextBox.getText().contains(zahl1)||
@@ -218,16 +209,21 @@ public class CreateNutzerprofil extends VerticalPanel {
 		        	createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 		        }
 				
-				
+				//Wenn kein Geburtsdatum angegeben wurde...
 				else if(geburtsdatumInhalt.getText().length() == 0){
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an");
 					createNutzerprofilFlexTable.setWidget(3, 3, warnungLabel);
-				}
+				} // Wenn keine Koerpergroesse angegeben wird...
 				else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 					
-				} else {
+//				} else if(koerpergroesseTextBox.getText()()){
+//					warnungLabel.setText("Ihre Eingabe darf nur Zahlen enthalten");
+//					createNutzerprofilFlexTable.setWidget(4, 5, warnungLabel);
+				}	
+				
+				else {
 					/**
 					 * Nutzerprofil anlegen.
 					 */
