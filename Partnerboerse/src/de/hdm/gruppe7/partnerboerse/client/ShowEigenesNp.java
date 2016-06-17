@@ -16,6 +16,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Profil;
 
+
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
@@ -52,6 +53,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 	/**
 	 * Konstruktor hinzufuegen.
+	 * @param user Nutzerprofil
 	 */
 	public ShowEigenesNp(Nutzerprofil user) {
 

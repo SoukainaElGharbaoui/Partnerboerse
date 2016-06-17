@@ -7,7 +7,6 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
@@ -15,6 +14,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
+/**
+ * Das asynchrone Gegenstueck des Interface {@link PartnerboerseAdministration}. 
+ * Es wird semiautomatisch durch das Google Plugin erstellt und gepflegt. 
+ * Daher erfolgt hier keine weitere Dokumentation. 
+ * Für weitere Informationen siehe das synchrone Interface {@link PartnerboerseAdministration}.
+ */
 
 public interface PartnerboerseAdministrationAsync {
 
@@ -125,13 +131,10 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	// Alle Vermerke eines Nutzerprofils auslesen.
 	void getGemerkteNutzerprofileFor(AsyncCallback<Merkliste> callback);
 
-	// Vermerkstatus ermitteln.
 	void pruefeVermerkstatus(int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Vermerkstatus aendern.
 	void vermerkstatusAendern(int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/*
@@ -148,18 +151,13 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	// Alle Sperrungen eines Nutzerprofils auslesen.
 	void getGesperrteNutzerprofileFor(AsyncCallback<Sperrliste> callback);
 
-	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde. 
 	void pruefeSperrstatusFremdprofil(int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int fremdprofilId, AsyncCallback<Integer> callback);
 	
-	// Sperrstatus aendern.
 	void sperrstatusAendern(int fremdprofilId, AsyncCallback<Integer> callback);
-
 
 	/*
 	 * *************************************************************************

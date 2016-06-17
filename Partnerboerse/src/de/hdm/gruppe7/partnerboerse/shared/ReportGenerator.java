@@ -52,7 +52,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
 	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-	   * {@ link PartnerboerseAdministrationImpltungImpl} notwendig. 
+	   * {@link PartnerboerseAdministrationImpltungImpl} notwendig. 
 	   * 
 	   * @throws IllegalArgumentException
 	   */

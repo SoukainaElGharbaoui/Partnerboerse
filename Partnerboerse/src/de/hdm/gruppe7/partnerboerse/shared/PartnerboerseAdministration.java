@@ -81,9 +81,24 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * **
 	 */
 
+	
+	
+	
 	/**
 	 * Suchprofil anlegen.
+	 * @param suchprofilName 
+	 * @param geschlecht 
+	 * @param alterMinInt 
+	 * @param alterMaxInt 
+	 * @param koerpergroesseInt 
+	 * @param haarfarbe 
+	 * @param raucher 
+	 * @param religion 
+	 * @return Suchprofil
 	 */
+	
+	
+	
 	public Suchprofil createSuchprofil(String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion);
 
@@ -132,15 +147,28 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * **
 	 */
 
-	// Alle Vermerke eines Nutzerprofils auslesen.
+	/**
+	 * Alle gemerkten Nutzerprofile eines Nutzers auslesen.
+	 * @return Merkliste-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	public Merkliste getGemerkteNutzerprofileFor() throws IllegalArgumentException;
 
-	// Vermerkstatus ermitteln.
+	/**
+	 * Vermerkstatus pruefen.
+	 * @param fremdprofilId Fremdprofil-ID
+	 * @return int Vermerkstatus
+	 * @throws IllegalArgumentException
+	 */
 	public int pruefeVermerkstatus(int fremdprofilId) throws IllegalArgumentException;
 	
-	// Vermerkstatus aendern.
+	/**
+	 * Vermerkstatus aendern.
+	 * @param fremdprofilId Fremdprofil-ID
+	 * @return int Vermerkstatus
+	 * @throws IllegalArgumentException
+	 */
 	public int vermerkstatusAendern(int fremdprofilId) throws IllegalArgumentException;
-
 
 	/*
 	 * *************************************************************************
@@ -156,18 +184,36 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * **
 	 */
 
-	// Alle Sperrungen eines Nutzerprofils auslesen.
+	/**
+	 * Alle gesperrten Nutzerprofile eines Nutzers auslesen.
+	 * @return Sperrliste-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	public Sperrliste getGesperrteNutzerprofileFor() throws IllegalArgumentException;
 	
-	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
+	/**
+	 * Pruefen, ob Fremdprofil von Nutzer gesperrt wurde. 
+	 * @param fremdprofilId Fremdprofil-ID
+	 * @return int Sperrstatus
+	 * @throws IllegalArgumentException
+	 */
 	public int pruefeSperrstatusFremdprofil(int fremdprofilId) throws IllegalArgumentException;
 		
-	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
+	/**
+	 * Pruefen, ob Nutzer von Fremdprofil gesperrt wurde. 
+	 * @param fremdprofilId Fremdprofil-ID
+	 * @return int Sperrstatus
+	 * @throws IllegalArgumentException
+	 */
 	public int getSperrstatusEigenesProfil(int fremdprofilId) throws IllegalArgumentException;	
 	
-	// Sperrstatus aendern.
+	/**
+	 * Sperrstatus aendern.
+	 * @param fremdprofilId Fremdprofil-ID
+	 * @return int Sperrstatus
+	 * @throws IllegalArgumentException
+	 */
 	public int sperrstatusAendern(int fremdprofilId) throws IllegalArgumentException;
-
 
 	/*
 	 * *************************************************************************

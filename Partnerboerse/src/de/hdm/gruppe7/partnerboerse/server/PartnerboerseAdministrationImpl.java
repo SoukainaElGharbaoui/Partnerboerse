@@ -293,7 +293,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * **
 	 */
 
-	// Alle Vermerke eines Nutzerprofils auslesen.
+	/**
+	 * Alle gemerkten Nutzerprofile eines Nutzers auslesen.
+	 */
 	public Merkliste getGemerkteNutzerprofileFor() throws IllegalArgumentException {
 
 		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
@@ -307,12 +309,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		return gemerkteNutzerprofile;
 	}
 
-	// Vermerkstatus ermitteln.
+	/**
+	 * Vermerkstatus pruefen.
+	 */
 	public int pruefeVermerkstatus(int fremdprofilId) throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profil.getProfilId(), fremdprofilId);
 	}
 
-	// Vermerkstatus aendern.
+	/**
+	 * Vermerkstatus aendern.
+	 */
 	public int vermerkstatusAendern(int fremdprofilId)
 			throws IllegalArgumentException {
 	
@@ -321,7 +327,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				fremdprofilId);
 
 		if (vermerkstatus == 1) {
-			// Wenn ein Vermerk vorliegt, wird dieser gelöscht.
+			// Wenn ein Vermerk vorliegt, wird dieser geloescht.
 			this.merklisteMapper.deleteVermerk(profil.getProfilId(), fremdprofilId);
 		} else {
 			// Wenn kein Vermerk vorliegt, wird ein Vermerk gesetzt.
@@ -329,7 +335,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 		return vermerkstatus;
-		
 	}
 
 	/*
