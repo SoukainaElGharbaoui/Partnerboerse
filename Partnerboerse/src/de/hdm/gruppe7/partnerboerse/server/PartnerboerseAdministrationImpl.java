@@ -639,7 +639,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		}
 
 }
-	// holt alle Partnervorschlaege für ein bestimmtes Suchprofil.
+	// holt alle Partnervorschlaege für ein bestimmtes Suchprofil
 
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName)
 			throws IllegalArgumentException {
