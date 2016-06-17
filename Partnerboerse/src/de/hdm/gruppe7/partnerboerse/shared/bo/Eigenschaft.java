@@ -1,106 +1,73 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
+/**
+ * Realisierung einer Eigenschaft.
+ */
 public class Eigenschaft extends BusinessObject {
 	
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Eigenschaft-ID.
+	 */
 	public int eigenschaftId;
+	
+	/**
+	 * Erlaeuterung. 
+	 */
 	public String erlaeuterung;
+	
+	/**
+	 * Typ. 
+	 */
 	public String typ;
 
-	
+	/**
+	 * Eigenschaft-ID setzen. 
+	 * @param eigenschaftId 
+	 */
 	public void setEigenschaftId(int eigenschaftId){
 		this.eigenschaftId = eigenschaftId;
 	}
 	
+	/**
+	 * Eigenschaft-ID auslesen.
+	 * @return eigenschaftId
+	 */
 	public int getEigenschaftId(){
 		return eigenschaftId;
 	}
 	
+	/**
+	 * Erlaeuterung setzen. 
+	 * @param erlaeuterung
+	 */
 	public void setErlaeuterung(String erlaeuterung){
 		this.erlaeuterung = erlaeuterung;
 	}
 	
+	/**
+	 * Erlaeuterung auslesen. 
+	 * @return erlaeuterung
+	 */
 	public String getErlaeuterung(){
 		return erlaeuterung;
 	}
 	
+	/**
+	 * Typ auslesen. 
+	 * @return typ 
+	 */
 	public String getTyp() {
 		return typ;
 	}
 
+	/**
+	 * Typ setzen. 
+	 * @param typ
+	 */
 	public void setTyp(String typ) {
 		this.typ = typ;
 	}
 	
-	//Konstruktor
-	public Eigenschaft(){
-	}
 }
-
-//package de.hdm.gruppe7.partnerboerse.shared.bo;
-//
-//public class Eigenschaft extends BusinessObject {
-//
-//	private static final long serialVersionUID = 1L;
-//
-//	public String bezeichnung;
-//	public int eigenschaftId;
-//	public String erlaeuterung;
-//	public String eigenschaft;
-//
-//	public void setBezeichnung(String bezeichnung) {
-//		this.bezeichnung = bezeichnung;
-//	}
-//
-//	public String getBezeichnung() {
-//		return bezeichnung;
-//	}
-//
-//	public void setEigenschaftId(int eigenschaftId) {
-//		this.eigenschaftId = eigenschaftId;
-//	}
-//
-//	public int getEigenschaftId() {
-//		return eigenschaftId;
-//	}
-//
-//	public void setErlaeuterung(String erlaeuterung) {
-//		this.erlaeuterung = erlaeuterung;
-//	}
-//
-//	public String getErlaeuterung() {
-//		return erlaeuterung;
-//	}
-//
-//	public void setEigenschaft(String eigenschaft) {
-//		this.eigenschaft = eigenschaft;
-//	}
-//
-//	public String getEigenschaft() {
-//		return eigenschaft;
-//	}
-//
-//	// Konstruktor
-//	public Eigenschaft() {
-//		super();
-//	}
-//
-//	public String toString() {
-//		return super.toString() + "Eigenschaft-ID: #" + this.eigenschaftId + "Bezeichnung: " + this.bezeichnung
-//				+ "Erlaeuterung: " + this.erlaeuterung + "Eigenschaft: " + this.eigenschaft;
-//	}
-//
-//	public boolean equals(Object o) {
-//		if (o != null && o instanceof Eigenschaft) {
-//			Eigenschaft eig = (Eigenschaft) o;
-//			try {
-//				return super.equals(eig);
-//			} catch (IllegalArgumentException e) {
-//				return false;
-//			}
-//		}
-//		return false;
-//	}
-//
-//}

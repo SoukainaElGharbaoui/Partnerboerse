@@ -1,6 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.Vector;
+import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -103,7 +103,7 @@ public class ShowSperrliste extends VerticalPanel {
 					public void onSuccess(Sperrliste result) {
 						
 						// Vektor von gesperrten Nutzerprofilen erzeugen. 
-						Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
+						List<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
 						
 						// Anzahl der Zeilen ermitteln.
 						int row = sperrlisteFlexTable.getRowCount();

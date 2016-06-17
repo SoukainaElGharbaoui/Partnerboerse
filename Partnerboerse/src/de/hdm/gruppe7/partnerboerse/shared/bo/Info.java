@@ -2,82 +2,95 @@ package de.hdm.gruppe7.partnerboerse.shared.bo;
 
 import java.util.List;
 
+/**
+ * Realisierung einer Info.
+ */
 public class Info extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
-
-//	// Attribute
-//	private int infoId;
-//	private String infotext;
-//	private int eigenschaftId;
-//	private String eigenschaftErlaeuterung;
 	
+	/**
+	 * Profil-ID.
+	 * Fremdschluesselbeziehung zum Profil.
+	 */
 	private int profilId;
+	
+	/**
+	 * Eigenschaft-ID.
+	 * Fremdschluesselbeziehung zur Eigenschaft. 
+	 */
 	private int eigenschaftId;
+	
+	/**
+	 * Infotext. 
+	 */
 	private String infotext;
+	
+	/**
+	 * Liste von Info-Objekten. 
+	 */
 	private List<Info> infos;
 	
-
-	// Konstruktor
-	public Info() {
-//		this.eigenschaftId = profilId;
-//		this.setInfos(infos);
-	}
-	
-	
-	
-	// Getter- & Settermethoden
-
-//	public int getAuswahloptionId() {
-//		return auswahloptionId;
-//	}
-//
-//	public void setAuswahloptionId(int auswahloptionId) {
-//		this.auswahloptionId = auswahloptionId;
-//	}
-
+	/**
+	 * Profil-ID auslesen. 
+	 * @return profilId
+	 */
 	public int getProfilId() {
 		return profilId;
 	}
 
+	/**
+	 * Profil-ID setzen. 
+	 * @param profilId
+	 */
 	public void setProfilId(int profilId) {
 		this.profilId = profilId;
 	}
 
+	/**
+	 * Eigenschaft-ID auslesen.
+	 * @return eigenschaftId
+	 */
 	public int getEigenschaftId() {
 		return eigenschaftId;
 	}
 
+	/**
+	 * EIgenschaft-ID setzen. 
+	 * @param eigenschaftId
+	 */
 	public void setEigenschaftId(int eigenschaftId) {
 		this.eigenschaftId = eigenschaftId;
 	}
 
-
-//	public int getInfoId() {
-//		return infoId;
-//	}
-//
-//	public void setInfoId(int infoId) {
-//		this.infoId = infoId;
-//	}
-
-
+	/**
+	 * Infotext auslesen. 
+	 * @return infotext
+	 */
 	public String getInfotext() {
 		return infotext;
 	}
 
+	/**
+	 * Infotext setzen.
+	 * @param infotext
+	 */
 	public void setInfotext(String infotext) {
 		this.infotext = infotext;
 	}
 
-
-
+	/**
+	 * Liste der Info-Objekte auslesen. 
+	 * @return infos
+	 */
 	public List<Info> getInfos() {
 		return infos;
 	}
 
-
-
+	/**
+	 * Liste der Info-Objekte setzen. 
+	 * @param infos
+	 */
 	public void setInfos(List<Info> infos) {
 		this.infos = infos;
 	}

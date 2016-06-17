@@ -1,6 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.Vector;
+import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,16 +40,6 @@ public class ShowMerkliste extends VerticalPanel {
 	 * Neue Tabelle zur Anzeige der gemerkten Kontakte erzeugen.
 	 */
 	private FlexTable merklisteFlexTable = new FlexTable();
-
-	/**
-	 * Neuen Button zum Loeschen eines Vermerks erzeugen und Beschriftung festlegen. 
-	 */
-	private Button loeschenButton = new Button("Löschen");
-
-	/**
-	 * Neuen Button zur Anzeige eines gemerkten Nutzerprofils erzeugen und Beschriftung festlegen. 
-	 */
-	private Button anzeigenButton = new Button("Anzeigen");
 
 	/**
 	 * Neues Label zur Ausgabe einer Information erzeugen. 
@@ -104,7 +94,7 @@ public class ShowMerkliste extends VerticalPanel {
 					public void onSuccess(Merkliste result) {
 						
 						// Vektor von gemerkten Nutzerprofilen erzeugen. 
-						Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
+						List<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
 						
 						// Anzahl der Zeilen ermitteln. 
 						int row = merklisteFlexTable.getRowCount();
@@ -125,8 +115,14 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
+							// Neuen Button zum Loeschen eines Vermerk erzeugen.
+							final Button loeschenButton = new Button("Löschen");
+							
 							// Button zum Loeschen eines Vermerks in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
+							
+							// Neuen Button zum Anzeigen eines Fremdprofils erzeugen.
+							final Button anzeigenButton = new Button("Anzeigen");
 
 							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);

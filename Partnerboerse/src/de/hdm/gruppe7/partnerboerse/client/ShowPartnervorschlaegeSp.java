@@ -146,7 +146,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									row++;
 									partnervorschlaegeSpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
 									partnervorschlaegeSpFlexTable.setText(row, 1,
-											String.valueOf(np.getAehnlichkeitSp()) + "%");
+											String.valueOf(np.getAehnlichkeit()) + "%");
 									partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
 									partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
 									partnervorschlaegeSpFlexTable.setText(row, 4,

@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -52,15 +53,15 @@ public class SperrlisteMapper {
 	}
 
 	/**
-	 * Alle gesperrten Nutzerprofile eines Nutzers auslesen.
-	 * 
-	 * @param profilId Profil-ID
-	 * @return Vector<Nutzerprofil> Vektor von gesperrten Nutzerprofil-Objekten.
+	 * Alle gesperrten Nutzerprofil-Objekte eines Nutzerprofils auslesen.
+	 * @param 	profilId Die Profil-ID des Nutzerprofils, fuer das die gesperrten Nutzerprofil-Objekte
+	 * 			ausgelesen werden sollen. 
+	 * @return 	Liste von gesperrten Nutzerprofil-Objekten.
 	 */
-	public Vector<Nutzerprofil> findGesperrteNutzerprofileFor(int profilId) {
+	public List<Nutzerprofil> findGesperrteNutzerprofileFor(int profilId) {
 		Connection con = DBConnection.connection();
 
-		Vector<Nutzerprofil> result = new Vector<Nutzerprofil>();
+		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -82,7 +83,7 @@ public class SperrlisteMapper {
 				n.setGeburtsdatumDate(rs.getDate("geburtsdatum"));
 				n.setGeschlecht(rs.getString("geschlecht"));
 
-				result.addElement(n);
+				result.add(n);
 
 			}
 
@@ -94,15 +95,14 @@ public class SperrlisteMapper {
 	}
 
 	/**
-	 * Pruefen, ob Fremdprofil von Nutzer gesperrt wurde. 
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID
-	 * @return int Sperrstatus Fremdprofil 
+	 * Pruefen, ob ein Fremdprofil vom eigenen Nutzerprofil gesperrt wurde. 
+	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das auf die Existenz einer Sperrung ueberprueft werden soll. 
+	 * @return Status, ob das Fremdprofil vom eigenen Nutzerprofil gesperrt wurde.
 	 */
 	public int pruefeSperrungFremdprofil(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
 		int sperrstatusFremdprofil = 0;
 
 		try {
@@ -113,10 +113,8 @@ public class SperrlisteMapper {
 					+ " AND fremdprofil_id=" + fremdprofilId);
 
 			if (rs.next()) {
-				// Es liegt eine Sperrung vor.
 				sperrstatusFremdprofil = 1;
 			} else {
-				// Es liegt keine Sperrung vor.
 				sperrstatusFremdprofil = 0;
 			}
 
@@ -127,15 +125,14 @@ public class SperrlisteMapper {
 	}
 
 	/**
-	 * Pruefen, ob Nutzer von Fremdprofil gesperrt wurde. 
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID
-	 * @return int Sperrstatus eigenes Profil 
+	 * Pruefen, ob das eigene Nutzerprofil vom Fremdprofil gesperrt wurde. 
+	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils.
+	 * @return Status, ob das eigene Nutzerprofil vom Fremdprofil gesperrt wurde.
 	 */
 	public int pruefeSperrungEigenesProfil(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisvariable (Ausgang: Es liegt keine Sperrung vor.)
 		int sperrstatusEigenesProfil = 0;
 
 		try {
@@ -146,10 +143,8 @@ public class SperrlisteMapper {
 					+ " AND fremdprofil_id=" + profilId);
 
 			if (rs.next()) {
-				// Es liegt eine Sperrung vor.
 				sperrstatusEigenesProfil = 1;
 			} else {
-				// Es liegt keine Sperrung vor.
 				sperrstatusEigenesProfil = 0;
 			}
 
@@ -161,8 +156,8 @@ public class SperrlisteMapper {
 
 	/**
 	 * Sperrung einfuegen. 
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID.
+	 * @param profilId Die Profil-ID des eigenen Nutzerprofils.
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das gesperrt werden soll. 
 	 */
 	public void insertSperrung(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
@@ -180,8 +175,8 @@ public class SperrlisteMapper {
 
 	/**
 	 * Sperrung loeschen.
-	 * @param profilId Profil-ID
-	 * @param fremdprofilId Fremdprofil-ID
+	 * @param profilId Die Profil-ID des eigenen Nutzerprofils.
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, dessen Sperrung geloescht werden soll.
 	 */
 	public void deleteSperrung(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
