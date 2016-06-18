@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
@@ -44,6 +45,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 	/**
 	 * Konstruktor hinzufuegen.
+	 * @param user Nutzerprofil
 	 */
 	public ShowEigenesNp() {
 
@@ -52,7 +54,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		horPanel.add(verPanel2);
 
 		/**
-		 * CSS anwenden.
+		 * CSS anwenden
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 

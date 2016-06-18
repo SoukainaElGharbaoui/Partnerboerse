@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Benutzer;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 public class SuchprofilMapper {
@@ -27,7 +24,12 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Suchprofil-Objekt in die Datenbank einfügen.
+	 * Suchprofil-Objekt in die Datenbank einfuegen.
+	 * 
+	 * @param s Das einzufuegende Nutzerprofil-Objekt.
+	 * @param profilId Die Profil-Id des eigenen Nutzerprofils. 
+	 * @return 	Das bereits uebergebene Suchprofil-Objekt, 
+	 * 			jedoch mit ggf. korrigierte Profil-ID.
 	 */
 	public Suchprofil insertSuchprofil(Suchprofil s, int profilId) {
 		Connection con = DBConnection.connection();
@@ -35,17 +37,12 @@ public class SuchprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			// Größte profil_id aus der Tabelle t_profil ermitteln.
 			ResultSet rs = stmt.executeQuery("SELECT MAX(profil_id) AS maxprofil_id " + "FROM t_profil1");
 
-			// Wenn wir etwas zurueckerhalten...
 			if (rs.next()) {
 
-				// Suchprofil-Objekt mit bisher maximalem, nun um 1
-				// inkrementierten Primärschlüssel versehen.
 				s.setProfilId(rs.getInt("maxprofil_id") + 1);
 
-				// Tabelle t_profil befüllen:
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"INSERT INTO t_profil1 (profil_id, geschlecht, haarfarbe, koerpergroesse, raucher, religion) "
@@ -53,7 +50,6 @@ public class SuchprofilMapper {
 								+ "'," + s.getKoerpergroesseInt() + ",'" + s.getRaucher() + "','" + s.getReligion()
 								+ "')");
 
-				// Tablle t_suchprofil befüllen:
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"INSERT INTO t_suchprofil1 (suchprofil_id, nutzerprofil_id, suchprofilname, alter_von, alter_bis) "
@@ -65,14 +61,12 @@ public class SuchprofilMapper {
 			e2.printStackTrace();
 		}
 
-		/*
-		 * Suchprofil-Objekt zurückgeben.
-		 */
 		return s;
 	}
 
 	/**
 	 * Suchprofil-Objekt wiederholt in die Datenbank schreiben.
+	 * @param s Das in die Datenbank zu schreibende Suchprofil-Objekt.
 	 */
 	public void updateSuchprofil(Suchprofil s) {
 		Connection con = DBConnection.connection();
@@ -97,7 +91,9 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Suchprofil-Objekt aus der Datenbank löschen.
+	 * Suchprofil-Objekt aus der Datenbank loeschen.
+	 * @param profilId Die Profil-ID des Nutzerprofils, das dessen Suchprofil geloescht werden soll.
+	 * @param suchprofilName Der Suchprofilname des Suchprofils, das geloescht werden soll. 
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
@@ -108,35 +104,25 @@ public class SuchprofilMapper {
 
 			Statement stmt = con.createStatement();
 
-			// Zu löschende suchprofil_id aus der Tabelle t_suchprofil holen.
 			ResultSet rs = stmt.executeQuery(
 					"SELECT suchprofil_id AS sp_id FROM t_suchprofil1 " + "WHERE t_suchprofil1.nutzerprofil_id="
 							+ profilId + " AND t_suchprofil1.suchprofilname LIKE '" + suchprofilName + "'");
 
-			// Wenn wir etwas zurückerhalten...
 			if (rs.next()) {
 				suchprofilIdInt = rs.getInt("sp_id");
 
-				// Daten aus der Tabelle t_aehnlichkeitsp mit der entsprechenden
-				// suchprofil_id löschen.
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"DELETE FROM t_aehnlichkeitsp1 " + "WHERE t_aehnlichkeitsp1.suchprofil_id=" + suchprofilIdInt);
 				
-				// Daten aus der Tabelle t_aehnlichkeitsp mit der entsprechenden
-				// suchprofil_id löschen.
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"DELETE FROM t_info1 " + "WHERE t_info1.profil_id=" + suchprofilIdInt);
 				
-				// Daten aus der Tabelle t_suchprofil mit der entsprechenden
-				// profil_id löschen.
 				stmt = con.createStatement();
 				stmt.executeUpdate(
 						"DELETE FROM t_suchprofil1 " + "WHERE t_suchprofil1.suchprofil_id=" + suchprofilIdInt);
 
-				// Daten aus der Tabelle t_profil mit der entsprechenden
-				// suchprofil_id löschen.
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM t_profil1 WHERE t_profil1.profil_id=" + suchprofilIdInt);
 
@@ -148,12 +134,13 @@ public class SuchprofilMapper {
 	}
 	
 	/**
-	 * Alle Suchprofile eines Nutzers auslesen.
+	 * Alle Suchprofil-Objekte eines Nutzerprofils auslesen. 
+	 * @param profilId Die Profil-ID des Nutzers, dessen Suchprofile ausgelesen werden sollen.
+	 * @return Liste von ausgelesenen Suchprofil-Objekten. 
 	 */
 	public List<Suchprofil> findAllSuchprofileFor(int profilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisliste vorbereiten
 		List<Suchprofil> result = new ArrayList<Suchprofil>();
 
 		try {
@@ -163,8 +150,6 @@ public class SuchprofilMapper {
 					+ "t_profil1 ON t_suchprofil1.suchprofil_id = t_profil1.profil_id "
 					+ "WHERE t_suchprofil1.nutzerprofil_id=" + profilId);
 
-			// Fuer jeden Eintrag im Suchergebnis wird nun ein
-			// Suchprofil-Objekt erstellt.
 			while (rs.next()) {
 				Suchprofil s = new Suchprofil();
 				s.setProfilId(rs.getInt("suchprofil_id"));
@@ -177,39 +162,32 @@ public class SuchprofilMapper {
 				s.setRaucher(rs.getString("raucher"));
 				s.setReligion(rs.getString("religion"));
 
-				// Hinzufuegen des neuen Objekts zur Ergebnisliste
 				result.add(s);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Ergebnisliste zurueckgeben
 		return result;
 	}
 
 	/**
-	 * Suchprofil anhand des Suchprofilnamens auslesen.
+	 * Suchprofil-Objekt anhand der Profil-ID und anhand des Suchprofilnamens auslesen.
+	 * @param profilId Die Profil-ID des Nutzers, dessen Suchprofil ausgelesen werden soll.
+	 * @param suchprofilname Der Name des Suchprofils, das augelesen werden soll.
+	 * @return Ausgelesenes Suchprofil-Objekt.
 	 */
-	public Suchprofil findSuchprofilByName(int profilId, String suchprofilName) {
-		// DB-Verbindung holen
+	public Suchprofil findSuchprofilByName(int profilId, String suchprofilname) {
 		Connection con = DBConnection.connection();
 
 		try {
-			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
 
-			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil1 INNER JOIN t_profil1 "
 					+ "ON t_suchprofil1.suchprofil_id = t_profil1.profil_id " + "WHERE t_suchprofil1.nutzerprofil_id="
-					+ profilId + " AND t_suchprofil1.suchprofilname LIKE '" + suchprofilName + "'");
+					+ profilId + " AND t_suchprofil1.suchprofilname LIKE '" + suchprofilname + "'");
 
-			/*
-			 * Da id Primärschlüssel ist, kann max. nur ein Tupel zurückgegeben
-			 * werden. Prüfe, ob ein Ergebnis vorliegt.
-			 */
 			if (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
 				Suchprofil s = new Suchprofil();
 
 				s.setProfilId(rs.getInt("suchprofil_id"));
@@ -233,12 +211,14 @@ public class SuchprofilMapper {
 	}
 	
 	/**
-	 * Existenz des Suchprofilnamens ueberpruefen.
+	 * Existenz des Suchprofilnames ueberpruefen. 
+	 * @param profilId Die Profil-ID des Nutzers, dessen Suchprofil ueberprueft werden soll.
+	 * @param suchprofilName Der Suchprofilname des Suchprofils, dessen Name ueberprueft werden soll.
+	 * @return Status, ob der Suchprofilname bereits existiert. 
 	 */
 	public int pruefeSuchprofilnameExistenz(int profilId, String suchprofilName) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisvariable (Ausgang: Der Suchprofilname existiert nicht.)
 		int existenz = 0;
 
 		try {
@@ -249,10 +229,8 @@ public class SuchprofilMapper {
 
 			if (rs.next()) {
 				if (rs.getInt("COUNT(*)") == 1)
-					// Der Suchprofilname existiert bereits.
 					existenz = 1;
 			} else {
-				// Der Suchprofilname existiert bisher nicht.
 				existenz = 0;
 			}
 
@@ -263,16 +241,17 @@ public class SuchprofilMapper {
 	}
 	
 	/**
-	 * Suchprofilname auslesen.
+	 * Suchprofilname auslesen. 
+	 * @param suchprofilId Die Suchprofil-ID des Suchprofils, das ausgelesen werden soll. 
+	 * @return Ausgelesener Suchprofilname. 
 	 */
-	public String getSuchprofilName(int profilId, int suchprofilId) {
+	public String getSuchprofilName(int suchprofilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT suchprofilname FROM t_suchprofil1 " + "WHERE nutzerprofil_id="
-					+ profilId + " AND suchprofil_id=" + suchprofilId);
+			ResultSet rs = stmt.executeQuery("SELECT suchprofilname FROM t_suchprofil1 " + "WHERE suchprofil_id=" + suchprofilId);
 
 			if (rs.next()) {
 				String suchprofilname = rs.getString("suchprofilname");
@@ -287,17 +266,22 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Aehnlichkeit einfuegen.
+	 * Aehnlichkeit setzen. 
+	 * @param profilId Die Profil-ID des Referenzprofils.
+	 * @param suchprofilId Die einzufuegende Suchprofil-ID.
+	 * @param suchprofilName Der einzufuegende Suchprofilname.
+	 * @param fremdprofilId Die Profil-ID des Vergleichsprofils.
+	 * @param aehnlichkeitSp Der einzufuegende Aehnlichkeitswert. 
 	 */
-	public void insertAehnlichkeit(int nutzerprofilId, int suchprofilId, String suchprofilName, int fremdprofilId,
-			int aehnlichkeitSp) {
+
+	public void insertAehnlichkeit(int profilId, int suchprofilId, int fremdprofilId, int aehnlichkeitSp) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, suchprofilname, fremdprofil_id, aehnlichkeit) "
-					+ "VALUES  (" + nutzerprofilId + "," + suchprofilId + ",'" + suchprofilName +  "'," +  fremdprofilId + "," + aehnlichkeitSp + ")");
+			stmt.executeUpdate("INSERT INTO t_aehnlichkeitsp1 (nutzerprofil_id, suchprofil_id, fremdprofil_id, aehnlichkeit) "
+					+ "VALUES  (" + profilId + "," + suchprofilId + "," +  fremdprofilId + "," + aehnlichkeitSp + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -305,15 +289,17 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Aehnlichkeit loeschen.
+	 * Aehnlichkeit entfernen.
+	 * @param profilId Die Profil-ID des Nutzerprofils, dessen Aehnlichkeitswerte 
+	 * 		  entfernt werden sollen. 
 	 */
-	public void deleteAehnlichkeitSp(int nutzerprofilId) {
+	public void deleteAehnlichkeitSp(int profilId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp1 WHERE nutzerprofil_id=" + nutzerprofilId);
+			stmt.executeUpdate("DELETE FROM t_aehnlichkeitsp1 WHERE nutzerprofil_id=" + profilId);
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
