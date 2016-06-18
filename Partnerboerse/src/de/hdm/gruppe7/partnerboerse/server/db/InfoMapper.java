@@ -339,6 +339,10 @@ public class InfoMapper {
 	/**
 	 * Alle Beschreibungsinfos f�r ein Profil auslesen
 	 * 
+<<<<<<< HEAD
+=======
+	 * @return List<Info>
+>>>>>>> branch 'master' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
 	 */
 	public List<Info> findBInfoByProfilId(int profilId) {
 		// DB-Verbindung holen

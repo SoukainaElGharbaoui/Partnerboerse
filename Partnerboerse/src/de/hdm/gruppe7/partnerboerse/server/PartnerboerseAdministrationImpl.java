@@ -320,8 +320,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(
 				profilId, suchprofilname);
-		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(
-				suchprofilId);
+		String suchprofilnameAktuell = this.suchprofilMapper
+				.getSuchprofilName(suchprofilId);
 
 		int ergebnis = 0;
 
@@ -496,12 +496,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils 
-	 * und den Profildaten und Infos anderer Nutzerprofilen berechnen.
+	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils und
+	 * den Profildaten und Infos anderer Nutzerprofilen berechnen.
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
-		this.aehnlichkeitEntfernen(profilId);
+		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
 				.findUnangeseheneNutzerprofile(profilId);
@@ -560,18 +560,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	}
 
-	/**
-	 * Aehnlichkeit entfernen.
-	 */
-	public void aehnlichkeitEntfernen(int profilId)
-			throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
-	}
 
 	/**
-	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen.
-	 * Es werden nur diejenigen Nutzerprofile ausgelesen, von denen 
-	 * der Nutzer nicht gesperrt wurde. 
+	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen. Es
+	 * werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer
+	 * nicht gesperrt wurde.
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
 			throws IllegalArgumentException {
@@ -579,14 +572,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				.findGeordnetePartnervorschlaegeNp(profilId);
 
 	}
-	
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: PartnervorschlaegeNp
 	 * *************************************************************************
 	 * **
 	 */
-	
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: PartnervorschlaegeSp
@@ -594,161 +587,156 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * **
 	 */
 	/**
-	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
-	 * und Infos anderer Nutzerprofile berechnen. 
+	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten
+	 * und Infos anderer Nutzerprofile berechnen.
 	 */
-	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
+	public void berechneAehnlichkeitSpFor(int profilId)
+			throws IllegalArgumentException {
+		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
+		
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(profilId);
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
-		
-		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
+				.findNutzerprofileOhneGesetzeSperrung(profilId);
+
+		// Vergleich der Profildaten von jeweils einem Suchprofil und einem
+		// Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 				int aehnlichkeitSp = 0;
 				int counter = 70;
-				
+
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
-				
-				if(sp.getGeschlecht().equals("Keine Auswhal")){
+
+				if (sp.getGeschlecht().equals("Keine Auswhal")) {
 					aehnlichkeitSp = aehnlichkeitSp + 30;
-					
+
 				} else {
-				
+
 					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					aehnlichkeitSp = aehnlichkeitSp + 30;
+						aehnlichkeitSp = aehnlichkeitSp + 30;
 					}
 				}
-				
-				if(sp.getHaarfarbe().equals("Keine Auswhal") ){				
+
+				if (sp.getHaarfarbe().equals("Keine Auswhal")) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-					
+
 				} else {
-					
+
 					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-					
+
 				}
-				
-				
-//				if (sp.getKoerpergroesseInt() == ) {
-//					aehnlichkeitSp = aehnlichkeitSp + 10;
-//					
-//				}else {
-					
-					if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+
+				// if (sp.getKoerpergroesseInt() == ) {
+				// aehnlichkeitSp = aehnlichkeitSp + 10;
+				//
+				// }else {
+
+				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-					}
-					
-//				}
-				
-				
-				if(sp.getRaucher().equals("Keine Auswahl")){
+				}
+
+				// }
+
+				if (sp.getRaucher().equals("Keine Auswahl")) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-					
+
 				} else {
-					
+
 					if (sp.getRaucher().equals(np.getRaucher())) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-					
+
 				}
-				if (sp.getRaucher().equals("Keine Auswahl") ){
+				if (sp.getRaucher().equals("Keine Auswahl")) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-					
+
 				} else {
-					
+
 					if (sp.getReligion().equals(np.getReligion())) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-					
-					
+
 				}
-				
-				
-				
+
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper
 						.findAllInfosNeu(suchprofilId);
 				List<Info> vergleichsinfo = infoMapper
 						.findAllInfosNeu(fremdprofilId);
-				
+
 				// Vergleich der Infos
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-							counter= counter + 2;
-							
-							if (rin.getInfotext().equals("Keine Auswahl") ){
-								
+							counter = counter + 2;
+
+							if (rin.getInfotext().equals("Keine Auswahl")) {
+
 								aehnlichkeitSp = aehnlichkeitSp + 2;
-								
+
 							} else {
-								
-								if (rin.getInfotext().isEmpty()){
+
+								if (rin.getInfotext().isEmpty()) {
 									aehnlichkeitSp = aehnlichkeitSp + 2;
-									
-							} else {
-								if (rin.getInfotext().equals(vin.getInfotext())) {
-									aehnlichkeitSp = aehnlichkeitSp + 2;
+
+								} else {
+									if (rin.getInfotext().equals(
+											vin.getInfotext())) {
+										aehnlichkeitSp = aehnlichkeitSp + 2;
+									}
 								}
-								}
-								
+
 							}
-							
+
 						}
 					}
 				}
-				
+
 				// Berechnung des Prozentwertes
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
-				
-				if(sp.getGeschlecht().equals(np.getGeschlecht())){
+
+				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
 					// Aehnlichkeit in die Datenbank setzen
-						suchprofilMapper.insertAehnlichkeit(profilId,
-						suchprofilId, fremdprofilId,
-						aehnlichkeitSp);
-									
-				}else {
-					
-					if (sp.getGeschlecht().equals("Keine Auswahl")){
+					suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId,
+							fremdprofilId, aehnlichkeitSp);
+
+				} else {
+
+					if (sp.getGeschlecht().equals("Keine Auswahl")) {
 						// Aehnlichkeit in die Datenbank setzen
 						suchprofilMapper.insertAehnlichkeit(profilId,
-						suchprofilId, fremdprofilId,
-						aehnlichkeitSp);
-						
+								suchprofilId, fremdprofilId, aehnlichkeitSp);
+
 					}
 				}
-				
+
 			}
 		}
-}
-	
-	/**
-	 * Aehnlichkeit entfernen. 
-	 */
-	public void aehnlichkeitEntfernenSp(int profilId)
-			throws IllegalArgumentException {
-		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 	}
 
+
 	/**
-	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer auslesen.
-	 * Es werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer 
-	 * nicht gesperrt wurde. 
+	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer
+	 * auslesen. Es werden nur diejenigen Nutzerprofile ausgelesen, von denen
+	 * der Nutzer nicht gesperrt wurde.
 	 */
 
-	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilname)
-		throws IllegalArgumentException {
-	
-		Suchprofil sp =	this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilname);
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId,
+			String suchprofilname) throws IllegalArgumentException {
+
+		Suchprofil sp = this.suchprofilMapper.findSuchprofilByName(profilId,
+				suchprofilname);
 
 		int suchprofilId = sp.getProfilId();
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilId);
-}
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(
+				profilId, suchprofilId);
+	}
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: PartnervorschlaegeSp

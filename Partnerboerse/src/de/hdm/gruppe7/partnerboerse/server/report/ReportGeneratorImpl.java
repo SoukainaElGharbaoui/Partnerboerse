@@ -35,25 +35,19 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
  *      Notwendigkeit an die Bed�rfnisse des IT-Projekts SS 2016
  *      "Partnerboerse" angepasst.
  * 
- *      Modifizierender @author Milena Weinmann
+ *      Modifizierender @author Milena Weinmann, Carolin Marian
  */
 
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
-	Nutzerprofil profil = new Nutzerprofil();
-
 	/**
-	 * Ein ReportGenerator ben�tigt Zugriff auf die
+	 * Ein ReportGenerator benoetigt Zugriff auf die
 	 * PartnerboerseAdministration, da diese die essentiellen Methoden f�r die
 	 * Koexistenz von Datenobjekten (vgl. bo-Package) bietet.
 	 */
 	private PartnerboerseAdministration partnerboerseAdministration = null;
-
-	public void setUser(Nutzerprofil n) {
-		this.profil = n;
-	}
 
 	/**
 	 * No-Argument-Konstruktor.
@@ -475,12 +469,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		return result;
 	}
 
-
+	/**
+	 * Login-Methode
+	 */
 
 	public boolean isUserRegistered(String userEmail) {
 		return false;
 	}
-
+	
+	/**
+	 * Login-Methode
+	 */
 	public Nutzerprofil login(String requestUri) throws Exception {
 
 		UserService userService = UserServiceFactory.getUserService();
