@@ -1106,4 +1106,125 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
+	public Beschreibungseigenschaft createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext) throws IllegalArgumentException {
+
+		Beschreibungseigenschaft b = new Beschreibungseigenschaft();
+		b.setEigenschaftId(eigenschaftId);
+		b.setErlaeuterung(erlaeuterung);
+		b.setTyp(typ);
+		b.setBeschreibungstext(beschreibungstext);
+		
+
+		b.setEigenschaftId(1);
+		
+		b = this.infoMapper.insertBeschreibungseigenschaft(b);
+		
+		return b;
+	}
+	
+	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId, String erleauterung,
+			String typ, List<String>  auswahloptionen) throws IllegalArgumentException {
+
+		Auswahleigenschaft a = new Auswahleigenschaft();
+		a.setEigenschaftId(eigenschaftId);
+		a.setErlaeuterung(erleauterung);
+		a.setTyp(typ);
+		a.setOptionen(auswahloptionen);
+		
+
+		a.setEigenschaftId(1);
+		
+		a = this.infoMapper.insertAuswahleigenschaft(a);
+		
+		System.out.println("hallo");
+		
+		return a;
+	}
+	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt wird aktualisiert.
+	 * 
+	 * @param eigenschaftId
+	 * @param erlaeuterung
+	 * @param typ
+	 * @param beschreibungstext
+	 * @throws IllegalArgumentException
+	 */
+	public void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext)
+			throws IllegalArgumentException {
+
+		Beschreibungseigenschaft b = new Beschreibungseigenschaft();
+		b.setErlaeuterung(erlaeuterung);
+		b.setTyp(typ);
+		b.setBeschreibungstext(beschreibungstext);
+	
+	
+
+		b.setEigenschaftId(eigenschaftId);
+
+		this.infoMapper.updateBeschreibungseigenschaft(b);;
+	}
+	
+	/**
+	 * Auswahleigenschaft-Objekt wird aktualisiert.
+	 * @param eigenschaftId
+	 * @param erlaeuterung
+	 * @param typ
+	 * @param auswahloptionen
+	 * @throws IllegalArgumentException
+	 */
+	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloptionen)
+			throws IllegalArgumentException {
+
+		Auswahleigenschaft a = new Auswahleigenschaft();
+		a.setErlaeuterung(erlaeuterung);
+		a.setTyp(typ);
+		a.setOptionen(auswahloptionen);
+	
+	
+
+		a.setEigenschaftId(eigenschaftId);
+
+		this.infoMapper.updateAuswahleigenschaft(a);;
+	}
+	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt wird geloescht.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteBeschreibungseigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
+		this.infoMapper.deleteBeschreibungseigenschaft(eigenschaftId);
+	}
+	
+	/**
+	 * Auswahleigenschaft-Objekt wird geloescht.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteAuswahleigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
+		this.infoMapper.deleteAuswahleigenschaft(eigenschaftId);
+	}
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
 }
