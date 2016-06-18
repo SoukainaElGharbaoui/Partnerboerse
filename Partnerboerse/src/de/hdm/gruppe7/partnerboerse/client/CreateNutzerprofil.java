@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
+import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
 
 /**
  * Diese Klasse dient dazu, ein Nutzerprofil zu erstellen.
@@ -218,9 +218,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 									ClientsideSettings.setAktuellerUser(nutzerprofil);
 
-									CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
+									CreateInfo createInfo = new CreateInfo(nutzerprofil.getProfilId());
 									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(createInfoNp);
+									RootPanel.get("Details").add(createInfo);
 								}
 							});
 				}
