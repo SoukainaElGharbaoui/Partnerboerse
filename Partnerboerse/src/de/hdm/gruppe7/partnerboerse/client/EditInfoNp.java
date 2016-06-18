@@ -322,12 +322,13 @@ public class EditInfoNp extends VerticalPanel {
 								}
 								
 								else if (result == 1) {
-									int suchprofilId = Integer.valueOf(editInfoFlexTable.getText(row, 0));
+									
+									int suchprofilId = profilId;
 									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 									
-									System.out.println("Ich suche:" + editInfoFlexTable.getText(row, 0));
+								
 								}
 							}
 						});

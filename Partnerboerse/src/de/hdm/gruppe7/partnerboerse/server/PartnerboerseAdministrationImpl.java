@@ -517,6 +517,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
+		
 		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
