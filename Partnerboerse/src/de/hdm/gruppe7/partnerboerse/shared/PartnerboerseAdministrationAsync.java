@@ -227,4 +227,34 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
+	void createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext, AsyncCallback<Beschreibungseigenschaft> callback);
+	
+	void createAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloption, AsyncCallback<Auswahleigenschaft> callback) ;
+	
+	void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext, AsyncCallback<Void> callback);
+	
+	void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloption, AsyncCallback<Void> callback);
+	
+	void deleteBeschreibungseigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+	
+	void deleteAuswahleigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
 }

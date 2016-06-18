@@ -337,12 +337,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Alle Beschreibungsinfos fï¿½r ein Profil auslesen
+	 * Alle Beschreibungsinfos fuer ein Profil auslesen
 	 * 
-<<<<<<< HEAD
-=======
 	 * @return List<Info>
->>>>>>> branch 'master' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
 	 */
 	public List<Info> findBInfoByProfilId(int profilId) {
 		// DB-Verbindung holen
@@ -396,5 +393,192 @@ public class InfoMapper {
 		}
 		return eigenschaftstext;
 	}
+	
+	/**
+	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator.
+	 * @param b Das einzufugende Beschreibungseigenschaft-Objekt.
+	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
+	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.
+	 */
+	public Beschreibungseigenschaft insertBeschreibungseigenschaft (Beschreibungseigenschaft b){
+		
+		
+		Connection con = DBConnection.connection();
+			
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+				.executeQuery("SELECT MAX(eigenschaft_id) AS maxeigenschaft_id FROM t_eigenschaft1");
+			
+			if(rs.next()) {
+				
+				b.setEigenschaftId(rs.getInt("maxeigenschaft_id") + 1);
+			
+			 stmt = con.createStatement();	
+			 stmt.executeUpdate("INSERT INTO t_eigenschaft1(eigenschaft_id,erlaeuterung,typ) "
+					+ "VALUES (" + b.getEigenschaftId() + ",'" + b.getErlaeuterung() + "','" + b.getTyp() + "')" );
+			 
+			 stmt = con.createStatement();
+			 stmt.executeUpdate("INSERT INTO t_beschreibungseigenschaft1(eigenschaft_id, beschreibungstext) "
+			 		+ "VALUES (" + b.getEigenschaftId() + ",'" + b.getBeschreibungstext() + "')" );
+				}
+			
+			} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return b;
+	}
+	
+	
+	/**
+	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator. Fuer den Administrator.
+	 * @param a Das einzufugende Beschreibungseigenschaft-Objekt.
+	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
+	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.
+	 */
+	public Auswahleigenschaft insertAuswahleigenschaft (Auswahleigenschaft a) {
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+				.executeQuery("SELECT MAX(eigenschaft_id) AS maxeigenschaft_id FROM t_eigenschaft1");
+			
+			if(rs.next()) {
+				
+				a.setEigenschaftId(rs.getInt("maxeigenschaft_id") + 1);
+			
+			 stmt = con.createStatement();	
+			 stmt.executeUpdate("INSERT INTO t_eigenschaft1(eigenschaft_id,erlaeuterung,typ) "
+					+ "VALUES (" + a.getEigenschaftId() + ",'" + a.getErlaeuterung() + "','" + a.getTyp() + "')" );
+			 
+			 stmt = con.createStatement();
+			 stmt.executeUpdate("INSERT INTO t_auswahleigenschaft1(eigenschaft_id, auswahloption) "
+			 		+ "VALUES (" + a.getEigenschaftId() + ",'" + a.getOptionen() + "')" );
+				}
+			
+			} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		
+		return a;
+		
+		
+	}	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt wiederholt in die Datenbank schreiben. Fuer den Administrator.
+	 * @param b Das in die Datenbank zu schreibende Beschreibungseigenschaft-Objekt.
+	 */
+	public void updateBeschreibungseigenschaft(Beschreibungseigenschaft b) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_eigenschaft1 " + "SET erlaeuterung=\""
+					+ b.getErlaeuterung() + "\", " + " typ=\""
+					+ b.getTyp() + "\" "
+					+ "WHERE eigenschaft_id=" + b.getEigenschaftId());
+
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_Beschreibungseigenschaft1 " + "SET beschreibungstext=\""
+					+ b.getBeschreibungstext() + "\" "  + "WHERE eigenschaft_id="
+					+ b.getEigenschaftId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+	
+	/**
+	 * Auswahleigenschaft-Objekt wiederholt in die Datenbank schreiben. Fuer den Administrator.
+	 * @param a  Das in die Datenbank zu schreibende Auswahleigenschaft-Objekt.
+	 */
+	public void updateAuswahleigenschaft(Auswahleigenschaft a) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_eigenschaft1 " + "SET erlaeuterung=\""
+					+ a.getErlaeuterung() + "\", " + " typ=\""
+					+ a.getTyp() + "\" "
+					+ "WHERE eigenschaft_id=" + a.getEigenschaftId());
+
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE t_Auswahleigenschaft1 " + "SET auswahloption=\""
+					+ a.getOptionen() + "\" "  + "WHERE eigenschaft_id="
+					+ a.getEigenschaftId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+	}
+	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt aus der Datenbank loeschen. Fuer den Administrator.
+	 * @param eigenschaftId
+	 */
+	public void deleteBeschreibungseigenschaft(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_beschreibungseigenschaft1 "
+					+ "WHERE eigenschaft_id=" + eigenschaftId);
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_eigenschaft1 "
+					+ "WHERE eigenschaft_id=" + eigenschaftId);				
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Auswahleigenschaft-Objekt aus der Datenbank loeschen. Fuer den Administrator.
+	 * @param eigenschaftId
+	 */
+	public void deleteAuswahleigenschaft(int eigenschaftId) {
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_auswahleigenschaft1 "
+					+ "WHERE eigenschaft_id=" + eigenschaftId);
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM t_eigenschaft1 "
+					+ "WHERE eigenschaft_id=" + eigenschaftId);				
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	
+	
 
 }
