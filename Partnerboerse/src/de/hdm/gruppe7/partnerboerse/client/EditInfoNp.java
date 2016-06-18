@@ -34,7 +34,8 @@ public class EditInfoNp extends VerticalPanel {
 
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
-	final Button updateInfosButton = new Button("Infos speichern");
+	private Button updateInfosButton = new Button("Infos speichern");
+	private Button createInfosButton = new Button("Infos anlegen");
 	private Label informationLabel = new Label();
 
 	private int row;
@@ -44,12 +45,36 @@ public class EditInfoNp extends VerticalPanel {
 	private List<Info> listInfos;
 	private List<Eigenschaft> listE;
 	
+	private int zaehler;
+	
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < editInfoFlexTable.getRowCount(); k++) {
+			
+			if (editInfoFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
 
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 
-	public EditInfoNp(final int profilId) {
+	public EditInfoNp(final int profilId, final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -147,7 +172,25 @@ public class EditInfoNp extends VerticalPanel {
 										});
 										
 										editInfoFlexTable.removeRow(l);
-										break;
+										
+										boolean befuellt = pruefeLeereTable();
+										
+										if (befuellt == true) {
+											
+											ueberschriftLabel.setText("Sie haben derzeit keine Infos angelegt.");
+											
+											editInfoFlexTable.setVisible(false);
+											updateInfosButton.setVisible(false);
+											informationLabel.setVisible(false);
+											
+											ueberschriftLabel.setVisible(true);
+//											createInfosButton.setVisible(true);
+											verPanel.add(createInfosButton);
+										}
+										
+										else {										
+											break;
+										}
 									}
 								}
 							}
@@ -232,7 +275,6 @@ public class EditInfoNp extends VerticalPanel {
 				} 
 			}
 		});
-		
 		
 		updateInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -323,7 +365,7 @@ public class EditInfoNp extends VerticalPanel {
 								
 								else if (result == 1) {
 									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilName);
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}
@@ -331,6 +373,16 @@ public class EditInfoNp extends VerticalPanel {
 						});
 					}
 				});
+		
+
+		createInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+					CreateInfoNp createInfo = new CreateInfoNp(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(createInfo);
+			}
+		});
 				
 			verPanel.add(ueberschriftLabel);
 			verPanel.add(editInfoFlexTable);

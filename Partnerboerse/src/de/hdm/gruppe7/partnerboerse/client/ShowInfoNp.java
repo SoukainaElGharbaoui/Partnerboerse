@@ -221,7 +221,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoNp editInfoNp = new EditInfoNp(profilId);
+				EditInfoNp editInfoNp = new EditInfoNp(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfoNp);
 			}

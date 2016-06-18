@@ -38,12 +38,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	private FlexTable partnervorschlaegeNpFlexTable = new FlexTable();
 	
 	/**
-	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
 	 */
 	private int zaehler;
 	
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
 	 */
 	public boolean pruefeLeereTable() {
 		
