@@ -142,28 +142,32 @@ public class NutzerprofilMapper {
 				stmt.executeUpdate("DELETE FROM t_info1 " + "WHERE profil_id="
 						+ profilId + " OR profil_id=" + suchprofilId);
 			}
-
+			
+			ResultSet rs2 = stmt
+					.executeQuery("SELECT suchprofil_id AS sp_id FROM t_suchprofil1 WHERE nutzerprofil_id="
+							+ profilId);
+			
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_suchprofil1 "
 					+ "WHERE nutzerprofil_id=" + profilId);
 
-			while (rs1.next()) {
+			while (rs2.next()) {
 
-				int suchprofilId2 = rs1.getInt("sp_id");
+				int suchprofilId2 = rs2.getInt("sp_id");
 
 				stmt = con.createStatement();
 				stmt.executeUpdate("DELETE FROM t_profil1 "
-						+ "WHERE profil_id=" + suchprofilId2);
-
+						+ "WHERE profil_id=" + suchprofilId2); 
 			}
-
+			
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_nutzerprofil1 "
 					+ "WHERE nutzerprofil_id=" + profilId);
-
+			
 			stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM t_profil1 " + "WHERE profil_id="
 					+ profilId);
+			
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

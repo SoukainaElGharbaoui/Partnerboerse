@@ -313,6 +313,7 @@ public class InfoMapper {
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
@@ -339,16 +340,16 @@ public class InfoMapper {
 	 * Alle Beschreibungsinfos f�r ein Profil auslesen
 	 * 
 <<<<<<< HEAD
-	 * @return List<Info>
 =======
-
->>>>>>> refs/heads/master
+	 * @return List<Info>
+>>>>>>> branch 'master' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
 	 */
 	public List<Info> findBInfoByProfilId(int profilId) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
 		List<Info> result = new ArrayList<Info>();
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
@@ -388,7 +389,6 @@ public class InfoMapper {
 
 				eigenschaftstext = rs.getString("erlaeuterung");
 			}
-
 			return eigenschaftstext;
 
 		} catch (SQLException e2) {

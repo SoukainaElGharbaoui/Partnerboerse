@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -30,7 +32,23 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 	private HorizontalPanel horPanelTabelle = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
+	
+	/**
+	 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen.
+	 */
+	private FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
 
+	private Label ueberschriftLabel = new Label(
+			"Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge anzeigen möchten:");
+	
+	private Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
+	private Label infoLabel = new Label();
+	private Label ergebnisLabel = new Label();
+	private ListBox auswahlListBox = new ListBox();
+	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
+	private Button anzeigenButton;
+	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
+	
 	/**
 	 * Variablen
 	 */
@@ -50,23 +68,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Label, AuswahlBox und Buttons erstellen
 		 */
-		final Label ueberschriftLabel = new Label(
-				"Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge anzeigen möchten:");
+		
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-		verPanel.add(ueberschriftLabel);
-
-		final Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
 		ueberschriftLabel2.addStyleName("partnerboerse-label");
-
-		final Label infoLabel = new Label();
-		final Label ergebnisLabel = new Label();
-		final ListBox auswahlListBox = new ListBox();
-		final Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
-
-		/**
-		 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen.
-		 */
-		final FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
 
 		/**
 		 * die AuswahlBox wird mit allen Suchprofilen des Nutzers gef�llt
@@ -85,11 +89,37 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 						for (Suchprofil s : result) {
 							auswahlListBox.addItem(s.getSuchprofilName());
 						}
+						
+							if (result.isEmpty()) {
+								auswahlListBox.setVisible(false);
+								anzeigenSpButton.setVisible(false);
+								ueberschriftLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
 
+								createSuchprofilButton.setVisible(true); 
+
+							} else {
+								for (Suchprofil s : result) {
+									auswahlListBox.addItem(s.getSuchprofilName());
+								}
+								createSuchprofilButton.setVisible(false);
+							}
 					}
 
 				});
 
+		/**
+		 * ClickHandler fuer den Suchprofil-Anlegen-Button hinzufuegen.
+		 */
+		createSuchprofilButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				// Seite zum Anlegen eines neuen Suchprofils aufrufen.
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createSuchprofil);
+			}
+
+		});
+		
 		/**
 		 * Bei Bet�tigung des AnzeigenButtons werden alle Partnervorschlaege
 		 * anhand des gew�hlen Suchprofils ausgegeben, nach Aehnlichkeit
@@ -108,7 +138,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf");
-
 							}
 
 							@Override
@@ -149,13 +178,16 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 											String.valueOf(np.getAehnlichkeit()) + "%");
 									partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
 									partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
-									partnervorschlaegeSpFlexTable.setText(row, 4,
-											String.valueOf(np.getGeburtsdatumDate()));
+									
+									Date geburtsdatum = np.getGeburtsdatumDate();
+									String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+									
+									partnervorschlaegeSpFlexTable.setText(row, 4, geburtsdatumString);
 									partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
 
 									// Anzeigen-Button f�r das Fremdprofil
 									// hinzufügen und ausbauen.
-									final Button anzeigenButton = new Button("Anzeigen");
+									anzeigenButton = new Button("Anzeigen");
 									partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
 
 									// ClickHandler für den Anzeigen-Button
@@ -195,6 +227,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenSpButton);
+		verPanel.add(createSuchprofilButton);	
 		verPanel.add(auswahlPanel);
 
 	}

@@ -2,31 +2,7 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.core.shared.GWT;
-
-import java.util.List;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.logical.shared.HasSelectionHandlers;
-import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-
-
-
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.InsertPanel;
-import com.google.gwt.user.client.ui.Label;
-
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -34,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 
-public class Navigator extends VerticalPanel {
+public class Navigator extends HorizontalPanel {
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
@@ -67,29 +43,14 @@ public class Navigator extends VerticalPanel {
 			}
 		});
 
-		nutzerprofilMenu.addItem("Neues Profil anlegen", new Command() {
-
-			@Override
-			public void execute() {
-				CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createNutzerprofil);
-
-			}
-
-
-		});
 
 		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
-
 			@Override
 			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showMerkliste);
-
 			}
-
 		});
 
 		nutzerprofilMenu.addItem("Sperrliste anzeigen", new Command() {
@@ -99,18 +60,16 @@ public class Navigator extends VerticalPanel {
 				ShowSperrliste showSperrliste = new ShowSperrliste();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSperrliste);
-
 			}
-
 		});
-
+		
 		nutzerprofilMenu.addSeparator();
 
 		// Men� f�r das Suchprofil
 		MenuBar suchprofilMenu = new MenuBar(true);
 		suchprofilMenu.setAnimationEnabled(true);
 
-		suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command() {
+		suchprofilMenu.addItem("Suchprofil anlegen", new Command() {
 
 			@Override
 			public void execute() {
@@ -144,7 +103,7 @@ public class Navigator extends VerticalPanel {
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
 
-		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschläge anzeigen", new Command() {
 
 			@Override
 			public void execute() {
@@ -172,7 +131,7 @@ public class Navigator extends VerticalPanel {
 
 		});
 
-		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Partnervorschläge anhand von Suchprofilen anzeigen", new Command() {
 
 			@Override
 			public void execute() {
@@ -195,21 +154,42 @@ public class Navigator extends VerticalPanel {
 							RootPanel.get("Details").add(showPartnervorschlaegeSp);
 
 							}
-
-						});
+				});
 
 				
 			}
 
 		});
-
-		partnervorschlaegeMenu.addSeparator();
+		
+//		partnervorschlaegeMenu.addSeparator();
+//		
+//		// Create the file menu
+//				MenuBar statusMenu = new MenuBar(true);
+//				statusMenu.setAnimationEnabled(true);
+//
+//				statusMenu.addItem("Ausloggen", new Command() {
+//					@Override
+//					public void execute() {
+////						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+////						RootPanel.get("Details").clear();
+////						RootPanel.get("Details").add(showEigenesNp);
+//						
+//						Anchor signOutLink = new Anchor();
+//
+//						signOutLink.setHref(nutzerprofil.getLogoutUrl());
+//						signOutLink.setText("Als " + nutzerprofil.getVorname() + " ausloggen");
+//						
+//					}
+//				});
+		
+		
 
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+//		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu
