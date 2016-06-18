@@ -456,7 +456,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(
 			int profilId) throws IllegalArgumentException;
 
-	public int createInfo(int profilId, List<Info> infos)
+	public List<Info> createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException;
 
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)

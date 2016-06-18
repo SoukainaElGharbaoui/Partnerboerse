@@ -60,6 +60,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
 	
+	private String profiltyp;
+	
 	/**
 	 * Konstruktor hinzufuegen.
 	 */
@@ -154,6 +156,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				profiltyp = "Np";
 
 				boolean vornameWert = isBuchstabe(vornameTextBox.getText()); 
 				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText()); 
@@ -202,7 +206,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 											
 											ClientsideSettings.setAktuellerUser(nutzerprofil);
 
-											CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
+											CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId(), 
+													profiltyp);
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(createInfoNp);
 										}

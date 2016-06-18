@@ -44,6 +44,8 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Button anzeigenButton = new Button("Suchprofil anzeigen");
 	private Button loeschenButton = new Button("Suchprofil löschen");
 	private Button bearbeitenButton = new Button("Suchprofil bearbeiten"); 
+	
+	private String profiltyp;
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -79,8 +81,16 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
+		/**
+		 * Die Variable profiltyp wird initialisiert.
+		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
+		 * vom Typ Suchprofil ist
+		 */
+		profiltyp = "Sp";
+		
+		
 		if (suchprofilName == null) {
-
+			
 		/**
 		 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
 		 */
@@ -167,7 +177,7 @@ public class ShowSuchprofil extends VerticalPanel {
 								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 
 								// Infos
-								ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
+								ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId, profiltyp);
 								infoPanel.clear();
 								infoPanel.add(showInfoNp);
 
@@ -304,7 +314,7 @@ public class ShowSuchprofil extends VerticalPanel {
 							showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 
 							// Infos
-							ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
+							ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId, profiltyp);
 							infoPanel.clear();
 							infoPanel.add(showInfoNp);
 
@@ -402,7 +412,7 @@ public class ShowSuchprofil extends VerticalPanel {
 									showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 
 									// Infos
-									ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
+									ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId, profiltyp);
 									infoPanel.clear();
 									infoPanel.add(showInfoNp);
 
@@ -433,7 +443,6 @@ public class ShowSuchprofil extends VerticalPanel {
 										}
 
 									});
-
 						}
 
 					});

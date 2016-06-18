@@ -40,11 +40,10 @@ public class CreateInfoNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
 
-	public CreateInfoNp(final int profilId) {
+	public CreateInfoNp(final int profilId, final String profiltyp) {
 		
 		this.add(verPanel);
 
-		
 		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
 		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
 		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
@@ -206,7 +205,7 @@ public class CreateInfoNp extends VerticalPanel {
 
 				
 				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId,
-						infos, new AsyncCallback<Integer>() {
+						infos, new AsyncCallback<List<Info>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -215,11 +214,11 @@ public class CreateInfoNp extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(Integer result) {
+							public void onSuccess(List<Info> result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 								
-								if (result == 0) {
+								if (profiltyp.equals("Np")) {
 									
 									ShowEigenesNp showNp = new ShowEigenesNp();
 									RootPanel.get("Navigator").add(new Navigator());
@@ -236,13 +235,12 @@ public class CreateInfoNp extends VerticalPanel {
 									RootPanel.get("Details").add(showNp);
 								}
 
-								else if (result == 1) {
+								else if (profiltyp.equals("Sp")) {
 									String suchprofilName = null;
 									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}
-
 							}
 						});
 			}

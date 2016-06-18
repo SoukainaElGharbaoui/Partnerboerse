@@ -65,7 +65,7 @@ public class ShowInfoNp extends VerticalPanel {
 	 * 
 	 * @param integer
 	 */
-	public ShowInfoNp(final int profilId) {
+	public ShowInfoNp(final int profilId, final String profiltyp) {
 		
 		this.add(verPanel);
 
@@ -229,7 +229,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId);
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}

@@ -1,12 +1,9 @@
-
 package de.hdm.gruppe7.partnerboerse.server.db;
-
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,9 +24,9 @@ public class InfoMapper {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();
 		}
-
 		return infoMapper;
 	}
+
 
 	public List<Eigenschaft> findAllEigenschaftenNeu() {
 		Connection con = DBConnection.connection();
@@ -71,9 +68,6 @@ public class InfoMapper {
 					.executeQuery("SELECT * FROM t_eigenschaft1 "
 							+ "WHERE t_eigenschaft1.eigenschaft_id NOT IN (SELECT t_info1.eigenschaft_id "
 							+ "FROM t_info1 WHERE t_info1.profil_id=" + profilId + ")");
-			
-//			SELECT * FROM t_eigenschaft1 WHERE t_eigenschaft1.eigenschaft_id NOT IN 
-//			(SELECT t_info1.eigenschaft_id FROM t_info1 WHERE t_info1.profil_id = 1)
 			
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();

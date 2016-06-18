@@ -48,6 +48,8 @@ public class ShowEigenesNp extends VerticalPanel {
 	private Button neinButton = new Button("Nein");
 	private Label loeschenLabel = new Label(
 			"Möchten Sie Ihr Profil wirklich löschen?");
+	
+	private String profiltyp;
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -85,6 +87,15 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0,
 				"TableHeader");
 		showEigenesNpFlexTable.addStyleName("FlexTable");
+		
+		
+		/**
+		 * Die Variable profiltyp wird initialisiert.
+		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
+		 * vom Typ Suchprofil ist
+		 */
+		profiltyp = "Np";
+		
 
 		/**
 		 * Nutzerprofil anhand der Profil-ID auslesen.
@@ -219,7 +230,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		/**
 		 * Infos anzeigen.
 		 */
-		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
+		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId(), profiltyp);
 
 		/**
 		 * Widgets den Panels hinzufuegen.

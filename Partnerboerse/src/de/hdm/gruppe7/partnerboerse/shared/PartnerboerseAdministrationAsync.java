@@ -200,7 +200,7 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllUnusedEigenschaften(int profilId, AsyncCallback<Map<List<Beschreibungseigenschaft>, 
 			List<Auswahleigenschaft>>> callback);
 	
-	void createInfo(int profilId, List<Info> infos, AsyncCallback<Integer> callback);
+	void createInfo(int profilId, List<Info> infos, AsyncCallback<List<Info>> callback);
 	
 	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
 	

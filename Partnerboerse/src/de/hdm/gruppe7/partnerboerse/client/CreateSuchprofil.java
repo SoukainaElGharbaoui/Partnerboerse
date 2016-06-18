@@ -229,8 +229,9 @@ public class CreateSuchprofil extends VerticalPanel {
 																				// CreateInfoSp
 																				// weitergeben.
 																				int suchprofilId = result.getProfilId();
+																				String profiltyp = "Sp";
 																				CreateInfoNp createInfoNp = new CreateInfoNp(
-																						suchprofilId);
+																						suchprofilId, profiltyp);
 																				RootPanel.get("Details").clear();
 																				RootPanel.get("Details")
 																						.add(createInfoNp);

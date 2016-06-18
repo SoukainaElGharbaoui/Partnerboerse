@@ -861,48 +861,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return result;
 	}
 
-	public List<String> getAllInfosNeuSp(int suchprofilId)
+
+	public List<Info> createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException {
 
-		List<String> list1 = new ArrayList<String>();
-		List<Info> result = new ArrayList<Info>();
-
-		result = this.infoMapper.findAllInfosNeu(suchprofilId);
-
-		for (Info i : result) {
-
-			int eigenschaftId = i.getEigenschaftId();
-
-			Eigenschaft e = new Eigenschaft();
-			e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
-
-			list1.add(String.valueOf(i.getProfilId()));
-			list1.add(String.valueOf(eigenschaftId));
-			list1.add(e.getErlaeuterung());
-			list1.add(String.valueOf(i.getInfotext()));
-			list1.add(e.getTyp());
-		}
-		return list1;
-	}
-
-	public int createInfo(int profilId, List<Info> infos)
-			throws IllegalArgumentException {
-
-		int ergebnis;
-
-		this.infoMapper.insertInfoNeu(profilId, infos);
-
-		Nutzerprofil np = this.nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-
-		if (np == null) {
-			ergebnis = 1;
-		}
-
-		else {
-			ergebnis = 0;
-		}
-		return ergebnis;
+		return this.infoMapper.insertInfoNeu(profilId, infos);
 	}
 
 	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
@@ -924,22 +887,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return ergebnis;
 	}
 
-	public void deleteAllInfosNeuSp(int suchprofilId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteAllInfosNeu(suchprofilId);
-	}
-
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 
-	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
-	}
-
-	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
+		public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException {
 		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
 		eigB = this.infoMapper.findEigBByIdNeu(eigenschaftId);
