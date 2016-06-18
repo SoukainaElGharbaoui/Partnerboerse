@@ -49,11 +49,6 @@ public class Nutzerprofil extends Profil {
 	 * Login-Status, auf false gesetzt. 
 	 */
 	private boolean loggedIn = false;
-	
-	/**
-	 * ???
-	 */
-	private boolean status = false;
 
 	/**
 	 * Vorname auslesen.
@@ -190,21 +185,6 @@ public class Nutzerprofil extends Profil {
 	 */
 	public boolean getLoggedIn() {
 		return loggedIn;
-	}
-
-	/**
-	 * ???
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	/**
-	 * ???
-	 * @return status
-	 */
-	public boolean getStatus() {
-		return status;
 	}
 
 }

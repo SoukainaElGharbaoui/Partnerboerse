@@ -24,7 +24,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 public class CreateUnusedInfos extends VerticalPanel {
 	
 	/**
-	 * VerticalPanel hinzufÃ¼gen. 
+	 * VerticalPanel hinzufügen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
@@ -43,7 +43,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	
 	
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Konstruktor hinzufügen.
 	 */
 	public CreateUnusedInfos(final int profilId) {	
 
@@ -65,7 +65,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 		showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
 
 		/**
-		 * Ãœberschrift-Label hinzufÃ¼gen. 
+		 * Überschrift-Label hinzufügen. 
 		 */
 		
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
@@ -226,7 +226,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 								
-								// Fall, profilId gehÃ¶rt zu Nutzerprofil
+								// Fall, profilId gehört zu Nutzerprofil
 								if (result == 0) {
 									
 									ShowEigenesNp showNp = new ShowEigenesNp();
@@ -235,10 +235,10 @@ public class CreateUnusedInfos extends VerticalPanel {
 									RootPanel.get("Details").add(showNp);
 								}
 								
-								// Fall, profilId gehÃ¶rt zu Suchprofil
+								// Fall, profilId gehört zu Suchprofil
 								else if (result == 1) {
-									
-									ShowSuchprofil showSp = new ShowSuchprofil();
+									String suchprofilName = null;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);

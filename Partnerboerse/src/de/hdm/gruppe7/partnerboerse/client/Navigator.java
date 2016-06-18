@@ -132,7 +132,8 @@ public class Navigator extends VerticalPanel {
 		suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+				String suchprofilName = null;
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
 			}
