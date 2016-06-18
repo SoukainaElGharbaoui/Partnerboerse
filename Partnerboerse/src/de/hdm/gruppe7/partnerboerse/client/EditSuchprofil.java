@@ -52,7 +52,7 @@ public class EditSuchprofil extends VerticalPanel {
 	/**
 	 * Button zum Speichern der Aenderungen hinzufuegen.
 	 */
-	private Button saveSuchprofilButton = new Button("Suchprofil bearbeiten");
+	private Button saveSuchprofilButton = new Button("Suchprofil speichern");
 
 	/**
 	 * Labels zur Benutzerinformation hinzufuegen.
@@ -257,7 +257,7 @@ public class EditSuchprofil extends VerticalPanel {
 													// angegeben
 													// wurde...
 													if (koerpergroesseTextBox.getText().length() == 0) {
-														warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+														warnungLabel.setText("Bitte geben Sie eine Körpergröße an.");
 														editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 													} else {
 														// Suchprofil

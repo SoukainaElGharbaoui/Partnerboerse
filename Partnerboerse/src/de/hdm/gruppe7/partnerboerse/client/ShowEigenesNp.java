@@ -1,7 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -36,8 +40,8 @@ public class ShowEigenesNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Ihr Profil:");
 	private FlexTable showEigenesNpFlexTable = new FlexTable();
 	private Label infoLabel = new Label();
-	private Button loeschenButton = new Button("Löschen");
-	private Button bearbeitenButton = new Button("Bearbeiten");
+	private Button loeschenButton = new Button("Profil löschen");
+	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	private DialogBox loeschenDialogBox = new DialogBox();
 	private Button jaButton = new Button("Ja");
 	private Button neinButton = new Button("Nein");
@@ -111,7 +115,9 @@ public class ShowEigenesNp extends VerticalPanel {
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
+						Date geburtsdatum = result.getGeburtsdatumDate();
+						String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+						showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
@@ -154,6 +160,10 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+//				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
+//					infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
+//				}
 
 				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich
 				// loeschen moechte, ausbauen.
@@ -213,8 +223,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 		verPanel1.add(ueberschriftLabel);
 		verPanel1.add(showEigenesNpFlexTable);
-		buttonPanel.add(loeschenButton);
 		buttonPanel.add(bearbeitenButton);
+		buttonPanel.add(loeschenButton);
 		verPanel1.add(buttonPanel);
 		verPanel1.add(infoLabel);
 		verPanel2.add(showInfoNp);

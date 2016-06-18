@@ -33,8 +33,8 @@ public class EditInfoNp extends VerticalPanel {
 	private Button loeschenButton;
 
 	private FlexTable editInfoFlexTable = new FlexTable();
-	private Label ueberschriftLabel = new Label("Info bearbeiten:");
-	final Button updateInfosButton = new Button("&Auml;nderungen speichern");
+	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
+	final Button updateInfosButton = new Button("Infos speichern");
 	private Label informationLabel = new Label();
 
 	private int row;

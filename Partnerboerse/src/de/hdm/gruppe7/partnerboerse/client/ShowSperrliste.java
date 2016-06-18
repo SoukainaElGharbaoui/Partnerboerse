@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -119,7 +121,11 @@ public class ShowSperrliste extends VerticalPanel {
 							sperrlisteFlexTable.setText(row, 0, fremdprofilId);
 							sperrlisteFlexTable.setText(row, 1, n.getVorname());
 							sperrlisteFlexTable.setText(row, 2, n.getNachname());
-							sperrlisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+							
+							Date geburtsdatum = n.getGeburtsdatumDate();
+							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+							
+							sperrlisteFlexTable.setText(row, 3, geburtsdatumString);
 							sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Button zum Loeschen einer Sperrung in die jeweilige Zeile der Tabelle einfuegen. 

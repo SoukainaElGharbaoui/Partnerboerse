@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -149,8 +151,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 											String.valueOf(np.getAehnlichkeit()) + "%");
 									partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
 									partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
-									partnervorschlaegeSpFlexTable.setText(row, 4,
-											String.valueOf(np.getGeburtsdatumDate()));
+									
+									Date geburtsdatum = np.getGeburtsdatumDate();
+									String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+									
+									partnervorschlaegeSpFlexTable.setText(row, 4, geburtsdatumString);
 									partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
 
 									// Anzeigen-Button f�r das Fremdprofil

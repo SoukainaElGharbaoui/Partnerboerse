@@ -40,10 +40,10 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
 	private FlexTable showSuchprofilFlexTable = new FlexTable();
-	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
-	private Button anzeigenButton = new Button("Anzeigen");
-	private Button loeschenButton = new Button("Löschen");
-	private Button bearbeitenButton = new Button("Bearbeiten");
+	private Button createSuchprofilButton = new Button("Suchprofil anlegen");
+	private Button anzeigenButton = new Button("Suchprofil anzeigen");
+	private Button loeschenButton = new Button("Suchprofil löschen");
+	private Button bearbeitenButton = new Button("Suchprofil bearbeiten"); 
 
 	/**
 	 * Konstruktor hinzufuegen.
