@@ -22,7 +22,7 @@ h1 {
 h2{
 	align: middle;
 	margin-left: 390px;
-	margin-bottom: 60px;
+	margin-bottom: 90px;
 }
  
  /* div#TopLevelFrame{
@@ -170,8 +170,10 @@ div#Trailer {
 } */
 .menubar {
 	background: #cee6fd;
-	border: 1px ridge #b0a5f5;
+	border: 2px groove #b0a5f5;
+	border-radius: 3px;
 	font-family: Arial Unicode MS, Arial, sans-serif;
+	font-style: cursive;
 	font-weight: bold;
 	width: 900px;
 	height: 30px;

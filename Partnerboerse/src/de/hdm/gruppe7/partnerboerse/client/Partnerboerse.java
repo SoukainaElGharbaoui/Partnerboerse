@@ -17,9 +17,9 @@ public class Partnerboerse implements EntryPoint {
 	
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
-	public HorizontalPanel loginPanel = new HorizontalPanel();
-	public Anchor signInLink = new Anchor("Jetzt einloggen");
-	public Anchor signOutLink = new Anchor();
+	private HorizontalPanel loginPanel = new HorizontalPanel();
+	private Anchor signInLink = new Anchor("Jetzt einloggen");
+	private Anchor signOutLink = new Anchor();
 	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 	
 	/**

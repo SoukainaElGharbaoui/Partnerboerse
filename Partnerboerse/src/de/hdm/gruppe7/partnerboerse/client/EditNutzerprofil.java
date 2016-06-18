@@ -85,7 +85,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setCellPadding(6);
 		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		editNutzerprofilFlexTable.addStyleName("FlexTable");
-		editNutzerprofilButton.addStyleName("navigatorbutton");
+		
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.
