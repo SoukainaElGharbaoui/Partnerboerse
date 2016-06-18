@@ -217,7 +217,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 */
 		result.append("<H1>" + r.getTitle() + "</H1>");
 		result.append("<table><tr>");
-
+		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 		if (r.getHeaderData() != null) {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td>");
 		}
@@ -286,6 +286,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 */
 		result.append("<H1>" + r.getTitle() + "</H1>");
 		result.append("<table><tr>");
+		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 
 		if (r.getHeaderData() != null) {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td>");
