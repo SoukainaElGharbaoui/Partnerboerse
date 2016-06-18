@@ -95,7 +95,7 @@ public class ShowFremdprofil extends VerticalPanel {
 						 * �berschrift-Label hinzuf�gen.
 						 */
 						ueberschriftLabel
-								.setText("Fremdprofil von " + result.getVorname() + " " + result.getNachname());
+								.setText("Profil von " + result.getVorname() + " " + result.getNachname() +":");
 
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
