@@ -111,6 +111,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(1, 2, suchprofilNameTextBox);
 		editSuchprofilFlexTable.setWidget(1, 3, reqLabel1);
 
+		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(2, 2, geschlechtListBox);
@@ -124,6 +125,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
 		editSuchprofilFlexTable.setWidget(5, 3, reqLabel4);
 
+		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -132,17 +134,19 @@ public class EditSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Glatze");
 		editSuchprofilFlexTable.setWidget(6, 2, haarfarbeListBox);
 
+		raucherListBox.addItem("Keine Auswahl");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editSuchprofilFlexTable.setWidget(7, 2, raucherListBox);
 
+		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editSuchprofilFlexTable.setWidget(8, 2, religionListBox);
-
+		
 		/**
 		 * Daten des Suchprofils in die Tabelle einfuegen.
 		 */

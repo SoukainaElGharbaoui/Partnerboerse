@@ -45,6 +45,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws Exception
 	 */
 	public Nutzerprofil login(String requestUri) throws Exception;
+	
+	/**
+	 * Pruefen, ob der Nutzer in der Datenbank noch nicht existiert.
+	 * 
+	 * @param userEmail
+	 * @return Boolscher WErt, ob Nutzer bereits in der Datenbank existiert.
+	 * @throws Exception
+	 */
+	public boolean pruefeObNutzerNeu(String userEmail) throws Exception;
+
 
 	/*
 	 * *************************************************************************
@@ -370,22 +380,12 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	/**
-	 * 
-	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils 
-	 * und den Profildaten und Infos anderer Nutzerprofilen berechnen.
+	 * Aehnlichkeit zwischen einem den Profildaten und Infos eines Nutzerprofil und den Profildaten 
+	 * und Infos anderer Nutzerprofile berechnen.
 	 * @param profilId
 	 * @throws IllegalArgumentException
 	 */
-	public void berechneAehnlichkeitNpFor(int profilId)
-			throws IllegalArgumentException;
-
-	/**
-	 * Aehnlichkeit entfernen.
-	 * @param profilId
-	 * @throws IllegalArgumentException
-	 */
-	public void aehnlichkeitEntfernen(int profilId)
-			throws IllegalArgumentException;
+	public void berechneAehnlichkeitNpFor(int profilId) throws IllegalArgumentException;
 
 	/**
 	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen.
@@ -395,9 +395,8 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Liste von Nutzerprofil-Objekten
 	 * @throws IllegalArgumentException
 	 */
-	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
-			throws IllegalArgumentException;
-
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException;
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: PartnervorschlaegeNp
@@ -421,13 +420,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void berechneAehnlichkeitSpFor(int profilId)
 			throws IllegalArgumentException;
 
-	/**
-	 * Aehnlichkeit entfernen.
-	 * @param profilId
-	 * @throws IllegalArgumentException
-	 */
-	public void aehnlichkeitEntfernenSp(int profilId)
-			throws IllegalArgumentException;
+
 
 	/**
 	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer auslesen.
@@ -495,5 +488,4 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
-
 }

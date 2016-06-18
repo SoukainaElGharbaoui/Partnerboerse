@@ -31,7 +31,7 @@ public class ShowSperrliste extends VerticalPanel {
 	 * Vertikales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+		
 	/**
 	 * Neues Label zur Anzeige der Ueberschrift erzeugen und Beschriftung festlegen.
 	 */
@@ -58,6 +58,37 @@ public class ShowSperrliste extends VerticalPanel {
 	private Label infoLabel = new Label();
 
 	/**
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < sperrlisteFlexTable.getRowCount(); k++) {
+			
+			if (sperrlisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
+	
+	
+	/**
 	 * Konstruktor hinzufuegen.
 	 */
 	public ShowSperrliste() {
@@ -67,6 +98,9 @@ public class ShowSperrliste extends VerticalPanel {
 		 * CSS auf das Label zur Anzeige der Ueberschrift anwenden. 
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+
+		/**
+		 * Header-Zeile der Tabelle festlegen.
 
 		/**
 		 * Kopfzeile der Tabelle festlegen.
@@ -207,9 +241,17 @@ public class ShowSperrliste extends VerticalPanel {
 
 						}
 
-					}
+						boolean befuellt = pruefeLeereTable();
+						
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setText("Sie haben derzeit keine Profile gesperrt.");
 
-				});
+							sperrlisteFlexTable.setVisible(false);
+							ueberschriftLabel.setVisible(true);
+						}
+					}
+			});
 
 		/**
 		 * Widgets zum vertikalen Panel hinzufuegen. 

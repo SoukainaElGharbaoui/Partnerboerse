@@ -1,7 +1,5 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
-import java.util.List;
-
 /**
  * Realisierung einer Info.
  */
@@ -25,11 +23,6 @@ public class Info extends BusinessObject {
 	 * Infotext. 
 	 */
 	private String infotext;
-	
-	/**
-	 * Liste von Info-Objekten. 
-	 */
-	private List<Info> infos;
 	
 	/**
 	 * Profil-ID auslesen. 
@@ -78,21 +71,4 @@ public class Info extends BusinessObject {
 	public void setInfotext(String infotext) {
 		this.infotext = infotext;
 	}
-
-	/**
-	 * Liste der Info-Objekte auslesen. 
-	 * @return infos
-	 */
-	public List<Info> getInfos() {
-		return infos;
-	}
-
-	/**
-	 * Liste der Info-Objekte setzen. 
-	 * @param infos
-	 */
-	public void setInfos(List<Info> infos) {
-		this.infos = infos;
-	}
-
 }

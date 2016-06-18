@@ -12,6 +12,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
+import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -99,6 +100,20 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		n.setLoginUrl(userService.createLoginURL(requestUri));
 		return n;
 	}
+	
+	
+	public boolean pruefeObNutzerNeu(String userEmail) {
+		
+		Nutzerprofil np = this.nutzerprofilMapper.findByNutzerprofilMitEmail(userEmail);
+		
+		if (np == null) {
+			return true;
+		}
+			
+		else {
+			return false;
+		}
+	}
 
 	/*
 	 * *************************************************************************
@@ -134,8 +149,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		n.setEmailAddress(emailAddress);
 
 		n.setProfilId(1);
-
-		return this.nutzerprofilMapper.insertNutzerprofil(n);
+		
+		n = this.nutzerprofilMapper.insertNutzerprofil(n);
+		
+		return n;
 	}
 
 	/**
@@ -304,8 +321,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(
 				profilId, suchprofilname);
-		String suchprofilnameAktuell = this.suchprofilMapper.getSuchprofilName(
-				suchprofilId);
+		String suchprofilnameAktuell = this.suchprofilMapper
+				.getSuchprofilName(suchprofilId);
 
 		int ergebnis = 0;
 
@@ -480,12 +497,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils 
-	 * und den Profildaten und Infos anderer Nutzerprofilen berechnen.
+	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils und
+	 * den Profildaten und Infos anderer Nutzerprofilen berechnen.
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
-		this.aehnlichkeitEntfernen(profilId);
+		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
 				.findUnangeseheneNutzerprofile(profilId);
@@ -544,18 +561,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	}
 
-	/**
-	 * Aehnlichkeit entfernen.
-	 */
-	public void aehnlichkeitEntfernen(int profilId)
-			throws IllegalArgumentException {
-		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
-	}
 
 	/**
-	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen.
-	 * Es werden nur diejenigen Nutzerprofile ausgelesen, von denen 
-	 * der Nutzer nicht gesperrt wurde. 
+	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen. Es
+	 * werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer
+	 * nicht gesperrt wurde.
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
 			throws IllegalArgumentException {
@@ -563,19 +573,23 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				.findGeordnetePartnervorschlaegeNp(profilId);
 
 	}
-	
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: PartnervorschlaegeNp
 	 * *************************************************************************
 	 * **
 	 */
-	
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: PartnervorschlaegeSp
 	 * *************************************************************************
 	 * **
+	 */
+	/**
+	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten
+	 * und Infos anderer Nutzerprofile berechnen.
 	 */
 	/**
 	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
@@ -586,6 +600,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * und Infos anderer Nutzerprofile berechnen. 
 	 */
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
+		
+		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
+		
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(profilId);
 		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
@@ -714,29 +731,25 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			}
 		}
 }
-	
-	/**
-	 * Aehnlichkeit entfernen. 
-	 */
-	public void aehnlichkeitEntfernenSp(int profilId)
-			throws IllegalArgumentException {
-		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
-	}
+
 
 	/**
-	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer auslesen.
-	 * Es werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer 
-	 * nicht gesperrt wurde. 
+	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer
+	 * auslesen. Es werden nur diejenigen Nutzerprofile ausgelesen, von denen
+	 * der Nutzer nicht gesperrt wurde.
 	 */
 
-	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilname)
-		throws IllegalArgumentException {
-	
-		Suchprofil sp =	this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilname);
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId,
+			String suchprofilname) throws IllegalArgumentException {
+
+		Suchprofil sp = this.suchprofilMapper.findSuchprofilByName(profilId,
+				suchprofilname);
 
 		int suchprofilId = sp.getProfilId();
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilId);
-}
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(
+				profilId, suchprofilId);
+	}
+
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: PartnervorschlaegeSp
@@ -1024,5 +1037,4 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
-
 }

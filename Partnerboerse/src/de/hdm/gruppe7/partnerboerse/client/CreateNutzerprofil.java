@@ -95,7 +95,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
-		createNutzerprofilFlexTable.setText(8, 0, "EMail");
+		createNutzerprofilFlexTable.setText(8, 0, "E-Mail");
 
 		/**
 		 * Zweite und dritte Spalte der Tabelle festlegen.
@@ -201,9 +201,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 										public void onSuccess(Nutzerprofil result) {
 											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 											
-											int profilId = result.getProfilId();
+											nutzerprofil = result;
 											
-											CreateInfoNp createInfoNp = new CreateInfoNp(profilId);
+											ClientsideSettings.setAktuellerUser(nutzerprofil);
+
+											CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(createInfoNp);
 										}
@@ -211,6 +213,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 						}
 			}
 		});
+		
 
 		/**
 		 * Widgets zum Panel hinzufuegen.

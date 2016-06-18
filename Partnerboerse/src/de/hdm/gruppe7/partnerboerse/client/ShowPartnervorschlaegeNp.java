@@ -26,10 +26,45 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 * VerticalPanel hinzufügen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private Label ueberschriftLabel = new Label("Diese Profile könnten Ihnen gefallen:");
+	private Label infoLabel = new Label();
+	private Label informationLabel = new Label();
+	private Label ergebnisLabel = new Label();
+	private Button anzeigenButton;
+
 	/**
-	 * Variablen
+	 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen.
 	 */
-	int ergebnis = 0;
+	private FlexTable partnervorschlaegeNpFlexTable = new FlexTable();
+	
+	/**
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
+			
+			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
 
 	/**
 	 * Konstruktor hinzufügen.
@@ -41,17 +76,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * Überschrift-Label hinzufügen.
 		 */
-		final Label ueberschriftLabel = new Label("Diese Profile koennten Ihnen gefallen:");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-		verPanel.add(ueberschriftLabel);
-
-		final Label infoLabel = new Label();
-		final Label ergebnisLabel = new Label();
-
-		/**
-		 * Tabelle zur Anzeige der Partnervorschlaege hinzufuegen.
-		 */
-		final FlexTable partnervorschlaegeNpFlexTable = new FlexTable();
+		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.
@@ -72,7 +98,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
 
 		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId(),
-
 				new AsyncCallback<List<Nutzerprofil>>() {
 
 					@Override
@@ -100,8 +125,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							partnervorschlaegeNpFlexTable.setText(row, 4, geburtsdatumString);
 							partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht());
 
-							// Anzeigen-Button hinzufügen und ausbauen.
-							final Button anzeigenButton = new Button("Anzeigen");
+							// Anzeigen-Button formatieren und CSS einbinden
+							anzeigenButton = new Button("Anzeigen");
 							partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
 
 							// ClickHandler für den Anzeigen-Button hinzufügen.
@@ -128,16 +153,25 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 											});
 								}
-
 							});
-
+						}
+						
+						boolean befuellt = pruefeLeereTable();
+						
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setVisible(false);
+							partnervorschlaegeNpFlexTable.setVisible(false);
+							
+							informationLabel.setText("Sie haben zurzeit keine unangesehenen Partnervorschläge.");
 						}
 					}
-
 				});
 
+		verPanel.add(ueberschriftLabel);
 		verPanel.add(ergebnisLabel);
 		verPanel.add(infoLabel);
+		verPanel.add(informationLabel);
 		verPanel.add(partnervorschlaegeNpFlexTable);
 
 	}

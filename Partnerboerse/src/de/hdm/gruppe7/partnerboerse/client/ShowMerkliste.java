@@ -47,6 +47,36 @@ public class ShowMerkliste extends VerticalPanel {
 	 * Neues Label zur Ausgabe einer Information erzeugen. 
 	 */
 	private Label infoLabel = new Label();
+	
+	/**
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
+			
+			if (merklisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+
 
 	/**
 	 * Konstruktor hinzufuegen. 
@@ -247,7 +277,15 @@ public class ShowMerkliste extends VerticalPanel {
 							});
 
 						}
-
+						
+						boolean befuellt = pruefeLeereTable();
+											
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
+							merklisteFlexTable.setVisible(false);
+							ueberschriftLabel.setVisible(true);
+						}
 					}
 
 				});

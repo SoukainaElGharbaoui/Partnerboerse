@@ -51,7 +51,6 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
-
 					}
 
 					@Override
@@ -67,9 +66,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 								auswahlListBox.addItem(s.getSuchprofilName());
 							}
 						}
-
 					}
-
 				});
 
 		/**
@@ -102,13 +99,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport()); 
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
-
 							}
-
-						});
-
+				});
 			}
-
 		});
 
 		verPanel.add(auswahlLabel);

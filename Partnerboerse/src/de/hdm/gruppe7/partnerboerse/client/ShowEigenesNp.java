@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -45,7 +46,8 @@ public class ShowEigenesNp extends VerticalPanel {
 	private DialogBox loeschenDialogBox = new DialogBox();
 	private Button jaButton = new Button("Ja");
 	private Button neinButton = new Button("Nein");
-	private Label loeschenLabel = new Label("Möchten Sie Ihr Profil wirklich löschen?");
+	private Label loeschenLabel = new Label(
+			"Möchten Sie Ihr Profil wirklich löschen?");
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -80,67 +82,82 @@ public class ShowEigenesNp extends VerticalPanel {
 		 * Tabelle formatieren.
 		 */
 		showEigenesNpFlexTable.setCellPadding(6);
-		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
+		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0,
+				"TableHeader");
 		showEigenesNpFlexTable.addStyleName("FlexTable");
 
 		/**
 		 * Nutzerprofil anhand der Profil-ID auslesen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
-				new AsyncCallback<Nutzerprofil>() {
+		ClientsideSettings.getPartnerboerseAdministration()
+				.getNutzerprofilById(nutzerprofil.getProfilId(),
+						new AsyncCallback<Nutzerprofil>() {
 
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf.");
+							}
 
-					public void onSuccess(Nutzerprofil result) {
-						// Nutzerprofil-Id aus der Datenabank holen
-						// und in Tabelle eintragen
-						String nutzerprofilId = String.valueOf(result.getProfilId());
-						
-						nutzerprofil.setProfilId(Integer.valueOf(nutzerprofilId));
-						showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
+							public void onSuccess(Nutzerprofil result) {
+								
+								// Nutzerprofil-Id aus der Datenabank holen
+								// und in Tabelle eintragen
+								String nutzerprofilId = String.valueOf(result
+										.getProfilId());
 
-						// Vorname aus Datenbank aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(1, 1, result.getVorname());
+								nutzerprofil.setProfilId(Integer
+										.valueOf(nutzerprofilId));
+								showEigenesNpFlexTable.setText(0, 1,
+										nutzerprofilId);
 
-						// Nachname aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(2, 1, result.getNachname());
+								// Vorname aus Datenbank aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(1, 1,
+										result.getVorname());
 
-						// Geschlecht aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(3, 1, result.getGeschlecht());
+								// Nachname aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(2, 1,
+										result.getNachname());
 
-						// Geburtsdatum aus der Datenbank holen
-						// und in Tabelle eintragen
-						Date geburtsdatum = result.getGeburtsdatumDate();
-						String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
-						showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
+								// Geschlecht aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(3, 1,
+										result.getGeschlecht());
 
-						// Koerpergroesse aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(5, 1, (Integer.toString(result.getKoerpergroesseInt())));
+								// Geburtsdatum aus der Datenbank holen
+								// und in Tabelle eintragen
+								Date geburtsdatum = result.getGeburtsdatumDate();
+								String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+								showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
 
-						// Haarfarbe aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(6, 1, result.getHaarfarbe());
 
-						// Raucher aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(7, 1, result.getRaucher());
+								// Koerpergroesse aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(5, 1,
+										(Integer.toString(result
+												.getKoerpergroesseInt())));
 
-						// Religion aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(8, 1, result.getReligion());
+								// Haarfarbe aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(6, 1,
+										result.getHaarfarbe());
 
-						// EMail aus der Datenbank holen
-						// und in Tabelle eintragen
-						showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
-					}
+								// Raucher aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(7, 1,
+										result.getRaucher());
 
-				});
+								// Religion aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(8, 1,
+										result.getReligion());
+
+								// EMail aus der Datenbank holen
+								// und in Tabelle eintragen
+								showEigenesNpFlexTable.setText(9, 1,
+										result.getEmailAddress());
+							}
+						});
 
 		/**
 		 * ClickHandler fuer den Button zum Bearbeiten hinzufuegen.
@@ -151,7 +168,6 @@ public class ShowEigenesNp extends VerticalPanel {
 				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
-
 			}
 		});
 
@@ -161,58 +177,45 @@ public class ShowEigenesNp extends VerticalPanel {
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-//				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
-//					infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
-//				}
+				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
+					
+					//Nutzerprofil loeschen.
+					ClientsideSettings.getPartnerboerseAdministration()
+							.deleteNutzerprofil(nutzerprofil.getProfilId(),
+									new AsyncCallback<Void>() {
 
-				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich
-				// loeschen moechte, ausbauen.
-				loeschenDialogBox.setText("Information");
-				loeschenDialogBox.setAnimationEnabled(true);
-				loeschenVerPanel.add(loeschenLabel);
-				loeschenVerPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-				loeschenVerPanel.add(jaButton);
-				loeschenVerPanel.add(neinButton);
-				loeschenDialogBox.setWidget(loeschenVerPanel);
-				loeschenDialogBox.center();
+										public void onFailure(
+												Throwable caught) {
+											infoLabel
+													.setText("Es trat ein Fehler auf.");
+										}
 
-				/**
-				 * ClickHandler fuer den Ja-Button hinzufuegen.
-				 */
-				jaButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						// Nutzerprofil loeschen.
-						ClientsideSettings.getPartnerboerseAdministration()
-								.deleteNutzerprofil(nutzerprofil.getProfilId(), new AsyncCallback<Void>() {
-
-									public void onFailure(Throwable caught) {
-										infoLabel.setText("Es trat ein Fehler auf.");
-									}
-
-									public void onSuccess(Void result) {
-										/**
-										 * Noch ausbauen: Weiterleitung auf
-										 * Logout-Seite.
-										 */
-										infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich gelöscht.");
-									}
-
-								});
-					}
-
-				});
-
-				/**
-				 * ClickHandler fuer den Nein-Button hinzufuegen.
-				 */
-				neinButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						loeschenDialogBox.hide();
-					}
-				});
+										public void onSuccess(Void result) {
+				
+											HorizontalPanel loginPanel = new HorizontalPanel();
+											
+											Anchor signOutLink = new Anchor();
+											signOutLink.setHref(nutzerprofil.getLogoutUrl());
+											
+											signOutLink.setText("Bestätige das Löschen mit einem Klick.");
+											
+											loginPanel.add(signOutLink);
+							
+											
+											Anchor signIn = new Anchor();
+											signIn.setText("Jetzt einloggen");
+											 
+											RootPanel.get("Navigator").clear();
+											RootPanel.get("Details").clear();
+											 
+											RootPanel.get("Navigator").add(loginPanel);
+										}
+							});
+				}
 			}
 		});
-
+		
+		
 		/**
 		 * Infos anzeigen.
 		 */
