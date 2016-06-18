@@ -53,6 +53,10 @@ public class ShowMerkliste extends VerticalPanel {
 	 */
 	private int zaehler;
 	
+	private Button loeschenButton;
+	private Button anzeigenButton;
+
+	
 	/**
 	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
 	 */
@@ -152,19 +156,20 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Neuen Button zum Loeschen eines Vermerk erzeugen.
-							final Button loeschenButton = new Button("Löschen");
+							loeschenButton = new Button("Löschen");
 							
 							// Button zum Loeschen eines Vermerks in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
 							
 							// Neuen Button zum Anzeigen eines Fremdprofils erzeugen.
-							final Button anzeigenButton = new Button("Anzeigen");
+							anzeigenButton = new Button("Anzeigen");
 
 							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
 
 							// Zeilenindex der Tabelle in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setText(row, 7, String.valueOf(row));
+							
 
 							/**
 							 * ClickHandler fuer den Button zum Loeschen eines Vermerks erzeugen. 
@@ -179,7 +184,7 @@ public class ShowMerkliste extends VerticalPanel {
 									 * Zeile 2 verwendet werden (Zeile 1 = Kopfzeile).
 									 */
 									
-									for (int i = 2; i <= merklisteFlexTable
+									for (int i = 2; i < merklisteFlexTable
 											.getRowCount(); i++) {
 
 										// Fremdprofil-ID der Tabelle ermitteln.
@@ -213,17 +218,26 @@ public class ShowMerkliste extends VerticalPanel {
 																	infoLabel
 																			.setText("Das Profil wurde erfolgreich von Ihrer Merkliste entfernt.");
 																}
-
-															});
+											});
 
 											// Jeweilige Zeile der Tabelle löschen.
-											merklisteFlexTable.removeRow(i);
-											break;
+											if (merklisteFlexTable.getRowCount() == 3) {
+												
+												merklisteFlexTable.removeRow(i);
+												
+												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
+												infoLabel.setVisible(false);
+												merklisteFlexTable.setVisible(false);
+												ueberschriftLabel.setVisible(true);
+											}
+											
+											else {
+												merklisteFlexTable.removeRow(i);
+												break;
+											}
 										}
 									}
-
 								}
-
 							});
 
 							/**
@@ -243,7 +257,6 @@ public class ShowMerkliste extends VerticalPanel {
 																Throwable caught) {
 															infoLabel
 																	.setText("Es trat ein Fehler auf.");
-
 														}
 
 														@Override
@@ -271,23 +284,20 @@ public class ShowMerkliste extends VerticalPanel {
 																Window.alert("Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
 															}
 														}
-													});
+											});
 								}
-
 							});
-
 						}
 						
 						boolean befuellt = pruefeLeereTable();
 											
 						if (befuellt == true) {
 							
-							ueberschriftLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
+							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
 							merklisteFlexTable.setVisible(false);
 							ueberschriftLabel.setVisible(true);
 						}
 					}
-
 				});
 
 		/**

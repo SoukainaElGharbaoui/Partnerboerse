@@ -470,7 +470,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
 
-	public int saveInfo(int profilId, List<Info> listI)
+	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException;
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)

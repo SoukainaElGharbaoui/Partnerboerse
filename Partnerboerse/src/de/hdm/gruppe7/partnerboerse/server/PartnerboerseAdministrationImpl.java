@@ -924,24 +924,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return optionen;
 	}
 
-	public int saveInfo(int profilId, List<Info> listI)
+	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException {
 
-		int ergebnis;
-
 		this.infoMapper.updateInfos(profilId, listI);
-
-		Nutzerprofil np = this.nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-
-		if (np == null) {
-			ergebnis = 1;
-		}
-
-		else {
-			ergebnis = 0;
-		}
-		return ergebnis;
 	}
 
 	// public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String

@@ -45,12 +45,12 @@ public class ShowSperrliste extends VerticalPanel {
 	/**
 	 * Neuen Button zum Loeschen einer Sperrung erzeugen und Beschriftung festlegen. 
 	 */
-	private Button loeschenButton = new Button("Löschen");
+	private Button loeschenButton;
 	
 	/**
 	 * Neuen Button zur Anzeige eines gesperrten Nutzerprofils erzeugen und Beschriftung festlegen. 
 	 */
-	private Button anzeigenButton = new Button("Anzeigen");
+	private Button anzeigenButton;
 	
 	/**
 	 * Neues Label zur Ausgabe einer Information erzeugen. 
@@ -163,9 +163,11 @@ public class ShowSperrliste extends VerticalPanel {
 							sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Button zum Loeschen einer Sperrung in die jeweilige Zeile der Tabelle einfuegen. 
+							loeschenButton = new Button("Löschen");
 							sperrlisteFlexTable.setWidget(row, 5, loeschenButton);
 
 							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
+							anzeigenButton = new Button("Anzeigen");
 							sperrlisteFlexTable.setWidget(row, 6, anzeigenButton);
 
 							// Zeilenindex der Tabelle in die jeweilige Zeile der Tabelle einfuegen. 
@@ -215,14 +217,25 @@ public class ShowSperrliste extends VerticalPanel {
 													});
 
 											// Jeweilige Zeile der Tabelle loeschen.
-											sperrlisteFlexTable.removeRow(i);
-											break;
+											
+											if (sperrlisteFlexTable.getRowCount() == 3) {
+												
+												sperrlisteFlexTable.removeRow(i);
+												
+												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
+												sperrlisteFlexTable.setVisible(false);
+												ueberschriftLabel.setVisible(true);
+											}
+											
+											else {
+												sperrlisteFlexTable.removeRow(i);
+												break;
+											}
 										}
 									}
-
 								}
-
 							});
+							
 
 							/**
 							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
@@ -236,16 +249,14 @@ public class ShowSperrliste extends VerticalPanel {
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
 								}
-
 							});
-
 						}
 
 						boolean befuellt = pruefeLeereTable();
 						
 						if (befuellt == true) {
 							
-							ueberschriftLabel.setText("Sie haben derzeit keine Profile gesperrt.");
+							ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
 
 							sperrlisteFlexTable.setVisible(false);
 							ueberschriftLabel.setVisible(true);

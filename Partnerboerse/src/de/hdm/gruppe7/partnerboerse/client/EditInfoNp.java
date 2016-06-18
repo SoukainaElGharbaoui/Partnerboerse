@@ -173,9 +173,9 @@ public class EditInfoNp extends VerticalPanel {
 										
 										editInfoFlexTable.removeRow(l);
 										
-										boolean befuellt = pruefeLeereTable();
+										boolean leer = pruefeLeereTable();
 										
-										if (befuellt == true) {
+										if (leer == true) {
 											
 											ueberschriftLabel.setText("Sie haben derzeit keine Infos angelegt.");
 											
@@ -184,7 +184,6 @@ public class EditInfoNp extends VerticalPanel {
 											informationLabel.setVisible(false);
 											
 											ueberschriftLabel.setVisible(true);
-//											createInfosButton.setVisible(true);
 											verPanel.add(createInfosButton);
 										}
 										
@@ -343,7 +342,7 @@ public class EditInfoNp extends VerticalPanel {
 				
 				
 				ClientsideSettings.getPartnerboerseAdministration().saveInfo(profilId,
-						infos, new AsyncCallback<Integer>() {
+						infos, new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -352,27 +351,27 @@ public class EditInfoNp extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(Integer result) {
+							public void onSuccess(Void result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 								
-								if (result == 0) {
+								
+								if(profiltyp.equals("Np")) {
 									
 									ShowEigenesNp showNp = new ShowEigenesNp();
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
 								
-								else if (result == 1) {
-									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
+								else if(profiltyp.equals("Sp")) {
+									ShowSuchprofil showSp = new ShowSuchprofil("suchprofilnamefehlt");
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}
 							}
-						});
-					}
 				});
+			}
+		});
 		
 
 		createInfosButton.addClickHandler(new ClickHandler() {

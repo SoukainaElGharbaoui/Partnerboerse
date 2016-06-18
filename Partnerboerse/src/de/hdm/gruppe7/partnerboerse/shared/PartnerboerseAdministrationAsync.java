@@ -210,7 +210,7 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void deleteOneInfoNeu(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
 
-	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Integer> callback);
+	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
 	
 	void getEigAById(int eigenschaftId, AsyncCallback<Auswahleigenschaft> callback);
 
