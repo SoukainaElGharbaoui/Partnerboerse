@@ -79,7 +79,8 @@ public class Partnerboerse implements EntryPoint {
 							ClientsideSettings.setAktuellerUser(result);
 
 							/**
-							 * Wenn der user nicht eingeloggt ist
+							 * Wenn der user nicht eingeloggt ist: Der User wird
+							 * begrüßt und der link zum login wird angezeigt
 							 */
 							if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
@@ -90,7 +91,8 @@ public class Partnerboerse implements EntryPoint {
 							}
 
 							/**
-							 * Wenn der User eingeloggt ist
+							 * Wenn der User eingeloggt ist:
+							 * 
 							 */
 							else if (result.isLoggedIn()) {
 
@@ -121,9 +123,12 @@ public class Partnerboerse implements EntryPoint {
 
 														// signInLink.setHref(nutzerprofil.getLoginUrl());
 														// loginPanel.add(signInLink);
-														RootPanel.get("Navigator").add(loginPanel);
-														RootPanel.get("Details").add(begrueßen);
-														RootPanel.get("Details").add(begrueßen2);
+
+														signOutLink.setText("Bestätige das Löschen mit einem Klick.");
+														RootPanel.get("Details").add(loginPanel);
+														// RootPanel.get("Details").add(begrueßen);
+														// RootPanel.get("Details").add(begrueßen2);
+
 													}
 
 												}
