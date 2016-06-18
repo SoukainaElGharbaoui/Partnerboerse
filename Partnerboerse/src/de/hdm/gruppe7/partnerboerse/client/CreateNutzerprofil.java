@@ -111,7 +111,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
 		geburtsdatumDateBox.getDatePicker().setYearAndMonthDropdownVisible(true);
 		geburtsdatumDateBox.getDatePicker().setVisibleYearCount(20);
-		geburtsdatumDateBox.showDatePicker();
 		
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
@@ -124,7 +123,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 				}
 			}
 		});
-
+		String todayString = DateTimeFormat.getFormat("dd.MM.yyyy").format(today());
+		geburtsdatumInhalt.setText(todayString);
 		geburtsdatumDateBox.setValue(new Date());
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
 		createNutzerprofilFlexTable.setWidget(3, 3, reqLabel4);
