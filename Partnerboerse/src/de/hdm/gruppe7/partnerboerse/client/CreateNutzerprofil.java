@@ -5,29 +5,18 @@ import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.HasShowRangeHandlers;
-import com.google.gwt.event.logical.shared.ShowRangeEvent;
-import com.google.gwt.event.logical.shared.ShowRangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.CalendarModel;
-import com.google.gwt.user.datepicker.client.CalendarUtil;
-import com.google.gwt.user.datepicker.client.CalendarView;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.datepicker.client.DatePicker;
-import com.google.gwt.user.datepicker.client.DefaultCalendarView;
-import com.google.gwt.user.datepicker.client.DefaultMonthSelector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
@@ -90,7 +79,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-	
+
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
@@ -105,9 +94,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 0, "E-Mail");
 
 		/**
-		 * Zweite und dritte Spalte der Tabelle festlegen.
-		 * Hierzu werden die Widgets in die Tabelle eingefuegt und 
-		 * die Items fuer die ListBoxen festgelegt. 
+		 * Zweite und dritte Spalte der Tabelle festlegen. Hierzu werden die
+		 * Widgets in die Tabelle eingefuegt und die Items fuer die ListBoxen
+		 * festgelegt.
 		 */
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
 		createNutzerprofilFlexTable.setWidget(0, 3, reqLabel1);
@@ -122,7 +111,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
 		geburtsdatumDateBox.getDatePicker().setYearAndMonthDropdownVisible(true);
 		geburtsdatumDateBox.getDatePicker().setVisibleYearCount(20);
-
+		geburtsdatumDateBox.showDatePicker();
+		
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
@@ -166,11 +156,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 2, nutzerprofil.getEmailAddress());
 
 		/**
-		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils erzeugen. 
-		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
-		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
-		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
-		 * ueber diesen Zustand ausgegeben. 
+		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils
+		 * erzeugen. Sobald dieser Button betaetigt wird, werden die Eingaben
+		 * sowohl auf Vollstaendigkeit als auch auf Korrektheit ueberprueft.
+		 * Sind Eingaben unvollstaendig oder inkorrekt, wird eine entsprechende
+		 * Information ueber diesen Zustand ausgegeben.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 
@@ -193,7 +183,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameWert == false) {
 					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-				} else if (geburtsdatumInhalt.getText().length() == 0) {
+				} else if (geburtsdatumDateBox.getValue() == null) {
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
 					createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
@@ -206,8 +196,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else {
 
 					/**
-					 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil in die Datenbank eingefuegt.
-					 * Zudem wird der aktuelle Nutzer gesetzt. Anschließend wird die Seite zum Anlegen der Infos aufgerufen.  
+					 * Sind alle Eingaben vollstaendig und korrekt, wird das
+					 * Nutzerprofil in die Datenbank eingefuegt. Zudem wird der
+					 * aktuelle Nutzer gesetzt. Anschließend wird die Seite zum
+					 * Anlegen der Infos aufgerufen.
 					 */
 					ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
 							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
@@ -272,17 +264,19 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
-	 * @param name 
-	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt. 
+	 * 
+	 * @param name
+	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
 		return name.matches("[a-zA-Z]+");
 	}
 
 	/**
-	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
-	 * @param name 
-	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt. 
+	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden.
+	 * 
+	 * @param name
+	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt.
 	 */
 	public boolean isZahl(String name) {
 		return name.matches("[0-9]+");
