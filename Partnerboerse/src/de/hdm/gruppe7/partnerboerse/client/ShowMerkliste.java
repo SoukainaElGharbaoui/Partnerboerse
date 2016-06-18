@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.Vector;
+import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -42,19 +44,39 @@ public class ShowMerkliste extends VerticalPanel {
 	private FlexTable merklisteFlexTable = new FlexTable();
 
 	/**
-	 * Neuen Button zum Loeschen eines Vermerks erzeugen und Beschriftung festlegen. 
-	 */
-	private Button loeschenButton = new Button("Löschen");
-
-	/**
-	 * Neuen Button zur Anzeige eines gemerkten Nutzerprofils erzeugen und Beschriftung festlegen. 
-	 */
-	private Button anzeigenButton = new Button("Anzeigen");
-
-	/**
 	 * Neues Label zur Ausgabe einer Information erzeugen. 
 	 */
 	private Label infoLabel = new Label();
+	
+	/**
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
+			
+			if (merklisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+
 
 	/**
 	 * Konstruktor hinzufuegen. 
@@ -104,7 +126,7 @@ public class ShowMerkliste extends VerticalPanel {
 					public void onSuccess(Merkliste result) {
 						
 						// Vektor von gemerkten Nutzerprofilen erzeugen. 
-						Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
+						List<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
 						
 						// Anzahl der Zeilen ermitteln. 
 						int row = merklisteFlexTable.getRowCount();
@@ -122,11 +144,21 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 0, fremdprofilId);
 							merklisteFlexTable.setText(row, 1, n.getVorname());
 							merklisteFlexTable.setText(row, 2, n.getNachname());
-							merklisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+							
+							Date geburtsdatum = n.getGeburtsdatumDate();
+							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+							
+							merklisteFlexTable.setText(row, 3, geburtsdatumString); 
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
+							// Neuen Button zum Loeschen eines Vermerk erzeugen.
+							final Button loeschenButton = new Button("Löschen");
+							
 							// Button zum Loeschen eines Vermerks in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
+							
+							// Neuen Button zum Anzeigen eines Fremdprofils erzeugen.
+							final Button anzeigenButton = new Button("Anzeigen");
 
 							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
@@ -245,7 +277,15 @@ public class ShowMerkliste extends VerticalPanel {
 							});
 
 						}
-
+						
+						boolean befuellt = pruefeLeereTable();
+											
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
+							merklisteFlexTable.setVisible(false);
+							ueberschriftLabel.setVisible(true);
+						}
 					}
 
 				});

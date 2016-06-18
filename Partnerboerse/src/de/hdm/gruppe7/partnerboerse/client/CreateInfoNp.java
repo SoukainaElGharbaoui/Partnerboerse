@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -24,9 +25,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
-//	Nutzerprofil nutzerprofil = new Nutzerprofil();
-//	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	
@@ -36,13 +36,12 @@ public class CreateInfoNp extends VerticalPanel {
 	private String eigenschaftId = null;
 	private String beschreibungstext = null;
 
-	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Info anlegen:");
+	private Button createInfosButton = new Button("Infos anlegen");
+	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
 
 	public CreateInfoNp(final int profilId) {
 		
-//		this.nutzerprofil.setProfilId(profilId);
 		this.add(verPanel);
 
 		
@@ -105,10 +104,10 @@ public class CreateInfoNp extends VerticalPanel {
 										showEigenschaftFlexTable.setWidget(row,
 												3, textArea);
 
-										beschreibungstext = eigB
-												.getBeschreibungstext();
-
-										textArea.setText(beschreibungstext);
+										
+										String defaultValue = eigB.getBeschreibungstext();
+										
+										textArea.getElement().setPropertyString("placeholder", defaultValue);
 									}
 
 									listA = result.get(listEigB);
@@ -202,7 +201,6 @@ public class CreateInfoNp extends VerticalPanel {
 
 							infos.add(info);
 						}
-
 					}
 				}
 
@@ -224,13 +222,23 @@ public class CreateInfoNp extends VerticalPanel {
 								if (result == 0) {
 									
 									ShowEigenesNp showNp = new ShowEigenesNp();
+									RootPanel.get("Navigator").add(new Navigator());
+									
+									Anchor signOut = new Anchor();
+									
+									signOut.setHref(nutzerprofil.getLogoutUrl());
+									signOut.setText("Als " + nutzerprofil.getVorname() + 
+											nutzerprofil.getProfilId() + " ausloggen");
+
+									RootPanel.get("Navigator").add(signOut);
+
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
 
 								else if (result == 1) {
-									
-									ShowSuchprofil showSp = new ShowSuchprofil();
+									int suchprofilId = 0;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.Vector;
+import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -29,7 +31,7 @@ public class ShowSperrliste extends VerticalPanel {
 	 * Vertikales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+		
 	/**
 	 * Neues Label zur Anzeige der Ueberschrift erzeugen und Beschriftung festlegen.
 	 */
@@ -56,6 +58,37 @@ public class ShowSperrliste extends VerticalPanel {
 	private Label infoLabel = new Label();
 
 	/**
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < sperrlisteFlexTable.getRowCount(); k++) {
+			
+			if (sperrlisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
+	
+	
+	/**
 	 * Konstruktor hinzufuegen.
 	 */
 	public ShowSperrliste() {
@@ -65,6 +98,9 @@ public class ShowSperrliste extends VerticalPanel {
 		 * CSS auf das Label zur Anzeige der Ueberschrift anwenden. 
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+
+		/**
+		 * Header-Zeile der Tabelle festlegen.
 
 		/**
 		 * Kopfzeile der Tabelle festlegen.
@@ -103,7 +139,7 @@ public class ShowSperrliste extends VerticalPanel {
 					public void onSuccess(Sperrliste result) {
 						
 						// Vektor von gesperrten Nutzerprofilen erzeugen. 
-						Vector<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
+						List<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
 						
 						// Anzahl der Zeilen ermitteln.
 						int row = sperrlisteFlexTable.getRowCount();
@@ -119,7 +155,11 @@ public class ShowSperrliste extends VerticalPanel {
 							sperrlisteFlexTable.setText(row, 0, fremdprofilId);
 							sperrlisteFlexTable.setText(row, 1, n.getVorname());
 							sperrlisteFlexTable.setText(row, 2, n.getNachname());
-							sperrlisteFlexTable.setText(row, 3, String.valueOf(n.getGeburtsdatumDate()));
+							
+							Date geburtsdatum = n.getGeburtsdatumDate();
+							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+							
+							sperrlisteFlexTable.setText(row, 3, geburtsdatumString);
 							sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());
 
 							// Button zum Loeschen einer Sperrung in die jeweilige Zeile der Tabelle einfuegen. 
@@ -201,9 +241,17 @@ public class ShowSperrliste extends VerticalPanel {
 
 						}
 
-					}
+						boolean befuellt = pruefeLeereTable();
+						
+						if (befuellt == true) {
+							
+							ueberschriftLabel.setText("Sie haben derzeit keine Profile gesperrt.");
 
-				});
+							sperrlisteFlexTable.setVisible(false);
+							ueberschriftLabel.setVisible(true);
+						}
+					}
+			});
 
 		/**
 		 * Widgets zum vertikalen Panel hinzufuegen. 

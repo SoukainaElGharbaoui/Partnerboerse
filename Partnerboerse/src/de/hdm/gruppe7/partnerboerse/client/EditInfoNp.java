@@ -33,8 +33,8 @@ public class EditInfoNp extends VerticalPanel {
 	private Button loeschenButton;
 
 	private FlexTable editInfoFlexTable = new FlexTable();
-	private Label ueberschriftLabel = new Label("Info bearbeiten:");
-	final Button updateInfosButton = new Button("&Auml;nderungen speichern");
+	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
+	final Button updateInfosButton = new Button("Infos speichern");
 	private Label informationLabel = new Label();
 
 	private int row;
@@ -322,10 +322,12 @@ public class EditInfoNp extends VerticalPanel {
 								}
 								
 								else if (result == 1) {
-									
-									ShowSuchprofil showSp = new ShowSuchprofil();
+									int suchprofilId = Integer.valueOf(editInfoFlexTable.getText(row, 0));
+									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
+									
+									System.out.println("Ich suche:" + editInfoFlexTable.getText(row, 0));
 								}
 							}
 						});
