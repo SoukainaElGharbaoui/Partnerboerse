@@ -37,6 +37,7 @@ public class Partnerboerse implements EntryPoint {
 		 * Darstellungsort.
 		 */
 
+//		nutzerprofil = null;
 		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
 		try {
@@ -54,17 +55,15 @@ public class Partnerboerse implements EntryPoint {
 
 								if (result.getEmailAddress() != null) {
 									
-									ClientsideSettings.setAktuellerUser(result);
-
-									signOutLink.setHref(nutzerprofil.getLogoutUrl());
-									signOutLink.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId() 
+									signOutLink.setHref(result.getLogoutUrl());
+									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() 
 											+ " ausloggen");
 									
 									loginPanel.add(signOutLink);
 									
 									
 									ClientsideSettings.getPartnerboerseAdministration()
-										.pruefeObNutzerNeu(nutzerprofil.getEmailAddress(),
+										.pruefeObNutzerNeu(result.getEmailAddress(),
 										 new AsyncCallback<Boolean>() {
 
 											@Override
@@ -81,7 +80,7 @@ public class Partnerboerse implements EntryPoint {
 											
 												else {
 													
-//													RootPanel.get("Navigator").add(new Navigator());
+													RootPanel.get("Navigator").add(new Navigator());
 													RootPanel.get("Navigator").add(loginPanel);
 												}
 											}});
@@ -105,8 +104,12 @@ public class Partnerboerse implements EntryPoint {
 								loginPanel.add(signInLink);
 								RootPanel.get("Navigator").add(loginPanel);
 							}
+							
+							nutzerprofil = result;
 						}
 					});
+			
+			ClientsideSettings.setAktuellerUser(nutzerprofil);
 
 		} catch (Exception e) {
 			e.printStackTrace();

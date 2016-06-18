@@ -93,7 +93,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
-		createNutzerprofilFlexTable.setText(8, 0, "EMail");
+		createNutzerprofilFlexTable.setText(8, 0, "E-Mail");
 
 		/**
 		 * Zweite und dritte Spalte der Tabelle festlegen.
@@ -104,7 +104,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
 		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
-		geschlechtListBox.addItem("nicht binär");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
