@@ -70,6 +70,7 @@ public class EditInfoNp extends VerticalPanel {
 		editInfoFlexTable.setText(0, 4, "Löschen");
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		updateInfosButton.addStyleName("navigatorbutton");
 		
 		
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,

@@ -60,17 +60,6 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
-	CharSequence zahl = "0";
-	CharSequence zahl1 = "1";
-	CharSequence zahl2 = "2";
-	CharSequence zahl3 = "3";
-	CharSequence zahl4 = "4";
-	CharSequence zahl5 = "5";
-	CharSequence zahl6 = "6";
-	CharSequence zahl7 = "7";
-	CharSequence zahl8 = "8";
-	CharSequence zahl9 = "9";
-	CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü";
 
 	private Button editNutzerprofilButton = new Button("Profil speichern");
 
@@ -96,6 +85,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.setCellPadding(6);
 		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 		editNutzerprofilFlexTable.addStyleName("FlexTable");
+		editNutzerprofilButton.addStyleName("navigatorbutton");
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.

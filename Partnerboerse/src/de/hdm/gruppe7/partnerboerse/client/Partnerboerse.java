@@ -17,9 +17,9 @@ public class Partnerboerse implements EntryPoint {
 	
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 	
-	private HorizontalPanel loginPanel = new HorizontalPanel();
-	private Anchor signInLink = new Anchor("Jetzt einloggen");
-	private Anchor signOutLink = new Anchor();
+	public HorizontalPanel loginPanel = new HorizontalPanel();
+	public Anchor signInLink = new Anchor("Jetzt einloggen");
+	public Anchor signOutLink = new Anchor();
 	private PartnerboerseAdministrationAsync partnerboerseAdministration;
 	
 	/**
@@ -84,7 +84,7 @@ public class Partnerboerse implements EntryPoint {
 												else {
 													
 													RootPanel.get("Navigator").add(new Navigator());
-													RootPanel.get("Navigator").add(loginPanel);
+													RootPanel.get("Navigator2").add(loginPanel);
 												}
 											}});
 									}
@@ -94,7 +94,7 @@ public class Partnerboerse implements EntryPoint {
 									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 									
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Navigator2").add(loginPanel);
 								}
 							}
 							
@@ -102,7 +102,7 @@ public class Partnerboerse implements EntryPoint {
 							else if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Navigator2").add(loginPanel);
 							}
 						}
 					});

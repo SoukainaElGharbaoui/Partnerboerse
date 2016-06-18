@@ -78,6 +78,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel3.setStyleName("red_label");
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
+		createNutzerprofilButton.setStyleName("navigatorbutton");
 
 		/**
 		 * Tabelle formatieren.

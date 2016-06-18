@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 
 
 public class Navigator extends HorizontalPanel {
@@ -26,7 +27,7 @@ public class Navigator extends HorizontalPanel {
 		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("480px");
+		menu.setWidth("900px");
 		menu.setAnimationEnabled(true);
 		menu.setStyleName("gwt-MenuBar-horizontal");
 
@@ -44,7 +45,7 @@ public class Navigator extends HorizontalPanel {
 		});
 
 
-		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
+		nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
 			@Override
 			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
@@ -161,6 +162,10 @@ public class Navigator extends HorizontalPanel {
 
 		});
 		
+		partnervorschlaegeMenu.addSeparator();
+		
+		
+		
 //		partnervorschlaegeMenu.addSeparator();
 //		
 //		// Create the file menu
@@ -189,6 +194,8 @@ public class Navigator extends HorizontalPanel {
 		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		menu.addSeparator();
+		
 //		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		//////////////////////////////////////////////////////////////////////////////////
