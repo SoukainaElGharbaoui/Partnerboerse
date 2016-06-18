@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
@@ -239,7 +240,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				} else if (nachnameWert == false) {
 					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
-				} else if (geburtsdatumInhalt.getText().length() == 0) {
+				} else if (geburtsdatumDateBox.getValue() == null) {
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
 					editNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
@@ -331,4 +332,5 @@ public class EditNutzerprofil extends VerticalPanel {
 	public boolean isZahl(String name) {
 		return name.matches("[0-9]+");
 	}
+	
 }
