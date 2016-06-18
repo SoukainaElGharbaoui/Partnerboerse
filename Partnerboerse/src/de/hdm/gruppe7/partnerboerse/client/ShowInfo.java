@@ -20,7 +20,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 
-public class ShowInfoNp extends VerticalPanel {
+public class ShowInfo extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
 	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
@@ -65,7 +65,7 @@ public class ShowInfoNp extends VerticalPanel {
 	 * 
 	 * @param integer
 	 */
-	public ShowInfoNp(final int profilId) {
+	public ShowInfo(final int profilId) {
 		
 		this.add(verPanel);
 
@@ -200,7 +200,7 @@ public class ShowInfoNp extends VerticalPanel {
 						// Fall, profilId gehört zu Nutzerprofil
 						if (result == 0) {
 							
-							ShowEigenesNp showNp = new ShowEigenesNp();
+							ShowNutzerprofil showNp = new ShowNutzerprofil();
 
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showNp);
@@ -224,9 +224,9 @@ public class ShowInfoNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoNp editInfoNp = new EditInfoNp(profilId);
+				EditInfo editInfo = new EditInfo(profilId);
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(editInfoNp);
+				RootPanel.get("Details").add(editInfo);
 			}
 		});
 

@@ -23,10 +23,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class EditInfoNp extends VerticalPanel {
+public class EditInfo extends VerticalPanel {
 
 	/**
-	 * VerticalPanels hinzufügen.
+	 * VerticalPanels hinzufï¿½gen.
 	 */
 
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -46,10 +46,10 @@ public class EditInfoNp extends VerticalPanel {
 	
 
 	/**
-	 * Konstruktor hinzufügen.
+	 * Konstruktor hinzufï¿½gen.
 	 */
 
-	public EditInfoNp(final int profilId) {
+	public EditInfo(final int profilId) {
 		this.add(verPanel);
 
 		/**
@@ -67,7 +67,7 @@ public class EditInfoNp extends VerticalPanel {
 		editInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
-		editInfoFlexTable.setText(0, 4, "Löschen");
+		editInfoFlexTable.setText(0, 4, "Lï¿½schen");
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
@@ -110,7 +110,7 @@ public class EditInfoNp extends VerticalPanel {
 						editInfoFlexTable.setText(row, 0, String.valueOf(listInfos.get(i).getProfilId()));
 						editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
 						
-						loeschenButton = new Button("Löschen");
+						loeschenButton = new Button("Lï¿½schen");
 						editInfoFlexTable.setWidget(row, 4, loeschenButton);
 						
 						
@@ -123,12 +123,12 @@ public class EditInfoNp extends VerticalPanel {
 				
 									if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
 									
-										informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
+										informationLabel.setText("Die EigenschaftIds stimmen nicht ï¿½berein.");
 									}
 									
 									else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
 										
-										informationLabel.setText("Die EigenschaftIds stimmen überein.");
+										informationLabel.setText("Die EigenschaftIds stimmen ï¿½berein.");
 				
 										ClientsideSettings.getPartnerboerseAdministration()
 												.deleteOneInfoNeu(profilId, eigenschaftId, 
@@ -137,12 +137,12 @@ public class EditInfoNp extends VerticalPanel {
 													@Override
 													public void onFailure(Throwable caught) {
 														informationLabel
-																.setText("Beim Löschen der Info trat ein Fehler auf.");
+																.setText("Beim Lï¿½schen der Info trat ein Fehler auf.");
 													}
 				
 													@Override
 													public void onSuccess(Void result) {
-														informationLabel.setText("Das Löschen der Info hat funktioniert.");
+														informationLabel.setText("Das Lï¿½schen der Info hat funktioniert.");
 													}
 										});
 										
@@ -261,12 +261,12 @@ public class EditInfoNp extends VerticalPanel {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											informationLabel.setText("Beim Löschen der Info ist ein Fehler aufgetreten.");
+											informationLabel.setText("Beim Lï¿½schen der Info ist ein Fehler aufgetreten.");
 										}
 
 										@Override
 										public void onSuccess(Void result) {
-											informationLabel.setText("Die Info wurde gelöscht, da das Eingabefeld geleert wurde.");
+											informationLabel.setText("Die Info wurde gelï¿½scht, da das Eingabefeld geleert wurde.");
 										}
 							});
 						}
@@ -316,7 +316,7 @@ public class EditInfoNp extends VerticalPanel {
 								
 								if (result == 0) {
 									
-									ShowEigenesNp showNp = new ShowEigenesNp();
+									ShowNutzerprofil showNp = new ShowNutzerprofil();
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
