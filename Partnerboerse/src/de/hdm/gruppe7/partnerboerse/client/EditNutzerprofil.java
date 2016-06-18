@@ -268,9 +268,9 @@ public class EditNutzerprofil extends VerticalPanel {
 								}
 
 								public void onSuccess(Void result) {
-								ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+								ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil();
 								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showEigenesNp);
+								RootPanel.get("Details").add(showNutzerprofil);
 							}
 					});
 

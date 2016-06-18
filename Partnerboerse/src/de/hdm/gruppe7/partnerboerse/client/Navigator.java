@@ -37,9 +37,9 @@ public class Navigator extends HorizontalPanel {
 		nutzerprofilMenu.addItem("Profil anzeigen", new Command() {
 			@Override
 			public void execute() {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil();
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showEigenesNp);
+				RootPanel.get("Details").add(showNutzerprofil);
 			}
 		});
 

@@ -201,10 +201,10 @@ public class CreateSuchprofil extends VerticalPanel {
 									@Override
 									public void onSuccess(Suchprofil result) {
 									int suchprofilId = result.getProfilId();
-									CreateInfoNp createInfoNp = new CreateInfoNp(suchprofilId);
+									CreateInfo createInfo = new CreateInfo(suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details")
-									.add(createInfoNp);
+									.add(createInfo);
 								}
 
 							});
