@@ -58,18 +58,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
+	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
-	
-	private CharSequence zahl = "0";
-	private CharSequence zahl1 = "1";
-	private CharSequence zahl2 = "2";
-	private CharSequence zahl3 = "3";
-	private CharSequence zahl4 = "4";
-	private CharSequence zahl5 = "5";
-	private CharSequence zahl6 = "6";
-	private CharSequence zahl7 = "7";
-	private CharSequence zahl8 = "8";
-	private CharSequence zahl9 = "9";
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -84,6 +74,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
+		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
 		/**
@@ -133,6 +124,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		geburtsdatumDateBox.setValue(new Date());
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
+		createNutzerprofilFlexTable.setWidget(3, 3, reqLabel4);
 
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
 		createNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);

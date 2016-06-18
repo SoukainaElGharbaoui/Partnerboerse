@@ -241,6 +241,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 
 	}
 
@@ -580,6 +581,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
 	 * und Infos anderer Nutzerprofile berechnen. 
 	 */
+	/**
+	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
+	 * und Infos anderer Nutzerprofile berechnen. 
+	 */
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(profilId);
@@ -695,7 +700,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 						suchprofilId, fremdprofilId,
 						aehnlichkeitSp);
 									
-				}else {
+				} else {
 					
 					if (sp.getGeschlecht().equals("Keine Auswahl")){
 						// Aehnlichkeit in die Datenbank setzen
