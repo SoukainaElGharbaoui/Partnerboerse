@@ -20,7 +20,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 /**
  * Diese Klasse dient dazu, das eigene Nutzerprofil anzuzeigen. 
  */
-public class ShowEigenesNp extends VerticalPanel {
+public class ShowNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
@@ -47,7 +47,7 @@ public class ShowEigenesNp extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public ShowEigenesNp() {
+	public ShowNutzerprofil() {
 
 		this.add(horPanel);
 		horPanel.add(nutzerprofilPanel);
@@ -176,7 +176,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
-		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
+		ShowInfo showInfo = new ShowInfo(nutzerprofil.getProfilId());
 
 		/**
 		 * Widgets den Panels hinzufuegen.
@@ -187,7 +187,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		buttonPanel.add(loeschenButton);
 		nutzerprofilPanel.add(buttonPanel);
 		nutzerprofilPanel.add(infoLabel);
-		infoPanel.add(showInfoNp);
+		infoPanel.add(showInfo);
 
 	}
 

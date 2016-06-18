@@ -23,7 +23,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-public class CreateInfoNp extends VerticalPanel {
+public class CreateInfo extends VerticalPanel {
 
 	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 	
@@ -41,7 +41,7 @@ public class CreateInfoNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
 
-	public CreateInfoNp(final int profilId) {
+	public CreateInfo(final int profilId) {
 		
 		this.add(verPanel);
 
@@ -222,7 +222,7 @@ public class CreateInfoNp extends VerticalPanel {
 								
 								if (result == 0) {
 									
-									ShowEigenesNp showNp = new ShowEigenesNp();
+									ShowNutzerprofil showNp = new ShowNutzerprofil();
 									RootPanel.get("Navigator").add(new Navigator());
 									
 									Anchor signOut = new Anchor();
