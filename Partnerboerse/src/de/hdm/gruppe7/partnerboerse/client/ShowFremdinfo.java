@@ -18,7 +18,7 @@ public class ShowFremdinfo extends VerticalPanel {
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
-	private Label ueberschriftLabel = new Label("Infos dieser Person:");
+	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
 
 	private int row;

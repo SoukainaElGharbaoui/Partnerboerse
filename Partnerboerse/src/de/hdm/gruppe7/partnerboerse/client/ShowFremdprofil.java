@@ -45,10 +45,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	public ShowFremdprofil(final int fremdprofilId) {
 		this.add(horPanel);
 
-		/**
-		 * �berschrift-Label hinzuf�gen.
-		 */
-		final Label ueberschriftLabel = new Label("Fremdprofil");
+		final Label ueberschriftLabel = new Label();
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
@@ -94,6 +91,12 @@ public class ShowFremdprofil extends VerticalPanel {
 
 					public void onSuccess(Nutzerprofil result) {
 
+						/**
+						 * �berschrift-Label hinzuf�gen.
+						 */
+						ueberschriftLabel
+								.setText("Fremdprofil von " + result.getVorname() + " " + result.getNachname());
+
 						// Nutzerprofil-Id aus der Datenabank holen
 						// und in Tabelle eintragen
 						final String nutzerprofilId = String.valueOf(result.getProfilId());
@@ -113,11 +116,11 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						
+
 						Date geburtsdatum = result.getGeburtsdatumDate();
 						String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
-						
-						showFremdprofilFlexTable.setText(4, 1, geburtsdatumString); 
+
+						showFremdprofilFlexTable.setText(4, 1, geburtsdatumString);
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen
@@ -134,7 +137,6 @@ public class ShowFremdprofil extends VerticalPanel {
 						// Religion aus der Datenbank holen
 						// und in Tabelle eintragen
 						showFremdprofilFlexTable.setText(8, 1, result.getReligion());
-
 					}
 				});
 
