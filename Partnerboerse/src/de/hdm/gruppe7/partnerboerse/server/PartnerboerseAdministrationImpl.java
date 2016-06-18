@@ -1,7 +1,11 @@
+
 package de.hdm.gruppe7.partnerboerse.server;
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +31,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
 
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
@@ -288,7 +293,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findSuchprofilByName(profilId,
 				suchprofilName);
 	}
-
+	
+	/**
+	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 */
+	
+	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
+			throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilById(profilId,
+				suchprofilId);		
+	}
+	
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils pruefen.
 	 */
@@ -326,7 +341,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int ergebnis = 0;
 
-		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein
+		// Der Suchprofilname wurde ver�ndert, es existiert jedoch bereits ein
 		// gleichnamiges, anderes Suchprofil.
 		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
 			ergebnis = 1;
@@ -502,6 +517,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
+		
 		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
@@ -522,10 +538,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			if (np.getHaarfarbe().equals(referenzprofil.getHaarfarbe())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
-
-			if (np.getKoerpergroesseInt() == referenzprofil
-					.getKoerpergroesseInt()) {
+			
+			if (np.getKoerpergroesseInt() +5 >= referenzprofil.getKoerpergroesseInt()) {
+			if(np.getKoerpergroesseInt()-5 <= referenzprofil.getKoerpergroesseInt()){
 				aehnlichkeit = aehnlichkeit + 1;
+				}
 			}
 
 			if (np.getRaucher().equals(referenzprofil.getRaucher())) {
@@ -535,6 +552,42 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			if (np.getReligion().equals(referenzprofil.getReligion())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
+			
+			// Berechnung des Alters des Fremdprofils
+				 		GregorianCalendar geburtstagVgl = new GregorianCalendar();
+				         geburtstagVgl.setTime(referenzprofil.getGeburtsdatumDate());
+				         GregorianCalendar heute = new GregorianCalendar();
+				         int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+				         if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
+				         {
+				             alter = alter - 1;
+				         }
+				         else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH)){
+				             if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE)){
+				                 alter = alter - 1;
+				             }
+				         }
+				         // Berechnung des Alters des eigenen Profils
+				         GregorianCalendar geburtstagRef = new GregorianCalendar();
+				         geburtstagRef.setTime(np.getGeburtsdatumDate());
+				         GregorianCalendar heute1 = new GregorianCalendar();
+				         int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+				         if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
+				         {
+				             alterRef = alterRef - 1;
+				         }
+				         else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
+				         {
+				             if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE)){
+				                 alterRef = alterRef - 1;
+				             }
+				         }
+				         
+				         if(alter+5 >= alterRef){
+				        	if(alter-5 <= alterRef){
+				        	  aehnlichkeit = aehnlichkeit +3;
+				        	  }
+				        	}
 
 			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
 			List<Info> vergleichsinfo = infoMapper
@@ -637,18 +690,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					}
 					
 				}
-				
-				
-//				if (sp.getKoerpergroesseInt() == ) {
-//					aehnlichkeitSp = aehnlichkeitSp + 10;
-//					
-//				}else {
 					
-					if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
+					if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-					
-//				}
+					}
 				
 				
 				if(sp.getRaucher().equals("Keine Auswahl")){
@@ -672,6 +719,28 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					
 					
 				}
+				
+				GregorianCalendar geburtstag = new GregorianCalendar();
+				 		        geburtstag.setTime(np.getGeburtsdatumDate());
+				 		        GregorianCalendar heute = new GregorianCalendar();
+				 		        int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+				 		        if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH))
+				 		        {
+				 		            alter = alter - 1;
+						        }
+				 		        else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH))
+				 		        {
+				 		            if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE))
+				 		            {
+				 		                alter = alter - 1;
+				 		            }
+				 		        }
+				 		        
+				 		        if(sp.getAlterMaxInt() >= alter){
+				 		        	if(sp.getAlterMinInt() <= alter){
+				 		        		aehnlichkeitSp = aehnlichkeitSp +10;
+				 		        	}
+				 		        }
 				
 				
 				

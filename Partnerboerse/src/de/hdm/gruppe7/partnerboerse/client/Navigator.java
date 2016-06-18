@@ -91,8 +91,8 @@ public class Navigator extends HorizontalPanel {
 		suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				String suchprofilName = null;
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+				int suchprofilId = 0;
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
 			}

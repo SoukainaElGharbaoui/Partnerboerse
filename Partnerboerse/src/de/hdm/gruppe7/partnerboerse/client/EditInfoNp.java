@@ -26,7 +26,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class EditInfoNp extends VerticalPanel {
 
 	/**
-	 * VerticalPanels hinzufÃ¼gen.
+	 * VerticalPanels hinzufügen.
 	 */
 
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -46,7 +46,7 @@ public class EditInfoNp extends VerticalPanel {
 	
 
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Konstruktor hinzufügen.
 	 */
 
 	public EditInfoNp(final int profilId) {
@@ -67,7 +67,7 @@ public class EditInfoNp extends VerticalPanel {
 		editInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
-		editInfoFlexTable.setText(0, 4, "LÃ¶schen");
+		editInfoFlexTable.setText(0, 4, "Löschen");
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
@@ -110,7 +110,7 @@ public class EditInfoNp extends VerticalPanel {
 						editInfoFlexTable.setText(row, 0, String.valueOf(listInfos.get(i).getProfilId()));
 						editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
 						
-						loeschenButton = new Button("LÃ¶schen");
+						loeschenButton = new Button("Löschen");
 						editInfoFlexTable.setWidget(row, 4, loeschenButton);
 						
 						
@@ -123,12 +123,12 @@ public class EditInfoNp extends VerticalPanel {
 				
 									if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
 									
-										informationLabel.setText("Die EigenschaftIds stimmen nicht Ã¼berein.");
+										informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
 									}
 									
 									else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
 										
-										informationLabel.setText("Die EigenschaftIds stimmen Ã¼berein.");
+										informationLabel.setText("Die EigenschaftIds stimmen überein.");
 				
 										ClientsideSettings.getPartnerboerseAdministration()
 												.deleteOneInfoNeu(profilId, eigenschaftId, 
@@ -137,12 +137,12 @@ public class EditInfoNp extends VerticalPanel {
 													@Override
 													public void onFailure(Throwable caught) {
 														informationLabel
-																.setText("Beim LÃ¶schen der Info trat ein Fehler auf.");
+																.setText("Beim Löschen der Info trat ein Fehler auf.");
 													}
 				
 													@Override
 													public void onSuccess(Void result) {
-														informationLabel.setText("Das LÃ¶schen der Info hat funktioniert.");
+														informationLabel.setText("Das Löschen der Info hat funktioniert.");
 													}
 										});
 										
@@ -261,12 +261,12 @@ public class EditInfoNp extends VerticalPanel {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											informationLabel.setText("Beim LÃ¶schen der Info ist ein Fehler aufgetreten.");
+											informationLabel.setText("Beim Löschen der Info ist ein Fehler aufgetreten.");
 										}
 
 										@Override
 										public void onSuccess(Void result) {
-											informationLabel.setText("Die Info wurde gelÃ¶scht, da das Eingabefeld geleert wurde.");
+											informationLabel.setText("Die Info wurde gelöscht, da das Eingabefeld geleert wurde.");
 										}
 							});
 						}
@@ -322,10 +322,13 @@ public class EditInfoNp extends VerticalPanel {
 								}
 								
 								else if (result == 1) {
-									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilName);
+									
+									int suchprofilId = profilId;
+									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
+									
+								
 								}
 							}
 						});
@@ -338,4 +341,4 @@ public class EditInfoNp extends VerticalPanel {
 			verPanel.add(updateInfosButton);
 
 		}
-	}
+}

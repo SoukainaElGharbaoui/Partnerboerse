@@ -48,7 +48,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufuegen.
 	 */
-	public ShowSuchprofil(String suchprofilName) {
+	public ShowSuchprofil(int suchprofilId) {
 
 		this.add(gesamtPanel);
 		gesamtPanel.add(suchprofilPanel);
@@ -79,7 +79,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
-		if (suchprofilName == null) {
+		if (suchprofilId == 0) {
 
 		/**
 		 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
@@ -102,7 +102,9 @@ public class ShowSuchprofil extends VerticalPanel {
 				} else {
 					for (Suchprofil s : result) {
 						auswahlListBox.addItem(s.getSuchprofilName());
+						
 					}
+									
 					createSuchprofilButton.setVisible(false);
 				}
 			}
@@ -190,8 +192,8 @@ public class ShowSuchprofil extends VerticalPanel {
 									}
 
 									public void onSuccess(Void result) {
-										String suchprofilName = null;
-										ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+										int suchprofilId = 0;
+										ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 										suchprofilPanel.clear();
 										infoPanel.clear();
 										suchprofilPanel.add(showSuchprofil);
@@ -266,8 +268,8 @@ public class ShowSuchprofil extends VerticalPanel {
 			
 			// Tabelle mit Suchprofildaten befuellen.
 			ClientsideSettings.getPartnerboerseAdministration()
-					.getSuchprofilByName(nutzerprofil.getProfilId(), 
-							suchprofilName, new AsyncCallback<Suchprofil>() {
+					.getSuchprofilById(nutzerprofil.getProfilId(), 
+							suchprofilId, new AsyncCallback<Suchprofil>() {
 
 						public void onFailure(Throwable caught) {
 							infoLabel.setText("Es trat ein Fehler auf.");
@@ -328,8 +330,8 @@ public class ShowSuchprofil extends VerticalPanel {
 								}
 
 								public void onSuccess(Void result) {
-									String suchprofilName = null;
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+									int suchprofilId = 0;
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 									suchprofilPanel.clear();
 									infoPanel.clear();
 									suchprofilPanel.add(showSuchprofil);
@@ -425,8 +427,8 @@ public class ShowSuchprofil extends VerticalPanel {
 										}
 
 										public void onSuccess(Void result) {
-											String suchprofilName = null;
-											ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+											int suchprofilId = 0;
+											ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 											suchprofilPanel.clear();
 											infoPanel.clear();
 											suchprofilPanel.add(showSuchprofil);

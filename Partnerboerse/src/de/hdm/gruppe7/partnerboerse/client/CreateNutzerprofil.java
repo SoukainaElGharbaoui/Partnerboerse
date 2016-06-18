@@ -5,18 +5,29 @@ import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.HasShowRangeHandlers;
+import com.google.gwt.event.logical.shared.ShowRangeEvent;
+import com.google.gwt.event.logical.shared.ShowRangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.CalendarModel;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
+import com.google.gwt.user.datepicker.client.CalendarView;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DefaultCalendarView;
+import com.google.gwt.user.datepicker.client.DefaultMonthSelector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
@@ -27,17 +38,18 @@ import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 public class CreateNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
+	 * erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Vertikales Panel erzeugen. 
+	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Widgets erzeugen. 
+	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
@@ -46,6 +58,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox geschlechtListBox = new ListBox();;
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
+
 	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
@@ -115,6 +128,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 				Date geburtsdatum = event.getValue();
 				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
+
+				if (event.getValue().after(today())) {
+					geburtsdatumDateBox.setValue(today(), false);
+				}
 			}
 		});
 
@@ -156,11 +173,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * ueber diesen Zustand ausgegeben. 
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 
-				boolean vornameWert = isBuchstabe(vornameTextBox.getText()); 
-				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText()); 
-				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText()); 
+				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
+				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
+				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
 
 				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
@@ -168,23 +186,25 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-				} else if (vornameWert == false){
+
+				} else if (vornameWert == false) {
 					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
-				} else if (nachnameWert == false){
+				} else if (nachnameWert == false) {
 					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-				} else if (geburtsdatumInhalt.getText().length() == 0){
+				} else if (geburtsdatumInhalt.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
 					createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
-				} else if (koerpergroesseWert == false){
+				} else if (koerpergroesseWert == false) {
 					warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+
 				} else {
-					
+
 					/**
 					 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil in die Datenbank eingefuegt.
 					 * Zudem wird der aktuelle Nutzer gesetzt. Anschließend wird die Seite zum Anlegen der Infos aufgerufen.  
@@ -195,26 +215,25 @@ public class CreateNutzerprofil extends VerticalPanel {
 							raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
 							nutzerprofil.getEmailAddress(), new AsyncCallback<Nutzerprofil>() {
 
-										public void onFailure(Throwable caught) {
-											infoLabel.setText("Es trat ein Fehler auf");
-										}
-											
-										public void onSuccess(Nutzerprofil result) {
-											infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-											
-											nutzerprofil = result;
-											
-											ClientsideSettings.setAktuellerUser(nutzerprofil);
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf");
+								}
 
-											CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
-											RootPanel.get("Details").clear();
-											RootPanel.get("Details").add(createInfoNp);
-										}
-								});
-						}
+								public void onSuccess(Nutzerprofil result) {
+									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
+
+									nutzerprofil = result;
+
+									ClientsideSettings.setAktuellerUser(nutzerprofil);
+
+									CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createInfoNp);
+								}
+							});
+				}
 			}
 		});
-		
 
 		/**
 		 * Widgets zum Panel hinzufuegen.
@@ -227,30 +246,45 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 
 	/**
-	 * Methode erstellen, die das Geburtsdatum formatiert. 
+	 * Methode erstellen, die das Geburtsdatum formatiert.
 	 */
+
 	Date getGeburtsdatum() {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
 	}
-	
+
+	/**
+	 * aktuelles Datum ermitteln
+	 * 
+	 * @return
+	 */
+
+	private static Date today() {
+		return zeroTime(new Date());
+	}
+
+	/** this is important to get rid of the time portion, including ms */
+	private static Date zeroTime(final Date date) {
+		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
+	}
+
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
 	 * @param name 
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt. 
 	 */
 	public boolean isBuchstabe(String name) {
-	    return name.matches("[a-zA-Z]+");
+		return name.matches("[a-zA-Z]+");
 	}
-	
+
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
 	 * @param name 
 	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt. 
 	 */
 	public boolean isZahl(String name) {
-	    return name.matches("[0-9]+");
+		return name.matches("[0-9]+");
 	}
-	
 }

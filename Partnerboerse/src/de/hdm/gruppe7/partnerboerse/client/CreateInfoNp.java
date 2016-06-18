@@ -35,6 +35,7 @@ public class CreateInfoNp extends VerticalPanel {
 
 	private String eigenschaftId = null;
 	private String beschreibungstext = null;
+	private int row;
 
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
@@ -72,7 +73,7 @@ public class CreateInfoNp extends VerticalPanel {
 							public void onSuccess(
 									Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
 
-								int row = showEigenschaftFlexTable
+								 row = showEigenschaftFlexTable
 										.getRowCount();
 								Set<List<Beschreibungseigenschaft>> output = result
 										.keySet();
@@ -237,8 +238,9 @@ public class CreateInfoNp extends VerticalPanel {
 								}
 
 								else if (result == 1) {
-									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
+									
+									int suchprofilId = profilId;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

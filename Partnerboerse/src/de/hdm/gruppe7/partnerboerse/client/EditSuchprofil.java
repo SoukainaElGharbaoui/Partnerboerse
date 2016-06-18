@@ -99,7 +99,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setText(2, 0, "Geschlecht");
 		editSuchprofilFlexTable.setText(3, 0, "Alter von");
 		editSuchprofilFlexTable.setText(4, 0, "Alter bis");
-		editSuchprofilFlexTable.setText(5, 0, "KÃ¶rpergrÃ¶ÃŸe");
+		editSuchprofilFlexTable.setText(5, 0, "Körpergröße");
 		editSuchprofilFlexTable.setText(6, 0, "Haarfarbe");
 		editSuchprofilFlexTable.setText(7, 0, "Raucher");
 		editSuchprofilFlexTable.setText(8, 0, "Religion");
@@ -113,7 +113,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("MÃ¤nnlich");
+		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(2, 2, geschlechtListBox);
 
 		editSuchprofilFlexTable.setWidget(3, 2, alterMinTextBox);
@@ -166,37 +166,37 @@ public class EditSuchprofil extends VerticalPanel {
 						// Suchprofilname auslesen und einfuegen.
 						suchprofilNameTextBox.setText(result.getSuchprofilName());
 
-						// Geschlecht auslesen und einfÃ¼gen.
+						// Geschlecht auslesen und einfügen.
 						for (int i = 0; i < geschlechtListBox.getItemCount(); i++) {
 							if (result.getGeschlecht().equals(geschlechtListBox.getValue(i))) {
 								geschlechtListBox.setSelectedIndex(i);
 							}
 						}
 
-						// AlterMin auslesen und einfÃ¼gen.
+						// AlterMin auslesen und einfügen.
 						alterMinTextBox.setText(Integer.toString(result.getAlterMinInt()));
 
-						// AlterMax auslesen und einfÃ¼gen.
+						// AlterMax auslesen und einfügen.
 						alterMaxTextBox.setText(Integer.toString(result.getAlterMaxInt()));
 
-						// KÃ¶rpergrÃ¶ÃŸe auslesen und einfÃ¼gen.
+						// Körpergröße auslesen und einfügen.
 						koerpergroesseTextBox.setText(Integer.toString(result.getKoerpergroesseInt()));
 
-						// Haarfarbe auslesen und einfÃ¼gen.
+						// Haarfarbe auslesen und einfügen.
 						for (int i = 0; i < haarfarbeListBox.getItemCount(); i++) {
 							if (result.getHaarfarbe().equals(haarfarbeListBox.getValue(i))) {
 								haarfarbeListBox.setSelectedIndex(i);
 							}
 						}
 
-						// Raucherstatus auslesen und einfÃ¼gen.
+						// Raucherstatus auslesen und einfügen.
 						for (int i = 0; i < raucherListBox.getItemCount(); i++) {
 							if (result.getRaucher().equals(raucherListBox.getValue(i))) {
 								raucherListBox.setSelectedIndex(i);
 							}
 						}
 
-						// Religion auslesen und einfÃ¼gen.
+						// Religion auslesen und einfügen.
 						for (int i = 0; i < religionListBox.getItemCount(); i++) {
 							if (result.getReligion().equals(religionListBox.getValue(i))) {
 								religionListBox.setSelectedIndex(i);
@@ -252,10 +252,10 @@ public class EditSuchprofil extends VerticalPanel {
 									warnungLabel.setText("'Alter von' muss kleiner als 'Alter bis' sein.");
 									editSuchprofilFlexTable.setWidget(3, 4, warnungLabel);
 								} else if (koerpergroesseTextBox.getText().length() == 0) {
-									warnungLabel.setText("Bitte geben Sie eine KÃ¶rpergrÃ¶ÃŸe an.");
+									warnungLabel.setText("Bitte geben Sie eine Körpergröße an.");
 									editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 								} else if (koerpergroesseWert == false) {
-									warnungLabel.setText("Ihre KÃ¶rpergrÃ¶ÃŸe darf nur Zahlen enthalten.");
+									warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
 									editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 								} else {
 									
@@ -283,8 +283,8 @@ public class EditSuchprofil extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-									String suchprofilName = suchprofilNameTextBox.getText();
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+									int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSuchprofil);
 					}
@@ -306,7 +306,7 @@ public class EditSuchprofil extends VerticalPanel {
 		});
 
 		/**
-		 * Widgets zum VerticalPanel hinzufÃ¼gen.
+		 * Widgets zum VerticalPanel hinzufügen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);
@@ -328,3 +328,4 @@ public class EditSuchprofil extends VerticalPanel {
 	    return name.matches("[0-9]+");
 	}
 }
+

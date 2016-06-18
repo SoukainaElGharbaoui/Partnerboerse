@@ -113,13 +113,13 @@ public class HTMLReportWriter extends ReportWriter {
 		 */
 		result.append("<H1>" + r.getTitle() + "</H1>");
 		// System.out.println("Titel:" + r.getTitle());
-		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
+		result.append("<table style=\"width:400px;border:1px solid silver;margin-bottom: 30px\"><tr>");
 		result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData()) + "</b></td>");
 		result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
 		result.append("</tr><tr><td></td><td>" + r.getCreated().toString() + "</td></tr></table>");
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table style=\"width:400px\">");
+		result.append("<table style=\"width:400px;margin-bottom: 30px\">");
 
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
@@ -129,7 +129,7 @@ public class HTMLReportWriter extends ReportWriter {
 					result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
 				} else {
 					if (i > 1) {
-						result.append("<td style=\"border-top:1px solid silver\">" + row.getColumnAt(k) + "</td>");
+						result.append("<td style=\"border-top:1px solid silver;margin-bottom: 30px\">" + row.getColumnAt(k) + "</td>");
 					} else {
 						result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
 					}
@@ -227,17 +227,17 @@ public class HTMLReportWriter extends ReportWriter {
 
 
 	    /*
-	     * Da AllAccountsOfAllCustomersReport ein CompositeReport ist, enthält r
-	     * eine Menge von Teil-Reports des Typs AllAccountsOfCustomerReport. Für
+	     * Da AllAccountsOfAllCustomersReport ein CompositeReport ist, enthï¿½lt r
+	     * eine Menge von Teil-Reports des Typs AllAccountsOfCustomerReport. Fï¿½r
 	     * jeden dieser Teil-Reports rufen wir processAllAccountsOfCustomerReport
-	     * auf. Das Ergebnis des jew. Aufrufs fügen wir dem Buffer hinzu.
+	     * auf. Das Ergebnis des jew. Aufrufs fï¿½gen wir dem Buffer hinzu.
 	     */
 
 	    for (int j = 0; j < r.getNumSubReports(); j= j + 2) {
 		      /*
 		       * AllAccountsOfCustomerReport wird als Typ der SubReports vorausgesetzt.
 		       * Sollte dies in einer erweiterten Form des Projekts nicht mehr gelten,
-		       * so müsste hier eine detailliertere Implementierung erfolgen.
+		       * so mï¿½sste hier eine detailliertere Implementierung erfolgen.
 		       */
 	    
 		      AllProfildatenOfNutzerReport subReport2 = (AllProfildatenOfNutzerReport) r
@@ -326,15 +326,15 @@ public class HTMLReportWriter extends ReportWriter {
 	      
 	    
 	  	      /*
-	       * Nach jeder Übersetzung eines Teilreports und anschließendem Auslesen
-	       * sollte die Ergebnisvariable zurückgesetzt werden.
+	       * Nach jeder ï¿½bersetzung eines Teilreports und anschlieï¿½endem Auslesen
+	       * sollte die Ergebnisvariable zurï¿½ckgesetzt werden.
 	       */
 	      this.resetReportText();
 	    }
 	    
 	    /*
 	     * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
-	     * reportText-Variable zugewiesen. Dadurch wird es möglich, anschließend das
+	     * reportText-Variable zugewiesen. Dadurch wird es mï¿½glich, anschlieï¿½end das
 	     * Ergebnis mittels getReportText() auszulesen.
 	     */
 	    this.reportText = result.toString();
