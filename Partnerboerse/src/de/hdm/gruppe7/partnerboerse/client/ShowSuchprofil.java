@@ -79,6 +79,12 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
+		
+		
+		
+		
+		
+		
 		if (suchprofilId == 0) {
 
 		/**

@@ -16,7 +16,6 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -33,6 +32,16 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 
+
+/**
+ * Implementierungsklasse des Interface PartnerboerseAdministration.
+ * 
+ * @see PartnerboerseAdministration
+ * @see PartnerboerseAdministrationAsync
+ * @see RemoteServiceServlet
+ * @author dunja
+ *
+ */
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		implements PartnerboerseAdministration {
@@ -43,9 +52,20 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	private SperrlisteMapper sperrlisteMapper = null;
 	private InfoMapper infoMapper = null;
 
+	/**
+	 * Dieser No-Argument-Konstruktor dient dazu, ein RemoteServiceServlet 
+	 * durch GWT.create(Klassenname.class) clientseitig zu erzeugen. 
+	 * Durch diese Instanzenmethode kann die Instanz initialisiert werden.
+	 * 
+	 * @see #init()
+	 * @throws IllegalArgumentException
+	 */
 	public PartnerboerseAdministrationImpl() throws IllegalArgumentException {
 	}
-
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#init()
+	 * 
+	 */
 	@Override
 	public void init() throws IllegalArgumentException {
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
@@ -63,14 +83,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
-	 * Pruefen, ob der Nutzer eingeloggt ist.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#isUserRegistered(String)
 	 */
 	public boolean isUserRegistered(String userEmail) {
 		return false;
 	}
 
 	/**
-	 * URL zum Einloggen anfordern.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#login(String)
 	 */
 	public Nutzerprofil login(String requestUri) throws Exception {
 
@@ -135,7 +155,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
-	 * Nutzerprofil anlegen.
+	 * Anlegen eines neuen Nutzerprofils. Dies führt implizit zu einem Speichern des
+	 * neuen Nutzeprofils in der Datenbank.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
+	 * #createNutzerprofil(String, String, String, Date, int, String, String, String, String)
 	 */
 	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
 			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
@@ -162,6 +186,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Nutzerprofil aktualisieren.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
+	 * #saveNutzerprofil(int, String, String, String, Date, int, String, String, String)
 	 */
 	public void saveNutzerprofil(int profilId, String vorname, String nachname,
 			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
@@ -185,6 +212,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Nutzerprofil loeschen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteNutzerprofil(int)
 	 */
 	public void deleteNutzerprofil(int profilId)
 			throws IllegalArgumentException {
@@ -193,6 +221,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Nutzerprofil anhand der Profil-ID auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getNutzerprofilById(int)
 	 */
 	public Nutzerprofil getNutzerprofilById(int profilId)
 			throws IllegalArgumentException {
@@ -201,6 +230,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Fremdprofil anhand der Profil-ID auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getFremdprofilById(int)
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId)
 			throws IllegalArgumentException {
@@ -223,6 +253,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil anlegen.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
+	 * #createSuchprofil(int, String, String, int, int, int, String, String, String)
 	 */
 	public Suchprofil createSuchprofil(int profilId, String suchprofilName,
 			String geschlecht, int alterMinInt, int alterMaxInt,
@@ -245,6 +278,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil aktualisieren.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
+	 * #saveSuchprofil(int, int, String, String, int, int, int, String, String, String)
 	 */
 	public void saveSuchprofil(int profilId, int suchprofilId,
 			String suchprofilName, String geschlecht, int alterMinInt,
@@ -269,6 +304,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil loeschen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteSuchprofil(int, String)
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName)
 			throws IllegalArgumentException {
@@ -277,6 +313,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle Suchprofile eines Nutzers auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllSuchprofileFor(int)
 	 */
 
 	public List<Suchprofil> getAllSuchprofileFor(int profilId)
@@ -287,6 +324,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil anhand der Profil-ID und des Suchprofilnamens auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilByName(int, String)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName)
 			throws IllegalArgumentException {
@@ -296,6 +334,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	/**
 	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilById(int, int)
 	 */
 	
 	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
@@ -306,6 +345,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils pruefen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)
 	 */
 	public int pruefeSuchprofilnameCreate(int profilId, String suchprofilname)
 			throws IllegalArgumentException {
@@ -330,6 +370,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofilname beim Editieren eines Suchprofils pruefen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameEdit(int, int, String)
 	 */
 	public int pruefeSuchprofilnameEdit(int profilId, int suchprofilId,
 			String suchprofilname) throws IllegalArgumentException {
@@ -371,6 +412,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle gemerkten Nutzerprofile eines Nutzers auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGemerkteNutzerprofileFor(int)
 	 */
 	public Merkliste getGemerkteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException {
@@ -388,6 +430,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Vermerkstatus pruefen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeVermerkstatus(int, int)
 	 */
 	public int pruefeVermerkstatus(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -396,6 +439,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Vermerkstatus aendern.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#vermerkstatusAendern(int, int)
 	 */
 	public int vermerkstatusAendern(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -429,6 +473,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle gesperrten Nutzerprofile eines Nutzers auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGesperrteNutzerprofileFor(int)
 	 */
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId)
 			throws IllegalArgumentException {
@@ -446,6 +491,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Pruefen, ob Fremdprofil von Nutzer gesperrt wurde.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSperrstatusFremdprofil(int, int)
 	 */
 	public int pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -455,6 +501,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Pruefen, ob Nutzer von Fremdprofil gesperrt wurde.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSperrstatusEigenesProfil(int, int)
 	 */
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -464,6 +511,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Sperrstatus aendern.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#sperrstatusAendern(int, int)
 	 */
 	public int sperrstatusAendern(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -497,6 +545,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle unangesehenen Nutzerprofile eines Nutzers auslesen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getUnangeseheneNutzerprofile(int)
 	 */
 	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
 			throws IllegalArgumentException {
@@ -505,6 +554,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Besuch setzen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#besuchSetzen(int, int)
 	 */
 	public void besuchSetzen(int profilId, int fremdprofilId)
 			throws IllegalArgumentException {
@@ -514,6 +564,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils und
 	 * den Profildaten und Infos anderer Nutzerprofilen berechnen.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitNpFor(int)
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
@@ -619,6 +670,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen. Es
 	 * werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer
 	 * nicht gesperrt wurde.
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGeordnetePartnervorschlaegeNp(int)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
 			throws IllegalArgumentException {
@@ -640,27 +692,34 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
-	/**
-	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten
-	 * und Infos anderer Nutzerprofile berechnen.
-	 */
+	
 	/**
 	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
 	 * und Infos anderer Nutzerprofile berechnen. 
-	 */
-	/**
-	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
-	 * und Infos anderer Nutzerprofile berechnen. 
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitSpFor(int)
 	 */
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
 		
+		/**
+		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden können.
+		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Suchprofil in der Berechnung berücksichtig werden. 
+		 */
 		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 		
+		/**
+		 * Alle Suchprofile des Nutzers werden ausgelesen und 
+		 * alle Nutzerprofile die gegen den Nutzer keine Sperrung gesetzt haben.
+		 */
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(profilId);
 		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
 		
-		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
+		/**
+		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
+		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
+		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heißt das dem Nutzer sind diese Angaben egal.
+		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 				int aehnlichkeitSp = 0;
@@ -668,7 +727,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
-				String suchprofilName = sp.getSuchprofilName();
+				
 				
 				if(sp.getGeschlecht().equals("Keine Auswhal")){
 					aehnlichkeitSp = aehnlichkeitSp + 30;
@@ -719,7 +778,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					
 					
 				}
-				
+				/**
+				 * Umrechnung des Datums im Suchprofil in ein Alter.
+				 */
 				GregorianCalendar geburtstag = new GregorianCalendar();
 				 		        geburtstag.setTime(np.getGeburtsdatumDate());
 				 		        GregorianCalendar heute = new GregorianCalendar();
@@ -744,13 +805,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				
 				
 				
-				// Holen aller Infos des Suchprofils und Nuterprofils
+				/**
+				 * Auslesen aller Infos aus einem Suchproifl und einem Vergleichsprofil.
+				 */
 				List<Info> referenzinfo = infoMapper
 						.findAllInfosNeu(suchprofilId);
 				List<Info> vergleichsinfo = infoMapper
 						.findAllInfosNeu(fremdprofilId);
 				
-				// Vergleich der Infos
+				/**
+				 * Vergleich der Infos des Suchprofils mit den Infos aus dem Vergleichsprofil.
+				 */
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
@@ -777,8 +842,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					}
 				}
 				
-				// Berechnung des Prozentwertes
+				/**
+				 * Berechnung des Prozentwertes.
+				 */
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
+				
+				/**
+				 * Damit Partnervorschlaege mit dem richtigen, im Suchprofil angegebenen, Geschlecht angezeigt werden,
+				 * wird die Aehnlichkeit in der Datenbank nur gespeichert,
+				 * wenn das Geschlecht des Vergleichprofils mit dem Geschlecht des Suchprofils uebereinstimmt.
+				 */
 				
 				if(sp.getGeschlecht().equals(np.getGeschlecht())){
 					// Aehnlichkeit in die Datenbank setzen
@@ -787,7 +860,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 						aehnlichkeitSp);
 									
 				} else {
-					
+					/**
+					 * Ist im Suchprofil das Geschlecht mit "Keine Auswahl" gesetzt,
+					 *wird die Aehnlichkeit unabhaengig vom Geschlecht des Vergelichsprofil in der Datenbank gespeichert.
+					 */
 					if (sp.getGeschlecht().equals("Keine Auswahl")){
 						// Aehnlichkeit in die Datenbank setzen
 						suchprofilMapper.insertAehnlichkeit(profilId,
@@ -804,8 +880,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle Partnervorschlaege anhand von Suchprofilen fuer einen Nutzer
-	 * auslesen. Es werden nur diejenigen Nutzerprofile ausgelesen, von denen
+	 * auslesen. Es werden nur die Nutzerprofile ausgelesen, von denen
 	 * der Nutzer nicht gesperrt wurde.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGeordnetePartnervorschlaegeSp(int, String)
 	 */
 
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId,
@@ -832,7 +910,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
+	 */
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
 			throws IllegalArgumentException {
 
@@ -872,7 +953,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		result.put(listEigB, listEigA);
 		return result;
 	}
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllUnusedEigenschaften(int)
+	 */
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(
 			int profilId) throws IllegalArgumentException {
 
@@ -919,7 +1003,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		result2.put(listEigB, listEigA);
 		return result2;
 	}
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfos(int)
+	 */
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
 			throws IllegalArgumentException {
 
@@ -943,6 +1030,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 *
+	 * @param suchprofilId
+	 * @return Liste von Info-Objekten
+	 * @throws IllegalArgumentException
+	 */
 	public List<String> getAllInfosNeuSp(int suchprofilId)
 			throws IllegalArgumentException {
 
@@ -966,6 +1059,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 		return list1;
 	}
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#createInfo(int, List)
+	 */
 
 	public int createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException {
@@ -986,7 +1083,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 		return ergebnis;
 	}
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
+	 */
 	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
 
 		int ergebnis;
@@ -1006,20 +1106,37 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return ergebnis;
 	}
 
+	/**
+	 * 
+	 * @param suchprofilId
+	 * @throws IllegalArgumentException
+	 */
 	public void deleteAllInfosNeuSp(int suchprofilId)
 			throws IllegalArgumentException {
 		this.infoMapper.deleteAllInfosNeu(suchprofilId);
 	}
-
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)
+	 */
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 
+	/**
+	 * 
+	 * @param suchprofilId
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
 	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
 			throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
 	}
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigBById(int)
+	 */
 
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException {
@@ -1028,7 +1145,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return eigB;
 	}
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAuswahleigenschaften(List)
+	 */
 	public List<Auswahleigenschaft> getAuswahleigenschaften(
 			List<Eigenschaft> listE) throws IllegalArgumentException {
 
@@ -1044,7 +1164,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 		return listEigA;
 	}
-
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigAById(int)
+	 */
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
@@ -1052,6 +1175,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return optionen;
 	}
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#saveInfo(int, List)
+	 */
 
 	public int saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException {
@@ -1086,12 +1213,20 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	//
 	// this.infoMapper.updateInfosNeu(i);
 	// }
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
+	 */
 
 	@Override
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosNeu(profilId);
 	}
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
+	 */
 
 	@Override
 	public String getEigenschaftstextById(int eigenschaftId)
@@ -1114,6 +1249,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * **
 	 */
 	
+	/**
+	 * Anlegen einer Beschreibungseigenschaft und das Speichern der Beschreibungseigenschaft in der Datenbank.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#createBeschreibungseigenschaft(int, String, String, String)
+	 */
+	
 	public Beschreibungseigenschaft createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, String beschreibungstext) throws IllegalArgumentException {
 
@@ -1131,6 +1272,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return b;
 	}
 	
+	/**
+	 * Anlegen einer Auswahleigenschaft und das Speichern der Auswahleigenschaft in der Datenbank.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#createAuswahleigenschaft(int, String, String, List)
+	 */
 	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId, String erleauterung,
 			String typ, List<String>  auswahloptionen) throws IllegalArgumentException {
 
@@ -1145,20 +1291,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		a = this.infoMapper.insertAuswahleigenschaft(a);
 		
-		System.out.println("hallo");
-		
 		return a;
 	}
 	
 	
 	/**
-	 * Beschreibungseigenschaft-Objekt wird aktualisiert.
+	 * Beschreibungseigenschaft-Objekt aktualisieren.
 	 * 
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param beschreibungstext
-	 * @throws IllegalArgumentException
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#saveBeschreibungseigenschaft(int, String, String, String)
 	 */
 	public void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, String beschreibungstext)
@@ -1177,12 +1317,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
-	 * Auswahleigenschaft-Objekt wird aktualisiert.
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param auswahloptionen
-	 * @throws IllegalArgumentException
+	 * Auswahleigenschaft-Objekt aktualisieren.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#saveAuswahleigenschaft(int, String, String, List)
 	 */
 	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, List<String> auswahloptionen)
@@ -1202,9 +1339,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	
 	/**
-	 * Beschreibungseigenschaft-Objekt wird geloescht.
-	 * @param eigenschaftId
-	 * @throws IllegalArgumentException
+	 * Beschreibungseigenschaft-Objekt loeschen.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteBeschreibungseigenschaft(int)
 	 */
 	public void deleteBeschreibungseigenschaft(int eigenschaftId)
 			throws IllegalArgumentException {
@@ -1212,9 +1349,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
-	 * Auswahleigenschaft-Objekt wird geloescht.
-	 * @param eigenschaftId
-	 * @throws IllegalArgumentException
+	 * Auswahleigenschaft-Objekt loeschen.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAuswahleigenschaft(int)
 	 */
 	public void deleteAuswahleigenschaft(int eigenschaftId)
 			throws IllegalArgumentException {
