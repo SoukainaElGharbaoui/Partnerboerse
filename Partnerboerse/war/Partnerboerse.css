@@ -95,6 +95,21 @@ div#Trailer {
 	margin-bottom: 1.5em;
 }
 
+.welcome-label {
+	font-size: 200%;
+	font-weight: bold;
+  	font-family: Perpetua, sans-serif;
+	color: #831b1d;
+ 	text-align: center;
+}
+
+.welcome-label2 {
+	font-size: 150%;
+	font-weight: bold;
+  	font-family: Perpetua, sans-serif;
+ 	text-align: center;
+}
+
 .partnerboerse-label {
 	font-size: 120%;
 	font-weight: bold;

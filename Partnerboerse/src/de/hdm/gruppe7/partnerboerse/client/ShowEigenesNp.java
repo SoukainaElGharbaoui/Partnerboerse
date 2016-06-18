@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -18,51 +17,49 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
-
+/**
+ * Diese Klasse dient dazu, das eigene Nutzerprofil anzuzeigen. 
+ */
 public class ShowEigenesNp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Panels hinzufuegen.
+	 * Panels erzeugen.
 	 */
-	private VerticalPanel verPanel1 = new VerticalPanel();
-	private VerticalPanel verPanel2 = new VerticalPanel();
-	private VerticalPanel loeschenVerPanel = new VerticalPanel();
+	private VerticalPanel nutzerprofilPanel = new VerticalPanel();
+	private VerticalPanel infoPanel = new VerticalPanel();
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
-	 * Widgets hinzufuegen.
+	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Ihr Profil:");
 	private FlexTable showEigenesNpFlexTable = new FlexTable();
 	private Label infoLabel = new Label();
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
-	private DialogBox loeschenDialogBox = new DialogBox();
-	private Button jaButton = new Button("Ja");
-	private Button neinButton = new Button("Nein");
-	private Label loeschenLabel = new Label(
-			"Möchten Sie Ihr Profil wirklich löschen?");
 
 	/**
-	 * Konstruktor hinzufuegen.
-	 * @param user Nutzerprofil
+	 * Konstruktor erstellen.
 	 */
 	public ShowEigenesNp() {
 
 		this.add(horPanel);
-		horPanel.add(verPanel1);
-		horPanel.add(verPanel2);
+		horPanel.add(nutzerprofilPanel);
+		horPanel.add(infoPanel);
 
 		/**
-		 * CSS anwenden
+		 * CSS anwenden und die Tabelle formatieren. 
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		showEigenesNpFlexTable.addStyleName("FlexTable");
+		showEigenesNpFlexTable.setCellPadding(6);
+		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.
@@ -79,92 +76,50 @@ public class ShowEigenesNp extends VerticalPanel {
 		showEigenesNpFlexTable.setText(9, 0, "EMail");
 
 		/**
-		 * Tabelle formatieren.
+		 * Nutzerprofil anhand der Profil-ID auslesen und die Profildaten in die Tabelle einfuegen.
 		 */
-		showEigenesNpFlexTable.setCellPadding(6);
-		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0,
-				"TableHeader");
-		showEigenesNpFlexTable.addStyleName("FlexTable");
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
+			new AsyncCallback<Nutzerprofil>() {
 
-		/**
-		 * Nutzerprofil anhand der Profil-ID auslesen.
-		 */
-		ClientsideSettings.getPartnerboerseAdministration()
-				.getNutzerprofilById(nutzerprofil.getProfilId(),
-						new AsyncCallback<Nutzerprofil>() {
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
 
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-							}
+					public void onSuccess(Nutzerprofil result) {
+						String nutzerprofilId = String.valueOf(result.getProfilId());
 
-							public void onSuccess(Nutzerprofil result) {
-								
-								// Nutzerprofil-Id aus der Datenabank holen
-								// und in Tabelle eintragen
-								String nutzerprofilId = String.valueOf(result
-										.getProfilId());
+						nutzerprofil.setProfilId(Integer.valueOf(nutzerprofilId));
+								showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
-								nutzerprofil.setProfilId(Integer
-										.valueOf(nutzerprofilId));
-								showEigenesNpFlexTable.setText(0, 1,
-										nutzerprofilId);
+								showEigenesNpFlexTable.setText(1, 1, result.getVorname());
 
-								// Vorname aus Datenbank aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(1, 1,
-										result.getVorname());
+								showEigenesNpFlexTable.setText(2, 1, result.getNachname());
 
-								// Nachname aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(2, 1,
-										result.getNachname());
+								showEigenesNpFlexTable.setText(3, 1, result.getGeschlecht());
 
-								// Geschlecht aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(3, 1,
-										result.getGeschlecht());
-
-								// Geburtsdatum aus der Datenbank holen
-								// und in Tabelle eintragen
 								Date geburtsdatum = result.getGeburtsdatumDate();
 								String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 								showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
 
+								showEigenesNpFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
 
-								// Koerpergroesse aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(5, 1,
-										(Integer.toString(result
-												.getKoerpergroesseInt())));
+								showEigenesNpFlexTable.setText(6, 1, result.getHaarfarbe());
 
-								// Haarfarbe aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(6, 1,
-										result.getHaarfarbe());
+								showEigenesNpFlexTable.setText(7, 1, result.getRaucher());
 
-								// Raucher aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(7, 1,
-										result.getRaucher());
+								showEigenesNpFlexTable.setText(8, 1, result.getReligion());
 
-								// Religion aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(8, 1,
-										result.getReligion());
-
-								// EMail aus der Datenbank holen
-								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(9, 1,
-										result.getEmailAddress());
+								showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
 							}
 						});
 
 		/**
-		 * ClickHandler fuer den Button zum Bearbeiten hinzufuegen.
+		 * ClickHandler fuer den Button zum Bearbeiten des Nutzerprofils erzeugen. 
+		 * Sobald der Button betaetigt wird, wird die Seite zum Bearbeiten des 
+		 * Nutzerprofils aufgerufen. 
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				// Seite zum Bearbeiten des Nutzerprofils aufrufen.
 				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
@@ -172,22 +127,24 @@ public class ShowEigenesNp extends VerticalPanel {
 		});
 
 		/**
-		 * ClickHandler fuer den Loeschen-Button hinzufuegen.
+		 * ClickHandler fuer den Button zum Loeschen des Nutzerprofils erzeugen. 
+		 * Sobald der Button betaetigt wird, erscheint eine Bildschrimmeldung, 
+		 * die hinterfragt, ob das Nutzerprofil tatsaechlich geloescht werden 
+		 * soll. Wird diese mit "Ok" bestaetigt, wird das Nutzerprofil aus der
+		 * Datenbank entfernt. Zudem wird das Nutzerprofil ausgeloggt und auf 
+		 * die Login-Seite weitergeleitet. 
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
 					
-					//Nutzerprofil loeschen.
 					ClientsideSettings.getPartnerboerseAdministration()
 							.deleteNutzerprofil(nutzerprofil.getProfilId(),
 									new AsyncCallback<Void>() {
 
-										public void onFailure(
-												Throwable caught) {
-											infoLabel
-													.setText("Es trat ein Fehler auf.");
+										public void onFailure(Throwable caught) {
+											infoLabel.setText("Es trat ein Fehler auf.");
 										}
 
 										public void onSuccess(Void result) {
@@ -217,20 +174,20 @@ public class ShowEigenesNp extends VerticalPanel {
 		
 		
 		/**
-		 * Infos anzeigen.
+		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
 		ShowInfoNp showInfoNp = new ShowInfoNp(nutzerprofil.getProfilId());
 
 		/**
 		 * Widgets den Panels hinzufuegen.
 		 */
-		verPanel1.add(ueberschriftLabel);
-		verPanel1.add(showEigenesNpFlexTable);
+		nutzerprofilPanel.add(ueberschriftLabel);
+		nutzerprofilPanel.add(showEigenesNpFlexTable);
 		buttonPanel.add(bearbeitenButton);
 		buttonPanel.add(loeschenButton);
-		verPanel1.add(buttonPanel);
-		verPanel1.add(infoLabel);
-		verPanel2.add(showInfoNp);
+		nutzerprofilPanel.add(buttonPanel);
+		nutzerprofilPanel.add(infoLabel);
+		infoPanel.add(showInfoNp);
 
 	}
 
