@@ -102,7 +102,9 @@ public class ShowSuchprofil extends VerticalPanel {
 				} else {
 					for (Suchprofil s : result) {
 						auswahlListBox.addItem(s.getSuchprofilName());
+						
 					}
+									
 					createSuchprofilButton.setVisible(false);
 				}
 			}

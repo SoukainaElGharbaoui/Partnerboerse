@@ -31,6 +31,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	
 	private String eigenschaftId;
 	private String beschreibungstext;
+	private int row;
 	
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
@@ -84,7 +85,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 						
 						informationLabel.setText("Die Methode wurde aufgerufen.");
 						
-						int row = showUnusedEigenschaftFlexTable.getRowCount();
+						 row = showUnusedEigenschaftFlexTable.getRowCount();
 						
 						Set<List<Beschreibungseigenschaft>> output = result.keySet();
 
@@ -241,7 +242,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 								
 								// Fall, profilId gehört zu Suchprofil
 								else if (result == 1) {
-									int suchprofilId = 0;
+									
+									int suchprofilId = Integer.valueOf(showUnusedEigenschaftFlexTable.getText(row, 0));
 									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
 									
 									RootPanel.get("Details").clear();

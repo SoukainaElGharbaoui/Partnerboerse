@@ -208,11 +208,14 @@ public class ShowInfoNp extends VerticalPanel {
 						
 						// Fall, profilId gehört zu Suchprofil
 						else if (result == 1) {
-							int suchprofilId= 0;
+							
+							int suchprofilId = profilId;
 							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
 							
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showSp);
+											
+							
 						}
 					}
 				});

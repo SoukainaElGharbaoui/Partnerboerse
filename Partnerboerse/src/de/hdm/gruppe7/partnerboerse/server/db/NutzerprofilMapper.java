@@ -382,26 +382,13 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
-							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, "
-							+ "t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion , t_aehnlichkeitnp1.aehnlichkeit "
-							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 "
-							+ "ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
-							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
-							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
-							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id "
-
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id != "
-							+ profilId
-							+ " AND (t_besuch1.nutzerprofil_id !="
-							+ profilId
-							+ " OR t_besuch1.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung1.fremdprofil_id !="
-							+ profilId
-							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
-							+ "AND t_aehnlichkeitnp1.nutzerprofil_id ="
-							+ profilId
-							+ " ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
+					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, "
+							+ "t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion, "
+							+ "t_aehnlichkeitnp1.aehnlichkeit FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
+							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id LEFT JOIN t_aehnlichkeitnp1 "
+							+ "ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id WHERE t_nutzerprofil1.nutzerprofil_id !=" +profilId 
+							+ " AND t_aehnlichkeitnp1.nutzerprofil_id =" + profilId 
+							+ " ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC ");
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
