@@ -214,7 +214,7 @@ public class SuchprofilMapper {
 	 * Suchprofil-Objekt anhand der Profil-ID und der Suchprofil-ID auslesen.
 	 * @param profilId
 	 * @param suchprofilId
-	 * @return
+	 * @return Suchprofil-Objekt
 	 */
 	
 	public Suchprofil findSuchprofilById (int profilId, int suchprofilId){

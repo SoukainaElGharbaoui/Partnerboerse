@@ -4,7 +4,7 @@ body {
     margin-bottom: 120px; 
      width: 100%;
      height: 100%;
-     overflow: scroll;
+     overflow: auto !important;
      
   }
   
@@ -69,9 +69,10 @@ div#Trailer {
 	text-align: center;
 	position: fixed;
 	bottom: 0;
+	right: 0;
 	width: 100%;
 	height: 9px;
-	overflow: hidden;
+	overflow: auto;
 	background: #8080ff;
 }
 
@@ -145,8 +146,18 @@ div#Trailer {
    background: #8080ff; 
 } */
 .menubar {
-	width: 900px;
-	background: #6b6bf1;
+	background: #cee6fd;
+	border: 1px ridge #b0a5f5;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	
+}
+
+.menuItem{
+   cursor: default;
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 12px;
+   background: #cee6fd;
+   border: 1px ridge #d7d1fa;
 }
 
 /* MERKLISTE BEGINN */ 
@@ -160,7 +171,7 @@ div#Trailer {
   border: 3px solid #0b0259;
   padding: 2px;
   margin-right: 150px; 
-  margin-bottom: 5px;
+  margin-bottom: 60px;
   overflow: scroll;
 }
 

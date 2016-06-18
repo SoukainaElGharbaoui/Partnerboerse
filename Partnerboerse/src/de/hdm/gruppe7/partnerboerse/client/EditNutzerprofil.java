@@ -10,6 +10,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -44,6 +45,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	private ListBox geschlechtListBox = new ListBox();
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
+
 	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
@@ -58,6 +60,17 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
+	CharSequence zahl = "0";
+	CharSequence zahl1 = "1";
+	CharSequence zahl2 = "2";
+	CharSequence zahl3 = "3";
+	CharSequence zahl4 = "4";
+	CharSequence zahl5 = "5";
+	CharSequence zahl6 = "6";
+	CharSequence zahl7 = "7";
+	CharSequence zahl8 = "8";
+	CharSequence zahl9 = "9";
+	CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü";
 
 	private Button editNutzerprofilButton = new Button("Profil speichern");
 
@@ -218,6 +231,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
+
 				} else if (vornameWert == false){
 					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
 					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);

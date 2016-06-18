@@ -11,6 +11,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -46,6 +47,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox geschlechtListBox = new ListBox();;
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
+
 	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
@@ -156,6 +158,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * ClickHandler fuer den Nutzerprofil-Anlegen-Button hinzufuegen.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 
 				boolean vornameWert = isBuchstabe(vornameTextBox.getText()); 
@@ -168,6 +171,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+
 				} else if (vornameWert == false){
 					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
@@ -185,6 +189,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 				} else {
 					
+
 					/**
 					 * Nutzerprofil anlegen.
 					 */

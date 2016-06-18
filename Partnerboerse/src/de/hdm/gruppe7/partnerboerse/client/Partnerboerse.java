@@ -55,15 +55,16 @@ public class Partnerboerse implements EntryPoint {
 							// wenn der user eingeloggt ist
 							if (result.isLoggedIn()) {
 
+
 								if (result.getEmailAddress() != null) {
 									
+
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + result.getProfilId() 
 											+ " ausloggen");
 									
 									loginPanel.add(signOutLink);
-									
-									
+												
 									ClientsideSettings.getPartnerboerseAdministration()
 										.pruefeObNutzerNeu(result.getEmailAddress(),
 										 new AsyncCallback<Boolean>() {
@@ -101,7 +102,7 @@ public class Partnerboerse implements EntryPoint {
 							else if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Details").add(loginPanel);
+								RootPanel.get("Navigator").add(loginPanel);
 							}
 						}
 					});

@@ -225,7 +225,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
 	 * @param profilId
 	 * @param suchprofilId
-	 * @return
+	 * @return Suchprofil-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
