@@ -1,8 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import com.google.gwt.core.client.GWT;
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -13,9 +16,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+
 
 public class ShowEigenesNp extends VerticalPanel {
 
@@ -39,8 +41,8 @@ public class ShowEigenesNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Ihr Profil:");
 	private FlexTable showEigenesNpFlexTable = new FlexTable();
 	private Label infoLabel = new Label();
-	private Button loeschenButton = new Button("Löschen");
-	private Button bearbeitenButton = new Button("Bearbeiten");
+	private Button loeschenButton = new Button("Profil löschen");
+	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	private DialogBox loeschenDialogBox = new DialogBox();
 	private Button jaButton = new Button("Ja");
 	private Button neinButton = new Button("Nein");
@@ -49,6 +51,7 @@ public class ShowEigenesNp extends VerticalPanel {
 
 	/**
 	 * Konstruktor hinzufuegen.
+	 * @param user Nutzerprofil
 	 */
 	public ShowEigenesNp() {
 
@@ -57,7 +60,7 @@ public class ShowEigenesNp extends VerticalPanel {
 		horPanel.add(verPanel2);
 
 		/**
-		 * CSS anwenden.
+		 * CSS anwenden
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
@@ -123,8 +126,10 @@ public class ShowEigenesNp extends VerticalPanel {
 
 								// Geburtsdatum aus der Datenbank holen
 								// und in Tabelle eintragen
-								showEigenesNpFlexTable.setText(4, 1, String
-										.valueOf(result.getGeburtsdatumDate()));
+								Date geburtsdatum = result.getGeburtsdatumDate();
+								String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+								showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
+
 
 								// Koerpergroesse aus der Datenbank holen
 								// und in Tabelle eintragen
@@ -171,76 +176,44 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
+					
+					//Nutzerprofil loeschen.
+					ClientsideSettings.getPartnerboerseAdministration()
+							.deleteNutzerprofil(nutzerprofil.getProfilId(),
+									new AsyncCallback<Void>() {
 
-				// DialogBox, die abfragt, ob man das Nutzerprofil wirklich
-				// loeschen moechte, ausbauen.
-				loeschenDialogBox.setText("Information");
-				loeschenDialogBox.setAnimationEnabled(true);
-				loeschenVerPanel.add(loeschenLabel);
-				loeschenVerPanel
-						.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-				loeschenVerPanel.add(jaButton);
-				loeschenVerPanel.add(neinButton);
-				loeschenDialogBox.setWidget(loeschenVerPanel);
-				loeschenDialogBox.center();
+										public void onFailure(
+												Throwable caught) {
+											infoLabel
+													.setText("Es trat ein Fehler auf.");
+										}
 
-				/**
-				 * ClickHandler fuer den Ja-Button hinzufuegen.
-				 */
-				jaButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-
-						// Nutzerprofil loeschen.
-						ClientsideSettings.getPartnerboerseAdministration()
-								.deleteNutzerprofil(nutzerprofil.getProfilId(),
-										new AsyncCallback<Void>() {
-
-											public void onFailure(
-													Throwable caught) {
-												infoLabel
-														.setText("Es trat ein Fehler auf.");
-											}
-
-											public void onSuccess(Void result) {
-												/**
-												 * Noch ausbauen: Weiterleitung
-												 * auf Logout-Seite.
-												 */
-												
-												HorizontalPanel loginPanel = new HorizontalPanel();
-												
-												Anchor signOutLink = new Anchor();
-												signOutLink.setHref(nutzerprofil.getLogoutUrl());
-												
-												signOutLink.setText("Bestätige das Löschen mit einem Klick.");
-												
-												loginPanel.add(signOutLink);
-
-												
-												Anchor signIn = new Anchor();
-												signIn.setText("Jetzt einloggen");
-												 
-												RootPanel.get("Navigator").clear();
-												RootPanel.get("Details").clear();
-												 
-												RootPanel.get("Navigator").add(loginPanel);
-											}
-										});
-						loeschenDialogBox.hide();
-					}
-				});
-
-				/**
-				 * ClickHandler fuer den Nein-Button hinzufuegen.
-				 */
-				neinButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						loeschenDialogBox.hide();
-					}
-				});
+										public void onSuccess(Void result) {
+				
+											HorizontalPanel loginPanel = new HorizontalPanel();
+											
+											Anchor signOutLink = new Anchor();
+											signOutLink.setHref(nutzerprofil.getLogoutUrl());
+											
+											signOutLink.setText("Bestätige das Löschen mit einem Klick.");
+											
+											loginPanel.add(signOutLink);
+							
+											
+											Anchor signIn = new Anchor();
+											signIn.setText("Jetzt einloggen");
+											 
+											RootPanel.get("Navigator").clear();
+											RootPanel.get("Details").clear();
+											 
+											RootPanel.get("Navigator").add(loginPanel);
+										}
+							});
+				}
 			}
 		});
-
 		
 		
 		/**
@@ -253,8 +226,8 @@ public class ShowEigenesNp extends VerticalPanel {
 		 */
 		verPanel1.add(ueberschriftLabel);
 		verPanel1.add(showEigenesNpFlexTable);
-		buttonPanel.add(loeschenButton);
 		buttonPanel.add(bearbeitenButton);
+		buttonPanel.add(loeschenButton);
 		verPanel1.add(buttonPanel);
 		verPanel1.add(infoLabel);
 		verPanel2.add(showInfoNp);

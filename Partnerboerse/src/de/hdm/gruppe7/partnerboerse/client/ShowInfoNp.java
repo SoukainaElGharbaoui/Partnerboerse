@@ -26,9 +26,9 @@ public class ShowInfoNp extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
 	
-	private Button loeschenButton = new Button("Alle Infos löschen");
-	private Button bearbeitenButton = new Button("Bearbeiten");
-	private Button erstelleRestlicheInfosButton = new Button("Weitere Infos anlegen");
+	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
+	private Button bearbeitenButton = new Button("Infos bearbeiten");
+	private Button loeschenButton = new Button("Infos löschen");
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
@@ -172,16 +172,16 @@ public class ShowInfoNp extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
+
+		verPanel.add(buttonPanel); 
+		buttonPanel.add(erstelleRestlicheInfosButton);
+		
+		verPanel.add(buttonPanel);
+		buttonPanel.add(bearbeitenButton);
 		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
 
-		verPanel.add(buttonPanel);
-		buttonPanel.add(bearbeitenButton);
-
-		verPanel.add(buttonPanel);
-		buttonPanel.add(erstelleRestlicheInfosButton);
-		
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -208,8 +208,8 @@ public class ShowInfoNp extends VerticalPanel {
 						
 						// Fall, profilId gehört zu Suchprofil
 						else if (result == 1) {
-							
-							ShowSuchprofil showSp = new ShowSuchprofil();
+							String suchprofilName = null;
+							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 							
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showSp);

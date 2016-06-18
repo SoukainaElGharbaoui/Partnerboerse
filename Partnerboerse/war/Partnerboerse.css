@@ -1,60 +1,77 @@
+
 body {
-    text-align: center;  /* Zentrierung im Internet Explorer */
+    text-align: left;  /* Zentrierung im Internet Explorer */
+    margin-bottom: 120px; 
+     width: 100%;
+     height: 100%;
+     overflow: scroll;
+     
   }
+  
 
 h1 {
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 20px;
+  font-family: Perpetua, sans-serif;
+  font-style: italic;
+  color: #831b1d;
+ /*  margin: 40px 0px 20px; */
   text-align: center;
 }
+ 
+ /* div#TopLevelFrame{
+	height: 900px;
+	align: left;
+	
+}  */ 
 
-div#Header {
-	margin: 5px; 	
-	background: #ff9191
+div#Header { 	
+	 /* background: #00ffff;   */
+	 max-height: 150px;
+	 padding: auto;
 }
 
 div#Navigator {
 
-	 /*max-height: 300px; */
-	/*overflow:scroll;*/
-	border: 3px solid silver; 
-
 	/*  max-height: 300px; */
-	 /*overflow:scroll; */
+	/* overflow:scroll;  */
 	border: 0px solid silver; 
 
-	padding: 3em 4em;
-	width: 100px; 
-	height: 720px;
+	/* padding: 3em 4em; */
+	width: 0px; 
+	height: 870px;
 	
-	background: #ffffff;
+	/* background: #b4c7fa; */
 } 
 
 div#Space{
 	width: 100px; 
-	height: 370px;
+	height: 210px;
+	
+	/* background: #800080; */
 }
 
 div#Details {
 	
 	/*padding: 3em 4em;*/
 	width: 900px; 
-	height: 370px;
+	height: 660px;
 	
-	background: #ffffff;
+	/*  background: #b4c7fa; */ 
 }
 
 div#Trailer {
 	clear: both;
-	padding: 10px 0;
+	padding: 3px 0;
 	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
-	/*position: fixed;*/
-	
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 9px;
+	overflow: hidden;
 	background: #8080ff;
 }
 
@@ -81,7 +98,7 @@ div#Trailer {
 	font-size: 120%;
 	font-weight: bold;
 	/* font-style: italic; */
-	color: gray;
+	color: #4430fe;
 	padding-bottom: 0.5em;
 }
 
@@ -93,18 +110,58 @@ div#Trailer {
 	padding-bottom: 0.5em;
 }
 
+/* .gwt-MenuBar {
+   cursor: default;  
+}
+.gwt-MenuBar .gwt-MenuItem {
+   cursor: default;
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 12px;
+}
+.gwt-MenuBar .gwt-MenuItem-selected {
+   background: #E3E8F3;
+}
+.gwt-MenuBar-horizontal {
+   background: #cda9eburl(images/hborder.png) repeat-x 0px -2003px;
+   border: 1px solid #e0e0e0;
+}
+.gwt-MenuBar-horizontal .gwt-MenuItem {
+   padding: 5px 10px;
+   vertical-align: bottom;
+   color: #000;
+   font-weight: bold;  
+}
+.gwt-MenuBar-horizontal .gwt-MenuItemSeparator {
+   width: 1px;
+   padding: 0px;
+   margin: 0px;
+   border: 0px;
+   border-left: 1px solid #ccc;
+   background: white;
+}
+.gwt-MenuBar-horizontal .gwt-MenuItemSeparator .menuSeparatorInner {
+   width: 1px;
+   height: 1px;
+   background: #8080ff; 
+} */
+.menubar {
+	width: 900px;
+	background: #6b6bf1;
+}
+
 /* MERKLISTE BEGINN */ 
 
 .TableHeader {
-  background-color: #808080;
+  background-color: #7c9ef8;
   color: black;
 }
  
 .FlexTable {
-  border: 1px solid silver;
+  border: 3px solid #0b0259;
   padding: 2px;
   margin-right: 150px; 
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  overflow: scroll;
 }
 
 .red_label {

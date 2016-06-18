@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -132,6 +134,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(nutzerprofil.getProfilId(),
 						auswahlListBox.getSelectedItemText(), new AsyncCallback<List<Nutzerprofil>>() {
 
+
 							@Override
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf");
@@ -172,11 +175,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									row++;
 									partnervorschlaegeSpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
 									partnervorschlaegeSpFlexTable.setText(row, 1,
-											String.valueOf(np.getAehnlichkeitSp()) + "%");
+											String.valueOf(np.getAehnlichkeit()) + "%");
 									partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
 									partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
-									partnervorschlaegeSpFlexTable.setText(row, 4,
-											String.valueOf(np.getGeburtsdatumDate()));
+									
+									Date geburtsdatum = np.getGeburtsdatumDate();
+									String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+									
+									partnervorschlaegeSpFlexTable.setText(row, 4, geburtsdatumString);
 									partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
 
 									// Anzeigen-Button f�r das Fremdprofil

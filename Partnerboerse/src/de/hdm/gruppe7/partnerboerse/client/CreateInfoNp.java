@@ -36,8 +36,8 @@ public class CreateInfoNp extends VerticalPanel {
 	private String eigenschaftId = null;
 	private String beschreibungstext = null;
 
-	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Info anlegen:");
+	private Button createInfosButton = new Button("Infos anlegen");
+	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
 
 	public CreateInfoNp(final int profilId) {
@@ -237,8 +237,8 @@ public class CreateInfoNp extends VerticalPanel {
 								}
 
 								else if (result == 1) {
-									
-									ShowSuchprofil showSp = new ShowSuchprofil();
+									String suchprofilName = null;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

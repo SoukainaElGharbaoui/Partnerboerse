@@ -2,13 +2,11 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 
@@ -23,10 +21,14 @@ public class Navigator extends HorizontalPanel {
 
 	public Navigator() {
 
+		
+		VerticalPanel verPanel1 = new VerticalPanel();
+		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("900px");
+		menu.setWidth("480px");
 		menu.setAnimationEnabled(true);
+		menu.setStyleName("gwt-MenuBar-horizontal");
 
 		// Create the file menu
 		MenuBar nutzerprofilMenu = new MenuBar(true);
@@ -41,9 +43,8 @@ public class Navigator extends HorizontalPanel {
 			}
 		});
 
-		
-		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
 
+		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
 			@Override
 			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
@@ -68,7 +69,7 @@ public class Navigator extends HorizontalPanel {
 		MenuBar suchprofilMenu = new MenuBar(true);
 		suchprofilMenu.setAnimationEnabled(true);
 
-		suchprofilMenu.addItem("Neues Suchprofil anlegen", new Command() {
+		suchprofilMenu.addItem("Suchprofil anlegen", new Command() {
 
 			@Override
 			public void execute() {
@@ -90,7 +91,8 @@ public class Navigator extends HorizontalPanel {
 		suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+				String suchprofilName = null;
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
 			}
@@ -101,7 +103,7 @@ public class Navigator extends HorizontalPanel {
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
 
-		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschläge anzeigen", new Command() {
 
 			@Override
 			public void execute() {
@@ -116,20 +118,20 @@ public class Navigator extends HorizontalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
+								ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 							}
 
 						});
 
-				ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 			}
 
 		});
 
-		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen anzeigen", new Command() {
+		partnervorschlaegeMenu.addItem("Partnervorschläge anhand von Suchprofilen anzeigen", new Command() {
 
 			@Override
 			public void execute() {
@@ -147,38 +149,38 @@ public class Navigator extends HorizontalPanel {
 							public void onSuccess(Void result3) {
 								// infoLabel.setText("Es hier trat kein Fehler
 								// auf.");
+							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showPartnervorschlaegeSp);
 
 							}
 				});
 
-				ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showPartnervorschlaegeSp);
-
+				
 			}
 
 		});
 		
-		partnervorschlaegeMenu.addSeparator();
-		
-		// Create the file menu
-				MenuBar statusMenu = new MenuBar(true);
-				statusMenu.setAnimationEnabled(true);
-
-				statusMenu.addItem("Ausloggen", new Command() {
-					@Override
-					public void execute() {
-//						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-//						RootPanel.get("Details").clear();
-//						RootPanel.get("Details").add(showEigenesNp);
-						
-						Anchor signOutLink = new Anchor();
-
-						signOutLink.setHref(nutzerprofil.getLogoutUrl());
-						signOutLink.setText("Als " + nutzerprofil.getVorname() + " ausloggen");
-						
-					}
-				});
+//		partnervorschlaegeMenu.addSeparator();
+//		
+//		// Create the file menu
+//				MenuBar statusMenu = new MenuBar(true);
+//				statusMenu.setAnimationEnabled(true);
+//
+//				statusMenu.addItem("Ausloggen", new Command() {
+//					@Override
+//					public void execute() {
+////						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+////						RootPanel.get("Details").clear();
+////						RootPanel.get("Details").add(showEigenesNp);
+//						
+//						Anchor signOutLink = new Anchor();
+//
+//						signOutLink.setHref(nutzerprofil.getLogoutUrl());
+//						signOutLink.setText("Als " + nutzerprofil.getVorname() + " ausloggen");
+//						
+//					}
+//				});
 		
 		
 
@@ -187,7 +189,7 @@ public class Navigator extends HorizontalPanel {
 		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
-		menu.addItem(new MenuItem("Ausloggen", statusMenu));
+//		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu

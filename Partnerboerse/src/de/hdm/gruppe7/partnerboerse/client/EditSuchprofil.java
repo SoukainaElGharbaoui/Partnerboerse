@@ -52,7 +52,7 @@ public class EditSuchprofil extends VerticalPanel {
 	/**
 	 * Button zum Speichern der Aenderungen hinzufuegen.
 	 */
-	private Button saveSuchprofilButton = new Button("Suchprofil bearbeiten");
+	private Button saveSuchprofilButton = new Button("Suchprofil speichern");
 
 	/**
 	 * Labels zur Benutzerinformation hinzufuegen.
@@ -107,6 +107,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(1, 2, suchprofilNameTextBox);
 		editSuchprofilFlexTable.setWidget(1, 3, reqLabel1);
 
+		geschlechtListBox.addItem("Keine Auswahl");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		editSuchprofilFlexTable.setWidget(2, 2, geschlechtListBox);
@@ -120,6 +121,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
 		editSuchprofilFlexTable.setWidget(5, 3, reqLabel4);
 
+		haarfarbeListBox.addItem("Keine Auswahl");
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
 		haarfarbeListBox.addItem("Rot");
@@ -128,17 +130,19 @@ public class EditSuchprofil extends VerticalPanel {
 		haarfarbeListBox.addItem("Glatze");
 		editSuchprofilFlexTable.setWidget(6, 2, haarfarbeListBox);
 
+		raucherListBox.addItem("Keine Auswahl");
 		raucherListBox.addItem("Raucher");
 		raucherListBox.addItem("Nichtraucher");
 		editSuchprofilFlexTable.setWidget(7, 2, raucherListBox);
 
+		religionListBox.addItem("Keine Auswahl");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		editSuchprofilFlexTable.setWidget(8, 2, religionListBox);
-
+		
 		/**
 		 * Daten des Suchprofils in die Tabelle einfuegen.
 		 */
@@ -219,6 +223,8 @@ public class EditSuchprofil extends VerticalPanel {
 							public void onSuccess(Integer result) {
 								// Wenn der Suchprofilname bereits
 								// existiert...
+								
+								
 								if (result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits.");
 									editSuchprofilFlexTable.setWidget(1, 4, warnungLabel);
@@ -255,7 +261,7 @@ public class EditSuchprofil extends VerticalPanel {
 													// angegeben
 													// wurde...
 													if (koerpergroesseTextBox.getText().length() == 0) {
-														warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+														warnungLabel.setText("Bitte geben Sie eine Körpergröße an.");
 														editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 													} else {
 														// Suchprofil
@@ -283,7 +289,8 @@ public class EditSuchprofil extends VerticalPanel {
 
 																			@Override
 																			public void onSuccess(Void result) {
-																				ShowSuchprofil showSuchprofil = new ShowSuchprofil();
+																				String suchprofilName = suchprofilNameTextBox.getText();
+																				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
 																				RootPanel.get("Details").clear();
 																				RootPanel.get("Details")
 																						.add(showSuchprofil);

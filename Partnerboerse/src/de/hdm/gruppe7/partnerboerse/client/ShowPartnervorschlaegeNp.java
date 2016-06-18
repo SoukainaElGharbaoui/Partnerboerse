@@ -1,9 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -36,12 +38,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	private FlexTable partnervorschlaegeNpFlexTable = new FlexTable();
 	
 	/**
-	 * Variablen
+	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
 	 */
 	private int zaehler;
 	
 	/**
-	 * Methode zur Überprüfung, ob die Tabelle leer ist
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
 	 */
 	public boolean pruefeLeereTable() {
 		
@@ -108,14 +110,19 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						int row = partnervorschlaegeNpFlexTable.getRowCount();
 
 						for (Nutzerprofil np : result) {
-
+							System.out.println("Profil geholt: " + np);
+							infoLabel.setText("Es trat kein Fehler auf");
 							final int fremdprofilId = np.getProfilId();
 							row++;
 							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
 							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
 							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname());
 							partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
-							partnervorschlaegeNpFlexTable.setText(row, 4, String.valueOf(np.getGeburtsdatumDate()));
+							
+							Date geburtsdatum = np.getGeburtsdatumDate();
+							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+							
+							partnervorschlaegeNpFlexTable.setText(row, 4, geburtsdatumString);
 							partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht());
 
 							// Anzeigen-Button formatieren und CSS einbinden

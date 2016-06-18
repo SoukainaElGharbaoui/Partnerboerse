@@ -7,7 +7,6 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-//import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahloption;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
@@ -19,7 +18,28 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public interface PartnerboerseAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Login
+	 * *************************************************************************
+	 * **
+	 */
 
+	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
+
+	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
+	
+	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
+
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Login
+	 * *************************************************************************
+	 * **
+	 */
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Nutzerprofil
@@ -31,32 +51,15 @@ public interface PartnerboerseAdministrationAsync {
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
 			AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * Nutzerprofil aktualisieren.
-	 */
 	void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
-	/**
-	 * Nutzerprofil l�schen.
-	 */
 	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
-	/**
-	 * Nutzerprofil anhand dessen Profil-ID auslesen.
-	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * Fremdprofil anhand dessen Profil-ID auslesen.
-	 */
 	void getFremdprofilById(int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
-
-	/**
-	 * Alle Nutzerprofile auslesen.
-	 */
-	void getAllNutzerprofile(AsyncCallback<List<Nutzerprofil>> callback);
 
 	/*
 	 * *************************************************************************
@@ -72,43 +75,22 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	/**
-	 * Suchprofil anlegen.
-	 */
 	void createSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 
-	/**
-	 * Suchprofil aktualisieren.
-	 */
 	void saveSuchprofil(int profilId, int suchprofilId, String suchprofilName, String geschlecht,
 			int alterMinInt, int alterMaxInt, int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
-	/**
-	 * Suchprofil loeschen.
-	 */
 	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 
-	/**
-	 * Alle Suchprofile eines Nutzers anzeigen.
-	 */
 	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback);
 	
-	/**
-	 * Suchprofil anhand des Suchprofilnamens auslesen.
-	 */
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback);
 	
-	/**
-	 * Suchprofilname beim Anlegen eines Suchprofils ueberpruefen.
-	 */
 	void pruefeSuchprofilnameCreate(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
 
-	/**
-	 * Suchprofilname beim Editieren eines Suchprofils ueberpruefen.
-	 */
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, String suchprofilname,
 			AsyncCallback<Integer> callback);
 
@@ -126,13 +108,10 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	// Alle Vermerke eines Nutzerprofils auslesen.
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Merkliste> callback);
 
-	// Vermerkstatus ermitteln.
 	void pruefeVermerkstatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Vermerkstatus aendern.
 	void vermerkstatusAendern(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/*
@@ -149,16 +128,12 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 
-	// Alle Sperrungen eines Nutzerprofils auslesen.
 	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Sperrliste> callback);
 
-	// Pruefen, ob Fremdprofil von Benutzer gesperrt wurde.
 	void pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Pruefen, ob Benutzer von Fremdprofil gesperrt wurde.
 	void getSperrstatusEigenesProfil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
-	// Sperrstatus aendern.
 	void sperrstatusAendern(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/*
@@ -170,33 +145,32 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Partnervorschl�ge
+	 * ** ABSCHNITT, Beginn: PartnervorschlaegeNp
 	 * *************************************************************************
 	 * **
 	 */
 
-	// Alle unangesehenen Nutzerprofile auslesen.
 	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
-	// Besuch setzen.
 	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
+	
+	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
 
 	void berechneAehnlichkeitNpFor(int profilId, AsyncCallback<Void> callback);
 
-	void aehnlichkeitEntfernen(int profilId, AsyncCallback<Void> callback);
-
 	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
+
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Partnervorschl�ge
+	 * ** ABSCHNITT, Ende: PartnervorschlaegeNp
 	 * *************************************************************************
 	 * **
 	 */
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlägeSp
+	 * ** ABSCHNITT, Beginn: PartnervorschlaegeSp
 	 * *************************************************************************
 	 * **
 	 */
@@ -210,7 +184,7 @@ public interface PartnerboerseAdministrationAsync {
 
 	/*
 	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlägeSp
+	 * ** ABSCHNITT, Ende: PartnervorschlaegeSp
 	 * *************************************************************************
 	 * **
 	 */
@@ -255,14 +229,4 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
-
-	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
-
-	// public void insertEmail(int profilId, String emailAddress,
-	// AsyncCallback<Nutzerprofil> callback);
-
-	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
-
-	void pruefeObNutzerNeu(String email, AsyncCallback<Boolean> callback);
-
 }

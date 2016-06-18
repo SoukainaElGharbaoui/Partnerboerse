@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -24,59 +25,25 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
-	/**
-	 * VerticalPanel hinzufügen.
-	 */
-	VerticalPanel verPanel = new VerticalPanel();
+	
+	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
-	/**
-	 * Label zur Information hinzufügen.
-	 */
+	private Label auswahlLabel = new Label("Wählen Sie ein Suchprofil aus, zu welchem Sie Partnervorschläge anzeigen möchten.");
 	private Label infoLabel = new Label();
-//	private Label informationLabel = new Label();
-	private Label ueberschriftLabel = new Label();
-	
-	private Label auswahlLabel = new Label("WÃ¤hlen Sie das anzuzeigende Suchprofil aus.");
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenButton = new Button("Partnervorschlaege Report anzeigen");
-
-	
-//	private int zaehler;
-//	
-//	public boolean pruefeLeereTable() {
-//		
-//		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
-//			
-//			if (merklisteFlexTable.getText(k, 0) == null) {
-//			}
-//			
-//			else {
-//				zaehler++;
-//			}
-//		}
-//		
-//		if (zaehler == 0) {
-//			return true;
-//		}
-//		
-//		else {
-//			return false;
-//		}
-//	}
+	private Button anzeigenButton = new Button("Partnervorschläge anzeigen");
 
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public ShowAllPartnervorschlaegeSpReport() {
-		this.add(verPanel);
-		
-		auswahlLabel.addStyleName("partnerboerse-label");
-//		informationLabel.addStyleName("partnerboerse-label");
-		
-		ueberschriftLabel.setText("Einen Moment bitte...");
-		
+	public ShowAllPartnervorschlaegeSpReport(){
+	this.add(verPanel);
+	
+	auswahlLabel.addStyleName("partnerboerse-label");
+	
 		/**
-		 * AuswahlListBox bef�llen
+		 * AuswahlListBox befuellen
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
@@ -88,8 +55,16 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Suchprofil> result) {
-						for (Suchprofil s : result) {
-							auswahlListBox.addItem(s.getSuchprofilName());
+						
+						if (result.isEmpty()) {
+							auswahlListBox.setVisible(false);
+							anzeigenButton.setVisible(false);
+							auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+
+						} else {
+							for (Suchprofil s : result) {
+								auswahlListBox.addItem(s.getSuchprofilName());
+							}
 						}
 					}
 				});
@@ -118,32 +93,22 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 									 */
 
 									HTMLReportWriter writer = new HTMLReportWriter();
+									
 									writer.process(report);
 									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport()); 
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
 							}
-							
-//							boolean befuellt = pruefeLeereTable();
-//							
-//							if (befuellt == true) {
-//								
-//								ueberschriftLabel.setVisible(false);
-//								merklisteFlexTable.setVisible(false);
-//												
-//								informationLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
-//							}
 				});
 			}
 		});
 
-		verPanel.add(infoLabel);
-//		verPanel.add(informationLabel);
-		verPanel.add(ueberschriftLabel);
-		
 		verPanel.add(auswahlLabel);
-		verPanel.add(auswahlListBox);
-		verPanel.add(anzeigenButton);
+		auswahlPanel.add(infoLabel);
+		auswahlPanel.add(auswahlListBox);
+		auswahlPanel.add(anzeigenButton);
+		verPanel.add(auswahlPanel); 
 
 	}
 }

@@ -160,6 +160,8 @@ public class CreateSuchprofil extends VerticalPanel {
 							}
 
 							public void onSuccess(Integer result) {
+								
+							
 								// Wenn der Suchprofilname bereits existiert...
 								if (result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits");
@@ -194,7 +196,7 @@ public class CreateSuchprofil extends VerticalPanel {
 													// angegeben wurde...
 												} else {
 													if (koerpergroesseTextBox.getText().length() == 0) {
-														warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+														warnungLabel.setText("Bitte geben Sie eine Körpergröße an.");
 														createSuchprofilFlexTable.setWidget(4, 4, warnungLabel);
 
 													} else {
