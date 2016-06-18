@@ -7,26 +7,30 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+/**
+ * Die Klasse <b>Partnerboerse</b> implementiert den EntryPoint.
+ * 
+ * @author Nina
+ */
 public class Partnerboerse implements EntryPoint {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
+	/**
+	 * Deklaraion der Labels für die Startseite(n)
+	 */
+	private Label begrueßen = new Label("Herzlich Willkommen bei LonelyHearts. ");
+	private Label begrueßen2 = new Label("Bitte melde dich an, um die Seite nutzen zu können.");
 
-	private Label begrueßen = new Label(
-			"Herzlich Willkommen bei LonelyHearts. ");
-	private Label begrueßen2 = new Label(
-			"Bitte melde dich an, um die Seite nutzen zu können.");
+	private Label begrueßenN = new Label("Herzlich Willkommen bei LonelyHearts. ");
+	private Label begrueßenN2 = new Label("Klicke dich nun durch die Webseite und finde andere LonelyHearts");
 
-	private Label begrueßenN = new Label(
-			"Herzlich Willkommen bei LonelyHearts. ");
-	private Label begrueßenN2 = new Label(
-			"Klicke dich nun durch die Webseite und finde andere LonelyHearts");
-
+	/**
+	 * Deklaration für den Login und den Logout
+	 */
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
@@ -38,23 +42,26 @@ public class Partnerboerse implements EntryPoint {
 	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
-
 	public void onModuleLoad() {
 
 		/**
-		 * Das VerticalPanel wird einem DIV-Element names "Navigator" in der
-		 * zugehörigen HTML-Datei zugewiesen und erhält so seinen
-		 * Darstellungsort.
+		 * CSS anwenden
 		 */
-
 		begrueßen.setStyleName("welcome-label");
 		begrueßen2.setStyleName("welcome-label2");
 		begrueßenN.setStyleName("welcome-label");
 		begrueßenN2.setStyleName("welcome-label2");
 
-		// nutzerprofil = null;
+		/**
+		 * Instantiierung von PartnerboerseAdministration
+		 */
 		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
+		/**
+		 * Zuerst wird die Domaene für die Partnerboerse definiert. Danach wird
+		 * der aktuell angemeldete User gesetzt. Je nachdem p der User aktuell
+		 * eingeloggt ist oder nicht, erfolgen unterschiedliche Aktionen.
+		 */
 		try {
 			ClientsideSettings.getPartnerboerseAdministration().login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
 					new AsyncCallback<Nutzerprofil>() {
@@ -67,7 +74,9 @@ public class Partnerboerse implements EntryPoint {
 
 							ClientsideSettings.setAktuellerUser(result);
 
-							// wenn der user eingeloggt ist
+							/**
+							 * Wenn der User eingeloggt ist
+							 */
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
