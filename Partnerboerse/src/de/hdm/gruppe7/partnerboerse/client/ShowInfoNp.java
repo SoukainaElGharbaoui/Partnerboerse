@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 
@@ -97,7 +96,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		
 	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
-			new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
+			new AsyncCallback<Map<List<Info>, List<Eigenschaft>>>() {
 
 		@Override
 		public void onFailure(Throwable caught) {

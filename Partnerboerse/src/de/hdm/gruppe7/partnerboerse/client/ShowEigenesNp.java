@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -31,7 +30,6 @@ public class ShowEigenesNp extends VerticalPanel {
 	 */
 	private VerticalPanel verPanel1 = new VerticalPanel();
 	private VerticalPanel verPanel2 = new VerticalPanel();
-	private VerticalPanel loeschenVerPanel = new VerticalPanel();
 	private HorizontalPanel horPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
@@ -43,12 +41,6 @@ public class ShowEigenesNp extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
-	private DialogBox loeschenDialogBox = new DialogBox();
-	private Button jaButton = new Button("Ja");
-	private Button neinButton = new Button("Nein");
-	private Label loeschenLabel = new Label(
-			"Möchten Sie Ihr Profil wirklich löschen?");
-	
 	private String profiltyp;
 
 	/**
