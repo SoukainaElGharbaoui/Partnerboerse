@@ -14,39 +14,26 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
+/**
+ * Diese Klasse dient dazu, ein Suchprofil zu erstellen. 
+ */
 public class CreateSuchprofil extends VerticalPanel {
 	
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das Login-Informationen enthaelt, erzeugen. 
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * VerticalPanel hinzufuegen.
+	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Label fuer das Pflichtfeld.
-	 */
-	private Label reqLabel1 = new Label("* Pflichtfeld");
-	private Label reqLabel2 = new Label("* Pflichtfeld");
-	private Label reqLabel3 = new Label("* Pflichtfeld");
-	private Label reqLabel4 = new Label("* Pflichtfeld");
-
-	/**
-	 * Label fuer die Ueberschrift hinzufuegen.
+	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Suchprofil anlegen:");
-
-	/**
-	 * Tabelle zum Anlegen des Suchprofils erstellen.
-	 */
 	private FlexTable createSuchprofilFlexTable = new FlexTable();
-
-	/**
-	 * TextBoxen und ListBoxen hinzufuegen.
-	 */
 	private TextBox suchprofilNameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
 	private TextBox alterMinTextBox = new TextBox();
@@ -55,31 +42,22 @@ public class CreateSuchprofil extends VerticalPanel {
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
-
-	/**
-	 * Button zum Anlegen der Aenderungen hinzufuegen.
-	 */
 	private Button createSuchprofilButton = new Button("Suchprofil anlegen");
-
-	/**
-	 * Label für die Benutzerinformation hinzufuegen.
-	 */
+	private Label reqLabel1 = new Label("* Pflichtfeld");
+	private Label reqLabel2 = new Label("* Pflichtfeld");
+	private Label reqLabel3 = new Label("* Pflichtfeld");
+	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
-	
-	private boolean alterVonWert; 
-	private boolean alterBisWert; 
-	private boolean koerpergroesseWert;
-
-
+	 
 	/**
-	 * Konstruktor hinzufuegen.
+	 * Konstruktor erstellen.
 	 */
 	public CreateSuchprofil() {
 		this.add(verPanel);
 
 		/**
-		 * CSS auf Ueberschrift und Pflichtfeld anwenden.
+		 * CSS anwenden und die Tabelle formatieren.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label"); 
 		reqLabel1.setStyleName("red_label");
@@ -87,13 +65,9 @@ public class CreateSuchprofil extends VerticalPanel {
 		reqLabel3.setStyleName("red_label");
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-
-		/**
-		 * CSS auf Tabelle anwenden und Tabelle formatieren.
-		 */
+		createSuchprofilFlexTable.addStyleName("FlexTable");
 		createSuchprofilFlexTable.setCellPadding(6);
 		createSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-		createSuchprofilFlexTable.addStyleName("FlexTable");
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.
@@ -108,8 +82,9 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setText(7, 0, "Religion");
 
 		/**
-		 * Zweite Spalte der Tabelle festlegen (TextBox/ListBox zur Angabe der
-		 * Werte).
+		 * Zweite Spalte der Tabelle festlegen.
+		 * Hierzu werden die Widgets in die Tabelle eingefuegt und 
+		 * die Items fuer die ListBoxen festgelegt. 
 		 */
 		createSuchprofilFlexTable.setWidget(0, 2, suchprofilNameTextBox);
 		createSuchprofilFlexTable.setWidget(0, 3, reqLabel1);
@@ -151,18 +126,17 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 
 		/**
-		 * ClickHandler für den Suchprofil-Anlegen-Button hinzufügen.
+		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
+		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
+		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
+		 * ueber diesen Zustand ausgegeben. 
 		 */
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				
 
-				// Suchprofilname ueberpruefen.
 				ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameCreate(nutzerprofil.getProfilId(),
 						suchprofilNameTextBox.getText(), new AsyncCallback<Integer>() {
-					
-					
 					
 							public void onFailure(Throwable caught) {
 								infoLabel.setText("Es trat ein Fehler auf.");
@@ -170,9 +144,9 @@ public class CreateSuchprofil extends VerticalPanel {
 
 							public void onSuccess(Integer result) {
 								
-								alterVonWert = isZahl(alterMinTextBox.getText()); 
-								alterBisWert = isZahl(alterMaxTextBox.getText()); 
-								koerpergroesseWert = isZahl(koerpergroesseTextBox.getText()); 
+								boolean alterVonWert = isZahl(alterMinTextBox.getText()); 
+								boolean alterBisWert = isZahl(alterMaxTextBox.getText()); 
+								boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText()); 
 								
 								if (result == 1) {
 									warnungLabel.setText("Der Suchprofilname existiert bereits");
@@ -203,7 +177,10 @@ public class CreateSuchprofil extends VerticalPanel {
 									createSuchprofilFlexTable.setWidget(4, 4, warnungLabel);
 								} else {
 								
-									// Suchprofil anlegen.
+									/**
+									 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil in die Datenbank eingefuegt.
+									 * Anschließend wird die Seite zum Anlegen der Suchprofil-Infos aufgerufen.  
+									 */
 									ClientsideSettings.getPartnerboerseAdministration()
 									.createSuchprofil(nutzerprofil.getProfilId(),
 									suchprofilNameTextBox.getText(),
@@ -252,14 +229,9 @@ public class CreateSuchprofil extends VerticalPanel {
 	}
 	
 	/**
-	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
-	 */
-	public boolean isBuchstabe(String name) {
-	    return name.matches("[a-zA-Z]+");
-	}
-	
-	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
+	 * @param name 
+	 * @return Boolscher Wert, der angibt, ob es sich um eine Zahl handelt. 
 	 */
 	public boolean isZahl(String name) {
 	    return name.matches("[0-9]+");

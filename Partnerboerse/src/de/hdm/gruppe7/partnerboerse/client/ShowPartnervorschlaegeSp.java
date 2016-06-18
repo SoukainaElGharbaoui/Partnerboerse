@@ -86,9 +86,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Suchprofil> result) {
-						for (Suchprofil s : result) {
-							auswahlListBox.addItem(s.getSuchprofilName());
-						}
 						
 							if (result.isEmpty()) {
 								auswahlListBox.setVisible(false);

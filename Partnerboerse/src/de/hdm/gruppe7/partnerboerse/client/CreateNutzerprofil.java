@@ -51,9 +51,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
-
 	private Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
-
 	private Label infoLabel = new Label();
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
@@ -62,13 +60,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label warnungLabel = new Label();
 
 	/**
-	 * Konstruktor hinzufuegen.
+	 * Konstruktor erstellen.
 	 */
 	public CreateNutzerprofil() {
 		this.add(verPanel);
 
 		/**
-		 * CSS anwenden.
+		 * CSS anwenden und Tabelle formatieren.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		reqLabel1.setStyleName("red_label");
@@ -76,14 +74,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel3.setStyleName("red_label");
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-
-		/**
-		 * Tabelle formatieren.
-		 */
+		createNutzerprofilFlexTable.addStyleName("FlexTable");
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-		createNutzerprofilFlexTable.addStyleName("FlexTable");
-
+	
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
@@ -99,6 +93,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		/**
 		 * Zweite und dritte Spalte der Tabelle festlegen.
+		 * Hierzu werden die Widgets in die Tabelle eingefuegt und 
+		 * die Items fuer die ListBoxen festgelegt. 
 		 */
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
 		createNutzerprofilFlexTable.setWidget(0, 3, reqLabel1);
@@ -153,7 +149,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 2, nutzerprofil.getEmailAddress());
 
 		/**
-		 * ClickHandler fuer den Nutzerprofil-Anlegen-Button hinzufuegen.
+		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
+		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
+		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
+		 * ueber diesen Zustand ausgegeben. 
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -186,7 +186,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else {
 					
 					/**
-					 * Nutzerprofil anlegen.
+					 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil in die Datenbank eingefuegt.
+					 * Zudem wird der aktuelle Nutzer gesetzt. Anschließend wird die Seite zum Anlegen der Infos aufgerufen.  
 					 */
 					ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
 							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
@@ -236,6 +237,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
+	 * @param name 
+	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt. 
 	 */
 	public boolean isBuchstabe(String name) {
 	    return name.matches("[a-zA-Z]+");
@@ -243,6 +246,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
+	 * @param name 
+	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt. 
 	 */
 	public boolean isZahl(String name) {
 	    return name.matches("[0-9]+");
