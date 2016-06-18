@@ -41,12 +41,6 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
-	 */
-	// private Nutzerprofil nutzerprofil =
-	// ClientsideSettings.getAktuellerUser();
-
-	/**
 	 * Ein ReportGenerator ben�tigt Zugriff auf die PartnerboerseAdministration,
 	 * da diese die essentiellen Methoden f�r die Koexistenz von Datenobjekten
 	 * (vgl. bo-Package) bietet.

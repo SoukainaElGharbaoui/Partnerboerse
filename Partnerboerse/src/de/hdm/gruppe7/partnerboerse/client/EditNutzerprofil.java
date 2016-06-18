@@ -117,6 +117,10 @@ public class EditNutzerprofil extends VerticalPanel {
 				Date geburtsdatum = event.getValue();
 				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
+
+				if (event.getValue().after(today())) {
+					geburtsdatumDateBox.setValue(today(), false);
+				}
 			}
 		});
 
@@ -263,5 +267,19 @@ public class EditNutzerprofil extends VerticalPanel {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
+	}
+	
+	/**
+	 * aktuelles Datum ermitteln
+	 * 
+	 * @return
+	 */
+	private static Date today() {
+		return zeroTime(new Date());
+	}
+
+	/** this is important to get rid of the time portion, including ms */
+	private static Date zeroTime(final Date date) {
+		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
 	}
 }

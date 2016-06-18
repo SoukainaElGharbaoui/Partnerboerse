@@ -5,9 +5,13 @@ import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.HasShowRangeHandlers;
+import com.google.gwt.event.logical.shared.ShowRangeEvent;
+import com.google.gwt.event.logical.shared.ShowRangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -16,12 +20,32 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.CalendarModel;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
+import com.google.gwt.user.datepicker.client.CalendarView;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DefaultCalendarView;
+import com.google.gwt.user.datepicker.client.DefaultMonthSelector;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 
 public class CreateNutzerprofil extends VerticalPanel {
+
+	// CalendarView view = new DefaultCalendarView();
+	//
+	// public CalendarView getView() {
+	// return view;
+	// }
+	//
+	// public void setView(CalendarView view) {
+	// this.view = view;
+	// }
+	//
+	// public CalendarView getCalendarView() {
+	// return getView();
+	// }
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
@@ -117,6 +141,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 				Date geburtsdatum = event.getValue();
 				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
+
+				if (event.getValue().after(today())) {
+					geburtsdatumDateBox.setValue(today(), false);
+				}
 			}
 		});
 
@@ -164,12 +192,12 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-					
-				// Wenn keine Koerpergroesse angegeben wird...	
+
+					// Wenn keine Koerpergroesse angegeben wird...
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
-					
+
 				} else {
 					/**
 					 * Nutzerprofil anlegen.
@@ -209,10 +237,24 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/**
 	 * Geburtsdatum erstellen.
 	 */
+
 	Date getGeburtsdatum() {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
 	}
+	
+	/**
+	 * aktuelles Datum ermitteln 
+	 * @return
+	 */
+	
+	private static Date today() {
+		return zeroTime(new Date());
+	}
 
+	/** this is important to get rid of the time portion, including ms */
+	private static Date zeroTime(final Date date) {
+		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
+	}
 }

@@ -33,12 +33,10 @@ public class Nutzerprofil extends Profil {
 
 
 	// WICHTIG FÜR LOGIN
-	private boolean loggedIn = false;
-	private String loginUrl;
-	private String logoutUrl;
-	private String emailAddress;
-	private String nickname;
-	private boolean status = false;
+	private boolean loggedIn = false; //gebraucht
+	private String loginUrl; //gebruahct
+	private String logoutUrl; //gebruacht
+	private String emailAddress; //gebraucht
 
 	
 
@@ -132,14 +130,6 @@ public class Nutzerprofil extends Profil {
 		return logoutUrl;
 	}
 
-	public void setNickname(String nickname2) {
-
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
@@ -150,14 +140,6 @@ public class Nutzerprofil extends Profil {
 
 	public String getLoginUrl() {
 		return loginUrl;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public boolean getStatus() {
-		return status;
 	}
 
 }
