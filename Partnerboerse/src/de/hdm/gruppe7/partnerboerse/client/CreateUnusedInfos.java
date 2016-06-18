@@ -30,6 +30,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
 	
 	private String eigenschaftId;
+	private String beschreibungstext;
+	private int row;
 	
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
@@ -68,7 +70,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	/**
 	 * Konstruktor hinzuf�gen.
 	 */
-	public CreateUnusedInfos(final int profilId, final String typ) {	
+	public CreateUnusedInfos(final int profilId, final String profiltyp) {	
 
 		this.add(verPanel);
 		
@@ -107,7 +109,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 						
 						informationLabel.setText("Die Methode wurde aufgerufen.");
 						
-						int row = showUnusedEigenschaftFlexTable.getRowCount();
+						 row = showUnusedEigenschaftFlexTable.getRowCount();
 						
 						Set<List<Beschreibungseigenschaft>> output = result.keySet();
 
@@ -192,19 +194,19 @@ public class CreateUnusedInfos extends VerticalPanel {
 							showInfosButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 							
-									if (typ.equals("Np")) {
+									if (profiltyp.equals("Np")) {
 										
-										ShowEigenesNp showNp = new ShowEigenesNp();
+										ShowNutzerprofil showNp = new ShowNutzerprofil();
 		
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showNp);
 									}
 									
 									// Fall, die profilId geh�rt zu Suchprofil
-									else if (typ.equals("Sp")) {
+									else if (profiltyp.equals("Sp")) {
 										
 										String suchprofilName = null;
-										ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
+										ShowSuchprofil showSp = new ShowSuchprofil(profilId);
 										
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showSp);
@@ -308,26 +310,27 @@ public class CreateUnusedInfos extends VerticalPanel {
 							public void onSuccess(List<Info> result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
+								
+								if (profiltyp.equals("Np")) {
+									
+									ShowNutzerprofil showNp = new ShowNutzerprofil();
+
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+								}
+								
+								// Fall, die profilId geh�rt zu Suchprofil
+								else if (profiltyp.equals("Sp")) {
+									
+									String suchprofilName = null;
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+									
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
+								
 							}
 						});
-				
-				if (typ.equals("Np")) {
-					
-					ShowEigenesNp showNp = new ShowEigenesNp();
-
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showNp);
-				}
-				
-				// Fall, die profilId geh�rt zu Suchprofil
-				else if (typ.equals("Sp")) {
-					
-					String suchprofilName = null;
-					ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
-					
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showSp);
-				}
 			}
 		});
 		

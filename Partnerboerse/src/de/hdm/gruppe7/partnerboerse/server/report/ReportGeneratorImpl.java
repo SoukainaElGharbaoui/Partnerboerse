@@ -43,6 +43,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
 	/**
+	 * Ein ReportGenerator ben�tigt Zugriff auf die PartnerboerseAdministration,
+	 * da diese die essentiellen Methoden f�r die Koexistenz von Datenobjekten
+	 * (vgl. bo-Package) bietet.
 	 * Ein ReportGenerator benoetigt Zugriff auf die
 	 * PartnerboerseAdministration, da diese die essentiellen Methoden f�r die
 	 * Koexistenz von Datenobjekten (vgl. bo-Package) bietet.

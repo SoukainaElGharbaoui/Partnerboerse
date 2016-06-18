@@ -35,6 +35,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @param userEmail
 	 * @return Boolscher Wert, ob Nutzer eingeloggt ist.
 	 */
+	
 	public boolean isUserRegistered(String userEmail);
 
 	/**
@@ -220,6 +221,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName)
+			throws IllegalArgumentException;
+	/**
+	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 * @param profilId
+	 * @param suchprofilId
+	 * @return Suchprofil-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
 			throws IllegalArgumentException;
 
 	/**
@@ -488,4 +498,47 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * *************************************************************************
 	 * **
 	 */
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
+	public Beschreibungseigenschaft createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext) throws IllegalArgumentException;
+	
+	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloptionen) throws IllegalArgumentException;
+	
+	public void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext)
+			throws IllegalArgumentException;
+	
+	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloptionen)
+			throws IllegalArgumentException;
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt loeschen.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	void deleteBeschreibungseigenschaft(int eigenschaftId) throws IllegalArgumentException;
+	
+	/**
+	 * Auswahleigenschaft-Objekt loeschen.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	void deleteAuswahleigenschaft(int eigenschaftId) throws IllegalArgumentException;
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
 }

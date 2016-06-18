@@ -1,7 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.server;
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
+
 
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
@@ -258,6 +262,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
+		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 
 	}
 
@@ -287,7 +292,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return this.suchprofilMapper.findSuchprofilByName(profilId,
 				suchprofilName);
 	}
-
+	
+	/**
+	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 */
+	
+	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
+			throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilById(profilId,
+				suchprofilId);		
+	}
+	
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils pruefen.
 	 */
@@ -325,7 +340,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int ergebnis = 0;
 
-		// Der Suchprofilname wurde verändert, es existiert jedoch bereits ein
+		// Der Suchprofilname wurde ver�ndert, es existiert jedoch bereits ein
 		// gleichnamiges, anderes Suchprofil.
 		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
 			ergebnis = 1;
@@ -501,6 +516,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
+		
 		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
@@ -521,10 +537,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			if (np.getHaarfarbe().equals(referenzprofil.getHaarfarbe())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
-
-			if (np.getKoerpergroesseInt() == referenzprofil
-					.getKoerpergroesseInt()) {
+			
+			if (np.getKoerpergroesseInt() +5 >= referenzprofil.getKoerpergroesseInt()) {
+			if(np.getKoerpergroesseInt()-5 <= referenzprofil.getKoerpergroesseInt()){
 				aehnlichkeit = aehnlichkeit + 1;
+				}
 			}
 
 			if (np.getRaucher().equals(referenzprofil.getRaucher())) {
@@ -534,6 +551,42 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			if (np.getReligion().equals(referenzprofil.getReligion())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
+			
+			// Berechnung des Alters des Fremdprofils
+				 		GregorianCalendar geburtstagVgl = new GregorianCalendar();
+				         geburtstagVgl.setTime(referenzprofil.getGeburtsdatumDate());
+				         GregorianCalendar heute = new GregorianCalendar();
+				         int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+				         if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
+				         {
+				             alter = alter - 1;
+				         }
+				         else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH)){
+				             if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE)){
+				                 alter = alter - 1;
+				             }
+				         }
+				         // Berechnung des Alters des eigenen Profils
+				         GregorianCalendar geburtstagRef = new GregorianCalendar();
+				         geburtstagRef.setTime(np.getGeburtsdatumDate());
+				         GregorianCalendar heute1 = new GregorianCalendar();
+				         int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+				         if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
+				         {
+				             alterRef = alterRef - 1;
+				         }
+				         else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
+				         {
+				             if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE)){
+				                 alterRef = alterRef - 1;
+				             }
+				         }
+				         
+				         if(alter+5 >= alterRef){
+				        	if(alter-5 <= alterRef){
+				        	  aehnlichkeit = aehnlichkeit +3;
+				        	  }
+				        	}
 
 			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
 			List<Info> vergleichsinfo = infoMapper
@@ -590,134 +643,162 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten
 	 * und Infos anderer Nutzerprofile berechnen.
 	 */
-	public void berechneAehnlichkeitSpFor(int profilId)
-			throws IllegalArgumentException {
+	/**
+	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
+	 * und Infos anderer Nutzerprofile berechnen. 
+	 */
+	/**
+	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
+	 * und Infos anderer Nutzerprofile berechnen. 
+	 */
+	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
+		
 		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 		
 		List<Suchprofil> referenzprofil = suchprofilMapper
 				.findAllSuchprofileFor(profilId);
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
-				.findNutzerprofileOhneGesetzeSperrung(profilId);
-
-		// Vergleich der Profildaten von jeweils einem Suchprofil und einem
-		// Nutzerprofil
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
+		
+		// Vergleich der Profildaten von jeweils einem Suchprofil und einem Nutzerprofil
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 				int aehnlichkeitSp = 0;
 				int counter = 70;
-
+				
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
-
-				if (sp.getGeschlecht().equals("Keine Auswhal")) {
+				
+				if(sp.getGeschlecht().equals("Keine Auswhal")){
 					aehnlichkeitSp = aehnlichkeitSp + 30;
-
+					
 				} else {
-
+				
 					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-						aehnlichkeitSp = aehnlichkeitSp + 30;
+					aehnlichkeitSp = aehnlichkeitSp + 30;
 					}
 				}
-
-				if (sp.getHaarfarbe().equals("Keine Auswhal")) {
+				
+				if(sp.getHaarfarbe().equals("Keine Auswhal") ){				
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
+					
 				} else {
-
+					
 					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+					aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-
+					
 				}
-
-				// if (sp.getKoerpergroesseInt() == ) {
-				// aehnlichkeitSp = aehnlichkeitSp + 10;
-				//
-				// }else {
-
-				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+					
+					if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
+					if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
-				// }
-
-				if (sp.getRaucher().equals("Keine Auswahl")) {
+					}
+					}
+				
+				
+				if(sp.getRaucher().equals("Keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
+					
 				} else {
-
+					
 					if (sp.getRaucher().equals(np.getRaucher())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
-					}
-
-				}
-				if (sp.getRaucher().equals("Keine Auswahl")) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-
-				} else {
-
-					if (sp.getReligion().equals(np.getReligion())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
-
+					
 				}
-
+				if (sp.getRaucher().equals("Keine Auswahl") ){
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					
+				} else {
+					
+					if (sp.getReligion().equals(np.getReligion())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+					
+					
+				}
+				
+				GregorianCalendar geburtstag = new GregorianCalendar();
+				 		        geburtstag.setTime(np.getGeburtsdatumDate());
+				 		        GregorianCalendar heute = new GregorianCalendar();
+				 		        int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+				 		        if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH))
+				 		        {
+				 		            alter = alter - 1;
+						        }
+				 		        else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH))
+				 		        {
+				 		            if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE))
+				 		            {
+				 		                alter = alter - 1;
+				 		            }
+				 		        }
+				 		        
+				 		        if(sp.getAlterMaxInt() >= alter){
+				 		        	if(sp.getAlterMinInt() <= alter){
+				 		        		aehnlichkeitSp = aehnlichkeitSp +10;
+				 		        	}
+				 		        }
+				
+				
+				
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper
 						.findAllInfosNeu(suchprofilId);
 				List<Info> vergleichsinfo = infoMapper
 						.findAllInfosNeu(fremdprofilId);
-
+				
 				// Vergleich der Infos
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-							counter = counter + 2;
-
-							if (rin.getInfotext().equals("Keine Auswahl")) {
-
+							counter= counter + 2;
+							
+							if (rin.getInfotext().equals("Keine Auswahl") ){
+								
 								aehnlichkeitSp = aehnlichkeitSp + 2;
-
+								
 							} else {
-
-								if (rin.getInfotext().isEmpty()) {
+								
+								if (rin.getInfotext().isEmpty()){
 									aehnlichkeitSp = aehnlichkeitSp + 2;
-
-								} else {
-									if (rin.getInfotext().equals(
-											vin.getInfotext())) {
-										aehnlichkeitSp = aehnlichkeitSp + 2;
-									}
+									
+							} else {
+								if (rin.getInfotext().equals(vin.getInfotext())) {
+									aehnlichkeitSp = aehnlichkeitSp + 2;
 								}
-
+								}
+								
 							}
-
+							
 						}
 					}
 				}
-
+				
 				// Berechnung des Prozentwertes
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
-
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+				
+				if(sp.getGeschlecht().equals(np.getGeschlecht())){
 					// Aehnlichkeit in die Datenbank setzen
-					suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId,
-							fremdprofilId, aehnlichkeitSp);
-
+						suchprofilMapper.insertAehnlichkeit(profilId,
+						suchprofilId, fremdprofilId,
+						aehnlichkeitSp);
+									
 				} else {
-
-					if (sp.getGeschlecht().equals("Keine Auswahl")) {
+					
+					if (sp.getGeschlecht().equals("Keine Auswahl")){
 						// Aehnlichkeit in die Datenbank setzen
 						suchprofilMapper.insertAehnlichkeit(profilId,
-								suchprofilId, fremdprofilId, aehnlichkeitSp);
-
+						suchprofilId, fremdprofilId,
+						aehnlichkeitSp);
+						
 					}
 				}
-
+				
 			}
 		}
-	}
+}
 
 
 	/**
@@ -743,7 +824,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
-
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
@@ -963,4 +1044,131 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
+	
+	
+	
+	
+
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
+	public Beschreibungseigenschaft createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext) throws IllegalArgumentException {
+
+		Beschreibungseigenschaft b = new Beschreibungseigenschaft();
+		b.setEigenschaftId(eigenschaftId);
+		b.setErlaeuterung(erlaeuterung);
+		b.setTyp(typ);
+		b.setBeschreibungstext(beschreibungstext);
+		
+
+		b.setEigenschaftId(1);
+		
+		b = this.infoMapper.insertBeschreibungseigenschaft(b);
+		
+		return b;
+	}
+	
+	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId, String erleauterung,
+			String typ, List<String>  auswahloptionen) throws IllegalArgumentException {
+
+		Auswahleigenschaft a = new Auswahleigenschaft();
+		a.setEigenschaftId(eigenschaftId);
+		a.setErlaeuterung(erleauterung);
+		a.setTyp(typ);
+		a.setOptionen(auswahloptionen);
+		
+
+		a.setEigenschaftId(1);
+		
+		a = this.infoMapper.insertAuswahleigenschaft(a);
+		
+		System.out.println("hallo");
+		
+		return a;
+	}
+	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt wird aktualisiert.
+	 * 
+	 * @param eigenschaftId
+	 * @param erlaeuterung
+	 * @param typ
+	 * @param beschreibungstext
+	 * @throws IllegalArgumentException
+	 */
+	public void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext)
+			throws IllegalArgumentException {
+
+		Beschreibungseigenschaft b = new Beschreibungseigenschaft();
+		b.setErlaeuterung(erlaeuterung);
+		b.setTyp(typ);
+		b.setBeschreibungstext(beschreibungstext);
+	
+	
+
+		b.setEigenschaftId(eigenschaftId);
+
+		this.infoMapper.updateBeschreibungseigenschaft(b);;
+	}
+	
+	/**
+	 * Auswahleigenschaft-Objekt wird aktualisiert.
+	 * @param eigenschaftId
+	 * @param erlaeuterung
+	 * @param typ
+	 * @param auswahloptionen
+	 * @throws IllegalArgumentException
+	 */
+	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloptionen)
+			throws IllegalArgumentException {
+
+		Auswahleigenschaft a = new Auswahleigenschaft();
+		a.setErlaeuterung(erlaeuterung);
+		a.setTyp(typ);
+		a.setOptionen(auswahloptionen);
+	
+	
+
+		a.setEigenschaftId(eigenschaftId);
+
+		this.infoMapper.updateAuswahleigenschaft(a);;
+	}
+	
+	
+	/**
+	 * Beschreibungseigenschaft-Objekt wird geloescht.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteBeschreibungseigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
+		this.infoMapper.deleteBeschreibungseigenschaft(eigenschaftId);
+	}
+	
+	/**
+	 * Auswahleigenschaft-Objekt wird geloescht.
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteAuswahleigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
+		this.infoMapper.deleteAuswahleigenschaft(eigenschaftId);
+	}
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
 }
+//

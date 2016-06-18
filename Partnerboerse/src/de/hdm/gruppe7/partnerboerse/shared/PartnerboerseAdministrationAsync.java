@@ -89,6 +89,8 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback);
 	
+	void getSuchprofilById (int profilId, int suchprofilId, AsyncCallback<Suchprofil> callback);
+	
 	void pruefeSuchprofilnameCreate(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, String suchprofilname,
@@ -222,6 +224,36 @@ public interface PartnerboerseAdministrationAsync {
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info
+	 * *************************************************************************
+	 * **
+	 */
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
+	 * *************************************************************************
+	 * **
+	 */
+	
+	void createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext, AsyncCallback<Beschreibungseigenschaft> callback);
+	
+	void createAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloption, AsyncCallback<Auswahleigenschaft> callback) ;
+	
+	void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, String beschreibungstext, AsyncCallback<Void> callback);
+	
+	void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloption, AsyncCallback<Void> callback);
+	
+	void deleteBeschreibungseigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+	
+	void deleteAuswahleigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+	
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Ende: Administrator-Funktionen
 	 * *************************************************************************
 	 * **
 	 */
