@@ -563,23 +563,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
 
-//				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-//					aehnlichkeitSp = aehnlichkeitSp + 30;
-//				}
-				
-				if(sp.getGeschlecht().equals("Keine Auswahl")){
-						aehnlichkeitSp = aehnlichkeitSp + 30;			
-						} else {
-						if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					 	aehnlichkeitSp = aehnlichkeitSp + 30;
-										}
-					 				}
-				if(sp.getHaarfarbe().equals("Keine Auswahl")){
-					aehnlichkeitSp = aehnlichkeitSp +10;
-				} else{
-					if(sp.getHaarfarbe().equals(np.getHaarfarbe())){
-						aehnlichkeitSp = aehnlichkeitSp + 10;
-					}
+				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					aehnlichkeitSp = aehnlichkeitSp + 30;
+				}
+
+				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+					aehnlichkeitSp = aehnlichkeitSp + 10;
 				}
 
 				if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
@@ -588,25 +577,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					}
 				}
 
-				
-				if(sp.getRaucher().equals("Keine Auswahl")){
-					aehnlichkeitSp = aehnlichkeitSp + 10;
-										
-					} else {
-										
 				if (sp.getRaucher().equals(np.getRaucher())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-					}
-										
 				}
 
-				if (sp.getReligion().equals("Keine Auswahl")) {
+				if (sp.getReligion().equals(np.getReligion())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 
-				} else {
-					if(sp.getRaucher().equals(np.getRaucher())){
-						aehnlichkeitSp = aehnlichkeitSp + 10;
-					}
 				}
 				
  				GregorianCalendar geburtstag = new GregorianCalendar();
