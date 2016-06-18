@@ -60,17 +60,6 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
-	CharSequence zahl = "0";
-	CharSequence zahl1 = "1";
-	CharSequence zahl2 = "2";
-	CharSequence zahl3 = "3";
-	CharSequence zahl4 = "4";
-	CharSequence zahl5 = "5";
-	CharSequence zahl6 = "6";
-	CharSequence zahl7 = "7";
-	CharSequence zahl8 = "8";
-	CharSequence zahl9 = "9";
-	CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü";
 
 	/**
 	 * Konstruktor erstellen.
@@ -224,7 +213,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				});
 
 		/**
-		 * ClickHandler fuer den Button zum Speichern eines Suchprofils erzeugen. 
+		 * ClickHandler fuer den Button zum Speichern eines Nutzerprofils erzeugen. 
 		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
 		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
 		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
@@ -310,15 +299,18 @@ public class EditNutzerprofil extends VerticalPanel {
 	}
 
 	/**
-	 * aktuelles Datum ermitteln
-	 * 
-	 * @return
+	 * Methode erstellen, die das aktuelle Datum ermittelt.
+	 * @return Aktuelles Datum 
 	 */
 	private static Date today() {
 		return zeroTime(new Date());
 	}
 
-	/** this is important to get rid of the time portion, including ms */
+	/**
+	 * Methode erstellen, die das aktuelle Datum formatiert. 
+	 * @param date
+	 * @return Aktuelles, formatiertes Datum
+	 */
 	private static Date zeroTime(final Date date) {
 		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
 	}
