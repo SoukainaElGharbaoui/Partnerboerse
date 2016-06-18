@@ -1,12 +1,9 @@
-
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,30 +23,57 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 public class ShowInfoNp extends VerticalPanel {
 
 	private VerticalPanel verPanel = new VerticalPanel();
-	private Label ueberschriftLabel = new Label("Ihre Infos:");
+	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
+	
+	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
+	private Button bearbeitenButton = new Button("Infos bearbeiten");
+	private Button loeschenButton = new Button("Infos löschen");
 
 	private FlexTable showInfoFlexTable = new FlexTable();
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-	
 	private int row;
 	private int eigenschaftIdInt;
 	private int eigenschaftIdTable;
+	private int zaehler;
+	
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < showInfoFlexTable.getRowCount(); k++) {
+			
+			if (showInfoFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
 
 	/**
 	 * Konstruktor
 	 * 
 	 * @param integer
 	 */
-	public ShowInfoNp(int profilId) {
+	public ShowInfoNp(final int profilId) {
+		
 		this.add(verPanel);
 
 		/**
-		 * Label �berschrift
+		 * Design der Labels
 		 */
-
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Label Button
@@ -71,12 +95,9 @@ public class ShowInfoNp extends VerticalPanel {
 		showInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showInfoFlexTable.addStyleName("FlexTable");
 
-		/**
-		 * InfoLabel erstellen um Text auszugeben
-		 */
 		
-		
-	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
+	ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
+			new AsyncCallback<Map<List<Info>,List<Eigenschaft>>>() {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -85,7 +106,7 @@ public class ShowInfoNp extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Map<List<Info>, List<Eigenschaft>> result) {
-			
+				
 			Set<List<Info>> output = result.keySet();
 			
 			for (List<Info> listI : output) {
@@ -100,7 +121,6 @@ public class ShowInfoNp extends VerticalPanel {
 					showInfoFlexTable.setText(row, 1, String.valueOf(i.getEigenschaftId()));
 					showInfoFlexTable.setText(row, 3, i.getInfotext());
 				}
-				
 				
 				List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
 				listE = result.get(listI);
@@ -128,55 +148,72 @@ public class ShowInfoNp extends VerticalPanel {
 						else {
 						}
 					}
-
 				}
-				
-				
 			}
-		}
-		
-	});
-		
+			
+			boolean befuellt = pruefeLeereTable();
+			
+			if (befuellt == true) {
+				
+				ueberschriftLabel.setVisible(false);
+				showInfoFlexTable.setVisible(false);
+				loeschenButton.setVisible(false);
+				bearbeitenButton.setVisible(false);
+				
+				informationLabel.setText("Sie haben bisher keine Infos angelegt.");
+
+				erstelleRestlicheInfosButton.setText("Infos anlegen");
+				erstelleRestlicheInfosButton.setVisible(true);
+			}
+	}
+});
 
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
 
-		final Button loeschenButton = new Button("Alle Infos löschen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(loeschenButton);
-
-		final Button bearbeitenButton = new Button("Bearbeiten");
+		verPanel.add(buttonPanel); 
+		buttonPanel.add(erstelleRestlicheInfosButton);
+		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(bearbeitenButton);
-
-		final Button erstellenButton = new Button("Infos anlegen");
-		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);
 		
-		final Button createRestlicheInfosButton = new Button("Weitere Infos anlegen.");
 		verPanel.add(buttonPanel);
-		buttonPanel.add(erstellenButton);
+		buttonPanel.add(loeschenButton);
 
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(new AsyncCallback<Void>() {
+				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
+						new AsyncCallback<Integer>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
 					}
 
 					@Override
-					public void onSuccess(Void result) {
+					public void onSuccess(Integer result) {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+						
+						// Fall, profilId gehört zu Nutzerprofil
+						if (result == 0) {
+							
+							ShowEigenesNp showNp = new ShowEigenesNp();
 
-						ShowEigenesNp showNp = new ShowEigenesNp();
-
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showNp);
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showNp);
+						}
+						
+						// Fall, profilId gehört zu Suchprofil
+						else if (result == 1) {
+							int suchprofilId= 0;
+							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
+							
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showSp);
+						}
 					}
 				});
 			}
@@ -184,23 +221,15 @@ public class ShowInfoNp extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfoNp editInfoNp = new EditInfoNp();
+				EditInfoNp editInfoNp = new EditInfoNp(profilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfoNp);
 			}
 		});
 
-		erstellenButton.addClickHandler(new ClickHandler() {
+		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateInfoNp createInfoNp = new CreateInfoNp();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createInfoNp);
-			}
-		});
-		
-		createRestlicheInfosButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos();
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}

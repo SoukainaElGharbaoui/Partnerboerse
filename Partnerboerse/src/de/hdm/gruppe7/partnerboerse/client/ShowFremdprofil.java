@@ -1,7 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -110,7 +113,11 @@ public class ShowFremdprofil extends VerticalPanel {
 
 						// Geburtsdatum aus der Datenbank holen
 						// und in Tabelle eintragen
-						showFremdprofilFlexTable.setText(4, 1, String.valueOf(result.getGeburtsdatumDate()));
+						
+						Date geburtsdatum = result.getGeburtsdatumDate();
+						String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+						
+						showFremdprofilFlexTable.setText(4, 1, geburtsdatumString); 
 
 						// Koerpergroesse aus der Datenbank holen
 						// und in Tabelle eintragen

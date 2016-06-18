@@ -34,16 +34,18 @@ public class EditNutzerprofil extends VerticalPanel {
 	/**
 	 * Widgets hinzufuegen.
 	 */
-	private Label ueberschriftLabel = new Label("Nutzerprofil bearbeiten:");
+	private Label ueberschriftLabel = new Label("Profil bearbeiten:");
 
 	private FlexTable editNutzerprofilFlexTable = new FlexTable();
 
+	private Label nutzerprofilIdLabel = new Label();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
-	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+
+	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
@@ -55,9 +57,21 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
+	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
+	CharSequence zahl = "0";
+	CharSequence zahl1 = "1";
+	CharSequence zahl2 = "2";
+	CharSequence zahl3 = "3";
+	CharSequence zahl4 = "4";
+	CharSequence zahl5 = "5";
+	CharSequence zahl6 = "6";
+	CharSequence zahl7 = "7";
+	CharSequence zahl8 = "8";
+	CharSequence zahl9 = "9";
+	CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü";
 
-	private Button editNutzerprofilButton = new Button("Nutzerprofil bearbeiten");
+	private Button editNutzerprofilButton = new Button("Profil speichern");
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -72,6 +86,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
+		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
 		/**
@@ -98,6 +113,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Zweite und Dritte Spalte der Tabelle festlegen.
 		 */
+		editNutzerprofilFlexTable.setWidget(0, 1, nutzerprofilIdLabel);
 		editNutzerprofilFlexTable.setWidget(1, 2, vornameTextBox);
 		editNutzerprofilFlexTable.setWidget(1, 3, reqLabel1);
 
@@ -115,7 +131,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
-				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
+				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
 
 				if (event.getValue().after(today())) {
@@ -126,9 +142,10 @@ public class EditNutzerprofil extends VerticalPanel {
 
 		geburtsdatumDateBox.setValue(new Date());
 		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumDateBox);
+		editNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);
 
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
-		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel3);
+		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel4);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -162,6 +179,8 @@ public class EditNutzerprofil extends VerticalPanel {
 					}
 
 					public void onSuccess(Nutzerprofil result) {
+
+						nutzerprofilIdLabel.setText(String.valueOf(result.getProfilId()));
 
 						vornameTextBox.setText(result.getVorname());
 
@@ -205,29 +224,40 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				// Wenn kein Vorname angegeben wird...
-				if (vornameTextBox.getText().length() == 0) {
+				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
+				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
+				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
 
+				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
 					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-					// Wenn kein Nachname angegeben wird...
-
 				} else if (nachnameTextBox.getText().length() == 0) {
-
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
-					// Wenn keine Koerpergroesse angegeben wird...
+
+				} else if (vornameWert == false) {
+					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+				} else if (nachnameWert == false) {
+					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
+				} else if (geburtsdatumInhalt.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
+					editNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
-
+				} else if (koerpergroesseWert == false) {
+					warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
 				} else {
 
 					/**
 					 * Nutzerprofil aktualisieren.
 					 */
-					ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(vornameTextBox.getText(),
-							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
+					ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(nutzerprofil.getProfilId(),
+							vornameTextBox.getText(), nachnameTextBox.getText(),
+							geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 							Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
 							raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
 							new AsyncCallback<Void>() {
@@ -242,7 +272,6 @@ public class EditNutzerprofil extends VerticalPanel {
 									ShowEigenesNp showEigenesNp = new ShowEigenesNp();
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showEigenesNp);
-
 								}
 							});
 
@@ -268,7 +297,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
 	}
-	
+
 	/**
 	 * aktuelles Datum ermitteln
 	 * 
@@ -281,5 +310,19 @@ public class EditNutzerprofil extends VerticalPanel {
 	/** this is important to get rid of the time portion, including ms */
 	private static Date zeroTime(final Date date) {
 		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
+	}
+
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
+	 **/
+	public boolean isBuchstabe(String name) {
+		return name.matches("[a-zA-Z]+");
+	}
+
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden.
+	 */
+	public boolean isZahl(String name) {
+		return name.matches("[0-9]+");
 	}
 }

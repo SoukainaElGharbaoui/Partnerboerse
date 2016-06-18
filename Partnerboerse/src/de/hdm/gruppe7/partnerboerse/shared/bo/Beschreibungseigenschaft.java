@@ -1,39 +1,31 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
-import java.util.List;
-
+/**
+ * Realisierung einer Beschreibungseigenschaft. 
+ */
 public class Beschreibungseigenschaft extends Eigenschaft {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Beschreibungstext. 
+	 */
 	private String beschreibungstext;
 	
+	/**
+	 * Beschreibungstext auslesen. 
+	 * @return beschreibungstext
+	 */
+	public String getBeschreibungstext() {
+		return beschreibungstext;
+	}
+	
+	/**
+	 * Beschreibungstext setzen. 
+	 * @param beschreibungstext
+	 */
 	public void setBeschreibungstext(String beschreibungstext) {
 		this.beschreibungstext = beschreibungstext;
 	}
 
-	public String getBeschreibungstext() {
-		return beschreibungstext;
-	}
 }
-
-
-//	public String beschreibungstext;
-//	public int beschreibungsId;
-//
-//
-//	public String getBeschreibungstext() {
-//		return beschreibungstext;
-//	}
-//
-//	public void setBeschreibungsId(int beschreibungsId) {
-//		this.beschreibungsId = beschreibungsId;
-//	}
-//
-//	public int getBeschreibungsId() {
-//		return beschreibungsId;
-//>>>>>>> refs/heads/master
-//	}
-//
-//	public void setBeschreibungstext(String beschreibungstext) {
-//		this.beschreibungstext = beschreibungstext;
-//	}

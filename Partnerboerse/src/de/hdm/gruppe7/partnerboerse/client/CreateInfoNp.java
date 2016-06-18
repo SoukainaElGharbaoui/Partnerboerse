@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -24,24 +25,30 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 public class CreateInfoNp extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-
+	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	
 	private VerticalPanel verPanel = new VerticalPanel();
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
+	
+	private List<Beschreibungseigenschaft> listB;
+	private List<Auswahleigenschaft> listA;
 
 	private String eigenschaftId = null;
 	private String beschreibungstext = null;
 
-	private Button createInfosButton = new Button("Info anlegen");
-	private Label ueberschriftLabel = new Label("Info anlegen:");
+	private Button createInfosButton = new Button("Infos anlegen");
+	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
 
-	public CreateInfoNp() {
+	public CreateInfoNp(final int profilId) {
+		
 		this.add(verPanel);
 
-		showEigenschaftFlexTable.setText(0, 0, "Eigenschaft-Id");
-		showEigenschaftFlexTable.setText(0, 1, "Erlaeuterung");
-		showEigenschaftFlexTable.setText(0, 2, "Anlegen");
+		
+		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
+		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
+		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
+		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
 		showEigenschaftFlexTable.setCellPadding(6);
 		showEigenschaftFlexTable.getRowFormatter().addStyleName(0,
@@ -71,6 +78,8 @@ public class CreateInfoNp extends VerticalPanel {
 										.keySet();
 
 								for (List<Beschreibungseigenschaft> listEigB : output) {
+									
+									listB = listEigB;
 
 									for (Beschreibungseigenschaft eigB : listEigB) {
 
@@ -78,44 +87,48 @@ public class CreateInfoNp extends VerticalPanel {
 
 										eigenschaftId = null;
 										beschreibungstext = null;
+										
+										showEigenschaftFlexTable.setText(row,
+												0, String.valueOf(profilId));
 
 										eigenschaftId = String.valueOf(eigB
 												.getEigenschaftId());
-
+										
 										showEigenschaftFlexTable.setText(row,
-												0, eigenschaftId);
+												1, eigenschaftId);
 										showEigenschaftFlexTable.setText(row,
-												1, eigB.getErlaeuterung());
+												2, eigB.getErlaeuterung());
 
 										final TextArea textArea = new TextArea();
-										textArea.setTitle("TextArea");
 
 										showEigenschaftFlexTable.setWidget(row,
-												2, textArea);
+												3, textArea);
 
-										beschreibungstext = eigB
-												.getBeschreibungstext();
-
-										textArea.setText(beschreibungstext);
+										
+										String defaultValue = eigB.getBeschreibungstext();
+										
+										textArea.getElement().setPropertyString("placeholder", defaultValue);
 									}
 
-									List<Auswahleigenschaft> listEigA = result
-											.get(listEigB);
+									listA = result.get(listEigB);
 
-									for (Auswahleigenschaft eigA : listEigA) {
+									for (Auswahleigenschaft eigA : listA) {
 
 										row++;
+										
 										showEigenschaftFlexTable.setText(row,
-												0, String.valueOf(eigA
+												0, String.valueOf(profilId));
+										
+										showEigenschaftFlexTable.setText(row,
+												1, String.valueOf(eigA
 														.getEigenschaftId()));
 										showEigenschaftFlexTable.setText(row,
-												1, eigA.getErlaeuterung());
+												2, eigA.getErlaeuterung());
 
 										final ListBox lb = new ListBox();
-										lb.setTitle("ListBox");
 
 										showEigenschaftFlexTable.setWidget(row,
-												2, lb);
+												3, lb);
 
 										List<String> optionen = eigA
 												.getOptionen();
@@ -141,34 +154,59 @@ public class CreateInfoNp extends VerticalPanel {
 
 				List<Info> infos = new ArrayList<Info>();
 				String infotextTable = null;
+				
+				int k;
 
 				for (int i = 2; i < showEigenschaftFlexTable.getRowCount(); i++) {
+					
+					k = 0;
+					k = i - 2;
 
 					String eigenschaftIdTable = showEigenschaftFlexTable
-							.getText(i, 0);
+							.getText(i, 1);
 
-					Widget w = showEigenschaftFlexTable.getWidget(i, 2);
-
+					Widget w = showEigenschaftFlexTable.getWidget(i, 3);
+					
 					if (w instanceof TextArea) {
-
+						
 						infotextTable = ((TextArea) w).getText();
+
+						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+						}
+						
+						else if (((TextArea) w).getText().isEmpty()) {
+							informationLabel.setText("Das Eingabefeld ist leer.");
+						}
+						
+						else {
+							Info info = new Info();
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
+
+							infos.add(info);
+						}
 					}
 
 					else if (w instanceof ListBox) {
 
 						infotextTable = ((ListBox) w).getSelectedItemText();
+						
+						if (infotextTable.equals("Keine Auswahl")) {
+						}
+						
+						else {
+							Info info = new Info();
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
 
+							infos.add(info);
+						}
 					}
-
-					Info info = new Info();
-					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-					info.setInfotext(infotextTable);
-
-					infos.add(info);
 				}
 
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(
-						infos, new AsyncCallback<List<Info>>() {
+				
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId,
+						infos, new AsyncCallback<Integer>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -177,13 +215,33 @@ public class CreateInfoNp extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(List<Info> result) {
+							public void onSuccess(Integer result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
+								
+								if (result == 0) {
+									
+									ShowEigenesNp showNp = new ShowEigenesNp();
+									RootPanel.get("Navigator").add(new Navigator());
+									
+									Anchor signOut = new Anchor();
+									
+									signOut.setHref(nutzerprofil.getLogoutUrl());
+									signOut.setText("Als " + nutzerprofil.getVorname() + 
+											nutzerprofil.getProfilId() + " ausloggen");
 
-								ShowEigenesNp showNp = new ShowEigenesNp();
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showNp);
+									RootPanel.get("Navigator").add(signOut);
+
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+								}
+
+								else if (result == 1) {
+									int suchprofilId = 0;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
 
 							}
 						});

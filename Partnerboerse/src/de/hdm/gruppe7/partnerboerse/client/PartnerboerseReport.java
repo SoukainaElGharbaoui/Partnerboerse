@@ -29,7 +29,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
+
 	private ReportGeneratorAsync reportGeneratorAsync;
+
 
 	@Override
 	public void onModuleLoad() {
@@ -38,11 +40,14 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			reportGenerator = ClientsideSettings.getReportGenerator();
 		}
 
+
 		reportGeneratorAsync = GWT.create(ReportGenerator.class);
 
 		try {
 			ClientsideSettings.getReportGenerator().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
+
 					new AsyncCallback<Nutzerprofil>() {
+
 
 						public void onFailure(Throwable caught) {
 							RootPanel.get().add(new Label(caught.toString()));
@@ -53,33 +58,35 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 							if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
+
 									
 								ClientsideSettings.setAktuellerUser(result);
 									
+
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
-									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(new PartnerboerseReport());
-									RootPanel.get("Navigator").add(loginPanel);
+								    loginPanel.add(signOutLink);
+									RootPanel.get("Details").add(new PartnerboerseReport());
+									RootPanel.get("Header").add(loginPanel);
 								}
 
 								if (result.getEmailAddress() == null) {
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(new PartnerboerseReport());
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Details").add(new PartnerboerseReport());
+									RootPanel.get("Header").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil());
 								}
 
 							}
 
 							// wenn der user nicht eingeloggt ist
-							if (!result.isLoggedIn()) {
+     						if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Header").add(loginPanel);
 							}
 						}
 					});
@@ -90,14 +97,17 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("3000px");
+		menu.setWidth("330px");
+		menu.setHeight("27px");
+		menu.setStyleName("menubar");
 		menu.setAnimationEnabled(true);
 
 		// Create the file menu
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
+	
 
-		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
+		MenuItem unangesehenePartnervorschlaege = partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
 			@Override
 			public void execute() {
 				ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
@@ -105,8 +115,10 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 				RootPanel.get("Details").add(showAllPartnervorschlaegeNpReport);
 			}
 		});
+		
+		unangesehenePartnervorschlaege.setStyleName("menuItem");
 
-		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
+		MenuItem partnervorschlaegeSp = partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
 
 			@Override
 			public void execute() {
@@ -118,6 +130,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			}
 
 		});
+		
+		partnervorschlaegeSp.setStyleName("menuItem");
+
 
 		partnervorschlaegeMenu.addSeparator();
 

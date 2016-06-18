@@ -1,123 +1,161 @@
 package de.hdm.gruppe7.partnerboerse.shared.bo;
 
 import java.util.Date;
-import java.util.List;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Widget;
-
-import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 
 /**
- * Realisierung eines exemplarischen Nutzerprofils.
- * 
- * @author Nina BaumgÃ¤rtner
+ * Realisierung eines Nutzerprofils.
  */
-
 public class Nutzerprofil extends Profil {
 
 	private static final long serialVersionUID = 1L;
 
-	
+	/**
+	 * Vorname.
+	 */
 	private String vorname;
-	private String nachname; 
-	private String geburtsdatum; 
-	private Date geburtsdatumDate;
-	private List <Nutzerprofil> partnervorschlaegeNp;
-	private List <Nutzerprofil> partnervorschlaegeSp;
-	private List <Nutzerprofil> angeseheneNp;
-
-	private int aehnlichkeit;
 	private int aehnlichkeitSp;
 
+	/**
+	 * Nachname.
+	 */
+	private String nachname;
 
+	/**
+	 * Geburtsdatum.
+	 */
+	private Date geburtsdatumDate;
 
-	// WICHTIG FÜR LOGIN
-	private boolean loggedIn = false; //gebraucht
-	private String loginUrl; //gebruahct
-	private String logoutUrl; //gebruacht
-	private String emailAddress; //gebraucht
+	/**
+	 * Aehnlichkeit zwischen einem Nutzerprofil und anderen Nutzerprofilen oder
+	 * zwischen einem Suchprofil und anderen Nutzerprofilen.
+	 */
+	private int aehnlichkeit;
 
-	
+	/**
+	 * E-Mail-Adresse.
+	 */
+	private String emailAddress;
 
-	// Konstruktor
-	public Nutzerprofil() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	/**
+	 * Login-URL.
+	 */
+	private String loginUrl;
 
-	// METHODEN NUTZERPROFIL
+	/**
+	 * Logout-URL.
+	 */
+	private String logoutUrl;
+
+	/**
+	 * Login-Status, auf false gesetzt.
+	 */
+	private boolean loggedIn = false;
+
+	/**
+	 * Vorname auslesen.
+	 * 
+	 * @return vorname
+	 */
 	public String getVorname() {
 		return vorname;
 	}
 
+	/**
+	 * Vorname setzen.
+	 * 
+	 * @param vorname
+	 */
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	
-	
+
+	/**
+	 * Nachname auslesen.
+	 * 
+	 * @return nachname
+	 */
 	public String getNachname() {
 		return nachname;
 	}
 
+	/**
+	 * Nachname setzen.
+	 * 
+	 * @param nachname
+	 */
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
 
-	public String getGeburtsdatum() {
-		return geburtsdatum;
-	}
-
-	public void setGeburtsdatum(String geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
-
+	/**
+	 * Geburtsdatum auslesen.
+	 * 
+	 * @return geburtsdatumDate
+	 */
 	public Date getGeburtsdatumDate() {
 		return geburtsdatumDate;
 	}
 
+	/**
+	 * Geburtsdatum setzen.
+	 * 
+	 * @param geburtsdatumDate
+	 */
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
 		this.geburtsdatumDate = geburtsdatumDate;
 	}
 
-
+	/**
+	 * Aehnlichkeit auslesen.
+	 * 
+	 * @return aehnlichkeit
+	 */
 	public int getAehnlichkeit() {
-
 		return aehnlichkeit;
 	}
 
-
+	/**
+	 * Aehnlichkeit setzen.
+	 * 
+	 * @param aehnlichkeit
+	 */
 	public void setAehnlichkeit(int aehnlichkeit) {
-
 		this.aehnlichkeit = aehnlichkeit;
 	}
 
-	
-
-	public int getAehnlichkeitSp (){
-		return aehnlichkeitSp;
-	}
-	
-	public void setAehnlichkeitSp (int aehnlichkeitSp){
-		
-		this.aehnlichkeitSp = aehnlichkeitSp;
-	}
-
-
-	public String getEmailAddress(){
+	/**
+	 * E-Mail-Adresse auslesen.
+	 * 
+	 * @return emailAddress
+	 */
+	public String getEmailAddress() {
 		return emailAddress;
 	}
 
-	// METHODEN LOGIN
+	/**
+	 * Login-Status ermitteln.
+	 * 
+	 * @return loggedIn
+	 */
 	public boolean isLoggedIn() {
 		return loggedIn;
 
 	}
 
+	/**
+	 * Login-Status setzen.
+	 * 
+	 * @param b
+	 */
 	public void setLoggedIn(boolean b) {
 		loggedIn = b;
 	}
 
+	/**
+	 * Login-Status auslesen.
+	 * 
+	 * @return loggedIn
+	 */
 	public boolean getLoggedIn() {
 		return loggedIn;
 	}

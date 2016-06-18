@@ -1,7 +1,6 @@
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
@@ -38,6 +37,8 @@ public interface ReportGeneratorAsync {
 			AsyncCallback<AllPartnervorschlaegeSpReport> callback);
 
 	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
+
+
 
 	// public void insertEmail(int profilId, String emailAddress,
 	// AsyncCallback<Nutzerprofil> callback);

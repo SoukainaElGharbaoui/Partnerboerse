@@ -15,6 +15,7 @@ import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -31,45 +32,34 @@ import com.google.gwt.user.datepicker.client.DefaultMonthSelector;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfoNp;
 
+/**
+ * Diese Klasse dient dazu, ein Nutzerprofil zu erstellen.
+ */
 public class CreateNutzerprofil extends VerticalPanel {
 
-	// CalendarView view = new DefaultCalendarView();
-	//
-	// public CalendarView getView() {
-	// return view;
-	// }
-	//
-	// public void setView(CalendarView view) {
-	// this.view = view;
-	// }
-	//
-	// public CalendarView getCalendarView() {
-	// return getView();
-	// }
-
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
+	 * erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Panel hinzufuegen.
+	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Widgets hinzufuegen.
+	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
 	private ListBox geschlechtListBox = new ListBox();;
-
 	private DateBox geburtsdatumDateBox = new DateBox();
 	private Label geburtsdatumInhalt = new Label();
-	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 
+	private DateTimeFormat geburtsdatumFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	private TextBox koerpergroesseTextBox = new TextBox();
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
@@ -81,7 +71,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
-	final Label warnungLabel = new Label();
+	private Label reqLabel4 = new Label("* Pflichtfeld");
+	private Label warnungLabel = new Label();
 
 	/**
 	 * Konstruktor hinzufuegen.
@@ -96,6 +87,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
+		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
 		/**
@@ -116,7 +108,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
-		createNutzerprofilFlexTable.setText(8, 0, "EMail");
+		createNutzerprofilFlexTable.setText(8, 0, "E-Mail");
 
 		/**
 		 * Zweite und dritte Spalte der Tabelle festlegen.
@@ -127,7 +119,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(1, 2, nachnameTextBox);
 		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
-		geschlechtListBox.addItem("nicht binär");
 		geschlechtListBox.addItem("Weiblich");
 		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
@@ -139,7 +130,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
-				String geburtsdatumString = DateTimeFormat.getFormat("yyyy-MM-dd").format(geburtsdatum);
+				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 				geburtsdatumInhalt.setText(geburtsdatumString);
 
 				if (event.getValue().after(today())) {
@@ -150,6 +141,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		geburtsdatumDateBox.setValue(new Date());
 		createNutzerprofilFlexTable.setWidget(3, 2, geburtsdatumDateBox);
+		createNutzerprofilFlexTable.setWidget(3, 3, reqLabel4);
 
 		createNutzerprofilFlexTable.setWidget(4, 2, koerpergroesseTextBox);
 		createNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);
@@ -167,7 +159,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		raucherListBox.addItem("Nichtraucher");
 		createNutzerprofilFlexTable.setWidget(6, 2, raucherListBox);
 
-		religionListBox.addItem("ohne Bekenntnis");
+		religionListBox.addItem("Ohne Bekenntnis");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -181,24 +173,38 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * ClickHandler fuer den Nutzerprofil-Anlegen-Button hinzufuegen.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 
-				// Wenn kein Vorname angegeben wird...
+				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
+				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
+				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
+
 				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
-
-					// Wenn kein Nachname angegeben wird...
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 
-					// Wenn keine Koerpergroesse angegeben wird...
+				} else if (vornameWert == false) {
+					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
+					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+				} else if (nachnameWert == false) {
+					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
+					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+				} else if (geburtsdatumInhalt.getText().length() == 0) {
+					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
+					createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+				} else if (koerpergroesseWert == false) {
+					warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
+					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 
 				} else {
+
 					/**
 					 * Nutzerprofil anlegen.
 					 */
@@ -215,7 +221,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 								public void onSuccess(Nutzerprofil result) {
 									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 
-									CreateInfoNp createInfoNp = new CreateInfoNp();
+									nutzerprofil = result;
+
+									ClientsideSettings.setAktuellerUser(nutzerprofil);
+
+									CreateInfoNp createInfoNp = new CreateInfoNp(nutzerprofil.getProfilId());
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(createInfoNp);
 								}
@@ -235,7 +245,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 
 	/**
-	 * Geburtsdatum erstellen.
+	 * Methode erstellen, die das Geburtsdatum formatiert.
 	 */
 
 	Date getGeburtsdatum() {
@@ -243,12 +253,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
 	}
-	
+
 	/**
-	 * aktuelles Datum ermitteln 
+	 * aktuelles Datum ermitteln
+	 * 
 	 * @return
 	 */
-	
+
 	private static Date today() {
 		return zeroTime(new Date());
 	}
@@ -256,5 +267,19 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/** this is important to get rid of the time portion, including ms */
 	private static Date zeroTime(final Date date) {
 		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
+	}
+
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
+	 **/
+	public boolean isBuchstabe(String name) {
+		return name.matches("[a-zA-Z]+");
+	}
+
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden.
+	 */
+	public boolean isZahl(String name) {
+		return name.matches("[0-9]+");
 	}
 }
