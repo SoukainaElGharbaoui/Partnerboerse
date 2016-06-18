@@ -30,7 +30,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
 	
 	private String eigenschaftId;
-	private String beschreibungstext;
 	
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
@@ -121,7 +120,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 								row++;
 
 								eigenschaftId = null;
-								beschreibungstext = null;
 								
 								showUnusedEigenschaftFlexTable.setText(row,	0, 
 										String.valueOf(profilId));

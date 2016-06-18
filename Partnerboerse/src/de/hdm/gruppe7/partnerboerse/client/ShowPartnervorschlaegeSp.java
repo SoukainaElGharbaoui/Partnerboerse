@@ -142,7 +142,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 							@Override
 							public void onSuccess(List<Nutzerprofil> result) {
-
+								
 								// Bei jeder Auswahl eines Suchprofils soll die
 								// Tabelle komplett gel�scht werden
 								partnervorschlaegeSpFlexTable.removeAllRows();
@@ -165,43 +165,60 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 								partnervorschlaegeSpFlexTable.setText(0, 4, "Geburtsdatum");
 								partnervorschlaegeSpFlexTable.setText(0, 5, "Geschlecht");
 								partnervorschlaegeSpFlexTable.setText(0, 6, "Anzeigen");
-
-								// Tabelle wird bef�llt und die Zeilenanzahl auf
-								// 0 gesetzt
-								int row = 0;
-								for (Nutzerprofil np : result) {
-
-									final int fremdprofilId = np.getProfilId();
-									row++;
-									partnervorschlaegeSpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
-									partnervorschlaegeSpFlexTable.setText(row, 1,
-											String.valueOf(np.getAehnlichkeit()) + "%");
-									partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
-									partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
+								
+								
+								if(result.isEmpty() == true) {
 									
-									Date geburtsdatum = np.getGeburtsdatumDate();
-									String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+									ueberschriftLabel.setText("Sie haben zurzeit keine passenden "
+											+ "Partnervorschläge.");
 									
-									partnervorschlaegeSpFlexTable.setText(row, 4, geburtsdatumString);
-									partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
-
-									// Anzeigen-Button f�r das Fremdprofil
-									// hinzufügen und ausbauen.
-									anzeigenButton = new Button("Anzeigen");
-									partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
-
-									// ClickHandler für den Anzeigen-Button
-									// hinzufügen.
-									anzeigenButton.addClickHandler(new ClickHandler() {
-										public void onClick(ClickEvent event) {
-											ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId);
-											RootPanel.get("Details").clear();
-											RootPanel.get("Details").add(showFremdprofil);
-
-										}
-
-									});
-
+									auswahlListBox.setVisible(false);
+									anzeigenSpButton.setVisible(false);
+									ueberschriftLabel2.setVisible(false);
+									partnervorschlaegeSpFlexTable.setVisible(false);
+									
+									ueberschriftLabel.setVisible(true);
+								}
+								
+								else {
+									
+									// Tabelle wird bef�llt und die Zeilenanzahl auf
+									// 0 gesetzt
+									int row = 0;
+									for (Nutzerprofil np : result) {
+	
+										final int fremdprofilId = np.getProfilId();
+										row++;
+										partnervorschlaegeSpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
+										partnervorschlaegeSpFlexTable.setText(row, 1,
+												String.valueOf(np.getAehnlichkeit()) + "%");
+										partnervorschlaegeSpFlexTable.setText(row, 2, np.getVorname());
+										partnervorschlaegeSpFlexTable.setText(row, 3, np.getNachname());
+										
+										Date geburtsdatum = np.getGeburtsdatumDate();
+										String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
+										
+										partnervorschlaegeSpFlexTable.setText(row, 4, geburtsdatumString);
+										partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
+	
+										// Anzeigen-Button f�r das Fremdprofil
+										// hinzufügen und ausbauen.
+										anzeigenButton = new Button("Anzeigen");
+										partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+	
+										// ClickHandler für den Anzeigen-Button
+										// hinzufügen.
+										anzeigenButton.addClickHandler(new ClickHandler() {
+											public void onClick(ClickEvent event) {
+												ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId);
+												RootPanel.get("Details").clear();
+												RootPanel.get("Details").add(showFremdprofil);
+	
+											}
+	
+										});
+	
+									}
 								}
 
 							}

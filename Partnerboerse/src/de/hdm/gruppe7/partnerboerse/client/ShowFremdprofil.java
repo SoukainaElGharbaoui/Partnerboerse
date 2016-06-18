@@ -38,6 +38,8 @@ public class ShowFremdprofil extends VerticalPanel {
 	 */
 	private Button mButton = new Button();
 	private Button sButton = new Button();
+	
+	final Label ueberschriftLabel = new Label("Fremdprofil");
 
 	/**
 	 * Konstruktor hinzuf�gen.
@@ -48,7 +50,6 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * �berschrift-Label hinzuf�gen.
 		 */
-		final Label ueberschriftLabel = new Label("Fremdprofil");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
