@@ -242,6 +242,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
+		
 
 	}
 
@@ -270,6 +271,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			throws IllegalArgumentException {
 		return this.suchprofilMapper.findSuchprofilByName(profilId,
 				suchprofilName);
+	}
+	
+	/**
+	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 */
+	
+	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
+			throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilById(profilId,
+				suchprofilId);		
 	}
 
 	/**
@@ -696,7 +707,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 						suchprofilId, fremdprofilId,
 						aehnlichkeitSp);
 									
-				}else {
+				} else {
 					
 					if (sp.getGeschlecht().equals("Keine Auswahl")){
 						// Aehnlichkeit in die Datenbank setzen

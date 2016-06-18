@@ -86,6 +86,8 @@ public interface PartnerboerseAdministrationAsync {
 	
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback);
 	
+	void getSuchprofilById (int profilId, int suchprofilId, AsyncCallback<Suchprofil> callback);
+	
 	void pruefeSuchprofilnameCreate(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, String suchprofilname,

@@ -237,8 +237,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 								
 								// Fall, profilId gehört zu Suchprofil
 								else if (result == 1) {
-									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilName);
+									int suchprofilId = 0;
+									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);

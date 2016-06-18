@@ -211,6 +211,15 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName)
 			throws IllegalArgumentException;
+	/**
+	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 * @param profilId
+	 * @param suchprofilId
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils pruefen.

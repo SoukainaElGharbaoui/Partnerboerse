@@ -285,8 +285,8 @@ public class EditSuchprofil extends VerticalPanel {
 
 																			@Override
 																			public void onSuccess(Void result) {
-																				String suchprofilName = suchprofilNameTextBox.getText();
-																				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilName);
+																				int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
+																				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
 																				RootPanel.get("Details").clear();
 																				RootPanel.get("Details")
 																						.add(showSuchprofil);

@@ -211,6 +211,48 @@ public class SuchprofilMapper {
 	}
 	
 	/**
+	 * Suchprofil-Objekt anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 * @param profilId
+	 * @param suchprofilId
+	 * @return
+	 */
+	
+	public Suchprofil findSuchprofilById (int profilId, int suchprofilId){
+		Connection con = DBConnection.connection();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM t_suchprofil1 INNER JOIN t_profil1 "
+					+ "ON t_suchprofil1.suchprofil_id = t_profil1.profil_id " + "WHERE t_suchprofil1.nutzerprofil_id="
+					+ profilId + " AND t_suchprofil1.suchprofil_id =" + suchprofilId );
+			
+			if (rs.next()){
+				
+				Suchprofil s = new Suchprofil();
+
+				s.setProfilId(rs.getInt("suchprofil_id"));
+				s.setSuchprofilName(rs.getString("suchprofilname"));
+				s.setGeschlecht(rs.getString("geschlecht"));
+				s.setKoerpergroesseInt(rs.getInt("koerpergroesse"));
+				s.setHaarfarbe(rs.getString("haarfarbe"));
+				s.setAlterMinInt(rs.getInt("alter_von"));
+				s.setAlterMaxInt(rs.getInt("alter_bis"));
+				s.setRaucher(rs.getString("raucher"));
+				s.setReligion(rs.getString("religion"));
+				
+				return s;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			return null;
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Existenz des Suchprofilnames ueberpruefen. 
 	 * @param profilId Die Profil-ID des Nutzers, dessen Suchprofil ueberprueft werden soll.
 	 * @param suchprofilName Der Suchprofilname des Suchprofils, dessen Name ueberprueft werden soll.
