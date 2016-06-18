@@ -55,6 +55,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
+	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
 
 	private Button editNutzerprofilButton = new Button("Profil speichern");
@@ -72,6 +73,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		reqLabel1.setStyleName("red_label");
 		reqLabel2.setStyleName("red_label");
 		reqLabel3.setStyleName("red_label");
+		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 
 		/**
@@ -122,9 +124,10 @@ public class EditNutzerprofil extends VerticalPanel {
 
 		geburtsdatumDateBox.setValue(new Date());
 		editNutzerprofilFlexTable.setWidget(4, 2, geburtsdatumDateBox);
+		editNutzerprofilFlexTable.setWidget(4, 3, reqLabel3);
 
 		editNutzerprofilFlexTable.setWidget(5, 2, koerpergroesseTextBox);
-		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel3);
+		editNutzerprofilFlexTable.setWidget(5, 3, reqLabel4);
 
 		haarfarbeListBox.addItem("Blond");
 		haarfarbeListBox.addItem("Braun");
@@ -201,22 +204,31 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				// Wenn kein Vorname angegeben wird...
-				if (vornameTextBox.getText().length() == 0) {
+				boolean vornameWert = isBuchstabe(vornameTextBox.getText()); 
+				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText()); 
+				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText()); 
 
+				if (vornameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
 					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-					// Wenn kein Nachname angegeben wird...
-
 				} else if (nachnameTextBox.getText().length() == 0) {
-
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
-					// Wenn keine Koerpergroesse angegeben wird...
+				} else if (vornameWert == false){
+					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+				} else if (nachnameWert == false){
+					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(2, 4, warnungLabel);
+				} else if (geburtsdatumInhalt.getText().length() == 0){
+					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
+					editNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 				} else if (koerpergroesseTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
-
+				} else if (koerpergroesseWert == false){
+					warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
+					editNutzerprofilFlexTable.setWidget(5, 4, warnungLabel);
 				} else {
 
 				/**
@@ -262,5 +274,19 @@ public class EditNutzerprofil extends VerticalPanel {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
 		return sqlDate;
+	}
+	
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
+	 */
+	public boolean isBuchstabe(String name) {
+	    return name.matches("[a-zA-Z]+");
+	}
+	
+	/**
+	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
+	 */
+	public boolean isZahl(String name) {
+	    return name.matches("[0-9]+");
 	}
 }

@@ -255,7 +255,7 @@ public class EditSuchprofil extends VerticalPanel {
 													// angegeben
 													// wurde...
 													if (koerpergroesseTextBox.getText().length() == 0) {
-														warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+														warnungLabel.setText("Bitte geben Sie eine Körpergröße an.");
 														editSuchprofilFlexTable.setWidget(5, 4, warnungLabel);
 													} else {
 														// Suchprofil
