@@ -43,15 +43,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
 	/**
-<<<<<<< HEAD
 	 * Ein ReportGenerator ben�tigt Zugriff auf die PartnerboerseAdministration,
 	 * da diese die essentiellen Methoden f�r die Koexistenz von Datenobjekten
 	 * (vgl. bo-Package) bietet.
-=======
 	 * Ein ReportGenerator benoetigt Zugriff auf die
 	 * PartnerboerseAdministration, da diese die essentiellen Methoden f�r die
 	 * Koexistenz von Datenobjekten (vgl. bo-Package) bietet.
->>>>>>> branch 'master' of https://github.com/SoukainaElGharbaoui/Partnerboerse.git
 	 */
 	private PartnerboerseAdministration partnerboerseAdministration = null;
 
