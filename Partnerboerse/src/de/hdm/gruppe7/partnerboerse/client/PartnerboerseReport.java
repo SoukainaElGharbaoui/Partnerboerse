@@ -97,14 +97,17 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("900px");
+		menu.setWidth("330px");
+		menu.setHeight("27px");
+		menu.setStyleName("menubar");
 		menu.setAnimationEnabled(true);
 
 		// Create the file menu
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
+	
 
-		partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
+		MenuItem unangesehenePartnervorschlaege = partnervorschlaegeMenu.addItem("Unangesehene Partnervorschlaege", new Command() {
 			@Override
 			public void execute() {
 				ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
@@ -112,8 +115,10 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 				RootPanel.get("Details").add(showAllPartnervorschlaegeNpReport);
 			}
 		});
+		
+		unangesehenePartnervorschlaege.setStyleName("menuItem");
 
-		partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
+		MenuItem partnervorschlaegeSp = partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
 
 			@Override
 			public void execute() {
@@ -125,6 +130,8 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			}
 
 		});
+		
+		partnervorschlaegeSp.setStyleName("menuItem");
 
 
 		partnervorschlaegeMenu.addSeparator();

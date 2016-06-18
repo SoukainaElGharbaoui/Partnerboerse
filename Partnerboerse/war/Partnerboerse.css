@@ -146,8 +146,18 @@ div#Trailer {
    background: #8080ff; 
 } */
 .menubar {
-	width: 900px;
-	background: #6b6bf1;
+	background: #cee6fd;
+	border: 1px ridge #b0a5f5;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	
+}
+
+.menuItem{
+   cursor: default;
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 12px;
+   background: #cee6fd;
+   border: 1px ridge #d7d1fa;
 }
 
 /* MERKLISTE BEGINN */ 

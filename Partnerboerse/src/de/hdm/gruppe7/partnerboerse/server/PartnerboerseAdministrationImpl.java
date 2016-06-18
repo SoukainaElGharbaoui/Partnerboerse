@@ -1,7 +1,9 @@
 package de.hdm.gruppe7.partnerboerse.server;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -437,9 +439,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			if (np.getHaarfarbe().equals(referenzprofil.getHaarfarbe())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
-
-			if (np.getKoerpergroesseInt() == referenzprofil.getKoerpergroesseInt()) {
-				aehnlichkeit = aehnlichkeit + 1;
+			
+			if (np.getKoerpergroesseInt() +5 >= referenzprofil.getKoerpergroesseInt()) {
+			if(np.getKoerpergroesseInt()-5 <= referenzprofil.getKoerpergroesseInt()){
+					 			aehnlichkeit = aehnlichkeit + 1;
+					 			}
 			}
 
 			if (np.getRaucher().equals(referenzprofil.getRaucher())) {
@@ -449,6 +453,42 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			if (np.getReligion().equals(referenzprofil.getReligion())) {
 				aehnlichkeit = aehnlichkeit + 1;
 			}
+			
+			// Berechnung des Alters des Fremdprofils
+	 		GregorianCalendar geburtstagVgl = new GregorianCalendar();
+	         geburtstagVgl.setTime(referenzprofil.getGeburtsdatumDate());
+	         GregorianCalendar heute = new GregorianCalendar();
+	         int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+	         if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH))
+	         {
+	             alter = alter - 1;
+	         }
+	         else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH)){
+	             if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE)){
+	                 alter = alter - 1;
+	             }
+	         }
+	         // Berechnung des Alters des eigenen Profils
+	         GregorianCalendar geburtstagRef = new GregorianCalendar();
+	         geburtstagRef.setTime(np.getGeburtsdatumDate());
+	         GregorianCalendar heute1 = new GregorianCalendar();
+	         int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+	         if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH))
+	         {
+	             alterRef = alterRef - 1;
+	         }
+	         else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH))
+	         {
+	             if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE)){
+	                 alterRef = alterRef - 1;
+	             }
+	         }
+	         
+	         if(alter+5 >= alterRef){
+	        	if(alter-5 <= alterRef){
+	        	  aehnlichkeit = aehnlichkeit +3;
+	        	  }
+	        	}
 
 			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
 			List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(vergleichsprofilId);
@@ -517,32 +557,78 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			for (Nutzerprofil np : vergleichsprofil) {
 
 				int aehnlichkeitSp = 0;
-				int counter = 70;
+				int counter = 80;
 
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 				String suchprofilName = sp.getSuchprofilName();
 
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					aehnlichkeitSp = aehnlichkeitSp + 30;
+//				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+//					aehnlichkeitSp = aehnlichkeitSp + 30;
+//				}
+				
+				if(sp.getGeschlecht().equals("Keine Auswahl")){
+						aehnlichkeitSp = aehnlichkeitSp + 30;			
+						} else {
+						if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					 	aehnlichkeitSp = aehnlichkeitSp + 30;
+										}
+					 				}
+				if(sp.getHaarfarbe().equals("Keine Auswahl")){
+					aehnlichkeitSp = aehnlichkeitSp +10;
+				} else{
+					if(sp.getHaarfarbe().equals(np.getHaarfarbe())){
+						aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
 				}
 
-				if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
+				if (sp.getKoerpergroesseInt()+5 >= np.getKoerpergroesseInt()) {
+				if(sp.getKoerpergroesseInt()-5 <= np.getKoerpergroesseInt()){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
 				}
 
-				if (sp.getKoerpergroesseInt() == np.getKoerpergroesseInt()) {
+				
+				if(sp.getRaucher().equals("Keine Auswahl")){
 					aehnlichkeitSp = aehnlichkeitSp + 10;
-				}
-
+										
+					} else {
+										
 				if (sp.getRaucher().equals(np.getRaucher())) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
+										
 				}
 
-				if (sp.getReligion().equals(np.getReligion())) {
+				if (sp.getReligion().equals("Keine Auswahl")) {
 					aehnlichkeitSp = aehnlichkeitSp + 10;
 
+				} else {
+					if(sp.getRaucher().equals(np.getRaucher())){
+						aehnlichkeitSp = aehnlichkeitSp + 10;
+					}
 				}
+				
+ 				GregorianCalendar geburtstag = new GregorianCalendar();
+ 		        geburtstag.setTime(np.getGeburtsdatumDate());
+ 		        GregorianCalendar heute = new GregorianCalendar();
+ 		        int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+ 		        if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH))
+ 		        {
+ 		            alter = alter - 1;
+ 		        }
+ 		        else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH))
+ 		        {
+ 		            if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE))
+ 		            {
+ 		                alter = alter - 1;
+ 		            }
+ 		        }
+ 		        if(sp.getAlterMaxInt() >= alter){
+ 		        	 if(sp.getAlterMinInt() <= alter){
+ 						 aehnlichkeitSp = aehnlichkeitSp + 10;
+ 					 }
+}
 
 				// Holen aller Infos des Suchprofils und Nuterprofils
 				List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
