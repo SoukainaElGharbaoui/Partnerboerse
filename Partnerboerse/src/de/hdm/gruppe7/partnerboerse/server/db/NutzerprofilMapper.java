@@ -379,10 +379,6 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Geordnete Partnervorschlaege fuer ein Nutzerprofil auslesen. 
-<<<<<<< HEAD
-	 * Es werden nur unangesehene Nutzerprofile, von denen das Nutzerprofil nicht gesperrt wurde, ausgelesen.
-=======
->>>>>>> refs/heads/master
 	 * @param profilId Die Profil-ID des Nutzerprofils, fuer das die Partnervorschlaege ausgelesen werden sollen. 
 	 * @return Liste von vorgeschlagenenen Nutzerprofil-Objekten.
 	 */
@@ -397,12 +393,14 @@ public class NutzerprofilMapper {
 			ResultSet rs = stmt
 					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
 							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, "
-							+ "t_profil1.raucher, t_profil1.religion FROM t_nutzerprofil1 "
+							+ "t_profil1.raucher, t_profil1.religion, t_aehnlichkeitnp1.aehnlichkeit FROM t_nutzerprofil1 "
 							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId
-							+ "AND t_nutzerprofil1.nutzerprofil_id "
-							+ "NOT IN (SELECT t_sperrung1.nutzerprofil_id FROM t_sperrung1 WHERE t_sperrung1.fremdprofil_id =" + profilId
-							+ ") "
+							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
+							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_aehnlichkeitnp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_aehnlichkeitnp1.nutzerprofil_id =" + profilId
+							+ " AND t_nutzerprofil1.nutzerprofil_id !=" + profilId
+							+ " AND (t_sperrung1.fremdprofil_id !=" + profilId
+							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
 							+ "ORDER BY t_nutzerprofil1.nutzerprofil_id");
 
 

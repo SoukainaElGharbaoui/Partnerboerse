@@ -799,13 +799,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
-<<<<<<< HEAD
 		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, hei�t dies dem Nutzer sind diese Angaben egal.
-=======
-		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
-		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, hei�t das dem Nutzer sind diese Angaben egal.
->>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
