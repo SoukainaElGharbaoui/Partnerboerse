@@ -1,45 +1,53 @@
 package de.hdm.gruppe7.partnerboerse.shared.report;
 
 /**
- * <p>
- * Diese Klasse wird benötigt, um auf dem Client die ihm vom Server zur
- * Verfügung gestellten <code>Report</code>-Objekte in ein menschenlesbares
- * Format zu überführen.
- * </p>
- * <p>
+ * Diese Klasse wird benoetigt, um auf dem Client die ihm vom Server zur
+ * Verfuegung gestellten Report-Objekte in ein menschenlesbares Format zu 
+ * ueberfuehren.
+ * 
  * Das Zielformat kann prinzipiell beliebig sein. Methoden zum Auslesen der in
- * das Zielformat überführten Information wird den Subklassen überlassen. In
- * dieser Klasse werden die Signaturen der Methoden deklariert, die für die
- * Prozessierung der Quellinformation zuständig sind.
- * </p>
+ * das Zielformat Ueberfuehrten Information wird den Subklassen ueberlassen. In
+ * dieser Klasse werden die Signaturen der Methoden deklariert, die fuer die
+ * Prozessierung der Quellinformation zustaendig sind.
  * 
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
 
 public abstract class ReportWriter {
 	
 	  /**
-	   * Übersetzen eines <code>AllSuchprofileOfNutzerReport</code> in das
-	   * Zielformat.
+	   * Uebersetzen eines AllInfosOfNutzerReport in das Zielformat.
 	   * 
-	   * @param r der zu übersetzende Report
+	   * @param r der zu uebersetzende Report
 	   */
-	
 	
 	public abstract void process(AllInfosOfNutzerReport r);
 	
 	
+	/**
+	 * Uebersetzen eines AllProfildatenOfNutzerReport in das Zielformat.
+	 * 
+	 * @param r der zu uebersetzende Report
+	 */
 	public abstract void process(AllProfildatenOfNutzerReport r);
 	
+	/**
+	 * Uebersetzen eines AllPartnervorschlaegeNpReport in das Zielformat.
+	 * 
+	 * @param r der zu uebersetzende Report
+	 */
 	public abstract void process(AllPartnervorschlaegeNpReport r);
 
 	
+	/**
+	 * Uebersetzen eines AllPartnervorschlaegeSpReport in das Zielformat.
+	 * 
+	 * @param r der zu uebersetzende Report
+	 */ 
 	public abstract void process(AllPartnervorschlaegeSpReport r);
 	
 	

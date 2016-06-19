@@ -6,18 +6,16 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * Diese Klasse stellt eine Menge einzelner Absätze (
- * <code>SimpleParagraph</code>-Objekte) dar. Diese werden als Unterabschnitte
- * in einem <code>Vector</code> abgelegt verwaltet.
+ * Diese Klasse stellt eine Menge einzelner Absaetze (SimpleParagraph-Objekte) dar. 
+ * Diese werden als Unterabschnitte in einem Vector abgelegt verwaltet.
  * 
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
+
 public class CompositeParagraph extends Paragraph implements IsSerializable, Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -28,9 +26,9 @@ public class CompositeParagraph extends Paragraph implements IsSerializable, Ser
 	private Vector<SimpleParagraph> subParagraphs = new Vector<SimpleParagraph>();
 	
 	  /**
-	   * Einen Unterabschnitt hinzufügen.
+	   * Einen Unterabschnitt hinzufuegen.
 	   * 
-	   * @param p der hinzuzufügende Unterabschnitt.
+	   * @param p der hinzuzufuegende Unterabschnitt.
 	   */
 	public void addSubParagraph(SimpleParagraph p) {
 	   this.subParagraphs.addElement(p);
@@ -46,9 +44,9 @@ public class CompositeParagraph extends Paragraph implements IsSerializable, Ser
 	}
 	
 	  /**
-	   * Auslesen sämtlicher Unterabschnitte.
+	   * Auslesen saemtlicher Unterabschnitte.
 	   * 
-	   * @return <code>Vector</code>, der sämtliche Unterabschnitte enthält.
+	   * @return Vector, der saemtliche Unterabschnitte enthält.
 	   */
 	public Vector<SimpleParagraph> getSubParagraphs() {
 	    return this.subParagraphs;
@@ -66,44 +64,37 @@ public class CompositeParagraph extends Paragraph implements IsSerializable, Ser
 	  /**
 	   * Auslesen eines einzelnen Unterabschnitts.
 	   * 
-	   * @param i der Index des gewünschten Unterabschnitts (0 <= i <n), mit n =
+	   * @param i der Index des gewuenschten Unterabschnitts (0 <= i <n), mit n =
 	   *          Anzahl der Unterabschnitte.
 	   * 
-	   * @return der gewünschte Unterabschnitt.
+	   * @return der gewuenschte Unterabschnitt.
 	   */
 	public SimpleParagraph getParagraphAt(int i) {
 	    return this.subParagraphs.elementAt(i);
 	}
 	
 	  /**
-	   * Umwandeln eines <code>CompositeParagraph</code> in einen
-	   * <code>String</code>.
+	   * Umwandeln eines CompositeParagraphin einenString. Dazu wird zunaecht ein leerer Buffer
+	   * angelegt an den alle String-Repraesentationen der Unterabschnitte eingetragen werden.
+	   * Danach folgt eine Schleife ueber alle Unterabschnitte, in der die jeweiligen 
+	   * Unterabschnitte in einen String gewandelt werden und dem Buffer angehaengt wird.
+	   * Am Ende wir der Buffer in einen String umgewandelt und zurueckgegeben.
+	   * 
+	   * @return String 
 	   */
 	public String toString() {
-	    /*
-	     * Wir legen einen leeren Buffer an, in den wir sukzessive sämtliche
-	     * String-Repräsentationen der Unterabschnitte eintragen.
-	     */
+	   
 	    StringBuffer result = new StringBuffer();
 
-	    // Schleife über alle Unterabschnitte
 	    for (int i = 0; i < this.subParagraphs.size(); i++) {
 	      SimpleParagraph p = this.subParagraphs.elementAt(i);
 
-	      /*
-	       * den jew. Unterabschnitt in einen String wandeln und an den Buffer hängen.
-	       */
 	      result.append(p.toString() + "\n");
 	    }
 
-	    /*
-	     * Schließlich wird der Buffer in einen String umgewandelt und
-	     * zurückgegeben.
-	     */
+	
 	    return result.toString();
 	  }
 
 	
-	
-
 }
