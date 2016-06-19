@@ -12,7 +12,7 @@ import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
+ * Klasse mit Eigenschaften und Diensten, die fuer alle Client-seitigen Klassen
  * relevant sind
  * 
  * @author Nina
@@ -50,7 +50,7 @@ public class ClientsideSettings extends CommonSettings {
 	/**
 	 * Auslesen des applikationsweiten (Client-seitig!) zentralen Loggers.
 	 * 
-	 * @return die Logger-Instanz für die Server-Seite
+	 * @return die Logger-Instanz fuer die Server-Seite
 	 */
 	public static Logger getLogger() {
 		return log;
@@ -61,7 +61,7 @@ public class ClientsideSettings extends CommonSettings {
 	 * PartnerboerseAdministration. Diese Methode erstellt die
 	 * PartnerboerseAdministration, sofern sie noch nicht existiert. Bei
 	 * wiederholtem Aufruf dieser Methode wird stets das bereits zuvor angelegte
-	 * Objekt zurückgegeben.
+	 * Objekt zurueckgegeben.
 	 * 
 	 * @return Instanz des Typs PartnerboerseAdministrationAsync
 	 */
@@ -77,7 +77,7 @@ public class ClientsideSettings extends CommonSettings {
 	 * Anlegen und Auslesen des applikationsweit eindeutigen ReportGenerators.
 	 * Diese Methode erstellt den ReportGenerator, sofern dieser noch nicht
 	 * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
-	 * zuvor angelegte Objekt zurückgegeben.
+	 * zuvor angelegte Objekt zurueckgegeben.
 	 * 
 	 * @return Instanz des Typs ReportGeneratorAsync
 	 */
