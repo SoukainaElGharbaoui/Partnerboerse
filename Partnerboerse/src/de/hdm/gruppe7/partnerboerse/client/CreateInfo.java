@@ -47,6 +47,9 @@ public class CreateInfo extends VerticalPanel {
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
 
+	/**
+	 * Attribute erzeugen
+	 */
 	private String eigenschaftId = null;
 	private int row;
 
@@ -160,7 +163,7 @@ public class CreateInfo extends VerticalPanel {
 				});
 
 		/**
-		 * ClickHandler fuer den Button zum Anlegen einer Info. ANNINA
+		 * ClickHandler fuer den Button zum Anlegen einer Info.
 		 */
 
 		createInfosButton.addClickHandler(new ClickHandler() {

@@ -44,9 +44,15 @@ public class ShowFremdprofil extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
+	 * 
 	 * @param fremdprofilId 
+	 * @param profiltyp 
 	 */
 	public ShowFremdprofil(final int fremdprofilId, final String profiltyp) {
+		
+		/**
+		 * Horizontales Panel hinzufuegen.
+		 */
 		this.add(horPanel);
 
 		/**
