@@ -88,7 +88,7 @@ div#Details {
 div#Trailer {
 	clear: both;
 	padding: 3px 0;
-	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	/* standardkonforme horizontale Zentrierung */
 	margin-top: 30px;
 	border-top: 1px dashed silver;
 	font-size: 80%;
@@ -115,11 +115,12 @@ div#Trailer {
 	font-size: 100%;
 	font-weight: bold; 
 	width: 10em;
-	heigt: 20em; 
-	margin-bottom: 10px;
-	margin-top: 10px;
+	height: 2em; 
+	border: 1px solid silver;
+	margin-bottom: 20px;
+	margin-top: 20px;
 	color: #1524db;
-	background-color: #92c0fa;
+	overflow: visible;
 }
 
 .partnerboerse-label {
