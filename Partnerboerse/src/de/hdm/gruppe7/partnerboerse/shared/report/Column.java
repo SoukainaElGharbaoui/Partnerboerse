@@ -5,19 +5,17 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * Spalte eines <code>Row</code>-Objekts. <code>Column</code>-Objekte
- * implementieren das <code>Serializable</code>-Interface und können daher als
- * Kopie z.B. vom Server an den Client übertragen werden.
+ * Spalte eines Row-Objekts. Column-Objekte implementieren das Serializable-Interface und 
+ * koennen daher als Kopie z.B. vom Server an den Client uebertragen werden.
  * 
  * @see Row
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
+
 public class Column implements IsSerializable, Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,6 +28,7 @@ public class Column implements IsSerializable, Serializable {
 	
 	/**
 	 * No-Argument-Konstruktor.
+	 * 
 	 * @see #Column(String)
 	 * @see SimpleParagraph#SimpleParagraph()
 	 */
@@ -56,7 +55,7 @@ public class Column implements IsSerializable, Serializable {
 	}
 	
 	  /**
-	   * Überschreiben des aktuellen Spaltenwerts.
+	   * Ueberschreiben des aktuellen Spaltenwerts.
 	   * 
 	   * @param value neuer Spaltenwert
 	   */
@@ -65,7 +64,7 @@ public class Column implements IsSerializable, Serializable {
 	}
 	
 	  /**
-	   * Umwandeln des <code>Column</code>-Objekts in einen String.
+	   * Umwandeln des Column-Objekts in einen String.
 	   * 
 	   * @see java.lang.Object
 	   */

@@ -19,8 +19,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Synchrone Schnittstelle f�r die Verwaltung der Partnerboerse.
- * @author dunja
- *
+ * 
  */
 @RemoteServiceRelativePath("partnerboerseadministration")
 public interface PartnerboerseAdministration extends RemoteService {
@@ -532,7 +531,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	
-	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
+	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;

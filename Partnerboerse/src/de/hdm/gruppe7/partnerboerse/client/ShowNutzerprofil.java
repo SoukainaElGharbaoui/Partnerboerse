@@ -21,7 +21,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
  * Diese Klasse dient dazu, das eigene Nutzerprofil anzuzeigen. 
  */
 public class ShowNutzerprofil extends VerticalPanel {
-
+	
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
 	 */
@@ -44,13 +44,13 @@ public class ShowNutzerprofil extends VerticalPanel {
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	
-	private String profiltyp;
+//	private String profiltyp;
 
 
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public ShowNutzerprofil() {
+	public ShowNutzerprofil(final int profilId, final String profiltyp) {
 
 		this.add(horPanel);
 		horPanel.add(nutzerprofilPanel);
@@ -63,13 +63,13 @@ public class ShowNutzerprofil extends VerticalPanel {
 		showEigenesNpFlexTable.addStyleName("FlexTable");
 		showEigenesNpFlexTable.setCellPadding(6);
 		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-
-		/**
-		 * Die Variable profiltyp wird initialisiert.
-		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
-		 * vom Typ Suchprofil ist
-		 */
-		profiltyp = "Np";
+//
+//		/**
+//		 * Die Variable profiltyp wird initialisiert.
+//		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
+//		 * vom Typ Suchprofil ist
+//		 */
+//		profiltyp = "Np";
 		
 		/**
 		 * Erste Spalte der Tabelle festlegen.
@@ -88,7 +88,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 		/**
 		 * Nutzerprofil anhand der Profil-ID auslesen und die Profildaten in die Tabelle einfuegen.
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(profilId,
 			new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -97,8 +97,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 
 					public void onSuccess(Nutzerprofil result) {
 						String nutzerprofilId = String.valueOf(result.getProfilId());
-
-						nutzerprofil.setProfilId(Integer.valueOf(nutzerprofilId));
+						
 								showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
 
 								showEigenesNpFlexTable.setText(1, 1, result.getVorname());
@@ -130,7 +129,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil();
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editNutzerprofil);
 			}
@@ -150,7 +149,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
 					
 					ClientsideSettings.getPartnerboerseAdministration()
-							.deleteNutzerprofil(nutzerprofil.getProfilId(),
+							.deleteNutzerprofil(profilId,
 									new AsyncCallback<Void>() {
 
 										public void onFailure(Throwable caught) {
@@ -158,7 +157,9 @@ public class ShowNutzerprofil extends VerticalPanel {
 										}
 
 										public void onSuccess(Void result) {
-				
+											
+											if (profiltyp == "Np") {
+												
 											HorizontalPanel loginPanel = new HorizontalPanel();
 											
 											Anchor signOutLink = new Anchor();
@@ -176,6 +177,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 											RootPanel.get("Details").clear();
 											 
 											RootPanel.get("Navigator").add(loginPanel);
+											}
 										}
 							});
 				}
@@ -186,7 +188,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
-		ShowInfo showInfo = new ShowInfo(nutzerprofil.getProfilId(), profiltyp);
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
 
 		/**
 		 * Widgets den Panels hinzufuegen.

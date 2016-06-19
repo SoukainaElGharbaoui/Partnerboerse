@@ -18,8 +18,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Das asynchrone Gegenst�ck des Interface {@link PartnerboerseAdministration}
- * 
- * @author dunja
  *
  */
 public interface PartnerboerseAdministrationAsync {
@@ -488,7 +486,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param profilId
 	 * @param callback
 	 */
-	void deleteAllInfosNeu(int profilId, AsyncCallback<Integer> callback);
+	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)

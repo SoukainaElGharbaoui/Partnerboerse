@@ -66,7 +66,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public CreateNutzerprofil() {
+//	public CreateNutzerprofil() {
+
+	
+	public CreateNutzerprofil(final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -168,8 +171,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				
-				profiltyp = "Np";
-
 				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
 				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
 				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
@@ -218,14 +219,16 @@ public class CreateNutzerprofil extends VerticalPanel {
 									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 									
 									ClientsideSettings.setAktuellerUser(result);
+//									
+//									infoLabel.setText("" + ClientsideSettings.getAktuellerUser().getProfilId());
 								
-										CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
-												profiltyp);
-										RootPanel.get("Details").clear();
-										RootPanel.get("Details").add(createInfo);
-										}
-								});
-						}
+									CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
+										profiltyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createInfo);
+									}
+					});
+				}
 			}
 		});
 
@@ -236,7 +239,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(infoLabel);
-
 	}
 
 	/**

@@ -6,25 +6,20 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * <p>
- * Basisklasse aller Reports. Reports sind als <code>Serializable</code>
- * deklariert, damit sie von dem Server an den Client gesendet werden können.
+ * Basisklasse aller Reports. Reports sind als Serializable
+ * deklariert, damit sie von dem Server an den Client gesendet werden koennen.
  * Der Zugriff auf Reports erfolgt also nach deren Bereitstellung lokal auf dem
  * Client.
- * </p>
- * <p>
+ * 
  * Ein Report besitzt eine Reihe von Standardelementen. Sie werden mittels
  * Attributen modelliert und dort dokumentiert.
- * </p>
  * 
  * @see Report
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
 
 public abstract class Report implements IsSerializable, Serializable {

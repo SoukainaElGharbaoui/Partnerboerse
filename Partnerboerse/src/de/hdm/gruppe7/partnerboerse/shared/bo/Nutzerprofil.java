@@ -13,8 +13,6 @@ public class Nutzerprofil extends Profil {
 	 * Vorname.
 	 */
 	private String vorname;
-	private int aehnlichkeitSp;
-
 	/**
 	 * Nachname.
 	 */
