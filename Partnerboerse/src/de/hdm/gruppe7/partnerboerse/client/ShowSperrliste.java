@@ -186,6 +186,7 @@ public class ShowSperrliste extends VerticalPanel {
 												
 												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
 												sperrlisteFlexTable.setVisible(false);
+												infoLabel.setVisible(false);
 												ueberschriftLabel.setVisible(true);
 											}
 											

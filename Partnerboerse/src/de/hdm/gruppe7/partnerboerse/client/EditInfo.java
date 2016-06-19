@@ -171,14 +171,13 @@ public class EditInfo extends VerticalPanel {
 													}
 										});
 										
-										editInfoFlexTable.removeRow(l);
+										// Jeweilige Zeile der Tabelle loeschen.
 										
-										boolean leer = pruefeLeereTable();
-										
-										if (leer == true) {
+										if (editInfoFlexTable.getRowCount() == 3) {
+											
+											editInfoFlexTable.removeRow(l);
 											
 											ueberschriftLabel.setText("Sie haben derzeit keine Infos angelegt.");
-											
 											editInfoFlexTable.setVisible(false);
 											updateInfosButton.setVisible(false);
 											informationLabel.setVisible(false);
@@ -187,7 +186,8 @@ public class EditInfo extends VerticalPanel {
 											verPanel.add(createInfosButton);
 										}
 										
-										else {										
+										else {
+											editInfoFlexTable.removeRow(l);
 											break;
 										}
 									}

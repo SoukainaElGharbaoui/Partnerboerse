@@ -205,15 +205,19 @@ public class CreateInfo extends VerticalPanel {
 									ShowNutzerprofil showNp = new ShowNutzerprofil();
 									RootPanel.get("Navigator").add(new Navigator());
 									
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+									
 									Anchor signOut = new Anchor();
 									
-									signOut.setHref(nutzerprofil.getLogoutUrl());
+									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
 									signOut.setText("Als " + nutzerprofil.getVorname() + 
 											nutzerprofil.getProfilId() + " ausloggen");
+									
+									RootPanel.get("Navigator").add(signOut);
 								}
 
 								else if (profiltyp.equals("Sp")) {
-									String suchprofilName = null;
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
