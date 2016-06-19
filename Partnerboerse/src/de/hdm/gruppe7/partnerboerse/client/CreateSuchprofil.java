@@ -118,6 +118,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setWidget(6, 2, raucherListBox);
 
 		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Ohne Bekenntnis"); 
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
