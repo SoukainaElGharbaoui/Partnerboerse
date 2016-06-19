@@ -44,11 +44,27 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		implements PartnerboerseAdministration {
-
+	
+	
+	/**
+	 * Referenz auf den NutzerprofilMapper, der Nutzerprofil-Obejekte mit der Datenbank abgleicht.
+	 */
 	private NutzerprofilMapper nutzerprofilMapper = null;
+	/**
+	 * Referenz auf den SuchprofilMapper, der Suchprofil-Objekte mit der Datenbank abgleicht.
+	 */
 	private SuchprofilMapper suchprofilMapper = null;
+	/**
+	 * Referenz auf den MerklisteMapper, der 
+	 */
 	private MerklisteMapper merklisteMapper = null;
+	/**
+	 * Referenz auf den SperrlisteMapper,
+	 */
 	private SperrlisteMapper sperrlisteMapper = null;
+	/**
+	 * Referenz auf den InfoMapper, der Info-Objekte mit der Datenbank abgleicht.
+	 */
 	private InfoMapper infoMapper = null;
 
 	/**
@@ -61,10 +77,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	public PartnerboerseAdministrationImpl() throws IllegalArgumentException {
 	}
+	
 	/**
+	 * Mapper, mit ihnen wird mit der Datenbank kommuniziert.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#init()
 	 * 
 	 */
+	
 	@Override
 	public void init() throws IllegalArgumentException {
 		this.nutzerprofilMapper = NutzerprofilMapper.nutzerprofilMapper();
@@ -154,7 +174,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
+<<<<<<< HEAD
+	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des
+=======
 	 * Anlegen eines neuen Nutzerprofils. Dies fï¿½hrt implizit zu einem Speichern des
+>>>>>>> refs/heads/master
 	 * neuen Nutzeprofils in der Datenbank.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
@@ -211,6 +235,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Nutzerprofil loeschen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteNutzerprofil(int)
 	 */
 	public void deleteNutzerprofil(int profilId)
@@ -220,6 +245,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Nutzerprofil anhand der Profil-ID auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getNutzerprofilById(int)
 	 */
 	public Nutzerprofil getNutzerprofilById(int profilId)
@@ -229,6 +255,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Fremdprofil anhand der Profil-ID auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getFremdprofilById(int)
 	 */
 	public Nutzerprofil getFremdprofilById(int fremdprofilId)
@@ -277,6 +304,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil aktualisieren.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
 	 * #saveSuchprofil(int, int, String, String, int, int, int, String, String, String)
 	 */
@@ -303,6 +331,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofil loeschen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteSuchprofil(int, String)
 	 */
 	public void deleteSuchprofil(int profilId, String suchprofilName)
@@ -312,6 +341,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle Suchprofile eines Nutzers auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllSuchprofileFor(int)
 	 */
 
@@ -322,7 +352,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Suchprofil anhand der Profil-ID und des Suchprofilnamens auslesen.
+	 * Suchprofil anhand der Nutzerprofil-ID und des Suchprofilnamens auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilByName(int, String)
 	 */
 	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName)
@@ -332,7 +363,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/**
-	 * Suchprofil anhand der Profil-ID und der Suchprofil-ID auslesen.
+	 * Suchprofil anhand der Nutzerprofil-ID und der Suchprofil-ID auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilById(int, int)
 	 */
 	
@@ -344,6 +376,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	
 	/**
 	 * Suchprofilname beim Anlegen eines Suchprofils pruefen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)
 	 */
 	public int pruefeSuchprofilnameCreate(int profilId, String suchprofilname)
@@ -369,6 +402,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Suchprofilname beim Editieren eines Suchprofils pruefen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameEdit(int, int, String)
 	 */
 	public int pruefeSuchprofilnameEdit(int profilId, int suchprofilId,
@@ -380,14 +414,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				.getSuchprofilName(suchprofilId);
 
 		int ergebnis = 0;
-
-		// Der Suchprofilname wurde verï¿½ndert, es existiert jedoch bereits ein
-		// gleichnamiges, anderes Suchprofil.
+		/**
+		 * Diese If-Anweisung prueft ob der Suchprofilname beim editieren
+		 * veraendert wurde und ob dieser eingegebene Suchprofilname bereits existiert.
+		 * Wenn er bereits existiert wird die Ergebnis-Variable auf 1 gesetzt.
+		 */
 		if (existenz == 1 && (!suchprofilname.equals(suchprofilnameAktuell))) {
 			ergebnis = 1;
 		}
-
-		// Der Suchprofilname existiert noch nicht, die TextBox ist jedoch leer.
+		/**
+		 * Diese If-Anweisung prueft ob die TextBox leer ist, das heißt der Nutzer 
+		 * hat keinen Suchproiflnamen eingetragen.
+		 * Trifft das zu, wird die Anweisung ausgefuehrt.
+		 */
 		if (existenz == 0 && (suchprofilname.isEmpty())) {
 			ergebnis = 2;
 		}
@@ -410,7 +449,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
-	 * Alle gemerkten Nutzerprofile eines Nutzers auslesen.
+	 * Merkliste fuer den Nutzer erstellen. 
+	 * Es werden alle Nutzerprofile ausgelesen, die von dem Nutzer gemerkt wurden. 
+	 * Diese werden in der Merkliste gespeichert und ausgegeben.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGemerkteNutzerprofileFor(int)
 	 */
 	public Merkliste getGemerkteNutzerprofileFor(int profilId)
@@ -428,7 +470,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Vermerkstatus pruefen.
+	 * Vermerkstatus pruefen. Es wird geprueft ob zwischen dem Nutzer und einem Fremdprofil ein Vermerk gesetzt wurde . 
+	 * Das bedeutet ob der Nutzer oder der jeweils andere Nutzer auf der jeweils anderen Merkliste stehen. 
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeVermerkstatus(int, int)
 	 */
 	public int pruefeVermerkstatus(int profilId, int fremdprofilId)
@@ -437,7 +481,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Vermerkstatus aendern.
+	 * Vermerkstatus aendern. 
+	 * Der Vermerkstatus eines Fremdproifls wird von "merken" auf "nicht 
+	 * mehr merken" gesetzt oder andersherum. 
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#vermerkstatusAendern(int, int)
 	 */
 	public int vermerkstatusAendern(int profilId, int fremdprofilId)
@@ -445,7 +492,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int vermerkstatus = this.merklisteMapper.pruefeVermerk(profilId,
 				fremdprofilId);
-
+		/**
+		 * Ist ein Vermerk vohanden wird dieser geloescht. 
+		 * Ist keiner vorhanden wird ein Vermerk gesetzt.
+		 */
 		if (vermerkstatus == 1) {
 			this.merklisteMapper.deleteVermerk(profilId, fremdprofilId);
 
@@ -472,6 +522,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle gesperrten Nutzerprofile eines Nutzers auslesen.
+	 * Diese werden dann auf die Sperrliste gestzt und diese dann ausgegeben.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGesperrteNutzerprofileFor(int)
 	 */
 	public Sperrliste getGesperrteNutzerprofileFor(int profilId)
@@ -490,6 +542,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Pruefen, ob Fremdprofil von Nutzer gesperrt wurde.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSperrstatusFremdprofil(int, int)
 	 */
 	public int pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId)
@@ -500,6 +553,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Pruefen, ob Nutzer von Fremdprofil gesperrt wurde.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSperrstatusEigenesProfil(int, int)
 	 */
 	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
@@ -509,7 +563,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 * Sperrstatus aendern.
+	 * Sperrstatus aendern. Der Sperrstatus eines Fremdprofils wird von 
+	 * "Sperrung aufheben" auf "Sperrung setzten" gesetzt oder andersherum.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#sperrstatusAendern(int, int)
 	 */
 	public int sperrstatusAendern(int profilId, int fremdprofilId)
@@ -517,7 +573,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		int sperrstatus = this.sperrlisteMapper.pruefeSperrungFremdprofil(
 				profilId, fremdprofilId);
-
+		/**
+		 * Ist eine Sperrung bereits gesetzt wird diese geloescht. 
+		 * Ist keine vorhanden wird eine Sperrung gesetzt und gleichzeitg 
+		 * dieses gesperrte Fremdprofil aus der Merkliste des Nutzers entfernt,
+		 * falls dieses dort vorhanden war.
+		 */
 		if (sperrstatus == 1) {
 			this.sperrlisteMapper.deleteSperrung(profilId, fremdprofilId);
 		} else {
@@ -543,7 +604,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
-	 * Alle unangesehenen Nutzerprofile eines Nutzers auslesen.
+	 * Alle unangesehenen Nutzerprofile eines Nutzers auslesen. 
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getUnangeseheneNutzerprofile(int)
 	 */
 	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
@@ -553,6 +615,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Besuch setzen.
+	 * Wurde das Fremdprofil vom Nutzers angesehen, wird dies durch einen Besuch gekennzeichent.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#besuchSetzen(int, int)
 	 */
 	public void besuchSetzen(int profilId, int fremdprofilId)
@@ -563,18 +627,28 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	/**
 	 * Aehnlichkeit zwischen den Profildaten und Infos eines Nutzerprofils und
 	 * den Profildaten und Infos anderer Nutzerprofilen berechnen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitNpFor(int)
 	 */
 	public void berechneAehnlichkeitNpFor(int profilId)
 			throws IllegalArgumentException {
 		
+		/**
+		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden können.
+		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Nutzerprofil in der Berechnung berücksichtig werden. 
+		 */
 		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
-
+		/**
+		 * Alle Nutzerprofile die noch nicht besucht wurden werden ausgelesen.
+		 * Ebenso das Nutzerprofil des Nutzers wird ausgelesen.
+		 */
 		List<Nutzerprofil> vergleichsprofile = nutzerprofilMapper
 				.findUnangeseheneNutzerprofile(profilId);
 		Nutzerprofil referenzprofil = nutzerprofilMapper
 				.findByNutzerprofilId(profilId);
-
+		/**
+		 * Die Profildaten des Nutzers werden mit den Profildaten des Vergeleichsprofils verglichen. 
+		 */
 		for (Nutzerprofil np : vergleichsprofile) {
 
 			int aehnlichkeit = 3;
@@ -603,7 +677,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				aehnlichkeit = aehnlichkeit + 1;
 			}
 			
-			// Berechnung des Alters des Fremdprofils
+			/**
+			 * Berechnung des Geburtsdatums in ein Alter.
+			 */
 				 		GregorianCalendar geburtstagVgl = new GregorianCalendar();
 				         geburtstagVgl.setTime(referenzprofil.getGeburtsdatumDate());
 				         GregorianCalendar heute = new GregorianCalendar();
@@ -617,7 +693,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				                 alter = alter - 1;
 				             }
 				         }
-				         // Berechnung des Alters des eigenen Profils
+				         
 				         GregorianCalendar geburtstagRef = new GregorianCalendar();
 				         geburtstagRef.setTime(np.getGeburtsdatumDate());
 				         GregorianCalendar heute1 = new GregorianCalendar();
@@ -638,11 +714,15 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				        	  aehnlichkeit = aehnlichkeit +3;
 				        	  }
 				        	}
-
+			/**
+			 * Infos des Nutzers und des Vergleichsprofil werden ausgelesen.	         
+			 */
 			List<Info> referenzinfo = infoMapper.findAllInfosNeu(profilId);
 			List<Info> vergleichsinfo = infoMapper
 					.findAllInfosNeu(vergleichsprofilId);
-
+			/**
+			 * Vergleich der Infos.
+			 */
 			for (Info rin : referenzinfo) {
 				for (Info vin : vergleichsinfo) {
 					if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
@@ -654,9 +734,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					}
 				}
 			}
-
+			
+			/**
+			 * Berechnung der Prozentzahl.
+			 */
 			aehnlichkeit = aehnlichkeit * (100 / counter);
-
+			/**
+			 * Die Aehnlichkeit wird in die Datenbank gespeichert.
+			 */
 			nutzerprofilMapper.insertAehnlichkeit(profilId, vergleichsprofilId,
 					aehnlichkeit);
 
@@ -667,8 +752,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 	 * Alle unangesehenen Partnervorschlaege fuer einen Nutzer auslesen. Es
-	 * werden nur diejenigen Nutzerprofile ausgelesen, von denen der Nutzer
+	 * werden nur die Nutzerprofile ausgelesen, von denen der Nutzer
 	 * nicht gesperrt wurde.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGeordnetePartnervorschlaegeNp(int)
 	 */
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
@@ -693,7 +779,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 	
 	/**
-	 * Aehnlichkeit zwischen einem Suchprofil eines Nutzers und den Profildaten 
+	 * Aehnlichkeit zwischen den Profildaten und Infos eines Suchprofils eines Nutzers und den Profildaten 
 	 * und Infos anderer Nutzerprofile berechnen. 
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitSpFor(int)
@@ -716,8 +802,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
+<<<<<<< HEAD
+		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
+		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heißt dies dem Nutzer sind diese Angaben egal.
+=======
 		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heiï¿½t das dem Nutzer sind diese Angaben egal.
+>>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -847,7 +938,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				aehnlichkeitSp = aehnlichkeitSp * (100 / counter);
 				
 				/**
-				 * Damit Partnervorschlaege mit dem richtigen, im Suchprofil angegebenen, Geschlecht angezeigt werden,
+				 * Damit Partnervorschlaege mit dem richtigen im Suchprofil angegebenen Geschlecht angezeigt werden,
 				 * wird die Aehnlichkeit in der Datenbank nur gespeichert,
 				 * wenn das Geschlecht des Vergleichprofils mit dem Geschlecht des Suchprofils uebereinstimmt.
 				 */
@@ -1053,8 +1144,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		this.infoMapper.deleteAllInfosNeu(profilId);
 	}
 
+
 	
 	/**
+	 *Ein Info-Objekt loeschen.
+	 *
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)
 	 */
 	@Override
@@ -1065,6 +1159,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	
 	/**
+	 * Beschreibungseigenschaft-Objekt anhand der Eigenschaft-ID auslesen.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigBById(int)
 	 */
 	@Override
@@ -1077,6 +1173,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAuswahleigenschaften(List)
 	 */
 	@Override
@@ -1128,6 +1225,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
+	 * Auslesen des Beschreibungstextes einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
+	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
 	 */
 	@Override

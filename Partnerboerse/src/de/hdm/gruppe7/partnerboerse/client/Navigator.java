@@ -6,10 +6,13 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 
+/**
+ * @author dunja
+ *
+ */
 public class Navigator extends HorizontalPanel {
 
 	/**
@@ -19,10 +22,11 @@ public class Navigator extends HorizontalPanel {
 
 	int aehnlichkeit = 0;
 
+	/**
+	 * 
+	 */
 	public Navigator() {
 
-		
-		VerticalPanel verPanel1 = new VerticalPanel();
 		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);

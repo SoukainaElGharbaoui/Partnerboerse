@@ -12,6 +12,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author dunja
+ *
+ */
 public class InfoMapper {
 
 	private static InfoMapper infoMapper = null;
@@ -20,6 +24,7 @@ public class InfoMapper {
 
 	}
 
+	
 	public static InfoMapper infoMapper() {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();
@@ -28,6 +33,11 @@ public class InfoMapper {
 	}
 
 
+	/**
+	 * Auslesen aller Eigenschaften.
+	 * 
+	 * @return Eine Liste mit Eigenschaft-Objekten, die saemtliche Eigenschaften repraesentieren.
+	 */
 	public List<Eigenschaft> findAllEigenschaftenNeu() {
 		Connection con = DBConnection.connection();
 
@@ -56,6 +66,13 @@ public class InfoMapper {
 	}
 	
 	
+	/**
+	 * Auslesen aller Eigenschaften die vom Nutzer nicht mit Infos befuellt wurde.
+	 * 
+	 * @param profilId
+	 * @return Eine Liste von Eigenschaften, 
+	 * die saemtliche Eigenschaften repraesentieren die vom Nutzer nicht genutzt werden.
+	 */
 	public List<Eigenschaft> findAllUnusedEigenschaftenNeu(int profilId) {
 		Connection con = DBConnection.connection();
 		
@@ -68,6 +85,7 @@ public class InfoMapper {
 					.executeQuery("SELECT * FROM t_eigenschaft1 "
 							+ "WHERE t_eigenschaft1.eigenschaft_id NOT IN (SELECT t_info1.eigenschaft_id "
 							+ "FROM t_info1 WHERE t_info1.profil_id=" + profilId + ")");
+
 			
 			while (rs.next()) {
 				Eigenschaft e = new Eigenschaft();
@@ -86,6 +104,13 @@ public class InfoMapper {
 	}
 
 
+	/**
+	 * Anlegen mehrerer Infos, welche im GUI vom Nutzer selbst gesetzt werden.
+	 * 
+	 * @param profilId
+	 * @param infos
+	 * @return Eine Liste von Info-Objekten, welche die angelegten Infos repraesentieren.
+	 */
 	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
 
 		Connection con = DBConnection.connection();
@@ -106,6 +131,12 @@ public class InfoMapper {
 		return infos;
 	}
 
+	/**
+	 * Alle Infos eines Nutzers auslesen, anhand der Profil-ID.
+	 * 
+	 * @param profilId
+	 * @return Eine Liste von Info-Objekten, welche saemtliche Infos eines Nutzers repraesentieren.
+	 */
 	public List<Info> findAllInfosNeu(int profilId) {
 		
 		Connection con = DBConnection.connection();
@@ -134,6 +165,12 @@ public class InfoMapper {
 		return result;
 	}
 
+	/**
+	 * Auslesen einer Eigenschaft anhand der Eigenschaft-ID.
+	 * 
+	 * @param eigenschaftId
+	 * @return Ein Eigenschaft-Objekt, welches die ausgelesene Eigenschaft repraesentiert.
+	 */
 	public Eigenschaft findEigenschaftByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
@@ -159,6 +196,12 @@ public class InfoMapper {
 		return null;
 	}
 
+	/**
+	 * Auslesen einer Auswahleigenschaft anhand der Eigenschaft-ID.
+	 * 
+	 * @param eigenschaftId
+	 * @return Ein Auswahleigenschaft-Objekt, welches die ausgelesene Auswahleigenschaft repraesentiert.
+	 */
 	public Auswahleigenschaft findEigAByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
@@ -189,6 +232,12 @@ public class InfoMapper {
 		return null;
 	}
 
+	/**
+	 * Auslesen einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
+	 * 
+	 * @param eigenschaftId
+	 * @return Ein Beschreibungseigenschaft-Objekt, welches die ausgelesene Beschreibungseigenschaft repraesentiert.
+	 */
 	public Beschreibungseigenschaft findEigBByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
@@ -216,6 +265,11 @@ public class InfoMapper {
 	}
 	
 
+	/**
+	 * Loeschen aller Infos eines Nutzers, anhand der Profil-ID.
+	 * 
+	 * @param profilId
+	 */
 	public void deleteAllInfosNeu(int profilId) {
 		Connection con = DBConnection.connection();
 
@@ -231,6 +285,12 @@ public class InfoMapper {
 		}
 	}
 
+	/**
+	 * Loeschen einer Info eines Nutzers anhand der Profil-ID und der Eigenschaft-ID.
+	 * 
+	 * @param profilId
+	 * @param eigenschaftId
+	 */
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
@@ -244,35 +304,42 @@ public class InfoMapper {
 		}
 	}
 
-	public List<Info> findInfosByProfilId(int profilId) {
-
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		List<Info> result = new ArrayList<Info>();
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE t_info1.profil_id =" + profilId);
-
-			while (rs.next()) {
-				Info info = new Info();
-				info.setInfotext(rs.getString("infotext"));
-				info.setProfilId(rs.getInt("profil_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				result.add(info);
-
-			}
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-
-		return result;
-	}
+	
+//	public List<Info> findInfosByProfilId(int profilId) {
+//
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE t_info1.profil_id =" + profilId);
+//
+//			while (rs.next()) {
+//				Info info = new Info();
+//				info.setInfotext(rs.getString("infotext"));
+//				info.setProfilId(rs.getInt("profil_id"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				result.add(info);
+//
+//			}
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
 	
 
+	/**
+	 * Infos eines Nutzers aktualisieren.
+	 * 
+	 * @param profilId
+	 * @param listI
+	 */
 	public void updateInfos(int profilId, List<Info> listI) {
 		Connection con = DBConnection.connection();
 		String infotextAlt;
@@ -302,71 +369,108 @@ public class InfoMapper {
 	}
 	
 	
-	public List<Info> findAInfoByProfilId(int profilId) {
-		// DB-Verbindung holen
-		Connection con = DBConnection.connection();
-
-		List<Info> result = new ArrayList<Info>();
-		
-		try {
-			// Leeres SQL-Statement (JDBC) anlegen
-			Statement stmt = con.createStatement();
-
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id " + "FROM t_auswahlinfo "
-					+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
-
-			while (rs.next()) {
-
-				Info info = new Info();
-				// info.setAuswahloptionId(rs.getInt("auswahloption_id"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				result.add(info);
-			}
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-		return result;
-	}
+	/**
+	 * @param profilId
+	 * @return
+	 */
+//	public List<Info> findAInfoByProfilId(int profilId) {
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//		
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id " + "FROM t_auswahlinfo "
+//					+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
+//
+//			while (rs.next()) {
+//
+//				Info info = new Info();
+//				// info.setAuswahloptionId(rs.getInt("auswahloption_id"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				result.add(info);
+//			}
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//		return result;
+//	}
 
 	/**
 	 * Alle Beschreibungsinfos fuer ein Profil auslesen
 	 * 
+	 * @param profilId 
 	 * @return List<Info>
 	 */
-	public List<Info> findBInfoByProfilId(int profilId) {
-		// DB-Verbindung holen
+//	public List<Info> findBInfoByProfilId(int profilId) {
+//		// DB-Verbindung holen
+//		Connection con = DBConnection.connection();
+//
+//		List<Info> result = new ArrayList<Info>();
+//		
+//		try {
+//			// Leeres SQL-Statement (JDBC) anlegen
+//			Statement stmt = con.createStatement();
+//
+//			// Statement ausfÃ¼llen und als Query an die DB schicken
+//			ResultSet rs = stmt.executeQuery("SELECT infotext, eigenschaft_id " + "FROM t_beschreibungsinfo "
+//					+ "WHERE t_beschreibungsinfo.nutzerprofil_id =" + profilId);
+//
+//			while (rs.next()) {
+//
+//				Info info = new Info();
+//				info.setInfotext(rs.getString("infotext"));
+//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
+//				result.add(info);
+//			}
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
+//
+//		return result;
+//	}
+
+
+	/**
+	 * Auslesen des Eigenschaftstext anhand der Eigenschaft-ID.
+	 * 
+	 * @param eigenschaftId
+	 * @return Ein String, der den Eigenschaftstext repraesentiert.
+	 */
+	public String findEigenschaftstextById(int eigenschaftId) {
 		Connection con = DBConnection.connection();
 
-		List<Info> result = new ArrayList<Info>();
-		
+		String eigenschaftstext = new String();
+
 		try {
-			// Leeres SQL-Statement (JDBC) anlegen
+
 			Statement stmt = con.createStatement();
 
-			// Statement ausfÃ¼llen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT infotext, eigenschaft_id " + "FROM t_beschreibungsinfo "
-					+ "WHERE t_beschreibungsinfo.nutzerprofil_id =" + profilId);
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
 
 			while (rs.next()) {
 
-				Info info = new Info();
-				info.setInfotext(rs.getString("infotext"));
-				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-				result.add(info);
+				eigenschaftstext = rs.getString("erlaeuterung");
 			}
+			return eigenschaftstext;
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
-		return result;
+		return eigenschaftstext;
 	}
 
 	
 	/**
-	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. F�r den Administrator.
+	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. F�r den Administrator.
+	 * 
 	 * @param b Das einzufugende Beschreibungseigenschaft-Objekt.
 	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
 	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.
