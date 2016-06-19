@@ -84,8 +84,7 @@ public class Partnerboerse implements EntryPoint {
 												else {
 													
 
-													RootPanel.get("Navigator2").add(new Navigator());
-
+													RootPanel.get("Navigator").add(new Navigator());
 													RootPanel.get("Navigator2").add(loginPanel);
 												}
 											}});

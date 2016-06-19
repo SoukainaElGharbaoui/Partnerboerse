@@ -5,7 +5,6 @@ body {
      width: 100%;
      height: 100%;
      overflow: auto !important;
-     
   }
   
 
@@ -15,8 +14,6 @@ h1 {
   font-family: Perpetua, sans-serif;
   font-style: italic;
   color: #db0104;
-
- /*  margin: 40px 0px 20px; */
   text-align: center;
 }
 
@@ -36,20 +33,11 @@ h3{
 	font-size: 120%;
 	font-weight: bold;
 	font-family: Arial Unicode MS, Arial, sans-serif;
-	/* font-style: italic; */
 	color: #4430fe;
 	padding-bottom: 0.5em;
 	margin-top: 60px;
 	
 }
-
-
- 
- /* div#TopLevelFrame{
-	height: 900px;
-	align: left;
-	
-}  */ 
 
 div#Header { 	
 	  /* background: #00ffff;  */  
@@ -68,14 +56,14 @@ div#Navigator {
 	height: 870px;
 	position: relative;
 	
-	/* background: #b4c7fa; */
+	/* background: #800080; */ 
 } 
 
 div#Navigator2{
 	width: 120px;
 	right: 30px;
 	left: 420px;
-	top:267px;
+	top:306px;
 	position: absolute;
 	align: middle;
 
@@ -122,9 +110,6 @@ div#Trailer {
 	background: #b4dbfc;
 }
 
-.partnerboerse-loeschenbutton {
-	background-color: #ff8080;
-}
 
 .navigatorbutton {
 	font-size: 100%;
@@ -155,18 +140,51 @@ div#Trailer {
 	padding-bottom: 0.5em;
 }
 
-/* .gwt-MenuBar {
-   cursor: default;  
-}
-.gwt-MenuBar .gwt-MenuItem {
-   cursor: default;
+.MenuBar {
+   /* cursor: default;  */ 
+   background: linear-gradient(to right top, #e6e6ff, #ccccff);
    font-family: Arial Unicode MS, Arial, sans-serif;
    font-size: 12px;
+   font-weight: bold;
+   padding-top: 3px;
+   padding-bottom: 3px;
+   top:0px;
+   left: 30px;
+   right: 600px;
+   position: absolute;
 }
-.gwt-MenuBar .gwt-MenuItem-selected {
+.MenuItem {
+   cursor: default;
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 13px;
+}
+ .MenuItem-selected {
    background: #E3E8F3;
 }
-.gwt-MenuBar-horizontal {
+
+.MenuBarRep {
+   /* cursor: default;  */ 
+   background: linear-gradient(to right top, #e6e6ff, #ccccff);
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 12px;
+   font-weight: bold;
+   padding-top: 3px;
+   padding-bottom: 3px;
+   top:69px;
+   left: 30px;
+   right: 600px;
+   position: absolute;
+}
+.MenuItemRep {
+   cursor: default;
+   font-family: Arial Unicode MS, Arial, sans-serif;
+   font-size: 13px;
+}
+ .MenuItemRep-selected {
+   background: #E3E8F3;
+}
+
+ /* .gwt-MenuBar-horizontal {
    background: #cda9eburl(images/hborder.png) repeat-x 0px -2003px;
    border: 1px solid #e0e0e0;
 }
@@ -175,8 +193,8 @@ div#Trailer {
    vertical-align: bottom;
    color: #000;
    font-weight: bold;  
-}
-.gwt-MenuBar-horizontal .gwt-MenuItemSeparator {
+} */
+.MenuItemSeparator {
    width: 1px;
    padding: 0px;
    margin: 0px;
@@ -188,17 +206,17 @@ div#Trailer {
    width: 1px;
    height: 1px;
    background: #8080ff; 
-} */
-.menubar {
+} 
+/* .menubar {
 
 	background: #8b9df3;
-	background: linear-gradient(to right, #8b9df3, #e2e7fc); /* Standard syntax */
-	/* border: 2px ridge #d7d1fa; */
+	background: linear-gradient(to right, #8b9df3, #e2e7fc);
+	border: 2px ridge #d7d1fa;
 	border-radius: 2px;
 	font-family: Arial Unicode MS, Arial, sans-serif;
 	box-shadow: 3px 3px 5px silver;
 	height: 870px;
-	top:63px;
+	top:36px;
 	left: 30px;
 	right: 600px;
 	position: absolute;
@@ -212,10 +230,10 @@ div#Trailer {
    font-family: Arial Unicode MS, Arial, sans-serif;
    font-size: 12px;
    background: #b8c5f8;
-   /* border: 1px ridge #d7d1fa; */
+   border: 1px ridge #d7d1fa;
    border-radius: 2px;
    box-shadow: 1px 1px 5px silver;
-}
+} */
 
 /* MERKLISTE BEGINN */ 
 
