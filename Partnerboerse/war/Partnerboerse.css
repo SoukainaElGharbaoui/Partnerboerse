@@ -14,10 +14,29 @@ h1 {
   font-weight: bold;
   font-family: Perpetua, sans-serif;
   font-style: italic;
-  color: #831b1d;
+  color: #db0104;
  /*  margin: 40px 0px 20px; */
   text-align: center;
 }
+
+h2{
+	align: middle;
+	margin-left: 390px;
+	margin-bottom: 90px;
+}
+
+h3{
+	font-size: 120%;
+	font-weight: bold;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	/* font-style: italic; */
+	color: #4430fe;
+	padding-bottom: 0.5em;
+	margin-top: 60px;
+	
+}
+
+
  
  /* div#TopLevelFrame{
 	height: 900px;
@@ -40,9 +59,19 @@ div#Navigator {
 	/* padding: 3em 4em; */
 	width: 0px; 
 	height: 870px;
+	position: relative;
 	
 	/* background: #b4c7fa; */
 } 
+
+div#Navigator2{
+	width: 120px;
+	right: 30px;
+	left: 420px;
+	top:267px;
+	position: absolute;
+	align: middle;
+}
 
 div#Space{
 	width: 100px; 
@@ -98,9 +127,11 @@ div#Trailer {
 .partnerboerse-label {
 	font-size: 120%;
 	font-weight: bold;
+	font-family: Arial Unicode MS, Arial, sans-serif;
 	/* font-style: italic; */
 	color: #4430fe;
 	padding-bottom: 0.5em;
+	margin-top: 30px;
 }
 
 .partnerboerse-infolabel {
@@ -146,9 +177,19 @@ div#Trailer {
    background: #8080ff; 
 } */
 .menubar {
-	background: #cee6fd;
-	border: 1px ridge #b0a5f5;
+	background: #8b9df3;
+	background: linear-gradient(to right, #8b9df3, #e2e7fc); /* Standard syntax */
+	/* border: 2px ridge #d7d1fa; */
+	border-radius: 2px;
 	font-family: Arial Unicode MS, Arial, sans-serif;
+	box-shadow: 3px 3px 5px silver;
+	height: 870px;
+	top:63px;
+	left: 30px;
+	right: 600px;
+	position: absolute;
+	width: 720px;
+	margin-bottom: 60px;
 	
 }
 
@@ -156,8 +197,10 @@ div#Trailer {
    cursor: default;
    font-family: Arial Unicode MS, Arial, sans-serif;
    font-size: 12px;
-   background: #cee6fd;
-   border: 1px ridge #d7d1fa;
+   background: #b8c5f8;
+   /* border: 1px ridge #d7d1fa; */
+   border-radius: 2px;
+   box-shadow: 1px 1px 5px silver;
 }
 
 /* MERKLISTE BEGINN */ 
@@ -171,7 +214,7 @@ div#Trailer {
   border: 3px solid #0b0259;
   padding: 2px;
   margin-right: 150px; 
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   overflow: scroll;
 }
 

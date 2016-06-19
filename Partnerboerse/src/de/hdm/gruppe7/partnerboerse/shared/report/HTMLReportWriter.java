@@ -111,7 +111,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		 * ausgelesen und in HTML-Form übersetzt.
 		 */
-		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		// System.out.println("Titel:" + r.getTitle());
 		result.append("<table style=\"width:400px;border:1px solid silver;margin-bottom: 30px\"><tr>");
 		result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData()) + "</b></td>");
@@ -163,7 +163,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		 * ausgelesen und in HTML-Form übersetzt.
 		 */
-		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		// System.out.println("Titel:" + r.getTitle());
 		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 		result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData()) + "</b></td>");
@@ -215,7 +215,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Nun werden Schritt f�r Schritt die einzelnen Bestandteile des Reports
 		 * ausgelesen und in HTML-Form �bersetzt.
 		 */
-		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
 
 		if (r.getHeaderData() != null) {
@@ -284,7 +284,7 @@ public class HTMLReportWriter extends ReportWriter {
 		 * Nun werden Schritt f�r Schritt die einzelnen Bestandteile des Reports
 		 * ausgelesen und in HTML-Form �bersetzt.
 		 */
-		result.append("<H1>" + r.getTitle() + "</H1>");
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
 
 		if (r.getHeaderData() != null) {

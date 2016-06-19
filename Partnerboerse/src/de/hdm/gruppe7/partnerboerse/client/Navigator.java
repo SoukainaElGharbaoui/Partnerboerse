@@ -26,7 +26,7 @@ public class Navigator extends HorizontalPanel {
 		
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("480px");
+		menu.setWidth("800px");
 		menu.setAnimationEnabled(true);
 		menu.setStyleName("gwt-MenuBar-horizontal");
 
@@ -44,7 +44,7 @@ public class Navigator extends HorizontalPanel {
 		});
 
 
-		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
+		nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
 			@Override
 			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
