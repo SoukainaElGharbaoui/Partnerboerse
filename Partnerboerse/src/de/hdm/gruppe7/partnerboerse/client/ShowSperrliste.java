@@ -173,7 +173,6 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														public void onSuccess(Integer result) {
-															infoLabel.setText("Das Profil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
 													});
@@ -207,8 +206,12 @@ public class ShowSperrliste extends VerticalPanel {
 							 */
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
+									
+									String profiltyp = "Fp";
 
-									ShowFremdprofil showFremdprofil = new ShowFremdprofil(Integer.valueOf(fremdprofilId));
+									ShowFremdprofil showFremdprofil = new ShowFremdprofil(
+											Integer.valueOf(fremdprofilId), profiltyp);
+									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
 								}

@@ -46,17 +46,12 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Button anzeigenButton = new Button("Suchprofil anzeigen");
 	private Button loeschenButton = new Button("Suchprofil löschen");
 	private Button bearbeitenButton = new Button("Suchprofil bearbeiten"); 
-	
-	/**
-	 * Variable erstellen, die den Profiltyp speichert. 
-	 */
-	private String profiltyp;
 
 	/**
 	 * Konstruktor erstellen.
 	 * @param suchprofilId 
 	 */
-	public ShowSuchprofil(int suchprofilId) {
+	public ShowSuchprofil(final int suchprofilId, final String profiltyp) {
 
 		/**
 		 * Widgets den Panels hinzufuegen.
@@ -87,20 +82,13 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
-		/**
-		 * Die Variable profiltyp wird initialisiert.
-		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
-		 * vom Typ Suchprofil ist
-		 */
-		profiltyp = "Sp";
 
 		/**
 		 * Suchprofil anhand der Suchprofil-ID auslesen und die Tabelle mit
 		 * den Suchprofildaten befuellen. 
 		 */
 			ClientsideSettings.getPartnerboerseAdministration()
-			.getSuchprofilById(nutzerprofil.getProfilId(), 
-					suchprofilId, new AsyncCallback<Suchprofil>() {
+			.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
 
 				public void onFailure(Throwable caught) {
 					infoLabel.setText("Es trat ein Fehler auf.");
@@ -108,7 +96,6 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				public void onSuccess(Suchprofil result) {
 					
-					int suchprofilId = result.getProfilId();
 					showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
 					showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
 					showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
@@ -177,7 +164,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 			}
@@ -222,7 +209,6 @@ public class ShowSuchprofil extends VerticalPanel {
 									infoPanel.clear();
 									infoPanel.add(showInfo);
 								}
-
 							});
 				
 				/**
@@ -233,9 +219,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				buttonPanel.add(loeschenButton);
 				suchprofilPanel.add(buttonPanel);
 				suchprofilPanel.add(infoLabel);
-
 			}
-
 		});
 			
 		/**
@@ -245,13 +229,11 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
+				EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText(), profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editSuchprofil);
-
-				}
-
-			});
+			}
+		});
 			
 		/**
 		 * ClickHandler fuer den Button zum Loeschen eines Suchprofils erzeugen. 
@@ -271,16 +253,13 @@ public class ShowSuchprofil extends VerticalPanel {
 
 							public void onSuccess(Void result) {
 								int suchprofilId = 0;
-								ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
+								ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 								suchprofilPanel.clear();
 								infoPanel.clear();
 								suchprofilPanel.add(showSuchprofil);
 							}
-
 						});
-
 				}
-
 			});			
 		
 		/**

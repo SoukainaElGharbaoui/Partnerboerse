@@ -18,8 +18,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Das asynchrone Gegenst�ck des Interface {@link PartnerboerseAdministration}
- * 
- * @author dunja
  *
  */
 public interface PartnerboerseAdministrationAsync {
@@ -135,15 +133,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getFremdprofilById(int)
-	 * 
-	 * @param fremdprofilId
-	 * @param callback
-	 */
-	void getFremdprofilById(int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
-
-	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Nutzerprofil
@@ -231,7 +220,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param suchprofilId
 	 * @param callback
 	 */
-	void getSuchprofilById (int profilId, int suchprofilId, AsyncCallback<Suchprofil> callback);
+	void getSuchprofilById (int suchprofilId, AsyncCallback<Suchprofil> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)
@@ -497,7 +486,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param profilId
 	 * @param callback
 	 */
-	void deleteAllInfosNeu(int profilId, AsyncCallback<Integer> callback);
+	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)

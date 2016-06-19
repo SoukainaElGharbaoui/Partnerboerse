@@ -13,18 +13,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author dunja
- *
+ * Mapper-Klasse, die Merkliste-Objekte auf eine relationale Datenbank abbildet. 
+ * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
+ * Objekte umgewandelt werden. 
  */
 public class InfoMapper {
 
+	/**
+	   * Die Klasse InfoMapper wird nur einmal instantiiert (Singelton). 
+	   * Diese Variable ist durch den Bezeichner static nur einmal fuer saemtliche 
+	   * eventuellen Instanzen dieser Klasse vorhanden, sie speichert die einzige
+	   * Instanz dieser Klasse.
+	   * 
+	   * @see #infoMapper()
+	   */
 	private static InfoMapper infoMapper = null;
 
+	/**
+	 * Geschuetzter Konstruktor, der verhinder, mit new neue Instanzen dieser Klasse zu erzeugen.
+	 */
 	protected InfoMapper() {
-
 	}
 
-	
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch InfoMapper.infoMapper(). 
+	   * Sie stellt die Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von InfoMapper existiert.
+
+	   * @return InfoMapper-Objekt
+	   * @see infoMapper
+	   */
 	public static InfoMapper infoMapper() {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();
@@ -36,7 +54,7 @@ public class InfoMapper {
 	/**
 	 * Auslesen aller Eigenschaften.
 	 * 
-	 * @return Eine Liste mit Eigenschafts-Objekten, die saemtliche Eigenschaften repraesentieren.
+	 * @return Eine Liste mit Eigenschaft-Objekten, die saemtliche Eigenschaften repraesentieren.
 	 */
 	public List<Eigenschaft> findAllEigenschaftenNeu() {
 		Connection con = DBConnection.connection();
@@ -304,35 +322,6 @@ public class InfoMapper {
 		}
 	}
 
-	
-//	public List<Info> findInfosByProfilId(int profilId) {
-//
-//		// DB-Verbindung holen
-//		Connection con = DBConnection.connection();
-//
-//		List<Info> result = new ArrayList<Info>();
-//		try {
-//			// Leeres SQL-Statement (JDBC) anlegen
-//			Statement stmt = con.createStatement();
-//
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM t_info1 WHERE t_info1.profil_id =" + profilId);
-//
-//			while (rs.next()) {
-//				Info info = new Info();
-//				info.setInfotext(rs.getString("infotext"));
-//				info.setProfilId(rs.getInt("profil_id"));
-//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				result.add(info);
-//
-//			}
-//
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//
-//		return result;
-//	}
-	
 
 	/**
 	 * Infos eines Nutzers aktualisieren.
@@ -370,106 +359,7 @@ public class InfoMapper {
 	
 	
 	/**
-	 * @param profilId
-	 * @return
-	 */
-//	public List<Info> findAInfoByProfilId(int profilId) {
-//		// DB-Verbindung holen
-//		Connection con = DBConnection.connection();
-//
-//		List<Info> result = new ArrayList<Info>();
-//		
-//		try {
-//			// Leeres SQL-Statement (JDBC) anlegen
-//			Statement stmt = con.createStatement();
-//
-//			// Statement ausfÃ¼llen und als Query an die DB schicken
-//			ResultSet rs = stmt.executeQuery("SELECT auswahloption_id, eigenschaft_id " + "FROM t_auswahlinfo "
-//					+ "WHERE t_auswahlinfo.nutzerprofil_id =" + profilId);
-//
-//			while (rs.next()) {
-//
-//				Info info = new Info();
-//				// info.setAuswahloptionId(rs.getInt("auswahloption_id"));
-//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				result.add(info);
-//			}
-//
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//		return result;
-//	}
-
-	/**
-	 * Alle Beschreibungsinfos fuer ein Profil auslesen
-	 * 
-	 * @param profilId 
-	 * @return List<Info>
-	 */
-//	public List<Info> findBInfoByProfilId(int profilId) {
-//		// DB-Verbindung holen
-//		Connection con = DBConnection.connection();
-//
-//		List<Info> result = new ArrayList<Info>();
-//		
-//		try {
-//			// Leeres SQL-Statement (JDBC) anlegen
-//			Statement stmt = con.createStatement();
-//
-//			// Statement ausfÃ¼llen und als Query an die DB schicken
-//			ResultSet rs = stmt.executeQuery("SELECT infotext, eigenschaft_id " + "FROM t_beschreibungsinfo "
-//					+ "WHERE t_beschreibungsinfo.nutzerprofil_id =" + profilId);
-//
-//			while (rs.next()) {
-//
-//				Info info = new Info();
-//				info.setInfotext(rs.getString("infotext"));
-//				info.setEigenschaftId(rs.getInt("eigenschaft_id"));
-//				result.add(info);
-//			}
-//
-//		} catch (SQLException e2) {
-//			e2.printStackTrace();
-//		}
-//
-//		return result;
-//	}
-
-
-	/**
-	 * Auslesen des Eigenschaftstext anhand der Eigenschaft-ID.
-	 * 
-	 * @param eigenschaftId
-	 * @return Ein String, der den Eigenschaftstext repraesentiert.
-	 */
-	public String findEigenschaftstextById(int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		String eigenschaftstext = new String();
-
-		try {
-
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
-
-			while (rs.next()) {
-
-				eigenschaftstext = rs.getString("erlaeuterung");
-			}
-			return eigenschaftstext;
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-		return eigenschaftstext;
-	}
-
-	
-	/**
-	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. F�r den Administrator.
+	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Fuer den Administration.
 	 * 
 	 * @param b Das einzufugende Beschreibungseigenschaft-Objekt.
 	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
@@ -652,8 +542,4 @@ public class InfoMapper {
 			e2.printStackTrace();
 		}
 	}
-	
-	
-	
-
 }

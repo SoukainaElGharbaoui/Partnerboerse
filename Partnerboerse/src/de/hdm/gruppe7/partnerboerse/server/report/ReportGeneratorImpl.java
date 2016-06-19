@@ -252,7 +252,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		 * Nun werden saemtliche Profildaten des Nutzerprofils ausgelesen
 		 */
 
-		Nutzerprofil n = this.partnerboerseAdministration.getFremdprofilById(np
+		Nutzerprofil n = this.partnerboerseAdministration.getNutzerprofilById(np
 				.getProfilId());
 
 		// Eine leere Zeile anlegen.

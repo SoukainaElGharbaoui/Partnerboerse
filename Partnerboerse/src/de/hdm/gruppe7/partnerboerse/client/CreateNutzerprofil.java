@@ -66,7 +66,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public CreateNutzerprofil() {
+//	public CreateNutzerprofil() {
+
+	
+	public CreateNutzerprofil(final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -168,8 +171,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				
-				profiltyp = "Np";
-
 				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
 				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
 				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
@@ -180,12 +181,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-
 				} else if (vornameWert == false) {
-					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
+					warnungLabel.setText("Ihr Vorname darf nur Buchstaben enthalten.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
 				} else if (nachnameWert == false) {
-					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
+					warnungLabel.setText("Ihr Nachname darf nur Buchstaben enthalten.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 				} else if (geburtsdatumDateBox.getValue() == null) {
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
@@ -219,14 +219,16 @@ public class CreateNutzerprofil extends VerticalPanel {
 									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
 									
 									ClientsideSettings.setAktuellerUser(result);
+//									
+//									infoLabel.setText("" + ClientsideSettings.getAktuellerUser().getProfilId());
 								
-										CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
-												profiltyp);
-										RootPanel.get("Details").clear();
-										RootPanel.get("Details").add(createInfo);
-										}
-								});
-						}
+									CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
+										profiltyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(createInfo);
+									}
+					});
+				}
 			}
 		});
 
@@ -237,7 +239,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(infoLabel);
-
 	}
 
 	/**
@@ -272,7 +273,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
 	}
 
 	/**

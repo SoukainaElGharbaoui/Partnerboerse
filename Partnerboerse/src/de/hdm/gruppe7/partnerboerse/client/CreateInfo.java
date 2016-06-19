@@ -36,7 +36,6 @@ public class CreateInfo extends VerticalPanel {
 	private List<Auswahleigenschaft> listA;
 
 	private String eigenschaftId = null;
-	private String beschreibungstext = null;
 	private int row;
 
 	Anchor signOut = new Anchor();
@@ -83,7 +82,6 @@ public class CreateInfo extends VerticalPanel {
 								row++;
 
 								eigenschaftId = null;
-								beschreibungstext = null;
 
 								showEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
 
@@ -202,7 +200,7 @@ public class CreateInfo extends VerticalPanel {
 								
 								if (profiltyp.equals("Np")) {
 									
-									ShowNutzerprofil showNp = new ShowNutzerprofil();
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Navigator").add(new Navigator());
 									
 									RootPanel.get("Details").clear();
@@ -218,7 +216,7 @@ public class CreateInfo extends VerticalPanel {
 								}
 
 								else if (profiltyp.equals("Sp")) {
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

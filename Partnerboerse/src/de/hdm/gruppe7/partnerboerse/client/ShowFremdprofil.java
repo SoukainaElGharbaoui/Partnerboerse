@@ -46,7 +46,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * Konstruktor erstellen.
 	 * @param fremdprofilId 
 	 */
-	public ShowFremdprofil(final int fremdprofilId) {
+	public ShowFremdprofil(final int fremdprofilId, final String profiltyp) {
 		this.add(horPanel);
 
 		/**
@@ -73,7 +73,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Fremdprofil anhand der Profil-ID aus der Datenbank auslesen und die Profildaten in die Tabelle einfuegen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getFremdprofilById(fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override
@@ -228,7 +228,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Fremdprofils angezeigt. 
 		 */
-		ShowFremdinfo fremdinfo = new ShowFremdinfo(fremdprofilId);
+		ShowInfo fremdinfo = new ShowInfo(fremdprofilId, profiltyp);
 		infoPanel.add(fremdinfo);
 		horPanel.add(infoPanel);
 

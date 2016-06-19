@@ -215,8 +215,6 @@ public class ShowMerkliste extends VerticalPanel {
 
 																public void onSuccess(
 																		Integer result) {
-																	infoLabel
-																			.setText("Das Profil wurde erfolgreich von Ihrer Merkliste entfernt.");
 																}
 											});
 
@@ -225,7 +223,7 @@ public class ShowMerkliste extends VerticalPanel {
 												
 												merklisteFlexTable.removeRow(i);
 												
-												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
+												ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
 												infoLabel.setVisible(false);
 												merklisteFlexTable.setVisible(false);
 												ueberschriftLabel.setVisible(true);
@@ -267,8 +265,11 @@ public class ShowMerkliste extends VerticalPanel {
 															 * Seite des jeweiligen Fremdprofils weitergeleitet.
 															 */
 															if (result == 0) {
+																
+																String profiltyp = "Fp";
+																
 																ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-																		Integer.valueOf(fremdprofilId));
+																		Integer.valueOf(fremdprofilId), profiltyp);
 																RootPanel
 																		.get("Details")
 																		.clear();

@@ -64,7 +64,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public EditNutzerprofil() {
+	public EditNutzerprofil(final int profilId, final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -160,7 +160,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		 * Nutzerprofil anhand der Profil-ID aus der Datenbank auslesen und
 		 * die Profildaten in die Tabelle einfuegen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(nutzerprofil.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(profilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
@@ -169,7 +169,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 					public void onSuccess(Nutzerprofil result) {
 
-						nutzerprofilIdLabel.setText(String.valueOf(result.getProfilId()));
+						nutzerprofilIdLabel.setText(String.valueOf(profilId));
 
 						vornameTextBox.setText(result.getVorname());
 
@@ -256,7 +256,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				 * Datenbank geschrieben. Anschließend wird die Seite zum Anzeigen des Nutzerprofils aufgerufen.  
 				 */
 				ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(
-						nutzerprofil.getProfilId(), vornameTextBox.getText(),
+						profilId, vornameTextBox.getText(),
 						nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
 						Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
 						raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
@@ -268,15 +268,12 @@ public class EditNutzerprofil extends VerticalPanel {
 								}
 
 								public void onSuccess(Void result) {
-								ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil();
+								ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showNutzerprofil);
 							}
 					});
-
-
 				}
-
 			}
 		});
 
@@ -321,7 +318,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
 	}
 
 	/**

@@ -54,7 +54,7 @@ public class EditSuchprofil extends VerticalPanel {
 	 * Konstruktor erstellen.
 	 * @param suchprofilName 
 	 */
-	public EditSuchprofil(final String suchprofilName) {
+	public EditSuchprofil(final String suchprofilName, final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -261,12 +261,13 @@ public class EditSuchprofil extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
+										
 									int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
+									
+									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSuchprofil);
 					}
-
 				});
 
 			}
