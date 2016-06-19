@@ -1206,29 +1206,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		this.infoMapper.updateInfos(profilId, listI);
 	}
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
-	 */
-	@Override
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosNeu(profilId);
-	}
-
-	/**
-	 * Auslesen des Beschreibungstextes einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
-	 * 
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
-	 */
-	@Override
-	public String getEigenschaftstextById(int eigenschaftId)
-			throws IllegalArgumentException {
-
-		String erlaeuterung;
-		erlaeuterung = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId).getErlaeuterung();
-		return erlaeuterung;
-	}
-
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info

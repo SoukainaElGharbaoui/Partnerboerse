@@ -251,24 +251,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									
 									partnervorschlaegeSpFlexTable.setText(row, 7, String.valueOf(row));
 									
-									
-									
-									boolean befuellt = pruefeLeereTable();
-									
-									if (befuellt == true) {
-										
-										ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
-										ueberschriftLabel.setVisible(true);
-										
-										partnervorschlaegeSpFlexTable.setVisible(false);
-										ueberschriftLabel2.setVisible(false);
-										infoLabel.setVisible(false);
-										ergebnisLabel.setVisible(false);
-										auswahlListBox.setVisible(false);
-										anzeigenSpButton.setVisible(false);
-										anzeigenButton.setVisible(false);
-										createSuchprofilButton.setVisible(false);
-									}
 
 
 									/**
@@ -289,22 +271,22 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									});
 								}
 								
-//								boolean befuellt = pruefeLeereTable();
-//								
-//								if (befuellt == true) {
-//									
-//									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
-//									ueberschriftLabel.setVisible(true);
-//									
-//									partnervorschlaegeSpFlexTable.setVisible(false);
-//									ueberschriftLabel2.setVisible(false);
-//									infoLabel.setVisible(false);
-//									ergebnisLabel.setVisible(false);
-//									auswahlListBox.setVisible(false);
-//									anzeigenSpButton.setVisible(false);
-//									anzeigenButton.setVisible(false);
-//									createSuchprofilButton.setVisible(false);
-//								}
+								boolean befuellt = pruefeLeereTable();
+								
+								if (befuellt == true) {
+									
+									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
+									ueberschriftLabel.setVisible(true);
+									
+									partnervorschlaegeSpFlexTable.setVisible(false);
+									ueberschriftLabel2.setVisible(false);
+									infoLabel.setVisible(false);
+									ergebnisLabel.setVisible(false);
+									auswahlListBox.setVisible(false);
+									anzeigenSpButton.setVisible(false);
+									anzeigenButton.setVisible(false);
+									createSuchprofilButton.setVisible(false);
+								}
 							}
 						});
 				
@@ -319,47 +301,9 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				verPanel.add(ueberschriftLabel2);
 				horPanelTabelle.add(partnervorschlaegeSpFlexTable);
 				verPanel.add(horPanelTabelle);
-				
-				
-//				if (partnervorschlaegeSpFlexTable.getRowCount() == 1) {
-
-//				boolean befuellt = pruefeLeereTable();
-//				
-//				if (befuellt == true) {
-//					
-//					ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
-//					ueberschriftLabel.setVisible(true);
-//					
-////					partnervorschlaegeSpFlexTable.setVisible(false);
-//					ueberschriftLabel2.setVisible(false);
-//					infoLabel.setVisible(false);
-//					ergebnisLabel.setVisible(false);
-//					auswahlListBox.setVisible(false);
-//					anzeigenSpButton.setVisible(false);
-//					anzeigenButton.setVisible(false);
-//					createSuchprofilButton.setVisible(false);
-//				}
 			}
 		});
 		
-		
-//		boolean befuellt = pruefeLeereTable();
-//		
-//		if (befuellt == true) {
-//			
-//			ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
-//			ueberschriftLabel.setVisible(true);
-//			
-//			partnervorschlaegeSpFlexTable.setVisible(false);
-//			ueberschriftLabel2.setVisible(false);
-//			infoLabel.setVisible(false);
-//			ergebnisLabel.setVisible(false);
-//			auswahlListBox.setVisible(false);
-//			anzeigenSpButton.setVisible(false);
-//			anzeigenButton.setVisible(false);
-//			createSuchprofilButton.setVisible(false);
-//		}
-
 		
 		/**
 		 * Alle Widgets dem VerticalPanel und HorizontalPanel hinzufuegen.

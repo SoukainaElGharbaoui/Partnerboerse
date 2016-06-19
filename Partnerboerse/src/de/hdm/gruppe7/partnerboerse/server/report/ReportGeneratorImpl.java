@@ -1,7 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.server.report;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -13,6 +16,7 @@ import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
@@ -79,7 +83,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * Die Methode soll dem Report ein Impressum hinzufuegen. Dazu wird zunaechst
 	 * ein neuer CompositeParagraph angelegt, da das Impressum mehrzeilig sein soll.
 	 * Danach werden belibige SimpleParagraph dem CompositeParagraph hinzugefuegt. Zum
-	 * Schluss wird CompositeParagraph dem Report hinzugefügt über setImprint.
+	 * Schluss wird CompositeParagraph dem Report hinzugefï¿½gt ï¿½ber setImprint.
 	 * 
 	 * @param r der um das Impressum zu erweiternde Report.
 	 */
@@ -130,24 +134,29 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		/*
 		 * Nun werden saemtliche Infos des Nutzerprofils ausgelesen
 		 */
-
-		List<Info> infos = this.partnerboerseAdministration
-				.getAllInfosNeuReport(np.getProfilId());
-
-		for (Info i : infos) {
-
-			// Eine leere Zeile anlegen.
-			Row infoRow = new Row();
-
-			// Spalten hinzufuegen
-			infoRow.addColumn(new Column(this.partnerboerseAdministration
-					.getEigenschaftstextById(i.getEigenschaftId())));
-			infoRow.addColumn(new Column(i.getInfotext()));
-
-			// und schließlich die Zeile dem Report hinzufuegen.
-			result.addRow(infoRow);
+		Map<List<Info>,List<Eigenschaft>> resultMap = this.partnerboerseAdministration.getAllInfos(np.getProfilId());
+		
+		Set<List<Info>> output = resultMap.keySet();
+		
+		for (List<Info> listI : output) {
+			
+			List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+			listE = resultMap.get(listI);
+			
+			for (int e = 0; e < listE.size(); e++) {
+				
+				// Eine leere Zeile anlegen.
+				Row infoRow = new Row();
+				
+				infoRow.addColumn(new Column(listE.get(e).getErlaeuterung()));
+				
+					infoRow.addColumn(new Column(listI.get(e).getInfotext()));
+				
+//				und schliesslich die Zeile dem Report hinzufuegen.
+				result.addRow(infoRow);	
+			}
 		}
-
+		
 		/*
 		 * Zum Schluss muss der fertige Report zurueckgeben werden.
 		 */
@@ -231,7 +240,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		profildatenoRow.addColumn(new Column(n.getReligion()));
 		profildatenoRow.addColumn(new Column(n.getEmailAddress()));
 
-		// und schließlich die Zeile dem Report hinzufuegen.
+		// und schlieï¿½lich die Zeile dem Report hinzufuegen.
 		result.addRow(profildatenoRow);
 
 		return result;
@@ -286,7 +295,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		/*
 		 * Nun werden saemtliche Nutzerprofil-Objekte ausgelesen.
-		 * Anschließend wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
+		 * Anschlieï¿½end wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
 		 * createAllProfildatenOfNutzerReport(n) und ein Aufruf von 
 		 * createAllInfosOfNutzerReport(n) durchgefuehrt und somit jeweils
 		 * ein AllProfildatenOfNutzerReport-Objekt und ein AllInfosOfNutzerReport-Objekt
@@ -316,7 +325,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	/**
 	  * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeSpReport zurueckliefert.
 	 * Der Report stellt alle Partnervorschlaege, die anhand eines Suchprofils ermittelt wurden, 
-	 * für ein Nutzerprofil dar.
+	 * fï¿½r ein Nutzerprofil dar.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createAllPartnervorschlaegeSpReport(Nutzerprofil, String)
 	 */
@@ -363,7 +372,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		result.setHeaderData(header);
 		/*
 		 * Nun werden saemtliche Nutzerprofil-Objekte ausgelesen.
-		 * Anschließend wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
+		 * Anschlieï¿½end wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
 		 * createAllProfildatenOfNutzerReport(n) und ein Aufruf von 
 		 * createAllInfosOfNutzerReport(n) durchgefuehrt und somit jeweils
 		 * ein AllProfildatenOfNutzerReport-Objekt und ein AllInfosOfNutzerReport-Objekt

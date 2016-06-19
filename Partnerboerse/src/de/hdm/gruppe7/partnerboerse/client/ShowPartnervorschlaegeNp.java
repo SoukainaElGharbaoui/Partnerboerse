@@ -205,7 +205,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						if (befuellt == true) {
 							
 							ueberschriftLabel.setVisible(false);
-//							partnervorschlaegeNpFlexTable.setVisible(false);
+							partnervorschlaegeNpFlexTable.setVisible(false);
 							
 							informationLabel.setText("Sie haben zurzeit keine unangesehenen Partnervorschläge.");
 						}

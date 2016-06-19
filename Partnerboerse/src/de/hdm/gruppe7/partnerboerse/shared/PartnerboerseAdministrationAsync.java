@@ -473,14 +473,6 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
-	 * 
-	 * @param profilId
-	 * @param callback
-	 */
-	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
-
-	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
 	 * 
 	 * @param profilId
@@ -522,16 +514,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
-	 */
-	void getEigenschaftstextById(int eigenschaftId,
-			AsyncCallback<String> callback);
-	
-	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info
