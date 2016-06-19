@@ -60,14 +60,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	/**
 	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
 	 */
-	private int zaehler;
+	private int zaehler = 0;
 	
 	/**
 	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
 	 */
 	public boolean pruefeLeereTable() {
 		
-		for (int k = 2; k < partnervorschlaegeSpFlexTable.getRowCount(); k++) {
+		for (int k = 1; k < partnervorschlaegeSpFlexTable.getRowCount(); k++) {
 			
 			if (partnervorschlaegeSpFlexTable.getText(k, 0) == null) {
 			}
@@ -248,6 +248,28 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									
 									anzeigenButton = new Button("Anzeigen");
 									partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
+									
+									partnervorschlaegeSpFlexTable.setText(row, 7, String.valueOf(row));
+									
+									
+									
+									boolean befuellt = pruefeLeereTable();
+									
+									if (befuellt == true) {
+										
+										ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
+										ueberschriftLabel.setVisible(true);
+										
+										partnervorschlaegeSpFlexTable.setVisible(false);
+										ueberschriftLabel2.setVisible(false);
+										infoLabel.setVisible(false);
+										ergebnisLabel.setVisible(false);
+										auswahlListBox.setVisible(false);
+										anzeigenSpButton.setVisible(false);
+										anzeigenButton.setVisible(false);
+										createSuchprofilButton.setVisible(false);
+									}
+
 
 									/**
 									 * Der Clickhandler fuer den Azeigen-Button des Fremdprofils wird hinzufuegen.
@@ -266,6 +288,23 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 										}
 									});
 								}
+								
+//								boolean befuellt = pruefeLeereTable();
+//								
+//								if (befuellt == true) {
+//									
+//									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
+//									ueberschriftLabel.setVisible(true);
+//									
+//									partnervorschlaegeSpFlexTable.setVisible(false);
+//									ueberschriftLabel2.setVisible(false);
+//									infoLabel.setVisible(false);
+//									ergebnisLabel.setVisible(false);
+//									auswahlListBox.setVisible(false);
+//									anzeigenSpButton.setVisible(false);
+//									anzeigenButton.setVisible(false);
+//									createSuchprofilButton.setVisible(false);
+//								}
 							}
 						});
 				
@@ -282,7 +321,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				verPanel.add(horPanelTabelle);
 				
 				
-				if (partnervorschlaegeSpFlexTable.getRowCount() == 3) {
+//				if (partnervorschlaegeSpFlexTable.getRowCount() == 1) {
 
 //				boolean befuellt = pruefeLeereTable();
 //				
@@ -291,7 +330,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 //					ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
 //					ueberschriftLabel.setVisible(true);
 //					
-//					partnervorschlaegeSpFlexTable.setVisible(false);
+////					partnervorschlaegeSpFlexTable.setVisible(false);
 //					ueberschriftLabel2.setVisible(false);
 //					infoLabel.setVisible(false);
 //					ergebnisLabel.setVisible(false);
@@ -299,9 +338,27 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 //					anzeigenSpButton.setVisible(false);
 //					anzeigenButton.setVisible(false);
 //					createSuchprofilButton.setVisible(false);
-				}
+//				}
 			}
 		});
+		
+		
+//		boolean befuellt = pruefeLeereTable();
+//		
+//		if (befuellt == true) {
+//			
+//			ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
+//			ueberschriftLabel.setVisible(true);
+//			
+//			partnervorschlaegeSpFlexTable.setVisible(false);
+//			ueberschriftLabel2.setVisible(false);
+//			infoLabel.setVisible(false);
+//			ergebnisLabel.setVisible(false);
+//			auswahlListBox.setVisible(false);
+//			anzeigenSpButton.setVisible(false);
+//			anzeigenButton.setVisible(false);
+//			createSuchprofilButton.setVisible(false);
+//		}
 
 		
 		/**
