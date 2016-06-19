@@ -88,6 +88,11 @@ public class ShowSuchprofil extends VerticalPanel {
 		profiltyp = "Sp";
 
 		
+		
+		
+		if (suchprofilId == 0) {
+
+
 		/**
 		 * Wenn keine Suchprofil-ID uebergeben wurde (d.h., wenn die Seite ueber 
 		 * "Suchprofile anzeigen" aufgerufen wurde), wird die ListBox mit allen 
@@ -437,9 +442,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					buttonPanel.add(loeschenButton);
 					suchprofilPanel.add(buttonPanel);
 					suchprofilPanel.add(infoLabel);
-
 				}
-
 			});
 			
 			suchprofilPanel.add(auswahlLabel);
@@ -452,6 +455,6 @@ public class ShowSuchprofil extends VerticalPanel {
 			buttonPanel.add(loeschenButton);
 			suchprofilPanel.add(buttonPanel);
 			suchprofilPanel.add(infoLabel);
-	
-	} // Ende Konstruktor 
+		}
+	}
 }

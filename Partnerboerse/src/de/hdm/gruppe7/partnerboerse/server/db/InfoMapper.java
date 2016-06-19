@@ -364,32 +364,9 @@ public class InfoMapper {
 		return result;
 	}
 
-	public String findEigenschaftstextById(int eigenschaftId) {
-		Connection con = DBConnection.connection();
-
-		String eigenschaftstext = new String();
-
-		try {
-
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM t_eigenschaft1 WHERE eigenschaft_id =" + eigenschaftId);
-
-			while (rs.next()) {
-
-				eigenschaftstext = rs.getString("erlaeuterung");
-			}
-			return eigenschaftstext;
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-		return eigenschaftstext;
-	}
 	
 	/**
-	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator.
+	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Fï¿½r den Administrator.
 	 * @param b Das einzufugende Beschreibungseigenschaft-Objekt.
 	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
 	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.
@@ -427,7 +404,7 @@ public class InfoMapper {
 	
 	
 	/**
-	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator. Fuer den Administrator.
+	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. Fï¿½r den Administrator. Fuer den Administrator.
 	 * @param a Das einzufugende Beschreibungseigenschaft-Objekt.
 	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
 	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.
