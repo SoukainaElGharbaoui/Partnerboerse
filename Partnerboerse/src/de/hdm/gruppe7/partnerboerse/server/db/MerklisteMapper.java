@@ -10,38 +10,34 @@ import java.util.List;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Mapper-Klasse, die <code>Merkliste</code>-Objekte auf eine relationale Datenbank abbildet. 
+ * Mapper-Klasse, die Merkliste-Objekte auf eine relationale Datenbank abbildet. 
  * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
  * Objekte umgewandelt werden. 
  */
 public class MerklisteMapper {
 
 	/**
-	   * Die Klasse MerklisteMapper wird nur einmal instantiiert. Man spricht hierbei
-	   * von einem sogenannten <b>Singleton</b>.
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
-	   * einzige Instanz dieser Klasse.
+	   * Die Klasse MerklisteMapper wird nur einmal instantiiert (Singelton). 
+	   * Diese Variable ist durch den Bezeichner static nur einmal fuer saemtliche 
+	   * eventuellen Instanzen dieser Klasse vorhanden, sie speichert die einzige
+	   * Instanz dieser Klasse.
 	   * 
 	   * @see #merklisteMapper()
 	   */
 	private static MerklisteMapper merklisteMapper = null;
 
 	/**
-	 * Geschützter Konstruktor, der verhinder, mit <code>new</code> neue
-	 * Instanzen dieser Klasse zu erzeugen.
+	 * Geschuetzter Konstruktor, der verhinder, mit new neue Instanzen dieser Klasse zu erzeugen.
 	 */
 	protected MerklisteMapper() {
 	}
 
 	 /**
-	   * Diese statische Methode kann aufgrufen werden durch
-	   * <code>MerklisteMapper.merklisteMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
-	   * Instanz von <code>MerklisteMapper</code> existiert.
-	   * <p>
-	   * 
-	   * @return <code>MerklisteMapper</code>-Objekt 
+	   * Diese statische Methode kann aufgrufen werden durch MerklisteMapper.merklisteMapper(). 
+	   * Sie stellt die Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von MerklisteMapper existiert.
+
+	   * @return MerklisteMapper-Objekt
 	   * @see merklisteMapper
 	   */
 	public static MerklisteMapper merklisteMapper() {
@@ -94,7 +90,7 @@ public class MerklisteMapper {
 	 * Vermerkstatus pruefen.
 	 * @param 	profilId Die Profil-ID des eigenen Nutzerprofils.
 	 * @param 	fremdprofilId Die Profil-ID des Nutzerprofils, das auf die Existenz eines Vermerks ueberprueft werden soll. 
-	 * @return Status, ob bereits ein Vermerk vorliegt oder nicht.
+	 * @return Status, der angibt, ob bereits ein Vermerk vorliegt oder nicht.
 	 */
 	public int pruefeVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();

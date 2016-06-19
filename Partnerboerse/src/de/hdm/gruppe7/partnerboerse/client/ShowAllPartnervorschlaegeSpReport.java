@@ -25,11 +25,11 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
-	
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
-	private Label auswahlLabel = new Label("Wählen Sie ein Suchprofil aus, zu welchem Sie Partnervorschläge anzeigen möchten.");
+	private Label auswahlLabel = new Label(
+			"Wählen Sie ein Suchprofil aus, zu welchem Sie Partnervorschläge anzeigen möchten.");
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
 	private Button anzeigenButton = new Button("Partnervorschläge anzeigen");
@@ -37,11 +37,11 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	/**
 	 * Konstruktor hinzufügen.
 	 */
-	public ShowAllPartnervorschlaegeSpReport(){
-	this.add(verPanel);
-	
-	auswahlLabel.addStyleName("partnerboerse-label");
-	
+	public ShowAllPartnervorschlaegeSpReport() {
+		this.add(verPanel);
+
+		auswahlLabel.addStyleName("partnerboerse-label");
+
 		/**
 		 * AuswahlListBox befuellen
 		 */
@@ -55,7 +55,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 					@Override
 					public void onSuccess(List<Suchprofil> result) {
-						
+
 						if (result.isEmpty()) {
 							auswahlListBox.setVisible(false);
 							anzeigenButton.setVisible(false);
@@ -93,14 +93,14 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 									 */
 
 									HTMLReportWriter writer = new HTMLReportWriter();
-									
+
 									writer.process(report);
 									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport()); 
+									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport());
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
 							}
-				});
+						});
 			}
 		});
 
@@ -108,7 +108,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 		auswahlPanel.add(infoLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenButton);
-		verPanel.add(auswahlPanel); 
+		verPanel.add(auswahlPanel);
 
 	}
 }

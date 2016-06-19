@@ -26,32 +26,8 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 	 * Label zur Information hinzufügen.
 	 */
 	private Label infoLabel = new Label();
-//	private Label informationLabel = new Label();
 	private Label ueberschriftLabel = new Label();
 	
-//	private int zaehler;
-//	
-//	public boolean pruefeLeereTable() {
-//		
-//		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
-//			
-//			if (merklisteFlexTable.getText(k, 0) == null) {
-//			}
-//			
-//			else {
-//				zaehler++;
-//			}
-//		}
-//		
-//		if (zaehler == 0) {
-//			return true;
-//		}
-//		
-//		else {
-//			return false;
-//		}
-//	}
-
 	/**
 	 * Konstruktor hinzufügen.
 	 */
@@ -60,7 +36,6 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 		
 		ueberschriftLabel.setText("Einen Moment bitte...");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-//		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
 		 * Report auslesen.
@@ -85,23 +60,10 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(new HTML(writer.getReportText()));
 						}
-						
-//						boolean befuellt = pruefeLeereTable();
-//						
-//						if (befuellt == true) {
-//							
-//							ueberschriftLabel.setVisible(false);
-//							merklisteFlexTable.setVisible(false);
-//											
-//							informationLabel.setText("Sie haben sich derzeit keine Profile gemerkt.");
-//						}
-
 					}
-
 				});
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(infoLabel);
-//		verPanel.add(informationLabel);
 	}
 }

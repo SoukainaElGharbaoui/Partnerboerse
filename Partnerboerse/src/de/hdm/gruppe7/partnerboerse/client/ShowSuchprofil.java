@@ -16,25 +16,27 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
+/**
+ * Diese Klasse dient dazu, ein Suchprofil eines Nutzers anzuzeigen. 
+ */
 public class ShowSuchprofil extends VerticalPanel {
 	
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * VerticalPanels und HorizontalPanels hinzufuegen.
+	 * Panels erzeugen. 
 	 */
 	private VerticalPanel suchprofilPanel = new VerticalPanel();
 	private VerticalPanel infoPanel = new VerticalPanel();
-
 	private HorizontalPanel gesamtPanel = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
-	 * Widgets hinzufuegen.
+	 * Widgets erzeugen.
 	 */
 	private Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
 	private Label infoLabel = new Label();
@@ -46,28 +48,30 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Button bearbeitenButton = new Button("Suchprofil bearbeiten"); 
 
 	/**
-	 * Konstruktor hinzufuegen.
+	 * Konstruktor erstellen.
+	 * @param suchprofilId Die Profil-ID des Suchprofils, das angezeigt werden soll. 
+	 * @param profiltyp Der Profiltyp (Suchprofil).
 	 */
-	public ShowSuchprofil(int suchprofilId) {
+	public ShowSuchprofil(final int suchprofilId, final String profiltyp) {
 
+		/**
+		 * Widgets den Panels hinzufuegen.
+		 */
 		this.add(gesamtPanel);
 		gesamtPanel.add(suchprofilPanel);
+		suchprofilPanel.add(buttonPanel);
 		gesamtPanel.add(infoPanel);
 
 		/**
-		 * CSS auf Auswahl-Label anwenden.
+		 * CSS anwenden und die Tabelle formatieren. 
 		 */
 		auswahlLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Tabelle formatieren und CSS einbinden.
-		 */
+		showSuchprofilFlexTable.addStyleName("FlexTable");
 		showSuchprofilFlexTable.setCellPadding(6);
 		showSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-		showSuchprofilFlexTable.addStyleName("FlexTable");
 
 		/**
-		 * Erste Zeile der FlexTable definieren.
+		 * Erste Spalte der Tabelle festlegen.
 		 */
 		showSuchprofilFlexTable.setText(0, 0, "Suchprofil-id");
 		showSuchprofilFlexTable.setText(1, 0, "Suchprofilname");
@@ -79,10 +83,56 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
-		if (suchprofilId == 0) {
 
 		/**
-		 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
+		 * Suchprofil anhand der Suchprofil-ID auslesen und die Tabelle mit
+		 * den Suchprofildaten befuellen. 
+		 */
+			ClientsideSettings.getPartnerboerseAdministration()
+			.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
+
+				public void onFailure(Throwable caught) {
+					infoLabel.setText("Es trat ein Fehler auf.");
+				}
+
+				public void onSuccess(Suchprofil result) {
+					
+					showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
+					showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
+					showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
+					showSuchprofilFlexTable.setText(3, 1, Integer.toString(result.getAlterMinInt()));
+					showSuchprofilFlexTable.setText(4, 1, Integer.toString(result.getAlterMaxInt()));
+					showSuchprofilFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
+					showSuchprofilFlexTable.setText(6, 1, result.getHaarfarbe());
+					showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
+					showSuchprofilFlexTable.setText(8, 1, result.getReligion());
+					
+					/**
+					 * Widgets und Panels den Panels hinzufuegen. 
+					 */
+					suchprofilPanel.add(showSuchprofilFlexTable);
+					buttonPanel.add(bearbeitenButton);
+					buttonPanel.add(loeschenButton);
+					suchprofilPanel.add(buttonPanel);
+					suchprofilPanel.add(infoLabel);
+					
+					/**
+					 * Zusaetzlich zu den Suchprofildaten werden die Suchprofil-Infos 
+					 * des jeweiligen Suchprofils angezeigt. 
+					 */
+					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
+					infoPanel.clear();
+					infoPanel.add(showInfo);
+
+				}
+
+			});
+			
+		/**
+		 * Alle Suchprofile des Nutzerprofils auslesen und die ListBox mit den Suchprofilnamen befuellen.
+		 * Existieren zu diesem Nutzerprofil bisher keine Suchprofile, so wird eine Information ausgegeben, 
+		 * die ueber diesen Zustand informiert. Zudem wird ein Button eingeblendet, durch den neue Suchprofile
+		 * angelegt werden koennen. 
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(), 
 				new AsyncCallback<List<Suchprofil>>() {
@@ -106,266 +156,34 @@ public class ShowSuchprofil extends VerticalPanel {
 					createSuchprofilButton.setVisible(false);
 				}
 			}
-		});
-
+		}); 
+		
 		/**
-		 * ClickHandler fuer den Suchprofil-Anlegen-Button hinzufuegen.
+		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, wird die Seite zum Anlegen 
+		 * eines Suchprofils aufgerufen. 
 		 */
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				// Seite zum Anlegen eines neuen Suchprofils aufrufen.
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 			}
 
 		});
-
+		
 		/**
-		 * ClickHandler fuer den Anzeigen-Button hinzufuegen.
+		 * ClickHandler fuer den Button zum Anzeigen eines Suchprofils erzeugen.
+		 * Sobald dieser Button betaetigt wird, wird anhand der Profil-ID und 
+		 * anhand des Suchprofilnames das jeweilige Suchprofil ausgelesen. 
+		 * Anschliessend werden die Suchprofildaten in die Tabelle eingefuegt. 
 		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				// Tabelle mit Suchprofildaten befuellen.
 				ClientsideSettings.getPartnerboerseAdministration()
 						.getSuchprofilByName(nutzerprofil.getProfilId(), 
 								auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
-
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-							}
-
-							public void onSuccess(Suchprofil result) {
-								
-								// Suchprofil-ID
-								int suchprofilId = result.getProfilId();
-								showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
-
-								// Suchprofilname
-								showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
-
-								// Geschlecht
-								showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
-
-								// AlterMax
-								showSuchprofilFlexTable.setText(3, 1, Integer.toString(result.getAlterMinInt()));
-
-								// AlterMin
-								showSuchprofilFlexTable.setText(4, 1, Integer.toString(result.getAlterMaxInt()));
-
-								// Koerpergroesse
-								showSuchprofilFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
-
-								// Haarfarbe
-								showSuchprofilFlexTable.setText(6, 1, result.getHaarfarbe());
-
-								// Raucher
-								showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
-
-								// Religion
-								showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-
-								// Infos
-								ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
-								infoPanel.clear();
-								infoPanel.add(showInfoNp);
-
-							}
-
-						});
-
-				/**
-				 * ClickHandler fuer den Loeschen-Button hinzufuegen.
-				 */
-				loeschenButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-
-						// Suchprofil loeschen.
-						ClientsideSettings.getPartnerboerseAdministration()
-								.deleteSuchprofil(nutzerprofil.getProfilId(), auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
-
-									public void onFailure(Throwable caught) {
-										infoLabel.setText("Es trat ein Fehler auf");
-									}
-
-									public void onSuccess(Void result) {
-										int suchprofilId = 0;
-										ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
-										suchprofilPanel.clear();
-										infoPanel.clear();
-										suchprofilPanel.add(showSuchprofil);
-									}
-
-								});
-
-					}
-
-				});
-
-				/**
-				 * ClickHandler fuer den Bearbeiten-Button hinzfuegen.
-				 */
-				bearbeitenButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						// Seite zum Bearbeiten eines Suchprofils hinzufuegen.
-						EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(editSuchprofil);
-
-					}
-
-				});
-
-				suchprofilPanel.add(showSuchprofilFlexTable);
-				buttonPanel.add(bearbeitenButton);
-				buttonPanel.add(loeschenButton);
-				suchprofilPanel.add(buttonPanel);
-				suchprofilPanel.add(infoLabel);
-
-			}
-
-		});
-
-		suchprofilPanel.add(auswahlLabel);
-		auswahlPanel.add(auswahlListBox);
-		auswahlPanel.add(anzeigenButton);
-		auswahlPanel.add(createSuchprofilButton);
-		suchprofilPanel.add(auswahlPanel);
-
-	}
-		
-		else {
-			
-			/**
-			 * Auswahl-ListBox mit allen Suchprofilnamen des Nutzers füllen.
-			 */
-			ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(), 
-					new AsyncCallback<List<Suchprofil>>() {
-
-				public void onFailure(Throwable caught) {
-					infoLabel.setText("Es trat ein Fehler auf.");
-				}
-
-				public void onSuccess(List<Suchprofil> result) {
-					if (result.isEmpty()) {
-						auswahlListBox.setVisible(false);
-						anzeigenButton.setVisible(false);
-						auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
-
-						createSuchprofilButton.setVisible(true); 
-
-					} else {
-						for (Suchprofil s : result) {
-							auswahlListBox.addItem(s.getSuchprofilName());
-						}
-						createSuchprofilButton.setVisible(false);
-					}
-				}
-			});
-			
-			// Tabelle mit Suchprofildaten befuellen.
-			ClientsideSettings.getPartnerboerseAdministration()
-					.getSuchprofilById(nutzerprofil.getProfilId(), 
-							suchprofilId, new AsyncCallback<Suchprofil>() {
-
-						public void onFailure(Throwable caught) {
-							infoLabel.setText("Es trat ein Fehler auf.");
-						}
-
-						public void onSuccess(Suchprofil result) {
-							
-							// Suchprofil-ID
-							int suchprofilId = result.getProfilId();
-							showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
-
-							// Suchprofilname
-							showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
-
-							// Geschlecht
-							showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
-
-							// AlterMax
-							showSuchprofilFlexTable.setText(3, 1, Integer.toString(result.getAlterMinInt()));
-
-							// AlterMin
-							showSuchprofilFlexTable.setText(4, 1, Integer.toString(result.getAlterMaxInt()));
-
-							// Koerpergroesse
-							showSuchprofilFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
-
-							// Haarfarbe
-							showSuchprofilFlexTable.setText(6, 1, result.getHaarfarbe());
-
-							// Raucher
-							showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
-
-							// Religion
-							showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-
-							// Infos
-							ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
-							infoPanel.clear();
-							infoPanel.add(showInfoNp);
-
-						}
-
-					});
-			
-
-			/**
-			 * ClickHandler fuer den Loeschen-Button hinzufuegen.
-			 */
-			loeschenButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-
-					// Suchprofil loeschen.
-					ClientsideSettings.getPartnerboerseAdministration()
-							.deleteSuchprofil(nutzerprofil.getProfilId(), auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
-
-								public void onFailure(Throwable caught) {
-									infoLabel.setText("Es trat ein Fehler auf");
-								}
-
-								public void onSuccess(Void result) {
-									int suchprofilId = 0;
-									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
-									suchprofilPanel.clear();
-									infoPanel.clear();
-									suchprofilPanel.add(showSuchprofil);
-								}
-
-							});
-
-				}
-
-			});
-			
-			/**
-			 * ClickHandler fuer den Bearbeiten-Button hinzfuegen.
-			 */
-			bearbeitenButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					// Seite zum Bearbeiten eines Suchprofils hinzufuegen.
-					EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(editSuchprofil);
-
-				}
-
-			});
-			
-
-			/**
-			 * ClickHandler fuer den Anzeigen-Button hinzufuegen.
-			 */
-			anzeigenButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-
-					// Tabelle mit Suchprofildaten befuellen.
-					ClientsideSettings.getPartnerboerseAdministration()
-							.getSuchprofilByName(nutzerprofil.getProfilId(), 
-									auswahlListBox.getSelectedItemText(), new AsyncCallback<Suchprofil>() {
 
 								public void onFailure(Throwable caught) {
 									infoLabel.setText("Es trat ein Fehler auf.");
@@ -373,111 +191,87 @@ public class ShowSuchprofil extends VerticalPanel {
 
 								public void onSuccess(Suchprofil result) {
 									
-									// Suchprofil-ID
 									int suchprofilId = result.getProfilId();
 									showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
-
-									// Suchprofilname
 									showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
-
-									// Geschlecht
 									showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
-
-									// AlterMax
 									showSuchprofilFlexTable.setText(3, 1, Integer.toString(result.getAlterMinInt()));
-
-									// AlterMin
 									showSuchprofilFlexTable.setText(4, 1, Integer.toString(result.getAlterMaxInt()));
-
-									// Koerpergroesse
 									showSuchprofilFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
-
-									// Haarfarbe
 									showSuchprofilFlexTable.setText(6, 1, result.getHaarfarbe());
-
-									// Raucher
 									showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
-
-									// Religion
 									showSuchprofilFlexTable.setText(8, 1, result.getReligion());
-
-									// Infos
-									ShowInfoNp showInfoNp = new ShowInfoNp(suchprofilId);
+									
+									/**
+									 * Zusaetzlich zu den Suchprofildaten werden die Suchprofil-Infos 
+									 * des jeweiligen Suchprofils angezeigt. 
+									 */
+									ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
 									infoPanel.clear();
-									infoPanel.add(showInfoNp);
-
+									infoPanel.add(showInfo);
 								}
-
 							});
+				
+				/**
+				 * Widgets und Panels den Panels hinzufuegen.
+				 */
+				suchprofilPanel.add(showSuchprofilFlexTable);
+				buttonPanel.add(bearbeitenButton);
+				buttonPanel.add(loeschenButton);
+				suchprofilPanel.add(buttonPanel);
+				suchprofilPanel.add(infoLabel);
+			}
+		});
+			
+		/**
+		 * ClickHandler fuer den Button zum Bearbeiten eines Suchprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, wird die Seite zum Bearbeiten eines
+		 * Suchprofils aufgerufen. 
+		 */
+		bearbeitenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText(), profiltyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(editSuchprofil);
+			}
+		});
+			
+		/**
+		 * ClickHandler fuer den Button zum Loeschen eines Suchprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, wird das jeweilige Suchprofil 
+		 * geloescht. Anschliessend wird die Seite zum Anzeigen der Suchprofile
+		 * aufgerufen. 
+		 */
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
 
-					/**
-					 * ClickHandler fuer den Loeschen-Button hinzufuegen.
-					 */
-					loeschenButton.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
+				ClientsideSettings.getPartnerboerseAdministration()
+						.deleteSuchprofil(nutzerprofil.getProfilId(), auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
 
-							// Suchprofil loeschen.
-							ClientsideSettings.getPartnerboerseAdministration()
-									.deleteSuchprofil(nutzerprofil.getProfilId(), auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
+							public void onFailure(Throwable caught) {
+								infoLabel.setText("Es trat ein Fehler auf");
+							}
 
-										public void onFailure(Throwable caught) {
-											infoLabel.setText("Es trat ein Fehler auf");
-										}
-
-										public void onSuccess(Void result) {
-											int suchprofilId = 0;
-											ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
-											suchprofilPanel.clear();
-											infoPanel.clear();
-											suchprofilPanel.add(showSuchprofil);
-										}
-
-									});
-
-						}
-
-					});
-
-					/**
-					 * ClickHandler fuer den Bearbeiten-Button hinzfuegen.
-					 */
-					bearbeitenButton.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
-							// Seite zum Bearbeiten eines Suchprofils hinzufuegen.
-							EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText());
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(editSuchprofil);
-
-						}
-
-					});
-
-					suchprofilPanel.add(showSuchprofilFlexTable);
-					buttonPanel.add(bearbeitenButton);
-					buttonPanel.add(loeschenButton);
-					suchprofilPanel.add(buttonPanel);
-					suchprofilPanel.add(infoLabel);
-
+							public void onSuccess(Void result) {
+								int suchprofilId = 0;
+								ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
+								suchprofilPanel.clear();
+								infoPanel.clear();
+								suchprofilPanel.add(showSuchprofil);
+							}
+						});
 				}
+			});			
+		
+		/**
+		 * Widgets und Panels den Panels hinzufuegen. 
+		 */
+		suchprofilPanel.add(auswahlLabel);
+		auswahlPanel.add(auswahlListBox);
+		auswahlPanel.add(anzeigenButton);
+		auswahlPanel.add(createSuchprofilButton);
+		suchprofilPanel.add(auswahlPanel);
 
-			});
-			
-			suchprofilPanel.add(auswahlLabel);
-			auswahlPanel.add(auswahlListBox);
-			auswahlPanel.add(anzeigenButton);
-			suchprofilPanel.add(auswahlPanel);
-			
-			suchprofilPanel.add(showSuchprofilFlexTable);
-			buttonPanel.add(bearbeitenButton);
-			buttonPanel.add(loeschenButton);
-			suchprofilPanel.add(buttonPanel);
-			suchprofilPanel.add(infoLabel);
-			
-			
-			
-			
-		}
-	
-	}
+	} 
 
 }

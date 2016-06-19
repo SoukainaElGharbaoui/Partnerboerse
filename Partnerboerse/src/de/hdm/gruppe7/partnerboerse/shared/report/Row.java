@@ -6,19 +6,17 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * Zeile einer Tabelle eines <code>SimpleReport</code>-Objekts. <code>Row</code>
- * -Objekte implementieren das <code>Serializable</code>-Interface und können
- * daher als Kopie z.B. vom Server an den Client übertragen werden.
+ * Zeile einer Tabelle eines SimpleReport-Objekts. Row -Objekte implementieren das
+ * Serializable-Interface und koennen daher als Kopie z.B. vom Server an den Client
+ * uebertragen werden.
  * 
  * @see SimpleReport
  * @see Column
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
 
 public class Row implements IsSerializable, Serializable {
@@ -26,12 +24,12 @@ public class Row implements IsSerializable, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	  /**
-	   * Speicherplatz für die Spalten der Zeile.
+	   * Speicherplatz fuer die Spalten der Zeile.
 	   */
 	private Vector<Column> columns = new Vector<Column>();
 	
 	  /**
-	   * Hinzufügen einer Spalte.
+	   * Hinzufuegen einer Spalte.
 	   * 
 	   * @param c das Spaltenobjekt
 	   */
@@ -49,16 +47,16 @@ public class Row implements IsSerializable, Serializable {
 	  }
 	
 	/**
-	   * Auslesen sämtlicher Spalten.
+	   * Auslesen saemtlicher Spalten.
 	   * 
-	   * @return <code>Vector</code>-Objekts mit sämtlichen Spalten
+	   * @return Vector-Objekts mit saetlichen Spalten
 	   */
 	  public Vector<Column> getColumns() {
 	    return this.columns;
 	  }
 
 	  /**
-	   * Auslesen der Anzahl sämtlicher Spalten.
+	   * Auslesen der Anzahl saemmtlicher Spalten.
 	   * 
 	   * @return int Anzahl der Spalten
 	   */
@@ -71,7 +69,7 @@ public class Row implements IsSerializable, Serializable {
 	   * 
 	   * @param i der Index der auszulesenden Spalte (0 <= i < n), mit n = Anzahl
 	   *          der Spalten.
-	   * @return das gewünschte Spaltenobjekt.
+	   * @return das gewuenschte Spaltenobjekt.
 	   */
 	  public Column getColumnAt(int i) {
 	    return this.columns.elementAt(i);

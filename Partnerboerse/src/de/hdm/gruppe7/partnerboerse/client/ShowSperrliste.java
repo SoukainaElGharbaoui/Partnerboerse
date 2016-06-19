@@ -17,13 +17,13 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 
 /**
- * Diese Klasse dient dazu, die Sperrliste eines Nutzers anzuzeigen. 
+ * Diese Klasse dient dazu, die Sperrliste eines Nutzerprofils anzuzeigen. 
  */
 
 public class ShowSperrliste extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen. 
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
@@ -33,37 +33,20 @@ public class ShowSperrliste extends VerticalPanel {
 	private VerticalPanel verPanel = new VerticalPanel();
 		
 	/**
-	 * Neues Label zur Anzeige der Ueberschrift erzeugen und Beschriftung festlegen.
+	 * Widgets erzeugen. 
 	 */
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
-	
-	/**
-	 * Neue Tabelle zur Anzeige der gesperrten Kontakte erzeugen.
-	 */
 	private FlexTable sperrlisteFlexTable = new FlexTable();
-	
-	/**
-	 * Neuen Button zum Loeschen einer Sperrung erzeugen und Beschriftung festlegen. 
-	 */
-	private Button loeschenButton = new Button("Löschen");
-	
-	/**
-	 * Neuen Button zur Anzeige eines gesperrten Nutzerprofils erzeugen und Beschriftung festlegen. 
-	 */
-	private Button anzeigenButton = new Button("Anzeigen");
-	
-	/**
-	 * Neues Label zur Ausgabe einer Information erzeugen. 
-	 */
 	private Label infoLabel = new Label();
 
 	/**
-	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt. 
 	 */
 	private int zaehler;
 	
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 * Neue Methode definieren, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
 	 */
 	public boolean pruefeLeereTable() {
 		
@@ -86,22 +69,20 @@ public class ShowSperrliste extends VerticalPanel {
 		}
 	}
 	
-	
-	
 	/**
-	 * Konstruktor hinzufuegen.
+	 * Konstruktor erstellen.
 	 */
 	public ShowSperrliste() {
 		this.add(verPanel);
 
 		/**
-		 * CSS auf das Label zur Anzeige der Ueberschrift anwenden. 
+		 * CSS anwenden und die Tabelle formatieren. 
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Header-Zeile der Tabelle festlegen.
-
+		sperrlisteFlexTable.addStyleName("FlexTable");
+		sperrlisteFlexTable.setCellPadding(6);
+		sperrlisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		
 		/**
 		 * Kopfzeile der Tabelle festlegen.
 		 */
@@ -114,14 +95,11 @@ public class ShowSperrliste extends VerticalPanel {
 		sperrlisteFlexTable.setText(0, 6, "Anzeigen");
 
 		/**
-		 * CSS auf die Tabelle anwenden und die Tabelle formatieren.
-		 */
-		sperrlisteFlexTable.setCellPadding(6);
-		sperrlisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		sperrlisteFlexTable.addStyleName("FlexTable");
-
-		/**
-		 * Alle gesperrten Nutzerprofile eines Nutzers abfragen.
+		 * Nun werden alle gesperrten Nutzerprofile eines Nutzerprofils abgefragt. 
+		 * Das Ergebnis der Abfrage ist ein Sperrliste-Objekt. Die gesperrten Nutzerprofil-Objekte werden in einer
+		 * Liste von Nutzerprofilen gespeichert. Diese Liste wird in einer Schleife durchlaufen und jedes 
+		 * gesperrte Nutzerprofil wird in eine Zeile der Tabelle eingefuegt. Zudem wird der Tabelle bei jedem 
+		 * Schleifendurchlauf je ein Button zum Loeschen und ein Button zum Anzeigen einer Sperrung hinzugefuegt. 
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getGesperrteNutzerprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<Sperrliste>() {
@@ -130,28 +108,17 @@ public class ShowSperrliste extends VerticalPanel {
 						infoLabel.setText("Es trat ein Fehler auf."); 
 					}
 
-					/**
-					 * Das Ergebnis der Abfrage ist ein Sperrliste-Objekt. 
-					 * Die gesperrten Nutzerprofil-Objekte werden in einem Vektor von Nutzerprofilen gespeichert. 
-					 * Dieser Vektor wird in einer Schleife durchlaufen und jedes gesperrte Nutzerprofil wird in 
-					 * eine Zeile der Tabelle eingefuegt. 
-					 */
 					public void onSuccess(Sperrliste result) {
 						
-						// Vektor von gesperrten Nutzerprofilen erzeugen. 
 						List<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
 						
-						// Anzahl der Zeilen ermitteln.
 						int row = sperrlisteFlexTable.getRowCount();
 
-						// Jedes gesperrte Nutzerprofil in eine Zeile der Tabelle einfuegen. 
 						for (Nutzerprofil n : gemerkteNutzerprofile) {
 							row++;
 
-							// Fremdprofil-ID des gemerkten Nutzerprofils ermitteln.
 							final String fremdprofilId = String.valueOf(n.getProfilId());
 
-							// Jeweilige Zeile der Tabelle mit den Nutzerprofil-Daten befuellen. 
 							sperrlisteFlexTable.setText(row, 0, fremdprofilId);
 							sperrlisteFlexTable.setText(row, 1, n.getVorname());
 							sperrlisteFlexTable.setText(row, 2, n.getNachname());
@@ -162,17 +129,18 @@ public class ShowSperrliste extends VerticalPanel {
 							sperrlisteFlexTable.setText(row, 3, geburtsdatumString);
 							sperrlisteFlexTable.setText(row, 4, n.getGeschlecht());
 
-							// Button zum Loeschen einer Sperrung in die jeweilige Zeile der Tabelle einfuegen. 
+							final Button loeschenButton = new Button("Löschen");
 							sperrlisteFlexTable.setWidget(row, 5, loeschenButton);
 
-							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
+							final Button anzeigenButton = new Button("Anzeigen");
 							sperrlisteFlexTable.setWidget(row, 6, anzeigenButton);
 
-							// Zeilenindex der Tabelle in die jeweilige Zeile der Tabelle einfuegen. 
 							sperrlisteFlexTable.setText(row, 7, String.valueOf(row));
 
 							/**
-							 * ClickHandler fuer den Button zum Loeschen eines Vermerks erzeugen. 
+							 * ClickHandler fuer den Button zum Loeschen einer Sperrung erzeugen. 
+							 * Sobald der Button betaetigt wird, wird die Sperrung sowohl aus der 
+							 * Tabelle als auch aus der Datenbank entfernt.  
 							 */
 							loeschenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
@@ -186,19 +154,10 @@ public class ShowSperrliste extends VerticalPanel {
 									 */
 									for (int i = 2; i <= sperrlisteFlexTable.getRowCount(); i++) {
 
-										// Fremdprofil-ID der Tabelle ermitteln.
 										String fremdprofilIdFlexTable = sperrlisteFlexTable.getText(i, 0);
 
-										/*
-										 *  Wenn die Fremdprofil-ID der Tabelle mit der
-										 *  Fremdprofil-ID des Nutzerprofils uebereinstimmt,
-										 *  wird die Sperrung aus der Datenbank entfernt. 
-										 */
 										if (Integer.valueOf(fremdprofilIdFlexTable) == Integer.valueOf(fremdprofilId)) {
 
-											/**
-											 * Sperrung aus der Datenbank entfernen.
-											 */
 											ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(
 													nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
 													new AsyncCallback<Integer>() {
@@ -208,44 +167,58 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														public void onSuccess(Integer result) {
-															infoLabel.setText(
-																	"Das Profil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
 													});
 
-											// Jeweilige Zeile der Tabelle loeschen.
-											sperrlisteFlexTable.removeRow(i);
-											break;
+											if (sperrlisteFlexTable.getRowCount() == 3) {
+												
+												sperrlisteFlexTable.removeRow(i);
+												
+												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
+												sperrlisteFlexTable.setVisible(false);
+												infoLabel.setVisible(false);
+												ueberschriftLabel.setVisible(true);
+											}
+											
+											else {
+												sperrlisteFlexTable.removeRow(i);
+												break;
+											}
 										}
 									}
-
 								}
-
 							});
+							
 
 							/**
 							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
+							 * Sobald der Button betaetigt wird, wird die Seite zum Anzeigen eines 
+							 * Fremdprofils aufgerufen. 
 							 */
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
+									
+									String profiltyp = "Fp";
 
-									// Seite zur Anzeige des jeweiligen Fremdprofils aufrufen. 
 									ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-											Integer.valueOf(fremdprofilId));
+											Integer.valueOf(fremdprofilId), profiltyp);
+									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
 								}
-
 							});
-
 						}
 
+						/**
+						 * Pruefen, ob die Tabelle leer ist. Falls dies der Fall ist, wird eine 
+						 * entsprechende Information ueber diesen Zustand ausgegeben. 
+						 */
 						boolean befuellt = pruefeLeereTable();
 						
 						if (befuellt == true) {
 							
-							ueberschriftLabel.setText("Sie haben derzeit keine Profile gesperrt.");
+							ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
 
 							sperrlisteFlexTable.setVisible(false);
 							ueberschriftLabel.setVisible(true);

@@ -6,15 +6,37 @@ import java.util.List;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+/**
+ * Mapper-Klasse, die Nutzerprofil-Objekte auf eine relationale Datenbank abbildet. 
+ * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
+ * Objekte umgewandelt werden. 
+ */
 public class NutzerprofilMapper {
 
+	/**
+	   * Die Klasse Nutzerprofil wird nur einmal instantiiert (Singelton). 
+	   * Diese Variable ist durch den Bezeichner static nur einmal fuer saemtliche 
+	   * eventuellen Instanzen dieser Klasse vorhanden, sie speichert die einzige
+	   * Instanz dieser Klasse.
+	   * 
+	   * @see #nutzerprofilMapper()
+	   */
 	private static NutzerprofilMapper nutzerprofilMapper = null;
 
-	Nutzerprofil nutzerprofil = new Nutzerprofil();
-
+	/**
+	 * Geschuetzter Konstruktor, der verhinder, mit new neue Instanzen dieser Klasse zu erzeugen.
+	 */
 	protected NutzerprofilMapper() {
 	}
 
+	 /**
+	   * Diese statische Methode kann aufgrufen werden durch NutzerprofilMapper.nutzerprofilMapper(). 
+	   * Sie stellt die Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von NutzerprofilMapper existiert.
+
+	   * @return NutzerprofilMapper-Objekt
+	   * @see nutzerprofilMapper
+	   */
 	public static NutzerprofilMapper nutzerprofilMapper() {
 		if (nutzerprofilMapper == null) {
 			nutzerprofilMapper = new NutzerprofilMapper();
@@ -176,7 +198,7 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Nutzerprofil-Objekt anhand der Profil-ID auslesen. 
-	 * @param profilId Die Profil-ID des Nutzerprofil-Objekts, das ausgelesen werden soll.
+	 * @param profilId Die Profil-ID des Nutzerprofils, das ausgelesen werden soll.
 	 * @return Das ausgelesene Nutzerprofil-Objekt.
 	 */
 	public Nutzerprofil findByNutzerprofilId(int profilId) {
@@ -214,7 +236,7 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Nutzerprofil-Objekt anhand der E-Mail auslesen.
-	 * @param email Die E-Mail des Nutzerprofil-Objekts, das ausgelesen werden soll.
+	 * @param email Die E-Mail des Nutzerprofils, das ausgelesen werden soll.
 	 * @return Das ausgelesene Nutzerprofil-Objekt.
 	 */
 	public Nutzerprofil findByNutzerprofilMitEmail(String email) {
@@ -246,16 +268,10 @@ public class NutzerprofilMapper {
 		return null;
 	}
 
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlaegeNp
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
 	 * Alle unangesehenen Nutzerprofil-Objekte eines Nutzerprofils auslesen. 
-	 * @param profilId Profil-ID des Nutzersprofils, dessen unangesehene Nutzerprofil-Objekte ausgelesen werden sollen. 
+	 * Es werden lediglich diejenigen Nutzerprofil-Objekte ausgelesen, von denen das Nutzerprofil nicht gesperrt wurde.
+	 * @param profilId Profil-ID des Nutzersprofils, dessen unangesehenen Nutzerprofil-Objekte ausgelesen werden sollen. 
 	 * @return Liste von unangesehenen Nutzerprofil-Objekten. 
 	 */
 	public List<Nutzerprofil> findUnangeseheneNutzerprofile(int profilId) {
@@ -267,19 +283,13 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, "
-							+ "t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion "
-							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
-							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
-							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id !="
-							+ profilId
-							+ " AND (t_besuch1.nutzerprofil_id !="
-							+ profilId
-							+ " OR t_besuch1.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung1.fremdprofil_id !="
-							+ profilId
-							+ " OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id");
+					.executeQuery("SELECT * FROM t_profil1 "
+							+ "INNER JOIN t_nutzerprofil1 "
+							+ "ON t_profil1.profil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id "
+							+ "NOT IN (SELECT t_besuch1.fremdprofil_id "
+							+ "FROM t_besuch1 WHERE t_besuch1.nutzerprofil_id=" + profilId + ")");
+
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -369,8 +379,7 @@ public class NutzerprofilMapper {
 
 	/**
 	 * Geordnete Partnervorschlaege fuer ein Nutzerprofil auslesen. 
-	 * Es werden nur unangesehene Nutzerprofile, von denen das Nutzerprofil nicht gesperrt wurde, ausgelesen.
-	 * @param profilId Die Profil-ID des Nutzerprofils, für das die Partnervorschlaege ausgelesen werden sollen. 
+	 * @param profilId Die Profil-ID des Nutzerprofils, fuer das die Partnervorschlaege ausgelesen werden sollen. 
 	 * @return Liste von vorgeschlagenenen Nutzerprofil-Objekten.
 	 */
 	public List<Nutzerprofil> findGeordnetePartnervorschlaegeNp(int profilId) {
@@ -383,25 +392,17 @@ public class NutzerprofilMapper {
 
 			ResultSet rs = stmt
 					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
-							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, "
-							+ "t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion , t_aehnlichkeitnp1.aehnlichkeit "
-							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 "
-							+ "ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
+							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, "
+							+ "t_profil1.raucher, t_profil1.religion, t_aehnlichkeitnp1.aehnlichkeit FROM t_nutzerprofil1 "
 							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
 							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
-							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id "
-
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id != "
-							+ profilId
-							+ " AND (t_besuch1.nutzerprofil_id !="
-							+ profilId
-							+ " OR t_besuch1.fremdprofil_id IS NULL) "
-							+ "AND (t_sperrung1.fremdprofil_id !="
-							+ profilId
+							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_aehnlichkeitnp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_aehnlichkeitnp1.nutzerprofil_id =" + profilId
+							+ " AND t_nutzerprofil1.nutzerprofil_id !=" + profilId
+							+ " AND (t_sperrung1.fremdprofil_id !=" + profilId
 							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
-							+ "AND t_aehnlichkeitnp1.nutzerprofil_id ="
-							+ profilId
-							+ " ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
+							+ "ORDER BY t_nutzerprofil1.nutzerprofil_id");
+
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -426,18 +427,6 @@ public class NutzerprofilMapper {
 		return result;
 	}
 
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Ende: PartnervorschlaegeNp
-	 * ***************************************************************************
-	 */
-
-	/*
-	 * ***************************************************************************
-	 * ABSCHNITT, Beginn: PartnervorschlaegeSp
-	 * ***************************************************************************
-	 */
-	
 	/**
 	 * Alle nicht gesperrten Nutzerprofil-Objekte eines Nutzerprofils auslesen. 
 	 * @param profilId Die Profil-ID des Nutzerprofils, fuer das die nicht gesperrten Nutzerprofil-Objekte ausgelesen werden sollen.
@@ -497,7 +486,6 @@ public class NutzerprofilMapper {
 	public List<Nutzerprofil> findGeordnetePartnervorschlaegeSp(int profilId, int suchprofilId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnisliste vorbereiten
 		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
 		try {
@@ -511,10 +499,8 @@ public class NutzerprofilMapper {
 							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
 							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofil_id = " + suchprofilId 
 							+ " AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
-							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
+							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC");
 
-			// Für jeden Eintrag im Suchergebnis wird nun ein
-			// Nutzerprofil-Objekt erstellt.
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
 				nutzerprofil.setProfilId(rs.getInt("nutzerprofil_id"));
@@ -528,23 +514,13 @@ public class NutzerprofilMapper {
 				nutzerprofil.setReligion(rs.getString("religion"));
 				nutzerprofil.setAehnlichkeit(rs.getInt("aehnlichkeit"));
 
-				// Hinzufügen des neuen Objekts zur Ergebnisliste
 				result.add(nutzerprofil);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Ergebnisliste zurückgeben
 		return result;
 	}
-
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlaegeSp
-	 * *************************************************************************
-	 * **
-	 */
 
 }

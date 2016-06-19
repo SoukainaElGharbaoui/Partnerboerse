@@ -7,7 +7,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * Ein zusammengesetzter Report. Dieser Report kann aus einer Menge von 
- * Teil-Reports (vgl. Attribut <code>subReports</code>) bestehen.
+ * Teil-Reports (vgl. Attribut subReports) bestehen.
+ * 
+ * ----------------------------------------------------------------------------------------
+ * Diese Klasse wurde, wie von Herrn Prof. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * uebernommen und beiNotwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" angepasst.
  */
 
 public class CompositeReport extends Report implements IsSerializable, Serializable {
@@ -20,8 +24,9 @@ public class CompositeReport extends Report implements IsSerializable, Serializa
 	private Vector<Report> subReports = new Vector<Report>();
 	
 	/**
-	 * Hinzufügen eines Teil-Reports.
-	 * @param r der hinzuzufügende Teil-Report.
+	 * Hinzufuegen eines Teil-Reports.
+	 * 
+	 * @param r der hinzuzufuegende Teil-Report.
 	 */
 	public void addSubReport(Report r) {
 		this.subReports.addElement(r);
@@ -29,6 +34,7 @@ public class CompositeReport extends Report implements IsSerializable, Serializa
 	
 	/**
 	 * Entfernen eines Teil-Reports.
+	 * 
 	 * @param r der zu entfernende Teil-Report.
 	 */
 	public void removeSubReport(Report r) {
@@ -37,6 +43,7 @@ public class CompositeReport extends Report implements IsSerializable, Serializa
 	
 	/**
 	 * Auslesen der Anzahl von Teil-Reports.
+	 * 
 	 * @return int Anzahl der Teil-Reports.
 	 */
 	public int getNumSubReports() {
@@ -45,7 +52,8 @@ public class CompositeReport extends Report implements IsSerializable, Serializa
 	
 	/**
 	 * Auslesen eines einzelnen Teil-Reports.
-	 * @param i Position des Teilreports. Bei n Elementen läuft der Index i von 0
+	 * 
+	 * @param i Position des Teilreports. Bei n Elementen laeuft der Index i von 0
 	 * bis n-1.
 	 * 
 	 * @return Position des Teil-Reports.
@@ -54,40 +62,4 @@ public class CompositeReport extends Report implements IsSerializable, Serializa
 		return this.subReports.elementAt(i);
 	}
 
-
-	// NOCH FRAGEN OB MAN DAS DARF
-	
-	
-	 /**
-	   * Tabelle mit Positionsdaten. Die Tabelle wird zeilenweise in diesem
-	   * <code>Vector</code> abgelegt.
-	   */
-	  private Vector<Row> table = new Vector<Row>();
-
-	  /**
-	   * Hinzufügen einer Zeile.
-	   * 
-	   * @param r die hinzuzufügende Zeile
-	   */
-	  public void addRow(Row r) {
-	    this.table.addElement(r);
-	  }
-
-	  /**
-	   * Entfernen einer Zeile.
-	   * 
-	   * @param r die zu entfernende Zeile.
-	   */
-	  public void removeRow(Row r) {
-	    this.table.removeElement(r);
-	  }
-
-	  /**
-	   * Auslesen sämtlicher Positionsdaten.
-	   * 
-	   * @return die Tabelle der Positionsdaten
-	   */
-	  public Vector<Row> getRows() {
-	    return this.table;
-	  }
 }

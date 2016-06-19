@@ -1,7 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.server.report;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -13,6 +16,7 @@ import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
@@ -30,12 +34,9 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
  * 
  * @see ReportGenerator
  *      ------------------------------------------------------------------------
- *      ------------------ Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in
- *      der Vorlesung gew�nscht, als Grundlage �bernommen und bei
- *      Notwendigkeit an die Bed�rfnisse des IT-Projekts SS 2016
- *      "Partnerboerse" angepasst.
- * 
- *      Modifizierender @author Milena Weinmann, Carolin Marian
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, 
+ * als Grundlage uebernommen und bei Notwendigkeit an die Beduerfnisse des 
+ * IT-Projekts SS 2016 "Partnerboerse" angepasst.
  */
 
 @SuppressWarnings("serial")
@@ -43,9 +44,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		ReportGenerator {
 
 	/**
-	 * Ein ReportGenerator benoetigt Zugriff auf die
-	 * PartnerboerseAdministration, da diese die essentiellen Methoden f�r die
-	 * Koexistenz von Datenobjekten (vgl. bo-Package) bietet.
+	 * Ein ReportGenerator benoeigt Zugriff auf die PartnerboerseAdministration,
+	 * da diese die essentiellen Methoden fuer die Koexistenz von Datenobjekten
+	 * (vgl. bo-Package) bietet.
 	 */
 	private PartnerboerseAdministration partnerboerseAdministration = null;
 
@@ -63,10 +64,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	 * @see #ReportGeneratorImpl()
 	 */
 	public void init() throws IllegalArgumentException {
-		/*
-		 * Ein ReportGeneratorImpl-Objekt instantiiert f�r seinen Eigenbedarf
-		 * eine PartnerboerseAdministrationImpl-Instanz.
-		 */
+		
 		PartnerboerseAdministrationImpl p = new PartnerboerseAdministrationImpl();
 		p.init();
 		this.partnerboerseAdministration = p;
@@ -82,29 +80,27 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 	}
 
 	/**
-	 * Report-Impressum hinzuf�gen.
+	 * Die Methode soll dem Report ein Impressum hinzufuegen. Dazu wird zunaechst
+	 * ein neuer CompositeParagraph angelegt, da das Impressum mehrzeilig sein soll.
+	 * Danach werden belibige SimpleParagraph dem CompositeParagraph hinzugefuegt. Zum
+	 * Schluss wird CompositeParagraph dem Report hinzugef�gt �ber setImprint.
 	 * 
-	 * @param r
-	 *            der um das Impressum zu erweiternde Report.
+	 * @param r der um das Impressum zu erweiternde Report.
 	 */
 	protected void addImprint(Report r) {
 
-		/*
-		 * Das Imressum soll mehrzeilig sein.
-		 */
 		CompositeParagraph imprint = new CompositeParagraph();
 
 		imprint.addSubParagraph(new SimpleParagraph("Lonely Hearts"));
 
-		/*
-		 * Impressum zum Report hinzuf�gen.
-		 */
 		r.setImprint(imprint);
 	}
 
 	/**
-	 * Erstellen von <code>AllInfosOfNutzerReport</code>-Objekten.
+	 * Methode, die einen fertigen Report vom Typ AllInfosOfNutzerReport zurueckliefert. 
+	 * Der Report stellt alle Infos eines Nutzerprofils dar.
 	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createAllInfosOfNutzerReport(Nutzerprofil)
 	 */
 
 	public AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np)
@@ -113,95 +109,66 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		if (this.getPartnerboerseAdministration() == null)
 			return null;
 
-		/*
-		 * Zun�chst legen wir uns einen leeren Report an.
-		 */
 		AllInfosOfNutzerReport result = new AllInfosOfNutzerReport();
 
-		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
 		result.setTitle(" ");
 
-		// Imressum hinzuf�gen
-		this.addImprint(result);
-
+	
 		/*
-		 * Datum der Erstellung hinzuf�gen. new Date() erzeugt autom. einen
-		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-		 */
-		result.setCreated(new Date());
-
-		/*
-		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
-		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-		 * mehrzeilig, daher die Verwendung von CompositeParagraph.
-		 */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Kunden aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Infos von: \n"
-				+ np.getNachname() + ", " + np.getVorname()));
-
-		// // Kundennummer aufnehmen
-		// header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
-		// + np.getProfilId()));
-
-		// Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
-		result.setHeaderData(header);
-
-		/*
-		 * Ab hier erfolgt ein zeilenweises Hinzuf�gen von
-		 * Konto-Informationen.
+		 * Ab hier erfolgt ein zeilenweises Hinzufuegen von
+		 * Nutzerprofil-Informationen.
 		 */
 
 		/*
-		 * Zun�chst legen wir eine Kopfzeile f�r die Konto-Tabelle an.
+		 * Zunaechst legen wir eine Kopfzeile fuer die Info-Tabelle an.
 		 */
 		Row headline = new Row();
-
-		/*
-		 * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
-		 * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
-		 * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-		 * �berschriften ab.
-		 */
-
+		
 		headline.addColumn(new Column("Eigenschaft"));
 
 		headline.addColumn(new Column("Infotext"));
-
-		// Hinzuf�gen der Kopfzeile
+		
+		// Hinzufuegen der Kopfzeile
 		result.addRow(headline);
-
+		
 		/*
-		 * Nun werden s�mtliche Infos des Kunden ausgelesen
+		 * Nun werden saemtliche Infos des Nutzerprofils ausgelesen
 		 */
-
-		List<Info> infos = this.partnerboerseAdministration
-				.getAllInfosNeuReport(np.getProfilId());
-
-		for (Info i : infos) {
-
-			// Eine leere Zeile anlegen.
-			Row infoRow = new Row();
-
-			// Spalten hinzuf�gen
-
-			// infoRow.addColumn(new
-			// Column(String.valueOf(i.getEigenschaftId())));
-			infoRow.addColumn(new Column(this.partnerboerseAdministration
-					.getEigenschaftstextById(i.getEigenschaftId())));
-			infoRow.addColumn(new Column(i.getInfotext()));
-
-			// und schlie�lich die Zeile dem Report hinzuf�gen.
-			result.addRow(infoRow);
+		Map<List<Info>,List<Eigenschaft>> resultMap = this.partnerboerseAdministration.getAllInfos(np.getProfilId());
+		
+		Set<List<Info>> output = resultMap.keySet();
+		
+		for (List<Info> listI : output) {
+			
+			List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
+			listE = resultMap.get(listI);
+			
+			for (int e = 0; e < listE.size(); e++) {
+				
+				// Eine leere Zeile anlegen.
+				Row infoRow = new Row();
+				
+				infoRow.addColumn(new Column(listE.get(e).getErlaeuterung()));
+				
+					infoRow.addColumn(new Column(listI.get(e).getInfotext()));
+				
+//				und schliesslich die Zeile dem Report hinzufuegen.
+				result.addRow(infoRow);	
+			}
 		}
-
+		
 		/*
-		 * Zum Schluss m�ssen wir noch den fertigen Report zur�ckgeben.
+		 * Zum Schluss muss der fertige Report zurueckgeben werden.
 		 */
 		return result;
 	}
 
+	/**
+	 * Methode, die einen fertigen Report vom Typ AllProfildatenOfNutzerReport zurueckliefert.
+	 * Der Report stellt alle Profildaten eines Nutzerprofils dar.
+	 *  
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createAllProfildatenOfNutzerReport(Nutzerprofil)
+	 */
 	@Override
 	public AllProfildatenOfNutzerReport createAllProfildatenOfNutzerReport(
 			Nutzerprofil np) throws IllegalArgumentException {
@@ -210,55 +177,21 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			return null;
 
 		/*
-		 * Zun�chst legen wir uns einen leeren Report an.
+		 * Zunaechst wird ein leerer Report angelegt.
 		 */
 		AllProfildatenOfNutzerReport result = new AllProfildatenOfNutzerReport();
 
-		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
+		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
 		result.setTitle(np.getVorname() + " " + np.getNachname());
 
-		// Imressum hinzuf�gen
-		this.addImprint(result);
-
 		/*
-		 * Datum der Erstellung hinzuf�gen. new Date() erzeugt autom. einen
-		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-		 */
-		result.setCreated(new Date());
-
-		/*
-		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
-		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-		 * mehrzeilig, daher die Verwendung von CompositeParagraph.
-		 */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Kunden aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Profildaten von: "
-				+ np.getNachname() + ", " + np.getVorname()));
-
-		// // Kundennummer aufnehmen
-		// header.addSubParagraph(new SimpleParagraph("Profil-ID.: "
-		// + np.getProfilId()));
-
-		// Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
-		result.setHeaderData(header);
-
-		/*
-		 * Ab hier erfolgt ein zeilenweises Hinzuf�gen von Konto-Informationen.
+		 * Ab hier erfolgt ein zeilenweises Hinzufuegen von Profildaten.
 		 */
 
 		/*
-		 * Zun�chst legen wir eine Kopfzeile f�r die Konto-Tabelle an.
+		 * Zunaechst legen wir eine Kopfzeile fuer die Konto-Tabelle an.
 		 */
 		Row headline = new Row();
-
-		/*
-		 * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
-		 * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
-		 * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-		 * �berschriften ab.
-		 */
 
 		headline.addColumn(new Column("Profil-ID"));
 
@@ -280,23 +213,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		headline.addColumn(new Column("Email"));
 
-		// Hinzuf�gen der Kopfzeile
+		// Hinzufuegen der Kopfzeile
 		result.addRow(headline);
+		
 		/*
-		 * Nun werden s�mtliche Infos des Kunden ausgelesen
+		 * Nun werden saemtliche Profildaten des Nutzerprofils ausgelesen
 		 */
 
-		Nutzerprofil n = this.partnerboerseAdministration.getFremdprofilById(np
+		Nutzerprofil n = this.partnerboerseAdministration.getNutzerprofilById(np
 				.getProfilId());
 
-		System.out.println("Profil geholt:" + n.getVorname() + n.getNachname()
-				+ n.getGeschlecht() + n.getGeburtsdatumDate()
-				+ n.getKoerpergroesseInt() + n.getHaarfarbe() + n.getRaucher()
-				+ n.getReligion() + n.getEmailAddress());
 		// Eine leere Zeile anlegen.
 		Row profildatenoRow = new Row();
 
-		// Spalten hinzuf�gen
+		// Spalten hinzufuegen
 		profildatenoRow.addColumn(new Column(String.valueOf(n.getProfilId())));
 		profildatenoRow.addColumn(new Column(n.getVorname()));
 		profildatenoRow.addColumn(new Column(n.getNachname()));
@@ -310,16 +240,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		profildatenoRow.addColumn(new Column(n.getReligion()));
 		profildatenoRow.addColumn(new Column(n.getEmailAddress()));
 
-		// und schlie�lich die Zeile dem Report hinzuf�gen.
+		// und schlie�lich die Zeile dem Report hinzufuegen.
 		result.addRow(profildatenoRow);
 
 		return result;
 	}
 
 	/**
-	 * Erstellen von <code>AllPartnervorschlaegeNpReport</code>-Objekten.
+	 * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeNpReport zurueckliefert.
+	 * Der Report stellt alle unangesehenen Partnervorschlaege eines Nutzerprofils dar.
 	 * 
-	 * @return der fertige Report
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createAllPartnervorschlaegeNpReport(Nutzerprofil) 
 	 */
 	@Override
 	public AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil np)
@@ -329,18 +260,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			return null;
 
 		/*
-		 * Zun�chst legen wir uns einen leeren Report an.
+		 * Zunaechst wird ein leerer Report angelegt.
 		 */
 		AllPartnervorschlaegeNpReport result = new AllPartnervorschlaegeNpReport();
 
-		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
+		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
 		result.setTitle("Alle unangesehenen Partnervorschlaege");
 
-		// Imressum hinzuf�gen
+		// Imressum hinzufuegen
 		this.addImprint(result);
 
 		/*
-		 * Erstellungsdatum hinzuf�gen. new Date() erzeugt autom. einen
+		 * Erstellungsdatum hinzufuegen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		 */
 		result.setCreated(new Date());
@@ -351,7 +282,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		 */
 		CompositeParagraph header = new CompositeParagraph();
 
-		// Name und Vorname des Nutzers aufnehmen.
+		// Name und Vorname des Nutzerprofils aufnehmen.
 		header.addSubParagraph(new SimpleParagraph(np.getVorname() + " "
 				+ np.getNachname()));
 
@@ -359,31 +290,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
 				+ np.getProfilId()));
 
-		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
+		// Zusammengestellte Kopfdaten zum Report hinzufuegen.
 		result.setHeaderData(header);
-		/*
-		 * Da AllAccountsOfAllCustomersReport-Objekte aus einer Sammlung von
-		 * AllAccountsOfCustomerReport-Objekten besteht, ben�tigen wir keine
-		 * Kopfdaten f�r diesen Report-Typ. Wir geben einfach keine Kopfdaten
-		 * an...
-		 */
 
 		/*
-		 * Nun m�ssen s�mtliche Kunden-Objekte ausgelesen werden.
-		 * Anschlie�end wir f�r jedes Kundenobjekt c ein Aufruf von
-		 * createAllAccountsOfCustomerReport(c) durchgef�hrt und somit jeweils
-		 * ein AllAccountsOfCustomerReport-Objekt erzeugt. Diese Objekte werden
-		 * sukzessive der result-Variable hinzugef�gt. Sie ist vom Typ
-		 * AllAccountsOfAllCustomersReport, welches eine Subklasse von
+		 * Nun werden saemtliche Nutzerprofil-Objekte ausgelesen.
+		 * Anschlie�end wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
+		 * createAllProfildatenOfNutzerReport(n) und ein Aufruf von 
+		 * createAllInfosOfNutzerReport(n) durchgefuehrt und somit jeweils
+		 * ein AllProfildatenOfNutzerReport-Objekt und ein AllInfosOfNutzerReport-Objekt
+		 * erzeugt. Diese Objekte werden sukzessive der result-Variable hinzugefuegt. 
+		 * Sie ist vom Typ AllPartnervorschlaegeNpReport, welches eine Subklasse von
 		 * CompositeReport ist.
 		 */
 
 		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration
 				.getGeordnetePartnervorschlaegeNp(np.getProfilId());
-		System.out.println("Partnervorschlaege:" + allNutzer);
 		for (Nutzerprofil n : allNutzer) {
 			/*
-			 * Anlegen des jew. Teil-Reports und Hinzuf�gen zum Gesamt-Report.
+			 * Anlegen des jew. Teil-Reports und Hinzufuegen zum Gesamt-Report.
 			 */
 
 			result.addSubReport(this.createAllProfildatenOfNutzerReport(n));
@@ -392,15 +317,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		}
 
 		/*
-		 * Zu guter Letzt m�ssen wir noch den fertigen Report zur�ckgeben.
+		 *Fertigen Report zurueckgeben.
 		 */
 		return result;
 	}
 
 	/**
-	 * Erstellen von <code>AllPartnervorschlaegeSpReport</code>-Objekten.
+	  * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeSpReport zurueckliefert.
+	 * Der Report stellt alle Partnervorschlaege, die anhand eines Suchprofils ermittelt wurden, 
+	 * f�r ein Nutzerprofil dar.
 	 * 
-	 * @return der fertige Report
+	 * @see de.hdm.gruppe7.partnerboerse.shared.ReportGenerator#createAllPartnervorschlaegeSpReport(Nutzerprofil, String)
 	 */
 	@Override
 	public AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil,
@@ -410,19 +337,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 			return null;
 
 		/*
-		 * Zun�chst legen wir uns einen leeren Report an.
+		 * Anlegen eines leeren Reports.
 		 */
 		AllPartnervorschlaegeSpReport result = new AllPartnervorschlaegeSpReport();
 
-		// Jeder Report hat einen Titel (Bezeichnung / �berschrift).
+		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
 		result.setTitle("Alle Partnervorschlaege anhand des Suchprofils: "
 				+ suchprofilname);
 
-		// Imressum hinzuf�gen
+		// Imressum hinzufuegen
 		this.addImprint(result);
 
 		/*
-		 * Datum der Erstellung hinzuf�gen. new Date() erzeugt autom. einen
+		 * Datum der Erstellung hinzufuegen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		 */
 		result.setCreated(new Date());
@@ -441,15 +368,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
 				+ nutzerprofil.getProfilId()));
 		
-		// Zusammengestellte Kopfdaten zum Report hinzuf�gen.
+		// Zusammengestellte Kopfdaten zum Report hinzufuegen.
 		result.setHeaderData(header);
 		/*
-		 * Nun m�ssen s�mtliche Kunden-Objekte ausgelesen werden.
-		 * Anschlie�end wir f�r jedes Kundenobjekt c ein Aufruf von
-		 * createAllAccountsOfCustomerReport(c) durchgef�hrt und somit jeweils
-		 * ein AllAccountsOfCustomerReport-Objekt erzeugt. Diese Objekte werden
-		 * sukzessive der result-Variable hinzugef�gt. Sie ist vom Typ
-		 * AllAccountsOfAllCustomersReport, welches eine Subklasse von
+		 * Nun werden saemtliche Nutzerprofil-Objekte ausgelesen.
+		 * Anschlie�end wird fuer jedes Nutzerprofil-Objekt n ein Aufruf von
+		 * createAllProfildatenOfNutzerReport(n) und ein Aufruf von 
+		 * createAllInfosOfNutzerReport(n) durchgefuehrt und somit jeweils
+		 * ein AllProfildatenOfNutzerReport-Objekt und ein AllInfosOfNutzerReport-Objekt
+		 * erzeugt. Diese Objekte werden sukzessive der result-Variable hinzugefuegt. 
+		 * Sie ist vom Typ AllPartnervorschlaegeSpReport, welches eine Subklasse von
 		 * CompositeReport ist.
 		 */
 		List<Nutzerprofil> allNutzer = this.partnerboerseAdministration
@@ -457,14 +385,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		for (Nutzerprofil np : allNutzer) {
 			/*
-			 * Anlegen des jew. Teil-Reports und Hinzuf�gen zum Gesamt-Report.
+			 * Anlegen des jew. Teil-Reports und Hinzufuegen zum Gesamt-Report.
 			 */
 			result.addSubReport(this.createAllProfildatenOfNutzerReport(np));
 			result.addSubReport(this.createAllInfosOfNutzerReport(np));
 		}
 
 		/*
-		 * Zu guter Letzt m�ssen wir noch den fertigen Report zur�ckgeben.
+		 * Fertigen Report zurueckgeben.
 		 */
 		return result;
 	}

@@ -74,12 +74,17 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 								}
 
 								if (result.getEmailAddress() == null) {
+									
+									String profiltyp = "Np";
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Details").add(new PartnerboerseReport());
+
 									RootPanel.get("Navigator2").add(loginPanel);
-									RootPanel.get("Details").add(new CreateNutzerprofil());
+									RootPanel.get("Details").add(new CreateNutzerprofil(profiltyp));
+
 								}
 
 							}
@@ -93,7 +98,6 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 						}
 					});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

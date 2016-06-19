@@ -13,45 +13,45 @@ public class Nutzerprofil extends Profil {
 	 * Vorname.
 	 */
 	private String vorname;
-	
 	/**
 	 * Nachname.
 	 */
-	private String nachname; 
-	
+	private String nachname;
+
 	/**
 	 * Geburtsdatum.
 	 */
 	private Date geburtsdatumDate;
 
 	/**
-	 * Aehnlichkeit zwischen einem Nutzerprofil und anderen Nutzerprofilen 
-	 * oder zwischen einem Suchprofil und anderen Nutzerprofilen.
+	 * Aehnlichkeit zwischen einem Nutzerprofil und anderen Nutzerprofilen oder
+	 * zwischen einem Suchprofil und anderen Nutzerprofilen.
 	 */
 	private int aehnlichkeit;
-	
+
 	/**
-	 * E-Mail-Adresse. 
+	 * E-Mail-Adresse.
 	 */
 	private String emailAddress;
 
 	/**
-	 * Login-URL. 
+	 * Login-URL.
 	 */
 	private String loginUrl;
-	
+
 	/**
 	 * Logout-URL.
 	 */
 	private String logoutUrl;
-	
+
 	/**
-	 * Login-Status, auf false gesetzt. 
+	 * Login-Status, auf false gesetzt.
 	 */
 	private boolean loggedIn = false;
 
 	/**
 	 * Vorname auslesen.
+	 * 
 	 * @return vorname
 	 */
 	public String getVorname() {
@@ -60,14 +60,16 @@ public class Nutzerprofil extends Profil {
 
 	/**
 	 * Vorname setzen.
+	 * 
 	 * @param vorname
 	 */
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	
+
 	/**
 	 * Nachname auslesen.
+	 * 
 	 * @return nachname
 	 */
 	public String getNachname() {
@@ -76,6 +78,7 @@ public class Nutzerprofil extends Profil {
 
 	/**
 	 * Nachname setzen.
+	 * 
 	 * @param nachname
 	 */
 	public void setNachname(String nachname) {
@@ -84,6 +87,7 @@ public class Nutzerprofil extends Profil {
 
 	/**
 	 * Geburtsdatum auslesen.
+	 * 
 	 * @return geburtsdatumDate
 	 */
 	public Date getGeburtsdatumDate() {
@@ -91,7 +95,8 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Geburtsdatum setzen. 
+	 * Geburtsdatum setzen.
+	 * 
 	 * @param geburtsdatumDate
 	 */
 	public void setGeburtsdatumDate(Date geburtsdatumDate) {
@@ -100,6 +105,7 @@ public class Nutzerprofil extends Profil {
 
 	/**
 	 * Aehnlichkeit auslesen.
+	 * 
 	 * @return aehnlichkeit
 	 */
 	public int getAehnlichkeit() {
@@ -107,63 +113,26 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Aehnlichkeit setzen. 
+	 * Aehnlichkeit setzen.
+	 * 
 	 * @param aehnlichkeit
 	 */
 	public void setAehnlichkeit(int aehnlichkeit) {
 		this.aehnlichkeit = aehnlichkeit;
 	}
-	
+
 	/**
 	 * E-Mail-Adresse auslesen.
+	 * 
 	 * @return emailAddress
 	 */
-	public String getEmailAddress(){
+	public String getEmailAddress() {
 		return emailAddress;
-	}
-	
-	/**
-	 * E-Mail-Adresse setzen. 
-	 * @param emailAddress
-	 */
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	
-	/**
-	 * Login-URL auslesen. 
-	 * @return loginUrl
-	 */
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-	
-	/**
-	 * Login-URL setzen. 
-	 * @param loginUrl
-	 */
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
 	}
 
 	/**
-	 * Logout-URL auslesen.
-	 * @return logoutUrl
-	 */
-	public String getLogoutUrl() {
-		return logoutUrl;
-	}
-	
-	/**
-	 * Logout-URL setzen. 
-	 * @param createLogoutURL
-	 */
-	public void setLogoutUrl(String createLogoutURL) {
-		this.logoutUrl = createLogoutURL;
-	}
-	
-	/**
 	 * Login-Status ermitteln.
+	 * 
 	 * @return loggedIn
 	 */
 	public boolean isLoggedIn() {
@@ -172,7 +141,8 @@ public class Nutzerprofil extends Profil {
 	}
 
 	/**
-	 * Login-Status setzen. 
+	 * Login-Status setzen.
+	 * 
 	 * @param b
 	 */
 	public void setLoggedIn(boolean b) {
@@ -181,10 +151,31 @@ public class Nutzerprofil extends Profil {
 
 	/**
 	 * Login-Status auslesen.
+	 * 
 	 * @return loggedIn
 	 */
 	public boolean getLoggedIn() {
 		return loggedIn;
+	}
+
+	public void setLogoutUrl(String createLogoutURL) {
+		this.logoutUrl = createLogoutURL;
+	}
+
+	public String getLogoutUrl() {
+		return logoutUrl;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setLoginUrl(String loginUrl) {
+		this.loginUrl = loginUrl;
+	}
+
+	public String getLoginUrl() {
+		return loginUrl;
 	}
 
 }

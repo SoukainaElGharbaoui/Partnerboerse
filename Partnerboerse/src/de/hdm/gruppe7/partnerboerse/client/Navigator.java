@@ -7,10 +7,15 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 
 
+/**
+ * @author dunja
+ *
+ */
 public class Navigator extends HorizontalPanel {
 
 	/**
@@ -20,15 +25,20 @@ public class Navigator extends HorizontalPanel {
 
 	int aehnlichkeit = 0;
 
+	/**
+	 * 
+	 */
 	public Navigator() {
 
 		
+
 		VerticalPanel verPanel1 = new VerticalPanel();
 		/**
 		 * Ab hier wird die Menübar erstellt. Dabei werden abhängig von der 
 		 * Thematik einzelne vertikale aufklappbare Menüs zur 
 		 * horizontalen Menühauptleiste "menu" hinzugefügt.
 		 */
+
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		/**
@@ -49,11 +59,16 @@ public class Navigator extends HorizontalPanel {
 		MenuItem profilAnzeigen = nutzerprofilMenu.addItem("Profil anzeigen", new Command() {
 			@Override
 			public void execute() {
-				ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+				
+				int profilId = nutzerprofil.getProfilId();
+				String profiltyp = "Np";
+				
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp);
 				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showEigenesNp);
+				RootPanel.get("Details").add(showNutzerprofil);
 			}
 		});
+
 		
 		profilAnzeigen.setStyleName("MenuItem");
 		
@@ -63,6 +78,7 @@ public class Navigator extends HorizontalPanel {
 		 * angeklickt, so wird der jeweilige Command ausgeführt.
 		 */
 		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
+
 			@Override
 			public void execute() {
 				ShowMerkliste showMerkliste = new ShowMerkliste();
@@ -104,7 +120,9 @@ public class Navigator extends HorizontalPanel {
 				 * Suchprofilen enthaelt, geleert.
 				 */
 
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				String profiltyp = "Sp";
+				
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 
@@ -117,8 +135,9 @@ public class Navigator extends HorizontalPanel {
 		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
+				String profiltyp = "Sp";
 				int suchprofilId = 0;
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
 			}
@@ -155,10 +174,7 @@ public class Navigator extends HorizontalPanel {
 								RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 							}
-
 						});
-
-
 			}
 
 		});
@@ -232,10 +248,13 @@ public class Navigator extends HorizontalPanel {
                  */
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
+		menu.addItem(new MenuItem("Meine Suchprofile", suchprofilMenu));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
-		menu.addSeparator();
+
+		menu.addItem(new MenuItem("Meine Partnervorschläge", partnervorschlaegeMenu));
+        menu.addSeparator();
+//		menu.addItem(new MenuItem("Ausloggen", statusMenu));
+
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu
