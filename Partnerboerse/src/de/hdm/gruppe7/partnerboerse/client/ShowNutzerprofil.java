@@ -44,11 +44,10 @@ public class ShowNutzerprofil extends VerticalPanel {
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	
-//	private String profiltyp;
-
-
 	/**
 	 * Konstruktor erstellen.
+	 * @param profilId Die Profil-ID des Nutzerprofils, das angezeigt werden soll.
+	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
 	public ShowNutzerprofil(final int profilId, final String profiltyp) {
 
@@ -63,13 +62,6 @@ public class ShowNutzerprofil extends VerticalPanel {
 		showEigenesNpFlexTable.addStyleName("FlexTable");
 		showEigenesNpFlexTable.setCellPadding(6);
 		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-//
-//		/**
-//		 * Die Variable profiltyp wird initialisiert.
-//		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
-//		 * vom Typ Suchprofil ist
-//		 */
-//		profiltyp = "Np";
 		
 		/**
 		 * Erste Spalte der Tabelle festlegen.
@@ -99,25 +91,16 @@ public class ShowNutzerprofil extends VerticalPanel {
 						String nutzerprofilId = String.valueOf(result.getProfilId());
 						
 								showEigenesNpFlexTable.setText(0, 1, nutzerprofilId);
-
 								showEigenesNpFlexTable.setText(1, 1, result.getVorname());
-
 								showEigenesNpFlexTable.setText(2, 1, result.getNachname());
-
 								showEigenesNpFlexTable.setText(3, 1, result.getGeschlecht());
-
 								Date geburtsdatum = result.getGeburtsdatumDate();
 								String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 								showEigenesNpFlexTable.setText(4, 1, geburtsdatumString);
-
 								showEigenesNpFlexTable.setText(5, 1, Integer.toString(result.getKoerpergroesseInt()));
-
 								showEigenesNpFlexTable.setText(6, 1, result.getHaarfarbe());
-
 								showEigenesNpFlexTable.setText(7, 1, result.getRaucher());
-
 								showEigenesNpFlexTable.setText(8, 1, result.getReligion());
-
 								showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
 							}
 						});
@@ -158,8 +141,6 @@ public class ShowNutzerprofil extends VerticalPanel {
 
 										public void onSuccess(Void result) {
 											
-											if (profiltyp == "Np") {
-												
 											HorizontalPanel loginPanel = new HorizontalPanel();
 											
 											Anchor signOutLink = new Anchor();
@@ -169,7 +150,6 @@ public class ShowNutzerprofil extends VerticalPanel {
 											
 											loginPanel.add(signOutLink);
 							
-											
 											Anchor signIn = new Anchor();
 											signIn.setText("Jetzt einloggen");
 											 
@@ -177,7 +157,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 											RootPanel.get("Details").clear();
 											 
 											RootPanel.get("Navigator").add(loginPanel);
-											}
+											
 										}
 							});
 				}

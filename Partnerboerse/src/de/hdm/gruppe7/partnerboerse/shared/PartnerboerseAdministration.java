@@ -19,8 +19,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Synchrone Schnittstelle f�r die Verwaltung der Partnerboerse.
- * @author dunja
- *
+ * 
  */
 @RemoteServiceRelativePath("partnerboerseadministration")
 public interface PartnerboerseAdministration extends RemoteService {
@@ -44,27 +43,28 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * 
 	 * @param userEmail
 	 * @return Boolscher Wert, er zeigt ob der Nutzer eingeloggt ist.
+	 * @throws IllegalArgumentException 
 	 */
 	
-	public boolean isUserRegistered(String userEmail);
+	public boolean isUserRegistered(String userEmail) throws IllegalArgumentException;
 
 	/**
 	 * URL zum Einloggen anfordern.
 	 * 
 	 * @param requestUri
 	 * @return Nutzerprofil-Objekt, welches eingeloggt ist.
-	 * @throws Exception
+	 * @throws IllegalArgumentException 
 	 */
-	public Nutzerprofil login(String requestUri) throws Exception;
+	public Nutzerprofil login(String requestUri) throws IllegalArgumentException;
 	
 	/**
-	 * Pruefen, ob der Nutzer in der Datenbank noch nicht existiert.
+	 * Pruefen, ob der Nutzer in der Datenbank schon existiert.
 	 * 
 	 * @param userEmail
 	 * @return Boolscher Wert, der zeigt ob der Nutzer bereits in der Datenbank existiert.
-	 * @throws Exception
+	 * @throws IllegalArgumentException 
 	 */
-	public boolean pruefeObNutzerNeu(String userEmail) throws Exception;
+	public boolean pruefeObNutzerNeu(String userEmail) throws IllegalArgumentException;
 
 
 	/*
@@ -136,16 +136,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Nutzerprofil getNutzerprofilById(int profilId)
-			throws IllegalArgumentException;
-
-	/**
-	 * Ein Fremdprofil-Objekt anhand der Profil-ID auslesen.
-	 * 
-	 * @param fremdprofilId
-	 * @return Nutzerprofil-Objekt, welches ausgelesen wird.
-	 * @throws IllegalArgumentException
-	 */
-	public Nutzerprofil getFremdprofilById(int fremdprofilId)
 			throws IllegalArgumentException;
 
 	/*
@@ -239,7 +229,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Suchprofil-Objekt, welches ausgelesen wird.
 	 * @throws IllegalArgumentException
 	 */
-	public Suchprofil getSuchprofilById (int profilId, int suchprofilId)
+	public Suchprofil getSuchprofilById (int suchprofilId)
 			throws IllegalArgumentException;
 
 	/**
@@ -530,17 +520,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
 			throws IllegalArgumentException;
 
-	/**
-	 * Auslesen aller Info-Objekte eines Nutzer, fuer den Report.
-	 * 
-	 * @param profilId
-	 * @return Liste von Info-Objekten, die ausgelesen werden
-	 * @throws IllegalArgumentException
-	 */
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException;
-
-	
 	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
@@ -555,8 +534,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	public String getEigenschaftstextById(int eigenschaftId)
-			throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************

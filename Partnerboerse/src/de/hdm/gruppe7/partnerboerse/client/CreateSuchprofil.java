@@ -20,7 +20,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class CreateSuchprofil extends VerticalPanel {
 	
 	/**
-	 * Neues Nutzerprofil-Objekt, das Login-Informationen enthaelt, erzeugen. 
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen. 
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
@@ -51,7 +51,8 @@ public class CreateSuchprofil extends VerticalPanel {
 	private Label warnungLabel = new Label();
 	
 	/**
-	 * Konstruktor erstellen.
+	 * Konstruktor erstellen. 
+	 * @param profiltyp Der Profiltyp (Suchprofil).
 	 */
 	public CreateSuchprofil(final String profiltyp) {
 		this.add(verPanel);
@@ -232,7 +233,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
-	 * @param name 
+	 * @param name Der String, der ueberprueft wird. 
 	 * @return Boolscher Wert, der angibt, ob es sich um eine Zahl handelt. 
 	 */
 	public boolean isZahl(String name) {

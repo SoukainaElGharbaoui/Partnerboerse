@@ -45,7 +45,7 @@ public class ShowSperrliste extends VerticalPanel {
 	private int zaehler;
 	
 	/**
-	 * Neue Methode definiert, die prueft, ob die Tabelle leer ist. 
+	 * Neue Methode definieren, die prueft, ob die Tabelle leer ist. 
 	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
 	 */
 	public boolean pruefeLeereTable() {
@@ -108,12 +108,6 @@ public class ShowSperrliste extends VerticalPanel {
 						infoLabel.setText("Es trat ein Fehler auf."); 
 					}
 
-					/**
-					 * Das Ergebnis der Abfrage ist ein Sperrliste-Objekt. 
-					 * Die gesperrten Nutzerprofil-Objekte werden in einem Vektor von Nutzerprofilen gespeichert. 
-					 * Dieser Vektor wird in einer Schleife durchlaufen und jedes gesperrte Nutzerprofil wird in 
-					 * eine Zeile der Tabelle eingefuegt. 
-					 */
 					public void onSuccess(Sperrliste result) {
 						
 						List<Nutzerprofil> gemerkteNutzerprofile = result.getGesperrteNutzerprofile();
@@ -173,13 +167,10 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														public void onSuccess(Integer result) {
-															infoLabel.setText("Das Profil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
 													});
 
-											// Jeweilige Zeile der Tabelle loeschen.
-											
 											if (sperrlisteFlexTable.getRowCount() == 3) {
 												
 												sperrlisteFlexTable.removeRow(i);

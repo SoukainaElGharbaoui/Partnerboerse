@@ -35,7 +35,6 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen. 
 	 */
-
 	private Label ueberschriftLabel = new Label();
 	private FlexTable showFremdprofilFlexTable = new FlexTable();
 	private Button vermerkButton = new Button();
@@ -44,9 +43,14 @@ public class ShowFremdprofil extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
-	 * @param fremdprofilId 
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das angezeigt werden soll.
+	 * @param profiltyp Der Profiltyp (Fremdprofil).
 	 */
 	public ShowFremdprofil(final int fremdprofilId, final String profiltyp) {
+		
+		/**
+		 * Horizontales Panel hinzufuegen.
+		 */
 		this.add(horPanel);
 
 		/**
@@ -73,7 +77,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Fremdprofil anhand der Profil-ID aus der Datenbank auslesen und die Profildaten in die Tabelle einfuegen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getFremdprofilById(fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override

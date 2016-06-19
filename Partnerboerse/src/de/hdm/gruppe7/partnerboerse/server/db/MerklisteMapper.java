@@ -10,7 +10,7 @@ import java.util.List;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Mapper-Klasse, die Merkliste.-Objekte auf eine relationale Datenbank abbildet. 
+ * Mapper-Klasse, die Merkliste-Objekte auf eine relationale Datenbank abbildet. 
  * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
  * Objekte umgewandelt werden. 
  */
@@ -90,7 +90,7 @@ public class MerklisteMapper {
 	 * Vermerkstatus pruefen.
 	 * @param 	profilId Die Profil-ID des eigenen Nutzerprofils.
 	 * @param 	fremdprofilId Die Profil-ID des Nutzerprofils, das auf die Existenz eines Vermerks ueberprueft werden soll. 
-	 * @return Status, ob bereits ein Vermerk vorliegt oder nicht.
+	 * @return Status, der angibt, ob bereits ein Vermerk vorliegt oder nicht.
 	 */
 	public int pruefeVermerk(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();

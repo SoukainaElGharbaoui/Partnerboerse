@@ -18,8 +18,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Das asynchrone Gegenst�ck des Interface {@link PartnerboerseAdministration}
- * 
- * @author dunja
  *
  */
 public interface PartnerboerseAdministrationAsync {
@@ -135,15 +133,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getFremdprofilById(int)
-	 * 
-	 * @param fremdprofilId
-	 * @param callback
-	 */
-	void getFremdprofilById(int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
-
-	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Nutzerprofil
@@ -231,7 +220,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param suchprofilId
 	 * @param callback
 	 */
-	void getSuchprofilById (int profilId, int suchprofilId, AsyncCallback<Suchprofil> callback);
+	void getSuchprofilById (int suchprofilId, AsyncCallback<Suchprofil> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)
@@ -484,14 +473,6 @@ public interface PartnerboerseAdministrationAsync {
 	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
-	 * 
-	 * @param profilId
-	 * @param callback
-	 */
-	void getAllInfosNeuReport(int profilId, AsyncCallback<List<Info>> callback);
-
-	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
 	 * 
 	 * @param profilId
@@ -533,16 +514,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
-	 */
-	void getEigenschaftstextById(int eigenschaftId,
-			AsyncCallback<String> callback);
-	
-	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info

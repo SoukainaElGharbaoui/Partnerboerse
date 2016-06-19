@@ -215,16 +215,12 @@ public class HTMLReportWriter extends ReportWriter {
 
 			result.append(this.reportText + "\n");
 
-			
+		
 			AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r.getSubReportAt(j + 1);
 
 			this.process(subReport);
 
-			this.process(subReport);
-
 			result.append(this.reportText + "\n");
-			
-			this.resetReportText();
 		}
 		
 		this.reportText = result.toString();
@@ -272,8 +268,6 @@ public class HTMLReportWriter extends ReportWriter {
 
 		
 			AllInfosOfNutzerReport subReport = (AllInfosOfNutzerReport) r.getSubReportAt(j + 1);
-
-			this.process(subReport);
 
 			this.process(subReport);
 

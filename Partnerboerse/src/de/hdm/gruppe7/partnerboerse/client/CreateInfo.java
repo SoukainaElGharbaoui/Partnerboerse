@@ -19,47 +19,77 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+/**
+ * Die Klasse dient dazu, eine Info für das Nutzerprofil oder das Suchprofil zu
+ * erstellen.
+ */
 public class CreateInfo extends VerticalPanel {
 
-	Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	/**
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
+	 * erzeugen.
+	 */
+	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
+	/**
+	 * Vertikales Panel erzeugen.
+	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	private FlexTable showEigenschaftFlexTable = new FlexTable();
 
+	/**
+	 * Listen erzeugen.
+	 */
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
 
+	/**
+	 * Attribute erzeugen
+	 */
 	private String eigenschaftId = null;
-	private String beschreibungstext = null;
 	private int row;
 
-	Anchor signOut = new Anchor();
-	
+	/**
+	 * Widgets erzeugen.
+	 */
+	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
-	
 
+	/**
+	 * Konstruktor erstellen.
+	 *
+	 * @param profilId
+	 * @param profiltyp
+	 */
 	public CreateInfo(final int profilId, final String profiltyp) {
 		this.add(verPanel);
 
+		/**
+		 * CSS anwenden und Tabelle formatieren.
+		 */
+		showEigenschaftFlexTable.setCellPadding(6);
+		showEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		showEigenschaftFlexTable.addStyleName("FlexTable");
+		ueberschriftLabel.addStyleName("partnerboerse-label");
+
+		/**
+		 * Erste Spalte der Tabelle festlegen.
+		 */
 		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
 		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
 		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
 		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
-		showEigenschaftFlexTable.setCellPadding(6);
-		showEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		showEigenschaftFlexTable.addStyleName("FlexTable");
-
-		ueberschriftLabel.addStyleName("partnerboerse-label");
-
+		/**
+		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank
+		 * ausgelesen. Erst die Beschreibungsinfos, danach die Auswahlinfos.
+		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaften(
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
 
@@ -83,7 +113,6 @@ public class CreateInfo extends VerticalPanel {
 								row++;
 
 								eigenschaftId = null;
-								beschreibungstext = null;
 
 								showEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
 
@@ -132,6 +161,10 @@ public class CreateInfo extends VerticalPanel {
 						}
 					}
 				});
+
+		/**
+		 * ClickHandler fuer den Button zum Anlegen einer Info.
+		 */
 
 		createInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -187,8 +220,17 @@ public class CreateInfo extends VerticalPanel {
 					}
 				}
 
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId,
-						infos, new AsyncCallback<List<Info>>() {
+				/**
+				 * Die Infos werden in die Datenbank eingefügt.Danach wird
+				 * geprueft, ob es sich um Nutzerprofil oder ein Suchprofil
+				 * handelt. Handelt es sich um ein Nutzerprofil, dann wird man
+				 * nach dem Anlegen auf das erstelle Nutzerprofil
+				 * weitergeleitet. Es wird ebenfalls der logout hinzugefügt und
+				 * gesetzt. Handelt es sich um Suchprofil, dann wird man nach
+				 * dem Anlegen auf das entsprechende Suchprofil weitergeleitet.
+				 */
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
+						new AsyncCallback<List<Info>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -197,27 +239,26 @@ public class CreateInfo extends VerticalPanel {
 
 							@Override
 							public void onSuccess(List<Info> result) {
-								informationLabel.setText("Die Infos wurden "
-										+ "erfolgreich angelegt.");
-								
+								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
+
 								if (profiltyp.equals("Np")) {
-									
+
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Navigator").add(new Navigator());
-									
+
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
-									
+
 									Anchor signOut = new Anchor();
-									
+
 									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
-									signOut.setText("Als " + nutzerprofil.getVorname() + 
-											nutzerprofil.getProfilId() + " ausloggen");
-									
+									signOut.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId()
+											+ " ausloggen");
+
 									RootPanel.get("Navigator").add(signOut);
 								}
 
-								else if (profiltyp.equals("Sp")) {
+						else if (profiltyp.equals("Sp")) {
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
@@ -227,6 +268,9 @@ public class CreateInfo extends VerticalPanel {
 			}
 		});
 
+		/**
+		 * Widgets zum Panel hinzufuegen.
+		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showEigenschaftFlexTable);
 		verPanel.add(createInfosButton);

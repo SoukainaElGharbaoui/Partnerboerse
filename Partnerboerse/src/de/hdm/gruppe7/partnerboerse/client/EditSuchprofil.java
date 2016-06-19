@@ -52,7 +52,8 @@ public class EditSuchprofil extends VerticalPanel {
 	
 	/**
 	 * Konstruktor erstellen.
-	 * @param suchprofilName 
+	 * @param suchprofilName Der Name des Suchprofils, das editiert werden soll.
+	 * @param profiltyp Der Profiltyp (Suchprofil). 
 	 */
 	public EditSuchprofil(final String suchprofilName, final String profiltyp) {
 		this.add(verPanel);
@@ -290,7 +291,7 @@ public class EditSuchprofil extends VerticalPanel {
 	
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
-	 * @param name 
+	 * @param name Der String, der ueberprueft wird.  
 	 * @return Boolscher Wert, der angibt, ob es sich um eine Zahl handelt.  
 	 */
 	public boolean isZahl(String name) {
