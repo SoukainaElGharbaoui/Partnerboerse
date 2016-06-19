@@ -172,6 +172,8 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
+		
+		if (!profiltyp.equals("Fp")) {
 
 		verPanel.add(buttonPanel); 
 		buttonPanel.add(erstelleRestlicheInfosButton);
@@ -181,6 +183,8 @@ public class ShowInfo extends VerticalPanel {
 		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
+		
+		}
 
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
