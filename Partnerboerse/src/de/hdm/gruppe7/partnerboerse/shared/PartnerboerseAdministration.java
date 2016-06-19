@@ -18,7 +18,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 
 /**
- * Synchrone Schnittstelle für die Verwaltung der Partnerboerse.
+ * Synchrone Schnittstelle fï¿½r die Verwaltung der Partnerboerse.
  * @author dunja
  *
  */
@@ -517,7 +517,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @return Info-objekt, welches angelegt wird.
 	 * @throws IllegalArgumentException
 	 */
-	public int createInfo(int profilId, List<Info> infos)
+	public List<Info> createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException;
 
 	/**
@@ -546,7 +546,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
 
-	public int saveInfo(int profilId, List<Info> listI)
+	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException;
 
 	public Auswahleigenschaft getEigAById(int eigenschaftId)

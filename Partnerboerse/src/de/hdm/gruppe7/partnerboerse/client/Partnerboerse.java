@@ -97,7 +97,7 @@ public class Partnerboerse implements EntryPoint {
 							else if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
@@ -116,22 +116,13 @@ public class Partnerboerse implements EntryPoint {
 
 													if (result == true) {
 														RootPanel.get("Details").add(new CreateNutzerprofil());
-
 													}
 
 													else {
 
-														// signInLink.setHref(nutzerprofil.getLoginUrl());
-														// loginPanel.add(signInLink);
-
-//														signOutLink.setText("Bestätige das Löschen mit einem Klick.");
-														RootPanel.get("Details").add(loginPanel);
 														RootPanel.get("Navigator").add(new Navigator());
-														// RootPanel.get("Details").add(begrueßen);
-														// RootPanel.get("Details").add(begrueßen2);
-
+														RootPanel.get("Navigator").add(loginPanel);
 													}
-
 												}
 											});
 								}
