@@ -9,8 +9,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
@@ -68,7 +70,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 								    loginPanel.add(signOutLink);
 									RootPanel.get("Details").add(new PartnerboerseReport());
-									RootPanel.get("Header").add(loginPanel);
+									RootPanel.get("Navigator2").add(loginPanel);
 								}
 
 								if (result.getEmailAddress() == null) {
@@ -79,8 +81,10 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
 									loginPanel.add(signOutLink);
 									RootPanel.get("Details").add(new PartnerboerseReport());
-									RootPanel.get("Header").add(loginPanel);
+
+									RootPanel.get("Navigator2").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil(profiltyp));
+
 								}
 
 							}
@@ -89,7 +93,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
      						if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Header").add(loginPanel);
+								RootPanel.get("Navigator2").add(loginPanel);
 							}
 						}
 					});
@@ -99,9 +103,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("330px");
-		menu.setHeight("27px");
-		menu.setStyleName("menubar");
+		menu.setWidth("720px");
+		menu.setHeight("36px");
+		menu.setStyleName("MenuBarRep");
 		menu.setAnimationEnabled(true);
 
 		// Create the file menu
@@ -118,7 +122,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			}
 		});
 		
-		unangesehenePartnervorschlaege.setStyleName("menuItem");
+		unangesehenePartnervorschlaege.setStyleName("MenuItemRep");
 
 		MenuItem partnervorschlaegeSp = partnervorschlaegeMenu.addItem("Partnervorschlaege anhand von Suchprofilen", new Command() {
 
@@ -133,12 +137,14 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		});
 		
-		partnervorschlaegeSp.setStyleName("menuItem");
-
-
-		partnervorschlaegeMenu.addSeparator();
+		partnervorschlaegeSp.setStyleName("MenuItemRep");
+		
+		
+        partnervorschlaegeMenu.addSeparator();
+        
 
 		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		menu.addSeparator();
 
 		// add the menu to the root panel
 		RootPanel.get("Navigator").add(menu);

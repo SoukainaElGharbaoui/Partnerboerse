@@ -175,9 +175,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 
 	/**
-	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem
-	 * Speichern des neuen Nutzeprofils in der Datenbank.
-	 * 
+	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
 	 *      #createNutzerprofil(String, String, String, Date, int, String,
 	 *      String, String, String)
@@ -231,7 +229,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Ein Nutzerprofil-Objekt loeschen.
+=======
+	 * Nutzerprofil loeschen.
+>>>>>>> refs/heads/master
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteNutzerprofil(int)
 	 */
@@ -348,8 +350,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	/**
 	 * Suchprofil anhand der Nutzerprofil-ID und der Suchprofil-ID auslesen.
 	 * 
+<<<<<<< HEAD
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilById(int,
 	 *      int)
+=======
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilById(int, int)
+>>>>>>> refs/heads/master
 	 */
 
 	public Suchprofil getSuchprofilById(int suchprofilId) throws IllegalArgumentException {
@@ -766,11 +772,17 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
 
 		/**
+<<<<<<< HEAD
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines
 		 * Nutzerprofils. Es werden nur Nutzeprofile bedacht, die keine Sperrung
 		 * gegen den Nutzer gesetzt haben. Sind im Suchprofil Infos mit
 		 * "Keine Auswahl" gesetzt, hei�t dies dem Nutzer sind diese Angaben
 		 * egal.
+=======
+		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
+		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
+		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, hei�t dies dem Nutzer sind diese Angaben egal.
+>>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -897,11 +909,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				 * Geschlecht des Vergleichprofils mit dem Geschlecht des
 				 * Suchprofils uebereinstimmt.
 				 */
-
-				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-					// Aehnlichkeit in die Datenbank setzen
-					suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId, fremdprofilId, aehnlichkeitSp);
-
+				
+				if(sp.getGeschlecht().equals(np.getGeschlecht())){
+						suchprofilMapper.insertAehnlichkeit(profilId,
+						suchprofilId, fremdprofilId,
+						aehnlichkeitSp);
+									
 				} else {
 					/**
 					 * Ist im Suchprofil das Geschlecht mit "Keine Auswahl"

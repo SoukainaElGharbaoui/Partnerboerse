@@ -76,7 +76,9 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel3.setStyleName("red_label");
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
+
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
+
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 

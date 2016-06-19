@@ -71,14 +71,16 @@ public class Partnerboerse implements EntryPoint {
 							
 							ClientsideSettings.setAktuellerUser(result);
 
+
 							/**
 							 * Wenn der User nicht eingeloggt ist: Der User wird
 							 * begrue�t und der link zum login wird angezeigt
 							 */
 							if (!result.isLoggedIn()) {
+
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Navigator2").add(loginPanel);
 								RootPanel.get("Details").add(begrueßen);
 								RootPanel.get("Details").add(begrueßen2);
 							}
@@ -112,17 +114,16 @@ public class Partnerboerse implements EntryPoint {
 														String profiltyp = "Np";
 
 														RootPanel.get("Navigator").add(new Navigator());
-														RootPanel.get("Navigator").add(loginPanel);
+														RootPanel.get("Navigator2").add(loginPanel);
 														
 														RootPanel.get("Details")
 															.add(new CreateNutzerprofil(profiltyp));
-//														.add(new CreateNutzerprofil());
 													}
 
 													else {
 
 														RootPanel.get("Navigator").add(new Navigator());
-														RootPanel.get("Navigator").add(loginPanel);
+														RootPanel.get("Navigator2").add(loginPanel);
 													
 													}
 												}
@@ -135,11 +136,12 @@ public class Partnerboerse implements EntryPoint {
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator").add(loginPanel);
+									RootPanel.get("Navigator2").add(loginPanel);
 									RootPanel.get("Details").add(begrueßenN);
 									RootPanel.get("Details").add(begrueßenN2);
 
 								}
+
 							}
 						}
 					});

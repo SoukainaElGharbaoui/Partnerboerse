@@ -104,7 +104,9 @@ public class HTMLReportWriter extends ReportWriter {
 
 		StringBuffer result = new StringBuffer();
 
-		result.append("<H1>" + r.getTitle() + "</H1>");
+
+		result.append("<H3>" + r.getTitle() + "</H3>");
+
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table style=\"width:400px;margin-bottom: 30px\">");
@@ -147,7 +149,9 @@ public class HTMLReportWriter extends ReportWriter {
 
 		StringBuffer result = new StringBuffer();
 
-		result.append("<H1>" + r.getTitle() + "</H1>");
+
+		result.append("<H3>" + r.getTitle() + "</H3>");
+
 
 		Vector<Row> rows = r.getRows();
 		result.append("<table style=\"width:400px\">");
@@ -181,7 +185,7 @@ public class HTMLReportWriter extends ReportWriter {
  * AllPartnervorschlaegeNpReport handelt es sich um einen CompositeReport. Daher ist in r 
  * jeweils eine Telmenge der Subreports AllInfosOdNutzerReport und AllProfildatenOdNutzerReport
  * enthallten, fur die jeweils wieder die zugehoerige process-Methode aufgerufen wird. Dieses 
- * Ergebnis wird dann jeweils zum Buffer hinzugefügt. Nach jeder Uebersetzung und Auslesen
+ * Ergebnis wird dann jeweils zum Buffer hinzugefï¿½gt. Nach jeder Uebersetzung und Auslesen
  * eines Teilreports muss zunaechst noch einmal die Ergebnisvariable zurueckgestzt werden.Am 
  * Ende wird der Buffer in einen String umgewandelt und der reportText-Variable zugewiesen. 
  * Dies ermoeglich,das Ergebnis durch getReportText() auszulesen.
@@ -195,7 +199,8 @@ public class HTMLReportWriter extends ReportWriter {
 
 		StringBuffer result = new StringBuffer();
 
-		result.append("<H1>" + r.getTitle() + "</H1>");
+
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
 		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 		if (r.getHeaderData() != null) {
@@ -234,7 +239,7 @@ public class HTMLReportWriter extends ReportWriter {
 	 * AllPartnervorschlaegeNpReport handelt es sich um einen CompositeReport. Daher ist in r 
 	 * jeweils eine Telmenge der Subreports AllInfosOdNutzerReport und AllProfildatenOdNutzerReport
 	 * enthallten, fur die jeweils wieder die zugehoerige process-Methode aufgerufen wird. Dieses 
-	 * Ergebnis wird dann jeweils zum Buffer hinzugefügt. Nach jeder Uebersetzung und Auslesen
+	 * Ergebnis wird dann jeweils zum Buffer hinzugefï¿½gt. Nach jeder Uebersetzung und Auslesen
 	 * eines Teilreports muss zunaechst noch einmal die Ergebnisvariable zurueckgestzt werden.Am 
 	 * Ende wird der Buffer in einen String umgewandelt und der reportText-Variable zugewiesen. 
 	 * Dies ermoeglich,das Ergebnis durch getReportText() auszulesen.
@@ -246,8 +251,8 @@ public class HTMLReportWriter extends ReportWriter {
 		this.resetReportText();
 
 		StringBuffer result = new StringBuffer();
-		
-		result.append("<H1>" + r.getTitle() + "</H1>");
+
+		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
 		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 
