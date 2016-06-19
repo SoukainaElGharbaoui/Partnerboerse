@@ -22,7 +22,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class ShowSuchprofil extends VerticalPanel {
 	
 	/**
-	 * Neues Nutzerprofil-Objekt, das Login-Informationen enthaelt, erzeugen.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
@@ -49,7 +49,8 @@ public class ShowSuchprofil extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
-	 * @param suchprofilId 
+	 * @param suchprofilId Die Profil-ID des Suchprofils, das angezeigt werden soll. 
+	 * @param profiltyp Der Profiltyp (Suchprofil).
 	 */
 	public ShowSuchprofil(final int suchprofilId, final String profiltyp) {
 
@@ -88,8 +89,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 * den Suchprofildaten befuellen. 
 		 */
 			ClientsideSettings.getPartnerboerseAdministration()
-			.getSuchprofilById(nutzerprofil.getProfilId(), 
-					suchprofilId, new AsyncCallback<Suchprofil>() {
+			.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
 
 				public void onFailure(Throwable caught) {
 					infoLabel.setText("Es trat ein Fehler auf.");

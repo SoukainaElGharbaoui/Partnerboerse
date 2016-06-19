@@ -175,14 +175,10 @@ public class ShowInfo extends VerticalPanel {
 							loeschenButton.setVisible(false);
 							bearbeitenButton.setVisible(false);
 
-							informationLabel.setText("Sie haben bisher keine Infos angelegt.");
-
-							erstelleRestlicheInfosButton.setText("Infos anlegen");
-							erstelleRestlicheInfosButton.setVisible(true);
+							informationLabel.setText("Zu diesem Profil existieren zurzeit keine Infos.");
 						}
 					}
 				});
-
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
@@ -215,6 +211,7 @@ public class ShowInfo extends VerticalPanel {
 		 * eines Suchprofils handelt.
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 
 				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
@@ -261,6 +258,7 @@ public class ShowInfo extends VerticalPanel {
 		 * aufgerufen.
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 				EditInfo editInfo = new EditInfo(profilId, profiltyp);
 				RootPanel.get("Details").clear();

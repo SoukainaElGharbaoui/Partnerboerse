@@ -10,41 +10,36 @@ import java.util.List;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Mapper-Klasse, die <code>Sperrliste</code>-Objekte auf eine relationale
- * Datenbank abbildet. Das Mapping ist bidirektional, d.h. Objekte koennen in
- * DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die Sperrliste-Objekte auf eine relationale Datenbank abbildet. 
+ * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
+ * Objekte umgewandelt werden. 
  */
-
 public class SperrlisteMapper {
 
 	/**
-	 * Die Klasse SperrlisteMapper wird nur einmal instantiiert. Man spricht
-	 * hierbei von einem sogenannten <b>Singleton</b>. Diese Variable ist durch
-	 * den Bezeichner <code>static</code> nur einmal für sämtliche eventuellen
-	 * Instanzen dieser Klasse vorhanden. Sie speichert die einzige Instanz
-	 * dieser Klasse.
-	 * 
-	 * @see #sperrlisteMapper()
-	 */
+	   * Die Klasse SperrlisteMapper wird nur einmal instantiiert (Singelton). 
+	   * Diese Variable ist durch den Bezeichner static nur einmal fuer saemtliche 
+	   * eventuellen Instanzen dieser Klasse vorhanden, sie speichert die einzige
+	   * Instanz dieser Klasse.
+	   * 
+	   * @see #sperrlisteMapper()
+	   */
 	private static SperrlisteMapper sperrlisteMapper = null;
 
 	/**
-	 * Geschützter Konstruktor, der verhinder, mit <code>new</code> neue
-	 * Instanzen dieser Klasse zu erzeugen.
+	 * Geschuetzter Konstruktor, der verhinder, mit new neue Instanzen dieser Klasse zu erzeugen.
 	 */
 	protected SperrlisteMapper() {
 	}
 
-	/**
-	 * Diese statische Methode kann aufgrufen werden durch
-	 * <code>SperrlisteMapper.sperrlisteMapper()</code>. Sie stellt die
-	 * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine
-	 * einzige Instanz von <code>SperrlisteMapper</code> existiert.
-	 * <p>
-	 * 
-	 * @return <code>SperrlisteMapper</code>-Objekt
-	 * @see sperrlisteMapper
-	 */
+	 /**
+	   * Diese statische Methode kann aufgrufen werden durch SperrlisteMapper.sperrlisteMapper(). 
+	   * Sie stellt die Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von SperrlisteMapper existiert.
+
+	   * @return SperrlisteMapper-Objekt
+	   * @see sperrlisteMapper
+	   */
 	public static SperrlisteMapper sperrlisteMapper() {
 		if (sperrlisteMapper == null) {
 			sperrlisteMapper = new SperrlisteMapper();
@@ -98,7 +93,7 @@ public class SperrlisteMapper {
 	 * Pruefen, ob ein Fremdprofil vom eigenen Nutzerprofil gesperrt wurde. 
 	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
 	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das auf die Existenz einer Sperrung ueberprueft werden soll. 
-	 * @return Status, ob das Fremdprofil vom eigenen Nutzerprofil gesperrt wurde.
+	 * @return Status, der angibt, ob das Fremdprofil vom eigenen Nutzerprofil gesperrt wurde.
 	 */
 	public int pruefeSperrungFremdprofil(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();
@@ -128,7 +123,7 @@ public class SperrlisteMapper {
 	 * Pruefen, ob das eigene Nutzerprofil vom Fremdprofil gesperrt wurde. 
 	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
 	 * @param fremdprofilId Die Profil-ID des Fremdprofils.
-	 * @return Status, ob das eigene Nutzerprofil vom Fremdprofil gesperrt wurde.
+	 * @return Status, der angibt, ob das eigene Nutzerprofil vom Fremdprofil gesperrt wurde.
 	 */
 	public int pruefeSperrungEigenesProfil(int profilId, int fremdprofilId) {
 		Connection con = DBConnection.connection();

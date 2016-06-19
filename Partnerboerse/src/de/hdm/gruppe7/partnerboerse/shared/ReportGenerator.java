@@ -58,25 +58,48 @@ public interface ReportGenerator extends RemoteService {
 	 */
 	public void init() throws IllegalArgumentException;
 
-	/**
-	 * Einen <code>AllAccountsOfCustomerReport</code>-Reports erstellen. Dieser
-	 * Report-Typ stellt sÃ¤mtliche Suchprofile eines Nutzers dar.
-	 * 
-	 * @param c
-	 *            eine Referenz auf das Nutzerprofil-Objekt bzgl. dessen der
-	 *            Report erstellt werden soll.
-	 * @return das fertige Reportobjekt
-	 * @throws IllegalArgumentException
-	 * @see AllSuchprofileOfNutzerReport
-	 */
 
+	/**
+	 * Methode, die einen fertigen Report vom Typ AllInfosOfNutzerReport zurueckliefert. 
+	 * Der Report stellt alle Infos eines Nutzerprofils dar.
+	 * 
+	 * @param np Nutzerprofil-Objekt
+	 * @return AllInfosOfNutzerReport Fertiges Report-Objekt vom Typ AllInfosOfNutzerReport
+	 * @throws IllegalArgumentException
+	 */
 	AllInfosOfNutzerReport createAllInfosOfNutzerReport(Nutzerprofil np) throws IllegalArgumentException;
 
+	/**
+	 * Methode, die einen fertigen Report vom Typ AllProfildatenOfNutzerReport zurueckliefert.
+	 * Der Report stellt alle Profildaten eines Nutzerprofils dar.
+	 * 
+	 * @param np Nutzerorifil-Objekt
+	 * @return AllProfildatenOfNutzerReport Fertiges Report-Objekt vom Typ AllProfildatenOfNutzerReport
+	 * @throws IllegalArgumentException
+	 */
 	AllProfildatenOfNutzerReport createAllProfildatenOfNutzerReport(Nutzerprofil np) throws IllegalArgumentException;
 
+	/**
+	 * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeNpReport zurueckliefert.
+	 * Der Report stellt alle unangesehenen Partnervorschlaege eines Nutzerprofils dar.
+	 * 
+	 * @param nutzerprofil Nutzerprofil-Objekt
+	 * @return AllPartnervorschlaegeNpReport Fertiges Report-Objekt vom Typ AllPartnervorschlaegeNpReport
+	 * @throws IllegalArgumentException
+	 */
 	AllPartnervorschlaegeNpReport createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil)
 			throws IllegalArgumentException;
 
+	/**
+	 * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeSpReport zurueckliefert.
+	 * Der Report stellt alle Partnervorschlaege, die anhand eines Suchprofils ermittelt wurden, 
+	 * für ein Nutzerprofil dar.
+	 * 
+	 * @param nutzerprofil Nutzerprofil-Objekt
+	 * @param suchprofilname Name des Suchprofil-Objektes
+	 * @return AllPartnervorschlaegeSpReport Fertiges Report-Objekt vom Typ AllPartnervorschlaegeSpReport
+	 * @throws IllegalArgumentException
+	 */
 	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname)
 			throws IllegalArgumentException;
 

@@ -24,6 +24,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 /**
  * Diese Klasse dient dazu, eine Info zu bearbeiten.
+ *
  */
 public class EditInfo extends VerticalPanel {
 
