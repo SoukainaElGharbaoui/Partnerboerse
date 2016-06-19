@@ -36,7 +36,6 @@ public class CreateInfo extends VerticalPanel {
 	private List<Auswahleigenschaft> listA;
 
 	private String eigenschaftId = null;
-	private String beschreibungstext = null;
 	private int row;
 
 	Anchor signOut = new Anchor();
@@ -83,7 +82,6 @@ public class CreateInfo extends VerticalPanel {
 								row++;
 
 								eigenschaftId = null;
-								beschreibungstext = null;
 
 								showEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
 
