@@ -60,15 +60,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
-	
+
 	private String profiltyp;
 
 	/**
 	 * Konstruktor erstellen.
 	 */
-//	public CreateNutzerprofil() {
 
-	
 	public CreateNutzerprofil(final String profiltyp) {
 		this.add(verPanel);
 
@@ -116,7 +114,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
 		geburtsdatumDateBox.getDatePicker().setYearAndMonthDropdownVisible(true);
 		geburtsdatumDateBox.getDatePicker().setVisibleYearCount(20);
-		
+
 		geburtsdatumDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date geburtsdatum = event.getValue();
@@ -161,16 +159,16 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 2, nutzerprofil.getEmailAddress());
 
 		/**
-		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils
-		 * erzeugen. Sobald dieser Button betaetigt wird, werden die Eingaben
-		 * sowohl auf Vollstaendigkeit als auch auf Korrektheit ueberprueft.
-		 * Sind Eingaben unvollstaendig oder inkorrekt, wird eine entsprechende
-		 * Information ueber diesen Zustand ausgegeben.
+		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils. Sobald
+		 * dieser Button betaetigt wird, werden die Eingaben sowohl auf
+		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
+		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information
+		 * ueber diesen Zustand ausgegeben.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				
+
 				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
 				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
 				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
@@ -218,17 +216,14 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 								public void onSuccess(Nutzerprofil result) {
 									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-									
+
 									ClientsideSettings.setAktuellerUser(result);
-//									
-//									infoLabel.setText("" + ClientsideSettings.getAktuellerUser().getProfilId());
-								
-									CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
-										profiltyp);
+
+									CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(createInfo);
-									}
-					});
+								}
+							});
 				}
 			}
 		});
