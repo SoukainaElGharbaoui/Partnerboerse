@@ -18,7 +18,6 @@ public class InfoMapper {
 	private static InfoMapper infoMapper = null;
 
 	protected InfoMapper() {
-
 	}
 
 	

@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
@@ -36,8 +35,7 @@ public class Partnerboerse implements EntryPoint {
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
-	private PartnerboerseAdministrationAsync partnerboerseAdministration;
-
+	
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface
 	 * EntryPoint. Daher benoetigen wir die Methode
@@ -54,10 +52,7 @@ public class Partnerboerse implements EntryPoint {
 		begrueßenN.setStyleName("welcome-label");
 		begrueßenN2.setStyleName("welcome-label2");
 
-		/**
-		 * Instantiierung von PartnerboerseAdministration
-		 */
-		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
+		GWT.create(PartnerboerseAdministration.class);
 
 		/**
 		 * Zuerst wird die Domaene fuer die Partnerboerse definiert. Danach wird

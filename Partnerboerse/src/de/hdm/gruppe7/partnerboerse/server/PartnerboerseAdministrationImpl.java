@@ -173,13 +173,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
-<<<<<<< HEAD
-	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des
-=======
-	 * Anlegen eines neuen Nutzerprofils. Dies f�hrt implizit zu einem Speichern des
->>>>>>> refs/heads/master
-	 * neuen Nutzeprofils in der Datenbank.
-	 * 
+
+	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
 	 * #createNutzerprofil(String, String, String, Date, int, String, String, String, String)
 	 */
