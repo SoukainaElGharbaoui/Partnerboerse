@@ -109,28 +109,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		result.setTitle(" ");
 
-		this.addImprint(result);
-
-		result.setCreated(new Date());
-
-		/*
-		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
-		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-		 * mehrzeilig, daher die Verwendung von CompositeParagraph.
-		 */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Nutzeprofils aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Infos von: \n"
-				+ np.getNachname() + ", " + np.getVorname()));
-
-
-		// Hinzufuegen der zusammengestellten Kopfdaten zu dem Report
-		result.setHeaderData(header);
-
+	
 		/*
 		 * Ab hier erfolgt ein zeilenweises Hinzufuegen von
-		 * Konto-Informationen.
+		 * Nutzerprofil-Informationen.
 		 */
 
 		/*
@@ -192,29 +174,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
 		result.setTitle(np.getVorname() + " " + np.getNachname());
-
-		// Imressum hinzufuegen
-		this.addImprint(result);
-
-		/*
-		 * Datum der Erstellung hinzufuegen. new Date() erzeugt autom. einen
-		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-		 */
-		result.setCreated(new Date());
-
-		/*
-		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
-		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-		 * mehrzeilig, daher die Verwendung von CompositeParagraph.
-		 */
-		CompositeParagraph header = new CompositeParagraph();
-
-		// Name und Vorname des Kunden aufnehmen
-		header.addSubParagraph(new SimpleParagraph("Profildaten von: "
-				+ np.getNachname() + ", " + np.getVorname()));
-
-		// Hinzufuegen der zusammengestellten Kopfdaten zu dem Report
-		result.setHeaderData(header);
 
 		/*
 		 * Ab hier erfolgt ein zeilenweises Hinzufuegen von Profildaten.
