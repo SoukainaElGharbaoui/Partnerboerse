@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Mapper-Klasse, die Merkliste-Objekte auf eine relationale Datenbank abbildet. 
+ * Mapper-Klasse, die Info-Objekte auf eine relationale Datenbank abbildet. 
  * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
  * Objekte umgewandelt werden. 
  */

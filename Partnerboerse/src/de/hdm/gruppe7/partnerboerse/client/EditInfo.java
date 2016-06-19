@@ -23,6 +23,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+/**
+ * @author annina
+ *
+ */
 public class EditInfo extends VerticalPanel {
 
 	/**

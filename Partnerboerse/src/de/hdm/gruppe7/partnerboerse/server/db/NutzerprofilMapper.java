@@ -283,14 +283,13 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, "
-							+ "t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion "
-							+ "FROM t_nutzerprofil1 LEFT JOIN t_besuch1 ON t_nutzerprofil1.nutzerprofil_id = t_besuch1.fremdprofil_id "
-							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
-							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
-							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND (t_besuch1.nutzerprofil_id !=" + profilId
-							+ " OR t_besuch1.fremdprofil_id IS NULL) AND (t_sperrung1.fremdprofil_id !=" + profilId
-							+ " OR t_sperrung1.nutzerprofil_id IS NULL) ORDER BY t_nutzerprofil1.nutzerprofil_id");
+					.executeQuery("SELECT * FROM t_profil1 "
+							+ "INNER JOIN t_nutzerprofil1 "
+							+ "ON t_profil1.profil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_nutzerprofil1.nutzerprofil_id "
+							+ "NOT IN (SELECT t_besuch1.fremdprofil_id "
+							+ "FROM t_besuch1 WHERE t_besuch1.nutzerprofil_id=" + profilId + ")");
+
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -392,13 +391,18 @@ public class NutzerprofilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, t_nutzerprofil1.geburtsdatum, "
-							+ "t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, t_profil1.raucher, t_profil1.religion, "
-							+ "t_aehnlichkeitnp1.aehnlichkeit FROM t_nutzerprofil1 LEFT JOIN t_profil1 "
-							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id LEFT JOIN t_aehnlichkeitnp1 "
-							+ "ON t_nutzerprofil1.nutzerprofil_id = t_aehnlichkeitnp1.fremdprofil_id WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId 
-							+ " AND t_aehnlichkeitnp1.nutzerprofil_id =" + profilId 
-							+ " ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC ");
+					.executeQuery("SELECT t_nutzerprofil1.nutzerprofil_id, t_nutzerprofil1.vorname, t_nutzerprofil1.nachname, "
+							+ "t_nutzerprofil1.geburtsdatum, t_profil1.geschlecht, t_profil1.koerpergroesse, t_profil1.haarfarbe, "
+							+ "t_profil1.raucher, t_profil1.religion, t_aehnlichkeitnp1.aehnlichkeit FROM t_nutzerprofil1 "
+							+ "LEFT JOIN t_profil1 ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
+							+ "LEFT JOIN t_sperrung1 ON t_nutzerprofil1.nutzerprofil_id = t_sperrung1.nutzerprofil_id "
+							+ "LEFT JOIN t_aehnlichkeitnp1 ON t_aehnlichkeitnp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
+							+ "WHERE t_aehnlichkeitnp1.nutzerprofil_id =" + profilId
+							+ " AND t_nutzerprofil1.nutzerprofil_id !=" + profilId
+							+ " AND (t_sperrung1.fremdprofil_id !=" + profilId
+							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
+							+ "ORDER BY t_nutzerprofil1.nutzerprofil_id");
+
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();
@@ -495,7 +499,7 @@ public class NutzerprofilMapper {
 							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id , t_aehnlichkeitsp1 "
 							+ "WHERE t_nutzerprofil1.nutzerprofil_id !=" + profilId + " AND t_aehnlichkeitsp1.suchprofil_id = " + suchprofilId 
 							+ " AND t_aehnlichkeitsp1.fremdprofil_id = t_nutzerprofil1.nutzerprofil_id "
-							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC  ");
+							+ "ORDER BY t_aehnlichkeitsp1.aehnlichkeit DESC");
 
 			while (rs.next()) {
 				Nutzerprofil nutzerprofil = new Nutzerprofil();

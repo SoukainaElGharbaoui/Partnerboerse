@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 
@@ -160,7 +159,7 @@ public class ShowInfo extends VerticalPanel {
 				loeschenButton.setVisible(false);
 				bearbeitenButton.setVisible(false);
 				
-				informationLabel.setText("Sie haben bisher keine Infos angelegt.");
+				informationLabel.setText("Zu diesem Profil existieren zurzeit keine Infos.");
 
 				erstelleRestlicheInfosButton.setText("Infos anlegen");
 				erstelleRestlicheInfosButton.setVisible(true);

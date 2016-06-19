@@ -520,17 +520,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
 			throws IllegalArgumentException;
 
-	/**
-	 * Auslesen aller Info-Objekte eines Nutzer, fuer den Report.
-	 * 
-	 * @param profilId
-	 * @return Liste von Info-Objekten, die ausgelesen werden
-	 * @throws IllegalArgumentException
-	 */
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException;
-
-	
 	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
@@ -545,8 +534,6 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
-	public String getEigenschaftstextById(int eigenschaftId)
-			throws IllegalArgumentException;
 
 	/*
 	 * *************************************************************************

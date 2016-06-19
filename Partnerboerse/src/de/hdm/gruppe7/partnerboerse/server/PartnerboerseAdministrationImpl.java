@@ -34,10 +34,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  * @see PartnerboerseAdministration
  * @see PartnerboerseAdministrationAsync
  * @see RemoteServiceServlet
-<<<<<<< HEAD
-=======
- *
->>>>>>> refs/heads/master
  */
 @SuppressWarnings("serial")
 public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
@@ -176,10 +172,16 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 	/**
 <<<<<<< HEAD
+	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des
+	 * neuen Nutzeprofils in der Datenbank.
+	 * 
+=======
+<<<<<<< HEAD
 	 * Ein Nutzerprofil-Objekt anlegen.
 =======
 
 	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des 
+>>>>>>> refs/heads/master
 >>>>>>> refs/heads/master
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
 	 * #createNutzerprofil(String, String, String, Date, int, String, String, String, String)
@@ -797,13 +799,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
-<<<<<<< HEAD
 		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, hei�t dies dem Nutzer sind diese Angaben egal.
-=======
-		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
-		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, hei�t das dem Nutzer sind diese Angaben egal.
->>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -1209,29 +1206,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		this.infoMapper.updateInfos(profilId, listI);
 	}
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
-	 */
-	@Override
-	public List<Info> getAllInfosNeuReport(int profilId)
-			throws IllegalArgumentException {
-		return this.infoMapper.findAllInfosNeu(profilId);
-	}
-
-	/**
-	 * Auslesen des Beschreibungstextes einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
-	 * 
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
-	 */
-	@Override
-	public String getEigenschaftstextById(int eigenschaftId)
-			throws IllegalArgumentException {
-
-		String erlaeuterung;
-		erlaeuterung = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId).getErlaeuterung();
-		return erlaeuterung;
-	}
-
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Info

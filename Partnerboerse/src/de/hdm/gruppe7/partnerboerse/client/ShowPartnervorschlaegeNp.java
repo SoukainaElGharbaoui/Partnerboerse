@@ -57,7 +57,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 */
 	public boolean pruefeLeereTable() {
 		
-		for (int k = 2; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
+		for (int k = 1; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
 			
 			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
 			}
@@ -156,6 +156,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							 */
 							anzeigenButton = new Button("Anzeigen");
 							partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
+							
+							partnervorschlaegeNpFlexTable.setText(row, 7, String.valueOf(row));
 							
 							/**
 							 * Der Clickhandler fuer den Azeigen-Button des Fremdprofils wird hinzufuegen.
