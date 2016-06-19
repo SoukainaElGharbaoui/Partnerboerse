@@ -58,6 +58,35 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
 	private Button anzeigenButton;
 	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
+	
+	/**
+	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
+	 */
+	private int zaehler;
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < partnervorschlaegeSpFlexTable.getRowCount(); k++) {
+			
+			if (partnervorschlaegeSpFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
 	 
 
 	/**
@@ -259,13 +288,27 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				horPanelTabelle.add(partnervorschlaegeSpFlexTable);
 				verPanel.add(horPanelTabelle);
 
+				
+				boolean befuellt = pruefeLeereTable();
+				
+				if (befuellt == true) {
+					
+					ueberschriftLabel.setText("Sie haben zurzeit keine unangesehenen Partnervorschläge.");
+					ueberschriftLabel.setVisible(true);
+					
+					partnervorschlaegeSpFlexTable.setVisible(false);
+					ueberschriftLabel2.setVisible(false);
+					infoLabel.setVisible(false);
+					ergebnisLabel.setVisible(false);
+					auswahlListBox.setVisible(false);
+					anzeigenSpButton.setVisible(false);
+					anzeigenButton.setVisible(false);
+					createSuchprofilButton.setVisible(false);
+				}
 			}
-
 		});
-		
-		
-	
 
+		
 		/**
 		 * Alle Widgets dem VerticalPanel und HorizontalPanel hinzufuegen.
 		 * 
