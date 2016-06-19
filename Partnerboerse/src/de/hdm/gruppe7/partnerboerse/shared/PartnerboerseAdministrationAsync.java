@@ -18,8 +18,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Das asynchrone Gegenst�ck des Interface {@link PartnerboerseAdministration}
- * 
- * @author dunja
  *
  */
 public interface PartnerboerseAdministrationAsync {

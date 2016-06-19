@@ -19,8 +19,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
  * Synchrone Schnittstelle f�r die Verwaltung der Partnerboerse.
- * @author dunja
- *
+ * 
  */
 @RemoteServiceRelativePath("partnerboerseadministration")
 public interface PartnerboerseAdministration extends RemoteService {

@@ -38,7 +38,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  * @see PartnerboerseAdministration
  * @see PartnerboerseAdministrationAsync
  * @see RemoteServiceServlet
- * @author dunja
  *
  */
 @SuppressWarnings("serial")
@@ -418,7 +417,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			ergebnis = 1;
 		}
 		/**
-		 * Diese If-Anweisung prueft ob die TextBox leer ist, das heißt der Nutzer 
+		 * Diese If-Anweisung prueft ob die TextBox leer ist, das heiï¿½t der Nutzer 
 		 * hat keinen Suchproiflnamen eingetragen.
 		 * Trifft das zu, wird die Anweisung ausgefuehrt.
 		 */
@@ -629,8 +628,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			throws IllegalArgumentException {
 		
 		/**
-		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden können.
-		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Nutzerprofil in der Berechnung berücksichtig werden. 
+		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden kï¿½nnen.
+		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Nutzerprofil in der Berechnung berï¿½cksichtig werden. 
 		 */
 		this.nutzerprofilMapper.deleteAehnlichkeit(profilId);
 		/**
@@ -799,7 +798,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
 <<<<<<< HEAD
 		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
-		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heißt dies dem Nutzer sind diese Angaben egal.
+		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heiï¿½t dies dem Nutzer sind diese Angaben egal.
 =======
 		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heiï¿½t das dem Nutzer sind diese Angaben egal.
