@@ -202,7 +202,7 @@ public class CreateInfo extends VerticalPanel {
 								
 								if (profiltyp.equals("Np")) {
 									
-									ShowNutzerprofil showNp = new ShowNutzerprofil();
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Navigator").add(new Navigator());
 									
 									RootPanel.get("Details").clear();
@@ -218,7 +218,7 @@ public class CreateInfo extends VerticalPanel {
 								}
 
 								else if (profiltyp.equals("Sp")) {
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

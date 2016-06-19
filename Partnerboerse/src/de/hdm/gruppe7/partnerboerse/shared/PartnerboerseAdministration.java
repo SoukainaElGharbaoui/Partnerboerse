@@ -541,7 +541,7 @@ public interface PartnerboerseAdministration extends RemoteService {
 			throws IllegalArgumentException;
 
 	
-	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
+	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
 
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;

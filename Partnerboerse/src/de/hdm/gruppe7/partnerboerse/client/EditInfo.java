@@ -297,7 +297,8 @@ public class EditInfo extends VerticalPanel {
 							informationLabel.setText("Das Eingabefeld ist leer.");
 							
 							
-							ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(profilId, Integer.valueOf(eigenschaftIdTable),
+							ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(profilId, 
+									Integer.valueOf(eigenschaftIdTable),
 									new AsyncCallback<Void>() {
 
 										@Override
@@ -358,13 +359,13 @@ public class EditInfo extends VerticalPanel {
 								
 								if(profiltyp.equals("Np")) {
 									
-									ShowNutzerprofil showNp = new ShowNutzerprofil();
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
 								
 								else if(profiltyp.equals("Sp")) {
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}

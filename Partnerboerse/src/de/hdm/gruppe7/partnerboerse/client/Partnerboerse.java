@@ -22,7 +22,7 @@ public class Partnerboerse implements EntryPoint {
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	/**
-	 * Deklaraion der Labels für die Startseite(n)
+	 * Deklaraion der Labels fuer die Startseite(n)
 	 */
 	private Label begrueßen = new Label("Herzlich Willkommen bei Lonely Hearts. ");
 	private Label begrueßen2 = new Label("Bitte melde dich an, um die Seite nutzen zu können.");
@@ -31,7 +31,7 @@ public class Partnerboerse implements EntryPoint {
 	private Label begrueßenN2 = new Label("Klicke dich nun durch die Webseite und finde andere Lonely Hearts");
 
 	/**
-	 * Deklaration für den Login und den Logout
+	 * Deklaration fuer den Login und den Logout
 	 */
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
@@ -40,9 +40,9 @@ public class Partnerboerse implements EntryPoint {
 
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface
-	 * <code>EntryPoint</code>. Daher benötigen wir die Methode
-	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
-	 * <code>main()</code>-Methode normaler Java-Applikationen.
+	 * EntryPoint. Daher benoetigen wir die Methode
+	 * public void onModuleLoad(). Diese ist das GWT-Pendant der
+	 * main()-Methode normaler Java-Applikationen.
 	 */
 	public void onModuleLoad() {
 
@@ -60,7 +60,7 @@ public class Partnerboerse implements EntryPoint {
 		partnerboerseAdministration = GWT.create(PartnerboerseAdministration.class);
 
 		/**
-		 * Zuerst wird die Domaene für die Partnerboerse definiert. Danach wird
+		 * Zuerst wird die Domaene fuer die Partnerboerse definiert. Danach wird
 		 * der aktuell angemeldete User gesetzt. Je nachdem ob der User aktuell
 		 * eingeloggt ist oder nicht, erfolgen unterschiedliche Aktionen.
 		 */
@@ -73,14 +73,12 @@ public class Partnerboerse implements EntryPoint {
 						}
 
 						public void onSuccess(Nutzerprofil result) {
-
-							nutzerprofil = result;
-
+							
 							ClientsideSettings.setAktuellerUser(result);
 
 							/**
-							 * Wenn der user nicht eingeloggt ist: Der User wird
-							 * begrüßt und der link zum login wird angezeigt
+							 * Wenn der User nicht eingeloggt ist: Der User wird
+							 * begrue�t und der link zum login wird angezeigt
 							 */
 							if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
@@ -112,10 +110,18 @@ public class Partnerboerse implements EntryPoint {
 												}
 
 												@Override
-												public void onSuccess(Boolean result) {
+												public void onSuccess(Boolean pruefung) {
 
-													if (result == true) {
-														RootPanel.get("Details").add(new CreateNutzerprofil());
+													if (pruefung == true) {
+														
+														String profiltyp = "Np";
+
+														RootPanel.get("Navigator").add(new Navigator());
+														RootPanel.get("Navigator").add(loginPanel);
+														
+														RootPanel.get("Details")
+															.add(new CreateNutzerprofil(profiltyp));
+//														.add(new CreateNutzerprofil());
 													}
 
 													else {

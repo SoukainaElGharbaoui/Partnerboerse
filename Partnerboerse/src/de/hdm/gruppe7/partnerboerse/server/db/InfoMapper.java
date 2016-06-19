@@ -36,7 +36,7 @@ public class InfoMapper {
 	/**
 	 * Auslesen aller Eigenschaften.
 	 * 
-	 * @return Eine Liste mit Eigenschafts-Objekten, die saemtliche Eigenschaften repraesentieren.
+	 * @return Eine Liste mit Eigenschaft-Objekten, die saemtliche Eigenschaften repraesentieren.
 	 */
 	public List<Eigenschaft> findAllEigenschaftenNeu() {
 		Connection con = DBConnection.connection();
