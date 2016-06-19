@@ -50,12 +50,10 @@ public class CreateSuchprofil extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
 	
-	private String profiltyp;
-	 
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public CreateSuchprofil() {
+	public CreateSuchprofil(final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -128,8 +126,6 @@ public class CreateSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
 		
-		profiltyp = "Sp";
-
 		/**
 		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
 		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 

@@ -41,12 +41,15 @@ public class Navigator extends HorizontalPanel {
 		nutzerprofilMenu.addItem("Profil anzeigen", new Command() {
 			@Override
 			public void execute() {
-				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil();
+				
+				int profilId = nutzerprofil.getProfilId();
+				String profiltyp = "Np";
+				
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showNutzerprofil);
 			}
 		});
-
 
 		nutzerprofilMenu.addItem("Merklise anzeigen", new Command() {
 			@Override
@@ -84,7 +87,9 @@ public class Navigator extends HorizontalPanel {
 				 * Suchprofilen enthaelt, geleert.
 				 */
 
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				String profiltyp = "Sp";
+				
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 
@@ -95,8 +100,9 @@ public class Navigator extends HorizontalPanel {
 		suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
+				String profiltyp = "Sp";
 				int suchprofilId = 0;
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId);
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
 			}
@@ -127,10 +133,7 @@ public class Navigator extends HorizontalPanel {
 								RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 							}
-
 						});
-
-
 			}
 
 		});

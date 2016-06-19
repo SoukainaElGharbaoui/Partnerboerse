@@ -172,6 +172,8 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
+		
+		if (!profiltyp.equals("Fp")) {
 
 		verPanel.add(buttonPanel); 
 		buttonPanel.add(erstelleRestlicheInfosButton);
@@ -181,41 +183,41 @@ public class ShowInfo extends VerticalPanel {
 		
 		verPanel.add(buttonPanel);
 		buttonPanel.add(loeschenButton);
+		
+		}
 
 		
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
 				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
-						new AsyncCallback<Integer>() {
+						new AsyncCallback<Void>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
 					}
 
 					@Override
-					public void onSuccess(Integer result) {
+					public void onSuccess(Void result) {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 						
 						// Fall, profilId gehört zu Nutzerprofil
-						if (result == 0) {
+						if (profiltyp == "Np") {
 							
-							ShowNutzerprofil showNp = new ShowNutzerprofil();
+							ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showNp);
 						}
 						
 						// Fall, profilId gehört zu Suchprofil
-						else if (result == 1) {
+						else if (profiltyp == "Sp") {
 							
 							int suchprofilId = profilId;
-							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId);
+							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId, profiltyp);
 							
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showSp);
-											
-							
 						}
 					}
 				});
