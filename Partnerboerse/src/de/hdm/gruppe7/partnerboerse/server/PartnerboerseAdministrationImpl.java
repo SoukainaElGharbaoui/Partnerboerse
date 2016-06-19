@@ -797,13 +797,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
-<<<<<<< HEAD
+		 * 
 		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heißt dies dem Nutzer sind diese Angaben egal.
-=======
-		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
-		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heiï¿½t das dem Nutzer sind diese Angaben egal.
->>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -939,7 +935,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				 */
 				
 				if(sp.getGeschlecht().equals(np.getGeschlecht())){
-					// Aehnlichkeit in die Datenbank setzen
 						suchprofilMapper.insertAehnlichkeit(profilId,
 						suchprofilId, fremdprofilId,
 						aehnlichkeitSp);
@@ -950,7 +945,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 					 *wird die Aehnlichkeit unabhaengig vom Geschlecht des Vergelichsprofil in der Datenbank gespeichert.
 					 */
 					if (sp.getGeschlecht().equals("Keine Auswahl")){
-						// Aehnlichkeit in die Datenbank setzen
 						suchprofilMapper.insertAehnlichkeit(profilId,
 						suchprofilId, fremdprofilId,
 						aehnlichkeitSp);
