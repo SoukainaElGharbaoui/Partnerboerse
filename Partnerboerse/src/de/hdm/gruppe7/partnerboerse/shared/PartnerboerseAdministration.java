@@ -520,17 +520,51 @@ public interface PartnerboerseAdministration extends RemoteService {
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
 			throws IllegalArgumentException;
 
+	/**
+	 * Alle Infos loeschen.
+	 * 
+	 * @param profilId
+	 * @throws IllegalArgumentException
+	 */
 	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException;
-
+	
+	/**
+	 * Eine einzelne Info loeschen.
+	 * 
+	 * @param profilId
+	 * @param eigenschaftId
+	 * @throws IllegalArgumentException
+	 */
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException;
 
+	/**
+	 * Speichert alle angegeben Infos.
+	 * 
+	 * @param profilId
+	 * @param listI
+	 * @throws IllegalArgumentException
+	 */
 	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException;
 
+	/**
+	 * Liefert alle Eigenschaften, die als Auswahleigenschaft gekennzeichnet sind. 
+	 * 
+	 * @param eigenschaftId
+	 * @return eigA, Auswahleigenschaft
+	 * @throws IllegalArgumentException
+	 */
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException;
 
+	/**
+	 * Liefert alle Eigenschaften, die als Beschreibungseigenschaft gekennzeichnet sind. 
+	 * 
+	 * @param eigenschaftId
+	 * @return eigB, Beschreibungseigenschaft
+	 * @throws IllegalArgumentException
+	 */
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException;
 
