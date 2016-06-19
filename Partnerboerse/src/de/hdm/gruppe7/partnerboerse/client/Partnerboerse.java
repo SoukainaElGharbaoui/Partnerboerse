@@ -24,7 +24,7 @@ public class Partnerboerse implements EntryPoint {
 	 * Deklaraion der Labels fuer die Startseite(n)
 	 */
 	private Label begrueßen = new Label("Herzlich Willkommen bei Lonely Hearts. ");
-	private Label begrueßen2 = new Label("Bitte melde dich an, um die Seite nutzen zu können.");
+	private Label begrueßen2 = new Label("Bitte melde dich an, um die Webseite nutzen zu können.");
 
 	private Label begrueßenN = new Label("Herzlich Willkommen bei LonelyHearts. ");
 	private Label begrueßenN2 = new Label("Klicke dich nun durch die Webseite und finde andere Lonely Hearts");
