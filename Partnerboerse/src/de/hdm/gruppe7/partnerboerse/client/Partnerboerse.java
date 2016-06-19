@@ -24,11 +24,11 @@ public class Partnerboerse implements EntryPoint {
 	/**
 	 * Deklaraion der Labels für die Startseite(n)
 	 */
-	private Label begrueßen = new Label("Herzlich Willkommen bei LonelyHearts. ");
+	private Label begrueßen = new Label("Herzlich Willkommen bei Lonely Hearts. ");
 	private Label begrueßen2 = new Label("Bitte melde dich an, um die Seite nutzen zu können.");
 
 	private Label begrueßenN = new Label("Herzlich Willkommen bei LonelyHearts. ");
-	private Label begrueßenN2 = new Label("Klicke dich nun durch die Webseite und finde andere LonelyHearts");
+	private Label begrueßenN2 = new Label("Klicke dich nun durch die Webseite und finde andere Lonely Hearts");
 
 	/**
 	 * Deklaration für den Login und den Logout
@@ -122,6 +122,7 @@ public class Partnerboerse implements EntryPoint {
 
 														RootPanel.get("Navigator").add(new Navigator());
 														RootPanel.get("Navigator").add(loginPanel);
+													
 													}
 												}
 											});
