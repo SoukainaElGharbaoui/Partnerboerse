@@ -173,7 +173,6 @@ public class ShowSperrliste extends VerticalPanel {
 														}
 
 														public void onSuccess(Integer result) {
-															infoLabel.setText("Das Profil wurde erfolgreich von Ihrer Sperrliste entfernt.");
 														}
 
 													});

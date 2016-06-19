@@ -73,7 +73,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Fremdprofil anhand der Profil-ID aus der Datenbank auslesen und die Profildaten in die Tabelle einfuegen. 
 		 */
-		ClientsideSettings.getPartnerboerseAdministration().getFremdprofilById(fremdprofilId,
+		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
 					@Override

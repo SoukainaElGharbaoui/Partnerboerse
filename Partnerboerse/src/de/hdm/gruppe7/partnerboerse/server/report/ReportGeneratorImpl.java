@@ -289,7 +289,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		 * Nun werden s�mtliche Infos des Kunden ausgelesen
 		 */
 
-		Nutzerprofil n = this.partnerboerseAdministration.getFremdprofilById(np
+		Nutzerprofil n = this.partnerboerseAdministration.getNutzerprofilById(np
 				.getProfilId());
 
 		System.out.println("Profil geholt:" + n.getVorname() + n.getNachname()

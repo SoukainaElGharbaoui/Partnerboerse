@@ -321,7 +321,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
 	}
 
 	/**

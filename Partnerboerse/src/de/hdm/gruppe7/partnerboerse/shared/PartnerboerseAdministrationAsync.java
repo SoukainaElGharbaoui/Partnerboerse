@@ -135,15 +135,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getFremdprofilById(int)
-	 * 
-	 * @param fremdprofilId
-	 * @param callback
-	 */
-	void getFremdprofilById(int fremdprofilId, AsyncCallback<Nutzerprofil> callback);
-
-	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Ende: Nutzerprofil
@@ -231,7 +222,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param suchprofilId
 	 * @param callback
 	 */
-	void getSuchprofilById (int profilId, int suchprofilId, AsyncCallback<Suchprofil> callback);
+	void getSuchprofilById (int suchprofilId, AsyncCallback<Suchprofil> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)

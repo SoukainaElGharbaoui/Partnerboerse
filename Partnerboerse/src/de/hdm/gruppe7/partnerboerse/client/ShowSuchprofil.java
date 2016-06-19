@@ -99,8 +99,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 * den Suchprofildaten befuellen. 
 		 */
 			ClientsideSettings.getPartnerboerseAdministration()
-			.getSuchprofilById(nutzerprofil.getProfilId(), 
-					suchprofilId, new AsyncCallback<Suchprofil>() {
+			.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
 
 				public void onFailure(Throwable caught) {
 					infoLabel.setText("Es trat ein Fehler auf.");

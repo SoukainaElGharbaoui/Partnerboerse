@@ -12,14 +12,38 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper-Klasse, die Merkliste-Objekte auf eine relationale Datenbank abbildet. 
+ * Das Mapping ist bidirektional, d.h. Objekte koennen in DB-Strukturen und DB-Strukturen in 
+ * Objekte umgewandelt werden. 
+ */
 public class InfoMapper {
 
+	/**
+	   * Die Klasse InfoMapper wird nur einmal instantiiert (Singelton). 
+	   * Diese Variable ist durch den Bezeichner static nur einmal fuer saemtliche 
+	   * eventuellen Instanzen dieser Klasse vorhanden, sie speichert die einzige
+	   * Instanz dieser Klasse.
+	   * 
+	   * @see #infoMapper()
+	   */
 	private static InfoMapper infoMapper = null;
 
+	/**
+	 * Geschuetzter Konstruktor, der verhinder, mit new neue Instanzen dieser Klasse zu erzeugen.
+	 */
 	protected InfoMapper() {
 
 	}
 
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch InfoMapper.infoMapper(). 
+	   * Sie stellt die Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von InfoMapper existiert.
+
+	   * @return InfoMapper-Objekt
+	   * @see infoMapper
+	   */
 	public static InfoMapper infoMapper() {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();

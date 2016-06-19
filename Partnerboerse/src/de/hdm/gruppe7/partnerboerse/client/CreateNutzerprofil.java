@@ -180,12 +180,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 				} else if (nachnameTextBox.getText().length() == 0) {
 					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-
 				} else if (vornameWert == false) {
-					warnungLabel.setText("Ihr Vorname darf keine Zahlen enthalten.");
+					warnungLabel.setText("Ihr Vorname darf nur Buchstaben enthalten.");
 					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
 				} else if (nachnameWert == false) {
-					warnungLabel.setText("Ihr Nachname darf keine Zahlen enthalten.");
+					warnungLabel.setText("Ihr Nachname darf nur Buchstaben enthalten.");
 					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
 				} else if (geburtsdatumDateBox.getValue() == null) {
 					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
@@ -272,7 +271,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("[a-zA-Z]+");
+		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
 	}
 
 	/**
