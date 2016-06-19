@@ -52,6 +52,8 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	
 	/**
 	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
+	 * 
+	 * @return boolean, zeigt ob die Tabelle leer ist oder nicht
 	 */
 	public boolean pruefeLeereTable() {
 		
