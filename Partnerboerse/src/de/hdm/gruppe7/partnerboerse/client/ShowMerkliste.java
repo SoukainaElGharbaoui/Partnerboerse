@@ -18,47 +18,35 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Merkliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Diese Klasse dient dazu, die Merkliste eines Nutzers anzuzeigen.
+ * Diese Klasse dient dazu, die Merkliste eines Nutzerprofils anzuzeigen.
  */
-
 public class ShowMerkliste extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Vertikales Panel hinzufuegen. 
+	 * Vertikales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Neues Label zur Anzeige der Ueberschrift erzeugen und Beschriftung festlegen.
+	 * Widgets erzeugen. 
 	 */
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
-
-	/**
-	 * Neue Tabelle zur Anzeige der gemerkten Kontakte erzeugen.
-	 */
 	private FlexTable merklisteFlexTable = new FlexTable();
-
-	/**
-	 * Neues Label zur Ausgabe einer Information erzeugen. 
-	 */
 	private Label infoLabel = new Label();
 	
 	/**
-	 * Neue Variable erstellt, die die Anzahl der befüllten Zeilen enthält
+	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
 	 */
 	private int zaehler;
 	
-	private Button loeschenButton;
-	private Button anzeigenButton;
-
-	
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prüft
+	 * Neue Methode definiert, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
 	 */
 	public boolean pruefeLeereTable() {
 		
@@ -83,15 +71,18 @@ public class ShowMerkliste extends VerticalPanel {
 
 
 	/**
-	 * Konstruktor hinzufuegen. 
+	 * Konstruktor erzeugen. 
 	 */
 	public ShowMerkliste() {
 		this.add(verPanel);
 
 		/**
-		 * CSS auf das Label zur Anzeige der Ueberschrift anwenden. 
+		 * CSS anwenden und die Tabelle formatieren.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		merklisteFlexTable.addStyleName("FlexTable");
+		merklisteFlexTable.setCellPadding(6);
+		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 
 		/**
 		 * Kopfzeile der Tabelle festlegen.
@@ -105,14 +96,11 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.setText(0, 6, "Anzeigen");
 
 		/**
-		 * CSS auf die Tabelle anwenden und die Tabelle formatieren. 
-		 */
-		merklisteFlexTable.setCellPadding(6);
-		merklisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		merklisteFlexTable.addStyleName("FlexTable");
-
-		/**
-		 * Alle gemerkten Nutzerprofile eines Nutzers abfragen. 
+		 * Nun werden alle gemerkten Nutzerprofile eines Nutzerprofils abgefragt. 
+		 * Das Ergebnis der Abfrage ist ein Merkliste-Objekt. Die gemerkten Nutzerprofil-Objekte werden in einer
+		 * Liste von Nutzerprofilen gespeichert. Diese Liste wird in einer Schleife durchlaufen und jedes 
+		 * gemerkte Nutzerprofil wird in eine Zeile der Tabelle eingefuegt. Zudem wird der Tabelle bei jedem 
+		 * Schleifendurchlauf je ein Button zum Loeschen und ein Button zum Anzeigen eines Vermerks hinzugefuegt. 
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<Merkliste>() {
@@ -121,30 +109,18 @@ public class ShowMerkliste extends VerticalPanel {
 						infoLabel.setText("Es trat ein Fehler auf."); 
 					}
 
-					/**
-					 * Das Ergebnis der Abfrage ist ein Merkliste-Objekt. 
-					 * Die gemerkten Nutzerprofil-Objekte werden in einem Vektor von Nutzerprofilen gespeichert. 
-					 * Dieser Vektor wird in einer Schleife durchlaufen und jedes gemerkte Nutzerprofil wird in 
-					 * eine Zeile der Tabelle eingefuegt. 
-					 */
 					public void onSuccess(Merkliste result) {
 						
-						// Vektor von gemerkten Nutzerprofilen erzeugen. 
 						List<Nutzerprofil> gemerkteNutzerprofile = result.getGemerkteNutzerprofile();
 						
-						// Anzahl der Zeilen ermitteln. 
 						int row = merklisteFlexTable.getRowCount();
 
-						// Jedes gemerkte Nutzerprofil in eine Zeile der Tabelle einfuegen. 
 						for (Nutzerprofil n : gemerkteNutzerprofile) {
 							
-							// Anzahl der Zeilen um 1 erhoehen. 
 							row++;
 
-							// Fremdprofil-ID des gemerkten Nutzerprofils ermitteln.
 							final String fremdprofilId = String.valueOf(n.getProfilId());
 
-							// Jeweilige Zeile der Tabelle mit den Nutzerprofil-Daten befuellen. 
 							merklisteFlexTable.setText(row, 0, fremdprofilId);
 							merklisteFlexTable.setText(row, 1, n.getVorname());
 							merklisteFlexTable.setText(row, 2, n.getNachname());
@@ -155,24 +131,20 @@ public class ShowMerkliste extends VerticalPanel {
 							merklisteFlexTable.setText(row, 3, geburtsdatumString); 
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
 
-							// Neuen Button zum Loeschen eines Vermerk erzeugen.
-							loeschenButton = new Button("Löschen");
+							final Button loeschenButton = new Button("Löschen");
 							
-							// Button zum Loeschen eines Vermerks in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 5, loeschenButton);
 							
-							// Neuen Button zum Anzeigen eines Fremdprofils erzeugen.
-							anzeigenButton = new Button("Anzeigen");
+							final Button anzeigenButton = new Button("Anzeigen");
 
-							// Button zur Anzeige des Fremdprofils in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
 
-							// Zeilenindex der Tabelle in die jeweilige Zeile der Tabelle einfuegen. 
 							merklisteFlexTable.setText(row, 7, String.valueOf(row));
 							
-
 							/**
-							 * ClickHandler fuer den Button zum Loeschen eines Vermerks erzeugen. 
+							 * ClickHandler fuer den Button zum Loeschen einer Sperrung erzeugen. 
+							 * Sobald der Button betaetigt wird, wird die Sperrung sowohl aus der 
+							 * Tabelle als auch aus der Datenbank entfernt.  
 							 */
 							loeschenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
@@ -218,7 +190,6 @@ public class ShowMerkliste extends VerticalPanel {
 																}
 											});
 
-											// Jeweilige Zeile der Tabelle löschen.
 											if (merklisteFlexTable.getRowCount() == 3) {
 												
 												merklisteFlexTable.removeRow(i);
@@ -240,12 +211,14 @@ public class ShowMerkliste extends VerticalPanel {
 
 							/**
 							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
+							 * Sobald der Button betaetigt wird, wird geprueft, ob das Nutzerprofil von 
+							 * diesem Fremdprofil gesperrt wurde. Wenn ja, wird eine entsprechende 
+							 * Information ausgegeben, die ueber diesen Zustand informiert. Wenn nein,
+							 * wird die Seite zum Anzeigen eines Fremdprofils aufgerufen. 
 							 */
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 
-									// Prüfen, ob Benutzer von Fremdprofil
-									// gesperrt wurde.
 									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
 											nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
 											new AsyncCallback<Integer>() {
@@ -260,10 +233,6 @@ public class ShowMerkliste extends VerticalPanel {
 														@Override
 														public void onSuccess(
 																Integer result) {
-															/*
-															 * Wenn keine Sperrung vorliegt, wird der Nutzer auf die
-															 * Seite des jeweiligen Fremdprofils weitergeleitet.
-															 */
 															if (result == 0) {
 																
 																String profiltyp = "Fp";
@@ -277,10 +246,6 @@ public class ShowMerkliste extends VerticalPanel {
 																		.get("Details")
 																		.add(showFremdprofil);
 
-																/*
-																 * Wenn eine Sperrung vorliegt, wird eine Bildschirmmeldung
-																 * ausgegeben, die den Nutzer über diesen Zustand informiert.
-																 */
 															} else {
 																Window.alert("Sie können dieses Nutzerprofil nicht anzeigen, da Sie von diesem gesperrt wurden.");
 															}
@@ -290,6 +255,10 @@ public class ShowMerkliste extends VerticalPanel {
 							});
 						}
 						
+						/**
+						 * Pruefen, ob die Tabelle leer ist. Falls dies der Fall ist, wird eine 
+						 * entsprechende Information ueber diesen Zustand ausgegeben. 
+						 */
 						boolean befuellt = pruefeLeereTable();
 											
 						if (befuellt == true) {

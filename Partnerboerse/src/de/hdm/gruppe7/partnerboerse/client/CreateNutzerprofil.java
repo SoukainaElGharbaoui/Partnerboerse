@@ -27,8 +27,7 @@ import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
 public class CreateNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
-	 * erzeugen.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
@@ -61,14 +60,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
 	
-	private String profiltyp;
-
 	/**
 	 * Konstruktor erstellen.
+	 * @param profiltyp Der Profiltyp (Nutzerprofil).
 	 */
-//	public CreateNutzerprofil() {
-
-	
 	public CreateNutzerprofil(final String profiltyp) {
 		this.add(verPanel);
 
@@ -164,8 +159,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils
 		 * erzeugen. Sobald dieser Button betaetigt wird, werden die Eingaben
 		 * sowohl auf Vollstaendigkeit als auch auf Korrektheit ueberprueft.
-		 * Sind Eingaben unvollstaendig oder inkorrekt, wird eine entsprechende
-		 * Information ueber diesen Zustand ausgegeben.
+		 * Sind Eingaben unvollstaendig oder inkorrekt, eine entsprechende 
+		 * Information ueber diesen Zustand ausgegeben. 
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 
@@ -216,14 +211,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 								}
 
 								public void onSuccess(Nutzerprofil result) {
-									infoLabel.setText("Ihr Nutzerprofil wurde erfolgreich angelegt");
-									
 									ClientsideSettings.setAktuellerUser(result);
-//									
-//									infoLabel.setText("" + ClientsideSettings.getAktuellerUser().getProfilId());
-								
-									CreateInfo createInfo = new CreateInfo(result.getProfilId(), 
-										profiltyp);
+									CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(createInfo);
 									}
@@ -252,24 +241,26 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 
 	/**
-	 * aktuelles Datum ermitteln
-	 * 
-	 * @return
+	 * Methode erstellen, die das aktuelle Datum ermittelt. 
+	 * @return Aktuelles Datum.
 	 */
 
 	private static Date today() {
 		return zeroTime(new Date());
 	}
 
-	/** this is important to get rid of the time portion, including ms */
+	/**
+	 * Methode erstellen, die das aktuelle Datum formatiert. 
+	 * @param date Das Datum, das formatiert werden soll.
+	 * @return Formatiertes Datum.
+	 */
 	private static Date zeroTime(final Date date) {
 		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
 	}
 
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
-	 * 
-	 * @param name
+	 * @param name Der String, der ueberprueft wird. 
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
@@ -278,8 +269,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden.
-	 * 
-	 * @param name
+	 * @param name Der String, der ueberprueft wird. 
 	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt.
 	 */
 	public boolean isZahl(String name) {

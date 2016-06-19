@@ -193,9 +193,9 @@ public class Navigator extends HorizontalPanel {
 
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Mein Suchprofil", suchprofilMenu));
+		menu.addItem(new MenuItem("Meine Suchprofile", suchprofilMenu));
 		menu.addSeparator();
-		menu.addItem(new MenuItem("Meine Partnervorschlaege", partnervorschlaegeMenu));
+		menu.addItem(new MenuItem("Meine Partnervorschläge", partnervorschlaegeMenu));
 //		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		//////////////////////////////////////////////////////////////////////////////////

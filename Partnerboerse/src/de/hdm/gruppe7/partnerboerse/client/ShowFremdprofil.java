@@ -35,7 +35,6 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen. 
 	 */
-
 	private Label ueberschriftLabel = new Label();
 	private FlexTable showFremdprofilFlexTable = new FlexTable();
 	private Button vermerkButton = new Button();
@@ -44,7 +43,8 @@ public class ShowFremdprofil extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
-	 * @param fremdprofilId 
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das angezeigt werden soll.
+	 * @param profiltyp Der Profiltyp (Fremdprofil).
 	 */
 	public ShowFremdprofil(final int fremdprofilId, final String profiltyp) {
 		this.add(horPanel);

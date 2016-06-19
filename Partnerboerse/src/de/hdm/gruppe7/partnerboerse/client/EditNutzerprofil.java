@@ -26,11 +26,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class EditNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
-	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
-	/**
 	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -63,6 +58,8 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
+	 * @param profilId Die Profil-ID des aktuellen Nutzerprofils.  
+	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
 	public EditNutzerprofil(final int profilId, final String profiltyp) {
 		this.add(verPanel);
@@ -83,7 +80,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
-		editNutzerprofilFlexTable.setText(0, 0, "Nutzerrofil-Id");
+		editNutzerprofilFlexTable.setText(0, 0, "Nutzerprofil-Id");
 		editNutzerprofilFlexTable.setText(1, 0, "Vorname");
 		editNutzerprofilFlexTable.setText(2, 0, "Nachname");
 		editNutzerprofilFlexTable.setText(3, 0, "Geschlecht");
@@ -297,7 +294,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die das aktuelle Datum ermittelt.
-	 * @return Aktuelles Datum 
+	 * @return Aktuelles Datum.
 	 */
 	private static Date today() {
 		return zeroTime(new Date());
@@ -305,8 +302,8 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die das aktuelle Datum formatiert. 
-	 * @param date
-	 * @return Aktuelles, formatiertes Datum
+	 * @param Aktuelles Geburtsdatum.
+	 * @return Aktuelles, formatiertes Datum.
 	 */
 	private static Date zeroTime(final Date date) {
 		return DateTimeFormat.getFormat("yyyyMMdd").parse(DateTimeFormat.getFormat("yyyyMMdd").format(date));
@@ -314,7 +311,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Buchstaben eingegeben wurden.
-	 * @param name 
+	 * @param name Der String, der ueberprueft wird. 
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
@@ -323,7 +320,7 @@ public class EditNutzerprofil extends VerticalPanel {
 
 	/**
 	 * Methode erstellen, die ueberprueft, ob nur Zahlen eingegeben wurden. 
-	 * @param name 
+	 * @param name Der String, der ueberprueft wird.  
 	 * @return Boolscher Wert, der angibt, ob es sich um Zahlen handelt. 
 	 */
 	public boolean isZahl(String name) {
