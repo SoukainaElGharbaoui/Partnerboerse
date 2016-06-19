@@ -15,8 +15,15 @@ h1 {
   font-family: Perpetua, sans-serif;
   font-style: italic;
   color: #db0104;
+
  /*  margin: 40px 0px 20px; */
   text-align: center;
+}
+
+h2{
+	align: middle;
+	margin-left: 390px;
+	margin-bottom: 90px;
 }
 
 h2{
@@ -45,8 +52,8 @@ h3{
 }  */ 
 
 div#Header { 	
-	 /* background: #00ffff;   */
-	 max-height: 150px;
+	  /* background: #00ffff;  */  
+	 max-height: 180px;
 	 padding: auto;
 }
 
@@ -71,6 +78,7 @@ div#Navigator2{
 	top:267px;
 	position: absolute;
 	align: middle;
+
 }
 
 div#Space{
@@ -93,6 +101,7 @@ div#Trailer {
 	clear: both;
 	padding: 3px 0;
 	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	margin-top: 30px;
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
@@ -109,7 +118,8 @@ div#Trailer {
 	font-size: 100%;
 	font-weight: bold;
 	width: 15em;
-	margin-bottom: 1em;
+	margin-bottom: 6em;
+	background: #b4dbfc;
 }
 
 .partnerboerse-loeschenbutton {
@@ -118,10 +128,13 @@ div#Trailer {
 
 .navigatorbutton {
 	font-size: 100%;
-	/*font-weight: bold; */
-	width: 15em;
+	font-weight: bold; 
+	width: 10em;
 	heigt: 20em; 
-	margin-bottom: 1.5em;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	color: #1524db;
+	background-color: #92c0fa;
 }
 
 .partnerboerse-label {
@@ -177,6 +190,7 @@ div#Trailer {
    background: #8080ff; 
 } */
 .menubar {
+
 	background: #8b9df3;
 	background: linear-gradient(to right, #8b9df3, #e2e7fc); /* Standard syntax */
 	/* border: 2px ridge #d7d1fa; */
