@@ -5,18 +5,16 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * Diese Klasse stellt einzelne Absätze dar. Der Absatzinhalt wird als String
+ * Diese Klasse stellt einzelne Absaetze dar. Der Absatzinhalt wird als String
  * gespeichert. Der Anwender sollte in diesem Strinig keinerlei
- * Formatierungssymbole einfügen, da diese in der Regel zielformatspezifisch
+ * Formatierungssymbole einfuegen, da diese in der Regel zielformatspezifisch
  * sind.
  * 
  * @author Thies
  * ------------------------------------------------------------------------------------------
- * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewünscht, als Grundlage 
- * übernommen und bei Notwendigkeit an die Bedürfnisse des IT-Projekts SS 2016 "Partnerboerse" 
+ * Diese Klasse wurde, wie von Herrn Prof. Dr. Thies in der Vorlesung gewuenscht, als Grundlage 
+ * Uebernommen und bei Notwendigkeit an die Beduerfnisse des IT-Projekts SS 2016 "Partnerboerse" 
  * angepasst. 
- * 
- * Modifizierender @author Milena Weinmann
  */
 public class SimpleParagraph extends Paragraph implements IsSerializable, Serializable {
 
@@ -28,19 +26,16 @@ public class SimpleParagraph extends Paragraph implements IsSerializable, Serial
   private String text = "";
 
   /**
-   * <p>
    * Serialisierbare Klassen, die mittels GWT-RPC transportiert werden sollen,
-   * müssen einen No-Argument-Konstruktor besitzen. Ist kein Konstruktor
+   * muessen einen No-Argument-Konstruktor besitzen. Ist kein Konstruktor
    * explizit angegeben, so existiert ini Java-Klassen implizit der
    * Default-Konstruktor, der dem No-Argument-Konstruktor entspricht.
-   * </p>
-   * <p>
+   * 
    * Besitzt eine Klasse mind. einen explizit implementierten Konstruktor, so
    * gelten nur diese explizit implementierten Konstruktoren. Der
    * Default-Konstruktor gilt dann nicht. Wenn wir in einer solchen Situation
-   * aber dennoch einen No-Argument-Konstruktor benötigen, müssen wir diesen wie
+   * aber dennoch einen No-Argument-Konstruktor benoetigen, muessen wir diesen wie
    * in diesem Beispiel explizit implementieren.
-   * </p>
    * 
    * @see #SimpleParagraph(String)
    */
@@ -48,8 +43,8 @@ public class SimpleParagraph extends Paragraph implements IsSerializable, Serial
   }
 
   /**
-   * Dieser Konstruktor ermöglicht es, bereits bei Instantiierung von
-   * <code>SimpleParagraph</code>-Objekten deren Inhalt angeben zu können.
+   * Dieser Konstruktor ermoeglicht es, bereits bei Instantiierung von
+   * SimpleParagraph-Objekten deren Inhalt angeben zu koennen.
    * 
    * @param value der Inhalt des Absatzes
    * @see #SimpleParagraph()
@@ -68,7 +63,7 @@ public class SimpleParagraph extends Paragraph implements IsSerializable, Serial
   }
 
   /**
-   * Überschreiben des Inhalts.
+   * Ueberschreiben des Inhalts.
    * 
    * @param text der neue Inhalt des Absatzes.
    */
@@ -77,10 +72,10 @@ public class SimpleParagraph extends Paragraph implements IsSerializable, Serial
   }
 
   /**
-   * Umwandeln des <code>SimpleParagraph</code>-Objekts in einen String.
+   * Umwandeln des SimpleParagraph-Objekts in einen String.
    */
   @Override
-public String toString() {
+  public String toString() {
     return this.text;
   }
 }
