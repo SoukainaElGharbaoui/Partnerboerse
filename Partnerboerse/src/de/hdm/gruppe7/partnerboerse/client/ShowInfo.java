@@ -65,7 +65,7 @@ public class ShowInfo extends VerticalPanel {
 	 * 
 	 * @param integer
 	 */
-	public ShowInfo(final int profilId) {
+	public ShowInfo(final int profilId, final String profiltyp) {
 		
 		this.add(verPanel);
 
@@ -224,7 +224,7 @@ public class ShowInfo extends VerticalPanel {
 
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfo editInfo = new EditInfo(profilId);
+				EditInfo editInfo = new EditInfo(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfo);
 			}
@@ -232,7 +232,7 @@ public class ShowInfo extends VerticalPanel {
 
 		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId);
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId, profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createRestlicheInfos);
 			}

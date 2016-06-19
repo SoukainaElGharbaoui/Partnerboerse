@@ -35,6 +35,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen. 
 	 */
+
 	private Label ueberschriftLabel = new Label();
 	private FlexTable showFremdprofilFlexTable = new FlexTable();
 	private Button vermerkButton = new Button();

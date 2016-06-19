@@ -17,7 +17,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 
 /**
- * Das asynchrone Gegenstück des Interface {@link PartnerboerseAdministration}
+ * Das asynchrone Gegenstï¿½ck des Interface {@link PartnerboerseAdministration}
  * 
  * @author dunja
  *
@@ -473,7 +473,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param infos
 	 * @param callback
 	 */
-	void createInfo(int profilId, List<Info> infos, AsyncCallback<Integer> callback);
+	void createInfo(int profilId, List<Info> infos, AsyncCallback<List<Info>> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfos(int)
@@ -515,7 +515,7 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param listI
 	 * @param callback
 	 */
-	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Integer> callback);
+	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigAById(int)

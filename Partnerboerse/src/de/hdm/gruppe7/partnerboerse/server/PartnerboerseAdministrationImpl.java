@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.server;
 
 
@@ -175,7 +174,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 */
 
 	/**
+<<<<<<< HEAD
 	 * Anlegen eines neuen Nutzerprofils. Dies fuehrt implizit zu einem Speichern des
+=======
+	 * Anlegen eines neuen Nutzerprofils. Dies fï¿½hrt implizit zu einem Speichern des
+>>>>>>> refs/heads/master
 	 * neuen Nutzeprofils in der Datenbank.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
@@ -784,8 +787,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
 		
 		/**
-		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden können.
-		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Suchprofil in der Berechnung berücksichtig werden. 
+		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu berechnet und gespeichert werden kï¿½nnen.
+		 * So sind die Werte immer aktuell, da Aenderungen im z.B. Suchprofil in der Berechnung berï¿½cksichtig werden. 
 		 */
 		this.suchprofilMapper.deleteAehnlichkeitSp(profilId);
 		
@@ -799,8 +802,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines Nutzerprofils. 
+<<<<<<< HEAD
 		 * Es werden nur Nutzeprofile bedacht, die keine Sperrung gegen den Nutzer gesetzt haben.
 		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heißt dies dem Nutzer sind diese Angaben egal.
+=======
+		 * Es werden nur Nutzeprofile bedacht die keine Sperrung gegen den Nutzer gesetzt haben.
+		 * Sind im Suchprofil Infos mit "Keine Auswahl" gesetzt, heiï¿½t das dem Nutzer sind diese Angaben egal.
+>>>>>>> refs/heads/master
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -985,17 +993,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * *************************************************************************
 	 * **
 	 */
-
+	
+	
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Info
 	 * *************************************************************************
 	 * **
 	 */
-	
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
 	 */
+	@Override
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
 			throws IllegalArgumentException {
 
@@ -1035,10 +1045,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		result.put(listEigB, listEigA);
 		return result;
 	}
-	
+
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllUnusedEigenschaften(int)
 	 */
+	@Override
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(
 			int profilId) throws IllegalArgumentException {
 
@@ -1085,10 +1097,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		result2.put(listEigB, listEigA);
 		return result2;
 	}
-	
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfos(int)
 	 */
+	@Override
 	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
 			throws IllegalArgumentException {
 
@@ -1113,62 +1126,19 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 
 	/**
-	 *
-	 * @param suchprofilId
-	 * @return Liste von Info-Objekten
-	 * @throws IllegalArgumentException
-	 */
-	public List<String> getAllInfosNeuSp(int suchprofilId)
-			throws IllegalArgumentException {
-
-		List<String> list1 = new ArrayList<String>();
-		List<Info> result = new ArrayList<Info>();
-
-		result = this.infoMapper.findAllInfosNeu(suchprofilId);
-
-		for (Info i : result) {
-
-			int eigenschaftId = i.getEigenschaftId();
-
-			Eigenschaft e = new Eigenschaft();
-			e = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId);
-
-			list1.add(String.valueOf(i.getProfilId()));
-			list1.add(String.valueOf(eigenschaftId));
-			list1.add(e.getErlaeuterung());
-			list1.add(String.valueOf(i.getInfotext()));
-			list1.add(e.getTyp());
-		}
-		return list1;
-	}
-	
-	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#createInfo(int, List)
 	 */
-
-	public int createInfo(int profilId, List<Info> infos)
+	@Override
+	public List<Info> createInfo(int profilId, List<Info> infos)
 			throws IllegalArgumentException {
 
-		int ergebnis;
-
-		this.infoMapper.insertInfoNeu(profilId, infos);
-
-		Nutzerprofil np = this.nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-
-		if (np == null) {
-			ergebnis = 1;
-		}
-
-		else {
-			ergebnis = 0;
-		}
-		return ergebnis;
+		return this.infoMapper.insertInfoNeu(profilId, infos);
 	}
-	
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
 	 */
+	@Override
 	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
 
 		int ergebnis;
@@ -1188,43 +1158,26 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		return ergebnis;
 	}
 
-	/**
-	 * 
-	 * @param suchprofilId
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteAllInfosNeuSp(int suchprofilId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteAllInfosNeu(suchprofilId);
-	}
+
 	
 	/**
 	 *Ein Info-Objekt loeschen.
 	 *
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)
 	 */
+	@Override
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
 			throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 
-	/**
-	 * 
-	 * @param suchprofilId
-	 * @param eigenschaftId
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteOneInfoNeuSp(int suchprofilId, int eigenschaftId)
-			throws IllegalArgumentException {
-		this.infoMapper.deleteOneInfoNeu(suchprofilId, eigenschaftId);
-	}
 	
 	/**
 	 * Beschreibungseigenschaft-Objekt anhand der Eigenschaft-ID auslesen.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigBById(int)
 	 */
-
+	@Override
 	public Beschreibungseigenschaft getEigBById(int eigenschaftId)
 			throws IllegalArgumentException {
 		Beschreibungseigenschaft eigB = new Beschreibungseigenschaft();
@@ -1232,11 +1185,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return eigB;
 	}
-	
+
 	/**
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAuswahleigenschaften(List)
 	 */
+	@Override
 	public List<Auswahleigenschaft> getAuswahleigenschaften(
 			List<Eigenschaft> listE) throws IllegalArgumentException {
 
@@ -1252,10 +1206,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		}
 		return listEigA;
 	}
-	
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigAById(int)
 	 */
+	@Override
 	public Auswahleigenschaft getEigAById(int eigenschaftId)
 			throws IllegalArgumentException {
 		Auswahleigenschaft optionen = new Auswahleigenschaft();
@@ -1263,66 +1218,38 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 		return optionen;
 	}
-	
+
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#saveInfo(int, List)
 	 */
-
-	public int saveInfo(int profilId, List<Info> listI)
+	@Override
+	public void saveInfo(int profilId, List<Info> listI)
 			throws IllegalArgumentException {
 
-		int ergebnis;
-
 		this.infoMapper.updateInfos(profilId, listI);
-
-		Nutzerprofil np = this.nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-
-		if (np == null) {
-			ergebnis = 1;
-		}
-
-		else {
-			ergebnis = 0;
-		}
-		return ergebnis;
 	}
 
-	// public void saveInfoNeuSp(int suchprofilId, int eigenschaftId, String
-	// infotext) throws IllegalArgumentException {
-	//
-	// System.out.println(suchprofilId + ", " + eigenschaftId + ", " +
-	// infotext);
-	//
-	// Info i = new Info();
-	// i.setProfilId(suchprofilId);
-	// i.setEigenschaftId(eigenschaftId);
-	// i.setInfotext(infotext);
-	//
-	// this.infoMapper.updateInfosNeu(i);
-	// }
-	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfosNeuReport(int)
 	 */
-
 	@Override
 	public List<Info> getAllInfosNeuReport(int profilId)
 			throws IllegalArgumentException {
 		return this.infoMapper.findAllInfosNeu(profilId);
 	}
-	
+
 	/**
 	 * Auslesen des Beschreibungstextes einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigenschaftstextById(int)
 	 */
-
 	@Override
 	public String getEigenschaftstextById(int eigenschaftId)
 			throws IllegalArgumentException {
 
-		return this.infoMapper.findEigenschaftstextById(eigenschaftId);
+		String erlaeuterung;
+		erlaeuterung = this.infoMapper.findEigenschaftByIdNeu(eigenschaftId).getErlaeuterung();
+		return erlaeuterung;
 	}
 
 	/*
@@ -1455,3 +1382,4 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * **
 	 */
 }
+//

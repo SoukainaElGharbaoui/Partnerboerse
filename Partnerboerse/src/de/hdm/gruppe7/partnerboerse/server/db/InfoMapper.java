@@ -1,11 +1,10 @@
-
 package de.hdm.gruppe7.partnerboerse.server.db;
-
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,9 +29,9 @@ public class InfoMapper {
 		if (infoMapper == null) {
 			infoMapper = new InfoMapper();
 		}
-
 		return infoMapper;
 	}
+
 
 	/**
 	 * Auslesen aller Eigenschaften.
@@ -86,7 +85,6 @@ public class InfoMapper {
 					.executeQuery("SELECT * FROM t_eigenschaft1 "
 							+ "WHERE t_eigenschaft1.eigenschaft_id NOT IN (SELECT t_info1.eigenschaft_id "
 							+ "FROM t_info1 WHERE t_info1.profil_id=" + profilId + ")");
-			
 
 			
 			while (rs.next()) {
@@ -438,6 +436,7 @@ public class InfoMapper {
 //		return result;
 //	}
 
+
 	/**
 	 * Auslesen des Eigenschaftstext anhand der Eigenschaft-ID.
 	 * 
@@ -467,6 +466,7 @@ public class InfoMapper {
 		}
 		return eigenschaftstext;
 	}
+
 	
 	/**
 	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator.
@@ -508,7 +508,7 @@ public class InfoMapper {
 	
 	
 	/**
-	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. Für den Administrator. Fuer den Administrator.
+	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. Fï¿½r den Administrator. Fuer den Administrator.
 	 * @param a Das einzufugende Beschreibungseigenschaft-Objekt.
 	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, 
 	 * 			jedoch mit ggf. korrigierte Eigenschaft-ID.

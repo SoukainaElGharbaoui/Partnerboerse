@@ -26,7 +26,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class EditInfo extends VerticalPanel {
 
 	/**
-	 * VerticalPanels hinzuf�gen.
+	 * VerticalPanels hinzufügen.
 	 */
 
 	private VerticalPanel verPanel = new VerticalPanel();
@@ -34,7 +34,8 @@ public class EditInfo extends VerticalPanel {
 
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
-	final Button updateInfosButton = new Button("Infos speichern");
+	private Button updateInfosButton = new Button("Infos speichern");
+	private Button createInfosButton = new Button("Infos anlegen");
 	private Label informationLabel = new Label();
 
 	private int row;
@@ -44,12 +45,36 @@ public class EditInfo extends VerticalPanel {
 	private List<Info> listInfos;
 	private List<Eigenschaft> listE;
 	
+	private int zaehler;
+	
+	
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < editInfoFlexTable.getRowCount(); k++) {
+			
+			if (editInfoFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
 
 	/**
-	 * Konstruktor hinzuf�gen.
+	 * Konstruktor hinzufügen.
 	 */
 
-	public EditInfo(final int profilId) {
+	public EditInfo(final int profilId, final String profiltyp) {
 		this.add(verPanel);
 
 		/**
@@ -67,7 +92,7 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
-		editInfoFlexTable.setText(0, 4, "L�schen");
+		editInfoFlexTable.setText(0, 4, "Löschen");
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		
@@ -110,7 +135,7 @@ public class EditInfo extends VerticalPanel {
 						editInfoFlexTable.setText(row, 0, String.valueOf(listInfos.get(i).getProfilId()));
 						editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
 						
-						loeschenButton = new Button("L�schen");
+						loeschenButton = new Button("Löschen");
 						editInfoFlexTable.setWidget(row, 4, loeschenButton);
 						
 						
@@ -123,12 +148,12 @@ public class EditInfo extends VerticalPanel {
 				
 									if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
 									
-										informationLabel.setText("Die EigenschaftIds stimmen nicht �berein.");
+										informationLabel.setText("Die EigenschaftIds stimmen nicht überein.");
 									}
 									
 									else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
 										
-										informationLabel.setText("Die EigenschaftIds stimmen �berein.");
+										informationLabel.setText("Die EigenschaftIds stimmen überein.");
 				
 										ClientsideSettings.getPartnerboerseAdministration()
 												.deleteOneInfoNeu(profilId, eigenschaftId, 
@@ -137,17 +162,34 @@ public class EditInfo extends VerticalPanel {
 													@Override
 													public void onFailure(Throwable caught) {
 														informationLabel
-																.setText("Beim L�schen der Info trat ein Fehler auf.");
+																.setText("Beim Löschen der Info trat ein Fehler auf.");
 													}
 				
 													@Override
 													public void onSuccess(Void result) {
-														informationLabel.setText("Das L�schen der Info hat funktioniert.");
+														informationLabel.setText("Das Löschen der Info hat funktioniert.");
 													}
 										});
 										
-										editInfoFlexTable.removeRow(l);
-										break;
+										// Jeweilige Zeile der Tabelle loeschen.
+										
+										if (editInfoFlexTable.getRowCount() == 3) {
+											
+											editInfoFlexTable.removeRow(l);
+											
+											ueberschriftLabel.setText("Sie haben derzeit keine Infos angelegt.");
+											editInfoFlexTable.setVisible(false);
+											updateInfosButton.setVisible(false);
+											informationLabel.setVisible(false);
+											
+											ueberschriftLabel.setVisible(true);
+											verPanel.add(createInfosButton);
+										}
+										
+										else {
+											editInfoFlexTable.removeRow(l);
+											break;
+										}
 									}
 								}
 							}
@@ -233,7 +275,6 @@ public class EditInfo extends VerticalPanel {
 			}
 		});
 		
-		
 		updateInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
@@ -261,12 +302,12 @@ public class EditInfo extends VerticalPanel {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											informationLabel.setText("Beim L�schen der Info ist ein Fehler aufgetreten.");
+											informationLabel.setText("Beim Löschen der Info ist ein Fehler aufgetreten.");
 										}
 
 										@Override
 										public void onSuccess(Void result) {
-											informationLabel.setText("Die Info wurde gel�scht, da das Eingabefeld geleert wurde.");
+											informationLabel.setText("Die Info wurde gelöscht, da das Eingabefeld geleert wurde.");
 										}
 							});
 						}
@@ -301,7 +342,7 @@ public class EditInfo extends VerticalPanel {
 				
 				
 				ClientsideSettings.getPartnerboerseAdministration().saveInfo(profilId,
-						infos, new AsyncCallback<Integer>() {
+						infos, new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -310,30 +351,37 @@ public class EditInfo extends VerticalPanel {
 							}
 
 							@Override
-							public void onSuccess(Integer result) {
+							public void onSuccess(Void result) {
 								informationLabel.setText("Die Infos wurden "
 										+ "erfolgreich angelegt.");
 								
-								if (result == 0) {
+								
+								if(profiltyp.equals("Np")) {
 									
 									ShowNutzerprofil showNp = new ShowNutzerprofil();
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
 								
-								else if (result == 1) {
-									
-									int suchprofilId = profilId;
-									ShowSuchprofil showSp = new ShowSuchprofil (suchprofilId);
+								else if(profiltyp.equals("Sp")) {
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
-									
-								
 								}
 							}
-						});
-					}
 				});
+			}
+		});
+		
+
+		createInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+					CreateInfo createInfo = new CreateInfo(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(createInfo);
+			}
+		});
 				
 			verPanel.add(ueberschriftLabel);
 			verPanel.add(editInfoFlexTable);
@@ -341,4 +389,4 @@ public class EditInfo extends VerticalPanel {
 			verPanel.add(updateInfosButton);
 
 		}
-}
+	}

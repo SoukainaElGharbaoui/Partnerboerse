@@ -178,14 +178,27 @@ public class ShowSperrliste extends VerticalPanel {
 
 													});
 
-											sperrlisteFlexTable.removeRow(i);
-											break;
+											// Jeweilige Zeile der Tabelle loeschen.
+											
+											if (sperrlisteFlexTable.getRowCount() == 3) {
+												
+												sperrlisteFlexTable.removeRow(i);
+												
+												ueberschriftLabel.setText("Sie haben zurzeit keine Profile gesperrt.");
+												sperrlisteFlexTable.setVisible(false);
+												infoLabel.setVisible(false);
+												ueberschriftLabel.setVisible(true);
+											}
+											
+											else {
+												sperrlisteFlexTable.removeRow(i);
+												break;
+											}
 										}
 									}
-
 								}
-
 							});
+							
 
 							/**
 							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
@@ -199,9 +212,7 @@ public class ShowSperrliste extends VerticalPanel {
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
 								}
-
 							});
-
 						}
 
 						/**

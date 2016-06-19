@@ -1,6 +1,5 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.bo.Auswahleigenschaft;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Beschreibungseigenschaft;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
@@ -53,12 +50,12 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Labels und Buttons erzeugen.
 	 */
 	
-	private Label ueberschriftLabel = new Label("Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge angezeigt bekommen möchten:");
-	private Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
+	private Label ueberschriftLabel = new Label("WÃ¤hlen Sie das Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge angezeigt bekommen mÃ¶chten:");
+	private Label ueberschriftLabel2 = new Label("Diese Profile kÃ¶nnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
 	private Label ergebnisLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
+	private Button anzeigenSpButton = new Button("PartnervorschlÃ¤ge anzeigen");
 	private Button anzeigenButton;
 	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 	 
@@ -86,12 +83,12 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		ueberschriftLabel2.addStyleName("partnerboerse-label");
 
 		/**
-		 * Die ListBox wird mit allen Suchprofil-Namen eines Nutzerprofils gefüllt.
+		 * Die ListBox wird mit allen Suchprofil-Namen eines Nutzerprofils gefÃ¼llt.
 		 * 
 		 * Sind keine Suchprofile angelegt, werden der Anzeigen-Button und die ListBox nicht angezeigt. 
 		 * Es erscheint dann das uberschriftLabel und der Suchprofil-Anlegen-Button.
 		 * 
-		 * Ist mindestens ein Suchprofil angelegt, wird die ListBox befüllt und der Suchprofil-Anlegen-Button wird nicht angezeigt. 
+		 * Ist mindestens ein Suchprofil angelegt, wird die ListBox befÃ¼llt und der Suchprofil-Anlegen-Button wird nicht angezeigt. 
 		 * Der Suchprofil-Anlegen-Button wird wiederum angezeigt.
 		 */
 		
@@ -169,7 +166,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 								/**
 								 * Bei jeder Auswahl eines Suchprofils wird die Tabelle komplett geloescht,
-								 * damit diese mit den neuen Informationen befüllt werden kann.
+								 * damit diese mit den neuen Informationen befÃ¼llt werden kann.
 								 * 
 								 */
 								partnervorschlaegeSpFlexTable.removeAllRows();
@@ -216,14 +213,14 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									partnervorschlaegeSpFlexTable.setText(row, 5, np.getGeschlecht());
 
 									/**
-									 * Der Anzeigen-Button für die Anzeige eines Fremdprofils wird erzeugt und der Tabelle hinzugefügt.
+									 * Der Anzeigen-Button fÃ¼r die Anzeige eines Fremdprofils wird erzeugt und der Tabelle hinzugefÃ¼gt.
 									 */
 									
 									anzeigenButton = new Button("Anzeigen");
 									partnervorschlaegeSpFlexTable.setWidget(row, 6, anzeigenButton);
 
 									/**
-									 * Der Clickhandler für den Azeigen-Button des Fremdprofils wird hinzufuegen.
+									 * Der Clickhandler fÃ¼r den Azeigen-Button des Fremdprofils wird hinzufuegen.
 									 * 
 									 * Bei Betaetigung des Anzeigen-Buttons gelangt man auf die Seite auf der das Fremdprofil angezeigt wird.
 									 */
@@ -266,7 +263,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Alle Widgets dem VerticalPanel und HorizontalPanel hinzufuegen.
 		 * 
-		 * Diese Widgets werden angezeigt sobald man über die MenüBar das Feld "Partnervorschlaege anhand Suchprofil" auswählt.
+		 * Diese Widgets werden angezeigt sobald man Ã¼ber die MenÃ¼Bar das Feld "Partnervorschlaege anhand Suchprofil" auswÃ¤hlt.
 		 */
 
 		verPanel.add(ueberschriftLabel);
