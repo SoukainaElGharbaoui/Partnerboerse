@@ -120,6 +120,7 @@ public class EditSuchprofil extends VerticalPanel {
 		editSuchprofilFlexTable.setWidget(7, 2, raucherListBox);
 
 		religionListBox.addItem("Keine Auswahl");
+		religionListBox.addItem("Ohne Bekenntnis");
 		religionListBox.addItem("Christlich");
 		religionListBox.addItem("Juedisch");
 		religionListBox.addItem("Muslimisch");
@@ -277,7 +278,7 @@ public class EditSuchprofil extends VerticalPanel {
 		});
 
 		/**
-		 * Widgets zum VerticalPanel hinzufuegen. 
+		 * Widgets zum vertikalen Panel hinzufuegen. 
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);

@@ -1,0 +1,198 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 134896 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:390), pid=11024, tid=14692
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_25-b18) (build 1.8.0_25-b18)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.25-b02 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000014576000):  JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=14692, stack(0x0000000015ae0000,0x0000000015be0000)]
+
+Stack: [0x0000000015ae0000,0x0000000015be0000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x31667a]
+
+
+Current CompileTask:
+C2:   1200  185 %     4       sun.security.provider.SHA::implCompress @ 12 (491 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00000000021f5000 JavaThread "DestroyJavaVM" [_thread_blocked, id=6828, stack(0x00000000009b0000,0x0000000000ab0000)]
+  0x0000000015dfe000 JavaThread "Service Thread" daemon [_thread_blocked, id=4184, stack(0x00000000161e0000,0x00000000162e0000)]
+  0x000000001458f800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=13120, stack(0x0000000015ce0000,0x0000000015de0000)]
+  0x000000001457e000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=10328, stack(0x0000000015be0000,0x0000000015ce0000)]
+=>0x0000000014576000 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=14692, stack(0x0000000015ae0000,0x0000000015be0000)]
+  0x0000000014574800 JavaThread "Attach Listener" daemon [_thread_blocked, id=12112, stack(0x00000000159e0000,0x0000000015ae0000)]
+  0x0000000014573000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=14728, stack(0x00000000158e0000,0x00000000159e0000)]
+  0x00000000022e6800 JavaThread "Finalizer" daemon [_thread_blocked, id=6480, stack(0x00000000157e0000,0x00000000158e0000)]
+  0x00000000022df800 JavaThread "Reference Handler" daemon [_thread_blocked, id=1368, stack(0x00000000156e0000,0x00000000157e0000)]
+
+Other Threads:
+  0x0000000014536000 VMThread [stack: 0x00000000155e0000,0x00000000156e0000] [id=6612]
+  0x0000000015e1a800 WatcherThread [stack: 0x00000000162e0000,0x00000000163e0000] [id=2312]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 16896K, used 4769K [0x00000000edb00000, 0x00000000eed80000, 0x0000000100000000)
+  eden space 14848K, 32% used [0x00000000edb00000,0x00000000edfa8440,0x00000000ee980000)
+  from space 2048K, 0% used [0x00000000eeb80000,0x00000000eeb80000,0x00000000eed80000)
+  to   space 2048K, 0% used [0x00000000ee980000,0x00000000ee980000,0x00000000eeb80000)
+ ParOldGen       total 38400K, used 0K [0x00000000c9000000, 0x00000000cb580000, 0x00000000edb00000)
+  object space 38400K, 0% used [0x00000000c9000000,0x00000000c9000000,0x00000000cb580000)
+ Metaspace       used 3942K, capacity 4638K, committed 4864K, reserved 1056768K
+  class space    used 444K, capacity 462K, committed 512K, reserved 1048576K
+
+Card table byte_map: [0x00000000117a0000,0x0000000011960000] byte_map_base: 0x0000000011158000
+
+Marking Bits: (ParMarkBitMap*) 0x000000005191d490
+ Begin Bits: [0x0000000011e90000, 0x0000000012c50000)
+ End Bits:   [0x0000000012c50000, 0x0000000013a10000)
+
+Polling page: 0x0000000000510000
+
+CodeCache: size=245760Kb used=1467Kb max_used=1478Kb free=244292Kb
+ bounds [0x00000000023e0000, 0x0000000002650000, 0x00000000113e0000]
+ total_blobs=482 nmethods=209 adapters=188
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 1.150 Thread 0x000000001458f800  203       3       java.util.ArrayList$Itr::checkForComodification (23 bytes)
+Event: 1.150 Thread 0x000000001458f800 nmethod 203 0x000000000254cd90 code [0x000000000254cf00, 0x000000000254d128]
+Event: 1.150 Thread 0x000000001458f800  204       3       java.util.ArrayList$Itr::next (66 bytes)
+Event: 1.151 Thread 0x000000001457e000 nmethod 200 0x0000000002550010 code [0x0000000002550160, 0x0000000002550358]
+Event: 1.151 Thread 0x000000001458f800 nmethod 204 0x000000000254f750 code [0x000000000254f900, 0x000000000254fda8]
+Event: 1.151 Thread 0x000000001457e000  202       4       java.lang.String::<init> (62 bytes)
+Event: 1.151 Thread 0x000000001458f800  205       1       java.net.URL::getPort (5 bytes)
+Event: 1.151 Thread 0x000000001458f800 nmethod 205 0x000000000254f490 code [0x000000000254f5e0, 0x000000000254f6f0]
+Event: 1.151 Thread 0x000000001458f800  206       1       java.nio.Buffer::limit (5 bytes)
+Event: 1.151 Thread 0x000000001458f800 nmethod 206 0x000000000254f1d0 code [0x000000000254f320, 0x000000000254f430]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0.353 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edc977d8) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 0.373 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edcaa750) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 0.377 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edcb1a18) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 0.382 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edcbe580) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 0.398 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edcd9088) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 0.399 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edce0908) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 1.146 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edec7c18) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 1.148 Thread 0x00000000021f5000 Exception <a 'java/security/PrivilegedActionException'> (0x00000000edecded0) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1312]
+Event: 1.152 Thread 0x00000000021f5000 Exception <a 'java/lang/OutOfMemoryError'> (0x00000000ededee30) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jni.cpp, line 742]
+Event: 1.152 Thread 0x00000000021f5000 Exception <a 'java/lang/OutOfMemoryError'> (0x00000000ededee30) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u25\1677\hotspot\src\share\vm\prims\jvm.cpp, line 1316]
+
+Events (10 events):
+Event: 1.145 loading class java/util/HashMap$KeySet
+Event: 1.145 loading class java/util/HashMap$KeySet done
+Event: 1.145 loading class java/util/HashMap$KeyIterator
+Event: 1.146 loading class java/util/HashMap$KeyIterator done
+Event: 1.146 loading class com/google/appengine/tools/enhancer/Enhancer
+Event: 1.146 loading class com/google/appengine/tools/enhancer/Enhancer done
+Event: 1.147 loading class com/google/appengine/tools/enhancer/EnhancerLoader
+Event: 1.147 loading class com/google/appengine/tools/enhancer/EnhancerLoader done
+Event: 1.151 loading class org/datanucleus/enhancer/DataNucleusEnhancer
+Event: 1.151 loading class org/datanucleus/enhancer/DataNucleusEnhancer done
+
+
+Dynamic libraries:
+0x00007ff789460000 - 0x00007ff789494000 	C:\Program Files\Java\jre1.8.0_25\bin\javaw.exe
+0x00007ffa63b60000 - 0x00007ffa63d21000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffa633b0000 - 0x00007ffa6345d000 	C:\WINDOWS\system32\KERNEL32.DLL
+0x00007ffa60b50000 - 0x00007ffa60d38000 	C:\WINDOWS\system32\KERNELBASE.dll
+0x00007ffa610f0000 - 0x00007ffa61197000 	C:\WINDOWS\system32\ADVAPI32.dll
+0x00007ffa631b0000 - 0x00007ffa6324d000 	C:\WINDOWS\system32\msvcrt.dll
+0x00007ffa62db0000 - 0x00007ffa62e0b000 	C:\WINDOWS\system32\sechost.dll
+0x00007ffa63090000 - 0x00007ffa631ac000 	C:\WINDOWS\system32\RPCRT4.dll
+0x00007ffa63250000 - 0x00007ffa633a6000 	C:\WINDOWS\system32\USER32.dll
+0x00007ffa60f60000 - 0x00007ffa610e6000 	C:\WINDOWS\system32\GDI32.dll
+0x00007ffa54930000 - 0x00007ffa54ba4000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.10586.0_none_8c15ae12515e1c22\COMCTL32.dll
+0x00007ffa62e10000 - 0x00007ffa6308d000 	C:\WINDOWS\system32\combase.dll
+0x00007ffa608f0000 - 0x00007ffa6095a000 	C:\WINDOWS\system32\bcryptPrimitives.dll
+0x00007ffa611a0000 - 0x00007ffa611db000 	C:\WINDOWS\system32\IMM32.DLL
+0x0000000050b10000 - 0x0000000050be2000 	C:\Program Files\Java\jre1.8.0_25\bin\msvcr100.dll
+0x0000000051140000 - 0x000000005199a000 	C:\Program Files\Java\jre1.8.0_25\bin\server\jvm.dll
+0x00007ffa62c40000 - 0x00007ffa62c48000 	C:\WINDOWS\system32\PSAPI.DLL
+0x00007ffa57cc0000 - 0x00007ffa57cc9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffa5e400000 - 0x00007ffa5e423000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffa61310000 - 0x00007ffa6137b000 	C:\WINDOWS\system32\WS2_32.dll
+0x00007ffa5e3a0000 - 0x00007ffa5e3cc000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x00007ffa60d40000 - 0x00007ffa60d83000 	C:\WINDOWS\system32\cfgmgr32.dll
+0x0000000051130000 - 0x000000005113f000 	C:\Program Files\Java\jre1.8.0_25\bin\verify.dll
+0x0000000051100000 - 0x0000000051128000 	C:\Program Files\Java\jre1.8.0_25\bin\java.dll
+0x00000000510e0000 - 0x00000000510f6000 	C:\Program Files\Java\jre1.8.0_25\bin\zip.dll
+0x00007ffa61530000 - 0x00007ffa62a8c000 	C:\WINDOWS\system32\SHELL32.dll
+0x00007ffa602a0000 - 0x00007ffa608e4000 	C:\WINDOWS\system32\windows.storage.dll
+0x00007ffa63a30000 - 0x00007ffa63a82000 	C:\WINDOWS\system32\shlwapi.dll
+0x00007ffa60200000 - 0x00007ffa6020f000 	C:\WINDOWS\system32\kernel.appcore.dll
+0x00007ffa609c0000 - 0x00007ffa60a75000 	C:\WINDOWS\system32\shcore.dll
+0x00007ffa60180000 - 0x00007ffa601cb000 	C:\WINDOWS\system32\powrprof.dll
+0x00007ffa601d0000 - 0x00007ffa601e4000 	C:\WINDOWS\system32\profapi.dll
+0x00007ffa5fb00000 - 0x00007ffa5fb17000 	C:\WINDOWS\SYSTEM32\CRYPTSP.dll
+0x00007ffa5f790000 - 0x00007ffa5f7c4000 	C:\WINDOWS\system32\rsaenh.dll
+0x00007ffa600b0000 - 0x00007ffa600d9000 	C:\WINDOWS\SYSTEM32\bcrypt.dll
+0x00007ffa5f8e0000 - 0x00007ffa5f8ff000 	C:\WINDOWS\SYSTEM32\USERENV.dll
+0x00007ffa5fc20000 - 0x00007ffa5fc2b000 	C:\WINDOWS\SYSTEM32\CRYPTBASE.dll
+0x00000000510c0000 - 0x00000000510da000 	C:\Program Files\Java\jre1.8.0_25\bin\net.dll
+0x00007ffa5fa50000 - 0x00007ffa5faac000 	C:\WINDOWS\system32\mswsock.dll
+0x00007ffa584f0000 - 0x00007ffa58528000 	C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
+0x00007ffa61300000 - 0x00007ffa61308000 	C:\WINDOWS\system32\NSI.dll
+0x00007ffa584d0000 - 0x00007ffa584e6000 	C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL
+0x00007ffa584b0000 - 0x00007ffa584ca000 	C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL
+0x00000000510a0000 - 0x00000000510b1000 	C:\Program Files\Java\jre1.8.0_25\bin\nio.dll
+0x00007ffa49f00000 - 0x00007ffa4a08c000 	C:\WINDOWS\SYSTEM32\dbghelp.dll
+
+VM Arguments:
+java_command: com.google.appengine.tools.enhancer.Enhance C:\Users\annina\git\Partnerboerse\Partnerboerse\war\WEB-INF\classes\de\hdm\gruppe7\partnerboerse\client\ShowSperrliste$1$1.class C:\Users\annina\git\Partnerboerse\Partnerboerse\war\WEB-INF\classes\de\hdm\gruppe7\partnerboerse\client\ShowSperrliste$1.class C:\Users\annina\git\Partnerboerse\Partnerboerse\war\WEB-INF\classes\de\hdm\gruppe7\partnerboerse\client\ShowSperrliste$1$2.class C:\Users\annina\git\Partnerboerse\Partnerboerse\war\WEB-INF\classes\de\hdm\gruppe7\partnerboerse\client\ShowSperrliste.class
+java_class_path (initial): C:\Users\annina\git\Partnerboerse\Partnerboerse\war\WEB-INF\classes;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\appengine-local-runtime-shared.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\el-api.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\jsp\repackaged-appengine-ant-1.7.1.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\jsp\repackaged-appengine-ant-launcher-1.7.1.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\jsp\repackaged-appengine-jasper-6.0.29.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\jsp\repackaged-appengine-jasper-el-6.0.29.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\shared\jsp\repackaged-appengine-tomcat-juli-6.0.29.jar;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\com.google.appengine.eclipse.sdkbundle_1.9.34\appengine-java-sdk-1.9.34\lib\
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_25
+PATH=C:/Program Files/Java/jre1.8.0_25/bin/server;C:/Program Files/Java/jre1.8.0_25/bin;C:/Program Files/Java/jre1.8.0_25/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Skype\Phone;C:\Program Files (x86)\QuickTime\QTSystem;C:\Program Files\Apache\maven\bin;C:\Users\annina\Downloads\Programme\Programmierprogramme\Eclipse, Java\eclipse-java-luna-SR1-win32-x86_64\eclipse;
+USERNAME=annina
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 22 Model 48 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8.1 , 64 bit Build 9600 
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 22 model 48 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv, bmi1
+
+Memory: 4k page, physical 3599348k(700724k free), swap 14609396k(2432k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.25-b02) for windows-amd64 JRE (1.8.0_25-b18), built on Oct  7 2014 14:25:37 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Sat Jun 18 20:42:34 2016
+elapsed time: 1 seconds (0d 0h 0m 1s)
+

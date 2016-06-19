@@ -43,6 +43,9 @@ public class ShowNutzerprofil extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
+	
+	private String profiltyp;
+
 
 	/**
 	 * Konstruktor erstellen.
@@ -61,6 +64,13 @@ public class ShowNutzerprofil extends VerticalPanel {
 		showEigenesNpFlexTable.setCellPadding(6);
 		showEigenesNpFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 
+		/**
+		 * Die Variable profiltyp wird initialisiert.
+		 * Ihr wird der String "Sp" hinzugefügt, d.h., dass das Profil
+		 * vom Typ Suchprofil ist
+		 */
+		profiltyp = "Np";
+		
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
@@ -176,7 +186,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
-		ShowInfo showInfo = new ShowInfo(nutzerprofil.getProfilId());
+		ShowInfo showInfo = new ShowInfo(nutzerprofil.getProfilId(), profiltyp);
 
 		/**
 		 * Widgets den Panels hinzufuegen.
