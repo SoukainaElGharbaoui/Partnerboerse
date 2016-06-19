@@ -1048,23 +1048,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
 	 */
 	@Override
-	public int deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
-
-		int ergebnis;
+	public void deleteAllInfosNeu(int profilId) throws IllegalArgumentException {
 
 		this.infoMapper.deleteAllInfosNeu(profilId);
-
-		Nutzerprofil np = this.nutzerprofilMapper
-				.findByNutzerprofilId(profilId);
-
-		if (np == null) {
-			ergebnis = 1;
-		}
-
-		else {
-			ergebnis = 0;
-		}
-		return ergebnis;
 	}
 
 	

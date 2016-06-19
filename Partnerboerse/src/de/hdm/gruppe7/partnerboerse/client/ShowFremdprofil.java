@@ -46,7 +46,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * Konstruktor erstellen.
 	 * @param fremdprofilId 
 	 */
-	public ShowFremdprofil(final int fremdprofilId) {
+	public ShowFremdprofil(final int fremdprofilId, final String profiltyp) {
 		this.add(horPanel);
 
 		/**

@@ -132,7 +132,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil();
+				
+				String profiltyp = "Sp";
+				
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 			}
@@ -227,7 +230,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									
 									anzeigenButton.addClickHandler(new ClickHandler() {
 										public void onClick(ClickEvent event) {
-											ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId);
+											
+											String profiltyp = "Fp";
+											
+											ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId, profiltyp);
 											RootPanel.get("Details").clear();
 											RootPanel.get("Details").add(showFremdprofil);
 

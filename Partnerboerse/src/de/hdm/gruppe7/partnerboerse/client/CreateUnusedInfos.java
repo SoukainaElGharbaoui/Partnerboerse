@@ -196,7 +196,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 							
 									if (profiltyp.equals("Np")) {
 										
-										ShowNutzerprofil showNp = new ShowNutzerprofil();
+										ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, 
+												profiltyp);
 		
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showNp);
@@ -206,7 +207,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 									else if (profiltyp.equals("Sp")) {
 										
 										String suchprofilName = null;
-										ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+										ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 										
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showSp);
@@ -313,7 +314,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								
 								if (profiltyp.equals("Np")) {
 									
-									ShowNutzerprofil showNp = new ShowNutzerprofil();
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
@@ -323,7 +324,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 								else if (profiltyp.equals("Sp")) {
 									
 									String suchprofilName = null;
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId);
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);

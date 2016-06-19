@@ -73,9 +73,7 @@ public class Partnerboerse implements EntryPoint {
 						}
 
 						public void onSuccess(Nutzerprofil result) {
-
-							nutzerprofil = result;
-
+							
 							ClientsideSettings.setAktuellerUser(result);
 
 							/**
@@ -112,14 +110,22 @@ public class Partnerboerse implements EntryPoint {
 												}
 
 												@Override
-												public void onSuccess(Boolean result) {
+												public void onSuccess(Boolean pruefung) {
 
-													if (result == true) {
-														RootPanel.get("Details").add(new CreateNutzerprofil());
+													if (pruefung == true) {
+														
+														String profiltyp = "Np";
+
+														RootPanel.get("Navigator").add(new Navigator());
+														RootPanel.get("Navigator").add(loginPanel);
+														
+														RootPanel.get("Details")
+															.add(new CreateNutzerprofil(profiltyp));
+//														.add(new CreateNutzerprofil());
 													}
 
 													else {
-
+														
 														RootPanel.get("Navigator").add(new Navigator());
 														RootPanel.get("Navigator").add(loginPanel);
 													}
