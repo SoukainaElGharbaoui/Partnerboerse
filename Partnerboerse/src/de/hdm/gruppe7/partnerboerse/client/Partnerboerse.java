@@ -124,8 +124,9 @@ public class Partnerboerse implements EntryPoint {
 														// signInLink.setHref(nutzerprofil.getLoginUrl());
 														// loginPanel.add(signInLink);
 
-														signOutLink.setText("Bestätige das Löschen mit einem Klick.");
+//														signOutLink.setText("Bestätige das Löschen mit einem Klick.");
 														RootPanel.get("Details").add(loginPanel);
+														RootPanel.get("Navigator").add(new Navigator());
 														// RootPanel.get("Details").add(begrueßen);
 														// RootPanel.get("Details").add(begrueßen2);
 
