@@ -49,6 +49,8 @@ public class CreateSuchprofil extends VerticalPanel {
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
+	
+	private String profiltyp;
 	 
 	/**
 	 * Konstruktor erstellen.
@@ -125,6 +127,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
 		createSuchprofilFlexTable.setWidget(7, 2, religionListBox);
+		
+		profiltyp = "Sp";
 
 		/**
 		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
@@ -194,6 +198,7 @@ public class CreateSuchprofil extends VerticalPanel {
 									religionListBox.getSelectedItemText(),
 									new AsyncCallback<Suchprofil>() {
 
+
 									@Override
 									public void onFailure(Throwable caught) {
 									infoLabel.setText("Es trat ein Fehler auf");
@@ -202,7 +207,7 @@ public class CreateSuchprofil extends VerticalPanel {
 									@Override
 									public void onSuccess(Suchprofil result) {
 									int suchprofilId = result.getProfilId();
-									CreateInfo createInfo = new CreateInfo(suchprofilId);
+									CreateInfo createInfo = new CreateInfo(suchprofilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details")
 									.add(createInfo);

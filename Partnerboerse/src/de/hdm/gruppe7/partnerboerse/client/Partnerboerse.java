@@ -19,6 +19,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
  */
 public class Partnerboerse implements EntryPoint {
 
+	Nutzerprofil nutzerprofil = new Nutzerprofil();
+
 	/**
 	 * Deklaraion der Labels für die Startseite(n)
 	 */
@@ -59,7 +61,7 @@ public class Partnerboerse implements EntryPoint {
 
 		/**
 		 * Zuerst wird die Domaene für die Partnerboerse definiert. Danach wird
-		 * der aktuell angemeldete User gesetzt. Je nachdem p der User aktuell
+		 * der aktuell angemeldete User gesetzt. Je nachdem ob der User aktuell
 		 * eingeloggt ist oder nicht, erfolgen unterschiedliche Aktionen.
 		 */
 		try {
@@ -72,15 +74,30 @@ public class Partnerboerse implements EntryPoint {
 
 						public void onSuccess(Nutzerprofil result) {
 
+							nutzerprofil = result;
+
 							ClientsideSettings.setAktuellerUser(result);
 
 							/**
-							 * Wenn der User eingeloggt ist
+							 * Wenn der user nicht eingeloggt ist: Der User wird
+							 * begrüßt und der link zum login wird angezeigt
 							 */
-							if (result.isLoggedIn()) {
+							if (!result.isLoggedIn()) {
+								signInLink.setHref(result.getLoginUrl());
+								loginPanel.add(signInLink);
+								RootPanel.get("Navigator").add(loginPanel);
+								RootPanel.get("Details").add(begrueßen);
+								RootPanel.get("Details").add(begrueßen2);
+							}
+
+							/**
+							 * Wenn der User eingeloggt ist:
+							 * 
+							 */
+							else if (result.isLoggedIn()) {
 
 								if (result.getEmailAddress() != null) {
-
+									
 									signOutLink.setHref(result.getLogoutUrl());
 									signOutLink.setText(
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
@@ -101,13 +118,10 @@ public class Partnerboerse implements EntryPoint {
 														RootPanel.get("Details").add(new CreateNutzerprofil());
 													}
 
-					else {
+													else {
 
 														RootPanel.get("Navigator").add(new Navigator());
 														RootPanel.get("Navigator").add(loginPanel);
-														RootPanel.get("Details").add(begrueßenN);
-														RootPanel.get("Details").add(begrueßenN2);
-
 													}
 												}
 											});
@@ -124,15 +138,6 @@ public class Partnerboerse implements EntryPoint {
 									RootPanel.get("Details").add(begrueßenN2);
 
 								}
-							}
-
-							// wenn der user nicht eingeloggt ist
-							else if (!result.isLoggedIn()) {
-								signInLink.setHref(result.getLoginUrl());
-								loginPanel.add(signInLink);
-								RootPanel.get("Navigator").add(loginPanel);
-								RootPanel.get("Details").add(begrueßen);
-								RootPanel.get("Details").add(begrueßen2);
 							}
 						}
 					});
