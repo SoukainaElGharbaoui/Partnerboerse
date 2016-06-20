@@ -81,7 +81,8 @@ public class Navigator extends HorizontalPanel {
 
 			@Override
 			public void execute() {
-				ShowMerkliste showMerkliste = new ShowMerkliste();
+				String listtyp = "M";
+				ShowMerkliste showMerkliste = new ShowMerkliste(listtyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showMerkliste);
 			}
@@ -93,7 +94,8 @@ public class Navigator extends HorizontalPanel {
 
 			@Override
 			public void execute() {
-				ShowSperrliste showSperrliste = new ShowSperrliste();
+				String listtyp = "S";
+				ShowSperrliste showSperrliste = new ShowSperrliste(listtyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSperrliste);
 			}
@@ -169,7 +171,8 @@ public class Navigator extends HorizontalPanel {
 
 							@Override
 							public void onSuccess(Void result) {
-								ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+								String listtyp = "PvNp";
+								ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp(listtyp);
 								RootPanel.get("Details").clear();
 								RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
@@ -199,7 +202,8 @@ public class Navigator extends HorizontalPanel {
 							public void onSuccess(Void result3) {
 								// infoLabel.setText("Es hier trat kein Fehler
 								// auf.");
-							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
+							String listtyp = "PvSp";
+							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
 							RootPanel.get("Details").clear();
 							RootPanel.get("Details").add(showPartnervorschlaegeSp);
 

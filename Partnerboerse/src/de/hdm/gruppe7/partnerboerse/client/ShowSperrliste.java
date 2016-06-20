@@ -72,7 +72,7 @@ public class ShowSperrliste extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public ShowSperrliste() {
+	public ShowSperrliste(final String listtyp) {
 		this.add(verPanel);
 
 		/**
@@ -202,7 +202,7 @@ public class ShowSperrliste extends VerticalPanel {
 									String profiltyp = "Fp";
 
 									ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-											Integer.valueOf(fremdprofilId), profiltyp);
+											Integer.valueOf(fremdprofilId), profiltyp, listtyp);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);

@@ -25,25 +25,25 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
  * Anlegen von bisher nicht angelegten Infos.
  */
 public class CreateUnusedInfos extends VerticalPanel {
-	
+
 	/**
-	 * VerticalPanel hinzufuegen. 
+	 * VerticalPanel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-	
+
 	/**
 	 * Listen erzeugen.
 	 */
 	private List<Beschreibungseigenschaft> listB;
 	private List<Auswahleigenschaft> listA;
-	
+
 	/**
 	 * Attribute erzeugen
 	 */
 	private String eigenschaftId;
 	private int row;
 	private int zaehler;
-	
+
 	/**
 	 * Widgets erzeugen.
 	 */
@@ -53,87 +53,115 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
 	private Label informationLabel = new Label();
-	
+	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
+	private Label pfadLabelSpA = new Label("Zurück zu: Suchprofil anzeigen");
+
 	/**
 	 * Prüft, ob die Tabelle leer ist.
 	 * 
 	 * @return boolean
 	 */
 	public boolean pruefeLeereTable() {
-		
+
 		for (int k = 2; k < showUnusedEigenschaftFlexTable.getRowCount(); k++) {
-			
+
 			if (showUnusedEigenschaftFlexTable.getText(k, 0) == null) {
 			}
-			
+
 			else {
 				zaehler++;
 			}
 		}
-		
+
 		if (zaehler == 0) {
 			return true;
 		}
-		
+
 		else {
 			return false;
 		}
 	}
-	
-	
+
 	/**
 	 * Konstruktor hinzufuegen.
 	 * 
-	 * @param profilId 
-	 * @param profiltyp 
+	 * @param profilId
+	 * @param profiltyp
 	 */
-	public CreateUnusedInfos(final int profilId, final String profiltyp) {	
-		
+	public CreateUnusedInfos(final int profilId, final String profiltyp) {
+
 		/**
 		 * Vertikales Panel hinzufuegen.
 		 */
 		this.add(verPanel);
-		
+
 		/**
 		 * Tabelle formatieren und CSS einbinden.
 		 */
 		showUnusedEigenschaftFlexTable.setCellPadding(6);
 		showUnusedEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
-		ueberschriftLabel.addStyleName("partnerboerse-label"); 
-		
+		ueberschriftLabel.addStyleName("partnerboerse-label");
+
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
 		showUnusedEigenschaftFlexTable.setText(0, 0, "Profil-Id");
 		showUnusedEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
 		showUnusedEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
-		showUnusedEigenschaftFlexTable.setText(0, 3, "Anlegen"); 
-		
+		showUnusedEigenschaftFlexTable.setText(0, 3, "Anlegen");
+
+		if (profiltyp.equals("Np")) {
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+			});
+		} else if (profiltyp.equals("Sp")) {
+
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+
+			});
+		}
+
 		/**
-		 * Bisher nicht angelegte Eigenschaften anhand der Profil-ID aus der Datenbank auslesen und die
-		 * Infodaten in die Tabelle einfuegen. Erst die Beschreibungsinfos, danach die Auswahlinfos.
+		 * Bisher nicht angelegte Eigenschaften anhand der Profil-ID aus der
+		 * Datenbank auslesen und die Infodaten in die Tabelle einfuegen. Erst
+		 * die Beschreibungsinfos, danach die Auswahlinfos.
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaften(profilId,
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
-					
+
 					@Override
 					public void onFailure(Throwable caught) {
 						informationLabel.setText("Beim Herausholen der Eigenschaften trat ein Fehler auf.");
 					}
 
 					@Override
-					public void onSuccess(
-							Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
-						
+					public void onSuccess(Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
+
 						informationLabel.setText("Die Methode wurde aufgerufen.");
-						
-						 row = showUnusedEigenschaftFlexTable.getRowCount();
-						
+
+						row = showUnusedEigenschaftFlexTable.getRowCount();
+
 						Set<List<Beschreibungseigenschaft>> output = result.keySet();
 
 						for (List<Beschreibungseigenschaft> listEigB : output) {
-							
+
 							listB = listEigB;
 
 							for (Beschreibungseigenschaft eigB : listEigB) {
@@ -141,22 +169,21 @@ public class CreateUnusedInfos extends VerticalPanel {
 								row++;
 
 								eigenschaftId = null;
-								
-								showUnusedEigenschaftFlexTable.setText(row,	0, 
-										String.valueOf(profilId));
+
+								showUnusedEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
 
 								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
 
-								showUnusedEigenschaftFlexTable.setText(row,	1, eigenschaftId);
-								
+								showUnusedEigenschaftFlexTable.setText(row, 1, eigenschaftId);
+
 								showUnusedEigenschaftFlexTable.setText(row, 2, eigB.getErlaeuterung());
 
 								final TextArea textArea = new TextArea();
 
 								showUnusedEigenschaftFlexTable.setWidget(row, 3, textArea);
-								
+
 								String defaultValue = eigB.getBeschreibungstext();
-								
+
 								textArea.getElement().setPropertyString("placeholder", defaultValue);
 							}
 
@@ -165,13 +192,11 @@ public class CreateUnusedInfos extends VerticalPanel {
 							for (Auswahleigenschaft eigA : listA) {
 
 								row++;
-								
-								showUnusedEigenschaftFlexTable.setText(row,
-										0, String.valueOf(profilId));
-								
-								showUnusedEigenschaftFlexTable.setText(row,
-										1, String.valueOf(eigA.getEigenschaftId()));
-								
+
+								showUnusedEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
+
+								showUnusedEigenschaftFlexTable.setText(row, 1, String.valueOf(eigA.getEigenschaftId()));
+
 								showUnusedEigenschaftFlexTable.setText(row, 2, eigA.getErlaeuterung());
 
 								final ListBox lb = new ListBox();
@@ -192,53 +217,51 @@ public class CreateUnusedInfos extends VerticalPanel {
 								}
 							}
 						}
-						
-						
+
 						boolean befuellt = pruefeLeereTable();
-						
+
 						if (befuellt == true) {
-							
+
 							ueberschriftLabel.setText("Sie haben bereits alle Infos angelegt.");
 
 							showUnusedEigenschaftFlexTable.setVisible(false);
 							createInfosButton.setVisible(false);
 							informationLabel.setVisible(false);
-							
+
 							ueberschriftLabel.setVisible(true);
-							
+
 							Button showInfosButton = new Button("Infos anzeigen");
-							
+
 							verPanel.add(showInfosButton);
-							
+
 							showInfosButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
-							
+
 									if (profiltyp.equals("Np")) {
-										
-										ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, 
-												profiltyp);
-		
+
+										ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showNp);
 									}
-									
+
 									/**
-									 *  Fall, die profilId gehoert zu Suchprofil
+									 * Fall, die profilId gehoert zu Suchprofil
 									 */
 									else if (profiltyp.equals("Sp")) {
-										
+
 										ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-										
+
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showSp);
 									}
 								}
-							});							
+							});
 						}
-					}		
-					
+					}
+
 				});
-		
+
 		/**
 		 * ClickHandler fuer den Button zum Anlegen einer Info.
 		 */
@@ -247,34 +270,33 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 				List<Info> infos = new ArrayList<Info>();
 				String infotextTable = null;
-				
+
 				int k;
 
 				for (int i = 2; i < showUnusedEigenschaftFlexTable.getRowCount(); i++) {
-					
+
 					k = 0;
 					k = i - 2;
 
-					String eigenschaftIdTable = showUnusedEigenschaftFlexTable
-							.getText(i, 1);
+					String eigenschaftIdTable = showUnusedEigenschaftFlexTable.getText(i, 1);
 
 					Widget w = showUnusedEigenschaftFlexTable.getWidget(i, 3);
-					
+
 					if (w instanceof TextArea) {
-						
+
 						infotextTable = ((TextArea) w).getText();
-							
+
 						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
 						}
-						
-						else if (!((TextArea) w).getText().isEmpty()){
+
+						else if (!((TextArea) w).getText().isEmpty()) {
 							Info info = new Info();
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
 							infos.add(info);
 						}
-						
+
 						else {
 							informationLabelB.setText("Das Eingabefeld ist leer.");
 						}
@@ -284,67 +306,71 @@ public class CreateUnusedInfos extends VerticalPanel {
 					else if (w instanceof ListBox) {
 
 						infotextTable = ((ListBox) w).getSelectedItemText();
-						
+
 						if (!infotextTable.equals("Keine Auswahl")) {
-							
+
 							Info info = new Info();
 							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
 							info.setInfotext(infotextTable);
 
 							infos.add(info);
 						}
-						
+
 						else {
 							informationLabelB.setText("Das Eingabefeld ist leer.");
 						}
 					}
 				}
-				
+
 				/**
 				 * ClickHandler fuer den Button zum Anlegen einer Info.
 				 */
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId,
-						infos, new AsyncCallback<List<Info>>() {
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
+						new AsyncCallback<List<Info>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								informationLabel
-										.setText("Es trat ein Fehler auf.");
+								informationLabel.setText("Es trat ein Fehler auf.");
 							}
 
 							@Override
 							public void onSuccess(List<Info> result) {
-								informationLabel.setText("Die Infos wurden "
-										+ "erfolgreich angelegt.");
-								
+								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
+
 								if (profiltyp.equals("Np")) {
-									
+
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showNp);
 								}
-								
+
 								/**
-								 *  Fall, die profilId gehoert zu Suchprofil
+								 * Fall, die profilId gehoert zu Suchprofil
 								 */
 								else if (profiltyp.equals("Sp")) {
-									
+
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-									
+
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
 								}
-								
+
 							}
 						});
 			}
 		});
-		
+
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
-		verPanel.add(ueberschriftLabel);  
+		if (profiltyp.equals("Np")) {
+			verPanel.add(pfadLabelNpA);
+		} else if (profiltyp.equals("Sp")) {
+			verPanel.add(pfadLabelSpA);
+		}
+
+		verPanel.add(ueberschriftLabel);
 		verPanel.add(showUnusedEigenschaftFlexTable);
 		verPanel.add(createInfosButton);
 		verPanel.add(informationLabelB);

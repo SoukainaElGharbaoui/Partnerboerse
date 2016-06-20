@@ -38,7 +38,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen.
 	 */
-	private Label ueberschriftLabel = new Label("Ihr Profil:");
+	private Label ueberschriftLabel = new Label("Mein Profil:");
 	private FlexTable showEigenesNpFlexTable = new FlexTable();
 	private Label infoLabel = new Label();
 	private Button loeschenButton = new Button("Profil löschen");

@@ -100,14 +100,6 @@ public class ShowInfo extends VerticalPanel {
 		informationLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-//		showInfoFlexTable.setText(0, 0, " ");
-//		showInfoFlexTable.setText(0, 1, " ");
-//		showInfoFlexTable.setText(0, 2, " ");
-//		showInfoFlexTable.setText(0, 3, " ");
-
-		/**
 		 * Alle Infos anhand der Profil-ID aus der Datenbank auslesen und die
 		 * Infos in die Tabelle einfuegen.
 		 */
@@ -125,11 +117,15 @@ public class ShowInfo extends VerticalPanel {
 						Set<List<Info>> output = result.keySet();
 
 						for (List<Info> listI : output) {
-
+							
 							row = showInfoFlexTable.getRowCount();
 
 							for (Info i : listI) {
-
+								
+								showInfoFlexTable.setCellPadding(6);
+								showInfoFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+								showInfoFlexTable.addStyleName("FlexTable");
+								
 								row++;
 
 								showInfoFlexTable.setText(row, 0, String.valueOf(i.getProfilId()));
