@@ -48,7 +48,7 @@ public class ShowInfo extends VerticalPanel {
 	private Label informationLabel = new Label();
 	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
 	private Button bearbeitenButton = new Button("Infos bearbeiten");
-	private Button loeschenButton = new Button("Infos löschen");
+	private Button loeschenButton = new Button("Alle Infos löschen");
 	private FlexTable showInfoFlexTable = new FlexTable();
 
 	/**
@@ -102,10 +102,10 @@ public class ShowInfo extends VerticalPanel {
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
-		showInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
-		showInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showInfoFlexTable.setText(0, 2, "Eigenschaft");
-		showInfoFlexTable.setText(0, 3, "Infotext");
+//		showInfoFlexTable.setText(0, 0, " ");
+//		showInfoFlexTable.setText(0, 1, " ");
+//		showInfoFlexTable.setText(0, 2, " ");
+//		showInfoFlexTable.setText(0, 3, " ");
 
 		/**
 		 * Alle Infos anhand der Profil-ID aus der Datenbank auslesen und die
