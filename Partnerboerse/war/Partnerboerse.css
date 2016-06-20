@@ -11,23 +11,20 @@ body {
 h1 {
   font-size: 3em;
   font-weight: bold;
-  font-family: Perpetua, sans-serif;
-  font-style: italic;
+  font-family: Arial Unicode MS, Arial, sans-serif;
   color: #db0104;
   text-align: center;
 }
 
 h2{
 	align: middle;
-	margin-left: 390px;
+	margin-left: 510px;
+	margin-right: 450px;
 	margin-bottom: 90px;
+	position: relative;
 }
 
-h2{
-	align: middle;
-	margin-left: 390px;
-	margin-bottom: 90px;
-}
+
 
 h3{
 	font-size: 120%;
@@ -126,15 +123,15 @@ div#Trailer {
 .welcome-label {
 	font-size: 200%;
 	font-weight: bold;
-  	font-family: Perpetua, sans-serif;
-	color: #831b1d;
+  	font-family: Arial Unicode MS, Arial, sans-serif;
+	color:  #db0104;
  	text-align: center;
 }
 
 .welcome-label2 {
 	font-size: 150%;
 	font-weight: bold;
-  	font-family: Perpetua, sans-serif;
+  	font-family: Arial Unicode MS, Arial, sans-serif;
  	text-align: center;
 }
 

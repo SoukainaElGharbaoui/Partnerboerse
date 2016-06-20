@@ -48,9 +48,9 @@ public class Partnerboerse implements EntryPoint {
 		 * CSS anwenden
 		 */
 		begrueßen.setStyleName("welcome-label");
-		begrueßen2.setStyleName("welcome-label2");
+		begrueßen2.setStyleName("welcome-label");
 		begrueßenN.setStyleName("welcome-label");
-		begrueßenN2.setStyleName("welcome-label2");
+		begrueßenN2.setStyleName("welcome-label");
 
 		GWT.create(PartnerboerseAdministration.class);
 

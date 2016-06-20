@@ -34,15 +34,15 @@ public class Navigator extends HorizontalPanel {
 
 		VerticalPanel verPanel1 = new VerticalPanel();
 		/**
-		 * Ab hier wird die Menübar erstellt. Dabei werden abhängig von der 
-		 * Thematik einzelne vertikale aufklappbare Menüs zur 
-		 * horizontalen Menühauptleiste "menu" hinzugefügt.
+		 * Ab hier wird die Menuebar erstellt. Dabei werden abhaengig von der 
+		 * Thematik einzelne vertikale aufklappbare Menues zur 
+		 * horizontalen Menuehauptleiste "menu" hinzugefuegt.
 		 */
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		/**
-		 * Festlegen der Länge der Menübar und Einbinden von CSS.
+		 * Festlegen der Laenge der Menuebar und Einbinden von CSS.
 		 */
 		menu.setWidth("720px");
 		menu.setHeight("36px");
@@ -50,8 +50,8 @@ public class Navigator extends HorizontalPanel {
 		menu.setStyleName("MenuBar");
 
 		/**
-		 * Menüleiste für das Nutzerprofil, in denen die Funktionen bezüglich des
-		 * eigenen Profils zur Verfügung gestellt werden.
+		 * Menueleiste für das Nutzerprofil, in denen die Funktionen bezueglich des
+		 * eigenen Profils zur Verfuegung gestellt werden.
 		 */
 		MenuBar nutzerprofilMenu = new MenuBar(true);
 		nutzerprofilMenu.setAnimationEnabled(true);
@@ -73,9 +73,9 @@ public class Navigator extends HorizontalPanel {
 		profilAnzeigen.setStyleName("MenuItem");
 		
 		/**
-		 * Den einzelnen Menüs werden verschiedene Items hinzugefügt, denen 
-		 * jeweils ein Command übergeben wird. Wird ein bestimmtes Item 
-		 * angeklickt, so wird der jeweilige Command ausgeführt.
+		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
+		 * jeweils ein Command uebergeben wird. Wird ein bestimmtes Item 
+		 * angeklickt, so wird der jeweilige Command ausgefuehrt.
 		 */
 		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
 
@@ -104,7 +104,7 @@ public class Navigator extends HorizontalPanel {
 		nutzerprofilMenu.addSeparator();
 
 		/**
-		 * Menü für das Suchprofil
+		 * Menue für das Suchprofil
 		 */
 		MenuBar suchprofilMenu = new MenuBar(true);
 		suchprofilMenu.setAnimationEnabled(true);
@@ -148,7 +148,7 @@ public class Navigator extends HorizontalPanel {
 		suchprofilMenu.addSeparator();
 		
 		/**
-		 * Menü für die Partnervorschläge
+		 * Menue für die Partnervorschlaege
 		 */
 
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
@@ -241,10 +241,10 @@ public class Navigator extends HorizontalPanel {
 		
 		 
                 /**
-                 * Hinzufügen der vertikalen Menüleisten nutzerProfilMenu, 
+                 * Hinzufuegen der vertikalen Menueleisten nutzerProfilMenu, 
                  * suchprofilMenu und partnervorschlaegeMenu zur 
                  * horizontalen Hauptleiste "menu" und Benennung der 
-                 * Menüleisten in der Menübar per String-Übergabe.
+                 * Menueleisten in der Menuebar per String-Uebergabe.
                  */
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
