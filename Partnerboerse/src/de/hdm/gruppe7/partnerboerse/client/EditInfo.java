@@ -8,7 +8,9 @@ import java.util.Set;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -46,16 +48,29 @@ public class EditInfo extends VerticalPanel {
 	private String infotext;
 	private String typ;
 	private int zaehler;
+	
+	private int counter;
+	private int counter2;
 
 	/**
 	 * Widgets erzeugen.
 	 */
-	private Button loeschenButton;
+	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
+	
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
+	
 	private Button updateInfosButton = new Button("Infos speichern");
+	
 	private Button createInfosButton = new Button("Infos anlegen");
+	private Button loeschenButton = new Button("Ausgewählte Infos löschen");
+	private Button selectAllInfosButton = new Button("Alle Infos markieren");
+	
 	private Label informationLabel = new Label();
+	
+	private CheckBox cb;
+	
+	private int eigenschaftId2;
 
 	/**
 	 * Prüft, die ob Tabelle leer ist.
@@ -112,6 +127,7 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
+		editInfoFlexTable.setText(0, 5, "");
 
 		/**
 		 * Info anhand der Profil-ID aus der Datenbank auslesen.
@@ -135,7 +151,7 @@ public class EditInfo extends VerticalPanel {
 								return;
 							}
 
-				else {
+							else {
 
 								listInfos = listI;
 
@@ -154,70 +170,75 @@ public class EditInfo extends VerticalPanel {
 									editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
 
 									loeschenButton = new Button("Löschen");
-									editInfoFlexTable.setWidget(row, 4, loeschenButton);
+									
+									cb = new CheckBox();
+									cb.setValue(false);
+									editInfoFlexTable.setWidget(row, 4, cb);
+									
+									editInfoFlexTable.setText(row, 5, String.valueOf(row));
 
-									loeschenButton.addClickHandler(new ClickHandler() {
-										public void onClick(ClickEvent event) {
-
-											for (int l = 2; l <= editInfoFlexTable.getRowCount(); l++) {
-
-												int tableEigenschaftId = Integer
-														.valueOf(editInfoFlexTable.getText(l, 1));
-
-												if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
-
-													informationLabel
-															.setText("Die EigenschaftIds stimmen nicht überein.");
-												}
-
-				else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
-
-													informationLabel.setText("Die EigenschaftIds stimmen überein.");
-
-													ClientsideSettings.getPartnerboerseAdministration()
-															.deleteOneInfoNeu(profilId, eigenschaftId,
-																	new AsyncCallback<Void>() {
-
-																		@Override
-																		public void onFailure(Throwable caught) {
-																			informationLabel.setText(
-																					"Beim Löschen der Info trat ein Fehler auf.");
-																		}
-
-																		@Override
-																		public void onSuccess(Void result) {
-																			informationLabel.setText(
-																					"Das Löschen der Info hat funktioniert.");
-																		}
-																	});
-
-													/**
-													 * Jeweilige Zeile der
-													 * Tabelle loeschen.
-													 */
-
-													if (editInfoFlexTable.getRowCount() == 3) {
-
-														editInfoFlexTable.removeRow(l);
-
-														ueberschriftLabel
-																.setText("Sie haben derzeit keine Infos angelegt.");
-														editInfoFlexTable.setVisible(false);
-														updateInfosButton.setVisible(false);
-														informationLabel.setVisible(false);
-
-														ueberschriftLabel.setVisible(true);
-														verPanel.add(createInfosButton);
-													}
-
-				else {
-														editInfoFlexTable.removeRow(l);
-														break;
-													}
-												}
-											}
-										}
-									});
+//									loeschenButton.addClickHandler(new ClickHandler() {
+//										public void onClick(ClickEvent event) {
+//
+//											for (int l = 2; l <= editInfoFlexTable.getRowCount(); l++) {
+//
+//												int tableEigenschaftId = Integer
+//														.valueOf(editInfoFlexTable.getText(l, 1));
+//
+//												if (Integer.valueOf(tableEigenschaftId) != eigenschaftId) {
+//
+//													informationLabel
+//															.setText("Die EigenschaftIds stimmen nicht überein.");
+//												}
+//
+//												else if (Integer.valueOf(tableEigenschaftId) == eigenschaftId) {
+//
+//													informationLabel.setText("Die EigenschaftIds stimmen überein.");
+//
+//													ClientsideSettings.getPartnerboerseAdministration()
+//															.deleteOneInfoNeu(profilId, eigenschaftId,
+//																	new AsyncCallback<Void>() {
+//
+//																		@Override
+//																		public void onFailure(Throwable caught) {
+//																			informationLabel.setText(
+//																					"Beim Löschen der Info trat ein Fehler auf.");
+//																		}
+//
+//																		@Override
+//																		public void onSuccess(Void result) {
+//																			informationLabel.setText(
+//																					"Das Löschen der Info hat funktioniert.");
+//																		}
+//																	});
+//
+//													/**
+//													 * Jeweilige Zeile der
+//													 * Tabelle loeschen.
+//													 */
+//
+//													if (editInfoFlexTable.getRowCount() == 3) {
+//
+//														editInfoFlexTable.removeRow(l);
+//
+//														ueberschriftLabel
+//																.setText("Sie haben derzeit keine Infos angelegt.");
+//														editInfoFlexTable.setVisible(false);
+//														updateInfosButton.setVisible(false);
+//														informationLabel.setVisible(false);
+//
+//														ueberschriftLabel.setVisible(true);
+//														verPanel.add(createInfosButton);
+//													}
+//
+//													else {
+//														editInfoFlexTable.removeRow(l);
+//														break;
+//													}
+//												}
+//											}
+//										}
+//									});
 
 									infotext = listI.get(i).getInfotext();
 
@@ -409,6 +430,21 @@ public class EditInfo extends VerticalPanel {
 						});
 			}
 		});
+		
+		
+		selectAllInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				for (int i = 2; i < editInfoFlexTable.getRowCount(); i++) {
+
+					CheckBox cb = (CheckBox) editInfoFlexTable.getWidget(i, 4);
+					cb.setValue(true);
+					
+					editInfoFlexTable.setWidget(i, 4, cb);
+				}
+			}
+		});
+		
 
 		/**
 		 * ClickHandler fuer den Button zum Anlegen einer Info erzeugen. Sobald
@@ -422,14 +458,100 @@ public class EditInfo extends VerticalPanel {
 				RootPanel.get("Details").add(createInfo);
 			}
 		});
+		
+		
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				for (int i = 2; i < editInfoFlexTable.getRowCount(); i++) {
+					
+					boolean checked = ((CheckBox) editInfoFlexTable.getWidget(i, 4)).getValue();
+					
+					 if (checked == true) {
+						 counter++;
+					 }
+				}
+				counter = counter + 2;
+				
+				if (counter == editInfoFlexTable.getRowCount()) {
+					
+					ueberschriftLabel.setText("" + counter2);
+					informationLabel.setText("Alle ListBoxen sind ausgewählt.");
+					
+					ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId, new AsyncCallback<Void>() {
 
+						@Override
+						public void onFailure(Throwable caught) {
+							informationLabel.setText("Es trat ein Fehler auf.");
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							informationLabel.setText("Es wurden alle Infos gelöscht.");
+						}
+					});
+					
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+						 
+				
+				else {
+					
+					int rowTable = editInfoFlexTable.getRowCount();
+					informationLabel.setText("" + rowTable);
+
+					for (int k = 2; k < rowTable; k++) {
+						
+						boolean checked2 = ((CheckBox) editInfoFlexTable.getWidget(k, 4)).getValue();
+						
+						if (checked2 == true) {
+							
+						 eigenschaftId2 = Integer.valueOf(editInfoFlexTable.getText(k, 1));
+						 
+						 
+						 ClientsideSettings.getPartnerboerseAdministration()
+							.deleteOneInfoNeu(profilId, eigenschaftId2,
+									new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											informationLabel.setText(
+													"Beim Löschen der Info trat ein Fehler auf.");
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											informationLabel.setText(
+													"Das Löschen der Info hat funktioniert.");
+										}
+						});
+						 
+						 
+						 /**
+							 * Jeweilige Zeile der
+							 * Tabelle loeschen.
+							 */
+							editInfoFlexTable.removeRow(k);
+							k--;
+						}
+					}
+				}
+			}
+		});
+
+		
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		buttonPanel.add(updateInfosButton);
+		buttonPanel.add(loeschenButton);
+		buttonPanel.add(selectAllInfosButton);
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
+		verPanel.add(buttonPanel);
 		verPanel.add(informationLabel);
-		verPanel.add(updateInfosButton);
-
 	}
 }
