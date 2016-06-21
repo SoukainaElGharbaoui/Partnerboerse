@@ -68,6 +68,10 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.addStyleName("FlexTable");
 		showFremdprofilFlexTable.setCellPadding(6);
 		showFremdprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
+		pfadLabelPvNp.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelPvSp.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelM.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelS.addStyleName("partnerboerse-zurueckbutton");
 
 		/**
 		 * Erste Spalte der Tabelle festlegen.

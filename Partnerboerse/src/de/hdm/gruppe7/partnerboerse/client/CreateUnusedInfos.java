@@ -102,6 +102,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 		showUnusedEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
 
 		/**
 		 * Erste Zeile der Tabelle festlegen.

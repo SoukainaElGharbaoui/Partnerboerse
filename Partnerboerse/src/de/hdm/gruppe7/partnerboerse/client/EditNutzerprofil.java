@@ -78,6 +78,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.addStyleName("FlexTable");
 		editNutzerprofilFlexTable.setCellPadding(6);
 		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
 		
 		/**
 		 * Erste Spalte der Tabelle festlegen.
