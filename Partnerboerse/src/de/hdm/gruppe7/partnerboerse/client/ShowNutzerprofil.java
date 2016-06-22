@@ -84,6 +84,8 @@ public class ShowNutzerprofil extends VerticalPanel {
 		showEigenesNpFlexTable.setText(7, 0, "Raucherstatus");
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
 		showEigenesNpFlexTable.setText(9, 0, "EMail");
+		
+		befuelleTabelle(); 
 
 		/**
 		 * ClickHandler fuer den Button zum Bearbeiten des Nutzerprofils erzeugen. 

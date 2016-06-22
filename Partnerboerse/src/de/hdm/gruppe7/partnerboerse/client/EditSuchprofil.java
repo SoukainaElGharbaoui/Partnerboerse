@@ -292,7 +292,6 @@ public class EditSuchprofil extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				
 				int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
-				
 				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp); 
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);

@@ -40,7 +40,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen.
 	 */
-	private Label auswahlLabel = new Label("Wählen Sie das anzuzeigende Suchprofil aus.");
+	private Label auswahlLabel = new Label("Wählen Sie ein Suchprofil aus.");
 	private Label ueberschriftLabel = new Label(); 
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
@@ -129,7 +129,16 @@ public class ShowSuchprofil extends VerticalPanel {
 					for (Suchprofil s : result) {
 						auswahlListBox.addItem(s.getSuchprofilName());
 					}
+					
 					createSuchprofilButton.setVisible(false);
+					
+					for (int i = 0; i < auswahlListBox.getItemCount(); i++) {
+						if (showSuchprofilFlexTable.getText(1, 1).equals(auswahlListBox.getValue(i))) {
+							auswahlListBox.setSelectedIndex(i);
+						}
+					}
+					
+					
 				}
 				
 						
@@ -182,7 +191,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditSuchprofil editSuchprofil = new EditSuchprofil(auswahlListBox.getSelectedItemText(), profiltyp);
+				EditSuchprofil editSuchprofil = new EditSuchprofil(showSuchprofilFlexTable.getText(1, 1), profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editSuchprofil);
 			}
@@ -196,21 +205,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				for(int i = 0; i < listS.size(); i++) {
-					
-					if(listS.get(i) != null) {
-						
-						if(!auswahlListBox.getSelectedItemText().equals(listS.get(i).getSuchprofilName())) {
-							
-							naechsteSuchprofilId = listS.get(i).getProfilId(); 
-							
-							break; 
-						}
-					}
-					
-				}
-
+				deleteSuchprofil(); 
 				}
 			});			
 		
@@ -237,7 +232,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				}
 
 				public void onSuccess(Suchprofil result) {
-					
+					ueberschriftLabel.setText("Ihr Suchprofil '" + result.getSuchprofilName() + "':");
 					showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
 					showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
 					showSuchprofilFlexTable.setText(2, 1, result.getGeschlecht());
@@ -251,6 +246,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					/**
 					 * Widgets und Panels den Panels hinzufuegen. 
 					 */
+					suchprofilPanel.add(ueberschriftLabel);
 					suchprofilPanel.add(showSuchprofilFlexTable);
 					buttonPanel.add(bearbeitenButton);
 					buttonPanel.add(loeschenButton);
@@ -281,7 +277,7 @@ public class ShowSuchprofil extends VerticalPanel {
 
 				public void onSuccess(Suchprofil result) {
 					
-					ueberschriftLabel.setText("Dein Suchprofil " + result.getSuchprofilName());
+					ueberschriftLabel.setText("Ihr Suchprofil '" + result.getSuchprofilName() + "':");
 					int suchprofilId = result.getProfilId();
 					showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
 					showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
@@ -305,8 +301,23 @@ public class ShowSuchprofil extends VerticalPanel {
 	}
 	
 	public void deleteSuchprofil() {
+		
+		for(int i = 0; i < listS.size(); i++) {
+			
+			if(listS.get(i) != null) {
+				
+				if(!showSuchprofilFlexTable.getText(1, 1).equals(listS.get(i).getSuchprofilName())) {
+					
+					naechsteSuchprofilId = listS.get(i).getProfilId(); 
+					
+					break; 
+				}
+			}
+			
+		}
+		
 		ClientsideSettings.getPartnerboerseAdministration()
-		.deleteSuchprofil(nutzerprofil.getProfilId(), auswahlListBox.getSelectedItemText(), new AsyncCallback<Void>() {
+		.deleteSuchprofil(nutzerprofil.getProfilId(), showSuchprofilFlexTable.getText(1, 1), new AsyncCallback<Void>() {
 
 			public void onFailure(Throwable caught) {
 				infoLabel.setText("Es trat ein Fehler auf");
@@ -315,6 +326,8 @@ public class ShowSuchprofil extends VerticalPanel {
 			public void onSuccess(Void result) {
 				
 				ShowSuchprofil showSuchprofil = new ShowSuchprofil(naechsteSuchprofilId, profiltyp);
+				ueberschriftPanel.clear();
+				auswahlPanel.clear();
 				suchprofilPanel.clear();
 				infoPanel.clear();
 				suchprofilPanel.add(showSuchprofil);
