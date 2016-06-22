@@ -50,37 +50,23 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 * Neue Variable erzeugen, die die Anzahl der befuellten Zeilen enthaelt
 	 */
 	private int zaehler;
+	private String listtyp;
+	private int fremdprofilId;
 
-	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
-	 * 
-	 * @return boolean, zeigt ob die Tabelle leer ist oder nicht
-	 */
-	public boolean pruefeLeereTable() {
 
-		for (int k = 1; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
-
-			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
-			}
-
-			else {
-				zaehler++;
-			}
-		}
-
-		if (zaehler == 0) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
 
 	/**
 	 * Konstruktor hinzufuegen.
 	 */
-	public ShowPartnervorschlaegeNp(final String listtyp) {
+	public ShowPartnervorschlaegeNp(String listtyp) {
+		
+		this.listtyp = listtyp;
+		
+		run();
+		
+	}
+	
+	public void run() {
 
 		/**
 		 * VerticelPanel wird dem Konstruktor hinzugefuegt.
@@ -111,7 +97,52 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		partnervorschlaegeNpFlexTable.setText(0, 4, "Geburtsdatum");
 		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
 		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
+		
+		befuelleTabelleNp();
 
+		/**
+		 * Alle Widgets dem VerticalPanel hinzufuegen.
+		 */
+
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(ergebnisLabel);
+		verPanel.add(infoLabel);
+		verPanel.add(informationLabel);
+		verPanel.add(partnervorschlaegeNpFlexTable);
+
+	}
+	
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
+	 * 
+	 * @return boolean, zeigt ob die Tabelle leer ist oder nicht
+	 */
+	public boolean pruefeLeereTable() {
+
+		for (int k = 1; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
+
+			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
+			}
+
+			else {
+				zaehler++;
+			}
+		}
+
+		if (zaehler == 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+	}
+	
+	
+	
+	public void befuelleTabelleNp() {
+		
 		/**
 		 * Es werden alle Partnervorschlaege anhand des des eigenen Nuzerprofis,
 		 * nach Aehnlichkeit geordnet, ausgegeben.
@@ -138,7 +169,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 						for (Nutzerprofil np : result) {
 
-							final int fremdprofilId = np.getProfilId();
+							fremdprofilId = np.getProfilId();
 
 							row++;
 
@@ -198,8 +229,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 													String profiltyp = "Fp";
 
-													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,
-															profiltyp, listtyp);
+													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp);
 													RootPanel.get("Details").clear();
 													RootPanel.get("Details").add(showFremdprofil);
 												}
@@ -224,16 +254,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						}
 					}
 				});
-
-		/**
-		 * Alle Widgets dem VerticalPanel hinzufuegen.
-		 */
-
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(ergebnisLabel);
-		verPanel.add(infoLabel);
-		verPanel.add(informationLabel);
-		verPanel.add(partnervorschlaegeNpFlexTable);
-
+		
 	}
 }

@@ -27,6 +27,7 @@ public class ShowInfo extends VerticalPanel {
 	 * VerticalPanel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	
 
 	/**
 	 * HorizontalPanel erzeugen.
@@ -89,6 +90,7 @@ public class ShowInfo extends VerticalPanel {
 		 * Vertikales Panel hinzufuegen.
 		 */
 		this.add(verPanel);
+		
 
 		/**
 		 * Tabelle formatieren und CSS einbinden.

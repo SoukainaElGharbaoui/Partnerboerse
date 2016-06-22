@@ -455,12 +455,6 @@ public class EditInfo extends VerticalPanel {
 		});
 
 		/**
-		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils
-		 * angezeigt.
-		 */
-		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
-
-		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
 		if (profiltyp.equals("Np")) {
