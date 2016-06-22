@@ -18,6 +18,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 
+/**
+ * Diese Klasse dient dazu, innerhalb des Reports Partnervorschlaege anhand
+ * eines Nutzerprofils azuzeigen.
+ */
 public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 	/**
@@ -38,36 +42,19 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 * Konstruktor hinzufügen.
 	 */
 	public ShowAllPartnervorschlaegeSpReport() {
+		run();
+
+	}
+
+	/**
+	 * Die Methode startet den Aufbau der Seite.
+	 */
+	public void run() {
 		this.add(verPanel);
 
 		auswahlLabel.addStyleName("partnerboerse-label");
 
-		/**
-		 * AuswahlListBox befuellen
-		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
-				new AsyncCallback<List<Suchprofil>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
-
-					@Override
-					public void onSuccess(List<Suchprofil> result) {
-
-						if (result.isEmpty()) {
-							auswahlListBox.setVisible(false);
-							anzeigenButton.setVisible(false);
-							auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
-
-						} else {
-							for (Suchprofil s : result) {
-								auswahlListBox.addItem(s.getSuchprofilName());
-							}
-						}
-					}
-				});
+		suchprofileAnzeigen();
 
 		/**
 		 * Report auslesen.
@@ -109,6 +96,35 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenButton);
 		verPanel.add(auswahlPanel);
-
 	}
+
+	/**
+	 * AuswahlListBox befuellen
+	 */
+	public void suchprofileAnzeigen() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
+				new AsyncCallback<List<Suchprofil>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					@Override
+					public void onSuccess(List<Suchprofil> result) {
+
+						if (result.isEmpty()) {
+							auswahlListBox.setVisible(false);
+							anzeigenButton.setVisible(false);
+							auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+
+						} else {
+							for (Suchprofil s : result) {
+								auswahlListBox.addItem(s.getSuchprofilName());
+							}
+						}
+					}
+				});
+	}
+
 }

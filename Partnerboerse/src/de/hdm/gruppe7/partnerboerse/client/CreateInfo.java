@@ -52,6 +52,8 @@ public class CreateInfo extends VerticalPanel {
 	 */
 	private String eigenschaftId = null;
 	private int row;
+	private int profilId;
+	private String profiltyp;
 
 	/**
 	 * Widgets erzeugen.
@@ -67,7 +69,16 @@ public class CreateInfo extends VerticalPanel {
 	 * @param profilId
 	 * @param profiltyp
 	 */
-	public CreateInfo(final int profilId, final String profiltyp) {
+	public CreateInfo(int profilId, String profiltyp) {
+		this.profilId = profilId;
+		this.profiltyp = profiltyp;
+		run();
+	}
+
+	/**
+	 * Die Methode startet den Aufbau der Seite.
+	 */
+	public void run() {
 		this.add(verPanel);
 
 		/**
@@ -86,10 +97,80 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
 		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
+		befuelleTabelle();
+
 		/**
-		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank
-		 * ausgelesen. Erst die Beschreibungsinfos, danach die Auswahlinfos.
+		 * ClickHandler fuer den Button zum Anlegen einer Info.
 		 */
+
+		createInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+				List<Info> infos = erstelleInfo();
+
+				/**
+				 * Die Infos werden in die Datenbank eingefügt.Danach wird
+				 * geprueft, ob es sich um Nutzerprofil oder ein Suchprofil
+				 * handelt. Handelt es sich um ein Nutzerprofil, dann wird man
+				 * nach dem Anlegen auf das erstelle Nutzerprofil
+				 * weitergeleitet. Es wird ebenfalls der logout hinzugefügt und
+				 * gesetzt. Handelt es sich um Suchprofil, dann wird man nach
+				 * dem Anlegen auf das entsprechende Suchprofil weitergeleitet.
+				 */
+				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
+						new AsyncCallback<List<Info>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								informationLabel.setText("Es trat ein Fehler auf.");
+							}
+
+							@Override
+							public void onSuccess(List<Info> result) {
+								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
+
+								if (profiltyp.equals("Np")) {
+
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+									RootPanel.get("Navigator").add(new Navigator());
+
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+
+									Anchor signOut = new Anchor();
+
+									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
+									signOut.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId()
+											+ " ausloggen");
+
+									RootPanel.get("Navigator").add(signOut);
+								}
+
+						else if (profiltyp.equals("Sp")) {
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
+							}
+						});
+			}
+		});
+
+		/**
+		 * Widgets zum Panel hinzufuegen.
+		 */
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(showEigenschaftFlexTable);
+		verPanel.add(createInfosButton);
+		verPanel.add(informationLabel);
+	}
+
+	/**
+	 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank
+	 * ausgelesen. Erst die Beschreibungsinfos, danach die Auswahlinfos.
+	 */
+	public void befuelleTabelle() {
+
 		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaften(
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
 
@@ -161,119 +242,65 @@ public class CreateInfo extends VerticalPanel {
 						}
 					}
 				});
+	}
 
-		/**
-		 * ClickHandler fuer den Button zum Anlegen einer Info.
-		 */
+	/**
+	 * Erstellen der Info.
+	 * 
+	 * @return infos
+	 */
+	public List<Info> erstelleInfo() {
+		List<Info> infos = new ArrayList<Info>();
+		String infotextTable = null;
 
-		createInfosButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		int k;
 
-				List<Info> infos = new ArrayList<Info>();
-				String infotextTable = null;
+		for (int i = 2; i < showEigenschaftFlexTable.getRowCount(); i++) {
 
-				int k;
+			k = 0;
+			k = i - 2;
 
-				for (int i = 2; i < showEigenschaftFlexTable.getRowCount(); i++) {
+			String eigenschaftIdTable = showEigenschaftFlexTable.getText(i, 1);
 
-					k = 0;
-					k = i - 2;
+			Widget w = showEigenschaftFlexTable.getWidget(i, 3);
 
-					String eigenschaftIdTable = showEigenschaftFlexTable.getText(i, 1);
+			if (w instanceof TextArea) {
 
-					Widget w = showEigenschaftFlexTable.getWidget(i, 3);
+				infotextTable = ((TextArea) w).getText();
 
-					if (w instanceof TextArea) {
-
-						infotextTable = ((TextArea) w).getText();
-
-						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
-						}
-
-						else if (((TextArea) w).getText().isEmpty()) {
-							informationLabel.setText("Das Eingabefeld ist leer.");
-						}
-
-						else {
-							Info info = new Info();
-							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-							info.setInfotext(infotextTable);
-
-							infos.add(info);
-						}
-					}
-
-					else if (w instanceof ListBox) {
-
-						infotextTable = ((ListBox) w).getSelectedItemText();
-
-						if (infotextTable.equals("Keine Auswahl")) {
-						}
-
-						else {
-							Info info = new Info();
-							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-							info.setInfotext(infotextTable);
-
-							infos.add(info);
-						}
-					}
+				if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
 				}
 
-				/**
-				 * Die Infos werden in die Datenbank eingefügt.Danach wird
-				 * geprueft, ob es sich um Nutzerprofil oder ein Suchprofil
-				 * handelt. Handelt es sich um ein Nutzerprofil, dann wird man
-				 * nach dem Anlegen auf das erstelle Nutzerprofil
-				 * weitergeleitet. Es wird ebenfalls der logout hinzugefügt und
-				 * gesetzt. Handelt es sich um Suchprofil, dann wird man nach
-				 * dem Anlegen auf das entsprechende Suchprofil weitergeleitet.
-				 */
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
-						new AsyncCallback<List<Info>>() {
+				else if (((TextArea) w).getText().isEmpty()) {
+					informationLabel.setText("Das Eingabefeld ist leer.");
+				}
 
-							@Override
-							public void onFailure(Throwable caught) {
-								informationLabel.setText("Es trat ein Fehler auf.");
-							}
+				else {
+					Info info = new Info();
+					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+					info.setInfotext(infotextTable);
 
-							@Override
-							public void onSuccess(List<Info> result) {
-								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
-
-								if (profiltyp.equals("Np")) {
-
-									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-									RootPanel.get("Navigator").add(new Navigator());
-
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showNp);
-
-									Anchor signOut = new Anchor();
-
-									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
-									signOut.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId()
-											+ " ausloggen");
-
-									RootPanel.get("Navigator").add(signOut);
-								}
-
-						else if (profiltyp.equals("Sp")) {
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showSp);
-								}
-							}
-						});
+					infos.add(info);
+				}
 			}
-		});
 
-		/**
-		 * Widgets zum Panel hinzufuegen.
-		 */
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(showEigenschaftFlexTable);
-		verPanel.add(createInfosButton);
-		verPanel.add(informationLabel);
+			else if (w instanceof ListBox) {
+
+				infotextTable = ((ListBox) w).getSelectedItemText();
+
+				if (infotextTable.equals("Keine Auswahl")) {
+				}
+
+				else {
+					Info info = new Info();
+					info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+					info.setInfotext(infotextTable);
+
+					infos.add(info);
+				}
+			}
+		}
+		return infos;
 	}
+
 }
