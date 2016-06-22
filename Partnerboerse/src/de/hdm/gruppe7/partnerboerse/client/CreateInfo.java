@@ -258,7 +258,7 @@ public class CreateInfo extends VerticalPanel {
 									RootPanel.get("Navigator").add(signOut);
 								}
 
-						else if (profiltyp.equals("Sp")) {
+						        else if (profiltyp.equals("Sp")) {
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);

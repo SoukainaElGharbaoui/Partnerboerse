@@ -31,7 +31,7 @@ public class ShowInfo extends VerticalPanel {
 	/**
 	 * HorizontalPanel erzeugen.
 	 */
-	HorizontalPanel buttonPanel = new HorizontalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Attribute erzeugen
@@ -50,32 +50,9 @@ public class ShowInfo extends VerticalPanel {
 	private Button bearbeitenButton = new Button("Infos bearbeiten");
 	private Button loeschenButton = new Button("Infos löschen");
 	private FlexTable showInfoFlexTable = new FlexTable();
-
-	/**
-	 * Prüft, die ob Tabelle leer ist.
-	 * 
-	 * @return boolean
-	 */
-	public boolean pruefeLeereTable() {
-
-		for (int k = 2; k < showInfoFlexTable.getRowCount(); k++) {
-
-			if (showInfoFlexTable.getText(k, 0) == null) {
-			}
-
-			else {
-				zaehler++;
-			}
-		}
-
-		if (zaehler == 0) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
+	
+	private int profilId;
+	private String profiltyp; 
 
 	/**
 	 * Konstruktor hinzufügen
@@ -84,7 +61,12 @@ public class ShowInfo extends VerticalPanel {
 	 * @param profiltyp
 	 */
 	public ShowInfo(final int profilId, final String profiltyp) {
-
+		this.profilId = profilId; 
+		this.profiltyp = profiltyp; 
+		run(); 
+	}
+	
+	public void run() {
 		/**
 		 * Vertikales Panel hinzufuegen.
 		 */
@@ -106,7 +88,68 @@ public class ShowInfo extends VerticalPanel {
 		showInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
 		showInfoFlexTable.setText(0, 2, "Eigenschaft");
 		showInfoFlexTable.setText(0, 3, "Infotext");
+		
+		getAllInfos(); 
 
+		/**
+		 * Widgets zum Panel hinzufuegen.
+		 */
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(showInfoFlexTable);
+		verPanel.add(informationLabel);
+
+		/**
+		 * Prüfen, ob es sich um ein Info eines Fremdprofils handelt. Wenn
+		 * nicht, werden entsprechende Buttons hinzugefuegt. Löschen, Bearbeiten
+		 * und Anlegen.
+		 */
+		if (!profiltyp.equals("Fp")) {
+			buttonPanel.add(erstelleRestlicheInfosButton);
+			buttonPanel.add(bearbeitenButton);
+			buttonPanel.add(loeschenButton);
+			verPanel.add(buttonPanel);
+		}
+
+		/**
+		 * ClickHandler fuer den Button zum Loeschen der gesamten Info. Es mus
+		 * geprueft werden, ob es sich um die Info eines Nutzerprofils oder
+		 * eines Suchprofils handelt.
+		 */
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				deleteAllInfos();
+			}
+		});
+
+		/**
+		 * ClickHandler fuer den Button zum Bearbeiten der Info erzeugen. Sobald
+		 * der Button betaetigt wird, wird die Seite zum Bearbeiten der Info
+		 * aufgerufen.
+		 */
+		bearbeitenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				EditInfo editInfo = new EditInfo(profilId, profiltyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(editInfo);
+			}
+		});
+
+		/**
+		 * ClickHandler fuer den Button zum erstellen der noch nicht angelegten
+		 * Infos erzeugen. Sobald der Button betaetigt wird, wird die Seite zum
+		 * hinzufügen der bislang nicht ngelegten Infos aufgerufen.
+		 */
+		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId, profiltyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(createRestlicheInfos);
+			}
+		});
+
+	}
+	
+	public void getAllInfos() {
 		/**
 		 * Alle Infos anhand der Profil-ID aus der Datenbank auslesen und die
 		 * Infos in die Tabelle einfuegen.
@@ -179,105 +222,69 @@ public class ShowInfo extends VerticalPanel {
 						}
 					}
 				});
-		/**
-		 * Widgets zum Panel hinzufuegen.
-		 */
-		verPanel.add(showInfoFlexTable);
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(showInfoFlexTable);
-		verPanel.add(informationLabel);
+	}
+	
+	/**
+	 * Prüft, die ob Tabelle leer ist.
+	 * 
+	 * @return boolean
+	 */
+	public boolean pruefeLeereTable() {
 
-		/**
-		 * Prüfen, ob es sich um ein Info eines Fremdprofils handelt. Wenn
-		 * nicht, werden entsprechende Buttons hinzugefuegt. Löschen, Bearbeiten
-		 * und Anlegen.
-		 */
-		if (!profiltyp.equals("Fp")) {
+		for (int k = 2; k < showInfoFlexTable.getRowCount(); k++) {
 
-			verPanel.add(buttonPanel);
-			buttonPanel.add(erstelleRestlicheInfosButton);
+			if (showInfoFlexTable.getText(k, 0) == null) {
+			}
 
-			verPanel.add(buttonPanel);
-			buttonPanel.add(bearbeitenButton);
-
-			verPanel.add(buttonPanel);
-			buttonPanel.add(loeschenButton);
-
+			else {
+				zaehler++;
+			}
 		}
 
-		/**
-		 * ClickHandler fuer den Button zum Loeschen der gesamten Info. Es mus
-		 * geprueft werden, ob es sich um die Info eines Nutzerprofils oder
-		 * eines Suchprofils handelt.
-		 */
-		loeschenButton.addClickHandler(new ClickHandler() {
+		if (zaehler == 0) {
+			return true;
+		}
 
-			public void onClick(ClickEvent event) {
+		else {
+			return false;
+		}
+	}
+	
+	public void deleteAllInfos() {
+		ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
+				new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
+					}
 
-				ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
-						new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
-							}
+					@Override
+					public void onSuccess(Void result) {
+						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
-							@Override
-							public void onSuccess(Void result) {
-								informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+						/**
+						 * Fall, profilId gehört zu Nutzerprofil
+						 */
+						if (profiltyp == "Np") {
 
-								/**
-								 * Fall, profilId gehört zu Nutzerprofil
-								 */
-								if (profiltyp == "Np") {
+							ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
-									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showNp);
+						}
 
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showNp);
-								}
+						/**
+						 * Fall, profilId gehört zu Suchprofil
+						 */
+						else if (profiltyp == "Sp") {
 
-								/**
-								 * Fall, profilId gehört zu Suchprofil
-								 */
-								else if (profiltyp == "Sp") {
+							int suchprofilId = profilId;
+							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId, profiltyp);
 
-									int suchprofilId = profilId;
-									ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId, profiltyp);
-
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showSp);
-								}
-							}
-						});
-			}
-		});
-
-		/**
-		 * ClickHandler fuer den Button zum Bearbeiten der Info erzeugen. Sobald
-		 * der Button betaetigt wird, wird die Seite zum Bearbeiten der Info
-		 * aufgerufen.
-		 */
-		bearbeitenButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				EditInfo editInfo = new EditInfo(profilId, profiltyp);
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(editInfo);
-			}
-		});
-
-		/**
-		 * ClickHandler fuer den Button zum erstellen der noch nicht angelegten
-		 * Infos erzeugen. Sobald der Button betaetigt wird, wird die Seite zum
-		 * hinzufügen der bislang nicht ngelegten Infos aufgerufen.
-		 */
-		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				CreateUnusedInfos createRestlicheInfos = new CreateUnusedInfos(profilId, profiltyp);
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(createRestlicheInfos);
-			}
-		});
-
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showSp);
+						}
+					}
+				});
 	}
 }

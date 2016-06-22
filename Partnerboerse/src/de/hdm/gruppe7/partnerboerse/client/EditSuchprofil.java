@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -25,9 +26,10 @@ public class EditSuchprofil extends VerticalPanel {
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Vertikales Panel erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Widgets erzeugen.
@@ -43,6 +45,7 @@ public class EditSuchprofil extends VerticalPanel {
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
 	private Button saveSuchprofilButton = new Button("Suchprofil speichern");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label infoLabel = new Label();
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
@@ -268,6 +271,7 @@ public class EditSuchprofil extends VerticalPanel {
 									ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSuchprofil);
+									
 					}
 				});
 
@@ -278,13 +282,36 @@ public class EditSuchprofil extends VerticalPanel {
 
 			}
 		});
+		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen des Bearbeitens eines Suchprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, wird die Seite zum Anzeigen der Suchprofile
+		 * aufgerufen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
+				
+				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showSuchprofil);
+				
+			}
+			
+		}); 
+		
+		
+		
 
 		/**
 		 * Widgets zum vertikalen Panel hinzufuegen. 
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);
-		verPanel.add(saveSuchprofilButton);
+		buttonPanel.add(saveSuchprofilButton); 
+		buttonPanel.add(abbrechenButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(infoLabel);
 	}
 	

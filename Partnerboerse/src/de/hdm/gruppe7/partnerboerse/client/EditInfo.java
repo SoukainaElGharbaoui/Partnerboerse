@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,6 +33,7 @@ public class EditInfo extends VerticalPanel {
 	 * VerticalPanels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Listen erzeugen.
@@ -54,6 +56,7 @@ public class EditInfo extends VerticalPanel {
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
 	private Button updateInfosButton = new Button("Infos speichern");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label informationLabel = new Label();
 
@@ -422,14 +425,26 @@ public class EditInfo extends VerticalPanel {
 				RootPanel.get("Details").add(createInfo);
 			}
 		});
+		
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+				
+			}
+			
+		}); 
 
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
+		buttonPanel.add(updateInfosButton);
+		buttonPanel.add(abbrechenButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(informationLabel);
-		verPanel.add(updateInfosButton);
 
 	}
 }

@@ -3,6 +3,8 @@ package de.hdm.gruppe7.partnerboerse.client;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -25,45 +27,39 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen..
 	 */
 	
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * VerticalPanels und HorizontalPanels erzeugen.
+	 * Panels erzeugen.
 	 */
-	
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel horPanelTabelle = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 	
 	/**
-	 * Tabelle zur Anzeige der Partnervorschlaege erzeugen.
+	 * Widgets erzeugen. 
 	 */
-	
 	private FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
-	
-	/**
-	 * Labels und Buttons erzeugen.
-	 */
-	
 	private Label ueberschriftLabel = new Label("Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge angezeigt bekommen möchten:");
 	private Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
 	private Label ergebnisLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
+	private Button auswahlButton = new Button("Partnervorschläge anzeigen"); 
 	private Button anzeigenButton;
 	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 	
 	/**
-	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
+	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt
 	 */
 	private int zaehler = 0;
 	
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
+	 * Methode erstellen, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
 	 */
 	public boolean pruefeLeereTable() {
 		
@@ -133,13 +129,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 						
 							if (result.isEmpty()) {
 								auswahlListBox.setVisible(false);
-								anzeigenSpButton.setVisible(false);
 								ueberschriftLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
 
 								createSuchprofilButton.setVisible(true); 
 
 							} else {
-								
 								for (Suchprofil s : result) {
 									auswahlListBox.addItem(s.getSuchprofilName());
 								}
@@ -177,7 +171,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 * 
 		 */
 		
-		anzeigenSpButton.addClickHandler(new ClickHandler() {
+		auswahlButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
 				horPanelTabelle.clear();
@@ -283,7 +277,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									infoLabel.setVisible(false);
 									ergebnisLabel.setVisible(false);
 									auswahlListBox.setVisible(false);
-									anzeigenSpButton.setVisible(false);
 									anzeigenButton.setVisible(false);
 									createSuchprofilButton.setVisible(false);
 								}
@@ -313,7 +306,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 		verPanel.add(ueberschriftLabel);
 		auswahlPanel.add(auswahlListBox);
-		auswahlPanel.add(anzeigenSpButton);
+		auswahlPanel.add(auswahlButton);
 		verPanel.add(createSuchprofilButton);	
 		verPanel.add(auswahlPanel);
 

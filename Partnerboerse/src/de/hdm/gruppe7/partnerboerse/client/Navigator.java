@@ -1,14 +1,19 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
+import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 
 
@@ -24,15 +29,12 @@ public class Navigator extends HorizontalPanel {
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	int aehnlichkeit = 0;
-
+	
 	/**
 	 * 
 	 */
 	public Navigator() {
 
-		
-
-		VerticalPanel verPanel1 = new VerticalPanel();
 		/**
 		 * Ab hier wird die Menübar erstellt. Dabei werden abhängig von der 
 		 * Thematik einzelne vertikale aufklappbare Menüs zur 
@@ -135,12 +137,39 @@ public class Navigator extends HorizontalPanel {
 		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				String profiltyp = "Sp";
-				int suchprofilId = 0;
-				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showSuchprofil);
-			}
+				
+				ClientsideSettings.getPartnerboerseAdministration()
+				.getAllSuchprofileFor(
+						nutzerprofil.getProfilId(),
+						new AsyncCallback<List<Suchprofil>>() {
+
+							@Override
+							public void onFailure(
+									Throwable caught) {
+							}
+
+							@Override
+							public void onSuccess(
+									List<Suchprofil> result) {
+								
+								int suchprofilId;
+								
+								if (result.isEmpty()) {
+									suchprofilId = 0;
+								} else {
+									suchprofilId = result.get(0).getProfilId();
+								}
+								
+								String profiltyp = "Sp";
+								ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showSuchprofil);
+
+							}
+
+						});
+				
+				}
 		});
 		
 		suchprofilAnzeigen.setStyleName("MenuItem");

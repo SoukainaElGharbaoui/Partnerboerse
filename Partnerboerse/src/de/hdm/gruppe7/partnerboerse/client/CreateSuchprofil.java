@@ -206,8 +206,7 @@ public class CreateSuchprofil extends VerticalPanel {
 									int suchprofilId = result.getProfilId();
 									CreateInfo createInfo = new CreateInfo(suchprofilId, profiltyp);
 									RootPanel.get("Details").clear();
-									RootPanel.get("Details")
-									.add(createInfo);
+									RootPanel.get("Details").add(createInfo);
 								}
 
 							});
