@@ -48,7 +48,7 @@ public class ShowInfo extends VerticalPanel {
 	private Label informationLabel = new Label();
 	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
 	private Button bearbeitenButton = new Button("Infos bearbeiten");
-	private Button loeschenButton = new Button("Infos löschen");
+	private Button loeschenButton = new Button("Alle Infos löschen");
 	private FlexTable showInfoFlexTable = new FlexTable();
 	
 	private int profilId;
@@ -168,11 +168,15 @@ public class ShowInfo extends VerticalPanel {
 						Set<List<Info>> output = result.keySet();
 
 						for (List<Info> listI : output) {
-
+							
 							row = showInfoFlexTable.getRowCount();
 
 							for (Info i : listI) {
-
+								
+								showInfoFlexTable.setCellPadding(6);
+								showInfoFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+								showInfoFlexTable.addStyleName("FlexTable");
+								
 								row++;
 
 								showInfoFlexTable.setText(row, 0, String.valueOf(i.getProfilId()));

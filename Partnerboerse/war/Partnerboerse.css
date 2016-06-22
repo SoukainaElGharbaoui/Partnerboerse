@@ -102,6 +102,12 @@ div#Trailer {
 	background: #8080ff;
 }
 
+.partnerboerse-zurueckbutton {
+	font-size: 100%;
+	font-weight: bold; 
+	color: #1524db;
+}
+
 .partnerboerse-menubutton {
 	font-size: 100%;
 	font-weight: bold;
