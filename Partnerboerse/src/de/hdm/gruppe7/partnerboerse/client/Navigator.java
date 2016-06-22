@@ -28,7 +28,6 @@ public class Navigator extends HorizontalPanel {
 
 	int aehnlichkeit = 0;
 	
-	Label test = new Label("hallo");
 
 	/**
 	 * 
@@ -83,29 +82,34 @@ public class Navigator extends HorizontalPanel {
 		 * jeweils ein Command übergeben wird. Wird ein bestimmtes Item
 		 * angeklickt, so wird der jeweilige Command ausgeführt.
 		 */
-		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem(
-				"Merkliste anzeigen", new Command() {
 
-					@Override
-					public void execute() {
-						ShowMerkliste showMerkliste = new ShowMerkliste();
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showMerkliste);
-					}
-				});
+		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
+
+			@Override
+			public void execute() {
+				String listtyp = "M";
+				ShowMerkliste showMerkliste = new ShowMerkliste(listtyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showMerkliste);
+			}
+		});
+		
 
 		merklisteAnzeigen.setStyleName("MenuItem");
 
 		MenuItem sperrlisteAnzeigen = nutzerprofilMenu.addItem(
 				"Sperrliste anzeigen", new Command() {
 
-					@Override
-					public void execute() {
-						ShowSperrliste showSperrliste = new ShowSperrliste();
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(showSperrliste);
-					}
-				});
+
+			@Override
+			public void execute() {
+				String listtyp = "S";
+				ShowSperrliste showSperrliste = new ShowSperrliste(listtyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showSperrliste);
+			}
+		});
+		
 
 		sperrlisteAnzeigen.setStyleName("MenuItem");
 
@@ -190,7 +194,7 @@ public class Navigator extends HorizontalPanel {
 															kleinsteZahl = spId
 																	.get(i);
 															
-															test.setText("dd"+kleinsteZahl);
+															
 															
 
 														}
@@ -255,18 +259,20 @@ public class Navigator extends HorizontalPanel {
 													@Override
 													public void onSuccess(
 															Void result) {
-														ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp();
+														String listtyp = "PvNp";
+														ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp(listtyp);
 														RootPanel.get("Details").clear();
 														RootPanel.get("Details").add(showPartnervorschlaegeNp);
 
 													}
 												});
-							}
+							
+								}
 
-						});
+							});
 
 		unangesehenePartnervorschlaegeAnzeigen.setStyleName("MenuItem");
-
+	
 		MenuItem partnervorschlaegeSpAnzeigen = partnervorschlaegeMenu.addItem(
 				"Partnervorschläge anhand von Suchprofilen anzeigen",
 				new Command() {
@@ -286,17 +292,16 @@ public class Navigator extends HorizontalPanel {
 												// .setText("Es trat ein Fehler auf.");
 											}
 
-											@Override
-											public void onSuccess(Void result3) {
-												// infoLabel.setText("Es hier
-												// trat kein Fehler
-												// auf.");
-												ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp();
-												RootPanel.get("Details")
-														.clear();
-												RootPanel
-														.get("Details")
-														.add(showPartnervorschlaegeSp);
+
+							@Override
+							public void onSuccess(Void result3) {
+								// infoLabel.setText("Es hier trat kein Fehler
+								// auf.");
+							String listtyp = "PvSp";
+							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showPartnervorschlaegeSp);
+
 
 											}
 										});
@@ -309,27 +314,7 @@ public class Navigator extends HorizontalPanel {
 
 		partnervorschlaegeMenu.addSeparator();
 
-		// partnervorschlaegeMenu.addSeparator();
-		//
-		// // Create the file menu
-		// MenuBar statusMenu = new MenuBar(true);
-		// statusMenu.setAnimationEnabled(true);
-		//
-		// statusMenu.addItem("Ausloggen", new Command() {
-		// @Override
-		// public void execute() {
-		// // ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-		// // RootPanel.get("Details").clear();
-		// // RootPanel.get("Details").add(showEigenesNp);
-		//
-		// Anchor signOutLink = new Anchor();
-		//
-		// signOutLink.setHref(nutzerprofil.getLogoutUrl());
-		// signOutLink.setText("Als " + nutzerprofil.getVorname() +
-		// " ausloggen");
-		//
-		// }
-		// });
+		
 
 		/**
 		 * Hinzufügen der vertikalen Menüleisten nutzerProfilMenu,
@@ -380,7 +365,8 @@ public class Navigator extends HorizontalPanel {
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
 		RootPanel.get("Navigator").add(menu);
-		verPanel1.add(test);
+		
 
-	}
+	
+}
 }

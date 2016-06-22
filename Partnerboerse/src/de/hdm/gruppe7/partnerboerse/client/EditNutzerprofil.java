@@ -55,6 +55,8 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
+	
+	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
 
 	/**
 	 * Konstruktor erstellen.
@@ -76,7 +78,8 @@ public class EditNutzerprofil extends VerticalPanel {
 		editNutzerprofilFlexTable.addStyleName("FlexTable");
 		editNutzerprofilFlexTable.setCellPadding(6);
 		editNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
-
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
@@ -153,6 +156,18 @@ public class EditNutzerprofil extends VerticalPanel {
 
 		editNutzerprofilFlexTable.setWidget(9, 2, emailLabel);
 
+		pfadLabelNpA.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNp);
+			}
+
+		});
+		
 		/**
 		 * Nutzerprofil anhand der Profil-ID aus der Datenbank auslesen und
 		 * die Profildaten in die Tabelle einfuegen. 
@@ -277,6 +292,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		verPanel.add(pfadLabelNpA);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editNutzerprofilFlexTable);
 		verPanel.add(editNutzerprofilButton);

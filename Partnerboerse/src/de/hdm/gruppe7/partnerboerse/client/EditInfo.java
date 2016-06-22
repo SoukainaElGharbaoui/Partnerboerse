@@ -56,6 +56,8 @@ public class EditInfo extends VerticalPanel {
 	private Button updateInfosButton = new Button("Infos speichern");
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label informationLabel = new Label();
+	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
+	private Label pfadLabelSpA = new Label("Zurück zu: Suchprofil anzeigen");
 
 	/**
 	 * Prüft, die ob Tabelle leer ist.
@@ -103,7 +105,9 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		editInfoFlexTable.addStyleName("FlexTable");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
+		
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
@@ -112,6 +116,33 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
+
+		if (profiltyp.equals("Np")) {
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+			});
+		} else if (profiltyp.equals("Sp")) {
+
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+
+			});
+		}
 
 		/**
 		 * Info anhand der Profil-ID aus der Datenbank auslesen.
@@ -424,8 +455,20 @@ public class EditInfo extends VerticalPanel {
 		});
 
 		/**
+		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils
+		 * angezeigt.
+		 */
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
+
+		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		if (profiltyp.equals("Np")) {
+			verPanel.add(pfadLabelNpA);
+		} else if (profiltyp.equals("Sp")) {
+			verPanel.add(pfadLabelSpA);
+		}
+
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
 		verPanel.add(informationLabel);

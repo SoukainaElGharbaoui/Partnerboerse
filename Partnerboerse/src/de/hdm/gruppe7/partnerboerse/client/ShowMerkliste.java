@@ -73,7 +73,7 @@ public class ShowMerkliste extends VerticalPanel {
 	/**
 	 * Konstruktor erzeugen. 
 	 */
-	public ShowMerkliste() {
+	public ShowMerkliste(final String listtyp) {
 		this.add(verPanel);
 
 		/**
@@ -232,13 +232,14 @@ public class ShowMerkliste extends VerticalPanel {
 
 														@Override
 														public void onSuccess(
+																
 																Integer result) {
 															if (result == 0) {
 																
 																String profiltyp = "Fp";
 																
 																ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-																		Integer.valueOf(fremdprofilId), profiltyp);
+																		Integer.valueOf(fremdprofilId), profiltyp, listtyp);
 																RootPanel
 																		.get("Details")
 																		.clear();

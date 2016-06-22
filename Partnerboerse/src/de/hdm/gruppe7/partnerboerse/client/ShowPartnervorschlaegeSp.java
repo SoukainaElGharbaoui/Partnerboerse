@@ -49,12 +49,12 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Labels und Buttons erzeugen.
 	 */
 
-	private Label ueberschriftLabel = new Label("WÃ¤hlen Sie das Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge angezeigt bekommen mÃ¶chten:");
-	private Label ueberschriftLabel2 = new Label("Diese Profile kÃ¶nnten Ihnen gefallen:");
+	private Label ueberschriftLabel = new Label("Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge angezeigt bekommen möchten:");
+	private Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
 	private Label ergebnisLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenSpButton = new Button("PartnervorschlÃ¤ge anzeigen");
+	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
 	private Button anzeigenButton;
 	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 	
@@ -63,38 +63,31 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
 	 */
 	private int zaehler = 0;
+	private String listtyp;
 
-	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
-	 * @return boolean, der zeigt ob die Tabelle leer ist oder nicht
-	 */
-	public boolean pruefeLeereTable() {
-
-		for (int k = 1; k < partnervorschlaegeSpFlexTable.getRowCount(); k++) {
-
-			if (partnervorschlaegeSpFlexTable.getText(k, 0) == null) {
-			}
-
-			else {
-				zaehler++;
-			}
-		}
-
-		if (zaehler == 0) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
+	
 
 	/**
 	 * Konstruktor hinzufuegen.
 	 * 
 	 * @param a
 	 */
-	public ShowPartnervorschlaegeSp() {
+	public ShowPartnervorschlaegeSp(String listtyp) {
+		
+		this.listtyp = listtyp;
+		
+		run();
+
+	}
+	
+	
+	
+
+	/**
+	 * Startet den Aufbau der Seite. Partnervorschlage werden ausgelesen und in die Tabelle befuellt.
+	 * @param listtyp 
+	 */
+	public void run() {
 		
 		/**
 		 * VerticalPanel und HorizontalPanel werden dem Konstruktor
@@ -111,18 +104,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		ueberschriftLabel2.addStyleName("partnerboerse-label");
-
-		run();
-
-	}
-	
-	
-	
-
-	/**
-	 * Startet den Aufbau der Seite. Partnervorschlage werden ausgelesen und in die Tabelle befuellt.
-	 */
-	public void run() {
 
 		befuelleListBox();
 
@@ -161,7 +142,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				/**
 				 * Bei jeder Auswahl eines Suchprofils wird die
 				 * Tabelle komplett geloescht, damit diese mit
-				 * den neuen Informationen befÃ¼llt werden kann.
+				 * den neuen Informationen befüllt werden kann.
 				 * 
 				 */
 				partnervorschlaegeSpFlexTable.removeAllRows();
@@ -208,7 +189,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Alle Widgets dem VerticalPanel und HorizontalPanel hinzufuegen.
 		 * 
-		 * Diese Widgets werden angezeigt sobald man Ã¼ber die MenueBar das Feld
+		 * Diese Widgets werden angezeigt sobald man über die MenueBar das Feld
 		 * "Partnervorschlaege anhand Suchprofil" auswaehlt.
 		 */
 
@@ -218,6 +199,31 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(auswahlPanel);
 
+	}
+	
+	/**
+	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
+	 * @return boolean, der zeigt ob die Tabelle leer ist oder nicht
+	 */
+	public boolean pruefeLeereTable() {
+
+		for (int k = 1; k < partnervorschlaegeSpFlexTable.getRowCount(); k++) {
+
+			if (partnervorschlaegeSpFlexTable.getText(k, 0) == null) {
+			}
+
+			else {
+				zaehler++;
+			}
+		}
+
+		if (zaehler == 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -282,11 +288,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 									anzeigenButton.addClickHandler(new ClickHandler() {public void onClick(ClickEvent event) {
 
-													String profiltyp = "Fp";
-													
-													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp);
-													RootPanel.get("Details").clear();
-													RootPanel.get("Details").add(showFremdprofil);
+										String profiltyp = "Fp";
+
+										ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp);
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(showFremdprofil);
 												}
 											});
 								}
@@ -295,7 +301,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 								if (befuellt == true) {
 
-									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden PartnervorschlÃ¤ge.");
+									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
 									ueberschriftLabel.setVisible(true);
 
 									partnervorschlaegeSpFlexTable.setVisible(false);
