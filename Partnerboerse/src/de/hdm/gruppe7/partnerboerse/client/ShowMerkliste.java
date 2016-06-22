@@ -112,7 +112,9 @@ public class ShowMerkliste extends VerticalPanel {
 				int rowTable = merklisteFlexTable.getRowCount();
 				int fremdprofilId;
 				infoLabel.setText("" + rowTable);
-
+				
+				zaehler = 0;
+				
 				for (int k = 2; k < rowTable; k++) {
 					
 					boolean checked = ((CheckBox) merklisteFlexTable.getWidget(k, 6)).getValue();
@@ -121,13 +123,15 @@ public class ShowMerkliste extends VerticalPanel {
 					
 					if (checked == true) {
 						
-					 fremdprofilId = Integer.valueOf(merklisteFlexTable.getText(k, 0));
-					
-					 infoLabel.setText("" + fremdprofilId);
+						zaehler++;
+						
+						fremdprofilId = Integer.valueOf(merklisteFlexTable.getText(k, 0));
+						
+						infoLabel.setText("" + fremdprofilId);
 
 					 
-					 ClientsideSettings.getPartnerboerseAdministration()
-					 	.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
+						ClientsideSettings.getPartnerboerseAdministration()
+					 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
 					 			new AsyncCallback<Integer>() {
 
 							@Override
@@ -161,6 +165,10 @@ public class ShowMerkliste extends VerticalPanel {
 							ueberschriftLabel.setVisible(true);
 						}
 					}
+				}
+				
+				if (zaehler == 0) {
+					Window.alert("Es wurde nichts ausgewählt.");
 				}
 			}
 		});

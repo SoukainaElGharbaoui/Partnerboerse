@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -30,7 +31,7 @@ public class ShowSperrliste extends VerticalPanel {
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * Vertikales Panel erzeugen. 
+	 * Vertikales und Horizontales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -41,16 +42,16 @@ public class ShowSperrliste extends VerticalPanel {
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
 	private FlexTable sperrlisteFlexTable = new FlexTable();
 	private Label infoLabel = new Label();
+	private CheckBox cb;
+	private Button anzeigenButton;
+	private Button loeschenButton = new Button("Ausgewählte Profile von Sperrliste entfernen");
+	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
 
 	/**
 	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt. 
 	 */
 	private int zaehler;
-	private CheckBox cb;
 	
-	private Button anzeigenButton;
-	private Button loeschenButton = new Button("Ausgewählte Profile von Sperrliste entfernen");
-	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
 	
 	/**
 	 * Konstruktor erstellen.
@@ -59,8 +60,15 @@ public class ShowSperrliste extends VerticalPanel {
 		run();
 	}
 	
+	/**
+	 * Startet den Aufruf der Seite. Es werden alle Nutzerprofile ausgelesen die
+	 *  gesperrt wurden und in die Tabelle eingefuegt.
+	 */
 	public void run() {
 		
+		/**
+		 * Vertical Panel wird hinzugefeugt.
+		 */
 		this.add(verPanel);
 		
 		/**
@@ -84,7 +92,11 @@ public class ShowSperrliste extends VerticalPanel {
 		
 		getGesperrteNutzerprofile();
 		
-		
+		/**
+		 * ClickHandler fuer den Alles-Auswaehlen-Button erzeugen.
+		 * Bei Betaetigung des Alles-Auswaehlen-Buttons
+		 * werden alle Checkboxen markiert und alle Eintraege koennen geloescht werden.
+		 */
 		selectAllProfilsButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
@@ -111,7 +123,15 @@ public class ShowSperrliste extends VerticalPanel {
 				int rowTable = sperrlisteFlexTable.getRowCount();
 				int fremdprofilId;
 				infoLabel.setText("" + rowTable);
-
+				
+				zaehler = 0;
+				
+				/**
+				 * Die For-Schleife ueberprueft Zeile fuer Zeile ob die Checkbox markiert ist oder nicht.
+				 * Ist eine checkbox markiert, wird die Fremprofil-ID des markierten Nutzerprofils ausgelesen
+				 * und der Vermerkstatus des Nutzerprofils geaendert. 
+				 * Das entsprechende Nutzerprofil wird dann aus der Sperrliste entfernt.
+				 */
 				for (int k = 2; k < rowTable; k++) {
 					
 					boolean checked = ((CheckBox) sperrlisteFlexTable.getWidget(k, 6)).getValue();
@@ -119,14 +139,15 @@ public class ShowSperrliste extends VerticalPanel {
 					infoLabel.setText("" + checked);
 					
 					if (checked == true) {
-						
-					 fremdprofilId = Integer.valueOf(sperrlisteFlexTable.getText(k, 0));
 					
-					 infoLabel.setText("" + fremdprofilId);
+						zaehler++;
+						fremdprofilId = Integer.valueOf(sperrlisteFlexTable.getText(k, 0));
+					
+						infoLabel.setText("" + fremdprofilId);
 					 
 
-					 ClientsideSettings.getPartnerboerseAdministration()
-					 	.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
+						ClientsideSettings.getPartnerboerseAdministration()
+					 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
 					 			new AsyncCallback<Integer>() {
 
 							@Override
@@ -160,6 +181,10 @@ public class ShowSperrliste extends VerticalPanel {
 							ueberschriftLabel.setVisible(true);
 						}
 					}
+				}
+				
+				if (zaehler == 0) {
+					Window.alert("Es wurde nichts ausgewählt.");
 				}
 			}
 		});
