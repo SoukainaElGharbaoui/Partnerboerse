@@ -97,33 +97,8 @@ public class CreateUnusedInfos extends VerticalPanel {
 		showUnusedEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
 		showUnusedEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
-		if (profiltyp.equals("Np")) {
-			pfadLabelNpA.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
+		pruefeProfilart();
 
-					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showNp);
-				}
-
-			});
-		} else if (profiltyp.equals("Sp")) {
-
-			pfadLabelSpA.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-
-					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showSp);
-				}
-
-			});
-		}
-		
 		befuelleTabelle();
 
 		/**
@@ -401,4 +376,35 @@ public class CreateUnusedInfos extends VerticalPanel {
 				});
 	}
 
+	/**
+	 * Prueft ob es sich um ein Nutzerprofil oder Suchprofil handelt.
+	 */
+	public void pruefeProfilart() {
+		if (profiltyp.equals("Np")) {
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+			});
+		} else if (profiltyp.equals("Sp")) {
+
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+
+			});
+		}
+	}
 }
