@@ -9,7 +9,9 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -31,7 +33,8 @@ public class ShowMerkliste extends VerticalPanel {
 	 * Vertikales Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
+	
 	/**
 	 * Widgets erzeugen. 
 	 */
@@ -43,37 +46,24 @@ public class ShowMerkliste extends VerticalPanel {
 	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
 	 */
 	private int zaehler;
+	private int fremdprofilId;
 	
-	/**
-	 * Neue Methode definiert, die prueft, ob die Tabelle leer ist. 
-	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
-	 */
-	public boolean pruefeLeereTable() {
-		
-		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
-			
-			if (merklisteFlexTable.getText(k, 0) == null) {
-			}
-			
-			else {
-				zaehler++;
-			}
-		}
-		
-		if (zaehler == 0) {
-			return true;
-		}
-		
-		else {
-			return false;
-		}
-	}
-
+	private CheckBox cb;
+	
+	private Button loeschenButton = new Button("Ausgewählte Profile von Merkliste entfernen");
+	private Button anzeigenButton;
+	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
+	
 
 	/**
 	 * Konstruktor erzeugen. 
 	 */
 	public ShowMerkliste() {
+		run();
+	}
+		
+	public void run() {
+	
 		this.add(verPanel);
 
 		/**
@@ -92,9 +82,105 @@ public class ShowMerkliste extends VerticalPanel {
 		merklisteFlexTable.setText(0, 2, "Nachname");
 		merklisteFlexTable.setText(0, 3, "Geburtstag");
 		merklisteFlexTable.setText(0, 4, "Geschlecht");
-		merklisteFlexTable.setText(0, 5, "Löschen");
-		merklisteFlexTable.setText(0, 6, "Anzeigen");
+		merklisteFlexTable.setText(0, 5, "Anzeigen");
+		merklisteFlexTable.setText(0, 6, "Löschen");
+		
+		getMerkliste();
+		
+		selectAllProfilsButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				for (int i = 2; i < merklisteFlexTable.getRowCount(); i++) {
 
+					CheckBox cb = (CheckBox) merklisteFlexTable.getWidget(i, 6);
+					cb.setValue(true);
+					
+					merklisteFlexTable.setWidget(i, 6, cb);
+				}
+			}
+		});
+		
+		/**
+		 * ClickHandler fuer den Button zum Loeschen einer Sperrung erzeugen. 
+		 * Sobald der Button betaetigt wird, wird die Sperrung sowohl aus der 
+		 * Tabelle als auch aus der Datenbank entfernt.  
+		 */
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				
+				int rowTable = merklisteFlexTable.getRowCount();
+				int fremdprofilId;
+				infoLabel.setText("" + rowTable);
+
+				for (int k = 2; k < rowTable; k++) {
+					
+					boolean checked = ((CheckBox) merklisteFlexTable.getWidget(k, 6)).getValue();
+					
+					infoLabel.setText("" + checked);
+					
+					if (checked == true) {
+						
+					 fremdprofilId = Integer.valueOf(merklisteFlexTable.getText(k, 0));
+					
+					 infoLabel.setText("" + fremdprofilId);
+
+					 
+					 ClientsideSettings.getPartnerboerseAdministration()
+					 	.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
+					 			new AsyncCallback<Integer>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								infoLabel.setText(
+									"Beim Ändern des Vermerkstatus trat ein Fehler auf.");								
+							}
+
+							@Override
+							public void onSuccess(Integer result) {
+								
+								infoLabel.setText(
+									"Das Ändern des Vermerkstatus hat funktioniert.");			
+							}
+					 });
+					 
+					 /**
+						 * Jeweilige Zeile der
+						 * Tabelle loeschen.
+						 */
+					 	merklisteFlexTable.removeRow(k);
+						k--;
+						
+						if (merklisteFlexTable.getRowCount() == 2) {
+							
+							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
+							merklisteFlexTable.setVisible(false);
+							buttonPanel.setVisible(false);
+							infoLabel.setVisible(false);
+							
+							ueberschriftLabel.setVisible(true);
+						}
+					}
+				}
+			}
+		});
+		
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 */
+		
+		buttonPanel.add(loeschenButton);
+		buttonPanel.add(selectAllProfilsButton);
+		
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(merklisteFlexTable);
+		verPanel.add(buttonPanel);
+		verPanel.add(infoLabel);
+	}
+	
+	
+	public void getMerkliste() {
+		
 		/**
 		 * Nun werden alle gemerkten Nutzerprofile eines Nutzerprofils abgefragt. 
 		 * Das Ergebnis der Abfrage ist ein Merkliste-Objekt. Die gemerkten Nutzerprofil-Objekte werden in einer
@@ -119,9 +205,9 @@ public class ShowMerkliste extends VerticalPanel {
 							
 							row++;
 
-							final String fremdprofilId = String.valueOf(n.getProfilId());
+							fremdprofilId = n.getProfilId();
 
-							merklisteFlexTable.setText(row, 0, fremdprofilId);
+							merklisteFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
 							merklisteFlexTable.setText(row, 1, n.getVorname());
 							merklisteFlexTable.setText(row, 2, n.getNachname());
 							
@@ -130,84 +216,17 @@ public class ShowMerkliste extends VerticalPanel {
 							
 							merklisteFlexTable.setText(row, 3, geburtsdatumString); 
 							merklisteFlexTable.setText(row, 4, n.getGeschlecht());
-
-							final Button loeschenButton = new Button("Löschen");
 							
-							merklisteFlexTable.setWidget(row, 5, loeschenButton);
+							anzeigenButton = new Button("Anzeigen");
+
+							merklisteFlexTable.setWidget(row, 5, anzeigenButton);
 							
-							final Button anzeigenButton = new Button("Anzeigen");
-
-							merklisteFlexTable.setWidget(row, 6, anzeigenButton);
-
+							cb = new CheckBox();
+							cb.setValue(false);
+							merklisteFlexTable.setWidget(row, 6, cb);
+							
 							merklisteFlexTable.setText(row, 7, String.valueOf(row));
 							
-							/**
-							 * ClickHandler fuer den Button zum Loeschen einer Sperrung erzeugen. 
-							 * Sobald der Button betaetigt wird, wird die Sperrung sowohl aus der 
-							 * Tabelle als auch aus der Datenbank entfernt.  
-							 */
-							loeschenButton.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
-
-									/*
-									 * Tabelle nach Fremdprofil-ID durchsuchen. 
-									 * Index = Die Zeile, die gelöscht werden
-									 * soll. Achtung: Die Tabelle darf erst ab
-									 * Zeile 2 verwendet werden (Zeile 1 = Kopfzeile).
-									 */
-									
-									for (int i = 2; i < merklisteFlexTable
-											.getRowCount(); i++) {
-
-										// Fremdprofil-ID der Tabelle ermitteln.
-										String fremdprofilIdFlexTable = merklisteFlexTable
-												.getText(i, 0);
-
-										/*
-										 *  Wenn die Fremdprofil-ID der Tabelle mit der
-										 *  Fremdprofil-ID des Nutzerprofils uebereinstimmt,
-										 *  wird der Vermerk aus der Datenbank entfernt. 
-										 */
-										if (Integer
-												.valueOf(fremdprofilIdFlexTable) == Integer
-												.valueOf(fremdprofilId)) {
-
-											/**
-											 * Vermerk aus der Datenbank entfernen.
-											 */
-											ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(
-													nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
-													new AsyncCallback<Integer>() {
-
-																public void onFailure(
-																		Throwable caught) {
-																	infoLabel
-																			.setText("Es trat ein Fehler auf.");
-																}
-
-																public void onSuccess(
-																		Integer result) {
-																}
-											});
-
-											if (merklisteFlexTable.getRowCount() == 3) {
-												
-												merklisteFlexTable.removeRow(i);
-												
-												ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
-												infoLabel.setVisible(false);
-												merklisteFlexTable.setVisible(false);
-												ueberschriftLabel.setVisible(true);
-											}
-											
-											else {
-												merklisteFlexTable.removeRow(i);
-												break;
-											}
-										}
-									}
-								}
-							});
 
 							/**
 							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
@@ -265,18 +284,39 @@ public class ShowMerkliste extends VerticalPanel {
 							
 							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
 							merklisteFlexTable.setVisible(false);
+							buttonPanel.setVisible(false);
+							
 							ueberschriftLabel.setVisible(true);
 						}
 					}
 				});
-
-		/**
-		 * Widgets zum vertikalen Panel hinzufuegen. 
-		 */
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(merklisteFlexTable);
-		verPanel.add(infoLabel);
-
 	}
+	
+	
+	/**
+	 * Neue Methode definiert, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist. 
+	 */
+	public boolean pruefeLeereTable() {
+		
+		for (int k = 2; k < merklisteFlexTable.getRowCount(); k++) {
+			
+			if (merklisteFlexTable.getText(k, 0) == null) {
+			}
+			
+			else {
+				zaehler++;
+			}
+		}
+		
+		if (zaehler == 0) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+
 
 }
