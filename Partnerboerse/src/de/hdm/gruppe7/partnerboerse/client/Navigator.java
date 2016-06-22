@@ -44,7 +44,7 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Festlegen der Laenge der Menuebar und Einbinden von CSS.
 		 */
-		menu.setWidth("720px");
+		menu.setWidth("100%");
 		menu.setHeight("36px");
 		menu.setAnimationEnabled(true);
 		menu.setStyleName("MenuBar");
@@ -284,7 +284,7 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
-		RootPanel.get("Navigator").add(menu);
+		RootPanel.get("Header").add(menu);
 
 	}
 }

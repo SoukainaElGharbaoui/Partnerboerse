@@ -80,7 +80,7 @@ public class Partnerboerse implements EntryPoint {
 
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator2").add(loginPanel);
+								RootPanel.get("Header").add(loginPanel);
 								RootPanel.get("Details").add(begrueßen);
 								RootPanel.get("Details").add(begrueßen2);
 							}
@@ -113,8 +113,8 @@ public class Partnerboerse implements EntryPoint {
 														
 														String profiltyp = "Np";
 
-														RootPanel.get("Navigator").add(new Navigator());
-														RootPanel.get("Navigator2").add(loginPanel);
+														RootPanel.get("Header").add(new Navigator());
+														RootPanel.get("Header").add(loginPanel);
 														
 														RootPanel.get("Details")
 															.add(new CreateNutzerprofil(profiltyp));
@@ -122,8 +122,8 @@ public class Partnerboerse implements EntryPoint {
 
 													else {
 
-														RootPanel.get("Navigator").add(new Navigator());
-														RootPanel.get("Navigator2").add(loginPanel);
+														RootPanel.get("Header").add(new Navigator());
+														RootPanel.get("Header").add(loginPanel);
 													
 													}
 												}
@@ -136,7 +136,7 @@ public class Partnerboerse implements EntryPoint {
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 
 									loginPanel.add(signOutLink);
-									RootPanel.get("Navigator2").add(loginPanel);
+									RootPanel.get("Header").add(loginPanel);
 									RootPanel.get("Details").add(begrueßenN);
 									RootPanel.get("Details").add(begrueßenN2);
 
