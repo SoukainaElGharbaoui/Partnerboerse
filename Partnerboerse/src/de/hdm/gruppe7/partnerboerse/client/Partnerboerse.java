@@ -108,11 +108,12 @@ public class Partnerboerse implements EntryPoint {
 
 												@Override
 												public void onSuccess(Boolean pruefung) {
-
+												
+													
 													if (pruefung == true) {
 														
 														String profiltyp = "Np";
-
+														
 														RootPanel.get("Navigator").add(new Navigator());
 														RootPanel.get("Navigator2").add(loginPanel);
 														
@@ -121,7 +122,7 @@ public class Partnerboerse implements EntryPoint {
 													}
 
 													else {
-
+														
 														RootPanel.get("Navigator").add(new Navigator());
 														RootPanel.get("Navigator2").add(loginPanel);
 													

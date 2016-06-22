@@ -242,7 +242,8 @@ public class CreateInfo extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
 								if (profiltyp.equals("Np")) {
-
+									
+								
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Navigator").add(new Navigator());
 

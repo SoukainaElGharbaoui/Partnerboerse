@@ -34,6 +34,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	private HorizontalPanel gesamtPanel = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
+	private VerticalPanel suchprofilPanel2 = new VerticalPanel();
 
 	/**
 	 * Widgets erzeugen.
@@ -59,6 +60,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		this.add(gesamtPanel);
 		gesamtPanel.add(suchprofilPanel);
+		gesamtPanel.add(suchprofilPanel2);
 		suchprofilPanel.add(buttonPanel);
 		gesamtPanel.add(infoPanel);
 
@@ -82,6 +84,10 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(6, 0, "Haarfarbe");
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
+		
+		final String suchprofilName;
+		
+
 		
 
 		/**
@@ -145,8 +151,8 @@ public class ShowSuchprofil extends VerticalPanel {
 				if (result.isEmpty()) {
 					auswahlListBox.setVisible(false);
 					anzeigenButton.setVisible(false);
+					
 					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
-
 					createSuchprofilButton.setVisible(true); 
 
 				} else {
@@ -155,8 +161,14 @@ public class ShowSuchprofil extends VerticalPanel {
 					}
 					createSuchprofilButton.setVisible(false);
 				}
+				
+						
 			}
 		}); 
+		
+		
+		
+	
 		
 		/**
 		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
@@ -171,8 +183,7 @@ public class ShowSuchprofil extends VerticalPanel {
 			}
 
 		});
-		
-		/**
+			/**
 		 * ClickHandler fuer den Button zum Anzeigen eines Suchprofils erzeugen.
 		 * Sobald dieser Button betaetigt wird, wird anhand der Profil-ID und 
 		 * anhand des Suchprofilnames das jeweilige Suchprofil ausgelesen. 
@@ -209,6 +220,8 @@ public class ShowSuchprofil extends VerticalPanel {
 									ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
 									infoPanel.clear();
 									infoPanel.add(showInfo);
+									
+									
 								}
 							});
 				
@@ -262,6 +275,9 @@ public class ShowSuchprofil extends VerticalPanel {
 						});
 				}
 			});			
+		
+
+		
 		
 		/**
 		 * Widgets und Panels den Panels hinzufuegen. 
