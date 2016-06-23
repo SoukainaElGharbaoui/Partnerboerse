@@ -46,10 +46,10 @@ h3{
 
 
 
-/* div#Navigator {
+ div#Navigator {
 
-	 max-height: 300px; */
-	/* overflow:scroll; 
+	 max-height: 300px; 
+	/*  overflow:scroll; 
 	border: 0px solid silver; 
 
 	padding: 3em 4em;
@@ -57,8 +57,8 @@ h3{
 	height: 870px;
 	position: relative;
 	
-	background: #800080; 
-}  */
+	background: #800080;  */
+}  
 
 div#Navigator2{
 	width: 120px;
