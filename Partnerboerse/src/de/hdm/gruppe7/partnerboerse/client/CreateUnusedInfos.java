@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,6 +31,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	 * VerticalPanel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Listen erzeugen.
@@ -51,6 +53,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	 */
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
 	private Button createInfosButton = new Button("Infos anlegen");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
@@ -89,13 +92,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
 		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
 
-		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		showUnusedEigenschaftFlexTable.setText(0, 0, "Profil-Id");
-		showUnusedEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showUnusedEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
-		showUnusedEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
 		pruefeProfilart();
 
@@ -165,6 +161,19 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 			}
 		});
+		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+				
+			}
+			
+		});
 
 		/**
 		 * Widgets zum Panel hinzufuegen.
@@ -175,9 +184,11 @@ public class CreateUnusedInfos extends VerticalPanel {
 			verPanel.add(pfadLabelSpA);
 		}
 
+		buttonPanel.add(createInfosButton);
+		buttonPanel.add(abbrechenButton);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showUnusedEigenschaftFlexTable);
-		verPanel.add(createInfosButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(informationLabelB);
 		verPanel.add(informationLabelA);
 		verPanel.add(informationLabel);
@@ -226,6 +237,9 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
+						showUnusedEigenschaftFlexTable.setCellPadding(6);
+						showUnusedEigenschaftFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+						showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
 
 						informationLabel.setText("Die Methode wurde aufgerufen.");
 
