@@ -22,39 +22,93 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen. 
 	 */
-
 	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
 
 	/**
-	 * VerticalPnale erzeugen.
+	 * Panel erzeugen. 
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Labels und Buttons erzeugen.
+	 * Widgets erzeugen. 
 	 */
 	private Label ueberschriftLabel = new Label("Diese Profile könnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
 	private Label informationLabel = new Label();
 	private Label ergebnisLabel = new Label();
 	private Button anzeigenButton;
-
-	/**
-	 * Tabelle zur Anzeige der Partnervorschlaege erzeugen.
-	 */
 	private FlexTable partnervorschlaegeNpFlexTable = new FlexTable();
 
 	/**
-	 * Neue Variable erzeugen, die die Anzahl der befuellten Zeilen enthaelt
+	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
 	 */
 	private int zaehler;
+	
+	/**
+	 * Variable fuer den Listtyp erstellen.  
+	 */
+	private String listtyp;
+	
+	/**
+	 * Variable fuer die Fremdprofil-ID erstellen.
+	 */
+	private int fremdprofilId;
 
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
-	 * 
-	 * @return boolean, zeigt ob die Tabelle leer ist oder nicht
+	 * Konstruktor erstellen.
+	 * @param listtyp Der Listtyp (PvNp). 
+	 */
+	public ShowPartnervorschlaegeNp(String listtyp) {
+		this.listtyp = listtyp;
+		run();
+		
+	}
+	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
+	public void run() {
+		this.add(verPanel);
+
+		/**
+		 * CSS anwenden und die Tabelle formatieren. 
+		 */
+		ueberschriftLabel.addStyleName("partnerboerse-label");
+		informationLabel.addStyleName("partnerboerse-label");
+		partnervorschlaegeNpFlexTable.setCellPadding(6);
+		partnervorschlaegeNpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		partnervorschlaegeNpFlexTable.addStyleName("FlexTable");
+
+		/**
+		 * Erste Zeile der Tabelle festlegen.
+		 */
+		partnervorschlaegeNpFlexTable.setText(0, 0, "F-ID");
+		partnervorschlaegeNpFlexTable.setText(0, 1, "Uebereinstimmung in %");
+		partnervorschlaegeNpFlexTable.setText(0, 2, "Vorname");
+		partnervorschlaegeNpFlexTable.setText(0, 3, "Nachname");
+		partnervorschlaegeNpFlexTable.setText(0, 4, "Geburtsdatum");
+		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
+		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
+		
+		befuelleTabelleNp();
+
+		/**
+		 * Widgets dem Panel hinzufuegen. 
+		 */
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(ergebnisLabel);
+		verPanel.add(infoLabel);
+		verPanel.add(informationLabel);
+		verPanel.add(partnervorschlaegeNpFlexTable);
+
+	}
+	
+	
+	/**
+	 * Methode erstellen, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist.
 	 */
 	public boolean pruefeLeereTable() {
 
@@ -76,48 +130,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 			return false;
 		}
 	}
-
+	
 	/**
-	 * Konstruktor hinzufuegen.
+	 * Methode erstellen, die die anangesehenen Partnervorschlaege geordnet nach Aehnlichkeit ausgibt
+	 * und in die Tabelle eintraegt. 
 	 */
-	public ShowPartnervorschlaegeNp(final String listtyp) {
-
-		/**
-		 * VerticelPanel wird dem Konstruktor hinzugefuegt.
-		 */
-
-		this.add(verPanel);
-
-		/**
-		 * CSS anwenden.
-		 */
-		ueberschriftLabel.addStyleName("partnerboerse-label");
-		informationLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Tabelle formatieren und CSS einbinden.
-		 */
-		partnervorschlaegeNpFlexTable.setCellPadding(6);
-		partnervorschlaegeNpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		partnervorschlaegeNpFlexTable.addStyleName("FlexTable");
-
-		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		partnervorschlaegeNpFlexTable.setText(0, 0, "F-ID");
-		partnervorschlaegeNpFlexTable.setText(0, 1, "Uebereinstimmung in %");
-		partnervorschlaegeNpFlexTable.setText(0, 2, "Vorname");
-		partnervorschlaegeNpFlexTable.setText(0, 3, "Nachname");
-		partnervorschlaegeNpFlexTable.setText(0, 4, "Geburtsdatum");
-		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
-		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
-
-		/**
-		 * Es werden alle Partnervorschlaege anhand des des eigenen Nuzerprofis,
-		 * nach Aehnlichkeit geordnet, ausgegeben.
-		 * 
-		 */
-
+	public void befuelleTabelleNp() {
 		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Nutzerprofil>>() {
 
@@ -131,14 +149,9 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 						int row = 0;
 
-						/**
-						 * Die Tabelle wird mit den Partnervorschlaegen
-						 * befuellt.
-						 */
-
 						for (Nutzerprofil np : result) {
 
-							final int fremdprofilId = np.getProfilId();
+							fremdprofilId = np.getProfilId();
 
 							row++;
 
@@ -154,9 +167,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht());
 
 							/**
-							 * Der Anzeigen-Button fuer die Anzeige eines
-							 * Fremdprofils wird erzeugt und der Tabelle
-							 * hinzugefuegt.
+							 * Anzeigen-Button fuer die Anzeige eines Fremdprofils erzeugen. 
 							 */
 							anzeigenButton = new Button("Anzeigen");
 							partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
@@ -164,27 +175,13 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							partnervorschlaegeNpFlexTable.setText(row, 7, String.valueOf(row));
 
 							/**
-							 * Der Clickhandler fuer den Azeigen-Button des
-							 * Fremdprofils wird hinzufuegen.
-							 * 
-							 * Bei Betaetigung des Anzeigen-Buttons gelangt man
-							 * auf die Seite auf der das Fremdprofil angezeigt
-							 * wird.
+							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
+							 * Bei Betaetigung dieses Buttons wird die Seite zum Anzeigen des Fremdprofils 
+							 * aufgerufen. Zudem wird dem Fremdprofil ein Besuch gesetzt, damit es beim 
+							 * naechsten Aufruf der unangesehenen Partnervorschlaege nicht mehr erscheint. 
 							 */
-
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
-
-									/**
-									 * Bei Betaetigung des Anzeigen-Button wird
-									 * der Nutzer auf ein Fremdprofil
-									 * weitergeleitet, gleichzeitig wird das
-									 * Fremprofil als besucht gesetzt und
-									 * verschwindet somit aus der Tabelle der
-									 * Partnervorschlaege. Da hier nur
-									 * unangesehene Partnervorschlaege angezeigt
-									 * werden.
-									 */
 									ClientsideSettings.getPartnerboerseAdministration().besuchSetzen(
 											nutzerprofil.getProfilId(), fremdprofilId, new AsyncCallback<Void>() {
 
@@ -195,45 +192,29 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 												@Override
 												public void onSuccess(Void result) {
-
 													String profiltyp = "Fp";
-
-													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,
-															profiltyp, listtyp);
+													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp);
 													RootPanel.get("Details").clear();
 													RootPanel.get("Details").add(showFremdprofil);
 												}
 
 											});
-								}
+									}
 							});
 						}
 
 						/**
-						 * Ist die Tabelle leer wird das Informations-Label
-						 * ausgegeben.
+						 * Bestehen keine unangesehenen Partnervorschlaege, wird eine Information ueber diesen 
+						 * Zustand ausgegeben. 
 						 */
 						boolean befuellt = pruefeLeereTable();
-
 						if (befuellt == true) {
-
 							ueberschriftLabel.setVisible(false);
 							partnervorschlaegeNpFlexTable.setVisible(false);
-
 							informationLabel.setText("Sie haben zurzeit keine unangesehenen Partnervorschläge.");
 						}
 					}
 				});
-
-		/**
-		 * Alle Widgets dem VerticalPanel hinzufuegen.
-		 */
-
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(ergebnisLabel);
-		verPanel.add(infoLabel);
-		verPanel.add(informationLabel);
-		verPanel.add(partnervorschlaegeNpFlexTable);
-
+		
 	}
 }

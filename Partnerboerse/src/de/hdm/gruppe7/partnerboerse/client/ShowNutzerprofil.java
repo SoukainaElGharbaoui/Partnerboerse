@@ -45,12 +45,30 @@ public class ShowNutzerprofil extends VerticalPanel {
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	
 	/**
+	 * Variable fuer die ProfilId erstellen.
+	 */
+	private int profilId; 
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
+	private String profiltyp; 
+	
+	/**
 	 * Konstruktor erstellen.
 	 * @param profilId Die Profil-ID des Nutzerprofils, das angezeigt werden soll.
 	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
-	public ShowNutzerprofil(final int profilId, final String profiltyp) {
-
+	public ShowNutzerprofil(int profilId, String profiltyp) {
+		this.profilId = profilId; 
+		this.profiltyp = profiltyp; 
+		run(); 
+	}
+	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
+	public void run() {
 		this.add(horPanel);
 		horPanel.add(nutzerprofilPanel);
 		horPanel.add(infoPanel);
@@ -76,10 +94,59 @@ public class ShowNutzerprofil extends VerticalPanel {
 		showEigenesNpFlexTable.setText(7, 0, "Raucherstatus");
 		showEigenesNpFlexTable.setText(8, 0, "Religion");
 		showEigenesNpFlexTable.setText(9, 0, "EMail");
+		
+		befuelleTabelle(); 
 
 		/**
-		 * Nutzerprofil anhand der Profil-ID auslesen und die Profildaten in die Tabelle einfuegen.
+		 * ClickHandler fuer den Button zum Bearbeiten des Nutzerprofils erzeugen. 
+		 * Sobald der Button betaetigt wird, wird die Seite zum Bearbeiten des 
+		 * Nutzerprofils aufgerufen. 
 		 */
+		bearbeitenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(profilId, profiltyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(editNutzerprofil);
+			}
+		});
+
+		/**
+		 * ClickHandler fuer den Button zum Loeschen des Nutzerprofils erzeugen. 
+		 * Sobald der Button betaetigt wird, erscheint eine Bildschrimmeldung, 
+		 * die hinterfragt, ob das Nutzerprofil tatsaechlich geloescht werden 
+		 * soll. Wird diese mit "Ok" bestaetigt, wird das Nutzerprofil aus der
+		 * Datenbank entfernt. Zudem wird der Nutzer ausgeloggt und auf die 
+		 * Login-Seite weitergeleitet. 
+		 */
+		loeschenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				loescheNutzerprofil(); 
+			}
+		});
+				
+		/**
+		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
+		 */
+		String listtyp = "Np";
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp, listtyp);
+
+		/**
+		 * Widgets den Panels hinzufuegen.
+		 */
+		nutzerprofilPanel.add(ueberschriftLabel);
+		nutzerprofilPanel.add(showEigenesNpFlexTable);
+		buttonPanel.add(bearbeitenButton);
+		buttonPanel.add(loeschenButton);
+		nutzerprofilPanel.add(buttonPanel);
+		nutzerprofilPanel.add(infoLabel);
+		infoPanel.add(showInfo);
+
+	}
+	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil anhand der Profil-ID ausliest und die Profildaten in die Tabelle einfuegt.
+	 */
+	public void befuelleTabelle() {
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(profilId,
 			new AsyncCallback<Nutzerprofil>() {
 
@@ -104,83 +171,43 @@ public class ShowNutzerprofil extends VerticalPanel {
 								showEigenesNpFlexTable.setText(9, 1, result.getEmailAddress());
 							}
 						});
+	}
+	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil loescht. 
+	 */
+	public void loescheNutzerprofil() {
+		if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
+			
+			ClientsideSettings.getPartnerboerseAdministration()
+					.deleteNutzerprofil(profilId,
+							new AsyncCallback<Void>() {
 
-		/**
-		 * ClickHandler fuer den Button zum Bearbeiten des Nutzerprofils erzeugen. 
-		 * Sobald der Button betaetigt wird, wird die Seite zum Bearbeiten des 
-		 * Nutzerprofils aufgerufen. 
-		 */
-		bearbeitenButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EditNutzerprofil editNutzerprofil = new EditNutzerprofil(profilId, profiltyp);
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(editNutzerprofil);
-			}
-		});
+								public void onFailure(Throwable caught) {
+									infoLabel.setText("Es trat ein Fehler auf.");
+								}
 
-		/**
-		 * ClickHandler fuer den Button zum Loeschen des Nutzerprofils erzeugen. 
-		 * Sobald der Button betaetigt wird, erscheint eine Bildschrimmeldung, 
-		 * die hinterfragt, ob das Nutzerprofil tatsaechlich geloescht werden 
-		 * soll. Wird diese mit "Ok" bestaetigt, wird das Nutzerprofil aus der
-		 * Datenbank entfernt. Zudem wird das Nutzerprofil ausgeloggt und auf 
-		 * die Login-Seite weitergeleitet. 
-		 */
-		loeschenButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				
-				if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
+								public void onSuccess(Void result) {
+									
+									HorizontalPanel loginPanel = new HorizontalPanel();
+									
+									Anchor signOutLink = new Anchor();
+									signOutLink.setHref(nutzerprofil.getLogoutUrl());
+									
+									signOutLink.setText("Bestätige das Löschen mit einem Klick.");
+									
+									loginPanel.add(signOutLink);
 					
-					ClientsideSettings.getPartnerboerseAdministration()
-							.deleteNutzerprofil(profilId,
-									new AsyncCallback<Void>() {
-
-										public void onFailure(Throwable caught) {
-											infoLabel.setText("Es trat ein Fehler auf.");
-										}
-
-										public void onSuccess(Void result) {
-											
-											HorizontalPanel loginPanel = new HorizontalPanel();
-											
-											Anchor signOutLink = new Anchor();
-											signOutLink.setHref(nutzerprofil.getLogoutUrl());
-											
-											signOutLink.setText("Bestätige das Löschen mit einem Klick.");
-											
-											loginPanel.add(signOutLink);
-							
-											Anchor signIn = new Anchor();
-											signIn.setText("Jetzt einloggen");
-											 
-											RootPanel.get("Navigator").clear();
-											RootPanel.get("Details").clear();
-											 
-											RootPanel.get("Navigator").add(loginPanel);
-											
-										}
-							});
-				}
+									Anchor signIn = new Anchor();
+									signIn.setText("Jetzt einloggen");
+									 
+									RootPanel.get("Navigator").clear();
+									RootPanel.get("Details").clear();
+									RootPanel.get("Navigator").add(loginPanel);
+									
+								}
+					});
 			}
-		});
-		
-		
-		/**
-		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
-		 */
-		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
-
-		/**
-		 * Widgets den Panels hinzufuegen.
-		 */
-		nutzerprofilPanel.add(ueberschriftLabel);
-		nutzerprofilPanel.add(showEigenesNpFlexTable);
-		buttonPanel.add(bearbeitenButton);
-		buttonPanel.add(loeschenButton);
-		nutzerprofilPanel.add(buttonPanel);
-		nutzerprofilPanel.add(infoLabel);
-		infoPanel.add(showInfo);
-
 	}
 
 }
