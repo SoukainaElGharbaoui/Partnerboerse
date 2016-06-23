@@ -304,7 +304,7 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Aehnlichkeit setzen.
+	 * Aehnlichkeit in die Datenbank einfuegen. 
 	 * @param profilId Die Profil-ID des Referenzprofils.
 	 * @param suchprofilId Die einzufuegende Suchprofil-ID.
 	 * @param suchprofilName Der einzufuegende Suchprofilname.
@@ -328,7 +328,7 @@ public class SuchprofilMapper {
 	}
 
 	/**
-	 * Aehnlichkeit entfernen.
+	 * Aehnlichkeit aus der Datenbank loeschen. 
 	 * @param profilId Die Profil-ID des Nutzerprofils, dessen Aehnlichkeitswerte entfernt werden sollen.
 	 */
 	public void deleteAehnlichkeit(int profilId) {

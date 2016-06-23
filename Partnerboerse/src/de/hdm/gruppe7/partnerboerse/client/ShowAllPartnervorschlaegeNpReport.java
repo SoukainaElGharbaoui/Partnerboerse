@@ -10,6 +10,10 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
+/**
+ * Diese Klasse dient dazu, innerhalb des Reports Partnervorschlaege anhand
+ * eines Nutzerprofils azuzeigen.
+ */
 public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 
 	/**
@@ -27,20 +31,33 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 	 */
 	private Label infoLabel = new Label();
 	private Label ueberschriftLabel = new Label();
-	
+
 	/**
 	 * Konstruktor hinzufügen.
 	 */
 	public ShowAllPartnervorschlaegeNpReport() {
+		run();
+	}
+
+	/**
+	 * Die Methode startet den Aufbau der Seite.
+	 */
+	public void run() {
 		this.add(verPanel);
-		
+
 		ueberschriftLabel.setText("Einen Moment bitte...");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
-		/**
-		 * Report auslesen.
-		 */
+		reportAuslesen();
 
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(infoLabel);
+	}
+
+	/**
+	 * Report auslesen.
+	 */
+	public void reportAuslesen() {
 		ClientsideSettings.getReportGenerator().createAllPartnervorschlaegeNpReport(nutzerprofil,
 				new AsyncCallback<AllPartnervorschlaegeNpReport>() {
 
@@ -62,8 +79,5 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 						}
 					}
 				});
-
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(infoLabel);
 	}
 }
