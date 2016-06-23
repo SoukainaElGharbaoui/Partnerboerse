@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -25,7 +26,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Die Klasse dient dazu, eine Info für das Nutzerprofil oder das Suchprofil zu
+ * Die Klasse dient dazu, eine Info fuer das Nutzerprofil oder das Suchprofil zu
  * erstellen.
  */
 public class CreateInfo extends VerticalPanel {
@@ -40,6 +41,8 @@ public class CreateInfo extends VerticalPanel {
 	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
+
 
 	/**
 	 * Listen erzeugen.
@@ -59,6 +62,7 @@ public class CreateInfo extends VerticalPanel {
 	 * Widgets erzeugen.
 	 */
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabel = new Label();
@@ -100,6 +104,19 @@ public class CreateInfo extends VerticalPanel {
 		befuelleTabelle();
 
 		/**
+		 * ClickHandler fuer den Button zum Abbrechen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+				
+			}
+			
+		});
+		
+		/**
 		 * ClickHandler fuer den Button zum Anlegen einer Info.
 		 */
 
@@ -109,11 +126,11 @@ public class CreateInfo extends VerticalPanel {
 				List<Info> infos = erstelleInfo();
 
 				/**
-				 * Die Infos werden in die Datenbank eingefügt.Danach wird
+				 * Die Infos werden in die Datenbank eingefuegt.Danach wird
 				 * geprueft, ob es sich um Nutzerprofil oder ein Suchprofil
 				 * handelt. Handelt es sich um ein Nutzerprofil, dann wird man
 				 * nach dem Anlegen auf das erstelle Nutzerprofil
-				 * weitergeleitet. Es wird ebenfalls der logout hinzugefügt und
+				 * weitergeleitet. Es wird ebenfalls der logout hinzugefuegt und
 				 * gesetzt. Handelt es sich um Suchprofil, dann wird man nach
 				 * dem Anlegen auf das entsprechende Suchprofil weitergeleitet.
 				 */
@@ -159,9 +176,11 @@ public class CreateInfo extends VerticalPanel {
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		buttonPanel.add(createInfosButton);
+		buttonPanel.add(abbrechenButton);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showEigenschaftFlexTable);
-		verPanel.add(createInfosButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(informationLabel);
 	}
 
