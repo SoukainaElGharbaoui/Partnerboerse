@@ -38,30 +38,33 @@ public class ShowMerkliste extends VerticalPanel {
 	/**
 	 * Widgets erzeugen. 
 	 */
-	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
 	private FlexTable merklisteFlexTable = new FlexTable();
+	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
 	private Label infoLabel = new Label();
-	
-	/**
-	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
-	 */
-	private int zaehler;
-	private int fremdprofilId;
-	
-	private CheckBox cb;
-	
 	private Button loeschenButton = new Button("Ausgewählte Profile von Merkliste entfernen");
 	private Button anzeigenButton;
 	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
-	
+	private CheckBox cb;
 
 	/**
-	 * Konstruktor erzeugen. 
+	 * Attribute erzeugen
 	 */
-	public ShowMerkliste() {
+	private String listtyp;
+	private int zaehler;
+	private int fremdprofilId;
+	
+	/**
+	 * Konstruktor erzeugen. 
+	 * @param listtyp Der Listtyp der Seite, von der das Anzeigen des Fremprofils aufgerufen wird (Merkliste).
+	 */
+	public ShowMerkliste(String listtyp) {
+		this.listtyp = listtyp;
 		run();
 	}
 		
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet.
+	 */
 	public void run() {
 	
 		this.add(verPanel);
@@ -87,6 +90,11 @@ public class ShowMerkliste extends VerticalPanel {
 		
 		getMerkliste();
 		
+		
+		/**
+		 * ClickHandler fuer den Button zum Auswaehlen aller angezeigten Profile erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden alle CheckBoxen der Tabelle ausgewaehlt.
+		 */
 		selectAllProfilsButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
@@ -115,6 +123,12 @@ public class ShowMerkliste extends VerticalPanel {
 				
 				zaehler = 0;
 				
+				/**
+				 * Die For-Schleife ueberprueft Zeile fuer Zeile ob die Checkbox markiert ist oder nicht.
+				 * Ist eine Checkbox markiert, wird die Fremprofil-ID des markierten Nutzerprofils ausgelesen
+				 * und der Vermerkstatus des Nutzerprofils geaendert. 
+				 * Das entsprechende Nutzerprofil wird dann aus der Merkliste entfernt.
+				 */
 				for (int k = 2; k < rowTable; k++) {
 					
 					boolean checked = ((CheckBox) merklisteFlexTable.getWidget(k, 6)).getValue();
@@ -128,45 +142,35 @@ public class ShowMerkliste extends VerticalPanel {
 						fremdprofilId = Integer.valueOf(merklisteFlexTable.getText(k, 0));
 						
 						infoLabel.setText("" + fremdprofilId);
-
-					 
-						ClientsideSettings.getPartnerboerseAdministration()
-					 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
-					 			new AsyncCallback<Integer>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabel.setText(
-									"Beim Ändern des Vermerkstatus trat ein Fehler auf.");								
-							}
-
-							@Override
-							public void onSuccess(Integer result) {
-								
-								infoLabel.setText(
-									"Das Ändern des Vermerkstatus hat funktioniert.");			
-							}
-					 });
-					 
-					 /**
-						 * Jeweilige Zeile der
-						 * Tabelle loeschen.
-						 */
-					 	merklisteFlexTable.removeRow(k);
-						k--;
 						
+						aendereVermerkstatus(fremdprofilId);
+					 
+						/**
+						* Jeweilige Zeile der
+						* Tabelle loeschen.
+						*/
+						merklisteFlexTable.removeRow(k);
+						k--;
+							
+						/**
+						 * Fall, die Merkliste ist leer, dann wird ein entsprechendes Label zur Information angezeigt.
+						 */
 						if (merklisteFlexTable.getRowCount() == 2) {
-							
-							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
-							merklisteFlexTable.setVisible(false);
-							buttonPanel.setVisible(false);
-							infoLabel.setVisible(false);
-							
-							ueberschriftLabel.setVisible(true);
+								
+						ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
+						merklisteFlexTable.setVisible(false);
+						buttonPanel.setVisible(false);
+						infoLabel.setVisible(false);
+								
+						ueberschriftLabel.setVisible(true);
 						}
 					}
 				}
 				
+				/**
+				 * Fall, dass keine CheckBox ausgewaehlt wurde.
+				 * Dann wird eine entsprechende Information angezeigt.
+				 */
 				if (zaehler == 0) {
 					Window.alert("Es wurde nichts ausgewählt.");
 				}
@@ -187,15 +191,15 @@ public class ShowMerkliste extends VerticalPanel {
 	}
 	
 	
+	/**
+	 * Nun werden alle gemerkten Nutzerprofile eines Nutzerprofils abgefragt. 
+	 * Das Ergebnis der Abfrage ist ein Merkliste-Objekt. Die gemerkten Nutzerprofil-Objekte werden in einer
+	 * Liste von Nutzerprofilen gespeichert. Diese Liste wird in einer Schleife durchlaufen und jedes 
+	 * gemerkte Nutzerprofil wird in eine Zeile der Tabelle eingefuegt. Zudem wird der Tabelle bei jedem 
+	 * Schleifendurchlauf je ein Button zum Loeschen und ein Button zum Anzeigen eines Vermerks hinzugefuegt. 
+	 */
 	public void getMerkliste() {
 		
-		/**
-		 * Nun werden alle gemerkten Nutzerprofile eines Nutzerprofils abgefragt. 
-		 * Das Ergebnis der Abfrage ist ein Merkliste-Objekt. Die gemerkten Nutzerprofil-Objekte werden in einer
-		 * Liste von Nutzerprofilen gespeichert. Diese Liste wird in einer Schleife durchlaufen und jedes 
-		 * gemerkte Nutzerprofil wird in eine Zeile der Tabelle eingefuegt. Zudem wird der Tabelle bei jedem 
-		 * Schleifendurchlauf je ein Button zum Loeschen und ein Button zum Anzeigen eines Vermerks hinzugefuegt. 
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().getGemerkteNutzerprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<Merkliste>() {
 
@@ -265,7 +269,7 @@ public class ShowMerkliste extends VerticalPanel {
 																String profiltyp = "Fp";
 																
 																ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-																		Integer.valueOf(fremdprofilId), profiltyp);
+																		Integer.valueOf(fremdprofilId), profiltyp, listtyp);
 																RootPanel
 																		.get("Details")
 																		.clear();
@@ -298,6 +302,32 @@ public class ShowMerkliste extends VerticalPanel {
 						}
 					}
 				});
+	}
+	
+	
+	/**
+	 * Methode, die die ausgewaehlten Fremdprofile fuer ein Nutzerprofil von der Merkliste streicht.
+	 * @param fremdprofilId Die Fremdprofil-Id des Nutzerprofils, dessen Vermerkstatus geaendert werden soll.
+	 */
+	public void aendereVermerkstatus(int fremdprofilId) {
+		
+		ClientsideSettings.getPartnerboerseAdministration()
+ 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
+ 			new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText(
+					"Beim Ändern des Vermerkstatus trat ein Fehler auf.");								
+			}
+	
+			@Override
+			public void onSuccess(Integer result) {
+				
+				infoLabel.setText(
+					"Das Ändern des Vermerkstatus hat funktioniert.");			
+			}
+ 		});
 	}
 	
 	

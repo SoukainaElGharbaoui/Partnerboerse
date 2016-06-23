@@ -48,21 +48,23 @@ public class ShowSperrliste extends VerticalPanel {
 	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
 
 	/**
-	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt. 
+	 * Attribute erzeugen.
 	 */
 	private int zaehler;
-	
+	private String listtyp;
 	
 	/**
 	 * Konstruktor erstellen.
+	 * @param listtyp Der Listtyp der Seite, von der das Anzeigen des Fremdprofils aufgerufen wird (Sperrliste).
 	 */
-	public ShowSperrliste() {
+	public ShowSperrliste(String listtyp) {
+		this.listtyp = listtyp;
 		run();
 	}
 	
 	/**
-	 * Startet den Aufruf der Seite. Es werden alle Nutzerprofile ausgelesen die
-	 *  gesperrt wurden und in die Tabelle eingefuegt.
+	 * Startet den Aufruf der Seite. Es werden alle Nutzerprofile ausgelesen, die
+	 *  gesperrt wurden. Diese werden in die Tabelle eingefuegt.
 	 */
 	public void run() {
 		
@@ -128,7 +130,7 @@ public class ShowSperrliste extends VerticalPanel {
 				
 				/**
 				 * Die For-Schleife ueberprueft Zeile fuer Zeile ob die Checkbox markiert ist oder nicht.
-				 * Ist eine checkbox markiert, wird die Fremprofil-ID des markierten Nutzerprofils ausgelesen
+				 * Ist eine Checkbox markiert, wird die Fremprofil-ID des markierten Nutzerprofils ausgelesen
 				 * und der Vermerkstatus des Nutzerprofils geaendert. 
 				 * Das entsprechende Nutzerprofil wird dann aus der Sperrliste entfernt.
 				 */
@@ -144,36 +146,22 @@ public class ShowSperrliste extends VerticalPanel {
 						fremdprofilId = Integer.valueOf(sperrlisteFlexTable.getText(k, 0));
 					
 						infoLabel.setText("" + fremdprofilId);
-					 
-
-						ClientsideSettings.getPartnerboerseAdministration()
-					 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
-					 			new AsyncCallback<Integer>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								infoLabel.setText(
-									"Beim Ändern des Vermerkstatus trat ein Fehler auf.");								
-							}
-
-							@Override
-							public void onSuccess(Integer result) {
-								
-								infoLabel.setText(
-									"Das Ändern des Vermerkstatus hat funktioniert.");			
-							}
-					 });
-					 
-					 /**
+						
+						aendereVermerkstatus(fremdprofilId);
+						
+						/**
 						 * Jeweilige Zeile der
 						 * Tabelle loeschen.
 						 */
 					 	sperrlisteFlexTable.removeRow(k);
 						k--;
 						
+						/**
+						 * Fall, die Merkliste ist leer, dann wird ein entsprechendes Label zur Information angezeigt.
+						 */
 						if (sperrlisteFlexTable.getRowCount() == 2) {
 							
-							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
+							ueberschriftLabel.setText("Sie haben zurkeit keine Profile gesperrt.");
 							sperrlisteFlexTable.setVisible(false);
 							buttonPanel.setVisible(false);
 							infoLabel.setVisible(false);
@@ -183,6 +171,10 @@ public class ShowSperrliste extends VerticalPanel {
 					}
 				}
 				
+				/**
+				 * Fall, dass keine CheckBox ausgewaehlt wurde.
+				 * Dann wird eine entsprechende Information angezeigt.
+				 */
 				if (zaehler == 0) {
 					Window.alert("Es wurde nichts ausgewählt.");
 				}
@@ -261,7 +253,7 @@ public class ShowSperrliste extends VerticalPanel {
 									String profiltyp = "Fp";
 
 									ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-											Integer.valueOf(fremdprofilId), profiltyp);
+											Integer.valueOf(fremdprofilId), profiltyp, listtyp);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);
@@ -287,6 +279,31 @@ public class ShowSperrliste extends VerticalPanel {
 			});
 	}
 	
+	
+	/**
+	 * Methode, die die ausgewaehlten Fremdprofile fuer ein Nutzerprofil von der Sperrliste streicht.
+	 * @param fremdprofilId Die Fremdprofil-Id des Nutzerprofils, dessen Vermerkstatus geaendert werden soll.
+	 */
+	public void aendereVermerkstatus(int fremdprofilId) {
+		
+		ClientsideSettings.getPartnerboerseAdministration()
+ 		.vermerkstatusAendern(nutzerprofil.getProfilId(), fremdprofilId, 
+ 			new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				infoLabel.setText(
+					"Beim Ändern des Vermerkstatus trat ein Fehler auf.");								
+			}
+	
+			@Override
+			public void onSuccess(Integer result) {
+				
+				infoLabel.setText(
+					"Das Ändern des Vermerkstatus hat funktioniert.");			
+			}
+ 		});
+	}
 	
 	
 	/**

@@ -1,4 +1,3 @@
-
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
@@ -27,14 +26,14 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 
 /**
  * Diese Klasse dient dazu, eine Info zu bearbeiten.
- *
  */
 public class EditInfo extends VerticalPanel {
 
 	/**
-	 * VerticalPanels erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
 
 	/**
 	 * Listen erzeugen.
@@ -46,48 +45,51 @@ public class EditInfo extends VerticalPanel {
 	 * Attribute erzeugen
 	 */
 	private int row;
-	private String infotext;
-	private String typ;
 	private int zaehler;
-	
 	private int counter;
 	private int counter2;
+	private int profilId;
+	
+	private String infotext;
+	private String typ;
+	private String profiltyp;
+
 
 	/**
 	 * Widgets erzeugen.
 	 */
-	private HorizontalPanel buttonPanel = new HorizontalPanel(); 
-	
 	private FlexTable editInfoFlexTable = new FlexTable();
+	
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
+	private Label informationLabel = new Label();
+	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
+	private Label pfadLabelSpA = new Label("Zurück zu: Suchprofil anzeigen");
 	
 	private Button updateInfosButton = new Button("Infos speichern");
-	
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Button loeschenButton = new Button("Ausgewählte Infos löschen");
 	private Button selectAllInfosButton = new Button("Alle Infos markieren");
-	
-	private Label informationLabel = new Label();
+	private Button abbrechenButton = new Button("Abbrechen");
 	
 	private CheckBox cb;
 	
-	private int profilId;
-	private String profiltyp;
-	
-
 	/**
-	 * Konstruktor hinzufügen.
+	 * Konstruktor hinzufuegen.
 	 * 
-	 * @param profilId
-	 * @param profiltyp
+	 * @param profilId Die Profil-ID des aktuellen Nutzerprofils.
+	 * @param profiltyp Der Profiltyp (Nutzerprofil / Suchprofil).
+	 * @param listtyp Der Listtyp der Seite, von der das Bearbeiten der Infos aufgerufen wird (Nutzerprofil / Suchprofil).
 	 */
-	public EditInfo(int profilId, String profiltyp) {
+	public EditInfo(int profilId, String profiltyp, String listtyp) {
 		this.profilId = profilId;
 		this.profiltyp = profiltyp;
 		
 		run();
 	}
 	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet.
+	 */
 	public void run() {
 
 		/**
@@ -102,16 +104,47 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		editInfoFlexTable.addStyleName("FlexTable");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
+		
 
 		/**
-		 * Erste Zeile der Tabelle festlegen.
+		 * Fall, profiltyp gehoert zu Nutzerprofil. 
+		 * Bei Klick auf dieses Label wird auf die Seite zum Anzeigen des 
+		 * Nutzerprofils geleitet.
 		 */
-		editInfoFlexTable.setText(0, 0, "Profil-Id");
-		editInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
-		editInfoFlexTable.setText(0, 2, "Eigenschaft");
-		editInfoFlexTable.setText(0, 3, "Bearbeiten");
-		editInfoFlexTable.setText(0, 4, "Löschen");
-		editInfoFlexTable.setText(0, 5, "");
+		if (profiltyp.equals("Np")) {
+			
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+			});
+			
+			/**
+			 * Fall, profiltyp gehoert zu Suchprofil. 
+			 * Bei Klick auf dieses Label wird auf die Seite zum Anzeigen des 
+			 * Suchprofils geleitet.
+			 */	
+		} else if (profiltyp.equals("Sp")) {
+
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+			});
+		}
 
 		
 		befuelleTabelle();
@@ -119,10 +152,11 @@ public class EditInfo extends VerticalPanel {
 
 		/**
 		 * ClickHandler fuer den Button zum Editieren einer Info erzeugen.
-		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben der Tabelle sowohl auf
 		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
 		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information
-		 * ueber diesen Zustand ausgegeben.
+		 * ueber diesen Zustand ausgegeben. Diese Daten aktualisieren die entsprechenden Daten
+		 * in der Datenbank.
 		 */
 		updateInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -140,7 +174,11 @@ public class EditInfo extends VerticalPanel {
 					if (w instanceof TextArea) {
 
 						infotextTable = ((TextArea) w).getText();
-
+						
+						/**
+						 * Fall, die TextArea ist leer. Dann wird
+						 * die entsprechende Info in der Datenbank geloescht.
+						 */
 						if (((TextArea) w).getText().isEmpty()) {
 							informationLabel.setText("Das Eingabefeld ist leer.");
 
@@ -160,8 +198,14 @@ public class EditInfo extends VerticalPanel {
 					else if (w instanceof ListBox) {
 
 						infotextTable = ((ListBox) w).getSelectedItemText();
-
+						
+						/**
+						 * Fall, der Wert der ListBox ist "Keine Auswahl". Dann wird
+						 * die entsprechende Info in der Datenbank geloescht.
+						 */
 						if (infotextTable.equals("Keine Auswahl")) {
+							
+							loescheInfo(eigenschaftIdTable);
 						}
 
 						else {
@@ -178,7 +222,10 @@ public class EditInfo extends VerticalPanel {
 			}
 		});
 		
-		
+		/**
+		 * ClickHandler fuer den Button zum Auswaehlen aller angezeigten Infos erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden alle CheckBoxen der Tabelle ausgewaehlt.
+		 */
 		selectAllInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
@@ -195,7 +242,7 @@ public class EditInfo extends VerticalPanel {
 
 		/**
 		 * ClickHandler fuer den Button zum Anlegen einer Info erzeugen. Sobald
-		 * dieser Button betaetigt wird, wird CreateInfo geöffnet.
+		 * dieser Button betaetigt wird, wird CreateInfo geoeffnet.
 		 */
 		createInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -207,6 +254,25 @@ public class EditInfo extends VerticalPanel {
 		});
 		
 		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen des Editierens erzeugen. Sobald
+		 * dieser Button betaetigt wird, wird die Seite zum Anzeigen des eigenen Nutzerprofils
+		 * angezeigt.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+			}
+		});
+		
+		
+		/**
+		 * ClickHandler fuer den Button zum Loeschen der ausgewaehlten Infos erzeugen. Sobald
+		 * dieser Button betaetigt wird, werden die ausgewaehlten Infos geloescht. Wurden alle
+		 * Infos geloescht, wird die Seite zum Anzeigen des eigenen Nutzerprofils angezeigt.
+		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
@@ -260,16 +326,26 @@ public class EditInfo extends VerticalPanel {
 							editInfoFlexTable.removeRow(k);
 							k--;
 							
+							
+							/**
+							 * Fall, es wurden alle Infos geloescht, dann wird auf die Seite zum Anzeigen des
+							 * Nutzerprofils weitergeleitet.
+							 */
 							if (editInfoFlexTable.getRowCount() == 2) {
 								
-								ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
-								editInfoFlexTable.setVisible(false);
-								buttonPanel.setVisible(false);
-								informationLabel.setVisible(false);
-								
-								ueberschriftLabel.setVisible(true);
+								ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showNp);
 							}
 						}
+					}
+					
+					/**
+					 * Fall, dass keine CheckBox ausgewaehlt wurde.
+					 * Dann wird eine entsprechende Information angezeigt.
+					 */
+					if (zaehler == 0) {
+						Window.alert("Es wurde nichts ausgewählt.");
 					}
 				}
 			}
@@ -279,9 +355,17 @@ public class EditInfo extends VerticalPanel {
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		
+		if (profiltyp.equals("Np")) {
+			verPanel.add(pfadLabelNpA);
+		} else if (profiltyp.equals("Sp")) {
+			verPanel.add(pfadLabelSpA);
+		}
+		
 		buttonPanel.add(updateInfosButton);
 		buttonPanel.add(loeschenButton);
 		buttonPanel.add(selectAllInfosButton);
+		buttonPanel.add(abbrechenButton);
 		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
@@ -290,11 +374,11 @@ public class EditInfo extends VerticalPanel {
 	}
 	
 	
+	/**
+	 * Methode, die die Infos anhand der Profil-ID aus der Datenbank ausliest und die Tabelle befuellt.
+	 */
 	public void befuelleTabelle() {
 		
-		/**
-		 * Info anhand der Profil-ID aus der Datenbank auslesen.
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 				new AsyncCallback<Map<List<Info>, List<Eigenschaft>>>() {
 
@@ -305,7 +389,7 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Map<List<Info>, List<Eigenschaft>> result) {
-
+						
 						Set<List<Info>> output = result.keySet();
 
 						for (List<Info> listI : output) {
@@ -323,6 +407,10 @@ public class EditInfo extends VerticalPanel {
 								listE = result.get(listI);
 
 								for (int i = 0; i < listI.size(); i++) {
+									
+									editInfoFlexTable.setCellPadding(6);
+									editInfoFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+									editInfoFlexTable.addStyleName("FlexTable");
 
 									row++;
 									infotext = null;
@@ -363,12 +451,13 @@ public class EditInfo extends VerticalPanel {
 	}
 	
 	
+	/**
+	 * Methode, die die Optionen der Auswahleigeschaften anhand der Liste
+	 * aus Eigenschaften aus der Datenbank ausliest und in die Tabelle einfuegt.
+	 */
+	
 	public void getAuswahleigenschaften() {
 		
-		/**
-		 * Optionen der Auswahleigeschaften anhand der Liste
-		 * aus Eigenschaften aus der Datenbank auslesen.
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAuswahleigenschaften(listE,
 				new AsyncCallback<List<Auswahleigenschaft>>() {
 
@@ -428,6 +517,10 @@ public class EditInfo extends VerticalPanel {
 	}
 
 	
+	/**
+	 * Loescht eine bestimmte Info des aktuellen Nutzerprofils aus der Datenbank.
+	 * @param eigenschaftIdTable Id der zu loeschenden Eigenschaft
+	 */
 	public void loescheInfo(int eigenschaftIdTable) {
 	
 		ClientsideSettings.getPartnerboerseAdministration().deleteOneInfoNeu(profilId,
@@ -448,6 +541,10 @@ public class EditInfo extends VerticalPanel {
 	}
 	
 	
+	/**
+	 * Methode, die die angelegten Infos eines Nutzerprofils in der Datenbank speichert.
+	 * @param infos Liste mit Infos zu einem Nutzerprofil
+	 */
 	public void speichereInfo(List<Info> infos) {
 		
 		/**
@@ -484,6 +581,9 @@ public class EditInfo extends VerticalPanel {
 	}
 	
 	
+	/**
+	 * Methode, die alle Infos loescht, wenn die Checkboxen aller Infos in der Tabelle ausgewaehlt sind.
+	 */
 	public void loescheAlleInfos() {
 		
 		ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId, 
@@ -502,9 +602,9 @@ public class EditInfo extends VerticalPanel {
 	}
 	
 	/**
-	 * Prüft, die ob Tabelle leer ist.
+	 * Methode, die prueft, ob die Tabelle leer ist.
 	 * 
-	 * @return boolean
+	 * @return boolean Boolscher Wert, der angibt, ob die Tabelle leer ist
 	 */
 	public boolean pruefeLeereTable() {
 
