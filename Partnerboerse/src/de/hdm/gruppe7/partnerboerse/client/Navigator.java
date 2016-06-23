@@ -79,15 +79,9 @@ public class Navigator extends HorizontalPanel {
 		profilAnzeigen.setStyleName("MenuItem");
 
 		/**
-<<<<<<< HEAD
 		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
 		 * jeweils ein Command uebergeben wird. Wird ein bestimmtes Item 
 		 * angeklickt, so wird der jeweilige Command ausgefuehrt.
-=======
-		 * Den einzelnen Menüs werden verschiedene Items hinzugefügt, denen
-		 * jeweils ein Command übergeben wird. Wird ein bestimmtes Item
-		 * angeklickt, so wird der jeweilige Command ausgeführt.
->>>>>>> refs/heads/master
 		 */
 
 		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
@@ -269,9 +263,7 @@ public class Navigator extends HorizontalPanel {
 
 											}
 										});
-
 					}
-
 				});
 
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");

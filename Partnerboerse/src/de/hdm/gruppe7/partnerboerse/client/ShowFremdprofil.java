@@ -173,7 +173,7 @@ public class ShowFremdprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Fremdprofils angezeigt.
 		 */
-		ShowInfo fremdinfo = new ShowInfo(fremdprofilId, profiltyp);
+		ShowInfo fremdinfo = new ShowInfo(fremdprofilId, profiltyp, listtyp);
 		infoPanel.add(fremdinfo);
 		horPanel.add(infoPanel);
 
@@ -202,7 +202,6 @@ public class ShowFremdprofil extends VerticalPanel {
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showS);
 				}
-
 			});
 		}
 

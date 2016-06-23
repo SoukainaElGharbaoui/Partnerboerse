@@ -127,7 +127,8 @@ public class ShowNutzerprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
-		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
+		String listtyp = "Np";
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp, listtyp);
 
 		/**
 		 * Widgets den Panels hinzufuegen.

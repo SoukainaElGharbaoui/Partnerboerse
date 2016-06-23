@@ -24,49 +24,55 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Info;
 public class ShowInfo extends VerticalPanel {
 
 	/**
-	 * VerticalPanel erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
-
-	/**
-	 * HorizontalPanel erzeugen.
-	 */
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
-	 * Attribute erzeugen
+	 * Attribute erzeugen.
 	 */
+	private String listtyp;
+	private String profiltyp; 
+
 	private int row;
 	private int eigenschaftIdInt;
 	private int eigenschaftIdTable;
 	private int zaehler;
+	private int profilId;
 
 	/**
 	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
+	
 	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
 	private Button bearbeitenButton = new Button("Infos bearbeiten");
 	private Button loeschenButton = new Button("Alle Infos löschen");
+	
 	private FlexTable showInfoFlexTable = new FlexTable();
 	
-	private int profilId;
-	private String profiltyp; 
-
 	/**
-	 * Konstruktor hinzufügen
+	 * Konstruktor hinzufuegen.
 	 * 
-	 * @param profilId
-	 * @param profiltyp
+	 * @param profilId Die Profil-Id des Profils (Nutzerprofil / Suchprofil / Fremdprofil)
+	 * @param profiltyp Der Profiltyp des Profils (Nutzerprofil / Suchprofil / Fremdprofil)
+	 * @param listtyp Der Listtyp der Seite, von der das Anzeigen der Infos aufgerufen wird (Nutzerprofil / Suchprofil / Fremdprofil)
 	 */
-	public ShowInfo(final int profilId, final String profiltyp) {
+	public ShowInfo(int profilId, String profiltyp, String listtyp) {
 		this.profilId = profilId; 
 		this.profiltyp = profiltyp; 
+		this.listtyp = listtyp;
+		
 		run(); 
 	}
 	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet.
+	 */
 	public void run() {
+		
 		/**
 		 * Vertikales Panel hinzufuegen.
 		 */
@@ -81,14 +87,6 @@ public class ShowInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		informationLabel.addStyleName("partnerboerse-label");
 
-		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		showInfoFlexTable.setText(0, 0, "Nutzerprofil-Id");
-		showInfoFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showInfoFlexTable.setText(0, 2, "Eigenschaft");
-		showInfoFlexTable.setText(0, 3, "Infotext");
-		
 		getAllInfos(); 
 
 		/**
@@ -99,8 +97,8 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(informationLabel);
 
 		/**
-		 * Prüfen, ob es sich um ein Info eines Fremdprofils handelt. Wenn
-		 * nicht, werden entsprechende Buttons hinzugefuegt. Löschen, Bearbeiten
+		 * Pruefen, ob es sich um ein Info eines Fremdprofils handelt. Wenn
+		 * nicht, werden entsprechende Buttons hinzugefuegt. Loeschen, Bearbeiten
 		 * und Anlegen.
 		 */
 		if (!profiltyp.equals("Fp")) {
@@ -128,16 +126,16 @@ public class ShowInfo extends VerticalPanel {
 		 */
 		bearbeitenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditInfo editInfo = new EditInfo(profilId, profiltyp);
+				EditInfo editInfo = new EditInfo(profilId, profiltyp, listtyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(editInfo);
 			}
 		});
 
 		/**
-		 * ClickHandler fuer den Button zum erstellen der noch nicht angelegten
+		 * ClickHandler fuer den Button zum Erstellen der noch nicht angelegten
 		 * Infos erzeugen. Sobald der Button betaetigt wird, wird die Seite zum
-		 * hinzufügen der bislang nicht ngelegten Infos aufgerufen.
+		 * hinzufuegen der bislang nicht ngelegten Infos aufgerufen.
 		 */
 		erstelleRestlicheInfosButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -149,11 +147,12 @@ public class ShowInfo extends VerticalPanel {
 
 	}
 	
+	/**
+	 * Methode, die alle Infos anhand der Profil-ID aus der Datenbank ausliest und die
+	 * Infos in die Tabelle einfuegt.
+	 */
 	public void getAllInfos() {
-		/**
-		 * Alle Infos anhand der Profil-ID aus der Datenbank auslesen und die
-		 * Infos in die Tabelle einfuegen.
-		 */
+		
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 				new AsyncCallback<Map<List<Info>, List<Eigenschaft>>>() {
 
@@ -207,7 +206,7 @@ public class ShowInfo extends VerticalPanel {
 										showInfoFlexTable.setText(i, 2, e.getErlaeuterung());
 									}
 
-				else {
+									else {
 									}
 								}
 							}
@@ -229,9 +228,9 @@ public class ShowInfo extends VerticalPanel {
 	}
 	
 	/**
-	 * Prüft, die ob Tabelle leer ist.
+	 * Prueft, ob die Tabelle leer ist.
 	 * 
-	 * @return boolean
+	 * @return boolean Boolscher Wert, der angibt, ob die Tabelle leer ist.
 	 */
 	public boolean pruefeLeereTable() {
 
@@ -254,7 +253,11 @@ public class ShowInfo extends VerticalPanel {
 		}
 	}
 	
+	/**
+	 * Methode, die alle Infos loescht.
+	 */
 	public void deleteAllInfos() {
+		
 		ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
 				new AsyncCallback<Void>() {
 					@Override
@@ -267,7 +270,7 @@ public class ShowInfo extends VerticalPanel {
 						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
 
 						/**
-						 * Fall, profilId gehört zu Nutzerprofil
+						 * Fall, profilId gehoert zu Nutzerprofil
 						 */
 						if (profiltyp == "Np") {
 
@@ -278,7 +281,7 @@ public class ShowInfo extends VerticalPanel {
 						}
 
 						/**
-						 * Fall, profilId gehört zu Suchprofil
+						 * Fall, profilId gehoert zu Suchprofil
 						 */
 						else if (profiltyp == "Sp") {
 
