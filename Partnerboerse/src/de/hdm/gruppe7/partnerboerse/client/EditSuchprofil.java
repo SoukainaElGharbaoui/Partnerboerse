@@ -34,6 +34,7 @@ public class EditSuchprofil extends VerticalPanel {
 	/**
 	 * Widgets erzeugen.
 	 */
+	private HorizontalPanel ankerPanel = new HorizontalPanel(); 
 	private Label ueberschriftLabel = new Label("Suchprofil bearbeiten:");
 	private FlexTable editSuchprofilFlexTable = new FlexTable();
 	private TextBox suchprofilNameTextBox = new TextBox();
@@ -52,7 +53,16 @@ public class EditSuchprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
+	private Label pfadLabelSp = new Label("Zurück zu: Suchprofile anzeigen");
+	
+	/**
+	 * Variable fuer den Suchprofilnamen erstellen.
+	 */
 	private String suchprofilName;
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
 	private String profiltyp;
 	
 	/**
@@ -67,11 +77,12 @@ public class EditSuchprofil extends VerticalPanel {
 	}
 	
 	/**
-	 * Startet den Aufbau der Seite
+	 * Methode erstellen, die den Aufbau der Seite startet. 
 	 */
 	public void run(){
-		
+		this.add(ankerPanel);
 		this.add(verPanel);
+		
 		/**
 		 * CSS anwenden und die Tabelle formatieren. 
 		 */
@@ -82,6 +93,7 @@ public class EditSuchprofil extends VerticalPanel {
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 		editSuchprofilFlexTable.addStyleName("FlexTable");
+		pfadLabelSp.addStyleName("partnerboerse-zurueckbutton");
 		editSuchprofilFlexTable.setCellPadding(6);
 		editSuchprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 
@@ -100,8 +112,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 		/**
 		 * Zweite und Dritte Spalte der Tabelle festlegen.
-		 * Hierzu werden die Widgets in die Tabelle eingefuegt 
-		 * und die Items fuer die ListBoxen festgelegt. 
+		 * Die Widgets werden in die Tabelle eingefuegt und die Items fuer die ListBoxen werden gesetzt. 
 		 */
 		editSuchprofilFlexTable.setWidget(1, 2, suchprofilNameTextBox);
 		editSuchprofilFlexTable.setWidget(1, 3, reqLabel1);
@@ -143,33 +154,22 @@ public class EditSuchprofil extends VerticalPanel {
 		religionListBox.addItem("Hinduistisch");
 		editSuchprofilFlexTable.setWidget(8, 2, religionListBox);
 		
-		
-		
-		/**
-		 * Suchprofil anhand der Profil-ID und anhand des Suchprofilnamens aus der 
-		 * Datenbank auslesen und die Suchprofildaten in die Tabelle einfuegen. 
-		 */
 		getSuchprofil();
 		
-
 		/**
 		 * ClickHandler fuer den Button zum Speichern eines Suchprofils erzeugen. 
-		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
-		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
-		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
-		 * ueber diesen Zustand ausgegeben. 
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben auf 
+		 * Vollstaendigkeit, auf Korrektheit und auf die Existenz des Suchprofilnamens 
+		 * ueberprueft. Sind Eingaben unvollstaendig oder inkorrekt, wird eine entsprechende
+		 * Information ueber diesen Zustand ausgegeben. Andernfalls wird das 
+		 * Suchprofil aktualisiert. Daraufhin wird die Seite zum Anzeigen der 
+		 * Suchprofile aufgerufen.
 		 */
 		saveSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
 				pruefeSuchprofil();
-				
-
 			}
-
-		
-		
-	});
+		});
 
 		
 		/**
@@ -179,21 +179,30 @@ public class EditSuchprofil extends VerticalPanel {
 		 */
 		abbrechenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
 				int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
 				ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp); 
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showSuchprofil);
-				
 			}
-			
 		}); 
 		
-		
+		/**
+		 * ClickHandler fuer das Label erzeugen, mit dessen Hilfe zur Seite zur Anzeige der 
+		 * Suchprofile zurueckgekehrt werden kann. 
+		 */
+		pfadLabelSp.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowSuchprofil showSp = new ShowSuchprofil(Integer.parseInt(editSuchprofilFlexTable.getText(0, 2)), profiltyp);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showSp);
+			}
+
+		});
 		
 		/**
-		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 * Widgets den Panels hinzufuegen. 
 		 */
+		verPanel.add(pfadLabelSp);
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editSuchprofilFlexTable);
 		buttonPanel.add(saveSuchprofilButton); 
@@ -202,7 +211,9 @@ public class EditSuchprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 	}
 	
-	
+	/**
+	 * Suchprofil anhand der Profil-ID auslesen und die Suchprofildaten in die Tabelle einfuegen. 
+	 */
 	public void getSuchprofil(){
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getSuchprofilByName(nutzerprofil.getProfilId(), suchprofilName,
@@ -253,15 +264,11 @@ public class EditSuchprofil extends VerticalPanel {
 		});
 		
 	}
-		/**
-		 * Hier werden die Eingaben bei der Erstellung des Suchprofils auf ihre 
-		 * Korrektheit ueberprueft. Zuerst wird ermittelt, ob der Suchprofilname
-		 * bereits vergeben ist. Ist dies nicht der Fall, so wird beispielsweise
-		 * ueberprueft,ob im Feld für die Koerpergroesse nur Zahlen drinstehen, oder
-		 * ob das maximale Alter nicht niedriger als das minimale Alter ist.
-		 * Erst wenn alle formellen Bedingungen erfuellt sind, wird ein Suchprofil 
-		 * angelegt
-		 */
+		
+	/**
+	 * Methode erstellen, die die Eingaben auf Vollstaendigkeit, Korrektheit und auf die Existenz des 
+	 * Suchprofilnamens ueberprueft.
+	 */
 		public void pruefeSuchprofil(){
 			ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameEdit(nutzerprofil.getProfilId(),
 					Integer.parseInt(editSuchprofilFlexTable.getText(0, 2)), suchprofilNameTextBox.getText(),
@@ -319,7 +326,10 @@ public class EditSuchprofil extends VerticalPanel {
 		}
 						
 						
-						
+	/**
+	 * Methode erstellen, die das Suchprofil aktualisiert. Dies führt zum wiederholten 
+	 * Schreiben des Suchprofils in die Datenbank.	
+	 */
 	public void suchprofilSpeichern(){
 					ClientsideSettings.getPartnerboerseAdministration()
 					.saveSuchprofil(nutzerprofil.getProfilId(),
@@ -343,9 +353,7 @@ public class EditSuchprofil extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Void result) {
-						
 					int suchprofilId = Integer.valueOf(editSuchprofilFlexTable.getText(0, 2));
-					
 					ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showSuchprofil);

@@ -156,7 +156,6 @@ public class Navigator extends HorizontalPanel {
 		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				
 				ClientsideSettings.getPartnerboerseAdministration()
 				.getAllSuchprofileFor(
 						nutzerprofil.getProfilId(),
