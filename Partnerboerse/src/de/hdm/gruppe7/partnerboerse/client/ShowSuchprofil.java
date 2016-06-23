@@ -50,12 +50,25 @@ public class ShowSuchprofil extends VerticalPanel {
 	private Button loeschenButton = new Button("Suchprofil löschen");
 	private Button bearbeitenButton = new Button("Suchprofil bearbeiten"); 
 	
+	/**
+	 * Variable fuer die Profil-ID des Suchprofils erstellen.
+	 */
 	private int suchprofilId; 
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
 	private String profiltyp; 
 	
-	private List<Suchprofil> listS = new ArrayList<Suchprofil>(); 
-	
+	/**
+	 * Variable fuer die naechste Suchprofil-ID erstellen.
+	 */
 	private int naechsteSuchprofilId; 
+	
+	/**
+	 * Liste erzeugen, die alle Suchprofile eines Nutzerprofils enthaelt. 
+	 */
+	private List<Suchprofil> listS = new ArrayList<Suchprofil>(); 
 
 	/**
 	 * Konstruktor erstellen.
@@ -68,9 +81,13 @@ public class ShowSuchprofil extends VerticalPanel {
 		run(); 
 	}
 	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
 	public void run() {
+		
 		/**
-		 * Widgets den Panels hinzufuegen.
+		 * Panels den Panels hinzufuegen.  
 		 */
 		this.add(ueberschriftPanel);
 		this.add(auswahlPanel);
@@ -101,49 +118,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		showSuchprofilFlexTable.setText(7, 0, "Raucher");
 		showSuchprofilFlexTable.setText(8, 0, "Religion");
 		
-		
-			
-		/**
-		 * Alle Suchprofile des Nutzerprofils auslesen und die ListBox mit den Suchprofilnamen befuellen.
-		 * Existieren zu diesem Nutzerprofil bisher keine Suchprofile, so wird eine Information ausgegeben, 
-		 * die ueber diesen Zustand informiert. Zudem wird ein Button eingeblendet, durch den neue Suchprofile
-		 * angelegt werden koennen. 
-		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(), 
-				new AsyncCallback<List<Suchprofil>>() {
-
-			public void onFailure(Throwable caught) {
-				infoLabel.setText("Es trat ein Fehler auf.");
-			}
-
-			public void onSuccess(List<Suchprofil> result) {
-				listS = result; 
-				if (result.isEmpty()) {
-					auswahlListBox.setVisible(false);
-					anzeigenButton.setVisible(false);
-					
-					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
-					createSuchprofilButton.setVisible(true); 
-
-				} else {
-					for (Suchprofil s : result) {
-						auswahlListBox.addItem(s.getSuchprofilName());
-					}
-					
-					createSuchprofilButton.setVisible(false);
-					
-					for (int i = 0; i < auswahlListBox.getItemCount(); i++) {
-						if (showSuchprofilFlexTable.getText(1, 1).equals(auswahlListBox.getValue(i))) {
-							auswahlListBox.setSelectedIndex(i);
-						}
-					}
-					
-					
-				}
-				
-						
-			}
-		}); 
+		getAllSuchprofile(); 
 		
 		getSuchprofil(); 
 		
@@ -160,7 +135,8 @@ public class ShowSuchprofil extends VerticalPanel {
 			}
 
 		});
-			/**
+		
+		/**
 		 * ClickHandler fuer den Button zum Anzeigen eines Suchprofils erzeugen.
 		 * Sobald dieser Button betaetigt wird, wird anhand der Profil-ID und 
 		 * anhand des Suchprofilnames das jeweilige Suchprofil ausgelesen. 
@@ -169,19 +145,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		anzeigenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				getSuchprofilByName(); 
-
-		/**
-		 * Widgets und Panels den Panels hinzufuegen.
-		 */
-		suchprofilPanel.add(ueberschriftLabel);
-		suchprofilPanel.add(showSuchprofilFlexTable);
-		buttonPanel.add(bearbeitenButton);
-		buttonPanel.add(loeschenButton);
-		suchprofilPanel.add(buttonPanel);
-		suchprofilPanel.add(infoLabel);
-				
 			}
-			
 		}); 
 		
 		/**
@@ -201,7 +165,8 @@ public class ShowSuchprofil extends VerticalPanel {
 		 * ClickHandler fuer den Button zum Loeschen eines Suchprofils erzeugen. 
 		 * Sobald dieser Button betaetigt wird, wird das jeweilige Suchprofil 
 		 * geloescht. Anschliessend wird die Seite zum Anzeigen der Suchprofile
-		 * aufgerufen. 
+		 * aufgerufen. Hier wird, falls verfuegbar, das naechste Suchprofil des
+		 * Nutzerprofils angezeigt. 
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -219,11 +184,50 @@ public class ShowSuchprofil extends VerticalPanel {
 
 	} 
 	
+	/**
+	 * Methode erstellen, die alle Suchprofile des Nutzerprofils ausliest und die ListBox mit den 
+	 * Suchprofilnamen befuellt. Existieren zu diesem Nutzerprofil bisher keine Suchprofile, werden 
+	 * die gewoehnlichen Inhalte der Seite ausgeblendet und es wird eine Information ausgegeben, 
+	 * die ueber diesen Zustand informiert. Zudem wird ein Button eingeblendet, durch den neue 
+	 * Suchprofile angelegt werden koennen. 
+	*/
+	public void getAllSuchprofile() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(), 
+				new AsyncCallback<List<Suchprofil>>() {
+
+			public void onFailure(Throwable caught) {
+				infoLabel.setText("Es trat ein Fehler auf.");
+			}
+
+			public void onSuccess(List<Suchprofil> result) {
+				listS = result; 
+				if (result.isEmpty()) {
+					auswahlListBox.setVisible(false);
+					anzeigenButton.setVisible(false);
+					auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+					createSuchprofilButton.setVisible(true); 
+				} else {
+					for (Suchprofil s : result) {
+						auswahlListBox.addItem(s.getSuchprofilName());
+					}
+					
+					createSuchprofilButton.setVisible(false);
+					
+					for (int i = 0; i < auswahlListBox.getItemCount(); i++) {
+						if (showSuchprofilFlexTable.getText(1, 1).equals(auswahlListBox.getValue(i))) {
+							auswahlListBox.setSelectedIndex(i);
+						}
+					}
+				}
+			}
+		}); 
+	}
+	
+	/**
+	 * Methode erstellen, die ein Suchprofil anhand der Profil-ID ausliest und die Tabelle 
+	 * mit den Suchprofildaten befuellt.
+	 */
 	public void getSuchprofil() {
-		/**
-		 * Suchprofil anhand der Suchprofil-ID auslesen und die Tabelle mit
-		 * den Suchprofildaten befuellen. 
-		 */
 			ClientsideSettings.getPartnerboerseAdministration()
 			.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
 
@@ -232,6 +236,7 @@ public class ShowSuchprofil extends VerticalPanel {
 				}
 
 				public void onSuccess(Suchprofil result) {
+
 					ueberschriftLabel.setText("Ihr Suchprofil '" + result.getSuchprofilName() + "':");
 					showSuchprofilFlexTable.setText(0, 1, String.valueOf(suchprofilId));
 					showSuchprofilFlexTable.setText(1, 1, result.getSuchprofilName());
@@ -243,9 +248,6 @@ public class ShowSuchprofil extends VerticalPanel {
 					showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
 					showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 					
-					/**
-					 * Widgets und Panels den Panels hinzufuegen. 
-					 */
 					suchprofilPanel.add(ueberschriftLabel);
 					suchprofilPanel.add(showSuchprofilFlexTable);
 					buttonPanel.add(bearbeitenButton);
@@ -253,10 +255,6 @@ public class ShowSuchprofil extends VerticalPanel {
 					suchprofilPanel.add(buttonPanel);
 					suchprofilPanel.add(infoLabel);
 					
-					/**
-					 * Zusaetzlich zu den Suchprofildaten werden die Suchprofil-Infos 
-					 * des jeweiligen Suchprofils angezeigt. 
-					 */
 					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
 					infoPanel.clear();
 					infoPanel.add(showInfo);
@@ -266,6 +264,10 @@ public class ShowSuchprofil extends VerticalPanel {
 			});
 	}
 	
+	/**
+	 * Methode erstellen, die ein Suchprofil anhand der Profil-ID und anhand des Suchprofilnamens 
+	 * ausliest und die Tabelle mit den Suchprofildaten befuellt.
+	 */
 	public void getSuchprofilByName() {
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getSuchprofilByName(nutzerprofil.getProfilId(), 
@@ -289,10 +291,13 @@ public class ShowSuchprofil extends VerticalPanel {
 					showSuchprofilFlexTable.setText(7, 1, result.getRaucher());
 					showSuchprofilFlexTable.setText(8, 1, result.getReligion());
 					
-					/**
-					 * Zusaetzlich zu den Suchprofildaten werden die Suchprofil-Infos 
-					 * des jeweiligen Suchprofils angezeigt. 
-					 */
+					suchprofilPanel.add(ueberschriftLabel);
+					suchprofilPanel.add(showSuchprofilFlexTable);
+					buttonPanel.add(bearbeitenButton);
+					buttonPanel.add(loeschenButton);
+					suchprofilPanel.add(buttonPanel);
+					suchprofilPanel.add(infoLabel);
+					
 					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
 					infoPanel.clear();
 					infoPanel.add(showInfo);
@@ -300,20 +305,19 @@ public class ShowSuchprofil extends VerticalPanel {
 			});
 	}
 	
+	/**
+	 * Methode erstellen, die ein Suchprofil loescht. Anschliessend wird die Seite zum Anzeigen der Suchprofile
+	 * aufgerufen. Hier wird, falls verfuegbar, das naechste Suchprofil des Nutzerprofils angezeigt. 
+	 */
 	public void deleteSuchprofil() {
 		
 		for(int i = 0; i < listS.size(); i++) {
-			
 			if(listS.get(i) != null) {
-				
 				if(!showSuchprofilFlexTable.getText(1, 1).equals(listS.get(i).getSuchprofilName())) {
-					
 					naechsteSuchprofilId = listS.get(i).getProfilId(); 
-					
 					break; 
 				}
 			}
-			
 		}
 		
 		ClientsideSettings.getPartnerboerseAdministration()
@@ -324,7 +328,6 @@ public class ShowSuchprofil extends VerticalPanel {
 			}
 
 			public void onSuccess(Void result) {
-				
 				ShowSuchprofil showSuchprofil = new ShowSuchprofil(naechsteSuchprofilId, profiltyp);
 				ueberschriftPanel.clear();
 				auswahlPanel.clear();

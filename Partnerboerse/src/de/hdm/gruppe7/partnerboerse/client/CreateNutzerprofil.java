@@ -66,7 +66,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private String profiltyp; 
 
 	/**
-	 * Konstruktor erstellen, der die Methode run() aufruft. 
+	 * Konstruktor erstellen.
 	 * @param profiltyp Der Profiltyp (Nutzerprofil).
 	 */
 	public CreateNutzerprofil(final String profiltyp) {
@@ -90,7 +90,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
-		
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 
@@ -175,7 +174,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		 * Vollstaendigkeit als auch auf Korrektheit geprueft. Sind die Eingaben 
 		 * unvollstaendig oder inkorrekt, wird eine entsprechende Fehlermeldung 
 		 * ueber diesen Zustand ausgegeben. Andernfalls wird das Nutzerprofil 
-		 * angelegt. 
+		 * angelegt. Anschliessend wird die Seite zum Anlegen der Infos aufgerufen.
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -227,7 +226,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 	
 	/**
-	 * Methode erstellen, die ein neues Nutzerprofil anlegt und dieses in der Datenbank speichert. 
+	 * Methode erstellen, die ein neues Nutzerprofil anlegt. Dies fürt zum Speichern des Nutzerprofils
+	 * in der Datenbank. 
 	 */
 	public void nutzerprofilAnlegen() {
 		
@@ -244,9 +244,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 					public void onSuccess(Nutzerprofil result) {
 						ClientsideSettings.setAktuellerUser(result);
 						
-						/**
-						 * Seite zum Anlegen der Infos aufrufen. 
-						 */
 						CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(createInfo);

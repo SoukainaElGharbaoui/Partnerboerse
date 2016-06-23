@@ -179,11 +179,13 @@ public class EditNutzerprofil extends VerticalPanel {
 		befuelleTabelle(); 
 		
 		/**
-		 * ClickHandler fuer den Button zum Speichern eines Nutzerprofils erzeugen. 
+		 * ClickHandler fuer den Button zum Speichern des eigenen Nutzerprofils erzeugen. 
 		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
 		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
 		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
-		 * ueber diesen Zustand ausgegeben. 
+		 * ueber diesen Zustand ausgegeben. Andernfalls wird das Nutzerprofil 
+		 * gespeichert. Anschliessend wird die Seite zum Anzeigen des eigenen 
+		 * Nutzeprofils aufgerufen.
 		 */
 		editNutzerprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -204,12 +206,14 @@ public class EditNutzerprofil extends VerticalPanel {
 			}
 		}); 
 		
+		/**
+		 * ClickHandler fuer das Label zum Zurueckkehren zum Nutzerprofil erzeugen. 
+		 * Sobald dieses Label betaetigt wird, wird die Seite zum Anzeigen des eigenen 
+		 * Nutzerprofils aufgerufen.
+		 */
 		pfadLabelNpA.addClickHandler(new ClickHandler() {
-
-			@Override
 			public void onClick(ClickEvent event) {
 				ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(showNp);
 			}
@@ -217,7 +221,7 @@ public class EditNutzerprofil extends VerticalPanel {
 		});
 
 		/**
-		 * Widgets zum Panel hinzufuegen.
+		 * Widgets den Panels hinzufuegen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editNutzerprofilFlexTable);
@@ -227,6 +231,10 @@ public class EditNutzerprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 	}
 	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil ausliest und die Profildaten in die 
+	 * Tabelle eintraegt. 
+	 */
 	public void befuelleTabelle() {
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(profilId,
 				new AsyncCallback<Nutzerprofil>() {
@@ -281,7 +289,7 @@ public class EditNutzerprofil extends VerticalPanel {
 				});
 
 		/**
-		 * Widgets zum Panel hinzufuegen.
+		 * Widgets dem Panel hinzufuegen.
 		 */
 		verPanel.add(pfadLabelNpA);
 		verPanel.add(ueberschriftLabel);
@@ -290,6 +298,9 @@ public class EditNutzerprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 	}
 	
+	/**
+	 * Methode erstellen, die die Eingaben auf Vollstaendigkeit und Korrektheit ueberprueft.
+	 */
 	public void pruefeEingabe() {
 		boolean vornameWert = isBuchstabe(vornameTextBox.getText());
 		boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
@@ -321,11 +332,11 @@ public class EditNutzerprofil extends VerticalPanel {
 		}
 	}
 	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil aktualisiert. Dies führt zum wiederholten 
+	 * Schreiben des Nutzerprofils in die Datenbank.
+	 */
 	public void aktualisiereNutzerprofil() {
-		/**
-		 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil wiederholt in die 
-		 * Datenbank geschrieben. Anschließend wird die Seite zum Anzeigen des Nutzerprofils aufgerufen.  
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().saveNutzerprofil(
 				profilId, vornameTextBox.getText(),
 				nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
