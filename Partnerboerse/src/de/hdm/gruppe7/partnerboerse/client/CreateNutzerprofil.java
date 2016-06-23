@@ -69,7 +69,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * Konstruktor erstellen.
 	 * @param profiltyp Der Profiltyp (Nutzerprofil).
 	 */
-	public CreateNutzerprofil(final String profiltyp) {
+	public CreateNutzerprofil(String profiltyp) {
 		this.profiltyp = profiltyp; 
 		run(); 
 	}

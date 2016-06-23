@@ -59,7 +59,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 	 * @param profilId Die Profil-ID des Nutzerprofils, das angezeigt werden soll.
 	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
-	public ShowNutzerprofil(final int profilId, final String profiltyp) {
+	public ShowNutzerprofil(int profilId, String profiltyp) {
 		this.profilId = profilId; 
 		this.profiltyp = profiltyp; 
 		run(); 

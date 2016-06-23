@@ -28,6 +28,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * Panels erzeugen.
 	 */
+	private HorizontalPanel ankerPanel = new HorizontalPanel(); 
 	private VerticalPanel fremdprofilPanel = new VerticalPanel();
 	private VerticalPanel infoPanel = new VerticalPanel();
 	private HorizontalPanel horPanel = new HorizontalPanel();
@@ -44,10 +45,21 @@ public class ShowFremdprofil extends VerticalPanel {
 	private Label pfadLabelM = new Label("Zurück zu: Merkliste anzeigen");
 	private Label pfadLabelS = new Label("Zurück zu: Sperrliste anzeigen");
 	private Label pfadLabelPvNp = new Label("Zurück zu: Unangesehene Partnervorschläge");
-	private Label pfadLabelPvSp = new Label("Zurück zu: Partnervorschläge mit Suchprofil");
+	private Label pfadLabelPvSp = new Label("Zurück zu: Partnervorschläge anhand von Suchprofilen");
 	
+	/**
+	 * Variable fuer die Fremdprofil-ID erstellen.
+	 */
 	private int fremdprofilId; 
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
 	private String profiltyp; 
+	
+	/**
+	 * Variable fuer den Listtyp erstellen.
+	 */
 	private String listtyp; 
 
 	/**
@@ -68,6 +80,7 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * Methode erstellen, die den Aufbau der Seite startet. 
 	 */
 	public void run() {
+		this.add(ankerPanel);
 		this.add(horPanel);
 
 		/**
@@ -139,13 +152,13 @@ public class ShowFremdprofil extends VerticalPanel {
 		 * ein entsprechendes Label zum Zurueckkehren zu dieser Seite eingeblendet. 
 		 */
 		if (listtyp.equals("M")) {
-			horPanel.add(pfadLabelM);
+			ankerPanel.add(pfadLabelM);
 		} else if (listtyp.equals("S")) {
-			horPanel.add(pfadLabelS);
+			ankerPanel.add(pfadLabelS);
 		} else if (listtyp.equals("PvNp")) {
-			horPanel.add(pfadLabelPvNp);
+			ankerPanel.add(pfadLabelPvNp);
 		} else if (listtyp.equals("PvSp")) {
-			horPanel.add(pfadLabelPvSp);
+			ankerPanel.add(pfadLabelPvSp);
 		}
 
 		/**

@@ -75,7 +75,7 @@ public class EditNutzerprofil extends VerticalPanel {
 	 * @param profilId Die Profil-ID des aktuellen Nutzerprofils.  
 	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
-	public EditNutzerprofil(final int profilId, final String profiltyp) {
+	public EditNutzerprofil(int profilId, String profiltyp) {
 		this.profilId = profilId; 
 		this.profiltyp = profiltyp; 
 		run(); 
