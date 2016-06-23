@@ -22,7 +22,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
 
 /**
- * Diese Klasse dient dazu, ein Nutzerprofil zu erstellen.
+ * Diese Klasse dient dazu, ein Nutzerprofil anzulegen.
  */
 public class CreateNutzerprofil extends VerticalPanel {
 
@@ -59,12 +59,25 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
 	private Label warnungLabel = new Label();
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
+	private String profiltyp; 
 
 	/**
-	 * Konstruktor erstellen.
+	 * Konstruktor erstellen, der die Methode run() aufruft. 
 	 * @param profiltyp Der Profiltyp (Nutzerprofil).
 	 */
 	public CreateNutzerprofil(final String profiltyp) {
+		this.profiltyp = profiltyp; 
+		run(); 
+	}
+	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
+	public void run() {
 		this.add(verPanel);
 
 		/**
@@ -76,9 +89,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		reqLabel3.setStyleName("red_label");
 		reqLabel4.setStyleName("red_label");
 		warnungLabel.setStyleName("red_label");
-
 		createNutzerprofilFlexTable.addStyleName("FlexTable");
-
+		
 		createNutzerprofilFlexTable.setCellPadding(6);
 		createNutzerprofilFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 
@@ -96,9 +108,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 0, "E-Mail");
 
 		/**
-		 * Zweite und dritte Spalte der Tabelle festlegen. Hierzu werden die
-		 * Widgets in die Tabelle eingefuegt und die Items fuer die ListBoxen
-		 * festgelegt.
+		 * Zweite und dritte Spalte der Tabelle festlegen. 
+		 * Die Widgets werden in die Tabelle eingefuegt und die Items fuer die ListBoxen werden gesetzt. 
 		 */
 		createNutzerprofilFlexTable.setWidget(0, 2, vornameTextBox);
 		createNutzerprofilFlexTable.setWidget(0, 3, reqLabel1);
@@ -125,6 +136,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 				}
 			}
 		});
+		
 		String todayString = DateTimeFormat.getFormat("dd.MM.yyyy").format(today());
 		geburtsdatumInhalt.setText(todayString);
 		geburtsdatumDateBox.setValue(new Date());
@@ -158,94 +170,94 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(8, 2, nutzerprofil.getEmailAddress());
 
 		/**
-<<<<<<< HEAD
-		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils. Sobald
-		 * dieser Button betaetigt wird, werden die Eingaben sowohl auf
-		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
-		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information
-		 * ueber diesen Zustand ausgegeben.
-=======
-		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils
-		 * erzeugen. Sobald dieser Button betaetigt wird, werden die Eingaben
-		 * sowohl auf Vollstaendigkeit als auch auf Korrektheit ueberprueft.
-		 * Sind Eingaben unvollstaendig oder inkorrekt, eine entsprechende 
-		 * Information ueber diesen Zustand ausgegeben. 
->>>>>>> refs/heads/master
+		 * ClickHandler fuer den Button zum Anlegen eines Nutzerprofils erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
+		 * Vollstaendigkeit als auch auf Korrektheit geprueft. Sind die Eingaben 
+		 * unvollstaendig oder inkorrekt, wird eine entsprechende Fehlermeldung 
+		 * ueber diesen Zustand ausgegeben. Andernfalls wird das Nutzerprofil 
+		 * angelegt. 
 		 */
 		createNutzerprofilButton.addClickHandler(new ClickHandler() {
-
 			public void onClick(ClickEvent event) {
-
-				boolean vornameWert = isBuchstabe(vornameTextBox.getText());
-				boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
-				boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
-
-				if (vornameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
-					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
-				} else if (nachnameTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
-					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-				} else if (vornameWert == false) {
-					warnungLabel.setText("Ihr Vorname darf nur Buchstaben enthalten.");
-					createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
-				} else if (nachnameWert == false) {
-					warnungLabel.setText("Ihr Nachname darf nur Buchstaben enthalten.");
-					createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
-				} else if (geburtsdatumDateBox.getValue() == null) {
-					warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
-					createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
-				} else if (koerpergroesseTextBox.getText().length() == 0) {
-					warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
-					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
-				} else if (koerpergroesseWert == false) {
-					warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
-					createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
-
-				} else {
-
-					/**
-					 * Sind alle Eingaben vollstaendig und korrekt, wird das
-					 * Nutzerprofil in die Datenbank eingefuegt. Zudem wird der
-					 * aktuelle Nutzer gesetzt. Anschließend wird die Seite zum
-					 * Anlegen der Infos aufgerufen.
-					 */
-					ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
-							nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
-							Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
-							raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
-							nutzerprofil.getEmailAddress(), new AsyncCallback<Nutzerprofil>() {
-
-								public void onFailure(Throwable caught) {
-									infoLabel.setText("Es trat ein Fehler auf");
-								}
-
-								public void onSuccess(Nutzerprofil result) {
-
-									ClientsideSettings.setAktuellerUser(result);
-
-									CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(createInfo);
-								}
-							});
-				}
+				pruefeEingabe(); 
 			}
 		});
-
+			
 		/**
-		 * Widgets zum Panel hinzufuegen.
+		 * Widgets dem Panel hinzufuegen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(createNutzerprofilButton);
 		verPanel.add(infoLabel);
 	}
+	
+	/**
+	 * Methode erstellen, die die Eingabe des Nutzers auf Vollstaendigkeit und Korrektheit ueberprueft. 
+	 */
+	public void pruefeEingabe() {
+		boolean vornameWert = isBuchstabe(vornameTextBox.getText());
+		boolean nachnameWert = isBuchstabe(nachnameTextBox.getText());
+		boolean koerpergroesseWert = isZahl(koerpergroesseTextBox.getText());
+
+		if (vornameTextBox.getText().length() == 0) {
+			warnungLabel.setText("Bitte geben Sie Ihren Vornamen an.");
+			createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+		} else if (nachnameTextBox.getText().length() == 0) {
+			warnungLabel.setText("Bitte geben Sie Ihren Nachnamen an.");
+			createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+		} else if (vornameWert == false) {
+			warnungLabel.setText("Ihr Vorname darf nur Buchstaben enthalten.");
+			createNutzerprofilFlexTable.setWidget(0, 4, warnungLabel);
+		} else if (nachnameWert == false) {
+			warnungLabel.setText("Ihr Nachname darf nur Buchstaben enthalten.");
+			createNutzerprofilFlexTable.setWidget(1, 4, warnungLabel);
+		} else if (geburtsdatumDateBox.getValue() == null) {
+			warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
+			createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
+		} else if (koerpergroesseTextBox.getText().length() == 0) {
+			warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+		} else if (koerpergroesseWert == false) {
+			warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
+			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
+		} else {
+			nutzerprofilAnlegen(); 
+		}
+	}
+	
+	/**
+	 * Methode erstellen, die ein neues Nutzerprofil anlegt und dieses in der Datenbank speichert. 
+	 */
+	public void nutzerprofilAnlegen() {
+		
+		ClientsideSettings.getPartnerboerseAdministration().createNutzerprofil(vornameTextBox.getText(),
+				nachnameTextBox.getText(), geschlechtListBox.getSelectedItemText(), getGeburtsdatum(),
+				Integer.parseInt(koerpergroesseTextBox.getText()), haarfarbeListBox.getSelectedItemText(),
+				raucherListBox.getSelectedItemText(), religionListBox.getSelectedItemText(),
+				nutzerprofil.getEmailAddress(), new AsyncCallback<Nutzerprofil>() {
+
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf");
+					}
+
+					public void onSuccess(Nutzerprofil result) {
+						ClientsideSettings.setAktuellerUser(result);
+						
+						/**
+						 * Seite zum Anlegen der Infos aufrufen. 
+						 */
+						CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(createInfo);
+					}
+				});
+		
+	}
 
 	/**
 	 * Methode erstellen, die das Geburtsdatum formatiert.
 	 */
-
 	Date getGeburtsdatum() {
 		Date geburtsdatum = geburtsdatumFormat.parse(geburtsdatumInhalt.getText());
 		java.sql.Date sqlDate = new java.sql.Date(geburtsdatum.getTime());
@@ -256,7 +268,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * Methode erstellen, die das aktuelle Datum ermittelt. 
 	 * @return Aktuelles Datum.
 	 */
-
 	private static Date today() {
 		return zeroTime(new Date());
 	}

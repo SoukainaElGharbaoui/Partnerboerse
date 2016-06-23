@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,6 +33,7 @@ public class EditInfo extends VerticalPanel {
 	 * VerticalPanels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Listen erzeugen.
@@ -54,8 +56,11 @@ public class EditInfo extends VerticalPanel {
 	private FlexTable editInfoFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Infos bearbeiten:");
 	private Button updateInfosButton = new Button("Infos speichern");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label informationLabel = new Label();
+	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
+	private Label pfadLabelSpA = new Label("Zurück zu: Suchprofil anzeigen");
 
 	/**
 	 * Prüft, die ob Tabelle leer ist.
@@ -103,7 +108,9 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		editInfoFlexTable.addStyleName("FlexTable");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
+		
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
@@ -112,6 +119,33 @@ public class EditInfo extends VerticalPanel {
 		editInfoFlexTable.setText(0, 2, "Eigenschaft");
 		editInfoFlexTable.setText(0, 3, "Bearbeiten");
 		editInfoFlexTable.setText(0, 4, "Löschen");
+
+		if (profiltyp.equals("Np")) {
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+			});
+		} else if (profiltyp.equals("Sp")) {
+
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+
+			});
+		}
 
 		/**
 		 * Info anhand der Profil-ID aus der Datenbank auslesen.
@@ -422,14 +456,38 @@ public class EditInfo extends VerticalPanel {
 				RootPanel.get("Details").add(createInfo);
 			}
 		});
+		
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+				
+			}
+			
+		}); 
+
+		/**
+		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils
+		 * angezeigt.
+		 */
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
 
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		if (profiltyp.equals("Np")) {
+			verPanel.add(pfadLabelNpA);
+		} else if (profiltyp.equals("Sp")) {
+			verPanel.add(pfadLabelSpA);
+		}
+
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(editInfoFlexTable);
+		buttonPanel.add(updateInfosButton);
+		buttonPanel.add(abbrechenButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(informationLabel);
-		verPanel.add(updateInfosButton);
 
 	}
 }
