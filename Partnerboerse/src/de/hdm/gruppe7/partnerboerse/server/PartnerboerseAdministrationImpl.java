@@ -872,7 +872,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 				Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
 
-				eigB.setErlaeuterung(listE.get(i).erlaeuterung);
+				eigB.setErlaeuterung(listE.get(i).getErlaeuterung());
 
 				listEigB.add(eigB);
 
