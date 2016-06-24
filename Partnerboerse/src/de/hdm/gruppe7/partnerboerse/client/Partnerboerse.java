@@ -24,9 +24,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
  */
 public class Partnerboerse implements EntryPoint {
 
-	// com.google.appengine.api.users.UserService userService =
-	// com.google.appengine.api.users.UserServiceFactory
-	// .getUserService();
+
 
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
@@ -61,6 +59,9 @@ public class Partnerboerse implements EntryPoint {
 	private LoginServiceAsync loginService = ClientsideSettings
 			.getLoginService();
 
+	
+	private static String editorHtmlName = "Partnerboerse.html";
+	
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface EntryPoint. Daher
 	 * benoetigen wir die Methode public void onModuleLoad(). Diese ist das
@@ -71,7 +72,7 @@ public class Partnerboerse implements EntryPoint {
 
 		
 		// Loginservice von Google
-		loginService.login(GWT.getHostPageBaseURL() + "Partnerboerse.html",
+		loginService.login(GWT.getHostPageBaseURL() + editorHtmlName,
 				loginExecute());
 
 	}
@@ -92,7 +93,10 @@ public class Partnerboerse implements EntryPoint {
 					admin.pruefeObNutzerNeu(result.getEmailAddress(),
 							pruefeObNutzerNeuExecute(result
 									.getEmailAddress()));
+					Window.Location.replace(result.getLogoutUrl());
+
 				} else {
+					
 					Window.Location.replace(result.getLoginUrl());
 				}
 			}
@@ -117,10 +121,10 @@ public class Partnerboerse implements EntryPoint {
 							getNuterprofilByEmailExecute(loginInfo.getEmailAddress()));
 
 				} else {
-					Window.alert("neuer Nutzer");
-//					CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil(Np);
-//					RootPanel.get("Details").clear();
-//					RootPanel.get("Details").add(createNutzerprofil);
+					
+					CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil("Np");
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(createNutzerprofil);
 				}
 
 			}

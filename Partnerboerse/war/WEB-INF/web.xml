@@ -34,16 +34,18 @@
 	<servlet-mapping>
 		<servlet-name>administrationServlet</servlet-name>
 		<url-pattern>/partnerboerse/admin</url-pattern>
+		<url-pattern>/partnerboersereports/admin</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>reportServlet</servlet-name>
-		<url-pattern>/partnerboerse/report</url-pattern>
+		<url-pattern>/partnerboersereports/report</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>loginServlet</servlet-name>
 		<url-pattern>/partnerboerse/login</url-pattern>
+		<url-pattern>/partnerboersereports/login</url-pattern>
 	</servlet-mapping>
 
 

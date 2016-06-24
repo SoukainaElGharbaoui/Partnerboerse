@@ -19,7 +19,7 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	private Nutzerprofil nutzerprofil;
 
 	/**
 	 * Vertikales Panel erzeugen.
@@ -35,7 +35,8 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public ShowAllPartnervorschlaegeNpReport() {
+	public ShowAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil) {
+		this.nutzerprofil=nutzerprofil;
 		run();
 	}
 

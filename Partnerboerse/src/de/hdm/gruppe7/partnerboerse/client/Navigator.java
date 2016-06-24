@@ -306,7 +306,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
+						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeNpReport);
@@ -317,7 +317,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport();
+						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeSpReport);

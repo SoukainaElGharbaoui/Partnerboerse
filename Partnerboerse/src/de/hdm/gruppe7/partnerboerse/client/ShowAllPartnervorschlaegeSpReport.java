@@ -27,7 +27,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	private Nutzerprofil nutzerprofil = null;
 	
 	/**
 	 * Widgets erzeugen. 
@@ -39,11 +39,13 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
 	private Button anzeigenButton = new Button("Partnervorschlaege anzeigen");
-
+	
+	
 	/**
 	 * Konstruktor erstellen.
 	 */
-	public ShowAllPartnervorschlaegeSpReport() {
+	public ShowAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil) {
+		this.nutzerprofil = nutzerprofil;
 		run();
 
 	}
@@ -86,7 +88,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 									writer.process(report);
 									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport());
+									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport(nutzerprofil));
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
 							}
