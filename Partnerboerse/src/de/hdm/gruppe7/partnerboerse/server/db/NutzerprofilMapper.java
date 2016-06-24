@@ -244,7 +244,10 @@ public class NutzerprofilMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM t_nutzerprofil1, t_profil1 WHERE email ='"
+					.executeQuery("SELECT * FROM t_nutzerprofil1 "
+							+ "LEFT JOIN t_profil1 "
+							+ "ON t_nutzerprofil1.nutzerprofil_id = t_profil1.profil_id "
+							+ "WHERE email ='"
 							+ email + "'");
 
 			if (rs.next()) {

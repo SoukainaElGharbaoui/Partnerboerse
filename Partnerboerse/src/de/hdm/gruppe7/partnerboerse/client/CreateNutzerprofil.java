@@ -29,7 +29,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Vertikales Panel erzeugen.
@@ -100,7 +100,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(1, 0, "Nachname");
 		createNutzerprofilFlexTable.setText(2, 0, "Geschlecht");
 		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
-		createNutzerprofilFlexTable.setText(4, 0, "KÃ¶rpergrÃ¶ÃŸe");
+		createNutzerprofilFlexTable.setText(4, 0, "Körpergröße");
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
@@ -117,7 +117,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("MÃ¤nnlich");
+		geschlechtListBox.addItem("Männlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
 
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(geburtsdatumFormat));
@@ -215,10 +215,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 			warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
 			createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
 		} else if (koerpergroesseTextBox.getText().length() == 0) {
-			warnungLabel.setText("Bitte geben Sie Ihre KÃ¶rpergrÃ¶ÃŸe an.");
+			warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
 			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 		} else if (koerpergroesseWert == false) {
-			warnungLabel.setText("Ihre KÃ¶rpergrÃ¶ÃŸe darf nur Zahlen enthalten.");
+			warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
 			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 		} else {
 			nutzerprofilAnlegen(); 
@@ -226,7 +226,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 	
 	/**
-	 * Methode erstellen, die ein neues Nutzerprofil anlegt. Dies fÃ¼rt zum Speichern des Nutzerprofils
+	 * Methode erstellen, die ein neues Nutzerprofil anlegt. Dies fürt zum Speichern des Nutzerprofils
 	 * in der Datenbank. 
 	 */
 	public void nutzerprofilAnlegen() {
@@ -242,8 +242,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 					}
 
 					public void onSuccess(Nutzerprofil result) {
-						ClientsideSettings.setAktuellerUser(result);
-						
+					//	ClientsideSettings.setAktuellerUser(result);
+
 						CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(createInfo);
@@ -284,7 +284,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("^[a-zA-ZÃ¤Ã¶Ã¼Ã„Ã–ÃœÃŸ ]+$");
+		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
 	}
 
 	/**

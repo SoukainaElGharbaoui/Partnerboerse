@@ -8,12 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+//import com.google.appengine.api.users.User;
+//import com.google.appengine.api.users.UserService;
+//import com.google.appengine.api.users.UserServiceFactory;
+//import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
+import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -36,7 +41,8 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  * @see RemoteServiceServlet
  */
 @SuppressWarnings("serial")
-public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implements PartnerboerseAdministration {
+public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
+		implements PartnerboerseAdministration {
 
 	/**
 	 * Referenz auf die Mapper, die Objekte mit der Datenbank abgleichen. 
@@ -68,73 +74,37 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		this.sperrlisteMapper = SperrlisteMapper.sperrlisteMapper();
 		this.infoMapper = InfoMapper.infoMapper();
 	}
-
-	/**
-	 * Pruefen, ob der Nutzer eingeloggt ist. 
-	 * @param userEmail E-Mail des Nutzers. 
-	 * @return Boolscher Wert, der angibt, ob der Nutzer eingeloggt ist.
-	 * @throws IllegalArgumentException 
+	
+	/* 
+	 * Gibt das aktuelle Profil anhand der EMail zurück
+	 * return nutzerprofil
 	 */
-	public boolean isUserRegistered(String userEmail) throws IllegalArgumentException {
-		return false;
+	@Override
+	public Nutzerprofil getNuterprofilByEmail (String email) {
+		return nutzerprofilMapper.findByNutzerprofilMitEmail(email);
+
 	}
 
-	/**
-	 * URL zum Einloggen anfordern.
-	 * @param requestUri 
-	 * @return Nutzerprofil-Objekt
-	 * @throws IllegalArgumentException 
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Nutzerprofil
+	 * *************************************************************************
+	 * **
 	 */
-	public Nutzerprofil login(String requestUri) throws IllegalArgumentException {
-
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
-
-		Nutzerprofil n = new Nutzerprofil();
-		if (user != null) {
-
-			Nutzerprofil bestehendesProfil = NutzerprofilMapper.nutzerprofilMapper()
-					.findByNutzerprofilMitEmail(user.getEmail());
-			if (bestehendesProfil != null) {
-				n.setLoggedIn(true);
-				bestehendesProfil.setLoggedIn(true);
-				bestehendesProfil.setLogoutUrl(userService.createLogoutURL(requestUri));
-				bestehendesProfil.setEmailAddress(user.getEmail());
-
-				ClientsideSettings.setAktuellerUser(bestehendesProfil);
-				return bestehendesProfil;
-			} 
-
-			n.setLoggedIn(true);
-			n.setEmailAddress(user.getEmail());
-
-		} else { 
-			n.setLoggedIn(false);
-
-		}
-		n.setLoginUrl(userService.createLoginURL(requestUri));
-		return n;
-	}
-
 	/**
-	 * Pruefen, ob der Nutzer neu ist. 
-	 * @param userEmail E-Mail des Nutzers. 
-	 * @return Boolscher Wert, angibt, ob der Nutzer neu ist. 
-	 * @throws IllegalArgumentException 
+	 * Pruefen, ob der Nutzer in der Datenbank schon existiert.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#login(String)
 	 */
 	public boolean pruefeObNutzerNeu(String userEmail) throws IllegalArgumentException {
 
-		Nutzerprofil np = this.nutzerprofilMapper.findByNutzerprofilMitEmail(userEmail);
-
-		if (np == null) {
+		if (nutzerprofilMapper.findByNutzerprofilMitEmail(userEmail) == null) {
 			return true;
 		}
-
-		else {
-			return false;
-		}
+		return false;
+		
 	}
-
+	
 	/**
 	 * Ein Nutzerprofil-Objekt anlegen.
 	 * @param vorname Vorname.
@@ -149,9 +119,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das angelegte Nutzerprofil-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Nutzerprofil createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
-			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress)
-			throws IllegalArgumentException {
+	public Nutzerprofil createNutzerprofil(String vorname, String nachname,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion,
+			String emailAddress) throws IllegalArgumentException {
 
 		Nutzerprofil n = new Nutzerprofil();
 		n.setVorname(vorname);
@@ -184,11 +155,12 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param religion Religion.
 	 * @throws IllegalArgumentException
 	 */
-	public void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht,
-			Date geburtsdatumDate, int koerpergroesseInt, String haarfarbe, String raucher, String religion)
+	public void saveNutzerprofil(int profilId, String vorname, String nachname,
+			String geschlecht, Date geburtsdatumDate, int koerpergroesseInt,
+			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
-		Nutzerprofil n = ClientsideSettings.getAktuellerUser();
+		Nutzerprofil n = Partnerboerse.getNp();
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
@@ -208,7 +180,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param profilId Die Profil-ID des Nutzerprofils, das geloescht werden soll.
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteNutzerprofil(int profilId) throws IllegalArgumentException {
+	public void deleteNutzerprofil(int profilId)
+			throws IllegalArgumentException {
 		this.nutzerprofilMapper.deleteNutzerprofil(profilId);
 	}
 
@@ -218,7 +191,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das ausgelesene Nutzerprofil-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Nutzerprofil getNutzerprofilById(int profilId) throws IllegalArgumentException {
+	public Nutzerprofil getNutzerprofilById(int profilId)
+			throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findByNutzerprofilId(profilId);
 	}
 
@@ -236,9 +210,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das angelegte Suchprofil-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Suchprofil createSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt,
-			int alterMaxInt, int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
+	public Suchprofil createSuchprofil(int profilId, String suchprofilName,
+			String geschlecht, int alterMinInt, int alterMaxInt,
+			int koerpergroesseInt, String haarfarbe, String raucher,
+			String religion) throws IllegalArgumentException {
 
 		Suchprofil s = new Suchprofil();
 		s.setSuchprofilName(suchprofilName);
@@ -268,9 +243,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param religion Religion.
 	 * @throws IllegalArgumentException
 	 */
-	public void saveSuchprofil(int profilId, int suchprofilId, String suchprofilName, String geschlecht,
-			int alterMinInt, int alterMaxInt, int koerpergroesseInt, String haarfarbe, String raucher, String religion)
-			throws IllegalArgumentException {
+	public void saveSuchprofil(int profilId, int suchprofilId,
+			String suchprofilName, String geschlecht, int alterMinInt,
+			int alterMaxInt, int koerpergroesseInt, String haarfarbe,
+			String raucher, String religion) throws IllegalArgumentException {
 
 		Suchprofil s = new Suchprofil();
 		s.setProfilId(suchprofilId);
@@ -294,7 +270,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param suchprofilName Name des Suchprofils, das geloescht werden soll. 
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteSuchprofil(int profilId, String suchprofilName) throws IllegalArgumentException {
+	public void deleteSuchprofil(int profilId, String suchprofilName)
+			throws IllegalArgumentException {
 		this.suchprofilMapper.deleteSuchprofil(profilId, suchprofilName);
 	}
 
@@ -306,7 +283,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 */
 	public List<Suchprofil> getAllSuchprofileFor(int profilId) throws IllegalArgumentException {
 		return this.suchprofilMapper.findAllSuchprofileFor(profilId);
-
 	}
 
 	/**
@@ -316,8 +292,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das ausgelesene Suchprofil-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName) throws IllegalArgumentException {
-		return this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilName);
+	public Suchprofil getSuchprofilByName(int profilId, String suchprofilName)
+			throws IllegalArgumentException {
+		return this.suchprofilMapper.findSuchprofilByName(profilId,
+				suchprofilName);
 	}
 
 	/**
@@ -336,9 +314,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param suchprofilname Suchprofilname, der geprueft werden soll. 
 	 * @return Status der angibt, ob der Suchprofilname bereits existiert oder leer ist. 
 	 */
-	public int pruefeSuchprofilnameCreate(int profilId, String suchprofilname) throws IllegalArgumentException {
+	public int pruefeSuchprofilnameCreate(int profilId, String suchprofilname)
+			throws IllegalArgumentException {
 
-		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profilId, suchprofilname);
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(
+				profilId, suchprofilname);
 
 		int ergebnis = 0;
 
@@ -361,11 +341,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status der angibt, ob der Suchprofilname bereits existiert oder leer ist.
 	 * @throws IllegalArgumentException
 	 */
-	public int pruefeSuchprofilnameEdit(int profilId, int suchprofilId, String suchprofilname)
-			throws IllegalArgumentException {
+	public int pruefeSuchprofilnameEdit(int profilId, int suchprofilId,
+			String suchprofilname) throws IllegalArgumentException {
 
-		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(profilId, suchprofilname);
-		String suchprofilnameAktuell = this.suchprofilMapper.findSuchprofilById(suchprofilId).getSuchprofilName();
+		int existenz = this.suchprofilMapper.pruefeSuchprofilnameExistenz(
+				profilId, suchprofilname);
+		String suchprofilnameAktuell = this.suchprofilMapper
+				.findSuchprofilById(suchprofilId).getSuchprofilName();
 
 		int ergebnis = 0;
 		
@@ -394,7 +376,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das ausgelesene Merkliste-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Merkliste getGemerkteNutzerprofileFor(int profilId) throws IllegalArgumentException {
+	public Merkliste getGemerkteNutzerprofileFor(int profilId)
+			throws IllegalArgumentException {
 
 		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
@@ -414,7 +397,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status, der angibt, ob bereits ein Vermerk vorliegt oder nicht.
 	 * @throws IllegalArgumentException
 	 */
-	public int pruefeVermerkstatus(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public int pruefeVermerkstatus(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
 		return this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId);
 	}
 
@@ -425,7 +409,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status, der angibt, ob ein Vermerk vorliegt oder nicht.
 	 * @throws IllegalArgumentException
 	 */
-	public int vermerkstatusAendern(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public int vermerkstatusAendern(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
 
 		int vermerkstatus = this.merklisteMapper.pruefeVermerk(profilId, fremdprofilId);
 
@@ -445,7 +430,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das ausgelesene Sperrliste-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Sperrliste getGesperrteNutzerprofileFor(int profilId) throws IllegalArgumentException {
+	public Sperrliste getGesperrteNutzerprofileFor(int profilId)
+			throws IllegalArgumentException {
 
 		List<Nutzerprofil> result = new ArrayList<Nutzerprofil>();
 
@@ -465,8 +451,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status, der angibt, ob eine Sperrung vorliegt oder nicht. 
 	 * @throws IllegalArgumentException
 	 */
-	public int pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId);
+	public int pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
+		return this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId,
+				fremdprofilId);
 	}
 
 	/**
@@ -476,8 +464,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status, der angibt, ob eine Sperrung vorliegt oder nicht. 
 	 * @throws IllegalArgumentException
 	 */
-	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId) throws IllegalArgumentException {
-		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profilId, fremdprofilId);
+	public int getSperrstatusEigenesProfil(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
+		return this.sperrlisteMapper.pruefeSperrungEigenesProfil(profilId,
+				fremdprofilId);
 	}
 
 	/**
@@ -487,7 +477,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Status, der angibt, ob nach der Aenderung eine Sperrung vorliegt oder nicht. 
 	 * @throws IllegalArgumentException
 	 */
-	public int sperrstatusAendern(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public int sperrstatusAendern(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
 
 		int sperrstatus = this.sperrlisteMapper.pruefeSperrungFremdprofil(profilId, fremdprofilId);
 		
@@ -507,7 +498,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Liste von ausgelesenen Nutzerprofil-Objekten.
 	 * @throws IllegalArgumentException
 	 */
-	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId) throws IllegalArgumentException {
+	public List<Nutzerprofil> getUnangeseheneNutzerprofile(int profilId)
+			throws IllegalArgumentException {
 		return this.nutzerprofilMapper.findUnangeseheneNutzerprofile(profilId);
 	}
 
@@ -517,7 +509,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param fremdprofilId Profil-ID des Nutzerprofils, fuer das ein Besuch gesetzt werden soll. 
 	 * @throws IllegalArgumentException
 	 */
-	public void besuchSetzen(int profilId, int fremdprofilId) throws IllegalArgumentException {
+	public void besuchSetzen(int profilId, int fremdprofilId)
+			throws IllegalArgumentException {
 		this.nutzerprofilMapper.insertBesuch(profilId, fremdprofilId);
 	}
 
@@ -527,7 +520,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param profilId Profil-ID des eigenen Nutzerprofils. 
 	 * @throws IllegalArgumentException
 	 */
-	public void berechneAehnlichkeitNpFor(int profilId) throws IllegalArgumentException {
+	public void berechneAehnlichkeitNpFor(int profilId)
+			throws IllegalArgumentException {
 
 		/**
 		 * Die bisher bestehenden Aehnlichkeiten werden aus der Datenbank entfernt, 
@@ -560,8 +554,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				aehnlichkeit = aehnlichkeit + 1;
 			}
 
-			if (np.getKoerpergroesseInt() + 5 >= referenzprofil.getKoerpergroesseInt()) {
-				if (np.getKoerpergroesseInt() - 5 <= referenzprofil.getKoerpergroesseInt()) {
+			if (np.getKoerpergroesseInt() + 5 >= referenzprofil
+					.getKoerpergroesseInt()) {
+				if (np.getKoerpergroesseInt() - 5 <= referenzprofil
+						.getKoerpergroesseInt()) {
 					aehnlichkeit = aehnlichkeit + 1;
 				}
 			}
@@ -580,11 +576,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			GregorianCalendar geburtstagVgl = new GregorianCalendar();
 			geburtstagVgl.setTime(referenzprofil.getGeburtsdatumDate());
 			GregorianCalendar heute = new GregorianCalendar();
-			int alter = heute.get(Calendar.YEAR) - geburtstagVgl.get(Calendar.YEAR);
+			int alter = heute.get(Calendar.YEAR)
+					- geburtstagVgl.get(Calendar.YEAR);
 			if (heute.get(Calendar.MONTH) < geburtstagVgl.get(Calendar.MONTH)) {
 				alter = alter - 1;
-			} else if (heute.get(Calendar.MONTH) == geburtstagVgl.get(Calendar.MONTH)) {
-				if (heute.get(Calendar.DATE) <= geburtstagVgl.get(Calendar.DATE)) {
+			} else if (heute.get(Calendar.MONTH) == geburtstagVgl
+					.get(Calendar.MONTH)) {
+				if (heute.get(Calendar.DATE) <= geburtstagVgl
+						.get(Calendar.DATE)) {
 					alter = alter - 1;
 				}
 			}
@@ -592,11 +591,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			GregorianCalendar geburtstagRef = new GregorianCalendar();
 			geburtstagRef.setTime(np.getGeburtsdatumDate());
 			GregorianCalendar heute1 = new GregorianCalendar();
-			int alterRef = heute1.get(Calendar.YEAR) - geburtstagRef.get(Calendar.YEAR);
+			int alterRef = heute1.get(Calendar.YEAR)
+					- geburtstagRef.get(Calendar.YEAR);
 			if (heute1.get(Calendar.MONTH) < geburtstagRef.get(Calendar.MONTH)) {
 				alterRef = alterRef - 1;
-			} else if (heute1.get(Calendar.MONTH) == geburtstagRef.get(Calendar.MONTH)) {
-				if (heute1.get(Calendar.DATE) <= geburtstagRef.get(Calendar.DATE)) {
+			} else if (heute1.get(Calendar.MONTH) == geburtstagRef
+					.get(Calendar.MONTH)) {
+				if (heute1.get(Calendar.DATE) <= geburtstagRef
+						.get(Calendar.DATE)) {
 					alterRef = alterRef - 1;
 				}
 			}
@@ -636,7 +638,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			/**
 			 * Aehnlichkeit in die Datenbank einfuegen.
 			 */
-			nutzerprofilMapper.insertAehnlichkeit(profilId, vergleichsprofilId, aehnlichkeit);
+			nutzerprofilMapper.insertAehnlichkeit(profilId, vergleichsprofilId,
+					aehnlichkeit);
 
 		}
 
@@ -649,8 +652,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Liste von ausgelesenen Nutzerprofil-Objekten.
 	 * @throws IllegalArgumentException
 	 */
-	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId) throws IllegalArgumentException {
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeNp(profilId);
+	public List<Nutzerprofil> getGeordnetePartnervorschlaegeNp(int profilId)
+			throws IllegalArgumentException {
+		return this.nutzerprofilMapper
+				.findGeordnetePartnervorschlaegeNp(profilId);
 
 	}
 
@@ -661,7 +666,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param profilId Profil-ID des eigenen Nutzerprofils. 
 	 * @throws IllegalArgumentException
 	 */
-	public void berechneAehnlichkeitSpFor(int profilId) throws IllegalArgumentException {
+	public void berechneAehnlichkeitSpFor(int profilId)
+			throws IllegalArgumentException {
 
 		/**
 		 * Die Aehnlichkeiten werden aus der Datenbank geloescht, damit sie neu
@@ -675,8 +681,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		 * Alle Suchprofile des Nutzers werden ausgelesen und alle Nutzerprofile
 		 * die gegen den Nutzer keine Sperrung gesetzt haben.
 		 */
-		List<Suchprofil> referenzprofil = suchprofilMapper.findAllSuchprofileFor(profilId);
-		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper.findNutzerprofileOhneGesetzeSperrung(profilId);
+		List<Suchprofil> referenzprofil = suchprofilMapper
+				.findAllSuchprofileFor(profilId);
+		List<Nutzerprofil> vergleichsprofil = nutzerprofilMapper
+				.findNutzerprofileOhneGesetzeSperrung(profilId);
 
 		/**
 		 * Vergleich der Profildaten eines Suchprofils mit den Profildaten eines
@@ -684,7 +692,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 		 * gegen den Nutzer gesetzt haben. Sind im Suchprofil Infos mit
 		 * "Keine Auswahl" gesetzt, heiï¿½t dies dem Nutzer sind diese Angaben
 		 * egal.
-
 		 */
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
@@ -716,7 +723,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				}
 
 				if (sp.getKoerpergroesseInt() + 5 >= np.getKoerpergroesseInt()) {
-					if (sp.getKoerpergroesseInt() - 5 <= np.getKoerpergroesseInt()) {
+					if (sp.getKoerpergroesseInt() - 5 <= np
+							.getKoerpergroesseInt()) {
 						aehnlichkeitSp = aehnlichkeitSp + 10;
 					}
 				}
@@ -747,11 +755,14 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				GregorianCalendar geburtstag = new GregorianCalendar();
 				geburtstag.setTime(np.getGeburtsdatumDate());
 				GregorianCalendar heute = new GregorianCalendar();
-				int alter = heute.get(Calendar.YEAR) - geburtstag.get(Calendar.YEAR);
+				int alter = heute.get(Calendar.YEAR)
+						- geburtstag.get(Calendar.YEAR);
 				if (heute.get(Calendar.MONTH) < geburtstag.get(Calendar.MONTH)) {
 					alter = alter - 1;
-				} else if (heute.get(Calendar.MONTH) == geburtstag.get(Calendar.MONTH)) {
-					if (heute.get(Calendar.DATE) <= geburtstag.get(Calendar.DATE)) {
+				} else if (heute.get(Calendar.MONTH) == geburtstag
+						.get(Calendar.MONTH)) {
+					if (heute.get(Calendar.DATE) <= geburtstag
+							.get(Calendar.DATE)) {
 						alter = alter - 1;
 					}
 				}
@@ -766,8 +777,10 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				 * Auslesen aller Infos aus einem Suchproifl und einem
 				 * Vergleichsprofil.
 				 */
-				List<Info> referenzinfo = infoMapper.findAllInfosNeu(suchprofilId);
-				List<Info> vergleichsinfo = infoMapper.findAllInfosNeu(fremdprofilId);
+				List<Info> referenzinfo = infoMapper
+						.findAllInfosNeu(suchprofilId);
+				List<Info> vergleichsinfo = infoMapper
+						.findAllInfosNeu(fremdprofilId);
 
 				/**
 				 * Vergleich der Infos des Suchprofils mit den Infos aus dem
@@ -788,7 +801,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 									aehnlichkeitSp = aehnlichkeitSp + 2;
 
 								} else {
-									if (rin.getInfotext().equals(vin.getInfotext())) {
+									if (rin.getInfotext().equals(
+											vin.getInfotext())) {
 										aehnlichkeitSp = aehnlichkeitSp + 2;
 									}
 								}
@@ -811,12 +825,11 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 				 * Geschlecht des Vergleichprofils mit dem Geschlecht des
 				 * Suchprofils uebereinstimmt.
 				 */
-				
-				if(sp.getGeschlecht().equals(np.getGeschlecht())){
-						suchprofilMapper.insertAehnlichkeit(profilId,
-						suchprofilId, fremdprofilId,
-						aehnlichkeitSp);
-									
+
+				if (sp.getGeschlecht().equals(np.getGeschlecht())) {
+					suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId,
+							fremdprofilId, aehnlichkeitSp);
+
 				} else {
 					/**
 					 * Ist im Suchprofil das Geschlecht mit "Keine Auswahl"
@@ -824,7 +837,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 					 * des Vergelichsprofil in der Datenbank gespeichert.
 					 */
 					if (sp.getGeschlecht().equals("Keine Auswahl")) {
-						suchprofilMapper.insertAehnlichkeit(profilId, suchprofilId, fremdprofilId, aehnlichkeitSp);
+						suchprofilMapper.insertAehnlichkeit(profilId,
+								suchprofilId, fremdprofilId, aehnlichkeitSp);
 
 					}
 				}
@@ -843,17 +857,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	public List<Nutzerprofil> getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilname)
 			throws IllegalArgumentException {
 
-		Suchprofil sp = this.suchprofilMapper.findSuchprofilByName(profilId, suchprofilname);
+		Suchprofil sp = this.suchprofilMapper.findSuchprofilByName(profilId,
+				suchprofilname);
 
 		int suchprofilId = sp.getProfilId();
-		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(profilId, suchprofilId);
+		return this.nutzerprofilMapper.findGeordnetePartnervorschlaegeSp(
+				profilId, suchprofilId);
 	}
 
 
 	/**
+<<<<<<< HEAD
+	 * Es werden alle Eigenschaften mit Hilfe der Map-Klasse aus der Datenbank
+	 * geholt und in die Tabelle eingefÃ¼gt. Dabei gibt es eine Schleife fuer
+	 * die Beschreibungseigenschfaten und eine fuer die Auswahleigenschaften.
+	 * 
+	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
+=======
 	 * Alle Eigenschaften auslesen.
 	 * @return Liste von ausgelesenen Beschreibungs- und Auswahleigenschaft-Objekten.
 	 * @throws IllegalArgumentException
+>>>>>>> refs/heads/master
 	 */
 	@Override
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
@@ -870,7 +894,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 			if (listE.get(i).getTyp().equals("B")) {
 
-				Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
+				Beschreibungseigenschaft eigB = infoMapper
+						.findEigBByIdNeu(listE.get(i).getEigenschaftId());
 
 				eigB.setErlaeuterung(listE.get(i).getErlaeuterung());
 
@@ -881,7 +906,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			else if (listE.get(i).getTyp().equals("A")) {
 
 				Auswahleigenschaft eigA = new Auswahleigenschaft();
-				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
+				eigA = this.infoMapper.findEigAByIdNeu(listE.get(i)
+						.getEigenschaftId());
 
 				eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
 
@@ -902,12 +928,13 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(int profilId)
-			throws IllegalArgumentException {
+	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllUnusedEigenschaften(
+			int profilId) throws IllegalArgumentException {
 
 		Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result2 = new HashMap<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>();
 
-		List<Eigenschaft> listE = infoMapper.findAllUnusedEigenschaftenNeu(profilId);
+		List<Eigenschaft> listE = infoMapper
+				.findAllUnusedEigenschaftenNeu(profilId);
 
 		List<Beschreibungseigenschaft> listEigB = new ArrayList<Beschreibungseigenschaft>();
 		List<Auswahleigenschaft> listEigA = new ArrayList<Auswahleigenschaft>();
@@ -920,7 +947,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 			else {
 				if (listE.get(i).getTyp().equals("B")) {
 
-					Beschreibungseigenschaft eigB = infoMapper.findEigBByIdNeu(listE.get(i).getEigenschaftId());
+					Beschreibungseigenschaft eigB = infoMapper
+							.findEigBByIdNeu(listE.get(i).getEigenschaftId());
 
 					eigB.setErlaeuterung(listE.get(i).getErlaeuterung());
 					eigB.setTyp(listE.get(i).getTyp());
@@ -932,7 +960,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 
 					Auswahleigenschaft eigA = new Auswahleigenschaft();
 
-					eigA = this.infoMapper.findEigAByIdNeu(listE.get(i).getEigenschaftId());
+					eigA = this.infoMapper.findEigAByIdNeu(listE.get(i)
+							.getEigenschaftId());
 
 					eigA.setErlaeuterung(listE.get(i).getErlaeuterung());
 					eigA.setTyp(listE.get(i).getTyp());
@@ -1015,7 +1044,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId) throws IllegalArgumentException {
+	public Map<List<Info>, List<Eigenschaft>> getAllInfos(int profilId)
+			throws IllegalArgumentException {
 
 		Map<List<Info>, List<Eigenschaft>> result = new HashMap<List<Info>, List<Eigenschaft>>();
 		List<Info> listI = new ArrayList<Info>();
@@ -1055,7 +1085,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void deleteOneInfoNeu(int profilId, int eigenschaftId) throws IllegalArgumentException {
+	public void deleteOneInfoNeu(int profilId, int eigenschaftId)
+			throws IllegalArgumentException {
 		this.infoMapper.deleteOneInfoNeu(profilId, eigenschaftId);
 	}
 
@@ -1104,8 +1135,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @return Das angelegte Auswahleigenschaft-Objekt.
 	 * @throws IllegalArgumentException
 	 */
-	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId, String erleauterung, String typ,
-			List<String> auswahloptionen) throws IllegalArgumentException {
+	public Auswahleigenschaft createAuswahleigenschaft(int eigenschaftId,
+			String erleauterung, String typ, List<String> auswahloptionen)
+			throws IllegalArgumentException {
 
 		Auswahleigenschaft a = new Auswahleigenschaft();
 		a.setEigenschaftId(eigenschaftId);
@@ -1128,8 +1160,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param beschreibungstext Beschreibungstext der Eigenschaft. 
 	 * @throws IllegalArgumentException
 	 */
-	public void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung, String typ,
-			String beschreibungstext) throws IllegalArgumentException {
+	public void saveBeschreibungseigenschaft(int eigenschaftId,
+			String erlaeuterung, String typ, String beschreibungstext)
+			throws IllegalArgumentException {
 
 		Beschreibungseigenschaft b = new Beschreibungseigenschaft();
 		b.setErlaeuterung(erlaeuterung);
@@ -1150,7 +1183,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param auswahloption Auswahltoption der Eigenschaft. 
 	 * @throws IllegalArgumentException
 	 */
-	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung, String typ, List<String> auswahloptionen)
+	public void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
+			String typ, List<String> auswahloptionen)
 			throws IllegalArgumentException {
 
 		Auswahleigenschaft a = new Auswahleigenschaft();
@@ -1169,7 +1203,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param eigenschaftId Eigenschaft-ID der Eigenschaft, die geloescht werden soll. 
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteBeschreibungseigenschaft(int eigenschaftId) throws IllegalArgumentException {
+	public void deleteBeschreibungseigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
 		this.infoMapper.deleteBeschreibungseigenschaft(eigenschaftId);
 	}
 
@@ -1178,7 +1213,8 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet implem
 	 * @param eigenschaftId Eigenschaft-ID der Eigenschaft, die geloescht werden soll. 
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteAuswahleigenschaft(int eigenschaftId) throws IllegalArgumentException {
+	public void deleteAuswahleigenschaft(int eigenschaftId)
+			throws IllegalArgumentException {
 		this.infoMapper.deleteAuswahleigenschaft(eigenschaftId);
 	}
 

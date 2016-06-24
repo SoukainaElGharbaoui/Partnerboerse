@@ -27,19 +27,21 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	/**
+	 * Widgets erzeugen. 
+	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
-
 	private Label auswahlLabel = new Label(
-			"WÃ¤hlen Sie ein Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge anzeigen mÃ¶chten.");
+			"Waehlen Sie ein Suchprofil aus, zu welchem Sie Partnervorschlaege anzeigen mÃ¶chten.");
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenButton = new Button("PartnervorschlÃ¤ge anzeigen");
+	private Button anzeigenButton = new Button("Partnervorschlaege anzeigen");
 
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Konstruktor erstellen.
 	 */
 	public ShowAllPartnervorschlaegeSpReport() {
 		run();
@@ -51,13 +53,14 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 */
 	public void run() {
 		this.add(verPanel);
-
 		auswahlLabel.addStyleName("partnerboerse-label");
 
 		suchprofileAnzeigen();
 
 		/**
-		 * Report auslesen.
+		 * ClickHaendler für den Button, der das Suchprofil auswählt. 
+		 * Für das ausgewaehlte Suchprofil wird anschliessend der Report für
+		 * alle Partnervorschlaege anhand des Suchprofils ausgelesen.
 		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -90,7 +93,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 						});
 			}
 		});
-
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 */
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(infoLabel);
 		auswahlPanel.add(auswahlListBox);

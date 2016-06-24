@@ -25,7 +25,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Panels erzeugen.

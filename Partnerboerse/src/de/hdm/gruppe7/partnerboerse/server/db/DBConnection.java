@@ -29,7 +29,7 @@ public class DBConnection {
 	 * Die URL, mit deren Hilfe die Datenbank angesprochen wird.
 	 */
 
-	private static String googleUrl = "jdbc.google:mysql://prof-thies.de:thies-bankproject:thies-bankproject/bankproject?user=demo&password=demo";
+	private static String googleUrl = "jdbc:google:mysql://partnerboerselonelyhearts:partnerboerselonelyheartsdb/partnerboerse?user=root&password=root";
 	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/partnerboerse?user=root&password=";
 
 	/**
@@ -48,11 +48,12 @@ public class DBConnection {
 					
 					Class.forName("com.mysql.jdbc.GoogleDriver");
 					url = googleUrl;
+					
 				} else {
 					
 					Class.forName("com.mysql.jdbc.Driver");
 					url = localUrl;
-				}
+			}
 				
 				con = DriverManager.getConnection(url);
 			} catch (Exception e) {

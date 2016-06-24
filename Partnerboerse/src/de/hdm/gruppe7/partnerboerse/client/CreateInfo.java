@@ -34,7 +34,7 @@ public class CreateInfo extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt erzeugen, das die Login-Informationen enthaelt,
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Vertikales Panel erzeugen.

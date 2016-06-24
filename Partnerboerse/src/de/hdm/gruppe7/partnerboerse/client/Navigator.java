@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -20,11 +21,17 @@ import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
  *
  */
 public class Navigator extends HorizontalPanel {
+	
+	
+	
+	
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	private String logoutUrl = Partnerboerse.getLoginInfo().getLogoutUrl();
 
 	int aehnlichkeit = 0;
 
@@ -41,7 +48,6 @@ public class Navigator extends HorizontalPanel {
 		 * Thematik einzelne vertikale aufklappbare Menues zur 
 		 * horizontalen Menuehauptleiste "menu" hinzugefuegt.
 		 */
-
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		/**
@@ -272,6 +278,7 @@ public class Navigator extends HorizontalPanel {
 
 		
 
+
 /**
  * Hinzufuegen der vertikalen Menueleisten nutzerProfilMenu, 
  * suchprofilMenu und partnervorschlaegeMenu zur 
@@ -283,7 +290,6 @@ public class Navigator extends HorizontalPanel {
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Suchprofile", suchprofilMenu));
 		menu.addSeparator();
-
 		menu.addItem(new MenuItem("Meine Partnervorschläge",
 				partnervorschlaegeMenu));
 		menu.addSeparator();
@@ -321,10 +327,7 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
-
 		RootPanel.get("Header").add(menu);
 
-
-	
 }
 }

@@ -17,12 +17,16 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
-
+/**
+ * Die Klasse PartnerboerseReports implementiert einen zweiten EntryPoint, 
+ * über den die Reports abgerufen werden können.
+ * 
+ */
 public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 	ReportGeneratorAsync reportGenerator = null;
 
-	Button unangesehenePartnervorschlaegeButton = new Button("Unangesehene PartnervorschlÃ¤ge");
+	Button unangesehenePartnervorschlaegeButton = new Button("Unangesehene Partnervorschlaege");
 
 	Button partnervorschlaegeSuchprofilButton = new Button("PartnervorschlÃ¤ge anhand von Suchprofilen");
 
@@ -45,61 +49,61 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		reportGeneratorAsync = GWT.create(ReportGenerator.class);
 
-		try {
-			ClientsideSettings.getReportGenerator().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
-
-					new AsyncCallback<Nutzerprofil>() {
-
-
-						public void onFailure(Throwable caught) {
-							RootPanel.get().add(new Label(caught.toString()));
-						}
-
-						public void onSuccess(Nutzerprofil result) {
-							// wenn der user eingeloggt ist
-							if (result.isLoggedIn()) {
-
-								if (result.getEmailAddress() != null) {
-
-									
-								ClientsideSettings.setAktuellerUser(result);
-									
-
-									signOutLink.setHref(result.getLogoutUrl());
-									signOutLink.setText(
-											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
-								    loginPanel.add(signOutLink);
-									RootPanel.get("Details").add(new PartnerboerseReport());
-									RootPanel.get("Navigator2").add(loginPanel);
-								}
-
-								if (result.getEmailAddress() == null) {
-									
-									String profiltyp = "Np";
-									
-									signOutLink.setHref(result.getLogoutUrl());
-									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
-									loginPanel.add(signOutLink);
-									RootPanel.get("Details").add(new PartnerboerseReport());
-
-									RootPanel.get("Navigator2").add(loginPanel);
-									RootPanel.get("Details").add(new CreateNutzerprofil(profiltyp));
-
-								}
-
-							}
-
-							// wenn der user nicht eingeloggt ist
-     						if (!result.isLoggedIn()) {
-								signInLink.setHref(result.getLoginUrl());
-								loginPanel.add(signInLink);
-								RootPanel.get("Navigator2").add(loginPanel);
-							}
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ClientsideSettings.getLoginService().login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html",
+//
+//					new AsyncCallback<Nutzerprofil>() {
+//
+//
+//						public void onFailure(Throwable caught) {
+//							RootPanel.get().add(new Label(caught.toString()));
+//						}
+//
+//						public void onSuccess(Nutzerprofil result) {
+//							// wenn der user eingeloggt ist
+//							if (result.isLoggedIn()) {
+//
+//								if (result.getEmailAddress() != null) {
+//
+//									
+//								ClientsideSettings.setAktuellerUser(result);
+//									
+//
+//									signOutLink.setHref(result.getLogoutUrl());
+//									signOutLink.setText(
+//											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
+//								    loginPanel.add(signOutLink);
+//									RootPanel.get("Details").add(new PartnerboerseReport());
+//									RootPanel.get("Navigator2").add(loginPanel);
+//								}
+//
+//								if (result.getEmailAddress() == null) {
+//									
+//									String profiltyp = "Np";
+//									
+//									signOutLink.setHref(result.getLogoutUrl());
+//									signOutLink.setText("Als " + result.getVorname() + " ausloggen");
+//									loginPanel.add(signOutLink);
+//									RootPanel.get("Details").add(new PartnerboerseReport());
+//
+//									RootPanel.get("Navigator2").add(loginPanel);
+//									RootPanel.get("Details").add(new CreateNutzerprofil(profiltyp));
+//
+//								}
+//
+//							}
+//
+//							// wenn der user nicht eingeloggt ist
+//     						if (!result.isLoggedIn()) {
+//								signInLink.setHref(result.getLoginUrl());
+//								loginPanel.add(signInLink);
+//								RootPanel.get("Navigator2").add(loginPanel);
+//							}
+//						}
+//					});
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);

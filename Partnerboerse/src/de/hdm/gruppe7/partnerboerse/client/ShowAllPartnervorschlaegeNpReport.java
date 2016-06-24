@@ -17,23 +17,23 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * VerticalPanel hinzufügen.
+	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Label zur Information hinzufügen.
+	 * Widgets erzeugen.
 	 */
 	private Label infoLabel = new Label();
 	private Label ueberschriftLabel = new Label();
 
 	/**
-	 * Konstruktor hinzufügen.
+	 * Konstruktor erstellen.
 	 */
 	public ShowAllPartnervorschlaegeNpReport() {
 		run();
@@ -48,8 +48,8 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 		ueberschriftLabel.setText("Einen Moment bitte...");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
-		reportAuslesen();
 
+		reportAuslesen();
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(infoLabel);
 	}
@@ -79,5 +79,6 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 						}
 					}
 				});
+
 	}
 }

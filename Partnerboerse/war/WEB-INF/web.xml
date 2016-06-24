@@ -4,59 +4,47 @@
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-    <servlet>
-    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
-    <servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
-    <url-pattern>/Partnerboerse/partnerboerseadministration</url-pattern>
-  </servlet-mapping>
-  
-    <servlet-mapping>
-    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
-    <url-pattern>/partnerboersereports/partnerboerseadministration</url-pattern>
-  </servlet-mapping>
-  
-    <servlet-mapping>
-    <servlet-name>partnerboerseAdministrationServlet</servlet-name>
-    <url-pattern>/partnerboerseadministration</url-pattern>
-  </servlet-mapping>
-  
-    <!-- Servlets -->
-    <servlet>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <servlet-class>de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <url-pattern>/Partnerboerse/reportgenerator</url-pattern>
-  </servlet-mapping>
-  
-    <servlet-mapping>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <url-pattern>/partnerboersereports/reportgenerator</url-pattern>
-  </servlet-mapping>
-  
-    
-	<servlet>
-		<servlet-name>partnerboerseAdministration</servlet-name>
-		<servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>partnerboerseAdministration</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-
-
-	<!-- Default page to serve -->
+	<!-- Welcome Pages -->
 	<welcome-file-list>
 		<welcome-file>Partnerboerse.html</welcome-file>
 		<welcome-file>PartnerboerseReports.html</welcome-file>
 	</welcome-file-list>
+
+	<!-- Servlets -->
+
+
+	<servlet>
+		<servlet-name>administrationServlet</servlet-name>
+		<servlet-class>de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl</servlet-class>
+
+	</servlet>
+
+	<servlet>
+		<servlet-name>reportServlet</servlet-name>
+		<servlet-class>de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl</servlet-class>
+	</servlet>
+	
+		<servlet>
+		<servlet-name>loginServlet</servlet-name>
+		<servlet-class>de.hdm.gruppe7.partnerboerse.server.LoginServiceImpl</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>administrationServlet</servlet-name>
+		<url-pattern>/partnerboerse/admin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>reportServlet</servlet-name>
+		<url-pattern>/partnerboerse/report</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>loginServlet</servlet-name>
+		<url-pattern>/partnerboerse/login</url-pattern>
+	</servlet-mapping>
+
 
 </web-app>
