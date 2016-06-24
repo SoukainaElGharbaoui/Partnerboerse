@@ -10,26 +10,30 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 
+/**
+ * Diese Klasse dient dazu einen Report aller unangesehen Partnervorschlaege
+ * für ein Nutzerprofil anzuzeigen.
+ */
 public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * VerticalPanel hinzufÃ¼gen.
+	 * Vertikales Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Label zur Information hinzufÃ¼gen.
+	 * Widgets erzeugen.
 	 */
 	private Label infoLabel = new Label();
 	private Label ueberschriftLabel = new Label();
 	
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Konstruktor erstellen.
 	 */
 	public ShowAllPartnervorschlaegeNpReport() {
 		this.add(verPanel);
@@ -38,7 +42,8 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * Report auslesen.
+		 * Der Report der alle unangesehenen Partnervorschlaege für ein Nutzerprofil
+		 * ausgibt wird auslesen.
 		 */
 
 		ClientsideSettings.getReportGenerator().createAllPartnervorschlaegeNpReport(nutzerprofil,
@@ -62,7 +67,9 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 						}
 					}
 				});
-
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(infoLabel);
 	}

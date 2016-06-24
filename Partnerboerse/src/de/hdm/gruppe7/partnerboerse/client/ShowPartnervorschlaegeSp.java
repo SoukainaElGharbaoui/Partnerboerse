@@ -28,7 +28,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
 	
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * VerticalPanels und HorizontalPanels erzeugen.

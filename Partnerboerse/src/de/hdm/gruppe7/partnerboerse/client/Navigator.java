@@ -1,8 +1,10 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -17,11 +19,17 @@ import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
  *
  */
 public class Navigator extends HorizontalPanel {
+	
+	
+	
+	
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	private String logoutUrl = Partnerboerse.getLoginInfo().getLogoutUrl();
 
 	int aehnlichkeit = 0;
 
@@ -32,12 +40,14 @@ public class Navigator extends HorizontalPanel {
 
 		
 
-		VerticalPanel verPanel1 = new VerticalPanel();
+		HorizontalPanel verPanel1 = new HorizontalPanel();
 		/**
 		 * Ab hier wird die Menübar erstellt. Dabei werden abhängig von der 
 		 * Thematik einzelne vertikale aufklappbare Menüs zur 
 		 * horizontalen Menühauptleiste "menu" hinzugefügt.
 		 */
+		
+		
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
@@ -217,26 +227,23 @@ public class Navigator extends HorizontalPanel {
 		
 		
 		
-//		partnervorschlaegeMenu.addSeparator();
-//		
-//		// Create the file menu
-//				MenuBar statusMenu = new MenuBar(true);
-//				statusMenu.setAnimationEnabled(true);
-//
-//				statusMenu.addItem("Ausloggen", new Command() {
-//					@Override
-//					public void execute() {
-////						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
-////						RootPanel.get("Details").clear();
-////						RootPanel.get("Details").add(showEigenesNp);
-//						
-//						Anchor signOutLink = new Anchor();
-//
-//						signOutLink.setHref(nutzerprofil.getLogoutUrl());
-//						signOutLink.setText("Als " + nutzerprofil.getVorname() + " ausloggen");
-//						
-//					}
-//				});
+		partnervorschlaegeMenu.addSeparator();
+		
+		// Create the file menu
+				MenuBar statusMenu = new MenuBar(true);
+				statusMenu.setAnimationEnabled(true);
+
+				statusMenu.addItem("Ausloggen", new Command() {
+					@Override
+					public void execute() {
+//						ShowEigenesNp showEigenesNp = new ShowEigenesNp();
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(showEigenesNp);
+						
+					Window.Location.replace(logoutUrl);
+						
+					}
+				});
 		
 		
 		 
@@ -253,7 +260,7 @@ public class Navigator extends HorizontalPanel {
 
 		menu.addItem(new MenuItem("Meine Partnervorschläge", partnervorschlaegeMenu));
         menu.addSeparator();
-//		menu.addItem(new MenuItem("Ausloggen", statusMenu));
+		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -284,7 +291,9 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
+		
 		RootPanel.get("Navigator").add(menu);
+		
 
 	}
 }

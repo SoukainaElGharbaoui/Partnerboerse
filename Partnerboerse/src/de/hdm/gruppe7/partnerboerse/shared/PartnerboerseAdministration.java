@@ -21,7 +21,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  * Synchrone Schnittstelle f�r die Verwaltung der Partnerboerse.
  * 
  */
-@RemoteServiceRelativePath("partnerboerseadministration")
+@RemoteServiceRelativePath("admin")
 public interface PartnerboerseAdministration extends RemoteService {
 
 	/**
@@ -30,57 +30,16 @@ public interface PartnerboerseAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void init() throws IllegalArgumentException;
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Login
-	 * *************************************************************************
-	 * **
-	 */
-
-	/**
-	 * Pruefen, ob der Nutzer eingeloggt ist.
-	 * 
-	 * @param userEmail
-	 * @return Boolscher Wert, er zeigt ob der Nutzer eingeloggt ist.
-	 * @throws IllegalArgumentException 
-	 */
 	
-	public boolean isUserRegistered(String userEmail) throws IllegalArgumentException;
-
-	/**
-	 * URL zum Einloggen anfordern.
-	 * 
-	 * @param requestUri
-	 * @return Nutzerprofil-Objekt, welches eingeloggt ist.
-	 * @throws IllegalArgumentException 
-	 */
-	public Nutzerprofil login(String requestUri) throws IllegalArgumentException;
-	
-	/**
-	 * Pruefen, ob der Nutzer in der Datenbank schon existiert.
-	 * 
-	 * @param userEmail
-	 * @return Boolscher Wert, der zeigt ob der Nutzer bereits in der Datenbank existiert.
-	 * @throws IllegalArgumentException 
-	 */
-	public boolean pruefeObNutzerNeu(String userEmail) throws IllegalArgumentException;
-
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Login
-	 * *************************************************************************
-	 * **
-	 */
-
 	/*
 	 * *************************************************************************
 	 * ** ABSCHNITT, Beginn: Nutzerprofil
 	 * *************************************************************************
 	 * **
 	 */
-
+	public boolean pruefeObNutzerNeu(String userEmail) throws IllegalArgumentException;
+	
+	public Nutzerprofil getNuterprofilByEmail (String email)  throws IllegalArgumentException;
 	/**
 	 * Ein Nutzerprofil-Objekt anlegen.
 	 * 

@@ -29,7 +29,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Vertikales Panel erzeugen.
@@ -222,7 +222,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 								public void onSuccess(Nutzerprofil result) {
 
-									ClientsideSettings.setAktuellerUser(result);
+//									ClientsideSettings.setAktuellerUser(result);
 
 									CreateInfo createInfo = new CreateInfo(result.getProfilId(), profiltyp);
 									RootPanel.get("Details").clear();

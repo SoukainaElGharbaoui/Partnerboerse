@@ -69,9 +69,4 @@ public interface ReportGeneratorAsync {
 	void createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname,
 			AsyncCallback<AllPartnervorschlaegeSpReport> callback);
 
-	
-	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
-
-	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
-
 }

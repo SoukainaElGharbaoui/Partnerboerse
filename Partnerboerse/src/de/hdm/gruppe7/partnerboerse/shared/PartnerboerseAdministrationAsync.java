@@ -29,48 +29,6 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void init(AsyncCallback<Void> callback);
 	
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Login
-	 * *************************************************************************
-	 * **
-	 */
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#isUserRegistered(String)
-	 * 
-	 * @param userEmail
-	 * @param isUserRegisteredCallback
-	 */
-	
-	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#login(String)
-	 * 
-	 * @param requestUri
-	 * @param callback
-	 * @throws Exception
-	 */
-	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeObNutzerNeu(String)
-	 * 
-	 * @param userEmail
-	 * @param callback
-	 */
-	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
-
-	
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Login
-	 * *************************************************************************
-	 * **
-	 */
 	
 	/*
 	 * *************************************************************************
@@ -78,6 +36,8 @@ public interface PartnerboerseAdministrationAsync {
 	 * *************************************************************************
 	 * **
 	 */
+	
+	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
 	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
@@ -595,6 +555,12 @@ public interface PartnerboerseAdministrationAsync {
 	 * @param callback
 	 */
 	void deleteAuswahleigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+
+
+	void getNuterprofilByEmail(String email,
+			AsyncCallback<Nutzerprofil> callback);
+
+
 	
 	/*
 	 * *************************************************************************

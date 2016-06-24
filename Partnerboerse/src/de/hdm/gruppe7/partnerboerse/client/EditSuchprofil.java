@@ -22,7 +22,7 @@ public class EditSuchprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Vertikales Panel erzeugen.

@@ -18,32 +18,38 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 
+/**
+ * Diese Klasse dient dazu einen Report aller Partnervorschlaege anhand eines
+ * Suchprofils für ein Nutzerprofil anzuzeigen.
+ */
 public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	/**
+	 * Widgets erzeugen. 
+	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
-
 	private Label auswahlLabel = new Label(
-			"WÃ¤hlen Sie ein Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge anzeigen mÃ¶chten.");
+			"Waehlen Sie ein Suchprofil aus, zu welchem Sie Partnervorschlaege anzeigen mÃ¶chten.");
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenButton = new Button("PartnervorschlÃ¤ge anzeigen");
+	private Button anzeigenButton = new Button("Partnervorschlaege anzeigen");
 
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Konstruktor erstellen.
 	 */
 	public ShowAllPartnervorschlaegeSpReport() {
 		this.add(verPanel);
-
 		auswahlLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * AuswahlListBox befuellen
+		 * AuswahlListBox  für die Suchprofile mit allen Suchprofilen eines
+		 * Nutzerprofils befuellen
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
 				new AsyncCallback<List<Suchprofil>>() {
@@ -70,7 +76,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 				});
 
 		/**
-		 * Report auslesen.
+		 * ClickHaendler für den Button, der das Suchprofil auswählt. 
+		 * Für das ausgewaehlte Suchprofil wird anschliessend der Report für
+		 * alle Partnervorschlaege anhand des Suchprofils ausgelesen.
 		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -103,7 +111,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 						});
 			}
 		});
-
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 */
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(infoLabel);
 		auswahlPanel.add(auswahlListBox);

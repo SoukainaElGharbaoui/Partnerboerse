@@ -397,51 +397,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		return result;
 	}
 
-	/**
-	 * Login-Methode
-	 */
-
-	public boolean isUserRegistered(String userEmail) {
-		return false;
-	}
 	
-	/**
-	 * Login-Methode
-	 */
-	public Nutzerprofil login(String requestUri) throws Exception {
-
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
-
-		Nutzerprofil n = new Nutzerprofil();
-		if (user != null) {
-
-			// EXISTING PROFILE
-			Nutzerprofil bestehendesProfil = NutzerprofilMapper
-					.nutzerprofilMapper().findByNutzerprofilMitEmail(
-							user.getEmail());
-			if (bestehendesProfil != null) {
-				n.setLoggedIn(true);
-				bestehendesProfil.setLoggedIn(true);
-				bestehendesProfil.setLogoutUrl(userService
-						.createLogoutURL(requestUri));
-				bestehendesProfil.setEmailAddress(user.getEmail());
-
-				ClientsideSettings.setAktuellerUser(bestehendesProfil);
-				return bestehendesProfil;
-			} // NO PROFILE
-
-			n.setLoggedIn(true);
-			n.setEmailAddress(user.getEmail());
-
-		} else { // USER = NULL
-			n.setLoggedIn(false);
-
-		}
-		n.setLoginUrl(userService.createLoginURL(requestUri));
-		return n;
-	}
-
+	
 	
 
 
