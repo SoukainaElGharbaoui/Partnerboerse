@@ -51,10 +51,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auslesen aller Eigenschaften.
-	 * 
-	 * @return Eine Liste mit Eigenschaft-Objekten, die saemtliche Eigenschaften
-	 *         repraesentieren.
+	 * Alle Eigenschafte-Objekte auslesen.
+	 * @return Liste von Eigenschaft-Objekten.
 	 */
 	public List<Eigenschaft> findAllEigenschaftenNeu() {
 		Connection con = DBConnection.connection();
@@ -84,12 +82,10 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auslesen aller Eigenschaften die vom Nutzer nicht mit Infos befuellt
-	 * wurde.
-	 * 
-	 * @param profilId
-	 * @return Eine Liste von Eigenschaften, die saemtliche Eigenschaften
-	 *         repraesentieren die vom Nutzer nicht genutzt werden.
+	 * Alle bisher nicht angelgten Eigenschaft-Objekte auslesen. 
+	 * @param profilId Profil-ID des Nutzerprofils, fuer das die bisher nicht 
+	 * angelegten Eigenschaften ausgelesen werden sollen. 
+	 * @return Liste von bisher nicht angelegten Eigenschaft-Objekten.
 	 */
 	public List<Eigenschaft> findAllUnusedEigenschaftenNeu(int profilId) {
 		Connection con = DBConnection.connection();
@@ -120,12 +116,10 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Anlegen mehrerer Infos, welche im GUI vom Nutzer selbst gesetzt werden.
-	 * 
-	 * @param profilId
-	 * @param infos
-	 * @return Eine Liste von Info-Objekten, welche die angelegten Infos
-	 *         repraesentieren.
+	 * Info-Objekte in die Datenbank einfuegen. 
+	 * @param profilId Profil-ID des Nutzerprofils, fuer das die Infos angelegt werden sollen.
+	 * @param infos Liste von Info-Objekten, die angelegt werden sollen. 
+	 * @return Liste von angelegten Info-Objekten.
 	 */
 	public List<Info> insertInfoNeu(int profilId, List<Info> infos) {
 
@@ -147,11 +141,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Alle Infos eines Nutzers auslesen, anhand der Profil-ID.
-	 * 
-	 * @param profilId
-	 * @return Eine Liste von Info-Objekten, welche saemtliche Infos eines
-	 *         Nutzers repraesentieren.
+	 * Alle Info-Objekte eines Nutzerprofils anhand der Profil-ID auslesen. 
+	 * @param profilId Profil-ID des Nutzerprofils, fuer den die Infos ausgelesen werden sollen.
+	 * @return Liste von ausgelesenen Info-Objekten.
 	 */
 	public List<Info> findAllInfosNeu(int profilId) {
 
@@ -182,11 +174,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auslesen einer Eigenschaft anhand der Eigenschaft-ID.
-	 * 
-	 * @param eigenschaftId
-	 * @return Ein Eigenschaft-Objekt, welches die ausgelesene Eigenschaft
-	 *         repraesentiert.
+	 * Ein Eigenschaft-Objekt anhand der Eigenschaft-ID auslesen. 
+	 * @param eigenschaftId Die Eigenschaft-ID der Eigenschaft, die ausgelesen werden soll. 
+	 * @return Das ausgelesene Eigenschaft-Objekt.
 	 */
 	public Eigenschaft findEigenschaftByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
@@ -214,11 +204,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auslesen einer Auswahleigenschaft anhand der Eigenschaft-ID.
-	 * 
-	 * @param eigenschaftId
-	 * @return Ein Auswahleigenschaft-Objekt, welches die ausgelesene
-	 *         Auswahleigenschaft repraesentiert.
+	 * Ein Auswahleigenschaft-Objekt anhand der Eigenschaft-ID auslesen. 
+	 * @param eigenschaftId Eigenschaft-ID der Auswahleigenschaft, die ausgelesen werden soll. 
+	 * @return Das ausgelesene Auswahleigenschaft-Objekt.
 	 */
 	public Auswahleigenschaft findEigAByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
@@ -251,11 +239,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auslesen einer Beschreibungseigenschaft anhand der Eigenschaft-ID.
-	 * 
-	 * @param eigenschaftId
-	 * @return Ein Beschreibungseigenschaft-Objekt, welches die ausgelesene
-	 *         Beschreibungseigenschaft repraesentiert.
+	 * Ein Beschreibungseigenschaft-Objekt anhand der Eigenschaft-ID auslesen. 
+	 * @param eigenschaftId Eigenschaft-ID der Beschreibungseigenschaft, die ausgelesen werden soll. 
+	 * @return Das ausgelesene Beschreibungseigenschaft-Objekt.
 	 */
 	public Beschreibungseigenschaft findEigBByIdNeu(int eigenschaftId) {
 		Connection con = DBConnection.connection();
@@ -284,9 +270,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Loeschen aller Infos eines Nutzers, anhand der Profil-ID.
-	 * 
-	 * @param profilId
+	 * Alle Info-Objekte eines Nutzerprofils loeschen. 
+	 * @param profilId Profil-ID des Nutzerprofils, dessen Infos geloescht werden sollen.
 	 */
 	public void deleteAllInfosNeu(int profilId) {
 		Connection con = DBConnection.connection();
@@ -304,11 +289,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Loeschen einer Info eines Nutzers anhand der Profil-ID und der
-	 * Eigenschaft-ID.
-	 * 
-	 * @param profilId
-	 * @param eigenschaftId
+	 * Ein Info-Objekt eines Nutzerprofils anhand der Profil-ID und der Eigenschaft-ID loeschen. 
+	 * @param profilId Profil-ID des Nutzerprofils, dessen Info geloescht werden soll. 
+	 * @param eigenschaftId Eigenschaft-ID der Eigenschaft, deren zugehoerige Info geloescht werden soll.
 	 */
 	public void deleteOneInfoNeu(int profilId, int eigenschaftId) {
 		Connection con = DBConnection.connection();
@@ -324,10 +307,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Infos eines Nutzers aktualisieren.
-	 * 
-	 * @param profilId
-	 * @param listI
+	 * Info-Objekte eines Nutzerprofils aktualisieren.
+	 * @param profilId Profil-ID des Nutzerprofils, dessen Infos aktualisiert werden sollen. 
+	 * @param listI Liste von Info-Objekte, die aktualisiert werden sollen.
 	 */
 	public void updateInfos(int profilId, List<Info> listI) {
 		Connection con = DBConnection.connection();
@@ -358,13 +340,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Beschreibungseigenschaft_Objekt in die Datenbank einfuegen. Fuer den
-	 * Administration.
-	 * 
-	 * @param b
-	 *            Das einzufugende Beschreibungseigenschaft-Objekt.
-	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, jedoch
-	 *         mit ggf. korrigierte Eigenschaft-ID.
+	 * Ein Beschreibungseigenschaft-Objekt in die Datenbank einfuegen (Administrator-Funktion).
+	 * @param b Das Beschreibungseigenschaft-Objekt, das angelegt werden soll. 
+	 * @return Das angelegte Beschreibungseigenschaft-Objekt. 
 	 */
 	public Beschreibungseigenschaft insertBeschreibungseigenschaft(Beschreibungseigenschaft b) {
 
@@ -396,13 +374,9 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auswahleigenschaft_Objekt in die Datenbank einfuegen. F�r den
-	 * Administrator. Fuer den Administrator.
-	 * 
-	 * @param a
-	 *            Das einzufugende Beschreibungseigenschaft-Objekt.
-	 * @return Das bereits uebergebene Beschreibungseigenschaft-Objekt, jedoch
-	 *         mit ggf. korrigierte Eigenschaft-ID.
+	 * Ein Auswahleigenschaft-Objekt in die Datenbank einfuegen (Administrator-Funktion).
+	 * @param b Das Auswahleigenschaft-Objekt, das angelegt werden soll. 
+	 * @return Das angelegte Auswahleigenschaft-Objekt. 
 	 */
 	public Auswahleigenschaft insertAuswahleigenschaft(Auswahleigenschaft a) {
 
@@ -435,12 +409,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Beschreibungseigenschaft-Objekt wiederholt in die Datenbank schreiben.
-	 * Fuer den Administrator.
-	 * 
-	 * @param b
-	 *            Das in die Datenbank zu schreibende
-	 *            Beschreibungseigenschaft-Objekt.
+	 * Ein Beschreibungseigenschaft-Objekt wiederholt in die Datenbank schreiben (Administrator-Funktion).
+	 * @param b Das Beschreibungseigenschaft-Objekt, das wiederholt in die Datenbank geschrieben werden soll.
 	 */
 	public void updateBeschreibungseigenschaft(Beschreibungseigenschaft b) {
 
@@ -465,11 +435,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auswahleigenschaft-Objekt wiederholt in die Datenbank schreiben. Fuer den
-	 * Administrator.
-	 * 
-	 * @param a
-	 *            Das in die Datenbank zu schreibende Auswahleigenschaft-Objekt.
+	 * Ein Auswahleigenschaft-Objekt wiederholt in die Datenbank schreiben (Administrator-Funktion).
+	 * @param a Das Auswahleigenschaft-Objekt, das wiederholt in die Datenbank geschrieben werden soll.
 	 */
 	public void updateAuswahleigenschaft(Auswahleigenschaft a) {
 
@@ -494,10 +461,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Beschreibungseigenschaft-Objekt aus der Datenbank loeschen. Fuer den
-	 * Administrator.
-	 * 
-	 * @param eigenschaftId
+	 * Ein Beschreibungseigenschaft-Objekt aus der Datenbank loeschen (Administrator-Funktion). 
+	 * @param eigenschaftId Eigenschaft-ID der Beschreibungseigenschaft, die geloescht werden soll. 
 	 */
 	public void deleteBeschreibungseigenschaft(int eigenschaftId) {
 		Connection con = DBConnection.connection();
@@ -518,10 +483,8 @@ public class InfoMapper {
 	}
 
 	/**
-	 * Auswahleigenschaft-Objekt aus der Datenbank loeschen. Fuer den
-	 * Administrator.
-	 * 
-	 * @param eigenschaftId
+	 * Ein Auswahleigenschaft-Objekt aus der Datenbank loeschen (Administrator-Funktion). 
+	 * @param eigenschaftId Eigenschaft-ID der Auswahleigenschaft, die geloescht werden soll. 
 	 */
 	public void deleteAuswahleigenschaft(int eigenschaftId) {
 		Connection con = DBConnection.connection();

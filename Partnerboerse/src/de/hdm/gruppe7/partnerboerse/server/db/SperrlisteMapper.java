@@ -150,7 +150,7 @@ public class SperrlisteMapper {
 	}
 
 	/**
-	 * Sperrung einfuegen. 
+	 * Sperrung in die Datenbank einfuegen. 
 	 * @param profilId Die Profil-ID des eigenen Nutzerprofils.
 	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das gesperrt werden soll. 
 	 */
@@ -169,7 +169,7 @@ public class SperrlisteMapper {
 	}
 
 	/**
-	 * Sperrung loeschen.
+	 * Sperrung aus der Datenbank loeschen.
 	 * @param profilId Die Profil-ID des eigenen Nutzerprofils.
 	 * @param fremdprofilId Die Profil-ID des Fremdprofils, dessen Sperrung geloescht werden soll.
 	 */

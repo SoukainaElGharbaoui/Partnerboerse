@@ -316,7 +316,7 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Besuch setzen. 
+	 * Besuch in die Datenbank einfuegen.
 	 * @param profilId Die Profil-ID des Nutzerprofils, fuer das der Besuch gesetzt werden soll.
 	 * @param fremdprofilId Die Profil-ID des Nutzerprofils, das besucht wurde. 
 	 */
@@ -335,7 +335,7 @@ public class NutzerprofilMapper {
 	}
 
 	/**
-	 * Aehnlichkeit setzen. 
+	 * Aehnlichkeit in die Datenbank einfuegen. 
 	 * @param profilId Die Profil-ID des Referenzprofils.
 	 * @param fremdprofilId Die Profil-ID des Vergleichsprofils. 
 	 * @param aehnlichkeit Der Aehnlichkeitswert. 
@@ -361,7 +361,7 @@ public class NutzerprofilMapper {
 	}
 	
 	/**
-	 * Aehnlichkeit entfernen. 
+	 * Aehnlichkeit aus der Datenbank loeschen. 
 	 * @param 	profilId Die Profil-ID des Nutzerprofils, dessen Aehnlichkeitswerte 
 	 * 			entfernt werden sollen.  
 	 */

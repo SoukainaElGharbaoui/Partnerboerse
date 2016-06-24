@@ -117,7 +117,7 @@ public class MerklisteMapper {
 
 
     /**
-     * Vermerk einfuegen.
+     * Vermerk in die Datenbank einfuegen.
      * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
      * @param fremdprofilId Die Profil-ID des Nutzerprofils, das vermerkt werden soll. 
      */
@@ -136,7 +136,7 @@ public class MerklisteMapper {
 	}
 
 	/**
-	 * Vermerk loeschen.
+	 * Vermerk aus der Datenbank loeschen.
 	 * @param profilId Die Profil-ID des eigenen Nutzerprofils. 
 	 * @param fremdprofilId Die Profil-ID des Nutzerprofils, dessen Vermerk geloescht werden soll. 
 	 */

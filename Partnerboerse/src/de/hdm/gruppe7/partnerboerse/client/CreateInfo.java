@@ -1,3 +1,4 @@
+
 package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class CreateInfo extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
-	 * erzeugen.
+	 * Neues Nutzerprofil-Objekt erzeugen, das die Login-Informationen enthaelt,
 	 */
 	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
@@ -64,8 +64,8 @@ public class CreateInfo extends VerticalPanel {
 	/**
 	 * Konstruktor erstellen.
 	 *
-	 * @param profilId
-	 * @param profiltyp
+	 * @param profilId Die Profil-Id, entweder des Nutzerprofils oder des Suchprofils
+	 * @param profiltyp Der Profiltyp, entweder mit dem Inhalt "Np" (Nutzerprofil) oder "Sp" (Suchprofil)
 	 */
 	public CreateInfo(final int profilId, final String profiltyp) {
 		this.add(verPanel);
@@ -79,7 +79,7 @@ public class CreateInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * Erste Spalte der Tabelle festlegen.
+		 * Erste Zeile der Tabelle festlegen.
 		 */
 		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
 		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
@@ -87,8 +87,8 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
 		/**
-		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank
-		 * ausgelesen. Erst die Beschreibungsinfos, danach die Auswahlinfos.
+		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank herausgeholt, ausgelesen
+		 * und anschliessend der Tabelle hinzugefuegt. Erst die Beschreibungsinfos, danach die Auswahlinfos. 
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaften(
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
@@ -163,7 +163,12 @@ public class CreateInfo extends VerticalPanel {
 				});
 
 		/**
-		 * ClickHandler fuer den Button zum Anlegen einer Info.
+		 * ClickHandler fuer den Button zum Anlegen der Infos. 
+		 * Die befuellte Tabelle wird durchlaufen und die Eingaben des Nutzers herausgelesen.
+		 * Eine neue Info wird instanziiert und die Daten dieser Info zugewiesen. 
+		 * Ist ein Eingabefeld leer oder identisch mit dem vordefinierten Beschreibungstext, 
+		 * der im Eingabefeld erscheint, so wird die Info nicht angelegt. Ebenso bei der Angabe 
+		 * "Keine Auswahl" in den Auswahlboxen.
 		 */
 
 		createInfosButton.addClickHandler(new ClickHandler() {
@@ -221,11 +226,11 @@ public class CreateInfo extends VerticalPanel {
 				}
 
 				/**
-				 * Die Infos werden in die Datenbank eingefügt.Danach wird
+				 * Die Infos werden in die Datenbank eingefuegt. Danach wird
 				 * geprueft, ob es sich um Nutzerprofil oder ein Suchprofil
 				 * handelt. Handelt es sich um ein Nutzerprofil, dann wird man
 				 * nach dem Anlegen auf das erstelle Nutzerprofil
-				 * weitergeleitet. Es wird ebenfalls der logout hinzugefügt und
+				 * weitergeleitet. Es wird ebenfalls der Logout hinzugefügt und
 				 * gesetzt. Handelt es sich um Suchprofil, dann wird man nach
 				 * dem Anlegen auf das entsprechende Suchprofil weitergeleitet.
 				 */
@@ -242,7 +247,8 @@ public class CreateInfo extends VerticalPanel {
 								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
 								if (profiltyp.equals("Np")) {
-
+									
+								
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 									RootPanel.get("Navigator").add(new Navigator());
 
@@ -258,7 +264,7 @@ public class CreateInfo extends VerticalPanel {
 									RootPanel.get("Navigator").add(signOut);
 								}
 
-						else if (profiltyp.equals("Sp")) {
+						        else if (profiltyp.equals("Sp")) {
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
