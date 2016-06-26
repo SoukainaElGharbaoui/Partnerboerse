@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -35,6 +36,7 @@ public class Navigator extends HorizontalPanel {
 
 		VerticalPanel verPanel1 = new VerticalPanel();
 		this.add(verPanel1);
+		
 		
 		/**
 		 * Ab hier wird die Menuebar erstellt. Dabei werden abhaengig von der 
@@ -79,15 +81,9 @@ public class Navigator extends HorizontalPanel {
 		profilAnzeigen.setStyleName("MenuItem");
 
 		/**
-<<<<<<< HEAD
 		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
 		 * jeweils ein Command uebergeben wird. Wird ein bestimmtes Item 
 		 * angeklickt, so wird der jeweilige Command ausgefuehrt.
-=======
-		 * Den einzelnen Menüs werden verschiedene Items hinzugefügt, denen
-		 * jeweils ein Command übergeben wird. Wird ein bestimmtes Item
-		 * angeklickt, so wird der jeweilige Command ausgeführt.
->>>>>>> refs/heads/master
 		 */
 
 		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {

@@ -70,7 +70,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 											"Als " + result.getVorname() + result.getProfilId() + " ausloggen");
 								    loginPanel.add(signOutLink);
 									RootPanel.get("Details").add(new PartnerboerseReport());
-									RootPanel.get("Navigator2").add(loginPanel);
+									RootPanel.get("Navigator").add(loginPanel);
 								}
 
 								if (result.getEmailAddress() == null) {
@@ -82,7 +82,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 									loginPanel.add(signOutLink);
 									RootPanel.get("Details").add(new PartnerboerseReport());
 
-									RootPanel.get("Navigator2").add(loginPanel);
+									RootPanel.get("Navigator").add(loginPanel);
 									RootPanel.get("Details").add(new CreateNutzerprofil(profiltyp));
 
 								}
@@ -93,7 +93,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
      						if (!result.isLoggedIn()) {
 								signInLink.setHref(result.getLoginUrl());
 								loginPanel.add(signInLink);
-								RootPanel.get("Navigator2").add(loginPanel);
+								RootPanel.get("Navigator").add(loginPanel);
 							}
 						}
 					});
@@ -147,7 +147,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		menu.addSeparator();
 
 		// add the menu to the root panel
-		RootPanel.get("Navigator").add(menu);
+		RootPanel.get("Header").add(menu);
 
 	}
 
