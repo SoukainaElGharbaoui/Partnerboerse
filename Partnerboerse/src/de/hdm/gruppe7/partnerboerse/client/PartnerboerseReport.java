@@ -103,8 +103,8 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("720px");
-		menu.setHeight("36px");
+		menu.setWidth("100%");
+		menu.setHeight("39px");
 		menu.setStyleName("MenuBarRep");
 		menu.setAnimationEnabled(true);
 

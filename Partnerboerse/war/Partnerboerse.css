@@ -76,7 +76,7 @@ div#Space{
 }
 
 div#Details {
-	top: 0px;
+	top: 50px;
 	width: 900px; 
 	height: 900px;
 	position: relative;
@@ -184,14 +184,14 @@ div#Trailer {
    /* cursor: default;  */ 
    background: linear-gradient(to right top, #7c9ef8, #ccccff);
    font-family: Arial Unicode MS, Arial, sans-serif;
-   font-size: 12px;
+   font-size: 13px;
    font-weight: bold;
    padding-top: 3px; 
-   padding-bottom: 3px; 
+   padding-bottom: 3px;
    top:0px;
    left: 0px;
    right: 0px;
-   position: relative;
+   position: absolute;
 }
 .MenuItemRep {
    cursor: default;
