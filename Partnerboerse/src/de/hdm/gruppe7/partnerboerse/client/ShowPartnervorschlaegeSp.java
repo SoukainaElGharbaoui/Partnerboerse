@@ -59,12 +59,15 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Variable fuer den Listtyp erstellen.
 	 */
 	private String listtyp;
+	private String suchprofilName;
+	private String spName;
 	
 	/**
 	 * Konstruktor erstellen.
 	 * @param listtyp Der Listtyp (PvSp)
 	 */
-	public ShowPartnervorschlaegeSp(String listtyp) {
+	public ShowPartnervorschlaegeSp(String listtyp, String suchprofilName) {
+		this.suchprofilName = suchprofilName;
 		this.listtyp = listtyp;
 		run();
 	}
@@ -115,24 +118,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				 * den neuen Informationen befüllt werden kann.
 				 */
 				partnervorschlaegeSpFlexTable.removeAllRows();
-
-				/**
-				 * Tabelle formatieren und CSS einbinden.
-				 */
-				partnervorschlaegeSpFlexTable.setCellPadding(6);
-				partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-				partnervorschlaegeSpFlexTable.addStyleName("FlexTable");
-				
-				/**
-				 * Erste Zeile der Tabelle festlegen.
-				 */
-				partnervorschlaegeSpFlexTable.setText(0, 0 ,"F-ID");
-				partnervorschlaegeSpFlexTable.setText(0, 1 ,"Uebereinstimmung in %");
-				partnervorschlaegeSpFlexTable.setText(0, 2 ,"Vorname");
-				partnervorschlaegeSpFlexTable.setText(0, 3 ,"Nachname");
-				partnervorschlaegeSpFlexTable.setText(0, 4 ,"Geburtsdatum");
-				partnervorschlaegeSpFlexTable.setText(0, 5 ,"Geschlecht");
-				partnervorschlaegeSpFlexTable.setText(0, 6 ,"Anzeigen");
 				
 				erzeugeTabelleSp();
 
@@ -140,6 +125,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				 * Widgets den Panels hinzufuegen. 
 				 * Diese Widgets werden angezeigt, sobald die Partnervorschlaege angezeigt werden.
 				 */
+				
+				if(suchprofilName == null){
+					ueberschriftLabel2.setVisible(true);
+				}
+				
 				verPanel.add(ergebnisLabel);
 				verPanel.add(infoLabel);
 				verPanel.add(ueberschriftLabel2);
@@ -153,12 +143,32 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		 * Diese Widgets werden angezeigt sobald man über die MenueBar das Feld
 		 * "Partnervorschlaege anhand Suchprofil" auswaehlt.
 		 */
-
+		if(suchprofilName != null){
+			
+			erzeugeTabelleSp();
+			for (int i = 0; i < auswahlListBox.getItemCount(); i++) {
+				if (suchprofilName.equals(auswahlListBox.getValue(i))) {
+					auswahlListBox.setSelectedIndex(i);
+				}
+			}
+					
+			ueberschriftLabel2.setVisible(true);
+			suchprofilName = null;
+		}
+		else {
+			
+			ueberschriftLabel2.setVisible(false);
+		}
+		
+		
+		
 		verPanel.add(ueberschriftLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenSpButton);
 		verPanel.add(createSuchprofilButton);
 		verPanel.add(auswahlPanel);
+		verPanel.add(ueberschriftLabel2);
+		horPanelTabelle.add(partnervorschlaegeSpFlexTable);
 
 	}
 	
@@ -193,9 +203,39 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	public void erzeugeTabelleSp() {
 		
 		horPanelTabelle.clear();
+		
+		/**
+		 * Tabelle formatieren und CSS einbinden.
+		 */
+		partnervorschlaegeSpFlexTable.setCellPadding(6);
+		partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		partnervorschlaegeSpFlexTable.addStyleName("FlexTable");
+		
+		/**
+		 * Erste Zeile der Tabelle festlegen.
+		 */
+		partnervorschlaegeSpFlexTable.setText(0, 0 ,"F-ID");
+		partnervorschlaegeSpFlexTable.setText(0, 1 ,"Uebereinstimmung in %");
+		partnervorschlaegeSpFlexTable.setText(0, 2 ,"Vorname");
+		partnervorschlaegeSpFlexTable.setText(0, 3 ,"Nachname");
+		partnervorschlaegeSpFlexTable.setText(0, 4 ,"Geburtsdatum");
+		partnervorschlaegeSpFlexTable.setText(0, 5 ,"Geschlecht");
+		partnervorschlaegeSpFlexTable.setText(0, 6 ,"Anzeigen");
+		
+		if (suchprofilName != null){
+			
+			 spName = suchprofilName;
+			
+			
+		}
+		
+		else {
+			
+			 spName = auswahlListBox.getSelectedItemText();
+		}
 
 		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(nutzerprofil.getProfilId(),
-						auswahlListBox.getSelectedItemText(), new AsyncCallback<List<Nutzerprofil>>() {
+					spName	, new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -248,8 +288,11 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									anzeigenButton.addClickHandler(new ClickHandler() {public void onClick(ClickEvent event) {
 
 										String profiltyp = "Fp";
+										
+									String	name = auswahlListBox.getSelectedItemText();
+										
 
-										ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp);
+										ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp, name);
 										RootPanel.get("Details").clear();
 										RootPanel.get("Details").add(showFremdprofil);
 												}

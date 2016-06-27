@@ -267,9 +267,10 @@ public class ShowMerkliste extends VerticalPanel {
 															if (result == 0) {
 																
 																String profiltyp = "Fp";
+																String name = null;
 																
 																ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-																		Integer.valueOf(fremdprofilId), profiltyp, listtyp);
+																		Integer.valueOf(fremdprofilId), profiltyp, listtyp, name);
 																RootPanel
 																		.get("Details")
 																		.clear();

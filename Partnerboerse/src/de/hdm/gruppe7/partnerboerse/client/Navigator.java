@@ -261,8 +261,11 @@ public class Navigator extends HorizontalPanel {
 											@Override
 											public void onSuccess(Void result3) {
 												
+												
+										
+												String suchprofilName = null;
 												String listtyp = "PvSp";
-												ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
+												ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp, suchprofilName);
 												RootPanel.get("Details").clear();
 												RootPanel.get("Details").add(showPartnervorschlaegeSp);
 												

@@ -251,9 +251,10 @@ public class ShowSperrliste extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 									
 									String profiltyp = "Fp";
+									String name = null;
 
 									ShowFremdprofil showFremdprofil = new ShowFremdprofil(
-											Integer.valueOf(fremdprofilId), profiltyp, listtyp);
+											Integer.valueOf(fremdprofilId), profiltyp, listtyp, name);
 									
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showFremdprofil);

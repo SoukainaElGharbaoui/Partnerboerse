@@ -61,6 +61,11 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * Variable fuer den Listtyp erstellen.
 	 */
 	private String listtyp; 
+	
+	/**
+	 * Variable fuer den Listtyp erstellen.
+	 */
+	private String name; 
 
 	/**
 	 * Konstruktor erstellen.
@@ -69,10 +74,11 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * @param listtyp Die Seite, von der das Fremdprofil aufgerufen wird (Merkliste, Sperrliste,
 	 * 		  PartnervorschlaegeNp, PartnervorschlaegeSp). 
 	 */
-	public ShowFremdprofil(int fremdprofilId, String profiltyp, String listtyp) {
+	public ShowFremdprofil(int fremdprofilId, String profiltyp, String listtyp, String name) {
 		this.fremdprofilId = fremdprofilId; 
 		this.profiltyp = profiltyp; 
 		this.listtyp = listtyp; 
+		this.name = name;
 		run(); 
 	}
 	
@@ -238,7 +244,8 @@ public class ShowFremdprofil extends VerticalPanel {
 		else if (listtyp.equals("PvSp")) {
 			pfadLabelPvSp.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					ShowPartnervorschlaegeSp showPS = new ShowPartnervorschlaegeSp(listtyp);
+					String suchprofilName = name;
+					ShowPartnervorschlaegeSp showPS = new ShowPartnervorschlaegeSp(listtyp, suchprofilName );
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showPS);
 				}
