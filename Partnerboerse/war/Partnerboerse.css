@@ -17,7 +17,6 @@ div#TopLevelFrame{
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 5px;
-	overflow: auto;
 	
 }
 div#Header { 	    
@@ -80,6 +79,7 @@ div#Details {
 	width: 900px; 
 	height: 900px;
 	position: relative;
+	overflow: auto;
 }
 
 div#Trailer {
