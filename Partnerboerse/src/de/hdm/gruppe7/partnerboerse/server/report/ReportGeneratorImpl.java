@@ -203,7 +203,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 
 		headline.addColumn(new Column("Geburtsdatum"));
 
-		headline.addColumn(new Column("Koerpergroessse"));
+		headline.addColumn(new Column("Körpergröße"));
 
 		headline.addColumn(new Column("Haarfarbe"));
 
@@ -265,7 +265,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		AllPartnervorschlaegeNpReport result = new AllPartnervorschlaegeNpReport();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
-		result.setTitle("Alle unangesehenen Partnervorschlaege");
+		result.setTitle("Alle unangesehenen Partnervorschläge");
 
 		// Imressum hinzufuegen
 		this.addImprint(result);
@@ -342,7 +342,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		AllPartnervorschlaegeSpReport result = new AllPartnervorschlaegeSpReport();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Ueberschrift).
-		result.setTitle("Alle Partnervorschlaege anhand des Suchprofils: "
+		result.setTitle("Alle Partnervorschläge anhand des Suchprofils: "
 				+ suchprofilname);
 
 		// Imressum hinzufuegen

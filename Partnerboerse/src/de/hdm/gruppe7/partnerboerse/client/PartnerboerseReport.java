@@ -53,7 +53,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		// Loginservice von Google
-		loginService.login(GWT.getHostPageBaseURL(), loginExecute());
+		loginService.login(GWT.getHostPageBaseURL() + "PartnerboerseReports.html", loginExecute());
 
 	}
 	private void createNavigator() {
@@ -121,8 +121,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 			public void onSuccess(LoginInfo result) {
 
 				if (!result.isLoggedIn()) {
-					Window.Location.replace(GWT.getHostPageBaseURL()
-							+ editorHtmlName);
+					Window.Location.replace(result.getLoginUrl());
 				} else {
 					admin.getNuterprofilByEmail(result.getEmailAddress(),
 							getNutzerprofilByEmailExecute(result

@@ -275,7 +275,7 @@ public class Navigator extends HorizontalPanel {
 
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");
 
-		partnervorschlaegeMenu.addSeparator();
+	//	partnervorschlaegeMenu.addSeparator();
 					MenuBar statusMenu = new MenuBar(true);
 						statusMenu.setAnimationEnabled(true);
 		
@@ -333,7 +333,9 @@ public class Navigator extends HorizontalPanel {
 								showAllPartnervorschlaegeSpReport);
 					}
 				});
+		
 
+		
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
