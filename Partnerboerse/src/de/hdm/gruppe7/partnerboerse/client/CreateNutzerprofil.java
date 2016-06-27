@@ -2,9 +2,6 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import java.util.Date;
 
-import org.cyberneko.html.HTMLTagBalancer.InfoStack;
-
-import com.google.gwt.dev.util.log.dashboard.DashboardNotifier;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
