@@ -1,13 +1,11 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -38,7 +36,7 @@ public class Navigator extends HorizontalPanel {
 	/**
 	 * 
 	 */
-	public Navigator() {
+	public Navigator(Nutzerprofil np) {
 
 		VerticalPanel verPanel1 = new VerticalPanel();
 		this.add(verPanel1);
@@ -275,7 +273,16 @@ public class Navigator extends HorizontalPanel {
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");
 
 		partnervorschlaegeMenu.addSeparator();
-
+					MenuBar statusMenu = new MenuBar(true);
+						statusMenu.setAnimationEnabled(true);
+		
+						statusMenu.addItem("Ausloggen", new Command() {
+							@Override
+							public void execute() {
+		 					Window.Location.replace(logoutUrl);
+		 						
+					}
+		 				});
 		
 
 
@@ -293,7 +300,7 @@ public class Navigator extends HorizontalPanel {
 		menu.addItem(new MenuItem("Meine Partnervorschläge",
 				partnervorschlaegeMenu));
 		menu.addSeparator();
-		// menu.addItem(new MenuItem("Ausloggen", statusMenu));
+		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		// ////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu

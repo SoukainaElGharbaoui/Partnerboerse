@@ -289,11 +289,13 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Nutzerprofil result) {
+				
+			
 				CreateInfo createInfo = new CreateInfo(result.getProfilId(),
 						profiltyp);
 				RootPanel.get("Details").clear();
 				
-				RootPanel.get("Navigator").add(new Navigator());
+	//			RootPanel.get("Navigator").add(new Navigator());
 				RootPanel.get("Details").add(createInfo); 
 				
 			}

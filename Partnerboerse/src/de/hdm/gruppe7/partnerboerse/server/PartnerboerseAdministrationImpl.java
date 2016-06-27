@@ -543,7 +543,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		for (Nutzerprofil np : vergleichsprofile) {
 
 			int aehnlichkeit = 3;
-			int counter = 7;
+			int counter = 10;
 			int vergleichsprofilId = np.getProfilId();
 
 			if (np.getGeschlecht().equals(referenzprofil.getGeschlecht())) {
@@ -867,17 +867,9 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 
 	/**
-<<<<<<< HEAD
-	 * Es werden alle Eigenschaften mit Hilfe der Map-Klasse aus der Datenbank
-	 * geholt und in die Tabelle eingefügt. Dabei gibt es eine Schleife fuer
-	 * die Beschreibungseigenschfaten und eine fuer die Auswahleigenschaften.
-	 * 
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
-=======
 	 * Alle Eigenschaften auslesen.
 	 * @return Liste von ausgelesenen Beschreibungs- und Auswahleigenschaft-Objekten.
 	 * @throws IllegalArgumentException
->>>>>>> refs/heads/master
 	 */
 	@Override
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()

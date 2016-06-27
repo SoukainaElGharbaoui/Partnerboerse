@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -250,18 +251,14 @@ public class CreateInfo extends VerticalPanel {
 									
 								
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-									RootPanel.get("Navigator").add(new Navigator());
-
+									
+									
+								Window.Location.replace("Partnerboerse.html");
+									
 									RootPanel.get("Details").clear();
+									RootPanel.get("Navigator").add(new Navigator(nutzerprofil));
 									RootPanel.get("Details").add(showNp);
-
-									Anchor signOut = new Anchor();
-
-									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
-									signOut.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId()
-											+ " ausloggen");
-
-									RootPanel.get("Navigator").add(signOut);
+									
 								}
 
 						        else if (profiltyp.equals("Sp")) {

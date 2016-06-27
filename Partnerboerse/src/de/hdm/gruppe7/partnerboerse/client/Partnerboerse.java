@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.thirdparty.javascript.jscomp.parsing.parser.trees.ThisExpressionTree;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -93,7 +94,6 @@ public class Partnerboerse implements EntryPoint {
 					admin.pruefeObNutzerNeu(result.getEmailAddress(),
 							pruefeObNutzerNeuExecute(result
 									.getEmailAddress()));
-					Window.Location.replace(result.getLogoutUrl());
 
 				} else {
 					
@@ -117,6 +117,7 @@ public class Partnerboerse implements EntryPoint {
 			public void onSuccess(Boolean result) {
 
 				if (!result) {
+			
 					admin.getNuterprofilByEmail(loginInfo.getEmailAddress(),
 							getNuterprofilByEmailExecute(loginInfo.getEmailAddress()));
 
@@ -125,6 +126,7 @@ public class Partnerboerse implements EntryPoint {
 					CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil("Np");
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(createNutzerprofil);
+					
 				}
 
 			}
@@ -140,6 +142,13 @@ public class Partnerboerse implements EntryPoint {
 	 */
 	public static Nutzerprofil getNp() {
 		return np;
+	}
+	/**
+	 * Setzt das aktuelle Nutzerprofil
+	 * @param np
+	 */
+	public static void setNp(Nutzerprofil np) {
+		np=np;
 	}
 
 	/**
@@ -161,9 +170,9 @@ public class Partnerboerse implements EntryPoint {
 
 			@Override
 			public void onSuccess(Nutzerprofil result) {
-
+				
 				np = result;
-				getMenu();
+			getMenu();
 
 			}
 		};
@@ -178,8 +187,8 @@ public class Partnerboerse implements EntryPoint {
 
 	}
 
-	private void getMenu() {
-		RootPanel.get("Navigator").add(new Navigator());
+	public static void getMenu() {
+		RootPanel.get("Navigator").add(new Navigator(np));
 		// RootPanel.get("Navigator2").add(loginPanel);
 	}
 
