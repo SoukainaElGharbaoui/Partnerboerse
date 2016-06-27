@@ -25,7 +25,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Panels erzeugen. 
@@ -61,6 +61,11 @@ public class ShowSuchprofil extends VerticalPanel {
 	private String profiltyp; 
 	
 	/**
+	 * Variable fuer den Listtyp erstellen.
+	 */
+	private String listtyp = "Sp";
+	
+	/**
 	 * Variable fuer die naechste Suchprofil-ID erstellen.
 	 */
 	private int naechsteSuchprofilId; 
@@ -69,13 +74,15 @@ public class ShowSuchprofil extends VerticalPanel {
 	 * Liste erzeugen, die alle Suchprofile eines Nutzerprofils enthaelt. 
 	 */
 	private List<Suchprofil> listS = new ArrayList<Suchprofil>(); 
+	
+
 
 	/**
 	 * Konstruktor erstellen.
 	 * @param suchprofilId Die Profil-ID des Suchprofils, das angezeigt werden soll. 
 	 * @param profiltyp Der Profiltyp (Suchprofil).
 	 */
-	public ShowSuchprofil(final int suchprofilId, final String profiltyp) {
+	public ShowSuchprofil(int suchprofilId, String profiltyp) {
 		this.suchprofilId = suchprofilId; 
 		this.profiltyp = profiltyp; 
 		run(); 
@@ -255,7 +262,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					suchprofilPanel.add(buttonPanel);
 					suchprofilPanel.add(infoLabel);
 					
-					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
+					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp, listtyp);
 					infoPanel.clear();
 					infoPanel.add(showInfo);
 
@@ -298,7 +305,7 @@ public class ShowSuchprofil extends VerticalPanel {
 					suchprofilPanel.add(buttonPanel);
 					suchprofilPanel.add(infoLabel);
 					
-					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp);
+					ShowInfo showInfo = new ShowInfo(suchprofilId, profiltyp, listtyp);
 					infoPanel.clear();
 					infoPanel.add(showInfo);
 				}

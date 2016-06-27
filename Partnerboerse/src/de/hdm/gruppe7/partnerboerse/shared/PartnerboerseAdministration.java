@@ -19,28 +19,22 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 /**
  * Synchrone Schnittstelle fuer die Verwaltung der Partnerboerse.
  */
-@RemoteServiceRelativePath("partnerboerseadministration")
+@RemoteServiceRelativePath("admin")
 public interface PartnerboerseAdministration extends RemoteService {
 
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#init()
 	 */
 	public void init() throws IllegalArgumentException;
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#isUserRegistered(String)
-	 */
-	public boolean isUserRegistered(String userEmail) throws IllegalArgumentException;
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#login(String)
-	 */
-	public Nutzerprofil login(String requestUri) throws IllegalArgumentException;
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeObNutzerNeu(String) 
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Nutzerprofil
+	 * *************************************************************************
+	 * **
 	 */
 	public boolean pruefeObNutzerNeu(String userEmail) throws IllegalArgumentException;
+	
+	public Nutzerprofil getNuterprofilByEmail (String email)  throws IllegalArgumentException;
 
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createNutzerprofil

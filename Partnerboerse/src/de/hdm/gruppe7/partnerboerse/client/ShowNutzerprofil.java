@@ -25,7 +25,7 @@ public class ShowNutzerprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Panels erzeugen.
@@ -44,7 +44,14 @@ public class ShowNutzerprofil extends VerticalPanel {
 	private Button loeschenButton = new Button("Profil löschen");
 	private Button bearbeitenButton = new Button("Profil bearbeiten");
 	
+	/**
+	 * Variable fuer die ProfilId erstellen.
+	 */
 	private int profilId; 
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
 	private String profiltyp; 
 	
 	/**
@@ -52,12 +59,15 @@ public class ShowNutzerprofil extends VerticalPanel {
 	 * @param profilId Die Profil-ID des Nutzerprofils, das angezeigt werden soll.
 	 * @param profiltyp Der Profiltyp (Nutzerprofil). 
 	 */
-	public ShowNutzerprofil(final int profilId, final String profiltyp) {
+	public ShowNutzerprofil(int profilId, String profiltyp) {
 		this.profilId = profilId; 
 		this.profiltyp = profiltyp; 
 		run(); 
 	}
 	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
 	public void run() {
 		this.add(horPanel);
 		horPanel.add(nutzerprofilPanel);
@@ -105,8 +115,8 @@ public class ShowNutzerprofil extends VerticalPanel {
 		 * Sobald der Button betaetigt wird, erscheint eine Bildschrimmeldung, 
 		 * die hinterfragt, ob das Nutzerprofil tatsaechlich geloescht werden 
 		 * soll. Wird diese mit "Ok" bestaetigt, wird das Nutzerprofil aus der
-		 * Datenbank entfernt. Zudem wird das Nutzerprofil ausgeloggt und auf 
-		 * die Login-Seite weitergeleitet. 
+		 * Datenbank entfernt. Zudem wird der Nutzer ausgeloggt und auf die 
+		 * Login-Seite weitergeleitet. 
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -117,7 +127,8 @@ public class ShowNutzerprofil extends VerticalPanel {
 		/**
 		 * Zusaetzlich zu den Profildaten werden die Infos des Nuterprofils angezeigt. 
 		 */
-		ShowInfo showInfo = new ShowInfo(profilId, profiltyp);
+		String listtyp = "Np";
+		ShowInfo showInfo = new ShowInfo(profilId, profiltyp, listtyp);
 
 		/**
 		 * Widgets den Panels hinzufuegen.
@@ -132,10 +143,10 @@ public class ShowNutzerprofil extends VerticalPanel {
 
 	}
 	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil anhand der Profil-ID ausliest und die Profildaten in die Tabelle einfuegt.
+	 */
 	public void befuelleTabelle() {
-		/**
-		 * Nutzerprofil anhand der Profil-ID auslesen und die Profildaten in die Tabelle einfuegen.
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(profilId,
 			new AsyncCallback<Nutzerprofil>() {
 
@@ -162,6 +173,9 @@ public class ShowNutzerprofil extends VerticalPanel {
 						});
 	}
 	
+	/**
+	 * Methode erstellen, die das eigene Nutzerprofil loescht. 
+	 */
 	public void loescheNutzerprofil() {
 		if(Window.confirm("Möchten Sie Ihr Profil wirklich löschen?")) {
 			
@@ -189,7 +203,6 @@ public class ShowNutzerprofil extends VerticalPanel {
 									 
 									RootPanel.get("Navigator").clear();
 									RootPanel.get("Details").clear();
-									 
 									RootPanel.get("Navigator").add(loginPanel);
 									
 								}

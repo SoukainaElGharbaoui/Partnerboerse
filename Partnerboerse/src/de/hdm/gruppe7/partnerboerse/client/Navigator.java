@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -21,11 +22,17 @@ import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
  *
  */
 public class Navigator extends HorizontalPanel {
+	
+	
+	
+	
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	private String logoutUrl = Partnerboerse.getLoginInfo().getLogoutUrl();
 
 	int aehnlichkeit = 0;
 
@@ -43,7 +50,6 @@ public class Navigator extends HorizontalPanel {
 		 * Thematik einzelne vertikale aufklappbare Menues zur 
 		 * horizontalen Menuehauptleiste "menu" hinzugefuegt.
 		 */
-
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		/**
@@ -79,6 +85,7 @@ public class Navigator extends HorizontalPanel {
 				});
 
 		profilAnzeigen.setStyleName("MenuItem");
+
 
 		/**
 		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
@@ -152,7 +159,6 @@ public class Navigator extends HorizontalPanel {
 		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
 			@Override
 			public void execute() {
-				
 				ClientsideSettings.getPartnerboerseAdministration()
 				.getAllSuchprofileFor(
 						nutzerprofil.getProfilId(),
@@ -266,9 +272,7 @@ public class Navigator extends HorizontalPanel {
 
 											}
 										});
-
 					}
-
 				});
 
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");
@@ -276,6 +280,7 @@ public class Navigator extends HorizontalPanel {
 		partnervorschlaegeMenu.addSeparator();
 
 		
+
 
 /**
  * Hinzufuegen der vertikalen Menueleisten nutzerProfilMenu, 
@@ -288,7 +293,6 @@ public class Navigator extends HorizontalPanel {
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Suchprofile", suchprofilMenu));
 		menu.addSeparator();
-
 		menu.addItem(new MenuItem("Meine Partnervorschläge",
 				partnervorschlaegeMenu));
 		menu.addSeparator();
@@ -305,7 +309,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
+						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeNpReport);
@@ -316,7 +320,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport();
+						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeSpReport);
@@ -326,10 +330,7 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
-
 		RootPanel.get("Header").add(menu);
 
-
-	
 }
 }

@@ -22,7 +22,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen. 
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Vertikales Panel erzeugen.
@@ -60,9 +60,12 @@ public class CreateSuchprofil extends VerticalPanel {
 		run();
 	}
 	
-	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
 	public void run(){
 		this.add(verPanel);
+		
 		/**
 		 * CSS anwenden und die Tabelle formatieren.
 		 */
@@ -89,9 +92,8 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setText(7, 0, "Religion");
 
 		/**
-		 * Zweite Spalte der Tabelle festlegen.
-		 * Hierzu werden die Widgets in die Tabelle eingefuegt und 
-		 * die Items fuer die ListBoxen festgelegt. 
+		 * Zweite und dritte Spalte der Tabelle festlegen. 
+		 * Die Widgets werden in die Tabelle eingefuegt und die Items fuer die ListBoxen werden gesetzt. 
 		 */
 		createSuchprofilFlexTable.setWidget(0, 2, suchprofilNameTextBox);
 		createSuchprofilFlexTable.setWidget(0, 3, reqLabel1);
@@ -135,22 +137,21 @@ public class CreateSuchprofil extends VerticalPanel {
 		
 		/**
 		 * ClickHandler fuer den Button zum Anlegen eines Suchprofils erzeugen. 
-		 * Sobald dieser Button betaetigt wird, werden die Eingaben sowohl auf 
-		 * Vollstaendigkeit als auch auf Korrektheit ueberprueft. Sind Eingaben
-		 * unvollstaendig oder inkorrekt, wird eine entsprechende Information 
-		 * ueber diesen Zustand ausgegeben. 
+		 * Sobald dieser Button betaetigt wird, werden die Eingaben auf 
+		 * Vollstaendigkeit und auf Korrektheit sowie auf die Existenz des 
+		 * Suchprofilnames ueberprueft. Sind Eingaben unvollstaendig oder inkorrekt, 
+		 * wird eine entsprechende Information ueber diesen Zustand ausgegeben. 
+		 * Andernfalls wird das Suchprofil angelegt. Anschliessend wird die 
+		 * Seite zum Anlegen der Infos aufgerufen.
 		 */
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				pruefeSuchprofilName();
-
-
 		      }
-
 		});
 
 		/**
-		 * Widgets zum VerticalPanel hinzufuegen.
+		 * Widgets dem Panel hinzufuegen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createSuchprofilFlexTable);
@@ -158,6 +159,11 @@ public class CreateSuchprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 
 	}
+	
+	/**
+	 * Methode erstellen, die die Eingaben auf Vollstaendigkeit und auf Korrektheit sowie auf die Existenz des 
+	 * Suchprofilnamens ueberprueft. 
+	 */
 	public void pruefeSuchprofilName(){
 		ClientsideSettings.getPartnerboerseAdministration().pruefeSuchprofilnameCreate(nutzerprofil.getProfilId(),
 				suchprofilNameTextBox.getText(), new AsyncCallback<Integer>() {
@@ -201,18 +207,17 @@ public class CreateSuchprofil extends VerticalPanel {
 							createSuchprofilFlexTable.setWidget(4, 4, warnungLabel);
 						} else {
 							createSuchprofil();
-						
-							/**
-							 * Sind alle Eingaben vollstaendig und korrekt, wird das Nutzerprofil in die Datenbank eingefuegt.
-							 * Anschließend wird die Seite zum Anlegen der Suchprofil-Infos aufgerufen.  
-							 */
-							
 				}
 			}
 
          });
 		
 	}
+	
+	/**
+	 * Methode erstellen, die ein neues Suchprofil anlegt. Dies fürt zum Speichern des Suchprofils
+	 * in der Datenbank. 
+	 */
 	public void createSuchprofil(){
 		ClientsideSettings.getPartnerboerseAdministration()
 		.createSuchprofil(nutzerprofil.getProfilId(),

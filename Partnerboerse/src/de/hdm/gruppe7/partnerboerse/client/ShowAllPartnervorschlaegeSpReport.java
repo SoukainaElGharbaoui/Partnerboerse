@@ -18,59 +18,51 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.HTMLReportWriter;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 
+/**
+ * Diese Klasse dient dazu, innerhalb des Reports Partnervorschlaege anhand
+ * eines Nutzerprofils azuzeigen.
+ */
 public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
-
+	private Nutzerprofil nutzerprofil = null;
+	
+	/**
+	 * Widgets erzeugen. 
+	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
-
 	private Label auswahlLabel = new Label(
-			"WÃ¤hlen Sie ein Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge anzeigen mÃ¶chten.");
+			"Waehlen Sie ein Suchprofil aus, zu welchem Sie Partnervorschlaege anzeigen mÃ¶chten.");
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenButton = new Button("PartnervorschlÃ¤ge anzeigen");
+	private Button anzeigenButton = new Button("Partnervorschlaege anzeigen");
+	
+	
+	/**
+	 * Konstruktor erstellen.
+	 */
+	public ShowAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil) {
+		this.nutzerprofil = nutzerprofil;
+		run();
+
+	}
 
 	/**
-	 * Konstruktor hinzufÃ¼gen.
+	 * Die Methode startet den Aufbau der Seite.
 	 */
-	public ShowAllPartnervorschlaegeSpReport() {
+	public void run() {
 		this.add(verPanel);
-
 		auswahlLabel.addStyleName("partnerboerse-label");
 
-		/**
-		 * AuswahlListBox befuellen
-		 */
-		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
-				new AsyncCallback<List<Suchprofil>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
-					}
-
-					@Override
-					public void onSuccess(List<Suchprofil> result) {
-
-						if (result.isEmpty()) {
-							auswahlListBox.setVisible(false);
-							anzeigenButton.setVisible(false);
-							auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
-
-						} else {
-							for (Suchprofil s : result) {
-								auswahlListBox.addItem(s.getSuchprofilName());
-							}
-						}
-					}
-				});
+		suchprofileAnzeigen();
 
 		/**
-		 * Report auslesen.
+		 * ClickHaendler für den Button, der das Suchprofil auswählt. 
+		 * Für das ausgewaehlte Suchprofil wird anschliessend der Report für
+		 * alle Partnervorschlaege anhand des Suchprofils ausgelesen.
 		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -96,19 +88,50 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 									writer.process(report);
 									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport());
+									RootPanel.get("Details").add(new ShowAllPartnervorschlaegeSpReport(nutzerprofil));
 									RootPanel.get("Details").add(new HTML(writer.getReportText()));
 								}
 							}
 						});
 			}
 		});
-
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 */
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(infoLabel);
 		auswahlPanel.add(auswahlListBox);
 		auswahlPanel.add(anzeigenButton);
 		verPanel.add(auswahlPanel);
-
 	}
+
+	/**
+	 * AuswahlListBox befuellen
+	 */
+	public void suchprofileAnzeigen() {
+		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),
+				new AsyncCallback<List<Suchprofil>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
+
+					@Override
+					public void onSuccess(List<Suchprofil> result) {
+
+						if (result.isEmpty()) {
+							auswahlListBox.setVisible(false);
+							anzeigenButton.setVisible(false);
+							auswahlLabel.setText("Sie haben bisher kein Suchprofil angelegt.");
+
+						} else {
+							for (Suchprofil s : result) {
+								auswahlListBox.addItem(s.getSuchprofilName());
+							}
+						}
+					}
+				});
+	}
+
 }

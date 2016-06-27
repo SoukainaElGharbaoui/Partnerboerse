@@ -25,21 +25,15 @@ public interface PartnerboerseAdministrationAsync {
 	 */
 	void init(AsyncCallback<Void> callback);
 	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#isUserRegistered(String)
+	/*
+	 * *************************************************************************
+	 * ** ABSCHNITT, Beginn: Nutzerprofil
+	 * *************************************************************************
+	 * **
 	 */
-	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#login(String)
-	 */
-	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
 	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeObNutzerNeu(String) 
-	 */
 	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
-
+	
 	/**
 	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createNutzerprofil
 	 * (String, String, String, geschlecht, Date, int, String, String, String, String)
@@ -264,5 +258,11 @@ public interface PartnerboerseAdministrationAsync {
 	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteAuswahleigenschaft(int)
 	 */
 	void deleteAuswahleigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+
+
+	void getNuterprofilByEmail(String email,
+			AsyncCallback<Nutzerprofil> callback);
+
+
 	
 }

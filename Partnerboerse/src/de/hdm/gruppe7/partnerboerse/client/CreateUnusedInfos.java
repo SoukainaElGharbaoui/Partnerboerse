@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,6 +31,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 	 * VerticalPanel hinzufuegen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Listen erzeugen.
@@ -43,18 +45,154 @@ public class CreateUnusedInfos extends VerticalPanel {
 	private String eigenschaftId;
 	private int row;
 	private int zaehler;
+	private int profilId;
+	private String profiltyp;
 
 	/**
 	 * Widgets erzeugen.
 	 */
 	private FlexTable showUnusedEigenschaftFlexTable = new FlexTable();
 	private Button createInfosButton = new Button("Infos anlegen");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 	private Label informationLabelB = new Label();
 	private Label informationLabelA = new Label();
 	private Label informationLabel = new Label();
 	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
 	private Label pfadLabelSpA = new Label("Zurück zu: Suchprofil anzeigen");
+
+	/**
+	 * Konstruktor hinzufuegen.
+	 * 
+	 * @param profilId
+	 * @param profiltyp
+	 */
+	public CreateUnusedInfos(int profilId, String profiltyp) {
+		this.profilId = profilId;
+		this.profiltyp = profiltyp;
+		run();
+	}
+
+	/**
+	 * Die Methode startet den Aufbau der Seite.
+	 */
+	public void run() {
+		/**
+		 * Vertikales Panel hinzufuegen.
+		 */
+		this.add(verPanel);
+
+		/**
+		 * Tabelle formatieren und CSS einbinden.
+		 */
+		showUnusedEigenschaftFlexTable.setCellPadding(6);
+		showUnusedEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
+		ueberschriftLabel.addStyleName("partnerboerse-label");
+		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
+		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
+
+
+		pruefeProfilart();
+
+		befuelleTabelle();
+
+		/**
+		 * ClickHandler fuer den Button zum Anlegen einer Info.
+		 */
+		createInfosButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+				List<Info> infos = new ArrayList<Info>();
+				String infotextTable = null;
+
+				int k;
+
+				for (int i = 2; i < showUnusedEigenschaftFlexTable.getRowCount(); i++) {
+
+					k = 0;
+					k = i - 2;
+
+					String eigenschaftIdTable = showUnusedEigenschaftFlexTable.getText(i, 1);
+
+					Widget w = showUnusedEigenschaftFlexTable.getWidget(i, 3);
+
+					if (w instanceof TextArea) {
+
+						infotextTable = ((TextArea) w).getText();
+
+						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+						}
+
+						else if (!((TextArea) w).getText().isEmpty()) {
+							Info info = new Info();
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
+
+							infos.add(info);
+						}
+
+						else {
+							informationLabelB.setText("Das Eingabefeld ist leer.");
+						}
+
+					}
+
+					else if (w instanceof ListBox) {
+
+						infotextTable = ((ListBox) w).getSelectedItemText();
+
+						if (!infotextTable.equals("Keine Auswahl")) {
+
+							Info info = new Info();
+							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
+							info.setInfotext(infotextTable);
+
+							infos.add(info);
+						}
+
+						else {
+							informationLabelB.setText("Das Eingabefeld ist leer.");
+						}
+					}
+				}
+
+				erstelleInfo(infos);
+
+			}
+		});
+		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(showNutzerprofil);
+				
+			}
+			
+		});
+
+		/**
+		 * Widgets zum Panel hinzufuegen.
+		 */
+		if (profiltyp.equals("Np")) {
+			verPanel.add(pfadLabelNpA);
+		} else if (profiltyp.equals("Sp")) {
+			verPanel.add(pfadLabelSpA);
+		}
+
+		buttonPanel.add(createInfosButton);
+		buttonPanel.add(abbrechenButton);
+		verPanel.add(ueberschriftLabel);
+		verPanel.add(showUnusedEigenschaftFlexTable);
+		verPanel.add(buttonPanel);
+		verPanel.add(informationLabelB);
+		verPanel.add(informationLabelA);
+		verPanel.add(informationLabel);
+	}
 
 	/**
 	 * Prüft, ob die Tabelle leer ist.
@@ -83,68 +221,12 @@ public class CreateUnusedInfos extends VerticalPanel {
 	}
 
 	/**
-	 * Konstruktor hinzufuegen.
-	 * 
-	 * @param profilId
-	 * @param profiltyp
+	 * Bisher nicht angelegte Eigenschaften anhand der Profil-ID aus der
+	 * Datenbank auslesen und die Infodaten in die Tabelle einfuegen. Erst die
+	 * Beschreibungsinfos, danach die Auswahlinfos.
 	 */
-	public CreateUnusedInfos(final int profilId, final String profiltyp) {
+	public void befuelleTabelle() {
 
-		/**
-		 * Vertikales Panel hinzufuegen.
-		 */
-		this.add(verPanel);
-
-		/**
-		 * Tabelle formatieren und CSS einbinden.
-		 */
-		showUnusedEigenschaftFlexTable.setCellPadding(6);
-		showUnusedEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
-		showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
-		ueberschriftLabel.addStyleName("partnerboerse-label");
-		pfadLabelNpA.addStyleName("partnerboerse-zurueckbutton");
-		pfadLabelSpA.addStyleName("partnerboerse-zurueckbutton");
-
-		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		showUnusedEigenschaftFlexTable.setText(0, 0, "Profil-Id");
-		showUnusedEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showUnusedEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
-		showUnusedEigenschaftFlexTable.setText(0, 3, "Anlegen");
-
-		if (profiltyp.equals("Np")) {
-			pfadLabelNpA.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-
-					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showNp);
-				}
-
-			});
-		} else if (profiltyp.equals("Sp")) {
-
-			pfadLabelSpA.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-
-					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showSp);
-				}
-
-			});
-		}
-
-		/**
-		 * Bisher nicht angelegte Eigenschaften anhand der Profil-ID aus der
-		 * Datenbank auslesen und die Infodaten in die Tabelle einfuegen. Erst
-		 * die Beschreibungsinfos, danach die Auswahlinfos.
-		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllUnusedEigenschaften(profilId,
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
 
@@ -155,6 +237,9 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> result) {
+						showUnusedEigenschaftFlexTable.setCellPadding(6);
+						showUnusedEigenschaftFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+						showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
 
 						informationLabel.setText("Die Methode wurde aufgerufen.");
 
@@ -261,122 +346,79 @@ public class CreateUnusedInfos extends VerticalPanel {
 							});
 						}
 					}
-
 				});
+	}
 
-		/**
-		 * ClickHandler fuer den Button zum Anlegen einer Info.
-		 */
-		createInfosButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+	/**
+	 * Erstellen der Info.
+	 * 
+	 * @param infos
+	 */
+	public void erstelleInfo(List<Info> infos) {
+		ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
+				new AsyncCallback<List<Info>>() {
 
-				List<Info> infos = new ArrayList<Info>();
-				String infotextTable = null;
+					@Override
+					public void onFailure(Throwable caught) {
+						informationLabel.setText("Es trat ein Fehler auf.");
+					}
 
-				int k;
+					@Override
+					public void onSuccess(List<Info> result) {
+						informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
-				for (int i = 2; i < showUnusedEigenschaftFlexTable.getRowCount(); i++) {
+						if (profiltyp.equals("Np")) {
 
-					k = 0;
-					k = i - 2;
+							ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
-					String eigenschaftIdTable = showUnusedEigenschaftFlexTable.getText(i, 1);
-
-					Widget w = showUnusedEigenschaftFlexTable.getWidget(i, 3);
-
-					if (w instanceof TextArea) {
-
-						infotextTable = ((TextArea) w).getText();
-
-						if (infotextTable.equals(listB.get(k).getBeschreibungstext())) {
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showNp);
 						}
 
-						else if (!((TextArea) w).getText().isEmpty()) {
-							Info info = new Info();
-							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-							info.setInfotext(infotextTable);
+						/**
+						 * Fall, die profilId gehoert zu Suchprofil
+						 */
+						else if (profiltyp.equals("Sp")) {
 
-							infos.add(info);
-						}
+							ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 
-						else {
-							informationLabelB.setText("Das Eingabefeld ist leer.");
+							RootPanel.get("Details").clear();
+							RootPanel.get("Details").add(showSp);
 						}
 
 					}
+				});
+	}
 
-					else if (w instanceof ListBox) {
+	/**
+	 * Prueft ob es sich um ein Nutzerprofil oder Suchprofil handelt.
+	 */
+	public void pruefeProfilart() {
+		if (profiltyp.equals("Np")) {
+			pfadLabelNpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
 
-						infotextTable = ((ListBox) w).getSelectedItemText();
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
-						if (!infotextTable.equals("Keine Auswahl")) {
-
-							Info info = new Info();
-							info.setEigenschaftId(Integer.valueOf(eigenschaftIdTable));
-							info.setInfotext(infotextTable);
-
-							infos.add(info);
-						}
-
-						else {
-							informationLabelB.setText("Das Eingabefeld ist leer.");
-						}
-					}
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
 				}
 
-				/**
-				 * ClickHandler fuer den Button zum Anlegen einer Info.
-				 */
-				ClientsideSettings.getPartnerboerseAdministration().createInfo(profilId, infos,
-						new AsyncCallback<List<Info>>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								informationLabel.setText("Es trat ein Fehler auf.");
-							}
-
-							@Override
-							public void onSuccess(List<Info> result) {
-								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
-
-								if (profiltyp.equals("Np")) {
-
-									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showNp);
-								}
-
-								/**
-								 * Fall, die profilId gehoert zu Suchprofil
-								 */
-								else if (profiltyp.equals("Sp")) {
-
-									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
-
-									RootPanel.get("Details").clear();
-									RootPanel.get("Details").add(showSp);
-								}
-
-							}
-						});
-			}
-		});
-
-		/**
-		 * Widgets zum Panel hinzufuegen.
-		 */
-		if (profiltyp.equals("Np")) {
-			verPanel.add(pfadLabelNpA);
+			});
 		} else if (profiltyp.equals("Sp")) {
-			verPanel.add(pfadLabelSpA);
-		}
 
-		verPanel.add(ueberschriftLabel);
-		verPanel.add(showUnusedEigenschaftFlexTable);
-		verPanel.add(createInfosButton);
-		verPanel.add(informationLabelB);
-		verPanel.add(informationLabelA);
-		verPanel.add(informationLabel);
+			pfadLabelSpA.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+
+			});
+		}
 	}
 }
