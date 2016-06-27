@@ -87,6 +87,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		/**
 		 * Erste Spalte der Tabelle festlegen.
 		 */
+		
 		showSuchprofilFlexTable.setText(0, 0, "Suchprofil-id");
 		showSuchprofilFlexTable.setText(1, 0, "Suchprofilname");
 		showSuchprofilFlexTable.setText(2, 0, "Geschlecht");
@@ -184,6 +185,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	}
 	
 	public void befuelleTabelle(){
+		
 		ClientsideSettings.getPartnerboerseAdministration()
 		.getSuchprofilById(suchprofilId, new AsyncCallback<Suchprofil>() {
 
