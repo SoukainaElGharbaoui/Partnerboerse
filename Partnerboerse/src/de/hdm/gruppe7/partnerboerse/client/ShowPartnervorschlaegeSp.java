@@ -59,10 +59,10 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * Variable fuer den Listtyp erstellen.
 	 */
 	private String listtyp;
-
+	
 	/**
 	 * Konstruktor erstellen.
-	 * @param listtyp Der Listtyp (PvSp).
+	 * @param listtyp Der Listtyp (PvSp)
 	 */
 	public ShowPartnervorschlaegeSp(String listtyp) {
 		this.listtyp = listtyp;
@@ -76,6 +76,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		this.add(verPanel);
 		this.add(auswahlPanel);
 		this.add(horPanelTabelle);
+		
 		
 		/**
 		 * CSS anwenden. 
@@ -98,7 +99,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				RootPanel.get("Details").add(createSuchprofil);
 			}
 		});
-
+		
 		/**
 		 * Clickhandler fuer den Button zum Anzeigen der Partnervorschlaege erzeugen. 
 		 * Sobald dieser Button betaetigt wird, werden alle alle Partnervorschlaege
@@ -194,7 +195,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		horPanelTabelle.clear();
 
 		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeSp(nutzerprofil.getProfilId(),
-						auswahlListBox.getSelectedItemText(),new AsyncCallback<List<Nutzerprofil>>() {
+						auswahlListBox.getSelectedItemText(), new AsyncCallback<List<Nutzerprofil>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -319,6 +320,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 									}
 
 									createSuchprofilButton.setVisible(false);
+									
 								}
 							}
 

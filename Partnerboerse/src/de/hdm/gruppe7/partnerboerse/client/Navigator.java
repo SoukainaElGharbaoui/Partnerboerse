@@ -250,20 +250,18 @@ public class Navigator extends HorizontalPanel {
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												// infoLabel
-												// .setText("Es trat ein Fehler auf.");
 											}
 
 
-							@Override
-							public void onSuccess(Void result3) {
-								// infoLabel.setText("Es hier trat kein Fehler
-								// auf.");
-							String listtyp = "PvSp";
-							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(showPartnervorschlaegeSp);
-
+											@Override
+											public void onSuccess(Void result3) {
+												
+												String listtyp = "PvSp";
+												ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
+												RootPanel.get("Details").clear();
+												RootPanel.get("Details").add(showPartnervorschlaegeSp);
+												
+												
 
 											}
 										});

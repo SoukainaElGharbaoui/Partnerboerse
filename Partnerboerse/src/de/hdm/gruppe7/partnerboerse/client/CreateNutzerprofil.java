@@ -10,9 +10,11 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -40,19 +42,20 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 */
 	private String email = Partnerboerse.getLoginInfo().getEmailAddress();
 
-	//Damit auf die Async Methoden zugegriffen werden können
+	//Damit auf die Async Methoden zugegriffen werden kÃ¶nnen
 	private PartnerboerseAdministrationAsync admin = ClientsideSettings
 			.getPartnerboerseAdministration();
 
 	/**
-	 * Vertikales Panel erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Widgets erzeugen.
 	 */
-	private Label ueberschriftLabel = new Label("Nutzerprofil anlegen:");
+	private Label ueberschriftLabel = new Label("Profil anlegen:");
 	private FlexTable createNutzerprofilFlexTable = new FlexTable();
 	private TextBox vornameTextBox = new TextBox();
 	private TextBox nachnameTextBox = new TextBox();
@@ -66,7 +69,8 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox haarfarbeListBox = new ListBox();
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
-	private Button createNutzerprofilButton = new Button("Nutzerprofil anlegen");
+	private Button createNutzerprofilButton = new Button("Profil anlegen");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label infoLabel = new Label();
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
@@ -117,7 +121,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(1, 0, "Nachname");
 		createNutzerprofilFlexTable.setText(2, 0, "Geschlecht");
 		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
-		createNutzerprofilFlexTable.setText(4, 0, "Körpergröße");
+		createNutzerprofilFlexTable.setText(4, 0, "KÃ¶rpergrÃ¶ÃŸe");
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
@@ -135,7 +139,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setWidget(1, 3, reqLabel2);
 
 		geschlechtListBox.addItem("Weiblich");
-		geschlechtListBox.addItem("Männlich");
+		geschlechtListBox.addItem("MÃ¤nnlich");
 		createNutzerprofilFlexTable.setWidget(2, 2, geschlechtListBox);
 
 		geburtsdatumDateBox.setFormat(new DateBox.DefaultFormat(
@@ -183,7 +187,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 
 		religionListBox.addItem("Ohne Bekenntnis");
 		religionListBox.addItem("Christlich");
-		religionListBox.addItem("Juedisch");
+		religionListBox.addItem("JÃ¼disch");
 		religionListBox.addItem("Muslimisch");
 		religionListBox.addItem("Buddhistisch");
 		religionListBox.addItem("Hinduistisch");
@@ -210,11 +214,23 @@ public class CreateNutzerprofil extends VerticalPanel {
 		/**
 		 * Widgets dem Panel hinzufuegen.
 		 */
+		buttonPanel.add(createNutzerprofilButton);
+		buttonPanel.add(abbrechenButton);
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createNutzerprofilFlexTable);
-		verPanel.add(createNutzerprofilButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(infoLabel);
+		
+		
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				Window.Location.replace(Partnerboerse.getLoginInfo().getLogoutUrl());
+			}
+		});
 	}
+	
 
 	/**
 	 * Methode erstellen, die die Eingabe des Nutzers auf Vollstaendigkeit und
@@ -241,10 +257,10 @@ public class CreateNutzerprofil extends VerticalPanel {
 			warnungLabel.setText("Bitte geben Sie Ihr Geburtsdatum an.");
 			createNutzerprofilFlexTable.setWidget(3, 4, warnungLabel);
 		} else if (koerpergroesseTextBox.getText().length() == 0) {
-			warnungLabel.setText("Bitte geben Sie Ihre Körpergröße an.");
+			warnungLabel.setText("Bitte geben Sie Ihre KÃ¶rpergrÃ¶ÃŸe an.");
 			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 		} else if (koerpergroesseWert == false) {
-			warnungLabel.setText("Ihre Körpergröße darf nur Zahlen enthalten.");
+			warnungLabel.setText("Ihre KÃ¶rpergrÃ¶ÃŸe darf nur Zahlen enthalten.");
 			createNutzerprofilFlexTable.setWidget(4, 4, warnungLabel);
 		} else {
 			nutzerprofilAnlegen();
@@ -252,7 +268,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	}
 
 	/**
-	 * Methode erstellen, die ein neues Nutzerprofil anlegt. Dies fürt zum
+	 * Methode erstellen, die ein neues Nutzerprofil anlegt. Dies fÃ¼rt zum
 	 * Speichern des Nutzerprofils in der Datenbank.
 	 */
 	public void nutzerprofilAnlegen() {
@@ -342,7 +358,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 	 * @return Boolscher Wert, der angibt, ob es sich um Buchstaben handelt.
 	 */
 	public boolean isBuchstabe(String name) {
-		return name.matches("^[a-zA-ZäöüÄÖÜß ]+$");
+		return name.matches("^[a-zA-ZÃ¤Ã¶Ã¼Ã„Ã–ÃœÃŸ ]+$");
 	}
 
 	/**

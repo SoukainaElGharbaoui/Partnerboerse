@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -177,7 +178,7 @@ public class ShowSuchprofil extends VerticalPanel {
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				deleteSuchprofil(); 
+				deleteSuchprofil(); 			
 				}
 			});			
 		
@@ -317,7 +318,7 @@ public class ShowSuchprofil extends VerticalPanel {
 	 * aufgerufen. Hier wird, falls verfuegbar, das naechste Suchprofil des Nutzerprofils angezeigt. 
 	 */
 	public void deleteSuchprofil() {
-		
+		if(Window.confirm("Möchten Sie dieses Suchprofil wirklich löschen?")){
 		for(int i = 0; i < listS.size(); i++) {
 			if(listS.get(i) != null) {
 				if(!showSuchprofilFlexTable.getText(1, 1).equals(listS.get(i).getSuchprofilName())) {
@@ -345,5 +346,5 @@ public class ShowSuchprofil extends VerticalPanel {
 			}
 		});
 	}
-
+	}
 }
