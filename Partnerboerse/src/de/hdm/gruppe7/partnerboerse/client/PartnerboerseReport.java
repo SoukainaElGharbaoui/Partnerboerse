@@ -40,6 +40,8 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Anchor signInLink = new Anchor("Jetzt einloggen");
 	private Anchor signOutLink = new Anchor();
+	private String logoutUrl = null;
+	private LoginInfo loginInfo = null;
 
 	private static String editorHtmlName = "Partnerboerse.html";
 
@@ -70,30 +72,69 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		partnervorschlaegeMenu.setAnimationEnabled(true);
 
 		MenuItem unangesehenePartnervorschlaege = partnervorschlaegeMenu
-				.addItem("Unangesehene Partnervorschlaege", new Command() {
+				.addItem("Unangesehene Partnervorschläge", new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(
-								np);
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeNpReport);
+						ClientsideSettings
+						.getPartnerboerseAdministration()
+						.berechneAehnlichkeitNpFor(
+								np.getProfilId(),
+								new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(
+											Throwable caught) {
+
+									}
+
+									@Override
+									public void onSuccess(
+											Void result) {
+										ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(
+												np);
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(
+												showAllPartnervorschlaegeNpReport);
+
+									}
+								});
+						
 					}
 				});
 
 		unangesehenePartnervorschlaege.setStyleName("MenuItemRep");
+		
+		MenuBar partnervorschlaegeSpMenu = new MenuBar(true);
+		partnervorschlaegeSpMenu.setAnimationEnabled(true);
 
-		MenuItem partnervorschlaegeSp = partnervorschlaegeMenu.addItem(
-				"Partnervorschlaege anhand von Suchprofilen", new Command() {
+		MenuItem partnervorschlaegeSp = partnervorschlaegeSpMenu.addItem(
+				"Partnervorschläge anhand von Suchprofilen", new Command() {
 
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(np);
+						ClientsideSettings.getPartnerboerseAdministration()
+						.berechneAehnlichkeitSpFor(
+								np.getProfilId(),
+								new AsyncCallback<Void>() {
 
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeSpReport);
+									@Override
+									public void onFailure(
+											Throwable caught) {
+									}
 
+
+									@Override
+									public void onSuccess(Void result3) {
+										ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(np);
+
+										RootPanel.get("Details").clear();
+										RootPanel.get("Details").add(
+												showAllPartnervorschlaegeSpReport);
+
+
+									}
+								});
+					
 					}
 
 				});
@@ -101,11 +142,27 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		partnervorschlaegeSp.setStyleName("MenuItemRep");
 
 		partnervorschlaegeMenu.addSeparator();
+		
+		MenuBar statusMenu = new MenuBar(true);
+		statusMenu.setAnimationEnabled(true);
+		MenuItem ausloggenItem = 
+				statusMenu.addItem("Ausloggen", new Command() {
+			@Override
+			public void execute() {
+				Window.Location.replace(logoutUrl);
+					
+	        }
+			});
+		ausloggenItem.setStyleName("MenuItemRep");
 
-		menu.addItem(new MenuItem("Meine Partnervorschlaege",
+		menu.addItem(new MenuItem("Unangesehene Partnervorschläge",
 				partnervorschlaegeMenu));
-		menu.addSeparator();
+		menu.addItem(new MenuItem("Partnervorschläge anhand von Suchprofilen", partnervorschlaegeSpMenu));
+		menu.addItem(new MenuItem("Ausloggen", statusMenu));
+		
 
+		
+		
 		// add the menu to the root panel
 		RootPanel.get("Header").add(menu);
 	}
@@ -119,19 +176,46 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 			@Override
 			public void onSuccess(LoginInfo result) {
-
+				logoutUrl = result.getLogoutUrl();
+				loginInfo = result;
 				if (!result.isLoggedIn()) {
 					Window.Location.replace(result.getLoginUrl());
 				} else {
-					admin.getNuterprofilByEmail(result.getEmailAddress(),
-							getNutzerprofilByEmailExecute(result
-									.getEmailAddress()));
+					admin.pruefeObNutzerNeu(result.getEmailAddress(), pruefeObNutzerNeuExecute(result
+							.getEmailAddress()));
+				
 
 				}
 			}
 		};
 		return asynCallback;
 	}
+
+	private AsyncCallback<Boolean> pruefeObNutzerNeuExecute(String email) {
+		AsyncCallback<Boolean> asynCallback = new AsyncCallback<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+
+				if (!result) {
+			
+					admin.getNuterprofilByEmail(loginInfo.getEmailAddress(),
+							getNutzerprofilByEmailExecute(loginInfo.getEmailAddress()));
+					
+				} else {
+					
+					Window.Location.replace("Partnerboerse.html");
+					
+				}
+
+			}
+		};
+		return asynCallback;
+	}
+
 
 	private AsyncCallback<Nutzerprofil> getNutzerprofilByEmailExecute(
 			String email) {
@@ -143,7 +227,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 			@Override
 			public void onSuccess(Nutzerprofil result) {
-
+//				Window.Location.replace("Partnerboerse.html");
 				np = result;
 				createNavigator();
 

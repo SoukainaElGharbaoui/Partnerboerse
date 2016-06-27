@@ -6,14 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
 import de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl;
-import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Eigenschaft;
@@ -193,8 +188,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		 */
 		Row headline = new Row();
 
-		headline.addColumn(new Column("Profil-ID"));
-
 		headline.addColumn(new Column("Vorname"));
 
 		headline.addColumn(new Column("Nachname"));
@@ -227,7 +220,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		Row profildatenoRow = new Row();
 
 		// Spalten hinzufuegen
-		profildatenoRow.addColumn(new Column(String.valueOf(n.getProfilId())));
 		profildatenoRow.addColumn(new Column(n.getVorname()));
 		profildatenoRow.addColumn(new Column(n.getNachname()));
 		profildatenoRow.addColumn(new Column(n.getGeschlecht()));
@@ -285,10 +277,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		// Name und Vorname des Nutzerprofils aufnehmen.
 		header.addSubParagraph(new SimpleParagraph(np.getVorname() + " "
 				+ np.getNachname()));
-
-		// Nutzerprofil-ID aufnehmen.
-		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
-				+ np.getProfilId()));
 
 		// Zusammengestellte Kopfdaten zum Report hinzufuegen.
 		result.setHeaderData(header);
@@ -363,10 +351,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements
 		// Name und Vorname des Nutzers aufnehmen.
 		header.addSubParagraph(new SimpleParagraph(nutzerprofil.getVorname() + " "
 				+ nutzerprofil.getNachname()));
-
-		// Nutzerprofil-ID aufnehmen.
-		header.addSubParagraph(new SimpleParagraph("Nutzerprofil-ID: "
-				+ nutzerprofil.getProfilId()));
 		
 		// Zusammengestellte Kopfdaten zum Report hinzufuegen.
 		result.setHeaderData(header);

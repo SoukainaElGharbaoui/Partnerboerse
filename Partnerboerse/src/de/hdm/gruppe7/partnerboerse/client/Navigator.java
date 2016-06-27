@@ -309,30 +309,30 @@ public class Navigator extends HorizontalPanel {
 		// Create the report menu
 		// ////////////////////////////////////////////////////////////////////////////////
 
-		MenuBar reportMenu = new MenuBar(true);
-		reportMenu.setAnimationEnabled(true);
-
-		reportMenu.addItem("Partnervorschlagreport des Nuzterprofils anzeigen",
-				new Command() {
-					@Override
-					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeNpReport);
-					}
-				});
-
-		reportMenu.addItem("Partnervorschlagreport des Suchprofils anzeigen",
-				new Command() {
-					@Override
-					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeSpReport);
-					}
-				});
+//		MenuBar reportMenu = new MenuBar(true);
+//		reportMenu.setAnimationEnabled(true);
+//
+//		reportMenu.addItem("Partnervorschlagreport des Nuzterprofils anzeigen",
+//				new Command() {
+//					@Override
+//					public void execute() {
+//						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(
+//								showAllPartnervorschlaegeNpReport);
+//					}
+//				});
+//
+//		reportMenu.addItem("Partnervorschlagreport des Suchprofils anzeigen",
+//				new Command() {
+//					@Override
+//					public void execute() {
+//						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(
+//								showAllPartnervorschlaegeSpReport);
+//					}
+//				});
 		
 
 		

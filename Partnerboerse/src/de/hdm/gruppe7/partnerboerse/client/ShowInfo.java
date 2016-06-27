@@ -95,6 +95,7 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
+		
 
 		/**
 		 * Pruefen, ob es sich um ein Info eines Fremdprofils handelt. Wenn

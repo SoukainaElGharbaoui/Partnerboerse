@@ -109,17 +109,17 @@ public class HTMLReportWriter extends ReportWriter {
 
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table style=\"width:400px;margin-bottom: 30px\">");
+		result.append("<table style=\"width:400px;margin-bottom: 30px;font-family:Arial\">");
 
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
 			result.append("<tr>");
 			for (int k = 0; k < row.getNumColumns(); k++) {
 				if (i == 0) {
-					result.append("<td style=\"background:#7c9ef8;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
+					result.append("<td style=\"background:#7c9ef8;font-weight:bold;font-family:Arial\">" + row.getColumnAt(k) + "</td>");
 				} else {
 					if (i > 1) {
-						result.append("<td style=\"border-top:1px solid silver;margin-bottom: 30px\">"
+						result.append("<td style=\"border-top:1px solid silver;margin-bottom: 30px;font-family:Arial\">"
 								+ row.getColumnAt(k) + "</td>");
 					} else {
 						result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
@@ -154,17 +154,17 @@ public class HTMLReportWriter extends ReportWriter {
 
 
 		Vector<Row> rows = r.getRows();
-		result.append("<table style=\"width:400px\">");
+		result.append("<table style=\"width:400px;font-family:Arial\">");
 
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.elementAt(i);
 			result.append("<tr>");
 			for (int k = 0; k < row.getNumColumns(); k++) {
 				if (i == 0) {
-					result.append("<td style=\"background:#7c9ef8;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
+					result.append("<td style=\"background:#7c9ef8;font-weight:bold;font-family:Arial\">" + row.getColumnAt(k) + "</td>");
 				} else {
 					if (i > 1) {
-						result.append("<td style=\"border-top:1px solid silver\">" + row.getColumnAt(k) + "</td>");
+						result.append("<td style=\"border-top:1px solid silver;font-family:Arial\">" + row.getColumnAt(k) + "</td>");
 					} else {
 						result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
 					}
@@ -202,7 +202,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
-		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
+		result.append("<table style=\"width:400px;border:1px solid silver;font-family:Arial\"><tr>");
 		if (r.getHeaderData() != null) {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td>");
 		}
@@ -254,7 +254,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 		result.append("<H3>" + r.getTitle() + "</H3>");
 		result.append("<table><tr>");
-		result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
+		result.append("<table style=\"width:400px;border:1px solid silver;font-family:Arial\"><tr>");
 
 		if (r.getHeaderData() != null) {
 			result.append("<td>" + paragraph2HTML(r.getHeaderData()) + "</td>");

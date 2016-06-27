@@ -78,14 +78,6 @@ public class CreateInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
-		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
-		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
-
-		/**
 		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank herausgeholt, ausgelesen
 		 * und anschliessend der Tabelle hinzugefuegt. Erst die Beschreibungsinfos, danach die Auswahlinfos. 
 		 */
