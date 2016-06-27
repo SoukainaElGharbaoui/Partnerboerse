@@ -21,8 +21,8 @@ import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Die Klasse PartnerboerseReports implementiert einen zweiten EntryPoint, über
- * den die Reports abgerufen werden können.
+ * Die Klasse PartnerboerseReports implementiert einen zweiten EntryPoint, ï¿½ber
+ * den die Reports abgerufen werden kï¿½nnen.
  * 
  */
 public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
@@ -56,12 +56,12 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		loginService.login(GWT.getHostPageBaseURL(), loginExecute());
 
 	}
-
 	private void createNavigator() {
+
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
-		menu.setWidth("720px");
-		menu.setHeight("36px");
+		menu.setWidth("100%");
+		menu.setHeight("39px");
 		menu.setStyleName("MenuBarRep");
 		menu.setAnimationEnabled(true);
 
@@ -107,7 +107,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		menu.addSeparator();
 
 		// add the menu to the root panel
-		RootPanel.get("Navigator").add(menu);
+		RootPanel.get("Header").add(menu);
 	}
 
 	private AsyncCallback<LoginInfo> loginExecute() {
@@ -154,7 +154,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zurück
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurï¿½ck
 	 * 
 	 * @return Nutzerprofil
 	 */

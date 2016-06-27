@@ -74,6 +74,7 @@ public class Partnerboerse implements EntryPoint {
 							pruefeObNutzerNeuExecute(result
 									.getEmailAddress()));
 
+
 				} else {
 					
 					Window.Location.replace(result.getLoginUrl());

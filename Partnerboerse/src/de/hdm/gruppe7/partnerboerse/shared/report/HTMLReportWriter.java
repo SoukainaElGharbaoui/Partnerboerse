@@ -116,7 +116,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<tr>");
 			for (int k = 0; k < row.getNumColumns(); k++) {
 				if (i == 0) {
-					result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
+					result.append("<td style=\"background:#7c9ef8;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
 				} else {
 					if (i > 1) {
 						result.append("<td style=\"border-top:1px solid silver;margin-bottom: 30px\">"
@@ -161,7 +161,7 @@ public class HTMLReportWriter extends ReportWriter {
 			result.append("<tr>");
 			for (int k = 0; k < row.getNumColumns(); k++) {
 				if (i == 0) {
-					result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
+					result.append("<td style=\"background:#7c9ef8;font-weight:bold\">" + row.getColumnAt(k) + "</td>");
 				} else {
 					if (i > 1) {
 						result.append("<td style=\"border-top:1px solid silver\">" + row.getColumnAt(k) + "</td>");

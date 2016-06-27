@@ -12,26 +12,24 @@ body {
   
 div#TopLevelFrame{
 	background-color: #dfdfff;
-	border: 2px;
+	border: 2px solid #0000ff;
 	position: relative;
-	margin-right: 2px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 5px;
+	
 }
 div#Header { 	    
-
-	 padding: auto;
+	 /* padding: auto; */
 	 text-align: middle;
 	 position: relative;
 }
   
-h1 {
-  margin-left: 0px;
+div#Logo {
+  margin-top: 35px;
+  margin-bottom: 0px;
+  position: relative;
 }
-
- h2{
-	margin-top:60px;
-	position: relative;
-} 
-
 
 
 h3{
@@ -40,11 +38,9 @@ h3{
 	font-family: Arial Unicode MS, Arial, sans-serif;
 	color: #4430fe;
 	padding-bottom: 0.5em;
-	margin-top: 60px;
+	margin-top: 0px;
 	
 }
-
-
 
  div#Navigator {
 
@@ -60,28 +56,31 @@ h3{
 	background: #800080;  */
 }  
 
-div#Navigator2{
+
+/* div#Navigator2{
 	width: 120px;
 	right: 30px;
 	left: 420px;
 	top:306px;
 	position: absolute;
 	align: middle;
+	background: #800040;
 
-}
+} */
 
 div#Space{
-	width: 100px; 
+	width: 0px; 
 	height: 210px;
 	
 	/* background: #800080; */
 }
 
 div#Details {
-
+	top: 50px;
 	width: 900px; 
-	height: 720px;
-	margin-bottom: 1px; 
+	height: 900px;
+	position: relative;
+	overflow: auto;
 }
 
 div#Trailer {
@@ -165,12 +164,13 @@ div#Trailer {
    /* cursor: default;  */ 
    background: linear-gradient(to right top, #7c9ef8, #cccfff);
    font-family: Arial Unicode MS, Arial, sans-serif;
-   font-size: 12px;
+   font-size: 13px;
    font-weight: bold;
    top:0px;
-   left: 0px;
-   right: 600px;
+   left:0px;
+   right:0px;
    position: absolute;
+   overflow: hidden;
 }
 .MenuItem {
    cursor: default;
@@ -185,13 +185,13 @@ div#Trailer {
    /* cursor: default;  */ 
    background: linear-gradient(to right top, #7c9ef8, #ccccff);
    font-family: Arial Unicode MS, Arial, sans-serif;
-   font-size: 12px;
+   font-size: 13px;
    font-weight: bold;
    padding-top: 3px; 
-    padding-bottom: 3px; 
-   top:69px;
-   left: 30px;
-   right: 600px;
+   padding-bottom: 3px;
+   top:0px;
+   left: 0px;
+   right: 0px;
    position: absolute;
 }
 .MenuItemRep {

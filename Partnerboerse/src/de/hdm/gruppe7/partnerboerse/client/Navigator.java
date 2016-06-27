@@ -6,6 +6,9 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -40,6 +43,7 @@ public class Navigator extends HorizontalPanel {
 
 		VerticalPanel verPanel1 = new VerticalPanel();
 		this.add(verPanel1);
+		
 		
 		/**
 		 * Ab hier wird die Menuebar erstellt. Dabei werden abhaengig von der 
@@ -81,6 +85,7 @@ public class Navigator extends HorizontalPanel {
 				});
 
 		profilAnzeigen.setStyleName("MenuItem");
+
 
 		/**
 		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
