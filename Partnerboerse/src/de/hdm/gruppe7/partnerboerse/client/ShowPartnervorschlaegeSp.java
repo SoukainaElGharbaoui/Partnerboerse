@@ -19,142 +19,109 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
 /**
- * Diese Klasse dient dazu, Partnervorschlaege anhand eines Suchprofils
+ * Diese Klasse dient dazu, Partnervorschlaege anhand von Suchprofilen
  * azuzeigen.
  */
 
 public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen.
 	 */
-
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * VerticalPanels und HorizontalPanels erzeugen.
+	 * Panels erzeugen. 
 	 */
-
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel horPanelTabelle = new HorizontalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
 
 	/**
-	 * Tabelle zur Anzeige der Partnervorschlaege erzeugen.
+	 * Widgets erzeugen. 
 	 */
-
+	private Label ueberschriftLabel = new Label("WÃ¤hlen Sie das Suchprofil aus, zu welchem Sie PartnervorschlÃ¤ge angezeigt bekommen mÃ¶chten:");
+	private Label ueberschriftLabel2 = new Label("Diese Profile kÃ¶nnten Ihnen gefallen:");
 	private FlexTable partnervorschlaegeSpFlexTable = new FlexTable();
-
-	/**
-	 * Labels und Buttons erzeugen.
-	 */
-
-	private Label ueberschriftLabel = new Label("Wählen Sie das Suchprofil aus, zu welchem Sie Partnervorschläge angezeigt bekommen möchten:");
-	private Label ueberschriftLabel2 = new Label("Diese Profile könnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
 	private Label ergebnisLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
-	private Button anzeigenSpButton = new Button("Partnervorschläge anzeigen");
+	private Button anzeigenSpButton = new Button("PartnervorschlÃ¤ge anzeigen");
 	private Button anzeigenButton;
 	private Button createSuchprofilButton = new Button("Neues Suchprofil anlegen");
 	
-
 	/**
-	 * Neue Variable erstellt, die die Anzahl der befuellten Zeilen enthaelt
+	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
 	 */
 	private int zaehler = 0;
+	
+	/**
+	 * Variable fuer den Listtyp erstellen.
+	 */
 	private String listtyp;
 
-	
-
 	/**
-	 * Konstruktor hinzufuegen.
-	 * 
-	 * @param a
+	 * Konstruktor erstellen.
+	 * @param listtyp Der Listtyp (PvSp).
 	 */
 	public ShowPartnervorschlaegeSp(String listtyp) {
-		
 		this.listtyp = listtyp;
-		
 		run();
-
 	}
-	
-	
-	
 
 	/**
-	 * Startet den Aufbau der Seite. Partnervorschlage werden ausgelesen und in die Tabelle befuellt.
-	 * @param listtyp 
+	 * Methode erstellen, die den Aufbau der Seite startet. 
 	 */
 	public void run() {
-		
-		/**
-		 * VerticalPanel und HorizontalPanel werden dem Konstruktor
-		 * hinzugefuegt.
-		 */
-
 		this.add(verPanel);
 		this.add(auswahlPanel);
 		this.add(horPanelTabelle);
 		
 		/**
-		 * CSS anwenden.
+		 * CSS anwenden. 
 		 */
-
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		ueberschriftLabel2.addStyleName("partnerboerse-label");
 
 		befuelleListBox();
 
 		/**
-		 * ClickHandler fuer den Suchprofil-Anlegen-Button hinzufuegen.
-		 * 
-		 * Bei Betaetigung des Suchprofil-Anlegen-Buttons, gelangt man auf die
-		 * Seite mit der man ein neues Suchprofil anlegt.
+		 * ClickHandler fuer Button zum Anlegen eines Suchprofils erzeugen. 
+		 * Bei der Betaetigung dieses Buttons gelangt man auf die Seite 
+		 * zum Anlegen eines neuen Suchprofils. 
 		 */
-
 		createSuchprofilButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
 				String profiltyp = "Sp";
-
-				CreateSuchprofil createSuchprofil = new CreateSuchprofil(
-						profiltyp);
+				CreateSuchprofil createSuchprofil = new CreateSuchprofil(profiltyp);
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(createSuchprofil);
 			}
-
 		});
 
 		/**
-		 * Clickhandler fuer den Anzeigen-Button hinzufuegen.
-		 * 
-		 * Bei Betaetigung des AnzeigenButtons werden alle Partnervorschlaege
+		 * Clickhandler fuer den Button zum Anzeigen der Partnervorschlaege erzeugen. 
+		 * Sobald dieser Button betaetigt wird, werden alle alle Partnervorschlaege
 		 * anhand des gewaehlten Suchprofils, nach Aehnlichkeit geordnet,
 		 * ausgegeben.
-		 * 
 		 */
-
 		anzeigenSpButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				/**
 				 * Bei jeder Auswahl eines Suchprofils wird die
-				 * Tabelle komplett geloescht, damit diese mit
-				 * den neuen Informationen befüllt werden kann.
-				 * 
+				 * Tabelle komplett geleert, damit diese mit
+				 * den neuen Informationen befÃ¼llt werden kann.
 				 */
 				partnervorschlaegeSpFlexTable.removeAllRows();
 
 				/**
 				 * Tabelle formatieren und CSS einbinden.
-				 * Tabelle wird bei jedem Klick komplett neu
-				 * erstellt.
 				 */
 				partnervorschlaegeSpFlexTable.setCellPadding(6);
 				partnervorschlaegeSpFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 				partnervorschlaegeSpFlexTable.addStyleName("FlexTable");
+				
 				/**
 				 * Erste Zeile der Tabelle festlegen.
 				 */
@@ -166,18 +133,12 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 				partnervorschlaegeSpFlexTable.setText(0, 5 ,"Geschlecht");
 				partnervorschlaegeSpFlexTable.setText(0, 6 ,"Anzeigen");
 				
-			
-
 				erzeugeTabelleSp();
 
 				/**
-				 * Alle Widgets dem VerticalPanel und HorizontalPanel
-				 * hinzufuegen.
-				 * 
-				 * Diese Widgets werden bei Betaetigung des Anzeigen-Buttons
-				 * angezeigt.
+				 * Widgets den Panels hinzufuegen. 
+				 * Diese Widgets werden angezeigt, sobald die Partnervorschlaege angezeigt werden.
 				 */
-
 				verPanel.add(ergebnisLabel);
 				verPanel.add(infoLabel);
 				verPanel.add(ueberschriftLabel2);
@@ -187,9 +148,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		});
 
 		/**
-		 * Alle Widgets dem VerticalPanel und HorizontalPanel hinzufuegen.
-		 * 
-		 * Diese Widgets werden angezeigt sobald man über die MenueBar das Feld
+		 * Widgets den Panels hinzufuegen. 
+		 * Diese Widgets werden angezeigt sobald man Ã¼ber die MenueBar das Feld
 		 * "Partnervorschlaege anhand Suchprofil" auswaehlt.
 		 */
 
@@ -202,8 +162,8 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	}
 	
 	/**
-	 * Neue Methode definiert, die die Tabelle auf Inhalt prueft
-	 * @return boolean, der zeigt ob die Tabelle leer ist oder nicht
+	 * Methode erstellen, die die Tabelle auf Inhalt prueft.
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist.
 	 */
 	public boolean pruefeLeereTable() {
 
@@ -227,7 +187,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	}
 
 	/**
-	 * Befuellen der Tabelle mit den Partnervorschlaegen geordnet nach Aehnlichkeit
+	 * Befuellen der Tabelle mit den Partnervorschlaegen geordnet nach Aehnlichkeit.
 	 */
 	public void erzeugeTabelleSp() {
 		
@@ -243,8 +203,6 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 							@Override
 							public void onSuccess(List<Nutzerprofil> result) {
-
-								
 
 								/**
 								 * Die Tabelle wird mit den Partnervorschlaegen
@@ -301,7 +259,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 
 								if (befuellt == true) {
 
-									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden Partnervorschläge.");
+									ueberschriftLabel.setText("Zu diesem Suchprofil existieren zurzeit keine passenden PartnervorschlÃ¤ge.");
 									ueberschriftLabel.setVisible(true);
 
 									partnervorschlaegeSpFlexTable.setVisible(false);

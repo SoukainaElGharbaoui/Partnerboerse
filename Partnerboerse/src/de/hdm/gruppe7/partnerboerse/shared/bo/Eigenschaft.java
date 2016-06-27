@@ -10,17 +10,17 @@ public class Eigenschaft extends BusinessObject {
 	/**
 	 * Eigenschaft-ID.
 	 */
-	public int eigenschaftId;
+	private int eigenschaftId;
 	
 	/**
 	 * Erlaeuterung. 
 	 */
-	public String erlaeuterung;
+	private String erlaeuterung;
 	
 	/**
 	 * Typ. 
 	 */
-	public String typ;
+	private String typ;
 
 	/**
 	 * Eigenschaft-ID setzen. 

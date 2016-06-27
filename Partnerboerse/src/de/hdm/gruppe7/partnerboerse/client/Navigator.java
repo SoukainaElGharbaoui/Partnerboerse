@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -18,14 +19,19 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
  *
  */
 public class Navigator extends HorizontalPanel {
+	
+	
+	
+	
 
 	/**
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
+	
+	private String logoutUrl = Partnerboerse.getLoginInfo().getLogoutUrl();
 
 	int aehnlichkeit = 0;
-	
 
 	/**
 	 * 
@@ -36,24 +42,25 @@ public class Navigator extends HorizontalPanel {
 		this.add(verPanel1);
 		
 		/**
-		 * Ab hier wird die Menübar erstellt. Dabei werden abhängig von der
-		 * Thematik einzelne vertikale aufklappbare Menüs zur horizontalen
-		 * Menühauptleiste "menu" hinzugefügt.
+		 * Ab hier wird die Menuebar erstellt. Dabei werden abhaengig von der 
+		 * Thematik einzelne vertikale aufklappbare Menues zur 
+		 * horizontalen Menuehauptleiste "menu" hinzugefuegt.
 		 */
-
 		MenuBar menu = new MenuBar();
 		menu.setAutoOpen(true);
 		/**
-		 * Festlegen der Länge der Menübar und Einbinden von CSS.
+
+		 * Festlegen der Laenge der Menuebar und Einbinden von CSS.
 		 */
-		menu.setWidth("720px");
+		menu.setWidth("100%");
 		menu.setHeight("36px");
+
 		menu.setAnimationEnabled(true);
 		menu.setStyleName("MenuBar");
 
 		/**
-		 * Menüleiste für das Nutzerprofil, in denen die Funktionen bezüglich
-		 * des eigenen Profils zur Verfügung gestellt werden.
+		 * Menueleiste für das Nutzerprofil, in denen die Funktionen bezueglich des
+		 * eigenen Profils zur Verfuegung gestellt werden.
 		 */
 		MenuBar nutzerprofilMenu = new MenuBar(true);
 		nutzerprofilMenu.setAnimationEnabled(true);
@@ -76,9 +83,9 @@ public class Navigator extends HorizontalPanel {
 		profilAnzeigen.setStyleName("MenuItem");
 
 		/**
-		 * Den einzelnen Menüs werden verschiedene Items hinzugefügt, denen
-		 * jeweils ein Command übergeben wird. Wird ein bestimmtes Item
-		 * angeklickt, so wird der jeweilige Command ausgeführt.
+		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
+		 * jeweils ein Command uebergeben wird. Wird ein bestimmtes Item 
+		 * angeklickt, so wird der jeweilige Command ausgefuehrt.
 		 */
 
 		MenuItem merklisteAnzeigen = nutzerprofilMenu.addItem("Merkliste anzeigen", new Command() {
@@ -114,7 +121,7 @@ public class Navigator extends HorizontalPanel {
 		nutzerprofilMenu.addSeparator();
 
 		/**
-		 * Menü für das Suchprofil
+		 * Menue für das Suchprofil
 		 */
 		MenuBar suchprofilMenu = new MenuBar(true);
 		suchprofilMenu.setAnimationEnabled(true);
@@ -144,92 +151,49 @@ public class Navigator extends HorizontalPanel {
 
 		suchprofilAnlegen.setStyleName("MenuItem");
 
-		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem(
-				"Suchprofile anzeigen", new Command() {
-					@Override
-					public void execute() {
+		MenuItem suchprofilAnzeigen = suchprofilMenu.addItem("Suchprofile anzeigen", new Command() {
+			@Override
+			public void execute() {
+				ClientsideSettings.getPartnerboerseAdministration()
+				.getAllSuchprofileFor(
+						nutzerprofil.getProfilId(),
+						new AsyncCallback<List<Suchprofil>>() {
 
-						ClientsideSettings.getPartnerboerseAdministration()
-								.getAllSuchprofileFor(
-										nutzerprofil.getProfilId(),
-										new AsyncCallback<List<Suchprofil>>() {
+							@Override
+							public void onFailure(
+									Throwable caught) {
+							}
 
-											@Override
-											public void onFailure(
-													Throwable caught) {
-												// TODO Auto-generated method
-												// stub
+							@Override
+							public void onSuccess(
+									List<Suchprofil> result) {
+								
+								int suchprofilId;
+								
+								if (result.isEmpty()) {
+									suchprofilId = 0;
+								} else {
+									suchprofilId = result.get(0).getProfilId();
+								}
+								
+								String profiltyp = "Sp";
+								ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
+								RootPanel.get("Details").clear();
+								RootPanel.get("Details").add(showSuchprofil);
 
-											}
+							}
 
-											@Override
-											public void onSuccess(
-													List<Suchprofil> result) {
-												
-												int kleinsteZahl = 0;
-												
-												if (result.isEmpty()) {
-													
-													kleinsteZahl = 0;
-													
-												} else {
-													
-													List<Integer> spId = new ArrayList<Integer>();
-
-													
-													for (Suchprofil sp : result) {
-
-														spId.add(sp
-																.getProfilId());
-
-													}
-
-													for (int i = 0; i < spId
-															.size(); i++) {
-
-														if (kleinsteZahl > spId
-																.get(i)) {
-															kleinsteZahl = spId
-																	.get(i);
-															
-															
-															
-
-														}
-
-													}
-													
-													
-													String profiltyp = "Sp";
-													int suchprofilId = kleinsteZahl;
-													ShowSuchprofil showSuchprofil = new ShowSuchprofil(
-															suchprofilId,
-															profiltyp);
-													RootPanel.get("Details")
-															.clear();
-													RootPanel
-															.get("Details")
-															.add(showSuchprofil);
-													
-													
-
-												}
-
-											}
-
-										});
-						
-
-					}
-
-				});
-
+						});
+				
+				}
+		});
+		
 		suchprofilAnzeigen.setStyleName("MenuItem");
 
 		suchprofilMenu.addSeparator();
 
 		/**
-		 * Menü für die Partnervorschläge
+		 * Menue für die Partnervorschlaege
 		 */
 
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
@@ -303,9 +267,7 @@ public class Navigator extends HorizontalPanel {
 
 											}
 										});
-
 					}
-
 				});
 
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");
@@ -314,17 +276,18 @@ public class Navigator extends HorizontalPanel {
 
 		
 
-		/**
-		 * Hinzufügen der vertikalen Menüleisten nutzerProfilMenu,
-		 * suchprofilMenu und partnervorschlaegeMenu zur horizontalen
-		 * Hauptleiste "menu" und Benennung der Menüleisten in der Menübar per
-		 * String-Übergabe.
-		 */
+
+/**
+ * Hinzufuegen der vertikalen Menueleisten nutzerProfilMenu, 
+ * suchprofilMenu und partnervorschlaegeMenu zur 
+ * horizontalen Hauptleiste "menu" und Benennung der 
+ * Menueleisten in der Menuebar per String-Uebergabe.
+ */
+		
 		menu.addItem(new MenuItem("Mein Profil", nutzerprofilMenu));
 		menu.addSeparator();
 		menu.addItem(new MenuItem("Meine Suchprofile", suchprofilMenu));
 		menu.addSeparator();
-
 		menu.addItem(new MenuItem("Meine Partnervorschläge",
 				partnervorschlaegeMenu));
 		menu.addSeparator();
@@ -341,7 +304,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport();
+						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeNpReport);
@@ -352,7 +315,7 @@ public class Navigator extends HorizontalPanel {
 				new Command() {
 					@Override
 					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport();
+						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
 						RootPanel.get("Details").clear();
 						RootPanel.get("Details").add(
 								showAllPartnervorschlaegeSpReport);
@@ -362,9 +325,7 @@ public class Navigator extends HorizontalPanel {
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */
-		RootPanel.get("Navigator").add(menu);
-		
+		RootPanel.get("Header").add(menu);
 
-	
 }
 }

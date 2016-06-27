@@ -15,62 +15,15 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Sperrliste;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 
-
 /**
- * Das asynchrone Gegenst�ck des Interface {@link PartnerboerseAdministration}
- *
+ * Das asynchrone Gegenstueck des Interface {@link PartnerboerseAdministration}.
  */
 public interface PartnerboerseAdministrationAsync {
 
 	/**
-	 * Initialisierung des Objekts.
-	 * 
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#init()
 	 */
 	void init(AsyncCallback<Void> callback);
-	
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Login
-	 * *************************************************************************
-	 * **
-	 */
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#isUserRegistered(String)
-	 * 
-	 * @param userEmail
-	 * @param isUserRegisteredCallback
-	 */
-	
-	void isUserRegistered(String userEmail, AsyncCallback<Boolean> isUserRegisteredCallback);
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#login(String)
-	 * 
-	 * @param requestUri
-	 * @param callback
-	 * @throws Exception
-	 */
-	void login(String requestUri, AsyncCallback<Nutzerprofil> callback) throws Exception;
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeObNutzerNeu(String)
-	 * 
-	 * @param userEmail
-	 * @param callback
-	 */
-	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
-
-	
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Login
-	 * *************************************************************************
-	 * **
-	 */
 	
 	/*
 	 * *************************************************************************
@@ -79,527 +32,237 @@ public interface PartnerboerseAdministrationAsync {
 	 * **
 	 */
 	
+	void pruefeObNutzerNeu(String userEmail, AsyncCallback<Boolean> callback);
+	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #createNutzerprofil(String, String, String, Date, int, String, String, String, String)
-	 * 
-	 * @param vorname
-	 * @param nachname
-	 * @param geschlecht
-	 * @param geburtsdatumDate
-	 * @param koerpergroesseInt
-	 * @param haarfarbe
-	 * @param raucher
-	 * @param religion
-	 * @param emailAddress
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createNutzerprofil
+	 * (String, String, String, geschlecht, Date, int, String, String, String, String)
 	 */
 	void createNutzerprofil(String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion, String emailAddress,
 			AsyncCallback<Nutzerprofil> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #saveNutzerprofil(int, String, String, String, Date, int, String, String, String)
-	 * 
-	 * @param profilId
-	 * @param vorname
-	 * @param nachname
-	 * @param geschlecht
-	 * @param geburtsdatumDate
-	 * @param koerpergroesseInt
-	 * @param haarfarbe
-	 * @param raucher
-	 * @param religion
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#saveNutzerprofil
+	 * (int, String, String, String, Date, int, String, String, String)
 	 */
 	void saveNutzerprofil(int profilId, String vorname, String nachname, String geschlecht, Date geburtsdatumDate,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteNutzerprofil(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteNutzerprofil(int)
 	 */
 	void deleteNutzerprofil(int profilId, AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getNutzerprofilById(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getNutzerprofilById(int)
 	 */
 	void getNutzerprofilById(int profilId, AsyncCallback<Nutzerprofil> callback);
 
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Nutzerprofil
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Suchprofil
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #createSuchprofil(int, String, String, int, int, int, String, String, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilName
-	 * @param geschlecht
-	 * @param alterMinInt
-	 * @param alterMaxInt
-	 * @param koerpergroesseInt
-	 * @param haarfarbe
-	 * @param raucher
-	 * @param religion
-	 * @param callback
-	 */
-	
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createSuchprofil
+	 * (int, String, String, int, int, int, String, String, String)
+	 */	
 	void createSuchprofil(int profilId, String suchprofilName, String geschlecht, int alterMinInt, int alterMaxInt,
 			int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Suchprofil> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #saveSuchprofil(int, int, String, String, int, int, int, String, String, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilId
-	 * @param suchprofilName
-	 * @param geschlecht
-	 * @param alterMinInt
-	 * @param alterMaxInt
-	 * @param koerpergroesseInt
-	 * @param haarfarbe
-	 * @param raucher
-	 * @param religion
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#saveSuchprofil
+	 * (int, int, String, String, int, int, int, String, String, String)
 	 */
 	void saveSuchprofil(int profilId, int suchprofilId, String suchprofilName, String geschlecht,
 			int alterMinInt, int alterMaxInt, int koerpergroesseInt, String haarfarbe, String raucher, String religion,
 			AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteSuchprofil(int, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilName
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteSuchprofil(int, String)
 	 */
 	void deleteSuchprofil(int profilId, String suchprofilName, AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllSuchprofileFor(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getAllSuchprofileFor(int)
 	 */
 	void getAllSuchprofileFor(int profilId, AsyncCallback<List<Suchprofil>> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilByName(int, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilName
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getSuchprofilByName(int, String)
 	 */
 	void getSuchprofilByName(int profilId, String suchprofilName, AsyncCallback<Suchprofil> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSuchprofilById(int, int)
-	 * 
-	 * @param profilId
-	 * @param suchprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getSuchprofilById(int)
 	 */
 	void getSuchprofilById (int suchprofilId, AsyncCallback<Suchprofil> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameCreate(int, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilname
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeSuchprofilnameCreate(int, String)
 	 */
 	void pruefeSuchprofilnameCreate(int profilId, String suchprofilname, AsyncCallback<Integer> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSuchprofilnameEdit(int, int, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilId
-	 * @param suchprofilname
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeSuchprofilnameEdit(int, int, String)
 	 */
 	void pruefeSuchprofilnameEdit(int profilId, int suchprofilId, String suchprofilname,
 			AsyncCallback<Integer> callback);
 
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Suchprofil
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Merkliste
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGemerkteNutzerprofileFor(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getGemerkteNutzerprofileFor(int)
 	 */
 	void getGemerkteNutzerprofileFor(int profilId, AsyncCallback<Merkliste> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeVermerkstatus(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeVermerkstatus(int, int)
 	 */
 	void pruefeVermerkstatus(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#vermerkstatusAendern(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#vermerkstatusAendern(int, int)
 	 */
 	void vermerkstatusAendern(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Merkliste
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Sperrliste
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGemerkteNutzerprofileFor(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getGesperrteNutzerprofileFor(int)
 	 */
 	void getGesperrteNutzerprofileFor(int profilId, AsyncCallback<Sperrliste> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#pruefeSperrstatusFremdprofil(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#pruefeSperrstatusFremdprofil(int, int)
 	 */
 	void pruefeSperrstatusFremdprofil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getSperrstatusEigenesProfil(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getSperrstatusEigenesProfil(int, int)
 	 */
 	void getSperrstatusEigenesProfil(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#sperrstatusAendern(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#sperrstatusAendern(int, int)
 	 */
 	void sperrstatusAendern(int profilId, int fremdprofilId, AsyncCallback<Integer> callback);
 
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Sperrliste
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlaegeNp
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getUnangeseheneNutzerprofile(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getUnangeseheneNutzerprofile(int)
 	 */
 	void getUnangeseheneNutzerprofile(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#besuchSetzen(int, int)
-	 * 
-	 * @param profilId
-	 * @param fremdprofilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#besuchSetzen(int, int)
 	 */
 	void besuchSetzen(int profilId, int fremdprofilId, AsyncCallback<Void> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitNpFor(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#berechneAehnlichkeitNpFor(int)
 	 */
 	void berechneAehnlichkeitNpFor(int profilId, AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGeordnetePartnervorschlaegeNp(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getGeordnetePartnervorschlaegeNp(int)
 	 */
 	void getGeordnetePartnervorschlaegeNp(int profilId, AsyncCallback<List<Nutzerprofil>> callback);
 
-
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlaegeNp
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: PartnervorschlaegeSp
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#berechneAehnlichkeitSpFor(int)
-	 * 
-	 * @param profilId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#berechneAehnlichkeitSpFor(int)
 	 */
 	void berechneAehnlichkeitSpFor(int profilId, AsyncCallback<Void> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getGeordnetePartnervorschlaegeSp(int, String)
-	 * 
-	 * @param profilId
-	 * @param suchprofilName
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getGeordnetePartnervorschlaegeSp(int, String)
 	 */
 	void getGeordnetePartnervorschlaegeSp(int profilId, String suchprofilName,
 			AsyncCallback<List<Nutzerprofil>> callback);
 
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: PartnervorschlaegeSp
-	 * *************************************************************************
-	 * **
-	 */
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Info
-	 * *************************************************************************
-	 * **
-	 */
-	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
-	 * 
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getAllEigenschaften()
 	 */
 	void getAllEigenschaften(AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>> callback);
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getAllUnusedEigenschaften(int)
+	 */
+	void getAllUnusedEigenschaften(int profilId, AsyncCallback<Map<List<Beschreibungseigenschaft>, 
+			List<Auswahleigenschaft>>> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAuswahleigenschaften(List)
-	 * 
-	 * @param listE
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getAuswahleigenschaften(List)
 	 */
 	void getAuswahleigenschaften(List<Eigenschaft> listE, 
 			AsyncCallback<List<Auswahleigenschaft>> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllUnusedEigenschaften(int)
-	 * 
-	 * @param profilId
-	 * @param callback
-	 */
-	void getAllUnusedEigenschaften(int profilId, AsyncCallback<Map<List<Beschreibungseigenschaft>, 
-			List<Auswahleigenschaft>>> callback);
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#createInfo(int, List)
-	 * 
-	 * @param profilId
-	 * @param infos
-	 * @param callback
-	 */
-	void createInfo(int profilId, List<Info> infos, AsyncCallback<List<Info>> callback);
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllInfos(int)
-	 * 
-	 * @param profilId
-	 * @param callback
-	 */
-	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAllInfosNeu(int)
-	 * 
-	 * @param profilId
-	 * @param callback
-	 */
-	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteOneInfoNeu(int, int)
-	 * 
-	 * @param profilId
-	 * @param eigenschaftId
-	 * @param callback
-	 */
-	void deleteOneInfoNeu(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
-
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#saveInfo(int, List)
-	 * 
-	 * @param profilId
-	 * @param listI
-	 * @param callback
-	 */
-	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
-	
-	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigAById(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getEigAById(int)
 	 */
 	void getEigAById(int eigenschaftId, AsyncCallback<Auswahleigenschaft> callback);
 
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getEigBById(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getEigBById(int)
 	 */
 	void getEigBById(int eigenschaftId, AsyncCallback<Beschreibungseigenschaft> callback);
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Info
-	 * *************************************************************************
-	 * **
-	 */
-	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Administrator-Funktionen
-	 * *************************************************************************
-	 * **
-	 */
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #createBeschreibungseigenschaft(int, String, String, String)
-	 * 
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param beschreibungstext
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createInfo(int, List)
+	 */
+	void createInfo(int profilId, List<Info> infos, AsyncCallback<List<Info>> callback);
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#getAllInfos(int)
+	 */
+	void getAllInfos(int profilId, AsyncCallback<Map<List<Info>, List<Eigenschaft>>> callback);
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteAllInfosNeu(int)
+	 */
+	void deleteAllInfosNeu(int profilId, AsyncCallback<Void> callback);
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteOneInfoNeu(int, int)
+	 */
+	void deleteOneInfoNeu(int profilId, int eigenschaftId, AsyncCallback<Void> callback);
+
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#saveInfo(int, List)
+	 */
+	void saveInfo(int profilId, List<Info> listI, AsyncCallback<Void> callback);
+	
+	/**
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createBeschreibungseigenschaft(int, String, String, String)
 	 */
 	void createBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, String beschreibungstext, AsyncCallback<Beschreibungseigenschaft> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #createAuswahleigenschaft(int, String, String, List)
-	 * 
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param auswahloption
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#createAuswahleigenschaft(int, String, String, List)
 	 */
 	void createAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, List<String> auswahloption, AsyncCallback<Auswahleigenschaft> callback) ;
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #saveBeschreibungseigenschaft(int, String, String, String)
-	 * 
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param beschreibungstext
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#saveBeschreibungseigenschaft(int, String, String, String)
 	 */
 	void saveBeschreibungseigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, String beschreibungstext, AsyncCallback<Void> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration
-	 * #saveAuswahleigenschaft(int, String, String, List)
-	 * 
-	 * @param eigenschaftId
-	 * @param erlaeuterung
-	 * @param typ
-	 * @param auswahloption
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#saveAuswahleigenschaft(int, String, String, List)
 	 */
 	void saveAuswahleigenschaft(int eigenschaftId, String erlaeuterung,
 			String typ, List<String> auswahloption, AsyncCallback<Void> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteBeschreibungseigenschaft(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteBeschreibungseigenschaft(int)
 	 */
 	void deleteBeschreibungseigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
 	
 	/**
-	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#deleteAuswahleigenschaft(int)
-	 * 
-	 * @param eigenschaftId
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.PartnerboerseAdministrationImpl#deleteAuswahleigenschaft(int)
 	 */
 	void deleteAuswahleigenschaft(int eigenschaftId, AsyncCallback<Void> callback);
+
+
+	void getNuterprofilByEmail(String email,
+			AsyncCallback<Nutzerprofil> callback);
+
+
 	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Administrator-Funktionen
-	 * *************************************************************************
-	 * **
-	 */
 }

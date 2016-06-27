@@ -1,15 +1,14 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.GWT;
 
 import de.hdm.gruppe7.partnerboerse.shared.CommonSettings;
+import de.hdm.gruppe7.partnerboerse.shared.LoginService;
+import de.hdm.gruppe7.partnerboerse.shared.LoginServiceAsync;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGenerator;
 import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
  * Klasse mit Eigenschaften und Diensten, die fuer alle Client-seitigen Klassen
@@ -33,28 +32,11 @@ public class ClientsideSettings extends CommonSettings {
 	private static ReportGeneratorAsync reportGenerator = null;
 
 	/**
-	 * Name des Client-seitigen Loggers.
+	 * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen
+	 * Dienst namens LoginService.
 	 */
-	private static final String LOGGER_NAME = "PartnerboerseProjekt Web Client";
-
-	/**
-	 * Instanz des Client-seitigen Loggers.
-	 */
-	private static final Logger log = Logger.getLogger(LOGGER_NAME);
-
-	/**
-	 * Instanz des Nutzerprofils
-	 */
-	private static Nutzerprofil aktuellerUser = null;
-
-	/**
-	 * Auslesen des applikationsweiten (Client-seitig!) zentralen Loggers.
-	 * 
-	 * @return die Logger-Instanz fuer die Server-Seite
-	 */
-	public static Logger getLogger() {
-		return log;
-	}
+	private static LoginServiceAsync loginService = null;
+	
 
 	/**
 	 * Anlegen und Auslesen der applikationsweit eindeutigen
@@ -89,24 +71,22 @@ public class ClientsideSettings extends CommonSettings {
 		return reportGenerator;
 
 	}
-
+	
 	/**
-	 * Setter-Methode zu aktuellerUser
+	 * Anlegen und Auslesen des applikationsweit eindeutigen LoginService.
+	 * Diese Methode erstellt den LoginService, sofern dieser noch nicht
+	 * existiert. Bei wiederholtem Aufruf dieser Methode wird stets das bereits
+	 * zuvor angelegte Objekt zurueckgegeben.
 	 * 
-	 * @param np
+	 * @return Instanz des Typs LoginServiceAsync
 	 */
-	public static void setAktuellerUser(Nutzerprofil np) {
-		aktuellerUser = np;
+	public static LoginServiceAsync getLoginService() {
 
-	}
+		if (loginService == null) {
+			loginService = GWT.create(LoginService.class);
+		}
+		return loginService;
 
-	/**
-	 * Getter-Methode zu aktuellerUser
-	 * 
-	 * @return aktuellerUser
-	 */
-	public static Nutzerprofil getAktuellerUser() {
-		return aktuellerUser;
 	}
 
 }

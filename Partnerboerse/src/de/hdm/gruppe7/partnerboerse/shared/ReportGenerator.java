@@ -45,7 +45,7 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeNpReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
 
-@RemoteServiceRelativePath("reportgenerator")
+@RemoteServiceRelativePath("report")
 public interface ReportGenerator extends RemoteService {
 
 
@@ -102,10 +102,6 @@ public interface ReportGenerator extends RemoteService {
 	 */
 	AllPartnervorschlaegeSpReport createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname)
 			throws IllegalArgumentException;
-
-	public boolean isUserRegistered(String userEmail);
-
-	public Nutzerprofil login(String requestUri) throws Exception;
 
 
 }

@@ -23,11 +23,12 @@ public class ShowFremdprofil extends VerticalPanel {
 	/**
 	 * Neues Nutzerprofil-Objekt, das Login-Informationen enthaelt, erzeugen.
 	 */
-	private Nutzerprofil nutzerprofil = ClientsideSettings.getAktuellerUser();
+	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
 	 * Panels erzeugen.
 	 */
+	private HorizontalPanel ankerPanel = new HorizontalPanel(); 
 	private VerticalPanel fremdprofilPanel = new VerticalPanel();
 	private VerticalPanel infoPanel = new VerticalPanel();
 	private HorizontalPanel horPanel = new HorizontalPanel();
@@ -44,21 +45,42 @@ public class ShowFremdprofil extends VerticalPanel {
 	private Label pfadLabelM = new Label("Zurück zu: Merkliste anzeigen");
 	private Label pfadLabelS = new Label("Zurück zu: Sperrliste anzeigen");
 	private Label pfadLabelPvNp = new Label("Zurück zu: Unangesehene Partnervorschläge");
-	private Label pfadLabelPvSp = new Label("Zurück zu: Partnervorschläge mit Suchprofil");
+	private Label pfadLabelPvSp = new Label("Zurück zu: Partnervorschläge anhand von Suchprofilen");
+	
+	/**
+	 * Variable fuer die Fremdprofil-ID erstellen.
+	 */
+	private int fremdprofilId; 
+	
+	/**
+	 * Variable fuer den Profiltyp erstellen.
+	 */
+	private String profiltyp; 
+	
+	/**
+	 * Variable fuer den Listtyp erstellen.
+	 */
+	private String listtyp; 
 
 	/**
 	 * Konstruktor erstellen.
-	 * 
-	 * @param fremdprofilId
-	 *            Die Profil-ID des Fremdprofils, das angezeigt werden soll.
-	 * @param profiltyp
-	 *            Der Profiltyp (Fremdprofil).
+	 * @param fremdprofilId Die Profil-ID des Fremdprofils, das angezeigt werden soll.
+	 * @param profiltyp Der Profiltyp (Fremdprofil).
+	 * @param listtyp Die Seite, von der das Fremdprofil aufgerufen wird (Merkliste, Sperrliste,
+	 * 		  PartnervorschlaegeNp, PartnervorschlaegeSp). 
 	 */
-	public ShowFremdprofil(final int fremdprofilId, final String profiltyp, final String listtyp) {
-
-		/**
-		 * Horizontales Panel hinzufuegen.
-		 */
+	public ShowFremdprofil(int fremdprofilId, String profiltyp, String listtyp) {
+		this.fremdprofilId = fremdprofilId; 
+		this.profiltyp = profiltyp; 
+		this.listtyp = listtyp; 
+		run(); 
+	}
+	
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
+	public void run() {
+		this.add(ankerPanel);
 		this.add(horPanel);
 
 		/**
@@ -86,13 +108,87 @@ public class ShowFremdprofil extends VerticalPanel {
 		showFremdprofilFlexTable.setText(7, 0, "Raucherstatus");
 		showFremdprofilFlexTable.setText(8, 0, "Religion");
 
+		pruefeListe(); 
+
+		befuelleTabelle(); 
+
+		pruefeSperrstatusFremdprofil(); 
+
+		/**
+		 * ClickHandler fuer den Sperrung-Button erzeugen. Je nach aktuellem
+		 * Sperrstatus wird eine Sperrung gesetzt oder entfernt. Zudem wird 
+		 * die Aufschrift des Sperrung-Buttons entweder in "Sperrung loeschen" 
+		 * oder in "Sperrung setzen" geaendert. Bei Ersterem wird zudem der 
+		 * Button zum Vermerken eines Fremdprofils ausgeblendet.
+		 */
+		sperrungButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				sperrstatusAendern(); 
+			}
+		});
+
+		pruefeVermerkstatus(); 
+
+		/**
+		 * ClickHandler fuer den Vermerk-Button erzeugen. Je nach aktuellem
+		 * Vermerkstatus wird ein Vermerk gesetzt oder entfernt. Zudem wird 
+		 * die Aufschrift des Vermerk-Buttonsn entweder in "Vermerk loeschen" 
+		 * oder in "Vermerk setzen" geaendert.
+		 */
+		vermerkButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				vermerkstatusAendern(); 
+			}
+		});
+
+		/**
+		 * Sperrung-Button und Vermerk-Button dem Panel fuer die Button hinzufuegen.
+		 */
+		buttonPanel.add(vermerkButton);
+		buttonPanel.add(sperrungButton);
+
+		/**
+		 * Je nach dem, von welcher Seite aus das Fremdprofil aufgerufen wurde, wird 
+		 * ein entsprechendes Label zum Zurueckkehren zu dieser Seite eingeblendet. 
+		 */
+		if (listtyp.equals("M")) {
+			ankerPanel.add(pfadLabelM);
+		} else if (listtyp.equals("S")) {
+			ankerPanel.add(pfadLabelS);
+		} else if (listtyp.equals("PvNp")) {
+			ankerPanel.add(pfadLabelPvNp);
+		} else if (listtyp.equals("PvSp")) {
+			ankerPanel.add(pfadLabelPvSp);
+		}
+
+		/**
+		 * Widgets den Panels hinzufuegen. 
+		 */
+		fremdprofilPanel.add(ueberschriftLabel);
+		fremdprofilPanel.add(showFremdprofilFlexTable);
+		fremdprofilPanel.add(infoLabel);
+		fremdprofilPanel.add(buttonPanel);
+		horPanel.add(fremdprofilPanel);
+
+		/**
+		 * Zusaetzlich zu den Profildaten werden die Infos des Fremdprofils angezeigt.
+		 */
+		ShowInfo fremdinfo = new ShowInfo(fremdprofilId, profiltyp, listtyp);
+		infoPanel.add(fremdinfo);
+		horPanel.add(infoPanel);
+
+	}
+	
+	/**
+	 * Methode erstellen, die prueft, von welcher Seite aus das Fremdprofil aufgerufen wurde. 
+	 * Den einzelnen Labels zum Zurueckkehren wird ein ClickHandler hinzugefuegt. Hierdurch 
+	 * kann bestimmt werden, auf Welche Seite zurueckgehert wird. 
+	 */
+	public void pruefeListe() {
 		if (listtyp.equals("M")) {
 			pfadLabelM.addClickHandler(new ClickHandler() {
-				@Override
 				public void onClick(ClickEvent event) {
-
 					ShowMerkliste showM = new ShowMerkliste(listtyp);
-
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showM);
 				}
@@ -101,28 +197,18 @@ public class ShowFremdprofil extends VerticalPanel {
 		} else if (listtyp.equals("S")) {
 
 			pfadLabelS.addClickHandler(new ClickHandler() {
-
-				@Override
 				public void onClick(ClickEvent event) {
-
 					ShowSperrliste showS = new ShowSperrliste(listtyp);
-
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showS);
 				}
-
 			});
 		}
 
 		else if (listtyp.equals("PvNp")) {
-
 			pfadLabelPvNp.addClickHandler(new ClickHandler() {
-
-				@Override
 				public void onClick(ClickEvent event) {
-
 					ShowPartnervorschlaegeNp showPN = new ShowPartnervorschlaegeNp(listtyp);
-
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showPN);
 				}
@@ -131,29 +217,24 @@ public class ShowFremdprofil extends VerticalPanel {
 		}
 
 		else if (listtyp.equals("PvSp")) {
-
 			pfadLabelPvSp.addClickHandler(new ClickHandler() {
-
-				@Override
 				public void onClick(ClickEvent event) {
-
 					ShowPartnervorschlaegeSp showPS = new ShowPartnervorschlaegeSp(listtyp);
-
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(showPS);
 				}
 
 			});
 		}
-
-		/**
-		 * Fremdprofil anhand der Profil-ID aus der Datenbank auslesen und die
-		 * Profildaten in die Tabelle einfuegen.
-		 */
+	}
+	
+	/**
+	 * Methode erstellen, die ein Nutzerprofil anhand der Profil-ID ausliest und die Profildaten in die Tabelle einfuegt.
+	 */
+	public void befuelleTabelle() {
 		ClientsideSettings.getPartnerboerseAdministration().getNutzerprofilById(fremdprofilId,
 				new AsyncCallback<Nutzerprofil>() {
 
-					@Override
 					public void onFailure(Throwable caught) {
 						infoLabel.setText("Es trat ein Fehler auf.");
 					}
@@ -184,12 +265,14 @@ public class ShowFremdprofil extends VerticalPanel {
 						showFremdprofilFlexTable.setText(8, 1, result.getReligion());
 					}
 				});
-
-		/**
-		 * Puefen, ob das Fremdprofil vom Nutzerprofil gesperrt wurde. Falls ja,
-		 * lautet die Aufschrift des Sperrung-Buttons "Sperrung loeschen". Falls
-		 * nein, lautet die Aufschrift des Sperrung-Buttons "Sperrung setzen".
-		 */
+	}
+	
+	/**
+	 * Puefen, ob das Fremdprofil vom Nutzerprofil gesperrt wurde. Falls ja,
+	 * lautet die Aufschrift des Sperrung-Buttons "Sperrung loeschen". Falls
+	 * nein, lautet die Aufschrift des Sperrung-Buttons "Sperrung setzen".
+	 */
+	public void pruefeSperrstatusFremdprofil(){
 		ClientsideSettings.getPartnerboerseAdministration().pruefeSperrstatusFremdprofil(nutzerprofil.getProfilId(),
 				fremdprofilId, new AsyncCallback<Integer>() {
 
@@ -206,44 +289,38 @@ public class ShowFremdprofil extends VerticalPanel {
 						}
 					}
 				});
+	}
+	
+	/**
+	 * Methode erstellen, die den Sperrstatus aendert. 
+	 */
+	public void sperrstatusAendern() {
+		ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(nutzerprofil.getProfilId(),
+				fremdprofilId, new AsyncCallback<Integer>() {
 
-		/**
-		 * ClickHandler fuer den Sperrung-Button erzeugen. Je nach aktuellem
-		 * Sperrstatus wird die Sperrung in die Datenbank eingefuegt bzw. aus
-		 * der Datenbank entfernt. Zudem wird die Aufschrift des
-		 * Sperrung-Buttons entweder in "Sperrung loeschen" oder in
-		 * "Sperrung setzen" geaendert. Bei Ersterem wird zudem der Button zum
-		 * Vermerken eines Fremdprofils ausgeblendet.
-		 */
-		sperrungButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
 
-				ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(nutzerprofil.getProfilId(),
-						fremdprofilId, new AsyncCallback<Integer>() {
-
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-							}
-
-							public void onSuccess(Integer result) {
-								if (result == 0) {
-									sperrungButton.setText("Sperrung löschen");
-									vermerkButton.setVisible(false);
-								} else {
-									sperrungButton.setText("Sperrung setzen");
-									vermerkButton.setText("Vermerk setzen");
-									vermerkButton.setVisible(true);
-								}
-							}
-						});
-			}
-		});
-
-		/**
-		 * Puefen, ob das Fremdprofil vom Nutzerprofil vermerkt wurde. Falls ja,
-		 * lautet die Aufschrift Vermerk-Buttons "Vermerk loeschen". Falls nein,
-		 * lautet die Aufschrift des Vermerk-Buttons "Sperrung setzen".
-		 */
+					public void onSuccess(Integer result) {
+						if (result == 0) {
+							sperrungButton.setText("Sperrung löschen");
+							vermerkButton.setVisible(false);
+						} else {
+							sperrungButton.setText("Sperrung setzen");
+							vermerkButton.setText("Vermerk setzen");
+							vermerkButton.setVisible(true);
+						}
+					}
+				});
+	}
+	
+	/**
+	 * Puefen, ob das Fremdprofil vom Nutzerprofil vermerkt wurde. Falls ja,
+	 * lautet die Aufschrift Vermerk-Buttons "Vermerk loeschen". Falls nein,
+	 * lautet die Aufschrift des Vermerk-Buttons "Sperrung setzen".
+	 */
+	public void pruefeVermerkstatus() {
 		ClientsideSettings.getPartnerboerseAdministration().pruefeVermerkstatus(nutzerprofil.getProfilId(),
 				fremdprofilId, new AsyncCallback<Integer>() {
 
@@ -259,67 +336,26 @@ public class ShowFremdprofil extends VerticalPanel {
 						}
 					}
 				});
+	}
+	
+	/**
+	 * Methode erstellen, die den Vermerkstatus aendert. 
+	 */
+	public void vermerkstatusAendern() {
+		ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(nutzerprofil.getProfilId(),
+				fremdprofilId, new AsyncCallback<Integer>() {
 
-		/**
-		 * ClickHandler fuer den Vermerk-Button erzeugen. Je nach aktuellem
-		 * Vermerkstatus wird der Vermerk in die Datenbank eingefuegt bzw. aus
-		 * der Datenbank entfernt. Zudem wird die Aufschrift des Vermerk-Buttons
-		 * entweder in "Vermerk loeschen" oder in "Vermerk setzen" geaendert.
-		 */
-		vermerkButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+					public void onFailure(Throwable caught) {
+						infoLabel.setText("Es trat ein Fehler auf.");
+					}
 
-				ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(nutzerprofil.getProfilId(),
-						fremdprofilId, new AsyncCallback<Integer>() {
-
-							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
-							}
-
-							public void onSuccess(Integer result) {
-								if (result == 0) {
-									vermerkButton.setText("Vermerk löschen");
-								} else {
-									vermerkButton.setText("Vermerk setzen");
-								}
-							}
-						});
-			}
-		});
-
-		/**
-		 * Sperrung-Button und Vermerk-Button zum Panel fuer die Buttons
-		 * hinzufuegen.
-		 */
-		buttonPanel.add(vermerkButton);
-		buttonPanel.add(sperrungButton);
-
-		/**
-		 * Widgets den Panels hinzufuegen.
-		 */
-		if (listtyp.equals("M")) {
-			horPanel.add(pfadLabelM);
-		} else if (listtyp.equals("S")) {
-			horPanel.add(pfadLabelS);
-		} else if (listtyp.equals("PvNp")) {
-			horPanel.add(pfadLabelPvNp);
-		} else if (listtyp.equals("PvSp")) {
-			horPanel.add(pfadLabelPvSp);
-		}
-
-		fremdprofilPanel.add(ueberschriftLabel);
-		fremdprofilPanel.add(showFremdprofilFlexTable);
-		fremdprofilPanel.add(infoLabel);
-		fremdprofilPanel.add(buttonPanel);
-		horPanel.add(fremdprofilPanel);
-
-		/**
-		 * Zusaetzlich zu den Profildaten werden die Infos des Fremdprofils
-		 * angezeigt.
-		 */
-		ShowInfo fremdinfo = new ShowInfo(fremdprofilId, profiltyp);
-		infoPanel.add(fremdinfo);
-		horPanel.add(infoPanel);
-
+					public void onSuccess(Integer result) {
+						if (result == 0) {
+							vermerkButton.setText("Vermerk löschen");
+						} else {
+							vermerkButton.setText("Vermerk setzen");
+						}
+					}
+				});
 	}
 }
