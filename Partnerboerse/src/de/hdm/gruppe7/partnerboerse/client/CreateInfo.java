@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -77,14 +76,6 @@ public class CreateInfo extends VerticalPanel {
 		showEigenschaftFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		showEigenschaftFlexTable.addStyleName("FlexTable");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
-
-		/**
-		 * Erste Zeile der Tabelle festlegen.
-		 */
-		showEigenschaftFlexTable.setText(0, 0, "Profil-Id");
-		showEigenschaftFlexTable.setText(0, 1, "Eigenschaft-Id");
-		showEigenschaftFlexTable.setText(0, 2, "Erlaeuterung");
-		showEigenschaftFlexTable.setText(0, 3, "Anlegen");
 
 		/**
 		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank herausgeholt, ausgelesen
@@ -250,18 +241,14 @@ public class CreateInfo extends VerticalPanel {
 									
 								
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-									RootPanel.get("Navigator").add(new Navigator());
-
+									
+									
+								Window.Location.replace("Partnerboerse.html");
+									
 									RootPanel.get("Details").clear();
+									RootPanel.get("Navigator").add(new Navigator(nutzerprofil));
 									RootPanel.get("Details").add(showNp);
-
-									Anchor signOut = new Anchor();
-
-									signOut.setHref(GWT.getHostPageBaseURL() + "Partnerboerse.html");
-									signOut.setText("Als " + nutzerprofil.getVorname() + nutzerprofil.getProfilId()
-											+ " ausloggen");
-
-									RootPanel.get("Navigator").add(signOut);
+									
 								}
 
 						        else if (profiltyp.equals("Sp")) {

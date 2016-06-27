@@ -404,7 +404,7 @@ public class NutzerprofilMapper {
 							+ " AND t_nutzerprofil1.nutzerprofil_id !=" + profilId
 							+ " AND (t_sperrung1.fremdprofil_id !=" + profilId
 							+ " OR t_sperrung1.nutzerprofil_id IS NULL) "
-							+ "ORDER BY t_nutzerprofil1.nutzerprofil_id");
+							+ "ORDER BY t_aehnlichkeitnp1.aehnlichkeit DESC");
 
 
 			while (rs.next()) {

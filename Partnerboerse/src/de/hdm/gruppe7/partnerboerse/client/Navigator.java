@@ -1,12 +1,15 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -36,10 +39,11 @@ public class Navigator extends HorizontalPanel {
 	/**
 	 * 
 	 */
-	public Navigator() {
+	public Navigator(Nutzerprofil np) {
 
 		VerticalPanel verPanel1 = new VerticalPanel();
 		this.add(verPanel1);
+		
 		
 		/**
 		 * Ab hier wird die Menuebar erstellt. Dabei werden abhaengig von der 
@@ -81,6 +85,7 @@ public class Navigator extends HorizontalPanel {
 				});
 
 		profilAnzeigen.setStyleName("MenuItem");
+
 
 		/**
 		 * Den einzelnen Menues werden verschiedene Items hinzugefuegt, denen 
@@ -250,20 +255,18 @@ public class Navigator extends HorizontalPanel {
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												// infoLabel
-												// .setText("Es trat ein Fehler auf.");
 											}
 
 
-							@Override
-							public void onSuccess(Void result3) {
-								// infoLabel.setText("Es hier trat kein Fehler
-								// auf.");
-							String listtyp = "PvSp";
-							ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(showPartnervorschlaegeSp);
-
+											@Override
+											public void onSuccess(Void result3) {
+												
+												String listtyp = "PvSp";
+												ShowPartnervorschlaegeSp showPartnervorschlaegeSp = new ShowPartnervorschlaegeSp(listtyp);
+												RootPanel.get("Details").clear();
+												RootPanel.get("Details").add(showPartnervorschlaegeSp);
+												
+												
 
 											}
 										});
@@ -272,8 +275,17 @@ public class Navigator extends HorizontalPanel {
 
 		partnervorschlaegeSpAnzeigen.setStyleName("MenuItem");
 
-		partnervorschlaegeMenu.addSeparator();
-
+	//	partnervorschlaegeMenu.addSeparator();
+					MenuBar statusMenu = new MenuBar(true);
+						statusMenu.setAnimationEnabled(true);
+		
+						statusMenu.addItem("Ausloggen", new Command() {
+							@Override
+							public void execute() {
+		 					Window.Location.replace(logoutUrl);
+		 						
+					}
+		 				});
 		
 
 
@@ -291,37 +303,39 @@ public class Navigator extends HorizontalPanel {
 		menu.addItem(new MenuItem("Meine Partnervorschläge",
 				partnervorschlaegeMenu));
 		menu.addSeparator();
-		// menu.addItem(new MenuItem("Ausloggen", statusMenu));
+		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
 		// ////////////////////////////////////////////////////////////////////////////////
 		// Create the report menu
 		// ////////////////////////////////////////////////////////////////////////////////
 
-		MenuBar reportMenu = new MenuBar(true);
-		reportMenu.setAnimationEnabled(true);
+//		MenuBar reportMenu = new MenuBar(true);
+//		reportMenu.setAnimationEnabled(true);
+//
+//		reportMenu.addItem("Partnervorschlagreport des Nuzterprofils anzeigen",
+//				new Command() {
+//					@Override
+//					public void execute() {
+//						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(
+//								showAllPartnervorschlaegeNpReport);
+//					}
+//				});
+//
+//		reportMenu.addItem("Partnervorschlagreport des Suchprofils anzeigen",
+//				new Command() {
+//					@Override
+//					public void execute() {
+//						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
+//						RootPanel.get("Details").clear();
+//						RootPanel.get("Details").add(
+//								showAllPartnervorschlaegeSpReport);
+//					}
+//				});
+		
 
-		reportMenu.addItem("Partnervorschlagreport des Nuzterprofils anzeigen",
-				new Command() {
-					@Override
-					public void execute() {
-						ShowAllPartnervorschlaegeNpReport showAllPartnervorschlaegeNpReport = new ShowAllPartnervorschlaegeNpReport(Partnerboerse.getNp());
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeNpReport);
-					}
-				});
-
-		reportMenu.addItem("Partnervorschlagreport des Suchprofils anzeigen",
-				new Command() {
-					@Override
-					public void execute() {
-						ShowAllPartnervorschlaegeSpReport showAllPartnervorschlaegeSpReport = new ShowAllPartnervorschlaegeSpReport(Partnerboerse.getNp());
-						RootPanel.get("Details").clear();
-						RootPanel.get("Details").add(
-								showAllPartnervorschlaegeSpReport);
-					}
-				});
-
+		
 		/**
 		 * Hinzufügen der Menübar zum RootPanel
 		 */

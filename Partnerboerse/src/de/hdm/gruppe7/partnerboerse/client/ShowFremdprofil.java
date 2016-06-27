@@ -208,9 +208,28 @@ public class ShowFremdprofil extends VerticalPanel {
 		else if (listtyp.equals("PvNp")) {
 			pfadLabelPvNp.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					ShowPartnervorschlaegeNp showPN = new ShowPartnervorschlaegeNp(listtyp);
-					RootPanel.get("Details").clear();
-					RootPanel.get("Details").add(showPN);
+					ClientsideSettings
+					.getPartnerboerseAdministration()
+					.berechneAehnlichkeitNpFor(
+							nutzerprofil.getProfilId(),
+							new AsyncCallback<Void>() {
+
+								@Override
+								public void onFailure(
+										Throwable caught) {
+
+								}
+
+								@Override
+								public void onSuccess(
+										Void result) {
+									String listtyp = "PvNp";
+									ShowPartnervorschlaegeNp showPartnervorschlaegeNp = new ShowPartnervorschlaegeNp(listtyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showPartnervorschlaegeNp);
+
+								}
+							});
 				}
 
 			});

@@ -1,20 +1,13 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe7.partnerboerse.shared.LoginService;
 import de.hdm.gruppe7.partnerboerse.shared.LoginServiceAsync;
-import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration;
 import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
@@ -32,11 +25,6 @@ public class Partnerboerse implements EntryPoint {
 	/**
 	 * Deklaraion der Labels fuer die Startseite(n)
 	 */
-	private Label begruessen = new Label(
-			"Herzlich Willkommen bei Lonely Hearts. ");
-	private Label begruessen2 = new Label(
-			"Bitte melde dich an, um die Webseite nutzen zu koennen.");
-
 	private Label begruessenN = new Label(
 			"Herzlich Willkommen bei LonelyHearts. ");
 	private Label begruessenN2 = new Label(
@@ -44,13 +32,7 @@ public class Partnerboerse implements EntryPoint {
 
 	/**
 	 * Deklaration fuer den Login und den Logout
-//	 */
-//	private HorizontalPanel loginPanel = new HorizontalPanel();
-//	private Anchor signInLink = new Anchor("Jetzt einloggen");
-//	private Anchor signOutLink = new Anchor();
-//
-//	private Label testLabel;
-
+	 */
 	private static Nutzerprofil np = null;
 	private static LoginInfo loginInfo = null;
 
@@ -81,8 +63,6 @@ public class Partnerboerse implements EntryPoint {
 		AsyncCallback<LoginInfo> asynCallback = new AsyncCallback<LoginInfo>() {
 			@Override
 			public void onFailure(Throwable caught) {
-
-
 			}
 
 			@Override
@@ -93,7 +73,7 @@ public class Partnerboerse implements EntryPoint {
 					admin.pruefeObNutzerNeu(result.getEmailAddress(),
 							pruefeObNutzerNeuExecute(result
 									.getEmailAddress()));
-					Window.Location.replace(result.getLogoutUrl());
+
 
 				} else {
 					
@@ -109,22 +89,25 @@ public class Partnerboerse implements EntryPoint {
 		AsyncCallback<Boolean> asynCallback = new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {
-
-
 			}
 
 			@Override
 			public void onSuccess(Boolean result) {
 
 				if (!result) {
+			
 					admin.getNuterprofilByEmail(loginInfo.getEmailAddress(),
 							getNuterprofilByEmailExecute(loginInfo.getEmailAddress()));
+					
+					RootPanel.get("Details").add(begruessenN);
+					RootPanel.get("Details").add(begruessenN2);
 
 				} else {
 					
 					CreateNutzerprofil createNutzerprofil = new CreateNutzerprofil("Np");
 					RootPanel.get("Details").clear();
 					RootPanel.get("Details").add(createNutzerprofil);
+					
 				}
 
 			}
@@ -134,7 +117,7 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zurück
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurï¿½ck
 	 * 
 	 * @return Nutzerprofil
 	 */
@@ -143,7 +126,7 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zurück
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurï¿½ck
 	 * 
 	 * @return Nutzerprofil
 	 */
@@ -161,9 +144,9 @@ public class Partnerboerse implements EntryPoint {
 
 			@Override
 			public void onSuccess(Nutzerprofil result) {
-
+				
 				np = result;
-				getMenu();
+			getMenu();
 
 			}
 		};
@@ -171,15 +154,13 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	private void setStyles() {
-		begruessen.setStyleName("welcome-label");
-		begruessen2.setStyleName("welcome-label2");
 		begruessenN.setStyleName("welcome-label");
 		begruessenN2.setStyleName("welcome-label2");
 
 	}
 
-	private void getMenu() {
-		RootPanel.get("Navigator").add(new Navigator());
+	public static void getMenu() {
+		RootPanel.get("Navigator").add(new Navigator(np));
 		// RootPanel.get("Navigator2").add(loginPanel);
 	}
 

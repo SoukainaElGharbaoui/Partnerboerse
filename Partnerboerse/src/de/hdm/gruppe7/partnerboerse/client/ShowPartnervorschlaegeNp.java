@@ -51,10 +51,10 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 */
 	private String listtyp;
 	
-	/**
-	 * Variable fuer die Fremdprofil-ID erstellen.
-	 */
-	private int fremdprofilId;
+//	/**
+//	 * Variable fuer die Fremdprofil-ID erstellen.
+//	 */
+//	private int fremdprofilId;
 
 	/**
 	 * Konstruktor erstellen.
@@ -105,32 +105,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 	}
 	
-	
-	/**
-	 * Methode erstellen, die prueft, ob die Tabelle leer ist. 
-	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist.
-	 */
-	public boolean pruefeLeereTable() {
-
-		for (int k = 1; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
-
-			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
-			}
-
-			else {
-				zaehler++;
-			}
-		}
-
-		if (zaehler == 0) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
-	
 	/**
 	 * Methode erstellen, die die anangesehenen Partnervorschlaege geordnet nach Aehnlichkeit ausgibt
 	 * und in die Tabelle eintraegt. 
@@ -151,11 +125,11 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 						for (Nutzerprofil np : result) {
 
-							fremdprofilId = np.getProfilId();
+							final int fremdprofilId = np.getProfilId();
 
 							row++;
 
-							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(np.getProfilId()));
+							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
 							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
 							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname());
 							partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
@@ -193,7 +167,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 												@Override
 												public void onSuccess(Void result) {
 													String profiltyp = "Fp";
-													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,profiltyp,listtyp);
+													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId, profiltyp, listtyp);
 													RootPanel.get("Details").clear();
 													RootPanel.get("Details").add(showFremdprofil);
 												}
@@ -203,6 +177,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 							});
 						}
 
+						
 						/**
 						 * Bestehen keine unangesehenen Partnervorschlaege, wird eine Information ueber diesen 
 						 * Zustand ausgegeben. 
@@ -217,4 +192,32 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 				});
 		
 	}
+
+	
+	
+	/**
+	 * Methode erstellen, die prueft, ob die Tabelle leer ist. 
+	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist.
+	 */
+	public boolean pruefeLeereTable() {
+
+		for (int k = 1; k < partnervorschlaegeNpFlexTable.getRowCount(); k++) {
+
+			if (partnervorschlaegeNpFlexTable.getText(k, 0) == null) {
+			}
+
+			else {
+				zaehler++;
+			}
+		}
+
+		if (zaehler == 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+	}
 }
+

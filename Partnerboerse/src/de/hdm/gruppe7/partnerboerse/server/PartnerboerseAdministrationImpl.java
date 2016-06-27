@@ -76,7 +76,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 	}
 	
 	/* 
-	 * Gibt das aktuelle Profil anhand der EMail zurück
+	 * Gibt das aktuelle Profil anhand der EMail zurï¿½ck
 	 * return nutzerprofil
 	 */
 	@Override
@@ -260,7 +260,6 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		s.setReligion(religion);
 
 		this.suchprofilMapper.updateSuchprofil(s);
-		this.suchprofilMapper.deleteAehnlichkeit(profilId);
 
 	}
 
@@ -543,7 +542,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		for (Nutzerprofil np : vergleichsprofile) {
 
 			int aehnlichkeit = 3;
-			int counter = 7;
+			int counter = 10;
 			int vergleichsprofilId = np.getProfilId();
 
 			if (np.getGeschlecht().equals(referenzprofil.getGeschlecht())) {
@@ -696,28 +695,28 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 		for (Suchprofil sp : referenzprofil) {
 			for (Nutzerprofil np : vergleichsprofil) {
 				int aehnlichkeitSp = 0;
-				int counter = 70;
+				int counter = 15;
 
 				int suchprofilId = sp.getProfilId();
 				int fremdprofilId = np.getProfilId();
 
-				if (sp.getGeschlecht().equals("Keine Auswhal")) {
-					aehnlichkeitSp = aehnlichkeitSp + 30;
+				if (sp.getGeschlecht().equals("Keine Auswahl")) {
+					aehnlichkeitSp = aehnlichkeitSp + 5;
 
 				} else {
 
 					if (sp.getGeschlecht().equals(np.getGeschlecht())) {
-						aehnlichkeitSp = aehnlichkeitSp + 30;
+						aehnlichkeitSp = aehnlichkeitSp + 5;
 					}
 				}
 
-				if (sp.getHaarfarbe().equals("Keine Auswhal")) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+				if (sp.getHaarfarbe().equals("Keine Auswahl")) {
+					aehnlichkeitSp = aehnlichkeitSp + 1;
 
 				} else {
 
 					if (sp.getHaarfarbe().equals(np.getHaarfarbe())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 1;
 					}
 
 				}
@@ -725,27 +724,27 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				if (sp.getKoerpergroesseInt() + 5 >= np.getKoerpergroesseInt()) {
 					if (sp.getKoerpergroesseInt() - 5 <= np
 							.getKoerpergroesseInt()) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 2;
 					}
 				}
 
 				if (sp.getRaucher().equals("Keine Auswahl")) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+					aehnlichkeitSp = aehnlichkeitSp + 1;
 
 				} else {
 
 					if (sp.getRaucher().equals(np.getRaucher())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 1;
 					}
 
 				}
 				if (sp.getRaucher().equals("Keine Auswahl")) {
-					aehnlichkeitSp = aehnlichkeitSp + 10;
+					aehnlichkeitSp = aehnlichkeitSp + 1;
 
 				} else {
 
 					if (sp.getReligion().equals(np.getReligion())) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 1;
 					}
 
 				}
@@ -769,7 +768,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 				if (sp.getAlterMaxInt() >= alter) {
 					if (sp.getAlterMinInt() <= alter) {
-						aehnlichkeitSp = aehnlichkeitSp + 10;
+						aehnlichkeitSp = aehnlichkeitSp + 5;
 					}
 				}
 
@@ -789,21 +788,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 				for (Info rin : referenzinfo) {
 					for (Info vin : vergleichsinfo) {
 						if (rin.getEigenschaftId() == vin.getEigenschaftId()) {
-							counter = counter + 2;
+							counter = counter + 1;
 
 							if (rin.getInfotext().equals("Keine Auswahl")) {
 
-								aehnlichkeitSp = aehnlichkeitSp + 2;
+								aehnlichkeitSp = aehnlichkeitSp + 1;
 
 							} else {
 
 								if (rin.getInfotext().isEmpty()) {
-									aehnlichkeitSp = aehnlichkeitSp + 2;
+									aehnlichkeitSp = aehnlichkeitSp + 1;
 
 								} else {
 									if (rin.getInfotext().equals(
 											vin.getInfotext())) {
-										aehnlichkeitSp = aehnlichkeitSp + 2;
+										aehnlichkeitSp = aehnlichkeitSp + 1;
 									}
 								}
 
@@ -867,15 +866,21 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 
 
 	/**
+<<<<<<< HEAD
 	 * Es werden alle Eigenschaften mit Hilfe der Map-Klasse aus der Datenbank
 	 * geholt und in die Tabelle eingefÃ¼gt. Dabei gibt es eine Schleife fuer
 	 * die Beschreibungseigenschfaten und eine fuer die Auswahleigenschaften.
 	 * 
 	 * @see de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministration#getAllEigenschaften()
+=======
+>>>>>>> refs/heads/master
 	 * Alle Eigenschaften auslesen.
 	 * @return Liste von ausgelesenen Beschreibungs- und Auswahleigenschaft-Objekten.
 	 * @throws IllegalArgumentException
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/heads/master
 	 */
 	@Override
 	public Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>> getAllEigenschaften()
