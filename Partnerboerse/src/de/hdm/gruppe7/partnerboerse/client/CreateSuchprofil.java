@@ -1,10 +1,13 @@
 package de.hdm.gruppe7.partnerboerse.client;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -25,9 +28,10 @@ public class CreateSuchprofil extends VerticalPanel {
 	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * Vertikales Panel erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Widgets erzeugen.
@@ -43,6 +47,7 @@ public class CreateSuchprofil extends VerticalPanel {
 	private ListBox raucherListBox = new ListBox();
 	private ListBox religionListBox = new ListBox();
 	private Button createSuchprofilButton = new Button("Suchprofil anlegen");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
@@ -149,15 +154,69 @@ public class CreateSuchprofil extends VerticalPanel {
 				pruefeSuchprofilName();
 		      }
 		});
+		
+		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen des Anlegevorgangs eines Suchprofils erzeugen.
+		 * Sobald dieser Button getaetigt wird, wird der Nutzer auf die Seite geleitet, auf der ihm seine
+		 * bisherigen Suchprofile angezeigt werden. Alle bisher im Formular eingetragenen Daten werden 
+		 * verworfen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				getAllSuchprofileFor();
+			}
+		});
 
 		/**
 		 * Widgets dem Panel hinzufuegen.
 		 */
+		buttonPanel.add(createSuchprofilButton);
+		buttonPanel.add(abbrechenButton);
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createSuchprofilFlexTable);
-		verPanel.add(createSuchprofilButton);
+		verPanel.add(buttonPanel);
 		verPanel.add(infoLabel);
 
+	}
+	
+	/**
+	 * Methode erstellen, die alle Suchprofile eines Nutzerprofils ausliest.
+	 */
+	public void getAllSuchprofileFor() {
+		
+		ClientsideSettings.getPartnerboerseAdministration()
+		.getAllSuchprofileFor(
+				nutzerprofil.getProfilId(),
+				new AsyncCallback<List<Suchprofil>>() {
+
+					@Override
+					public void onFailure(
+							Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(
+							List<Suchprofil> result) {
+						
+						int suchprofilId;
+						
+						if (result.isEmpty()) {
+							suchprofilId = 0;
+						} else {
+							suchprofilId = result.get(0).getProfilId();
+						}
+						
+						String profiltyp = "Sp";
+						ShowSuchprofil showSuchprofil = new ShowSuchprofil(suchprofilId, profiltyp);
+						RootPanel.get("Details").clear();
+						RootPanel.get("Details").add(showSuchprofil);
+
+					}
+
+				});
 	}
 	
 	/**

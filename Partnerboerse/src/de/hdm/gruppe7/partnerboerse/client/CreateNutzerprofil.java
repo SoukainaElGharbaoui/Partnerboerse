@@ -223,6 +223,11 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(infoLabel);
 		
 		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen des Anlegevorgangs eines Nutzerprofils erzeugen.
+		 * Sobald dieser Button getaetigt wird, wird der Nutzer zurueck auf die Login-Seite geleitet.
+		 * Alle bisher im Formular eingetragenen Daten werden verworfen.
+		 */
 		abbrechenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
