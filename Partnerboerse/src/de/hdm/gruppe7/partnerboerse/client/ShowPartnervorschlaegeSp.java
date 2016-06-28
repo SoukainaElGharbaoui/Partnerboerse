@@ -216,7 +216,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
-		partnervorschlaegeSpFlexTable.setText(0, 0, "Uebereinstimmung in %");
+		partnervorschlaegeSpFlexTable.setText(0, 0, "Übereinstimmung");
 		partnervorschlaegeSpFlexTable.setText(0, 1, "Vorname");
 		partnervorschlaegeSpFlexTable.setText(0, 2, "Nachname");
 		partnervorschlaegeSpFlexTable.setText(0, 3, "Geburtsdatum");

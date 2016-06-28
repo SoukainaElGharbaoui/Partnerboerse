@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -36,9 +37,10 @@ public class CreateInfo extends VerticalPanel {
 	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * Vertikales Panel erzeugen.
+	 * Panels erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 
 	/**
 	 * Listen erzeugen.
@@ -57,6 +59,7 @@ public class CreateInfo extends VerticalPanel {
 	 */
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	private Button createInfosButton = new Button("Infos anlegen");
+	private Button abbrechenButton = new Button("Abbrechen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
 
 	/**
@@ -161,6 +164,26 @@ public class CreateInfo extends VerticalPanel {
 						}
 					}
 				});
+		
+		/**
+		 * ClickHandler fuer den Button zum Abbrechen.
+		 */
+		abbrechenButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				if (profiltyp.equals("Np")) {
+					ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp); 
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNutzerprofil);
+				}
+				
+				else if (profiltyp.equals("Sp")) {
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp); 
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+			}
+		});
 
 		/**
 		 * ClickHandler fuer den Button zum Anlegen der Infos. Die befuellte
@@ -269,8 +292,11 @@ public class CreateInfo extends VerticalPanel {
 		/**
 		 * Widgets zum Panel hinzufuegen.
 		 */
+		buttonPanel.add(createInfosButton);
+		buttonPanel.add(abbrechenButton);
+		
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showEigenschaftFlexTable);
-		verPanel.add(createInfosButton);
+		verPanel.add(buttonPanel);
 	}
 }

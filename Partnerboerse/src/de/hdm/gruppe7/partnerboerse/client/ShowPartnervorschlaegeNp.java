@@ -82,7 +82,7 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
-		partnervorschlaegeNpFlexTable.setText(0, 0, "Uebereinstimmung in %");
+		partnervorschlaegeNpFlexTable.setText(0, 0, "Übereinstimmung");
 		partnervorschlaegeNpFlexTable.setText(0, 1, "Vorname");
 		partnervorschlaegeNpFlexTable.setText(0, 2, "Nachname");
 		partnervorschlaegeNpFlexTable.setText(0, 3, "Geburtsdatum");

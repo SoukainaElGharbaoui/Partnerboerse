@@ -42,7 +42,6 @@ public class ShowSperrliste extends VerticalPanel {
 	 */
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Sperrliste:");
 	private FlexTable sperrlisteFlexTable = new FlexTable();
-	private Label infoLabel = new Label();
 	private CheckBox cb;
 	private Button anzeigenButton;
 	private Button loeschenButton = new Button("Ausgewählte Profile von Sperrliste entfernen");
@@ -84,9 +83,8 @@ public class ShowSperrliste extends VerticalPanel {
 		sperrlisteFlexTable.addStyleName("FlexTable");
 		sperrlisteFlexTable.setCellPadding(6);
 		sperrlisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
+		sperrlisteFlexTable.getColumnFormatter().setWidth(0, "0px");
 		
-//		sperrlisteFlexTable.getFlexCellFormatter().set
-
 		/**
 		 * Kopfzeile der Tabelle festlegen.
 		 */
@@ -128,7 +126,6 @@ public class ShowSperrliste extends VerticalPanel {
 
 				int rowTable = sperrlisteFlexTable.getRowCount();
 				int fremdprofilId;
-				infoLabel.setText("" + rowTable);
 
 				zaehler = 0;
 
@@ -143,16 +140,12 @@ public class ShowSperrliste extends VerticalPanel {
 
 					boolean checked = ((CheckBox) sperrlisteFlexTable.getWidget(k, 6)).getValue();
 
-					infoLabel.setText("" + checked);
-
 					if (checked == true) {
 
 						zaehler++;
 						fremdprofilId = Integer.valueOf(sperrlisteFlexTable.getText(k, 0));
 
-						infoLabel.setText("" + fremdprofilId);
-
-						aendereVermerkstatus(fremdprofilId);
+						aendereSperrstatus(fremdprofilId);
 
 						/**
 						 * Jeweilige Zeile der Tabelle loeschen.
@@ -169,7 +162,6 @@ public class ShowSperrliste extends VerticalPanel {
 							ueberschriftLabel.setText("Sie haben zurkeit keine Profile gesperrt.");
 							sperrlisteFlexTable.setVisible(false);
 							buttonPanel.setVisible(false);
-							infoLabel.setVisible(false);
 
 							ueberschriftLabel.setVisible(true);
 						}
@@ -195,7 +187,6 @@ public class ShowSperrliste extends VerticalPanel {
 
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(sperrlisteFlexTable);
-		verPanel.add(infoLabel);
 		verPanel.add(buttonPanel);
 	}
 
@@ -296,9 +287,9 @@ public class ShowSperrliste extends VerticalPanel {
 	 *            Die Fremdprofil-Id des Nutzerprofils, dessen Vermerkstatus
 	 *            geaendert werden soll.
 	 */
-	public void aendereVermerkstatus(int fremdprofilId) {
+	public void aendereSperrstatus(int fremdprofilId) {
 
-		ClientsideSettings.getPartnerboerseAdministration().vermerkstatusAendern(nutzerprofil.getProfilId(),
+		ClientsideSettings.getPartnerboerseAdministration().sperrstatusAendern(nutzerprofil.getProfilId(),
 				fremdprofilId, new AsyncCallback<Integer>() {
 
 					@Override

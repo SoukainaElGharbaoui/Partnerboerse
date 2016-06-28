@@ -41,7 +41,6 @@ public class ShowMerkliste extends VerticalPanel {
 	 */
 	private FlexTable merklisteFlexTable = new FlexTable();
 	private Label ueberschriftLabel = new Label("Diese Profile befinden sich auf Ihrer Merkliste:");
-	private Label infoLabel = new Label();
 	private Button loeschenButton = new Button("Ausgewählte Profile von Merkliste entfernen");
 	private Button anzeigenButton;
 	private Button selectAllProfilsButton = new Button("Alle Profile markieren");
@@ -52,7 +51,7 @@ public class ShowMerkliste extends VerticalPanel {
 	 */
 	private String listtyp;
 	private int zaehler;
-	private int fremdprofilId;
+//	private int fremdprofilId;
 
 	/**
 	 * Konstruktor erzeugen.
@@ -122,7 +121,6 @@ public class ShowMerkliste extends VerticalPanel {
 
 				int rowTable = merklisteFlexTable.getRowCount();
 				int fremdprofilId;
-				infoLabel.setText("" + rowTable);
 
 				zaehler = 0;
 
@@ -137,15 +135,12 @@ public class ShowMerkliste extends VerticalPanel {
 
 					boolean checked = ((CheckBox) merklisteFlexTable.getWidget(k, 6)).getValue();
 
-					infoLabel.setText("" + checked);
 
 					if (checked == true) {
 
 						zaehler++;
 
 						fremdprofilId = Integer.valueOf(merklisteFlexTable.getText(k, 0));
-
-						infoLabel.setText("" + fremdprofilId);
 
 						aendereVermerkstatus(fremdprofilId);
 
@@ -164,7 +159,6 @@ public class ShowMerkliste extends VerticalPanel {
 							ueberschriftLabel.setText("Sie haben sich zurzeit keine Profile gemerkt.");
 							merklisteFlexTable.setVisible(false);
 							buttonPanel.setVisible(false);
-							infoLabel.setVisible(false);
 
 							ueberschriftLabel.setVisible(true);
 						}
@@ -191,7 +185,6 @@ public class ShowMerkliste extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(merklisteFlexTable);
 		verPanel.add(buttonPanel);
-		verPanel.add(infoLabel);
 	}
 
 	/**
@@ -221,9 +214,9 @@ public class ShowMerkliste extends VerticalPanel {
 
 							row++;
 							
-							Label id = new Label(String.valueOf(fremdprofilId));
+							Label id = new Label(String.valueOf(n.getProfilId()));
 
-							fremdprofilId = n.getProfilId();
+							final int fremdprofilId = n.getProfilId();
 
 							merklisteFlexTable.setWidget(row, 0, id);
 							id.setVisible(false);
@@ -259,7 +252,7 @@ public class ShowMerkliste extends VerticalPanel {
 								public void onClick(ClickEvent event) {
 
 									ClientsideSettings.getPartnerboerseAdministration().getSperrstatusEigenesProfil(
-											nutzerprofil.getProfilId(), Integer.valueOf(fremdprofilId),
+											nutzerprofil.getProfilId(), fremdprofilId,
 											new AsyncCallback<Integer>() {
 
 												@Override
