@@ -64,12 +64,12 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override
 					public void onSuccess(AllPartnervorschlaegeNpReport report) {
 						if (report != null) {
+							
 							/*
 							 * Neue HTML-Seite fuer den Report erzeugen.
 							 */

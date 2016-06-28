@@ -52,15 +52,14 @@ public class CreateSuchprofil extends VerticalPanel {
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
 	private Label reqLabel4 = new Label("* Pflichtfeld");
-	private Label infoLabel = new Label();
 	private Label warnungLabel = new Label();
-	final String profiltyp;
+	private String profiltyp;
 	
 	/**
 	 * Konstruktor erstellen. 
 	 * @param profiltyp Der Profiltyp (Suchprofil).
 	 */
-	public CreateSuchprofil(final String profiltyp) {
+	public CreateSuchprofil(String profiltyp) {
 		this.profiltyp = profiltyp;
 		run();
 	}
@@ -91,7 +90,7 @@ public class CreateSuchprofil extends VerticalPanel {
 		createSuchprofilFlexTable.setText(1, 0, "Geschlecht");
 		createSuchprofilFlexTable.setText(2, 0, "Alter von");
 		createSuchprofilFlexTable.setText(3, 0, "Alter bis");
-		createSuchprofilFlexTable.setText(4, 0, "Körpergröße");
+		createSuchprofilFlexTable.setText(4, 0, "Körpergröße in cm");
 		createSuchprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createSuchprofilFlexTable.setText(6, 0, "Raucher");
 		createSuchprofilFlexTable.setText(7, 0, "Religion");
@@ -178,8 +177,6 @@ public class CreateSuchprofil extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createSuchprofilFlexTable);
 		verPanel.add(buttonPanel);
-		verPanel.add(infoLabel);
-
 	}
 	
 	/**
@@ -228,7 +225,6 @@ public class CreateSuchprofil extends VerticalPanel {
 				suchprofilNameTextBox.getText(), new AsyncCallback<Integer>() {
 			
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					public void onSuccess(Integer result) {
@@ -293,7 +289,6 @@ public class CreateSuchprofil extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-		infoLabel.setText("Es trat ein Fehler auf");
 		}
 
 		@Override

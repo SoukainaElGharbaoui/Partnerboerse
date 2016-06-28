@@ -384,7 +384,6 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es ist ein Fehler beim Herausholen der Infos aufgetreten.");
 					}
 
 					@Override
@@ -413,19 +412,18 @@ public class EditInfo extends VerticalPanel {
 									editInfoFlexTable.addStyleName("FlexTable");
 
 									row++;
+									
 									infotext = null;
 									final int eigenschaftId = listInfos.get(i).getEigenschaftId();
-
-									editInfoFlexTable.setText(row, 0, String.valueOf(listInfos.get(i).getProfilId()));
-									editInfoFlexTable.setText(row, 1, String.valueOf(eigenschaftId));
+									Label id = new Label(String.valueOf(eigenschaftId));
+									
+									editInfoFlexTable.setWidget(row, 1, id);
+									id.setVisible(false);
 
 									cb = new CheckBox();
 									cb.setValue(false);
 									editInfoFlexTable.setWidget(row, 4, cb);
 									
-									editInfoFlexTable.setText(row, 5, String.valueOf(row));
-
-
 									infotext = listI.get(i).getInfotext();
 
 									Eigenschaft e = new Eigenschaft();
@@ -463,8 +461,6 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText(
-								"Beim Herausholen der Optionen ist ein " + "Fehler aufgetreten.");
 					}
 
 					@Override
@@ -477,6 +473,8 @@ public class EditInfo extends VerticalPanel {
 
 							i = 0;
 							i = row2 - 2;
+							
+							
 
 							if (listE.get(i).getTyp().equals("A")) {
 
@@ -528,14 +526,10 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel
-								.setText("Beim Löschen der Info ist ein Fehler aufgetreten.");
 					}
 
 					@Override
 					public void onSuccess(Void result) {
-						informationLabel.setText(
-								"Die Info wurde gelöscht, da das Eingabefeld geleert wurde.");
 					}
 		});
 	}
@@ -558,12 +552,10 @@ public class EditInfo extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override
 					public void onSuccess(Void result) {
-						informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
 						if (profiltyp.equals("Np")) {
 							ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
@@ -591,12 +583,21 @@ public class EditInfo extends VerticalPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				informationLabel.setText("Es trat ein Fehler auf.");
 			}
 
 			@Override
 			public void onSuccess(Void result) {
-				informationLabel.setText("Es wurden alle Infos gelöscht.");
+				if (profiltyp.equals("Np")){
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+				
+				else if (profiltyp.equals("Sp")){
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
 			}
 		});
 	}

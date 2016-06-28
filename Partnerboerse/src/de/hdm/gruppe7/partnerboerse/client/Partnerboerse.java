@@ -53,7 +53,9 @@ public class Partnerboerse implements EntryPoint {
 		setStyles();
 
 		
-		// Loginservice von Google
+		/*
+		 * Loginservice von Google
+		 */
 		loginService.login(GWT.getHostPageBaseURL() + editorHtmlName,
 				loginExecute());
 
@@ -161,7 +163,6 @@ public class Partnerboerse implements EntryPoint {
 
 	public static void getMenu() {
 		RootPanel.get("Navigator").add(new Navigator(np));
-		// RootPanel.get("Navigator2").add(loginPanel);
 	}
 
 }

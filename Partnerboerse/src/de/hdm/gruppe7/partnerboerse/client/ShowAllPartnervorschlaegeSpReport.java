@@ -28,9 +28,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	 * Neues Nutzerprofil-Objekt anlegen mit Login-Infos.
 	 */
 	private Nutzerprofil nutzerprofil = null;
-	
+
 	/**
-	 * Widgets erzeugen. 
+	 * Widgets erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 	private HorizontalPanel auswahlPanel = new HorizontalPanel();
@@ -39,8 +39,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private ListBox auswahlListBox = new ListBox();
 	private Button anzeigenButton = new Button("Partnervorschlaege anzeigen");
-	
-	
+
 	/**
 	 * Konstruktor erstellen.
 	 */
@@ -60,9 +59,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 		suchprofileAnzeigen();
 
 		/**
-		 * ClickHaendler für den Button, der das Suchprofil auswählt. 
-		 * Für das ausgewaehlte Suchprofil wird anschliessend der Report für
-		 * alle Partnervorschlaege anhand des Suchprofils ausgelesen.
+		 * ClickHaendler fï¿½r den Button, der das Suchprofil auswï¿½hlt. Fï¿½r das
+		 * ausgewaehlte Suchprofil wird anschliessend der Report fï¿½r alle
+		 * Partnervorschlaege anhand des Suchprofils ausgelesen.
 		 */
 		anzeigenButton.addClickHandler(new ClickHandler() {
 
@@ -73,17 +72,16 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								infoLabel.setText("Es trat ein Fehler auf.");
 							}
 
 							@Override
 							public void onSuccess(AllPartnervorschlaegeSpReport report) {
 								if (report != null) {
+									
 									/*
 									 * Neue HTML-Seite fuer den
 									 * Suchprofil-Report erzeugen.
 									 */
-
 									HTMLReportWriter writer = new HTMLReportWriter();
 
 									writer.process(report);
@@ -96,7 +94,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 			}
 		});
 		/**
-		 * Widgets zum vertikalen Panel hinzufuegen. 
+		 * Widgets zum vertikalen Panel hinzufuegen.
 		 */
 		verPanel.add(auswahlLabel);
 		auswahlPanel.add(infoLabel);
@@ -114,7 +112,6 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override

@@ -58,13 +58,15 @@ public class CreateInfo extends VerticalPanel {
 	private FlexTable showEigenschaftFlexTable = new FlexTable();
 	private Button createInfosButton = new Button("Infos anlegen");
 	private Label ueberschriftLabel = new Label("Infos anlegen:");
-	private Label informationLabel = new Label();
 
 	/**
 	 * Konstruktor erstellen.
 	 *
-	 * @param profilId Die Profil-Id, entweder des Nutzerprofils oder des Suchprofils
-	 * @param profiltyp Der Profiltyp, entweder mit dem Inhalt "Np" (Nutzerprofil) oder "Sp" (Suchprofil)
+	 * @param profilId
+	 *            Die Profil-Id, entweder des Nutzerprofils oder des Suchprofils
+	 * @param profiltyp
+	 *            Der Profiltyp, entweder mit dem Inhalt "Np" (Nutzerprofil)
+	 *            oder "Sp" (Suchprofil)
 	 */
 	public CreateInfo(final int profilId, final String profiltyp) {
 		this.add(verPanel);
@@ -78,15 +80,15 @@ public class CreateInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
 		/**
-		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank herausgeholt, ausgelesen
-		 * und anschliessend der Tabelle hinzugefuegt. Erst die Beschreibungsinfos, danach die Auswahlinfos. 
+		 * Die Eigenschaften werden mit Hilfe eines Maps aus der Datenbank
+		 * herausgeholt, ausgelesen und anschliessend der Tabelle hinzugefuegt.
+		 * Erst die Beschreibungsinfos, danach die Auswahlinfos.
 		 */
 		ClientsideSettings.getPartnerboerseAdministration().getAllEigenschaften(
 				new AsyncCallback<Map<List<Beschreibungseigenschaft>, List<Auswahleigenschaft>>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Beim Herausholen der Eigenschaften trat ein Fehler auf.");
 					}
 
 					@Override
@@ -101,20 +103,23 @@ public class CreateInfo extends VerticalPanel {
 
 							for (Beschreibungseigenschaft eigB : listEigB) {
 
+								showEigenschaftFlexTable.setCellPadding(6);
+								showEigenschaftFlexTable.getColumnFormatter().addStyleName(1, "TableHeader");
+								showEigenschaftFlexTable.addStyleName("FlexTable");
+
 								row++;
 
 								eigenschaftId = null;
-
-								showEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
+								Label id = new Label(String.valueOf(eigB.getEigenschaftId()));
 
 								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
 
-								showEigenschaftFlexTable.setText(row, 1, eigenschaftId);
-								showEigenschaftFlexTable.setText(row, 2, eigB.getErlaeuterung());
-
+								showEigenschaftFlexTable.setWidget(row, 0, id);
+								showEigenschaftFlexTable.setText(row, 1, eigB.getErlaeuterung());
+								id.setVisible(false);
 								final TextArea textArea = new TextArea();
 
-								showEigenschaftFlexTable.setWidget(row, 3, textArea);
+								showEigenschaftFlexTable.setWidget(row, 2, textArea);
 
 								String defaultValue = eigB.getBeschreibungstext();
 
@@ -124,17 +129,21 @@ public class CreateInfo extends VerticalPanel {
 							listA = result.get(listEigB);
 
 							for (Auswahleigenschaft eigA : listA) {
+								showEigenschaftFlexTable.setCellPadding(6);
+								showEigenschaftFlexTable.getColumnFormatter().addStyleName(1, "TableHeader");
+								showEigenschaftFlexTable.addStyleName("FlexTable");
 
 								row++;
 
-								showEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
+								Label id = new Label(String.valueOf(eigA.getEigenschaftId()));
 
-								showEigenschaftFlexTable.setText(row, 1, String.valueOf(eigA.getEigenschaftId()));
-								showEigenschaftFlexTable.setText(row, 2, eigA.getErlaeuterung());
+								showEigenschaftFlexTable.setWidget(row, 0, id);
+								showEigenschaftFlexTable.setText(row, 1, eigA.getErlaeuterung());
+								id.setVisible(false);
 
 								final ListBox lb = new ListBox();
 
-								showEigenschaftFlexTable.setWidget(row, 3, lb);
+								showEigenschaftFlexTable.setWidget(row, 2, lb);
 
 								List<String> optionen = eigA.getOptionen();
 
@@ -154,12 +163,13 @@ public class CreateInfo extends VerticalPanel {
 				});
 
 		/**
-		 * ClickHandler fuer den Button zum Anlegen der Infos. 
-		 * Die befuellte Tabelle wird durchlaufen und die Eingaben des Nutzers herausgelesen.
-		 * Eine neue Info wird instanziiert und die Daten dieser Info zugewiesen. 
-		 * Ist ein Eingabefeld leer oder identisch mit dem vordefinierten Beschreibungstext, 
-		 * der im Eingabefeld erscheint, so wird die Info nicht angelegt. Ebenso bei der Angabe 
-		 * "Keine Auswahl" in den Auswahlboxen.
+		 * ClickHandler fuer den Button zum Anlegen der Infos. Die befuellte
+		 * Tabelle wird durchlaufen und die Eingaben des Nutzers herausgelesen.
+		 * Eine neue Info wird instanziiert und die Daten dieser Info
+		 * zugewiesen. Ist ein Eingabefeld leer oder identisch mit dem
+		 * vordefinierten Beschreibungstext, der im Eingabefeld erscheint, so
+		 * wird die Info nicht angelegt. Ebenso bei der Angabe "Keine Auswahl"
+		 * in den Auswahlboxen.
 		 */
 
 		createInfosButton.addClickHandler(new ClickHandler() {
@@ -175,9 +185,9 @@ public class CreateInfo extends VerticalPanel {
 					k = 0;
 					k = i - 2;
 
-					String eigenschaftIdTable = showEigenschaftFlexTable.getText(i, 1);
+					String eigenschaftIdTable = showEigenschaftFlexTable.getText(i, 0);
 
-					Widget w = showEigenschaftFlexTable.getWidget(i, 3);
+					Widget w = showEigenschaftFlexTable.getWidget(i, 2);
 
 					if (w instanceof TextArea) {
 
@@ -187,7 +197,6 @@ public class CreateInfo extends VerticalPanel {
 						}
 
 						else if (((TextArea) w).getText().isEmpty()) {
-							informationLabel.setText("Das Eingabefeld ist leer.");
 						}
 
 						else {
@@ -230,28 +239,24 @@ public class CreateInfo extends VerticalPanel {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								informationLabel.setText("Es trat ein Fehler auf.");
 							}
 
 							@Override
 							public void onSuccess(List<Info> result) {
-								informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
 								if (profiltyp.equals("Np")) {
-									
-								
+
 									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-									
-									
-								Window.Location.replace("Partnerboerse.html");
-									
+
+									Window.Location.replace("Partnerboerse.html");
+
 									RootPanel.get("Details").clear();
 									RootPanel.get("Navigator").add(new Navigator(nutzerprofil));
 									RootPanel.get("Details").add(showNp);
-									
+
 								}
 
-						        else if (profiltyp.equals("Sp")) {
+						else if (profiltyp.equals("Sp")) {
 									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
 									RootPanel.get("Details").clear();
 									RootPanel.get("Details").add(showSp);
@@ -267,6 +272,5 @@ public class CreateInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showEigenschaftFlexTable);
 		verPanel.add(createInfosButton);
-		verPanel.add(informationLabel);
 	}
 }

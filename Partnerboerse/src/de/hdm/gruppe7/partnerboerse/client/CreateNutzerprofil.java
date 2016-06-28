@@ -68,7 +68,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 	private ListBox religionListBox = new ListBox();
 	private Button createNutzerprofilButton = new Button("Profil anlegen");
 	private Button abbrechenButton = new Button("Abbrechen");
-	private Label infoLabel = new Label();
 	private Label reqLabel1 = new Label("* Pflichtfeld");
 	private Label reqLabel2 = new Label("* Pflichtfeld");
 	private Label reqLabel3 = new Label("* Pflichtfeld");
@@ -118,7 +117,7 @@ public class CreateNutzerprofil extends VerticalPanel {
 		createNutzerprofilFlexTable.setText(1, 0, "Nachname");
 		createNutzerprofilFlexTable.setText(2, 0, "Geschlecht");
 		createNutzerprofilFlexTable.setText(3, 0, "Geburtsdatum");
-		createNutzerprofilFlexTable.setText(4, 0, "Körpergröße");
+		createNutzerprofilFlexTable.setText(4, 0, "Körpergröße in cm");
 		createNutzerprofilFlexTable.setText(5, 0, "Haarfarbe");
 		createNutzerprofilFlexTable.setText(6, 0, "Raucherstatus");
 		createNutzerprofilFlexTable.setText(7, 0, "Religion");
@@ -217,7 +216,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(createNutzerprofilFlexTable);
 		verPanel.add(buttonPanel);
-		verPanel.add(infoLabel);
 		
 		
 		/**
@@ -313,7 +311,6 @@ public class CreateNutzerprofil extends VerticalPanel {
 						profiltyp);
 				RootPanel.get("Details").clear();
 				
-	//			RootPanel.get("Navigator").add(new Navigator());
 				RootPanel.get("Details").add(createInfo); 
 				
 			}

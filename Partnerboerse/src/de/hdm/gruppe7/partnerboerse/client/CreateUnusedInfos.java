@@ -232,7 +232,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Beim Herausholen der Eigenschaften trat ein Fehler auf.");
 					}
 
 					@Override
@@ -240,8 +239,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 						showUnusedEigenschaftFlexTable.setCellPadding(6);
 						showUnusedEigenschaftFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
 						showUnusedEigenschaftFlexTable.addStyleName("FlexTable");
-
-						informationLabel.setText("Die Methode wurde aufgerufen.");
 
 						row = showUnusedEigenschaftFlexTable.getRowCount();
 
@@ -255,13 +252,12 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 								row++;
 
+								Label id = new Label(String.valueOf(eigB.getEigenschaftId()));
+								
 								eigenschaftId = null;
 
-								showUnusedEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
-
-								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
-
-								showUnusedEigenschaftFlexTable.setText(row, 1, eigenschaftId);
+								showUnusedEigenschaftFlexTable.setWidget(row, 1, id);
+								id.setVisible(false);
 
 								showUnusedEigenschaftFlexTable.setText(row, 2, eigB.getErlaeuterung());
 
@@ -280,9 +276,10 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 								row++;
 
-								showUnusedEigenschaftFlexTable.setText(row, 0, String.valueOf(profilId));
-
-								showUnusedEigenschaftFlexTable.setText(row, 1, String.valueOf(eigA.getEigenschaftId()));
+								Label id = new Label(String.valueOf(eigA.getEigenschaftId()));
+								
+								showUnusedEigenschaftFlexTable.setWidget(row, 1, id);
+								id.setVisible(false);
 
 								showUnusedEigenschaftFlexTable.setText(row, 2, eigA.getErlaeuterung());
 
@@ -313,6 +310,7 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 							showUnusedEigenschaftFlexTable.setVisible(false);
 							createInfosButton.setVisible(false);
+							abbrechenButton.setVisible(false);
 							informationLabel.setVisible(false);
 
 							ueberschriftLabel.setVisible(true);
@@ -360,12 +358,10 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es trat ein Fehler auf.");
 					}
 
 					@Override
 					public void onSuccess(List<Info> result) {
-						informationLabel.setText("Die Infos wurden " + "erfolgreich angelegt.");
 
 						if (profiltyp.equals("Np")) {
 
