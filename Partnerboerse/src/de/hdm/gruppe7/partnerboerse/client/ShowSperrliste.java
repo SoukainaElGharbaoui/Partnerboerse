@@ -85,7 +85,7 @@ public class ShowSperrliste extends VerticalPanel {
 		sperrlisteFlexTable.setCellPadding(6);
 		sperrlisteFlexTable.getRowFormatter().addStyleName(0, "TableHeader");
 		
-		sperrlisteFlexTable.getCellFormatter().setWidth(0, 0, "0px");
+//		sperrlisteFlexTable.getFlexCellFormatter().set
 
 		/**
 		 * Kopfzeile der Tabelle festlegen.
