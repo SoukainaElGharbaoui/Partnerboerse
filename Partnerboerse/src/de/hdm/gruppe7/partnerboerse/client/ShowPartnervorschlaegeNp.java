@@ -22,17 +22,18 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt, erzeugen. 
+	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
+	 * erzeugen.
 	 */
 	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
 
 	/**
-	 * Panel erzeugen. 
+	 * Panel erzeugen.
 	 */
 	private VerticalPanel verPanel = new VerticalPanel();
 
 	/**
-	 * Widgets erzeugen. 
+	 * Widgets erzeugen.
 	 */
 	private Label ueberschriftLabel = new Label("Diese Profile könnten Ihnen gefallen:");
 	private Label infoLabel = new Label();
@@ -45,35 +46,32 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 	 * Variable erstellen, die die Anzahl der befuellten Zeilen enthaelt.
 	 */
 	private int zaehler;
-	
+
 	/**
-	 * Variable fuer den Listtyp erstellen.  
+	 * Variable fuer den Listtyp erstellen.
 	 */
 	private String listtyp;
-	
-//	/**
-//	 * Variable fuer die Fremdprofil-ID erstellen.
-//	 */
-//	private int fremdprofilId;
 
 	/**
 	 * Konstruktor erstellen.
-	 * @param listtyp Der Listtyp (PvNp). 
+	 * 
+	 * @param listtyp
+	 *            Der Listtyp (PvNp).
 	 */
 	public ShowPartnervorschlaegeNp(String listtyp) {
 		this.listtyp = listtyp;
 		run();
-		
+
 	}
-	
+
 	/**
-	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 * Methode erstellen, die den Aufbau der Seite startet.
 	 */
 	public void run() {
 		this.add(verPanel);
 
 		/**
-		 * CSS anwenden und die Tabelle formatieren. 
+		 * CSS anwenden und die Tabelle formatieren.
 		 */
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		informationLabel.addStyleName("partnerboerse-label");
@@ -84,18 +82,17 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		/**
 		 * Erste Zeile der Tabelle festlegen.
 		 */
-		partnervorschlaegeNpFlexTable.setText(0, 0, "F-ID");
-		partnervorschlaegeNpFlexTable.setText(0, 1, "Uebereinstimmung in %");
-		partnervorschlaegeNpFlexTable.setText(0, 2, "Vorname");
-		partnervorschlaegeNpFlexTable.setText(0, 3, "Nachname");
-		partnervorschlaegeNpFlexTable.setText(0, 4, "Geburtsdatum");
-		partnervorschlaegeNpFlexTable.setText(0, 5, "Geschlecht");
-		partnervorschlaegeNpFlexTable.setText(0, 6, "Anzeigen");
-		
+		partnervorschlaegeNpFlexTable.setText(0, 0, "Übereinstimmung");
+		partnervorschlaegeNpFlexTable.setText(0, 1, "Vorname");
+		partnervorschlaegeNpFlexTable.setText(0, 2, "Nachname");
+		partnervorschlaegeNpFlexTable.setText(0, 3, "Geburtsdatum");
+		partnervorschlaegeNpFlexTable.setText(0, 4, "Geschlecht");
+		partnervorschlaegeNpFlexTable.setText(0, 5, "Anzeigen");
+
 		befuelleTabelleNp();
 
 		/**
-		 * Widgets dem Panel hinzufuegen. 
+		 * Widgets dem Panel hinzufuegen.
 		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(ergebnisLabel);
@@ -104,10 +101,10 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 		verPanel.add(partnervorschlaegeNpFlexTable);
 
 	}
-	
+
 	/**
-	 * Methode erstellen, die die anangesehenen Partnervorschlaege geordnet nach Aehnlichkeit ausgibt
-	 * und in die Tabelle eintraegt. 
+	 * Methode erstellen, die die anangesehenen Partnervorschlaege geordnet nach
+	 * Aehnlichkeit ausgibt und in die Tabelle eintraegt.
 	 */
 	public void befuelleTabelleNp() {
 		ClientsideSettings.getPartnerboerseAdministration().getGeordnetePartnervorschlaegeNp(nutzerprofil.getProfilId(),
@@ -115,7 +112,6 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf");
 					}
 
 					@Override
@@ -129,30 +125,31 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 							row++;
 
-							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(fremdprofilId));
-							partnervorschlaegeNpFlexTable.setText(row, 1, String.valueOf(np.getAehnlichkeit()) + "%");
-							partnervorschlaegeNpFlexTable.setText(row, 2, np.getVorname());
-							partnervorschlaegeNpFlexTable.setText(row, 3, np.getNachname());
+							partnervorschlaegeNpFlexTable.setText(row, 0, String.valueOf(np.getAehnlichkeit()) + "%");
+							partnervorschlaegeNpFlexTable.setText(row, 1, np.getVorname());
+							partnervorschlaegeNpFlexTable.setText(row, 2, np.getNachname());
 
 							Date geburtsdatum = np.getGeburtsdatumDate();
 							String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 
-							partnervorschlaegeNpFlexTable.setText(row, 4, geburtsdatumString);
-							partnervorschlaegeNpFlexTable.setText(row, 5, np.getGeschlecht());
+							partnervorschlaegeNpFlexTable.setText(row, 3, geburtsdatumString);
+							partnervorschlaegeNpFlexTable.setText(row, 4, np.getGeschlecht());
 
 							/**
-							 * Anzeigen-Button fuer die Anzeige eines Fremdprofils erzeugen. 
+							 * Anzeigen-Button fuer die Anzeige eines
+							 * Fremdprofils erzeugen.
 							 */
 							anzeigenButton = new Button("Anzeigen");
-							partnervorschlaegeNpFlexTable.setWidget(row, 6, anzeigenButton);
-
-							partnervorschlaegeNpFlexTable.setText(row, 7, String.valueOf(row));
+							partnervorschlaegeNpFlexTable.setWidget(row, 5, anzeigenButton);
 
 							/**
-							 * ClickHandler fuer den Button zum Anzeigen eines Fremdprofils erzeugen. 
-							 * Bei Betaetigung dieses Buttons wird die Seite zum Anzeigen des Fremdprofils 
-							 * aufgerufen. Zudem wird dem Fremdprofil ein Besuch gesetzt, damit es beim 
-							 * naechsten Aufruf der unangesehenen Partnervorschlaege nicht mehr erscheint. 
+							 * ClickHandler fuer den Button zum Anzeigen eines
+							 * Fremdprofils erzeugen. Bei Betaetigung dieses
+							 * Buttons wird die Seite zum Anzeigen des
+							 * Fremdprofils aufgerufen. Zudem wird dem
+							 * Fremdprofil ein Besuch gesetzt, damit es beim
+							 * naechsten Aufruf der unangesehenen
+							 * Partnervorschlaege nicht mehr erscheint.
 							 */
 							anzeigenButton.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
@@ -161,26 +158,26 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 
 												@Override
 												public void onFailure(Throwable caught) {
-													infoLabel.setText("Es trat ein Fehler auf.");
 												}
 
 												@Override
 												public void onSuccess(Void result) {
 													String profiltyp = "Fp";
-													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId, profiltyp, listtyp);
+													String suchprofilName = null;
+													ShowFremdprofil showFremdprofil = new ShowFremdprofil(fremdprofilId,
+															profiltyp, listtyp, suchprofilName);
 													RootPanel.get("Details").clear();
 													RootPanel.get("Details").add(showFremdprofil);
 												}
 
 											});
-									}
+								}
 							});
 						}
 
-						
 						/**
-						 * Bestehen keine unangesehenen Partnervorschlaege, wird eine Information ueber diesen 
-						 * Zustand ausgegeben. 
+						 * Bestehen keine unangesehenen Partnervorschlaege, wird
+						 * eine Information ueber diesen Zustand ausgegeben.
 						 */
 						boolean befuellt = pruefeLeereTable();
 						if (befuellt == true) {
@@ -190,12 +187,12 @@ public class ShowPartnervorschlaegeNp extends VerticalPanel {
 						}
 					}
 				});
-		
+
 	}
-	
-	
+
 	/**
-	 * Methode erstellen, die prueft, ob die Tabelle leer ist. 
+	 * Methode erstellen, die prueft, ob die Tabelle leer ist.
+	 * 
 	 * @return Boolscher Wert, der angibt, ob die Tabelle leer ist.
 	 */
 	public boolean pruefeLeereTable() {

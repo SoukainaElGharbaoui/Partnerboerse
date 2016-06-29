@@ -160,7 +160,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
-		Nutzerprofil n = Partnerboerse.getNp();
+		Nutzerprofil n = new Nutzerprofil();
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
