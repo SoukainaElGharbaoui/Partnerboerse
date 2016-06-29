@@ -240,7 +240,8 @@ public class EditNutzerprofil extends VerticalPanel {
 				new AsyncCallback<Nutzerprofil>() {
 
 					public void onFailure(Throwable caught) {
-						infoLabel.setText("Es trat ein Fehler auf.");
+						infoLabel.setText("Es trat ein Fehler beim Herausholen "
+								+ "des Nutzerprofils auf.");
 					}
 
 					public void onSuccess(Nutzerprofil result) {
@@ -346,7 +347,8 @@ public class EditNutzerprofil extends VerticalPanel {
 			
 
 						public void onFailure(Throwable caught) {
-							infoLabel.setText("Es trat ein Fehler auf");
+							infoLabel.setText("Es trat ein Fehler beim Aktualisieren "
+									+ "des Nutzerprofils auf");
 						}
 
 						public void onSuccess(Void result) {
