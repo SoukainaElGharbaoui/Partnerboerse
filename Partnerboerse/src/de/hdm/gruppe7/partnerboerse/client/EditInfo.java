@@ -256,9 +256,17 @@ public class EditInfo extends VerticalPanel {
 		 */
 		abbrechenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ShowNutzerprofil showNutzerprofil = new ShowNutzerprofil(profilId, profiltyp);
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(showNutzerprofil);
+				if (profiltyp.equals("Np")) {
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
+
+				else if (profiltyp.equals("Sp")) {
+					ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
 			}
 		});
 
@@ -325,9 +333,17 @@ public class EditInfo extends VerticalPanel {
 							 */
 							if (editInfoFlexTable.getRowCount() == 2) {
 
-								ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
-								RootPanel.get("Details").clear();
-								RootPanel.get("Details").add(showNp);
+								if (profiltyp.equals("Np")) {
+									ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showNp);
+								}
+
+								else if (profiltyp.equals("Sp")) {
+									ShowSuchprofil showSp = new ShowSuchprofil(profilId, profiltyp);
+									RootPanel.get("Details").clear();
+									RootPanel.get("Details").add(showSp);
+								}
 							}
 						}
 					}
