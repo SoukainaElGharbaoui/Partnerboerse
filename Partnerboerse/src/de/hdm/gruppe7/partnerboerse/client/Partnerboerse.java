@@ -12,13 +12,15 @@ import de.hdm.gruppe7.partnerboerse.shared.PartnerboerseAdministrationAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Die Klasse <b>Partnerboerse</b> implementiert den EntryPoint.
+ * Die Klasse Partnerboerse implementiert den EntryPoint.
  * 
  */
 public class Partnerboerse implements EntryPoint {
 
 
-
+	/**
+	 * Neues Nutzerprofil erzeugen
+	 */
 	Nutzerprofil nutzerprofil = new Nutzerprofil();
 
 	
@@ -35,15 +37,14 @@ public class Partnerboerse implements EntryPoint {
 	 */
 	private static Nutzerprofil np = null;
 	private static LoginInfo loginInfo = null;
+	
+	private static String editorHtmlName = "Partnerboerse.html";
 
 	private PartnerboerseAdministrationAsync admin = ClientsideSettings
 			.getPartnerboerseAdministration();
 	private LoginServiceAsync loginService = ClientsideSettings
 			.getLoginService();
 
-	
-	private static String editorHtmlName = "Partnerboerse.html";
-	
 	/**
 	 * Diese Klasse sichert die Implementierung des Interface EntryPoint. Daher
 	 * benoetigen wir die Methode public void onModuleLoad(). Diese ist das
@@ -52,15 +53,20 @@ public class Partnerboerse implements EntryPoint {
 	public void onModuleLoad() {
 		setStyles();
 
-		
-		/*
-		 * Loginservice von Google
+		/**
+		 * Login-Methode aufrufen und anschließend auf die Hostpage leiten.
 		 */
 		loginService.login(GWT.getHostPageBaseURL() + editorHtmlName,
 				loginExecute());
 
 	}
-
+	
+	/**
+	 * AsyncCallback für die Login-Mathode. Bei erhalt der LoginInfos wir die Methode
+	 * pruefeObMutzerNeu() aufgerufen.
+	 * 
+	 * @return
+	 */
 	private AsyncCallback<LoginInfo> loginExecute() {
 		AsyncCallback<LoginInfo> asynCallback = new AsyncCallback<LoginInfo>() {
 			@Override
@@ -86,7 +92,13 @@ public class Partnerboerse implements EntryPoint {
 
 		return asynCallback;
 	}
-
+	
+	/**
+	 * AsyncCallback für die Methode pruefeObMutzerNeu(). Falls der Wert false ist wird die Methode
+	 * getNutzerByEmail() aufgerufen, sonst wird der Nutzer auf CreateNutzerprofil() weitergeleitet.
+	 * 
+	 * @return
+	 */
 	private AsyncCallback<Boolean> pruefeObNutzerNeuExecute(String email) {
 		AsyncCallback<Boolean> asynCallback = new AsyncCallback<Boolean>() {
 			@Override
@@ -119,7 +131,7 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zur�ck
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurueck
 	 * 
 	 * @return Nutzerprofil
 	 */
@@ -128,14 +140,21 @@ public class Partnerboerse implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zur�ck
+	 * Gibt die LoginInfos des aktuell-eingeloggten Nutzerprofils zurueck
 	 * 
-	 * @return Nutzerprofil
+	 * @return loginInfo LoginInfo
 	 */
 	public static LoginInfo getLoginInfo() {
 		return loginInfo;
 	}
 
+	
+	/**
+	 * AsyncCallback für die Methode getNuterprofilByEmail(). Wenn ein Nutzerprofil zurückgeliefert wird,
+	 * wird die Methode getMenu() aurgerufen und das zurückgelieferte Nutzerprofil in die Variable np 
+	 * gespeichert.
+	 * @return
+	 */
 	private AsyncCallback<Nutzerprofil> getNuterprofilByEmailExecute(
 			String email) {
 		AsyncCallback<Nutzerprofil> asynCallback = new AsyncCallback<Nutzerprofil>() {
@@ -155,12 +174,18 @@ public class Partnerboerse implements EntryPoint {
 		return asynCallback;
 	}
 
+	/**
+	 * Methode legt die CSS-Styles für verschiedene Labels fest.
+	 */
 	private void setStyles() {
 		begruessenN.setStyleName("welcome-label");
 		begruessenN2.setStyleName("welcome-label2");
 
 	}
 
+	/**
+	 * Methode erzeugt ruft das Panel auf, durch welches die Menubar sichtbar wird.
+	 */
 	public static void getMenu() {
 		RootPanel.get("Navigator").add(new Navigator(np));
 	}

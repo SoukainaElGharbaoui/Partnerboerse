@@ -17,8 +17,6 @@ import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;

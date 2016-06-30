@@ -2,6 +2,9 @@ package de.hdm.gruppe7.partnerboerse.client;
 
 import java.io.Serializable;
 
+/**
+ * Realisierung iener LoginInfo
+ */
 public class LoginInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,7 +15,7 @@ public class LoginInfo implements Serializable {
 	private boolean loggedIn = false;
 
 	/**
-	 * Getter, der die e-Mail Adresse des Users zurückliefert
+	 * Getter, der die e-Mail Adresse des Users zurï¿½ckliefert
 	 * 
 	 * @return email
 	 */
@@ -21,7 +24,7 @@ public class LoginInfo implements Serializable {
 	}
 
 	/**
-	 * Getter, der die Google Logout-URL zurückliefert
+	 * Getter, der die Google Logout-URL zurï¿½ckliefert
 	 * 
 	 * @return logout
 	 */
@@ -30,7 +33,7 @@ public class LoginInfo implements Serializable {
 	}
 
 	/**
-	 * Getter, der den Nickname des Users zurückliefert
+	 * Getter, der den Nickname des Users zurï¿½ckliefert
 	 * 
 	 * @return nickname
 	 */
@@ -65,18 +68,34 @@ public class LoginInfo implements Serializable {
 		this.nickname = nickname;
 	}
 
+	/**
+	 * Methode gibt zurÃ¼ck ob ein Nutzer eingeloggt ist.
+	 * @return loggedIn
+	 */
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
-
+	
+	/**
+	 * 
+	 * @param loggedIn
+	 */
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
 
+	/**
+	 * Getter fuer die LoginUrl
+	 * @return loginUrl
+	 */
 	public String getLoginUrl() {
 		return loginUrl;
 	}
-
+	
+	/**
+	 * Setter fuer die LoginUrl
+	 * @param loginUrl
+	 */
 	public void setLoginUrl(String loginUrl) {
 		this.loginUrl = loginUrl;
 	}

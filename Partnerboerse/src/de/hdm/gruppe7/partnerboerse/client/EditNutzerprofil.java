@@ -1,12 +1,7 @@
 
 package de.hdm.gruppe7.partnerboerse.client;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import org.apache.commons.lang3.time.DateUtils;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -64,6 +59,9 @@ public class EditNutzerprofil extends VerticalPanel {
 	private Label warnungLabel = new Label();
 	private Label pfadLabelNpA = new Label("Zurück zu: Profil anzeigen");
 	
+	/**
+	 * Variable fuer eine Stunde festlegen
+	 */
 	public static final long HOUR = 3600 * 1000; //in milli-seconds
 
 	/**
@@ -146,41 +144,6 @@ public class EditNutzerprofil extends VerticalPanel {
 				
 				Date geburtsdatum = event.getValue();
 				
-//				int month = 
-//				int day =
-//				
-//				GregorianCalendar gc = new GregorianCalendar();
-//				gc.setTime(geburtsdatum);
-//				
-//				
-//				Label infoLabel = new Label();
-//				verPanel.add(infoLabel);
-//				
-//				infoLabel.setText(String.valueOf(geburtsdatum.getTime()));
-//				long millisec = geburtsdatum.getTime();
-//				
-//				long day = millisec / (24 * 60 * 60 * 1000);
-//				
-//				infoLabel.setText(String.valueOf(day));
-//				
-//				String startY = "01.01.1970 00:00:00";
-//				
-//				Date startYear;
-//				try {
-//					DateTimeFormat dt = DateTimeFormat("dd.MM.yyyy HH:mm:ss");
-//					Date startYear = dt.parse(startY);
-//					infoLabel.setText(String.valueOf(startYear));
-//					
-//				} catch (ParseException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//				String geburtsdatum2 = DateTimeFormat.getFormat("dd.MM.yyyy").format(startY);
-				
-//				Date geburtsdatum2 = new Date(geburtsdatum.getTime() + 12 * HOUR);
-				
-//				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum2);
 				String geburtsdatumString = DateTimeFormat.getFormat("dd.MM.yyyy").format(geburtsdatum);
 
 				geburtsdatumInhalt.setText(geburtsdatumString);

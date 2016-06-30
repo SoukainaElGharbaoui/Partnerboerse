@@ -69,6 +69,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 	 * 
 	 * @param listtyp
 	 *            Der Listtyp (PvSp)
+	 * @param suchprofilName  Name des Suchprofils
 	 */
 	public ShowPartnervorschlaegeSp(String listtyp, String suchprofilName) {
 		this.listtyp = listtyp;

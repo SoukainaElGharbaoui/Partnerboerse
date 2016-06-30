@@ -42,6 +42,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
+	 * @param nutzerprofil  Nutzerprofil, fuer welches der Report erstellt werden soll
 	 */
 	public ShowAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil) {
 		this.nutzerprofil = nutzerprofil;
@@ -59,7 +60,7 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 		suchprofileAnzeigen();
 
 		/**
-		 * ClickHaendler f�r den Button, der das Suchprofil ausw�hlt. F�r das
+		 * ClickHaendler f�r den Button, der das Suchprofil auswaehlt. Fuer das
 		 * ausgewaehlte Suchprofil wird anschliessend der Report f�r alle
 		 * Partnervorschlaege anhand des Suchprofils ausgelesen.
 		 */
@@ -78,9 +79,9 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 							public void onSuccess(AllPartnervorschlaegeSpReport report) {
 								if (report != null) {
 									
-									/*
+									/**
 									 * Neue HTML-Seite fuer den
-									 * Suchprofil-Report erzeugen.
+									 * AllPartnervorschlaegeSpReport-Report erzeugen.
 									 */
 									HTMLReportWriter writer = new HTMLReportWriter();
 
@@ -104,7 +105,8 @@ public class ShowAllPartnervorschlaegeSpReport extends VerticalPanel {
 	}
 
 	/**
-	 * AuswahlListBox befuellen
+	 * AuswahlListBox befuellen, indem alle Suchprofile eines Nutzers abgerufen werden und in die
+	 * ListBox geschrieben werden.
 	 */
 	public void suchprofileAnzeigen() {
 		ClientsideSettings.getPartnerboerseAdministration().getAllSuchprofileFor(nutzerprofil.getProfilId(),

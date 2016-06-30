@@ -1,6 +1,7 @@
 package de.hdm.gruppe7.partnerboerse.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllInfosOfNutzerReport;
 import de.hdm.gruppe7.partnerboerse.shared.report.AllPartnervorschlaegeSpReport;
@@ -23,48 +24,28 @@ import de.hdm.gruppe7.partnerboerse.shared.report.AllProfildatenOfNutzerReport;
 public interface ReportGeneratorAsync {
 
 	/**
-	 * Initialisierung des Objekts.
-	 * 
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl#init()
 	 */
 	void init(AsyncCallback<Void> callback);
 
 	/**
-	 * Methode, die einen fertigen Report vom Typ AllInfosOfNutzerReport zurueckliefert. 
-	 * Der Report stellt alle Infos eines Nutzerprofils dar.
-	 * 
-	 * @param np Nutzerprofil-Objekt
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl#createAllInfosOfNutzerReport(Nutzerprofil)
 	 */
 	void createAllInfosOfNutzerReport(Nutzerprofil np, AsyncCallback<AllInfosOfNutzerReport> callback);
 
 	/**
-	 * Methode, die einen fertigen Report vom Typ AllProfildatenOfNutzerReport zurueckliefert.
-	 * Der Report stellt alle Profildaten eines Nutzerprofils dar.
-	 * 
-	 * @param np Nutzerprofil-Objekt
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl#createAllProfildatenOfNutzerReport(Nutzerprofil)
 	 */
 	void createAllProfildatenOfNutzerReport(Nutzerprofil np, AsyncCallback<AllProfildatenOfNutzerReport> callback);
 
 	/**
-	 * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeNpReport zurueckliefert.
-	 * Der Report stellt alle unangesehenen Partnervorschlaege eines Nutzerprofils dar.
-	 * 
-	 * @param nutzerprofil Nutzerprofil-Objekt
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl#createAllPartnervorschlaegeNpReport(Nutzerprofil)
 	 */
 	void createAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil,
 			AsyncCallback<AllPartnervorschlaegeNpReport> callback);
 
 	/**
-	 * Methode, die einen fertigen Report vom Typ AllPartnervorschlaegeSpReport zurueckliefert.
-	 * Der Report stellt alle Partnervorschlaege, die anhand eines Suchprofils ermittelt wurden, 
-	 * für ein Nutzerprofil dar.
-	 * 
-	 * @param nutzerprofil Nutzerprofil-Objekt
-	 * @param suchprofilname Name des Suchprofil-Objektes
-	 * @param callback
+	 * @see de.hdm.gruppe7.partnerboerse.server.report.ReportGeneratorImpl#createAllPartnervorschlaegeSpReport(Nutzerprofil, String)
 	 */
 	void createAllPartnervorschlaegeSpReport(Nutzerprofil nutzerprofil, String suchprofilname,
 			AsyncCallback<AllPartnervorschlaegeSpReport> callback);

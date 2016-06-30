@@ -1,46 +1,19 @@
 package de.hdm.gruppe7.partnerboerse.shared;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.gruppe7.partnerboerse.client.LoginInfo;
-import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
+/**
+ * Synchrone Schnittstelle fuer den Login.
+ */
 @RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService {
 	
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Beginn: Login
-	 * *************************************************************************
-	 * **
-	 */
-
-	
 	/**
-	 * URL zum Einloggen anfordern.
-	 * 
-	 * @param requestUri
-	 * @return Nutzerprofil-Objekt, welches eingeloggt ist.
-	 * @throws IllegalArgumentException 
+	 * @see de.hdm.gruppe7.partnerboerse.server.LoginServiceImpl#login(String)
 	 */
 	public LoginInfo login(String requestUri) throws IllegalArgumentException;
 	
-	
-
-
-	/*
-	 * *************************************************************************
-	 * ** ABSCHNITT, Ende: Login
-	 * *************************************************************************
-	 * **
-	 */
-
-
-
 }

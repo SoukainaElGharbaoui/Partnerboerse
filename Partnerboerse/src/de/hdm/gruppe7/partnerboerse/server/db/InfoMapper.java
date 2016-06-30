@@ -375,7 +375,7 @@ public class InfoMapper {
 
 	/**
 	 * Ein Auswahleigenschaft-Objekt in die Datenbank einfuegen (Administrator-Funktion).
-	 * @param b Das Auswahleigenschaft-Objekt, das angelegt werden soll. 
+	 * @param a Das Auswahleigenschaft-Objekt, das angelegt werden soll. 
 	 * @return Das angelegte Auswahleigenschaft-Objekt. 
 	 */
 	public Auswahleigenschaft insertAuswahleigenschaft(Auswahleigenschaft a) {

@@ -17,7 +17,7 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Suchprofil;
 import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 
 /**
- *
+ *	In dieser Klasse wird die Menubar erstellt.
  */
 public class Navigator extends HorizontalPanel {
 
@@ -31,11 +31,22 @@ public class Navigator extends HorizontalPanel {
 	int aehnlichkeit = 0;
 
 	/**
-	 * 
+	 * Vertikales Panel erzeugen
+	 */
+	VerticalPanel verPanel1 = new VerticalPanel();
+
+	/**
+	 * Konstruktor erzeugen
+	 * @param np Nutzerprofil
 	 */
 	public Navigator(Nutzerprofil np) {
-
-		VerticalPanel verPanel1 = new VerticalPanel();
+		run();
+	}
+		
+	/**
+	 * Methode erstellen, die den Aufbau der Seite startet. 
+	 */
+	public void run(){
 		this.add(verPanel1);
 
 		/**

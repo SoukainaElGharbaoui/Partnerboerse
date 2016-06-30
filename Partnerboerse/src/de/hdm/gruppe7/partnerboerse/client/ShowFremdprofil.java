@@ -74,8 +74,11 @@ public class ShowFremdprofil extends VerticalPanel {
 	 * @param listtyp
 	 *            Die Seite, von der das Fremdprofil aufgerufen wird (Merkliste,
 	 *            Sperrliste, PartnervorschlaegeNp, PartnervorschlaegeSp).
+	 * @param name 
+	 * 			  Der name des Suchprofils, falls die Seite von Partnervorschlaegen 
+	 * 			  anhand eines Suchprofils aufgerufen wurde.
 	 */
-	public ShowFremdprofil(int fremdprofilId, String profiltyp, String listtyp, String name) {
+	public ShowFremdprofil(int fremdprofilId, String profiltyp, String listtyp, String 	name) {
 		this.fremdprofilId = fremdprofilId;
 		this.profiltyp = profiltyp;
 		this.listtyp = listtyp;

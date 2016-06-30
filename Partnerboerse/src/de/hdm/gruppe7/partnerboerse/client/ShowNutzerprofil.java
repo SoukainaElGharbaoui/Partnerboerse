@@ -22,11 +22,6 @@ import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 public class ShowNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das Login-Infos enthaelt, erzeugen.
-	 */
-	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
-
-	/**
 	 * Panels erzeugen.
 	 */
 	private VerticalPanel nutzerprofilPanel = new VerticalPanel();

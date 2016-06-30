@@ -51,7 +51,6 @@ public class CreateInfo extends VerticalPanel {
 	/**
 	 * Attribute erzeugen
 	 */
-	private String eigenschaftId = null;
 	private int row;
 
 	/**
@@ -112,10 +111,7 @@ public class CreateInfo extends VerticalPanel {
 
 								row++;
 
-								eigenschaftId = null;
 								Label id = new Label(String.valueOf(eigB.getEigenschaftId()));
-
-								eigenschaftId = String.valueOf(eigB.getEigenschaftId());
 
 								showEigenschaftFlexTable.setWidget(row, 0, id);
 								showEigenschaftFlexTable.setText(row, 1, eigB.getErlaeuterung());

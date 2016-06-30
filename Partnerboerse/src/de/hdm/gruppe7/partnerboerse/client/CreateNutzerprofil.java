@@ -29,12 +29,6 @@ import de.hdm.gruppe7.partnerboerse.client.CreateInfo;
 public class CreateNutzerprofil extends VerticalPanel {
 
 	/**
-	 * Neues Nutzerprofil-Objekt, das die Login-Informationen enthaelt,
-	 * erzeugen.
-	 */
-	private Nutzerprofil nutzerprofil = Partnerboerse.getNp();
-
-	/**
 	 * Aktuelle EmailAdresse aus Google-Account holen
 	 */
 	private String email = Partnerboerse.getLoginInfo().getEmailAddress();

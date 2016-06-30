@@ -34,6 +34,7 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 
 	/**
 	 * Konstruktor erstellen.
+	 * @param nutzerprofil Nutzerprofil, für das der Report erstellt werden soll
 	 */
 	public ShowAllPartnervorschlaegeNpReport(Nutzerprofil nutzerprofil) {
 		this.nutzerprofil=nutzerprofil;
@@ -49,8 +50,11 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 		ueberschriftLabel.setText("Einen Moment bitte...");
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 
-
 		reportAuslesen();
+		
+		/**
+		 * Widgets zum vertikalen Panel hinzufuegen
+		 */
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(infoLabel);
 	}
@@ -70,7 +74,7 @@ public class ShowAllPartnervorschlaegeNpReport extends VerticalPanel {
 					public void onSuccess(AllPartnervorschlaegeNpReport report) {
 						if (report != null) {
 							
-							/*
+							/**
 							 * Neue HTML-Seite fuer den Report erzeugen.
 							 */
 							HTMLReportWriter writer = new HTMLReportWriter();

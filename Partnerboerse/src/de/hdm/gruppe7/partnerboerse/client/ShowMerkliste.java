@@ -83,7 +83,6 @@ public class ShowMerkliste extends VerticalPanel {
 		/**
 		 * Kopfzeile der Tabelle festlegen.
 		 */
-//		merklisteFlexTable.setText(0, 0, "F-ID");
 		merklisteFlexTable.setText(0, 1, "Vorname");
 		merklisteFlexTable.setText(0, 2, "Nachname");
 		merklisteFlexTable.setText(0, 3, "Geburtstag");

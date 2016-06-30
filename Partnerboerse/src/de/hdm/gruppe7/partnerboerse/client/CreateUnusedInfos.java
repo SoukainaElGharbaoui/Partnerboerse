@@ -42,7 +42,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 	/**
 	 * Attribute erzeugen
 	 */
-	private String eigenschaftId;
 	private int row;
 	private int zaehler;
 	private int profilId;
@@ -260,8 +259,6 @@ public class CreateUnusedInfos extends VerticalPanel {
 
 								Label id = new Label(String.valueOf(eigB.getEigenschaftId()));
 								
-								eigenschaftId = null;
-
 								showUnusedEigenschaftFlexTable.setWidget(row, 1, id);
 								id.setVisible(false);
 

@@ -34,16 +34,7 @@ public class Nutzerprofil extends Profil {
 	 */
 	private String emailAddress;
 
-	/**
-	 * Login-URL.
-	 */
-	private String loginUrl;
-
-	/**
-	 * Logout-URL.
-	 */
-	private String logoutUrl;
-
+	
 	/**
 	 * Login-Status, auf false gesetzt.
 	 */
@@ -120,7 +111,18 @@ public class Nutzerprofil extends Profil {
 	public void setAehnlichkeit(int aehnlichkeit) {
 		this.aehnlichkeit = aehnlichkeit;
 	}
+	
 
+	/**
+	 * Email-Adresse setzen.
+	 * 
+	 * @param email
+	 */
+	public void setEmailAddress(String email) {
+		this.emailAddress = email;
+	}
+	
+	
 	/**
 	 * E-Mail-Adresse auslesen.
 	 * 
@@ -156,26 +158,6 @@ public class Nutzerprofil extends Profil {
 	 */
 	public boolean getLoggedIn() {
 		return loggedIn;
-	}
-
-	public void setLogoutUrl(String createLogoutURL) {
-		this.logoutUrl = createLogoutURL;
-	}
-
-	public String getLogoutUrl() {
-		return logoutUrl;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
-	public String getLoginUrl() {
-		return loginUrl;
 	}
 
 }

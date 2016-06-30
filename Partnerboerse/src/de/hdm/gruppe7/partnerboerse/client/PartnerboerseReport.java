@@ -5,7 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -17,17 +16,17 @@ import de.hdm.gruppe7.partnerboerse.shared.ReportGeneratorAsync;
 import de.hdm.gruppe7.partnerboerse.shared.bo.Nutzerprofil;
 
 /**
- * Die Klasse PartnerboerseReports implementiert einen zweiten EntryPoint, �ber
- * den die Reports abgerufen werden k�nnen.
+ * Die Klasse PartnerboerseReports implementiert einen zweiten EntryPoint, ueber
+ * den die Reports abgerufen werden koennen.
  * 
  */
 public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
+
+	/**
+	 * Deklaration fuer den Login und den Logout
+	 */
 	ReportGeneratorAsync reportGenerator = null;
-
-	Button unangesehenePartnervorschlaegeButton = new Button("Unangesehene Partnervorschlaege");
-
-	Button partnervorschlaegeSuchprofilButton = new Button("Partnervorschläge anhand von Suchprofilen");
 
 	private static Nutzerprofil np = null;
 
@@ -37,7 +36,11 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	private PartnerboerseAdministrationAsync admin = ClientsideSettings.getPartnerboerseAdministration();
 	private LoginServiceAsync loginService = ClientsideSettings.getLoginService();
 
-	@Override
+	/**
+	 * Diese Klasse sichert die Implementierung des Interface EntryPoint. Daher
+	 * benoetigen wir die Methode public void onModuleLoad(). Diese ist das
+	 * GWT-Pendant der main()-Methode normaler Java-Applikationen.
+	 */
 	public void onModuleLoad() {
 
 		/*
@@ -47,6 +50,9 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 	}
 
+	/**
+	 * Erstellung der MenuBar
+	 */
 	private void createNavigator() {
 
 		MenuBar menu = new MenuBar();
@@ -55,8 +61,6 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		menu.setHeight("39px");
 		menu.setStyleName("MenuBarRep");
 		menu.setAnimationEnabled(true);
-
-		// Create the file menu
 		MenuBar partnervorschlaegeMenu = new MenuBar(true);
 		partnervorschlaegeMenu.setAnimationEnabled(true);
 
@@ -136,10 +140,15 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		menu.addItem(new MenuItem("Partnervorschläge anhand von Suchprofilen", partnervorschlaegeSpMenu));
 		menu.addItem(new MenuItem("Ausloggen", statusMenu));
 
-		// add the menu to the root panel
 		RootPanel.get("Header").add(menu);
 	}
 
+	/**
+	 * AsyncCallback für die Login-Mathode. Bei erhalt der LoginInfos wir die Methode
+	 * pruefeObMutzerNeu() aufgerufen.
+	 * 
+	 * @return
+	 */
 	private AsyncCallback<LoginInfo> loginExecute() {
 		AsyncCallback<LoginInfo> asynCallback = new AsyncCallback<LoginInfo>() {
 			@Override
@@ -162,7 +171,14 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		};
 		return asynCallback;
 	}
-
+	
+	/**
+	 * AsyncCallback für die Methode pruefeObMutzerNeu(). Falls der Wert false ist wird die Methode
+	 * getNutzerByEmail() aufgerufen, sonst wird der Nutzer auf sie Seite "Partnerboerse.html" 
+	 * weitergeleitet.
+	 * 
+	 * @return
+	 */
 	private AsyncCallback<Boolean> pruefeObNutzerNeuExecute(String email) {
 		AsyncCallback<Boolean> asynCallback = new AsyncCallback<Boolean>() {
 			@Override
@@ -188,6 +204,11 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 		return asynCallback;
 	}
 
+	/**
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurueck. 
+	 * 
+	 * @return Nutzerprofil
+	 */
 	private AsyncCallback<Nutzerprofil> getNutzerprofilByEmailExecute(String email) {
 		AsyncCallback<Nutzerprofil> asynCallback = new AsyncCallback<Nutzerprofil>() {
 			@Override
@@ -197,7 +218,6 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 
 			@Override
 			public void onSuccess(Nutzerprofil result) {
-				// Window.Location.replace("Partnerboerse.html");
 				np = result;
 				createNavigator();
 
@@ -207,7 +227,7 @@ public class PartnerboerseReport extends VerticalPanel implements EntryPoint {
 	}
 
 	/**
-	 * Gibt das aktuell-eingeloggte Nutzerprofil zur�ck
+	 * Gibt das aktuell-eingeloggte Nutzerprofil zurueck
 	 * 
 	 * @return Nutzerprofil
 	 */
