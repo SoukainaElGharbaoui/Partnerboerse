@@ -146,6 +146,7 @@ public class ShowPartnervorschlaegeSp extends VerticalPanel {
 		if(suchprofilName != null){
 			
 			erzeugeTabelleSp();
+			
 			for (int i = 0; i < auswahlListBox.getItemCount(); i++) {
 				if (suchprofilName.equals(auswahlListBox.getValue(i))) {
 					auswahlListBox.setSelectedIndex(i);
