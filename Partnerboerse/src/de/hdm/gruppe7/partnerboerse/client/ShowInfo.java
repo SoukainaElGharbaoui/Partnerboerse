@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -34,11 +35,9 @@ public class ShowInfo extends VerticalPanel {
 	 * Attribute erzeugen.
 	 */
 	private String listtyp;
-	private String profiltyp; 
+	private String profiltyp;
 
 	private int row;
-	private int eigenschaftIdInt;
-	private int eigenschaftIdTable;
 	private int zaehler;
 	private int profilId;
 
@@ -47,33 +46,39 @@ public class ShowInfo extends VerticalPanel {
 	 */
 	private Label ueberschriftLabel = new Label("Infos zu diesem Profil:");
 	private Label informationLabel = new Label();
-	
+
 	private Button erstelleRestlicheInfosButton = new Button("Infos anlegen");
 	private Button bearbeitenButton = new Button("Infos bearbeiten");
 	private Button loeschenButton = new Button("Alle Infos löschen");
-	
+
 	private FlexTable showInfoFlexTable = new FlexTable();
-	
+
 	/**
 	 * Konstruktor hinzufuegen.
 	 * 
-	 * @param profilId Die Profil-Id des Profils (Nutzerprofil / Suchprofil / Fremdprofil)
-	 * @param profiltyp Der Profiltyp des Profils (Nutzerprofil / Suchprofil / Fremdprofil)
-	 * @param listtyp Der Listtyp der Seite, von der das Anzeigen der Infos aufgerufen wird (Nutzerprofil / Suchprofil / Fremdprofil)
+	 * @param profilId
+	 *            Die Profil-Id des Profils (Nutzerprofil / Suchprofil /
+	 *            Fremdprofil)
+	 * @param profiltyp
+	 *            Der Profiltyp des Profils (Nutzerprofil / Suchprofil /
+	 *            Fremdprofil)
+	 * @param listtyp
+	 *            Der Listtyp der Seite, von der das Anzeigen der Infos
+	 *            aufgerufen wird (Nutzerprofil / Suchprofil / Fremdprofil)
 	 */
 	public ShowInfo(int profilId, String profiltyp, String listtyp) {
-		this.profilId = profilId; 
-		this.profiltyp = profiltyp; 
+		this.profilId = profilId;
+		this.profiltyp = profiltyp;
 		this.listtyp = listtyp;
-		
-		run(); 
+
+		run();
 	}
-	
+
 	/**
 	 * Methode erstellen, die den Aufbau der Seite startet.
 	 */
 	public void run() {
-		
+
 		/**
 		 * Vertikales Panel hinzufuegen.
 		 */
@@ -89,7 +94,7 @@ public class ShowInfo extends VerticalPanel {
 		ueberschriftLabel.addStyleName("partnerboerse-label");
 		informationLabel.addStyleName("partnerboerse-label");
 
-		getAllInfos(); 
+		getAllInfos();
 
 		/**
 		 * Widgets zum Panel hinzufuegen.
@@ -97,12 +102,11 @@ public class ShowInfo extends VerticalPanel {
 		verPanel.add(ueberschriftLabel);
 		verPanel.add(showInfoFlexTable);
 		verPanel.add(informationLabel);
-		
 
 		/**
 		 * Pruefen, ob es sich um ein Info eines Fremdprofils handelt. Wenn
-		 * nicht, werden entsprechende Buttons hinzugefuegt. Loeschen, Bearbeiten
-		 * und Anlegen.
+		 * nicht, werden entsprechende Buttons hinzugefuegt. Loeschen,
+		 * Bearbeiten und Anlegen.
 		 */
 		if (!profiltyp.equals("Fp")) {
 			buttonPanel.add(erstelleRestlicheInfosButton);
@@ -118,7 +122,10 @@ public class ShowInfo extends VerticalPanel {
 		 */
 		loeschenButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				deleteAllInfos();
+				if (Window.confirm("Möchten Sie wirklich alle Infos zu diesem Profil löschen?")) {
+
+					deleteAllInfos();
+				}
 			}
 		});
 
@@ -149,19 +156,18 @@ public class ShowInfo extends VerticalPanel {
 		});
 
 	}
-	
+
 	/**
-	 * Methode, die alle Infos anhand der Profil-ID aus der Datenbank ausliest und die
-	 * Infos in die Tabelle einfuegt.
+	 * Methode, die alle Infos anhand der Profil-ID aus der Datenbank ausliest
+	 * und die Infos in die Tabelle einfuegt.
 	 */
 	public void getAllInfos() {
-		
+
 		ClientsideSettings.getPartnerboerseAdministration().getAllInfos(profilId,
 				new AsyncCallback<Map<List<Info>, List<Eigenschaft>>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						informationLabel.setText("Es ist ein Fehler beim Herausholen der Infos aufgetreten.");
 					}
 
 					@Override
@@ -170,20 +176,18 @@ public class ShowInfo extends VerticalPanel {
 						Set<List<Info>> output = result.keySet();
 
 						for (List<Info> listI : output) {
-							
+
 							row = showInfoFlexTable.getRowCount();
 
 							for (Info i : listI) {
-								
+
 								showInfoFlexTable.setCellPadding(6);
-								showInfoFlexTable.getColumnFormatter().addStyleName(2, "TableHeader");
+								showInfoFlexTable.getColumnFormatter().addStyleName(0, "TableHeader");
 								showInfoFlexTable.addStyleName("FlexTable");
-								
+
 								row++;
 
-								showInfoFlexTable.setText(row, 0, String.valueOf(i.getProfilId()));
-								showInfoFlexTable.setText(row, 1, String.valueOf(i.getEigenschaftId()));
-								showInfoFlexTable.setText(row, 3, i.getInfotext());
+								showInfoFlexTable.setText(row, 1, i.getInfotext());
 							}
 
 							List<Eigenschaft> listE = new ArrayList<Eigenschaft>();
@@ -192,25 +196,15 @@ public class ShowInfo extends VerticalPanel {
 							row = 0;
 							row = showInfoFlexTable.getRowCount();
 
-							for (Eigenschaft e : listE) {
+							int k;
 
-								row++;
+							for (int i = 0; i < listE.size(); i++) {
 
-								eigenschaftIdInt = 0;
-								eigenschaftIdInt = e.getEigenschaftId();
+								for (k = 2; k < showInfoFlexTable.getRowCount(); k++) {
 
-								for (int i = 2; i < showInfoFlexTable.getRowCount(); i++) {
+									showInfoFlexTable.setText(k, 0, listE.get(i).getErlaeuterung());
 
-									eigenschaftIdTable = 0;
-									eigenschaftIdTable = Integer.valueOf(showInfoFlexTable.getText(i, 1));
-
-									if (eigenschaftIdInt == eigenschaftIdTable) {
-
-										showInfoFlexTable.setText(i, 2, e.getErlaeuterung());
-									}
-
-									else {
-									}
+									i++;
 								}
 							}
 						}
@@ -229,7 +223,7 @@ public class ShowInfo extends VerticalPanel {
 					}
 				});
 	}
-	
+
 	/**
 	 * Prueft, ob die Tabelle leer ist.
 	 * 
@@ -255,46 +249,43 @@ public class ShowInfo extends VerticalPanel {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Methode, die alle Infos loescht.
 	 */
 	public void deleteAllInfos() {
-		
-		ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId,
-				new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						informationLabel.setText("Beim Löschen aller Infos ist ein Fehler aufgetreten.");
-					}
 
-					@Override
-					public void onSuccess(Void result) {
-						informationLabel.setText("Das Löschen aller Infos hat funktioniert.");
+		ClientsideSettings.getPartnerboerseAdministration().deleteAllInfosNeu(profilId, new AsyncCallback<Void>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 
-						/**
-						 * Fall, profilId gehoert zu Nutzerprofil
-						 */
-						if (profiltyp == "Np") {
+			@Override
+			public void onSuccess(Void result) {
 
-							ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
+				/**
+				 * Fall, profilId gehoert zu Nutzerprofil
+				 */
+				if (profiltyp == "Np") {
 
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(showNp);
-						}
+					ShowNutzerprofil showNp = new ShowNutzerprofil(profilId, profiltyp);
 
-						/**
-						 * Fall, profilId gehoert zu Suchprofil
-						 */
-						else if (profiltyp == "Sp") {
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showNp);
+				}
 
-							int suchprofilId = profilId;
-							ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId, profiltyp);
+				/**
+				 * Fall, profilId gehoert zu Suchprofil
+				 */
+				else if (profiltyp == "Sp") {
 
-							RootPanel.get("Details").clear();
-							RootPanel.get("Details").add(showSp);
-						}
-					}
-				});
+					int suchprofilId = profilId;
+					ShowSuchprofil showSp = new ShowSuchprofil(suchprofilId, profiltyp);
+
+					RootPanel.get("Details").clear();
+					RootPanel.get("Details").add(showSp);
+				}
+			}
+		});
 	}
 }

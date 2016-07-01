@@ -17,8 +17,6 @@ import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.gruppe7.partnerboerse.client.ClientsideSettings;
-import de.hdm.gruppe7.partnerboerse.client.Partnerboerse;
 import de.hdm.gruppe7.partnerboerse.server.db.InfoMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.MerklisteMapper;
 import de.hdm.gruppe7.partnerboerse.server.db.NutzerprofilMapper;
@@ -160,7 +158,7 @@ public class PartnerboerseAdministrationImpl extends RemoteServiceServlet
 			String haarfarbe, String raucher, String religion)
 			throws IllegalArgumentException {
 
-		Nutzerprofil n = Partnerboerse.getNp();
+		Nutzerprofil n = new Nutzerprofil();
 		n.setVorname(vorname);
 		n.setNachname(nachname);
 		n.setGeschlecht(geschlecht);
